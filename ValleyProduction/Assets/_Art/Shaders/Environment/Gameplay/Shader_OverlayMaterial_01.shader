@@ -1,4 +1,4 @@
-Shader "Custom/TestShaderZone"
+Shader "Valley/Shader_OverlayMaterial_01"
 {
     Properties
     {
