@@ -39,6 +39,7 @@ public class LandInteractions : MonoBehaviour
             }
             else
             {
+                Debug.Log("MouseInput");
                 OnMouseInput();
             }
         }
@@ -71,6 +72,7 @@ public class LandInteractions : MonoBehaviour
         {
             selectedConstruction.SelectObject();
         }
+
 
         if (ToolManager._selectedTool != SelectedTools.None)
         {

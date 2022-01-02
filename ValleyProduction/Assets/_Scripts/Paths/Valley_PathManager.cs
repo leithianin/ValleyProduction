@@ -247,6 +247,7 @@ public class Valley_PathManager : MonoBehaviour
     //Click on a marker
     public void CreatePathWithoutMarker(PathPoint markerAlreadyPlace)
     {
+        Debug.Log("v2 : " + markerAlreadyPlace);
         if (markerAlreadyPlace != currentMarker)
         {
             if (isNewPath)
