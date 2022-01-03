@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/ValleyAssets/ValleyInputActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Inputs/ValleyInputActions.inputactions'
 
 using System;
 using System.Collections;
