@@ -122,20 +122,20 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         int xDirection = 0;
         int yDirection = 0;
 
-        if(Input.GetKey(KeyCode.Z))
+        if(Input.GetKey(KeyCode.UpArrow))
         {
             yDirection++;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             yDirection--;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             xDirection++;
         }
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             xDirection--;
         }
