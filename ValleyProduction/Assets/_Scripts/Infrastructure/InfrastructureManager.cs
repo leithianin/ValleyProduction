@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 {
+    [SerializeField] private InfrastructurePreviewHandler previewHandler;
+    
     private InfrastructurePreview currentPreview;
 
     public static InfrastructurePreview GetCurrentPreview => instance.currentPreview;
@@ -11,10 +13,19 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void ChooseInfrastructure(InfrastructurePreview newPreview)
     {
+        if(newPreview != instance.currentPreview)
+        {
+            instance.previewHandler.SetInfrastructurePreview(newPreview);
+        }
         instance.currentPreview = newPreview;
     }
     
-    public static bool PlaceInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
+    public static void PlaceInfrastructure(Vector3 positionToPlace)
+    {
+        instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
+    }
+
+    private bool PlaceInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
     {
         if(toPlace.AskToPlace(positionToPlace))
         {

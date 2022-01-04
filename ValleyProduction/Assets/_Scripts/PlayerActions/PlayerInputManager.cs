@@ -59,6 +59,15 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         {
             OnKeyEscape?.Invoke();
         }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ConstructionManager.UnselectInfrastructureType();
+        }
     }
 
     private void CallLeftMouseInputs()
