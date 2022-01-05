@@ -14,6 +14,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent<Vector3> OnClicLeftPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicLeftObject;
 
+    [SerializeField] private UnityEvent OnClicRight;
+    [SerializeField] private UnityEvent<Vector3> OnClicRightPosition;
+    [SerializeField] private UnityEvent<GameObject> OnClicRightObject;
+
     [SerializeField] private UnityEvent OnKeyReturn;
     [SerializeField] private UnityEvent OnKeyDelete;
     [SerializeField] private UnityEvent OnKeyEscape;
@@ -35,6 +39,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             if (Input.GetMouseButtonDown(0))
             {
                 CallLeftMouseInputs();
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                CallRightMouseInputs();
             }
         }
 
@@ -90,6 +98,21 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             if (GetHitMouseGameobject(out GameObject hitObject))
             {
                 OnClicLeftObject?.Invoke(hitObject);
+            }
+        }
+    }
+
+    private void CallRightMouseInputs()
+    {
+        OnClicRight?.Invoke();
+
+        if (GetMousePosition != Vector3.zero)
+        {
+            OnClicRightPosition?.Invoke(GetMousePosition);
+
+            if (GetHitMouseGameobject(out GameObject hitObject))
+            {
+                OnClicRightObject?.Invoke(hitObject);
             }
         }
     }

@@ -40,6 +40,15 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
     }
 
+    public static void DestroyStructure(GameObject touchedObject)
+    {
+        Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
+        if (infraComponent != null)
+        {
+            InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, infraComponent);
+        }
+    }
+
     /// <summary>
     /// Input de désélection d'Infrastructure.
     /// </summary>

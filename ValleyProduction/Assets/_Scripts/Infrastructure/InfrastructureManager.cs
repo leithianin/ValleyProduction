@@ -41,7 +41,10 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void DeleteInfrastructure(Infrastructure toDelete)
     {
-        instance.UnselectInfrastructure(toDelete);
+        if (toDelete == instance.currentSelectedStructure)
+        {
+            UnselectInfrastructure();
+        }
         toDelete.RemoveObject();
     }
 
@@ -85,16 +88,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         if(instance.currentSelectedStructure != null)
         {
-            instance.UnselectInfrastructure(instance.currentSelectedStructure);
+            instance.currentSelectedStructure.UnselectObject();
         }
-    }
-
-    private void UnselectInfrastructure(Infrastructure toUnselect)
-    {
-        if (toUnselect != currentSelectedStructure)
-        {
-            currentSelectedStructure.UnselectObject();
-            currentSelectedStructure = null;
-        }
+        instance.currentSelectedStructure = null;
     }
 }
