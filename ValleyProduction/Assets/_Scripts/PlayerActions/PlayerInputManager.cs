@@ -60,6 +60,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             OnKeyEscape?.Invoke();
         }
 
+        // Input pour tester
         if(Input.GetKeyDown(KeyCode.A))
         {
             ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
@@ -67,6 +68,14 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         if (Input.GetKeyDown(KeyCode.E))
         {
             ConstructionManager.UnselectInfrastructureType();
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            ConstructionManager.SelectInfrastructureType(InfrastructureType.DeleteStructure);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ConstructionManager.UnselectStructure();
         }
     }
 

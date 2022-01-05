@@ -18,4 +18,9 @@ public class IST_PathPoint : Infrastructure
     {
         Debug.Log("Select Pathpoint");
     }
+
+    protected override void OnUnselectObject()
+    {
+        Debug.Log("Unselect Pathpoint");
+    }
 }

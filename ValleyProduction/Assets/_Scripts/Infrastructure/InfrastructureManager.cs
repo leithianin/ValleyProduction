@@ -8,6 +8,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     
     private InfrastructurePreview currentPreview;
 
+    private Infrastructure currentSelectedStructure;
+
     public static InfrastructurePreview GetCurrentPreview => instance.currentPreview;
 
 
@@ -37,18 +39,62 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         return false;
     }
 
-    public static void PlaceOnExistingInfrastructure(Infrastructure existingConstruction)
-    {
-
-    }
-
-    public static void ModifyInfrastructure(Infrastructure toModify)
-    {
-
-    }
-
     public static void DeleteInfrastructure(Infrastructure toDelete)
     {
+        instance.UnselectInfrastructure(toDelete);
         toDelete.RemoveObject();
+    }
+
+
+    /// <summary>
+    /// Gère l'intéraction avec une structure.
+    /// </summary>
+    /// <param name="interactedStructure">L'Infrastructure qui a été cliqué.</param>
+    public static void InteractWithStructure(InfrastructureType tool, Infrastructure interactedStructure)
+    {
+        switch (tool)
+        {
+            case InfrastructureType.None:
+                instance.SelectInfrastructure(interactedStructure);
+                break;
+            case InfrastructureType.DeleteStructure:
+                DeleteInfrastructure(interactedStructure);
+                break;
+            case InfrastructureType.PathTools:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Sélectionne l'Infrastructure.
+    /// </summary>
+    /// <param name="selectedStructure">L'Infrastructure à sélectionner.</param>
+    private void SelectInfrastructure(Infrastructure selectedStructure)
+    {
+        if (selectedStructure != currentSelectedStructure)
+        {
+            currentSelectedStructure = selectedStructure;
+            selectedStructure.SelectObject();
+        }
+    }
+
+    /// <summary>
+    /// Désélectionne l'Infrastructure.
+    /// </summary>
+    public static void UnselectInfrastructure()
+    {
+        if(instance.currentSelectedStructure != null)
+        {
+            instance.UnselectInfrastructure(instance.currentSelectedStructure);
+        }
+    }
+
+    private void UnselectInfrastructure(Infrastructure toUnselect)
+    {
+        if (toUnselect != currentSelectedStructure)
+        {
+            currentSelectedStructure.UnselectObject();
+            currentSelectedStructure = null;
+        }
     }
 }
