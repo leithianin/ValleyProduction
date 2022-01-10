@@ -38,9 +38,15 @@ public class CPN_Movement : MonoBehaviour
         agent.speed = speed;
     }
 
-    public void AsktoStartWalk(List<Vector3> nPathToTake)
+    public void WalkOnCurrentPath()
+    {
+        StartWalk();
+    }
+
+    public void WalkOnNewPath(List<Vector3> nPathToTake)
     {
         pathToTake = new List<Vector3>(nPathToTake);
+        currentPathIndex = 0;
 
         StartWalk();
     }
@@ -52,7 +58,6 @@ public class CPN_Movement : MonoBehaviour
             isWalking = true;
             agent.isStopped = false;
             enabled = true;
-            currentPathIndex = 0;
 
             SetNextDestination(currentPathIndex);
             OnStartWalking?.Invoke();

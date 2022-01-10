@@ -71,19 +71,19 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         // Input pour tester
         if(Input.GetKeyDown(KeyCode.A))
         {
-            ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
+            VLY_Time.SetTimeScale(1f);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ConstructionManager.UnselectInfrastructureType();
+            VLY_Time.SetTimeScale(3f);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            ConstructionManager.SelectInfrastructureType(InfrastructureType.DeleteStructure);
+            VLY_Time.ResetTime();
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ConstructionManager.UnselectStructure();
+            VLY_Time.PauseTime();
         }
     }
 

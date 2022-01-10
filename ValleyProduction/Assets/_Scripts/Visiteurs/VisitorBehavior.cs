@@ -19,21 +19,19 @@ public class VisitorBehavior : MonoBehaviour
     private IST_PathPoint lastPoint;
     private IST_PathPoint currentPoint;
 
-    private void Start()
-    {
-        SearchDestination();
-    }
+    public VisitorScriptable visitorType;
 
-    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition)
+    private AnimationHandler visitorDisplay;
+
+    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType)
     {
         TestPath wantedPath = SearchPath();
 
         if(wantedPath != null)
         {
-            // Type de visiteur
-            // Stats de visiteur
+            visitorType = nVisitorType;
 
-            movement.SetSpeed(3f);
+            movement.SetSpeed(visitorType.Speed);
 
             spawnPoint = nSpawnPoint;
             lastPoint = nSpawnPoint;
@@ -43,15 +41,14 @@ public class VisitorBehavior : MonoBehaviour
 
             gameObject.SetActive(true);
 
-            // Gestion de l'affichage du visiteur
-
-            List<Vector3> vectPath = new List<Vector3>();
-            foreach (Transform t in wantedPath.pathPoints)
+            if(visitorDisplay != null)
             {
-                vectPath.Add(t.position);
+                Destroy(visitorDisplay);
             }
 
-            movement.AsktoStartWalk(vectPath);
+            visitorDisplay = Instantiate(visitorType.Display, transform);
+
+            SearchDestination();
         }
     }
 
@@ -65,6 +62,7 @@ public class VisitorBehavior : MonoBehaviour
     public void SearchDestination()
     {
         // Récupération du prochain chemin
+
         List<Vector3> vectPath = new List<Vector3>();
         List<Transform> wantedPath = SearchPath().pathPoints;
         foreach (Transform t in wantedPath)
@@ -72,17 +70,36 @@ public class VisitorBehavior : MonoBehaviour
             vectPath.Add(t.position);
         }
 
-        movement.AsktoStartWalk(vectPath);
+        movement.WalkOnNewPath(vectPath);
     }
 
     public void ReachDestination()
     {
         // Check si despawn ou autre
-        SearchDestination();
+
+        if (Vector3.Distance(spawnPoint.transform.position, transform.position) < 2f)
+        {
+            VisitorManager.DeleteVisitor(this);
+        }
+        else
+        {
+            SearchDestination();
+        }
     }
 
+    // TEMPORAIRE
     private TestPath SearchPath()
     {
         return paths[UnityEngine.Random.Range(0, paths.Count)];
+    }
+
+    public void StartInteraction()
+    {
+        movement.StopWalk();
+    }
+
+    public void EndInteraction()
+    {
+        movement.WalkOnCurrentPath();
     }
 }

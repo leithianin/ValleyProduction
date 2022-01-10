@@ -12,8 +12,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     [SerializeField] private float timeBetweenSpawn = 10f;
     [SerializeField] private Vector2Int visitorToSpawnNb = Vector2Int.zero;
     [SerializeField] private float spawnDistanceFromSpawnPoint = 0.8f;
-
     [SerializeField] private int maxSpawn = 100;
+
+    [SerializeField] private VisitorScriptable[] visitorTypes;
 
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
@@ -24,6 +25,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         if(Time.time > nextSpawnTime)
         {
             int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
+            Debug.Log(spawnNb);
             for (int i = 0; i < spawnNb; i++)
             {
                 if(UsedVisitorNumber() < maxSpawn)
@@ -38,7 +40,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private void SpawnVisitor()
     {
+
         //Check si on peut ou non spawn un visiteur
+
         VisitorBehavior newVisitor = GetAvailableVisitor();
 
         Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
@@ -46,15 +50,21 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
 
         NavMeshHit hit;
+
         if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, .5f, NavMesh.AllAreas))
         {
-            newVisitor.SetVisitor(wantedSpawn, spawnPosition);
+            newVisitor.SetVisitor(wantedSpawn, spawnPosition, ChooseVisitorType());
         }
     }
 
     public static void DeleteVisitor(VisitorBehavior toDelete)
     {
         toDelete.UnsetVisitor();
+    }
+
+    private VisitorScriptable ChooseVisitorType()
+    {
+        return visitorTypes[Random.Range(0, visitorTypes.Length)];
     }
 
     private VisitorBehavior GetAvailableVisitor()
@@ -81,5 +91,10 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
 
         return toReturn;
+    }
+
+    public void ChoosePath()
+    {
+        // TO DO
     }
 }
