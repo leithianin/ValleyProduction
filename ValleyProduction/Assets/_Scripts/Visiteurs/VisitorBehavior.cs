@@ -87,19 +87,19 @@ public class VisitorBehavior : MonoBehaviour
         }
     }
 
-    // TEMPORAIRE
-    private TestPath SearchPath()
-    {
-        return paths[UnityEngine.Random.Range(0, paths.Count)];
-    }
-
-    public void StartInteraction()
+    public void StopWalk()
     {
         movement.StopWalk();
     }
 
-    public void EndInteraction()
+    public void ContinueWalk()
     {
         movement.WalkOnCurrentPath();
+    }
+
+    // TEMPORAIRE
+    private TestPath SearchPath()
+    {
+        return paths[UnityEngine.Random.Range(0, paths.Count)];
     }
 }

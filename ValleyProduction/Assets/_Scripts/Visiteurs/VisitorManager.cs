@@ -25,7 +25,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         if(Time.time > nextSpawnTime)
         {
             int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
-            Debug.Log(spawnNb);
             for (int i = 0; i < spawnNb; i++)
             {
                 if(UsedVisitorNumber() < maxSpawn)
