@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathCreationManager : MonoBehaviour
 {
-    //PathFinding
+    //PathFinding --> Input Joueur
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,7 @@ public class PathCreationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //NavMesh Calcul
+
     }
 }
