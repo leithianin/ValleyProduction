@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PathCreationManager : MonoBehaviour
 {
+    public static List<Vector3> navmeshPositionsList = new List<Vector3>();
     //PathFinding --> Input Joueur
 
     // Start is called before the first frame update

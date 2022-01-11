@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PathFragmentData : MonoBehaviour
 {
-    public PathPoint endPoint;                          //Starting point of the FragmentPath
-    public PathPoint startPoint;                        //Ending point of the FragmentPath
+    public IST_PathPoint endPoint;                          //Starting point of the FragmentPath
+    public IST_PathPoint startPoint;                        //Ending point of the FragmentPath
     public List<Vector3> path;
 
-    public PathFragmentData(PathPoint nStartPoint, PathPoint nEndPoint, List<Vector3> nPath)
+    public PathFragmentData(IST_PathPoint nStartPoint, IST_PathPoint nEndPoint, List<Vector3> nPath)
     {
         endPoint   = nEndPoint  ;
         startPoint = nStartPoint;
