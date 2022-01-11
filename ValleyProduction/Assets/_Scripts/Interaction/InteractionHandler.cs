@@ -6,7 +6,20 @@ using UnityEngine.Events;
 
 public class InteractionHandler : MonoBehaviour
 {
-    [SerializeField] private List<MonoBehaviour> interactionsTypes;
+    [SerializeField] private CPN_Movement movement;
+
+    public CPN_Movement Movement => movement;
+
+    // Dégueulasse ? CODE REVIEW
+    public Action<InteractionHandler> onMovementEnd;
+
+    public void OnEndMovement()
+    {
+        onMovementEnd?.Invoke(this);
+    }
+
+    /*[SerializeField] private List<MonoBehaviour> interactionsTypes;
+
     public void GetInteractionElement<T>(ref T element) where T : MonoBehaviour
     {
         Debug.Log(element);
@@ -17,7 +30,7 @@ public class InteractionHandler : MonoBehaviour
                 element = interactionsTypes[i] as T;
             }
         }
-    }
+    }*/
 
     // Voir si on peut pas stocker une liste d'action directement au niveau des personnages
 
@@ -29,18 +42,4 @@ public class InteractionHandler : MonoBehaviour
      * 
      * 
      */
-
-    /*public abstract void StartInteraction();
-
-    public abstract void EndInteraction();*/
-
-    public void StartInteraction()
-    {
-
-    }
-
-    public void EndInteraction()
-    {
-
-    }
 }

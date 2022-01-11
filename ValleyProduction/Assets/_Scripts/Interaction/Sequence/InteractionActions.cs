@@ -27,7 +27,6 @@ public abstract class InteractionActions : MonoBehaviour
     {
         askedCallbacks.Add(new SequenceCallback(callback, caller));
 
-        Debug.Log(caller);
         OnPlayAction(caller);
     }
 
@@ -39,6 +38,7 @@ public abstract class InteractionActions : MonoBehaviour
             if (askedCallbacks[i].caller == caller)
             {
                 askedCallbacks[i].callback?.Invoke();
+                askedCallbacks[i].callback = null;
 
                 askedCallbacks.RemoveAt(i);
                 i--;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +16,11 @@ public class CPN_Movement : MonoBehaviour
     [HideInInspector] public List<Vector3> pathToTake = new List<Vector3>();
 
     private int currentPathIndex;
-    private int interuptedPathIndex;
 
     [Header("Movement Events")]
-    public UnityEvent OnStartWalking;
-    public UnityEvent OnStopWalking;
-    public UnityEvent OnEndWalking;
+    public UnityEvent PlayOnStartWalking;
+    public UnityEvent PlayOnStopWalking;
+    public UnityEvent PlayOnEndWalking;
 
     // Update is called once per frame
     void Update()
@@ -67,7 +67,7 @@ public class CPN_Movement : MonoBehaviour
             enabled = true;
 
             SetNextDestination(currentPathIndex);
-            OnStartWalking?.Invoke();
+            PlayOnStartWalking?.Invoke();
         }
     }
 
@@ -103,7 +103,7 @@ public class CPN_Movement : MonoBehaviour
         {
             StopWalk();
 
-            OnEndWalking?.Invoke();
+            PlayOnEndWalking?.Invoke();
         }
     }
 
@@ -113,8 +113,6 @@ public class CPN_Movement : MonoBehaviour
 
         if(isWalking)
         {
-            interuptedPathIndex = currentPathIndex;
-
             for(int i = currentPathIndex; i < pathToTake.Count; i++)
             {
                 toReturn.Add(pathToTake[i]);
@@ -132,7 +130,7 @@ public class CPN_Movement : MonoBehaviour
         {
             isWalking = false;
             agent.isStopped = true;
-            OnStopWalking?.Invoke();
+            PlayOnStopWalking?.Invoke();
         }
     }
 }

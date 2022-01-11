@@ -29,7 +29,7 @@ public class VisitorBehavior : MonoBehaviour
 
     private void Start()
     {
-        movement.OnEndWalking.AddListener(ReachDestination);
+        movement.PlayOnEndWalking.AddListener(ReachDestination);
     }
 
     public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType)
@@ -98,14 +98,13 @@ public class VisitorBehavior : MonoBehaviour
 
     public void InteruptWalk()
     {
-        movement.OnEndWalking.RemoveListener(ReachDestination);
+        movement.PlayOnEndWalking.RemoveListener(ReachDestination);
         interuptedPath = new List<Vector3>(movement.InteruptWalk());
     }
 
     public void ContinueWalk()
     {
-        movement.OnEndWalking.AddListener(ReachDestination);
-        Debug.Log(interuptedPath.Count);
+        movement.PlayOnEndWalking.AddListener(ReachDestination);
         movement.WalkOnNewPath(interuptedPath);
     }
 
