@@ -2,25 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ButtonEnum { Path, None};
 public class UIManager : VLY_Singleton<UIManager>
 {
-    private ButtonEnum buttonSelected = ButtonEnum.None;
+    private InfrastructureType buttonSelected = InfrastructureType.None;
 
-    public ButtonEnum GetSelectedButton => buttonSelected;
+    public InfrastructureType GetSelectedButton => buttonSelected;
 
+    //Use in Path Button On Click()
     public void OnToolCreatePath()
     {
-        if(buttonSelected == ButtonEnum.Path)
+        if(buttonSelected == InfrastructureType.PathTools)
         {
-            buttonSelected = ButtonEnum.None;
+            buttonSelected = InfrastructureType.None;
         }
         else
         {
-            buttonSelected = ButtonEnum.Path;
+            buttonSelected = InfrastructureType.PathTools;
         }
     }
 
+    //Use in Construction Button On Click()
     public void OnToolCreateConstruction()
     {
         //Create a construction

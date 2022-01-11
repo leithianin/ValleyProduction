@@ -6,7 +6,7 @@ public class IST_PathPoint : Infrastructure
 {
     protected override void OnPlaceObject(Vector3 position)
     {
-        Debug.Log("Place Pathpoint");
+        PathManager.PlacePoint(this, position);      
     }
 
     protected override void OnRemoveObject()
