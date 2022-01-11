@@ -2,34 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisitorInteractionSight : MonoBehaviour
+public class VisitorInteractionSight : InteractionSight
 {
     [SerializeField] private VisitorBehavior visitor;
 
-    private bool isInteracting;
-
-    private void OnTriggerEnter(Collider other)
+    public override void OnEndInteraction(InteractionHandler spotInteractor)
     {
-        if (!isInteracting)
-        {
-            VisitorInteraction interaction = other.GetComponent<VisitorInteraction>();
-
-            if (interaction != null && interaction.IsUsable())
-            {
-                interaction.Interact(visitor);
-                isInteracting = true;
-                visitor.StopWalk();
-                interaction.PlayOnInteractionEnd += EndInteraction;
-            }
-        }
+        visitor.ContinueWalk();
     }
 
-    private void EndInteraction(VisitorBehavior interactionVisitor)
+    public override void OnStartInteraction(InteractionSpot spot)
     {
-        if(interactionVisitor == visitor)
-        {
-            visitor.ContinueWalk();
-            isInteracting = false;
-        }
+        visitor.InteruptWalk();
     }
 }

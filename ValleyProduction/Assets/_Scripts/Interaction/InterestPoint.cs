@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class InterestPoint : MonoBehaviour
 {
-    [SerializeField] private VisitorInteraction[] interactions;
+    [SerializeField] private InteractionSpot[] interactions;
 
-    public void Interact(VisitorBehavior visitor)
+    public bool IsUsable => GetUsableInteractions().Count > 0;
+
+    public InteractionSpot GetRandomSpot()
     {
-        List<VisitorInteraction> usableInteractions = GetUsableInteractions();
+        List<InteractionSpot> usableInteractions = GetUsableInteractions();
 
-        if(usableInteractions.Count > 0)
+        if (usableInteractions.Count > 0)
         {
-            interactions[Random.Range(0, usableInteractions.Count)].Interact(visitor);
+            return interactions[Random.Range(0, usableInteractions.Count)];
         }
+        return null;
     }
 
-    private List<VisitorInteraction> GetUsableInteractions()
+    private List<InteractionSpot> GetUsableInteractions()
     {
-        List<VisitorInteraction> usableInteractions = new List<VisitorInteraction>();
+        List<InteractionSpot> usableInteractions = new List<InteractionSpot>();
 
         for(int i = 0; i < interactions.Length; i++)
         {

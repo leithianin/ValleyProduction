@@ -23,6 +23,15 @@ public class VisitorBehavior : MonoBehaviour
 
     private AnimationHandler visitorDisplay;
 
+    List<Vector3> interuptedPath = new List<Vector3>();
+
+    public CPN_Movement Movement => movement;
+
+    private void Start()
+    {
+        movement.OnEndWalking.AddListener(ReachDestination);
+    }
+
     public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType)
     {
         TestPath wantedPath = SearchPath();
@@ -87,14 +96,17 @@ public class VisitorBehavior : MonoBehaviour
         }
     }
 
-    public void StopWalk()
+    public void InteruptWalk()
     {
-        movement.StopWalk();
+        movement.OnEndWalking.RemoveListener(ReachDestination);
+        interuptedPath = new List<Vector3>(movement.InteruptWalk());
     }
 
     public void ContinueWalk()
     {
-        movement.WalkOnCurrentPath();
+        movement.OnEndWalking.AddListener(ReachDestination);
+        Debug.Log(interuptedPath.Count);
+        movement.WalkOnNewPath(interuptedPath);
     }
 
     // TEMPORAIRE

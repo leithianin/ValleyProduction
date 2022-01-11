@@ -1,0 +1,39 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InteractionSequence : InteractionActions
+{
+    [SerializeField] private List<InteractionActions> sequence;
+
+    private int currentSequenceIndex = -1;
+
+    protected override void OnPlayAction(InteractionHandler caller)
+    {
+        currentSequenceIndex = -1;
+
+        Debug.Log("Start Sequence");
+
+        PlayNextStep(caller);
+    }
+
+    protected override void OnEndAction(InteractionHandler caller)
+    {
+        
+    }
+
+    private void PlayNextStep(InteractionHandler caller)
+    {
+        currentSequenceIndex++;
+        Debug.Log(currentSequenceIndex);
+        if (currentSequenceIndex >= sequence.Count)
+        {
+            EndAction(caller);
+        }
+        else
+        {
+            sequence[currentSequenceIndex].PlayAction(caller, () => PlayNextStep(caller));
+        }
+    }
+}

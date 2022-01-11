@@ -77,8 +77,6 @@ public abstract class InfrastructurePreview : MonoBehaviour
         bool toReturn = true;
 
         NavMeshHit hit;
-        Debug.Log(NavMesh.SamplePosition(position, out hit, 1 / navMeshSensitivity, NavMesh.AllAreas));
-
         if (!NavMesh.SamplePosition(position, out hit, 1 / navMeshSensitivity, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {
             toReturn = false;
