@@ -113,4 +113,14 @@ public class VisitorBehavior : MonoBehaviour
     {
         return paths[UnityEngine.Random.Range(0, paths.Count)];
     }
+
+    public void PlayMovementAnimation()
+    {
+        visitorDisplay.PlayBodyAnim(BodyAnimationType.Walk);
+    }
+
+    public void StopMovementAnimation()
+    {
+        visitorDisplay.StopBodyAnim(BodyAnimationType.Walk);
+    }
 }

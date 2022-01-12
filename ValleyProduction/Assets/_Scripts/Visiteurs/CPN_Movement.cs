@@ -48,11 +48,6 @@ public class CPN_Movement : MonoBehaviour
     {
         pathToTake = new List<Vector3>(nPathToTake);
 
-        foreach(Vector3 v in pathToTake)
-        {
-            Debug.Log(v);
-        }
-
         currentPathIndex = 0;
 
         StartWalk();
