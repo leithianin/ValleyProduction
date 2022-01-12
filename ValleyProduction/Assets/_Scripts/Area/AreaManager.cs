@@ -8,25 +8,14 @@ public class AreaManager : MonoBehaviour
     [SerializeField] private float areaHeight;
 
     public List<Area> areas = new List<Area>();
-    public Area areaTest = new Area();
-
-    public CPN_Movement movement;
-    public VisitorBehavior visitor;
 
     private void Start()
     {
-        AD_Visitor visitorData = new AD_Visitor();
-        AD_Noise noiseData = new AD_Noise();
-
-        areaTest.datas.Add(visitorData);
-        areaTest.datas.Add(noiseData);
-
-        areaTest.GetData<CPN_Movement>().AddData(movement);
-        areaTest.GetData<VisitorBehavior>().AddData(visitor);
+        CreateGrid();
     }
 
     [ContextMenu("Create Grid")]
-    private void CreateGird()
+    private void CreateGrid()
     {
         areas = new List<Area>();
 
@@ -41,9 +30,36 @@ public class AreaManager : MonoBehaviour
                 newArea.arrayPosition = new Vector2Int(i, j);
                 newArea.worldPosition = new Vector2(areaHeight / 2f + areaHeight * i, areaHeight / 2f + areaHeight * j);
 
+                newArea.datas.Add(new AD_Noise());
+
                 newArea.SetAllDisplay(areaHeight);
 
                 areas.Add(newArea);
+            }
+        }
+    }
+
+    public List<VisitorBehavior> visitor;
+    [ContextMenu("Add score")]
+    private void TestScore()
+    {
+        for (int i = 0; i < areas.Count; i++)
+        {
+            for (int j = 0; j < visitor.Count; j++)
+            {
+                areas[i].GetData<VisitorBehavior>().RemoveData(visitor[j]);
+            }
+        }
+    }
+
+    [ContextMenu("Remove score")]
+    private void TestScoreRemove()
+    {
+        for (int i = 0; i < areas.Count; i++)
+        {
+            for (int j = 0; j < visitor.Count; j++)
+            {
+                areas[i].GetData<VisitorBehavior>().AddData(visitor[j]);
             }
         }
     }

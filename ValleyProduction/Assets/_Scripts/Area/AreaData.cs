@@ -12,21 +12,35 @@ public abstract class AreaData
 
     public Action<int> OnUpdateScore;
 
+    public abstract AreaDataType GetDataType();
+
     public abstract int CalculateScore();
 }
 
 public abstract class AreaData<T> : AreaData
 {
-    public abstract void AddData(T data);
+    protected abstract void OnAddData(T data);
 
-    public abstract void RemoveData(T data);
+    protected abstract void OnRemoveData(T data);
 
     protected abstract int ScoreCalculation();
+
+    public void AddData(T data)
+    {
+        OnAddData(data);
+        CalculateScore();
+    }
+
+    public void RemoveData(T data)
+    {
+        OnRemoveData(data);
+        CalculateScore();
+    }
 
     public override int CalculateScore()
     {
         score = ScoreCalculation();
-        OnUpdateScore(score);
+        OnUpdateScore?.Invoke(score);
 
         return score;
     }

@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AD_Noise : AreaData<CPN_Movement>
+public class AD_Noise : AreaData<VisitorBehavior>
 {
-    public override void AddData(CPN_Movement data)
+    List<VisitorBehavior> visitorInZone = new List<VisitorBehavior>();
+
+    public override AreaDataType GetDataType()
     {
-        Debug.Log("Noise Data");
+        return AreaDataType.Noise;
     }
 
-    public override void RemoveData(CPN_Movement data)
+    protected override void OnAddData(VisitorBehavior data)
     {
-        throw new System.NotImplementedException();
+        visitorInZone.Add(data);
+    }
+
+    protected override void OnRemoveData(VisitorBehavior data)
+    {
+        visitorInZone.Remove(data);
     }
 
     protected override int ScoreCalculation()
     {
-        throw new System.NotImplementedException();
+        return visitorInZone.Count;
     }
 }

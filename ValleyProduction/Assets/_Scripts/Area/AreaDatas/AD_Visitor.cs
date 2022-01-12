@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class AD_Visitor : AreaData<VisitorBehavior>
 {
-    public override void AddData(VisitorBehavior data)
+    public override AreaDataType GetDataType()
+    {
+        return AreaDataType.Noise;
+    }
+
+    protected override void OnAddData(VisitorBehavior data)
     {
         Debug.Log("Visitor Data");
     }
@@ -14,7 +19,7 @@ public class AD_Visitor : AreaData<VisitorBehavior>
         throw new System.NotImplementedException();
     }
 
-    public override void RemoveData(VisitorBehavior data)
+    protected override void OnRemoveData(VisitorBehavior data)
     {
         throw new System.NotImplementedException();
     }
