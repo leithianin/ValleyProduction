@@ -9,7 +9,7 @@ public class AD_Visitor : AreaData<VisitorBehavior>
         Debug.Log("Visitor Data");
     }
 
-    public override int CalculateScore()
+    protected override int ScoreCalculation()
     {
         throw new System.NotImplementedException();
     }

@@ -9,12 +9,12 @@ public class AD_Noise : AreaData<CPN_Movement>
         Debug.Log("Noise Data");
     }
 
-    public override int CalculateScore()
+    public override void RemoveData(CPN_Movement data)
     {
         throw new System.NotImplementedException();
     }
 
-    public override void RemoveData(CPN_Movement data)
+    protected override int ScoreCalculation()
     {
         throw new System.NotImplementedException();
     }
