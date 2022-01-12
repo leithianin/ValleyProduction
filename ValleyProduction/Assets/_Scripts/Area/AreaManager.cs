@@ -7,6 +7,8 @@ public class AreaManager : MonoBehaviour
     [SerializeField] private Vector2 worldDimension;
     [SerializeField] private float areaHeight;
 
+    [SerializeField] private LayerMask areaDisplayMask;
+
     public List<Area> areas = new List<Area>();
 
     private void Start()
@@ -32,7 +34,7 @@ public class AreaManager : MonoBehaviour
 
                 newArea.datas.Add(new AD_Noise());
 
-                newArea.SetAllDisplay(areaHeight);
+                newArea.SetAllDisplay(areaHeight, areaDisplayMask);
 
                 areas.Add(newArea);
             }
@@ -47,7 +49,7 @@ public class AreaManager : MonoBehaviour
         {
             for (int j = 0; j < visitor.Count; j++)
             {
-                areas[i].GetData<VisitorBehavior>().RemoveData(visitor[j]);
+                areas[i].GetData<VisitorBehavior>().AddData(visitor[j]);
             }
         }
     }
@@ -59,7 +61,7 @@ public class AreaManager : MonoBehaviour
         {
             for (int j = 0; j < visitor.Count; j++)
             {
-                areas[i].GetData<VisitorBehavior>().AddData(visitor[j]);
+                areas[i].GetData<VisitorBehavior>().RemoveData(visitor[j]);
             }
         }
     }

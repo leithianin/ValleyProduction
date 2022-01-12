@@ -26,9 +26,9 @@ public class Area
         return null;
     }
 
-    public void SetAllDisplay(float zoneLength)
+    public void SetAllDisplay(float zoneLength, LayerMask mask)
     {
-        Collider[] hitColliders = Physics.OverlapBox(GetWorldPosition, Vector3.one * zoneLength / 2f, Quaternion.identity);
+        Collider[] hitColliders = Physics.OverlapBox(GetWorldPosition, Vector3.one * zoneLength / 2f, Quaternion.identity, mask);
 
         for (int i = 0; i < hitColliders.Length; i++)
         {
