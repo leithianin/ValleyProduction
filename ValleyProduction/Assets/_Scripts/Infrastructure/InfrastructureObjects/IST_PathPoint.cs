@@ -9,9 +9,14 @@ public class IST_PathPoint : Infrastructure
         PathManager.PlacePoint(this, position);      
     }
 
-    protected override void OnRemoveObject()
+    protected override bool OnRemoveObject()
     {
-        Debug.Log("Remove Pathpoint");
+        if(PathManager.CanDeletePoint(this))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     protected override void OnSelectObject()
