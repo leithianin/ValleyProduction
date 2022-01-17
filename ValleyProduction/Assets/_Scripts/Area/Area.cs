@@ -19,17 +19,18 @@ public class Area
     /// </summary>
     /// <typeparam name="T">Type de la data voulue.</typeparam>
     /// <returns>Le gestionaire de data du type voulut.</returns>
-    public AreaData<T> GetData<T>()
+    public List<AreaData<T>> GetData<T>()
     {
-        for(int i = 0; i < datas.Count;i++)
+        List<AreaData<T>> toReturn = new List<AreaData<T>>();
+        for (int i = 0; i < datas.Count;i++)
         {
             AreaData<T> toTest = datas[i] as AreaData<T>;
             if (toTest != null)
             {
-                return toTest;
+                toReturn.Add(toTest);
             }
         }
-        return null;
+        return toReturn;
     }
 
     /// <summary>

@@ -138,7 +138,11 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (toUpdate != null)
         {
-            toUpdate.GetData<T>().AddData(dataToUpdate);
+            List<AreaData<T>> dataAreaToUpdate = toUpdate.GetData<T>();
+            for (int i = 0; i < dataAreaToUpdate.Count; i++)
+            {
+                dataAreaToUpdate[i].AddData(dataToUpdate);
+            }
         }
     }
 
@@ -152,7 +156,11 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (toUpdate != null)
         {
-            toUpdate.GetData<T>().RemoveData(dataToUpdate);
+            List<AreaData<T>> dataAreaToUpdate = toUpdate.GetData<T>();
+            for (int i = 0; i < dataAreaToUpdate.Count; i++)
+            {
+                dataAreaToUpdate[i].RemoveData(dataToUpdate);
+            }
         }
     }
 
@@ -167,7 +175,11 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (toUpdate != null)
         {
-            toUpdate.GetData<T>().RefreshData(dataToRemove, dataToAdd);
+            List<AreaData<T>> dataAreaToUpdate = toUpdate.GetData<T>();
+            for (int i = 0; i < dataAreaToUpdate.Count; i++)
+            {
+                dataAreaToUpdate[i].RefreshData(dataToRemove, dataToAdd);
+            }
         }
     }
 
