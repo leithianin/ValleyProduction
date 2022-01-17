@@ -7,7 +7,7 @@ using UnityEngine;
 public class AreaDisplayDataHandler
 {
     public AreaDataType dataTypeToCheck;
-    public int score;
+    [HideInInspector] public int score;
     public float coef;
 }
 

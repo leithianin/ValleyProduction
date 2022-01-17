@@ -2,27 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AD_Noise : AreaData<VisitorBehavior>
+public class AD_Noise : AreaData<int>
 {
-    List<VisitorBehavior> visitorInZone = new List<VisitorBehavior>();
+    int reScore;
 
     public override AreaDataType GetDataType()
     {
         return AreaDataType.Noise;
     }
 
-    protected override void OnAddData(VisitorBehavior data)
+    protected override void OnAddData(int data)
     {
-        visitorInZone.Add(data);
+        reScore += data;
     }
 
-    protected override void OnRemoveData(VisitorBehavior data)
+    protected override void OnRemoveData(int data)
     {
-        visitorInZone.Remove(data);
+        reScore -= data;
     }
 
     protected override int ScoreCalculation()
     {
-        return visitorInZone.Count;
+        return reScore;
     }
 }

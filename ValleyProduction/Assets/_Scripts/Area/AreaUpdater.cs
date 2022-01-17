@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaUpdater<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class AreaUpdater : MonoBehaviour
+{
+    public abstract void UpdateData();
+}
+
+public class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 {
     [SerializeField] private T data;
 
@@ -10,15 +15,25 @@ public class AreaUpdater<T> : MonoBehaviour where T : MonoBehaviour
 
     private Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
-    public void UpdateData()
+    private void OnEnable()
+    {
+        AreaManager.AddAreaUpdater(this);
+    }
+
+    private void OnDisable()
+    {
+        AreaManager.RemoveAreaIpdater(this);
+    }
+
+    public override void UpdateData()
     {
         Area toCheck = AreaManager.GetAreaAtPosition(Position);
 
-        if(toCheck != currentArea && toCheck != null)
-        {
-            AreaManager.RemoveDataToArea(currentArea, data);
-            currentArea = toCheck;
-            AreaManager.AddDataToArea<T>(currentArea, data);
-        }
+        Debug.Log("Update Data : " + gameObject.name);
+
+        AreaManager.RemoveDataToArea(currentArea, data);
+        currentArea = toCheck;
+        AreaManager.AddDataToArea<T>(currentArea, data);
+
     }
 }

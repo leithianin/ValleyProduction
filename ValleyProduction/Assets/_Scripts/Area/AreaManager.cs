@@ -8,11 +8,16 @@ public class AreaManager : VLY_Singleton<AreaManager>
     [SerializeField] private Vector2 worldDimension;
     /// Taille de la grille
     [SerializeField] private float areaHeight;
+    [SerializeField] private bool showGizmos;
 
     /// Dimensions de la grille
     private static Vector2Int gridDimension;
     /// Layer mask contenant les AreaDisplay
     [SerializeField] private LayerMask areaDisplayMask;
+
+    private static List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
+    private static int updaterIndex;
+    [SerializeField] private int numberSataToUpdateInFrame;
 
     /// Liste de toutes les zones de la map
     private static List<Area> areas = new List<Area>();
@@ -48,6 +53,50 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 newArea.SetAllDisplay(areaHeight, areaDisplayMask);
 
                 areas.Add(newArea);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gère la mise à jour d'un nombre définit d'AreaUpdater
+    /// </summary>
+    private void LateUpdate()
+    {
+        if (allUpdaters.Count > 0)
+        {
+            for (int i = 0; i < numberSataToUpdateInFrame; i++)
+            {
+                updaterIndex = (updaterIndex + 1) % allUpdaters.Count;
+                allUpdaters[updaterIndex].UpdateData();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ajoute un AreaUpdater dans la liste.
+    /// </summary>
+    /// <param name="toAdd">L'AreaUpdater à ajouter.</param>
+    public static void AddAreaUpdater(AreaUpdater toAdd)
+    {
+        if(!allUpdaters.Contains(toAdd))
+        {
+            allUpdaters.Add(toAdd);
+        }
+    }
+
+    /// <summary>
+    /// Retire un AreaUpdater de la liste.
+    /// </summary>
+    /// <param name="toAdd">L'AreaUpdater à retirer.</param>
+    public static void RemoveAreaIpdater(AreaUpdater toRemove)
+    {
+        if (allUpdaters.Contains(toRemove))
+        {
+            allUpdaters.Remove(toRemove);
+
+            if(allUpdaters.Count <= updaterIndex)
+            {
+                updaterIndex = allUpdaters.Count;
             }
         }
     }
@@ -102,10 +151,13 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        for (int i = 0; i < areas.Count; i++)
+        if (showGizmos)
         {
-            Gizmos.DrawWireCube(areas[i].GetWorldPosition, Vector3.one * areaHeight);
+            Gizmos.color = Color.yellow;
+            for (int i = 0; i < areas.Count; i++)
+            {
+                Gizmos.DrawWireCube(areas[i].GetWorldPosition, Vector3.one * areaHeight);
+            }
         }
     }
 }
