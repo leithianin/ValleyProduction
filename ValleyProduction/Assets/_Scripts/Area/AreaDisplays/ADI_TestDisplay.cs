@@ -6,7 +6,6 @@ public class ADI_TestDisplay : AreaDisplay
 {
     public int scoreLow, scoreHigh;
 
-
     public override void OnUpdateScore(float newScore)
     {
         if(newScore < scoreLow)

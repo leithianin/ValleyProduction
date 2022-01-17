@@ -16,11 +16,23 @@ public abstract class AreaDisplay : MonoBehaviour
     /// Liste des type de data utilisé par l'AreaDisplay et leur degré d'importance.
     [SerializeField] private List<AreaDisplayDataHandler> datas;
 
+    public Vector2 Position => new Vector2(transform.position.x, transform.position.z);
+
+
     /// <summary>
     /// Appelé quand le score est modifié.
     /// </summary>
     /// <param name="newScore">Le nouveau score.</param>
     public abstract void OnUpdateScore(float newScore);
+
+    /*private void Start()
+    {
+        Area selfArea = AreaManager.GetAreaAtPosition(transform.position);
+        if (selfArea != null)
+        {
+            AffectToArea(selfArea.datas);
+        }
+    }*/
 
     /// <summary>
     /// S'inscrit à l'action "OnUpdateScore" des Area voulues.

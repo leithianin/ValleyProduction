@@ -67,6 +67,18 @@ public abstract class AreaData<T> : AreaData
     }
 
     /// <summary>
+    /// Update la data.
+    /// </summary>
+    /// <param name="dataToRemove">L'ancienne valeur de la data.</param>
+    /// <param name="dataToAdd">La nouvelle valeur de la data.</param>
+    public void RefreshData(T dataToRemove, T dataToAdd)
+    {
+        OnRemoveData(dataToRemove);
+        OnAddData(dataToAdd);
+        CalculateScore();
+    }
+
+    /// <summary>
     /// Calcul le score.
     /// </summary>
     /// <returns>Score calculé.</returns>

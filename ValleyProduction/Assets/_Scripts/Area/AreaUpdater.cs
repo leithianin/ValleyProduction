@@ -7,13 +7,15 @@ public abstract class AreaUpdater : MonoBehaviour
     public abstract void UpdateData();
 }
 
-public class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
+public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 {
-    [SerializeField] private T data;
+    [SerializeField] protected T data;
 
-    private Area currentArea;
+    protected T lastUpdatedData;
 
-    private Vector2 Position => new Vector2(transform.position.x, transform.position.z);
+    protected Area currentArea;
+
+    protected Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
     private void OnEnable()
     {
@@ -29,11 +31,35 @@ public class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
     {
         Area toCheck = AreaManager.GetAreaAtPosition(Position);
 
-        Debug.Log("Update Data : " + gameObject.name);
+        if (toCheck != currentArea)
+        {
+            if (lastUpdatedData != null)
+            {
+                AreaManager.RemoveDataToArea<T>(currentArea, lastUpdatedData);
+            }
+            currentArea = toCheck;
+            AreaManager.AddDataToArea<T>(currentArea, data);
+        }
+        else
+        {
+            currentArea = toCheck;
+            if (lastUpdatedData != null)
+            {
+                AreaManager.RefreshDataToArea<T>(currentArea, lastUpdatedData, data);
+            }
+            else
+            {
+                AreaManager.AddDataToArea<T>(currentArea, data);
+            }
+        }
 
-        AreaManager.RemoveDataToArea(currentArea, data);
-        currentArea = toCheck;
-        AreaManager.AddDataToArea<T>(currentArea, data);
+        SetLastUpdateData(data);
+    }
 
+    public abstract void SetData(T newData);
+
+    protected virtual void SetLastUpdateData(T lastData)
+    {
+        lastUpdatedData = lastData;
     }
 }

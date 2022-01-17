@@ -50,9 +50,15 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
                 newArea.datas.Add(new AD_Noise());
 
-                newArea.SetAllDisplay(areaHeight, areaDisplayMask);
-
                 areas.Add(newArea);
+            }
+        }
+
+        if (instance != null)
+        {
+            for (int i = 0; i < areas.Count; i++)
+            {
+                areas[i].SetAllDisplay(areaHeight, areaDisplayMask);
             }
         }
     }
@@ -62,6 +68,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// </summary>
     private void LateUpdate()
     {
+        Debug.Log(areas.Count);
         if (allUpdaters.Count > 0)
         {
             for (int i = 0; i < numberSataToUpdateInFrame; i++)
@@ -146,6 +153,21 @@ public class AreaManager : VLY_Singleton<AreaManager>
         if (toUpdate != null)
         {
             toUpdate.GetData<T>().RemoveData(dataToUpdate);
+        }
+    }
+
+    /// <summary>
+    /// Update la data à l'Area voulue.
+    /// </summary>
+    /// <typeparam name="T">Le type de la data à update.</typeparam>
+    /// <param name="toUpdate">L'Area à update.</param>
+    /// <param name="dataToRemove">L'ancienne valeur de la data.</param>
+    /// <param name="dataToAdd">La nouvelle valeur de la data.</param>
+    public static void RefreshDataToArea<T>(Area toUpdate, T dataToRemove, T dataToAdd)
+    {
+        if (toUpdate != null)
+        {
+            toUpdate.GetData<T>().RefreshData(dataToRemove, dataToAdd);
         }
     }
 

@@ -49,7 +49,11 @@ public class Area
 
             for (int j = 0; j < displays.Length; j++)
             {
-                displays[j].AffectToArea(datas);
+                //Debug.Log(AreaManager.GetAreaAtPosition(displays[j].transform.position).worldPosition.ToString("F4"));
+                if (AreaManager.GetAreaAtPosition(displays[j].Position) == this)
+                {
+                    displays[j].AffectToArea(datas);
+                }
             }
         }
     }
