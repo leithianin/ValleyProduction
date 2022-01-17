@@ -18,7 +18,6 @@ public class InteractionSpot : MonoBehaviour
     public void Interact(InteractionHandler interacter)
     {
         PlayOnInteractionStart?.Invoke(interacter);
-        Debug.Log(interacter);
         interactionAction.PlayAction(interacter, () => EndInteraction(interacter));
     }
 

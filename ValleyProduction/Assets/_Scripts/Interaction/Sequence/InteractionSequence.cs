@@ -13,8 +13,6 @@ public class InteractionSequence : InteractionActions
     {
         currentSequenceIndex = -1;
 
-        Debug.Log("Start Sequence");
-
         PlayNextStep(caller);
     }
 
@@ -26,7 +24,6 @@ public class InteractionSequence : InteractionActions
     private void PlayNextStep(InteractionHandler caller)
     {
         currentSequenceIndex++;
-        Debug.Log(currentSequenceIndex);
         if (currentSequenceIndex >= sequence.Count)
         {
             EndAction(caller);
