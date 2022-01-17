@@ -7,6 +7,10 @@ public abstract class AreaUpdater : MonoBehaviour
     public abstract void UpdateData();
 }
 
+/// <summary>
+/// Gère l'Update d'une data d'un objet de type T. Exemple : Voir AU_MakeSound.
+/// </summary>
+/// <typeparam name="T">Le type contenant la data.</typeparam>
 public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 {
     [SerializeField] protected T data;

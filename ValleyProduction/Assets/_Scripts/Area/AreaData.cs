@@ -26,6 +26,10 @@ public abstract class AreaData
     public abstract int CalculateScore();
 }
 
+/// <summary>
+/// Gère le calcul du score à partir des objets de type T contenant la data (Exemple : voir le AD_Noise (système de bruit))
+/// </summary>
+/// <typeparam name="T">Type d'objet à prendre en compte.</typeparam>
 public abstract class AreaData<T> : AreaData
 {
     /// <summary>
