@@ -78,6 +78,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
             //Crée le chemin si déselectionne l'outil
             if(instance.selectedStructureType == InfrastructureType.PathTools)
             {
+                UIManager.HideRoadsInfo();
                 PathManager.CreatePathData();
             }
 
