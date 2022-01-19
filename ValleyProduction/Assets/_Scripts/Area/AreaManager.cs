@@ -68,7 +68,6 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// </summary>
     private void LateUpdate()
     {
-        Debug.Log(areas.Count);
         if (allUpdaters.Count > 0)
         {
             for (int i = 0; i < numberSataToUpdateInFrame; i++)
