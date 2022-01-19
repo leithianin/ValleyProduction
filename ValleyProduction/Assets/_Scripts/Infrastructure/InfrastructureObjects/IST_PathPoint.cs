@@ -6,12 +6,12 @@ public class IST_PathPoint : Infrastructure
 {
     protected override void OnPlaceObject(Vector3 position)
     {
-        PathManager.PlacePoint(this, position);      
+        PathManager.PlacePoint(this, position);
     }
 
     protected override bool OnRemoveObject()
     {
-        if(PathManager.CanDeletePoint(this))
+        if(PathManager.CanDeleteGameobject(this))
         {
             return true;
         }
@@ -19,9 +19,29 @@ public class IST_PathPoint : Infrastructure
         return false;
     }
 
+    protected override void OnMoveObject()
+    {
+        Debug.Log("Moving PathPoint");
+    }
+
+    //Pas sur de ce que je fais là
+    protected override void OnHoldRightClic()
+    {
+        PathManager.CreatePathData();
+        PathManager.PlacePoint(this, transform.position);
+    }
+
     protected override void OnSelectObject()
     {
-        Debug.Log("Select Pathpoint");
+        //if (PathManager.IsPathpointOnCurrentList(this))
+        if(!PathManager.IsPathpointListEmpty())
+        {
+            PathManager.PlacePoint(this, transform.position);
+        }
+        else
+        {
+            PathManager.SelectPath(this);
+        }
     }
 
     protected override void OnUnselectObject()

@@ -8,7 +8,9 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is placed.")] private UnityEvent PlayOnPlace;
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
     [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnSelect;
-    [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnUnselect;
+    [SerializeField, Tooltip("Actions to play when the construction is unselected.")] private UnityEvent PlayOnUnselect;
+    [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnMove;
+    [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
 
     /// <summary>
     /// Used to do specific action when a construction is placed.
@@ -32,6 +34,16 @@ public abstract class Infrastructure : MonoBehaviour
     protected abstract void OnUnselectObject();
 
     /// <summary>
+    /// Used to do specific action when a construction is moved.
+    /// </summary>
+    protected abstract void OnMoveObject();
+
+    /// <summary>
+    /// Hold Right Clic action.
+    /// </summary>
+    protected abstract void OnHoldRightClic();
+
+    /// <summary>
     /// Play the feedbacks and special actions when the object is placed.
     /// </summary>
     /// <param name="position">The position where the object is placed.</param>
@@ -52,6 +64,21 @@ public abstract class Infrastructure : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Play the feedbacks and special actions when the object is moved.
+    /// </summary>
+    public void MoveObject()
+    {
+        PlayOnMove?.Invoke();
+        OnMoveObject();
+    }
+
+    public void HoldRightClic()
+    {
+        PlayOnHoldRightClic?.Invoke();
+        OnHoldRightClic();
     }
 
     /// <summary>

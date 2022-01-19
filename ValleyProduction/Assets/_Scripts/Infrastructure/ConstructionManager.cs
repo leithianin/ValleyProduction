@@ -40,6 +40,32 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
     }
 
+    public static void OnHoldRightClic(GameObject touchedObject)
+    {
+        Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
+        if (infraComponent != null)
+        {
+            InfrastructureManager.OnHoldRightClic(instance.selectedStructureType, infraComponent);
+        }
+    }
+
+    /// <summary>
+    /// Prend en compte l'input quand on maintient le clic
+    /// </summary>
+    /// <param name="touchedObject"></param>
+    public static void MoveStructure(GameObject touchedObject)
+    {
+        InfrastructureManager.MoveInfrastructure(touchedObject.GetComponent<Infrastructure>());
+    }
+
+    /// <summary>
+    /// Prend en compte l'input quand on lâche le maintien du clic
+    /// </summary>
+    public static void ReplaceStructure()
+    {
+        InfrastructureManager.ReplaceInfrastructure();
+    }
+
     public static void DestroyStructure(GameObject touchedObject)
     {
         Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
@@ -47,6 +73,22 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         {
             InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, infraComponent);
         }
+        else
+        {
+            if(instance.selectedStructureType == InfrastructureType.PathTools)
+            {
+                PathManager.CreatePathData();
+            }
+
+            UnselectInfrastructureType();
+        }
+    }
+
+    //C'était pour placer sur une infrastructure (Créer à partir d'une infrastructure)
+    public static void PlaceOnStructure(GameObject touchedObject)
+    {
+        PathManager.CreatePathData();
+        PathManager.PlacePoint(touchedObject.GetComponent<IST_PathPoint>(), touchedObject.transform.position);
     }
 
     /// <summary>
@@ -70,7 +112,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Input pour désélectionner l'outil.
     /// </summary>
     public static void UnselectInfrastructureType()
-    {
+    {   
         instance.OnSelectInfrastructureType(InfrastructureType.None);
     }
 

@@ -9,14 +9,17 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 {
     [SerializeField] private Camera usedCamera;
     [SerializeField] private EventSystem usedEventSystem;
+    [SerializeField] private float holdDuration;
 
     [SerializeField] private UnityEvent OnClicLeft;
     [SerializeField] private UnityEvent<Vector3> OnClicLeftPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicLeftObject;
+    [SerializeField] private UnityEvent<GameObject> OnClicLeftHold;
 
     [SerializeField] private UnityEvent OnClicRight;
     [SerializeField] private UnityEvent<Vector3> OnClicRightPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicRightObject;
+    [SerializeField] private UnityEvent<GameObject> OnClicRightHold;
 
     [SerializeField] private UnityEvent OnKeyReturn;
     [SerializeField] private UnityEvent OnKeyDelete;
@@ -25,6 +28,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public static Action<Vector2> OnKeyMove;
     public static Action<float> OnMouseScroll;
 
+    public static bool clicHold = false;
 
     public static Vector3 GetMousePosition => instance.GetGroundHitPoint();
 
@@ -34,15 +38,29 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     void Update()
     {
         //Handle Mouse input outside UI
+
         if (usedEventSystem.currentSelectedGameObject == null)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))                        //Clic gauche enfoncé
             {
+                StartCoroutine(TimerHoldLeft());
+            }
+            else if(Input.GetMouseButtonUp(0))                      //Clic gauche relaché
+            {
+                StopAllCoroutines();
+                Debug.Log("Coroutines Stop");
                 CallLeftMouseInputs();
             }
-            if (Input.GetMouseButtonDown(1))
+
+            if (Input.GetMouseButtonDown(1))                        //Clic droit enfoncé           
+            {
+                StartCoroutine(TimerHoldRight());
+            }
+            else if(Input.GetMouseButtonUp(1))
             {
                 CallRightMouseInputs();
+                StopAllCoroutines();
+                Debug.Log("Coroutines Stop");
             }
         }
 
@@ -87,33 +105,80 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         }
     }
 
+    IEnumerator TimerHoldLeft()
+    {
+        Debug.Log("Left Coroutine Start");
+        yield return new WaitForSeconds(holdDuration);
+        Debug.Log("Left Coroutine End");
+        CallLeftHoldMouseInput();
+    }
+
+    IEnumerator TimerHoldRight()
+    {
+        Debug.Log("Right Coroutine Start");
+        yield return new WaitForSeconds(holdDuration);
+        Debug.Log("Right Coroutine End");
+        CallRightHoldMouseInput();
+    }
+
     private void CallLeftMouseInputs()
     {
-        OnClicLeft?.Invoke();
-
-        if (GetMousePosition != Vector3.zero)
+        if (clicHold)
         {
-            OnClicLeftPosition?.Invoke(GetMousePosition);
+            clicHold = false;
+            ConstructionManager.ReplaceStructure();
+        }
+        else
+        {
+            OnClicLeft?.Invoke();
 
-            if (GetHitMouseGameobject(out GameObject hitObject))
+            if (GetMousePosition != Vector3.zero)
             {
-                OnClicLeftObject?.Invoke(hitObject);
+                OnClicLeftPosition?.Invoke(GetMousePosition);
+
+                if (GetHitMouseGameobject(out GameObject hitObject))
+                {
+                    OnClicLeftObject?.Invoke(hitObject);
+                }
             }
+        }
+    }
+
+    private void CallLeftHoldMouseInput()
+    {
+        if (GetHitMouseGameobject(out GameObject hitObject))
+        {
+            clicHold = true;
+            OnClicLeftHold?.Invoke(hitObject);
         }
     }
 
     private void CallRightMouseInputs()
     {
-        OnClicRight?.Invoke();
-
-        if (GetMousePosition != Vector3.zero)
+        if (!clicHold)
         {
-            OnClicRightPosition?.Invoke(GetMousePosition);
+            OnClicRight?.Invoke();
 
-            if (GetHitMouseGameobject(out GameObject hitObject))
+            if (GetMousePosition != Vector3.zero)
             {
-                OnClicRightObject?.Invoke(hitObject);
+                OnClicRightPosition?.Invoke(GetMousePosition);
+
+                if (GetHitMouseGameobject(out GameObject hitObject))
+                {
+                    OnClicRightObject?.Invoke(hitObject);
+                }
             }
+        }
+
+        clicHold = false;
+    }
+
+    private void CallRightHoldMouseInput()
+    {
+        if(GetHitMouseGameobject(out GameObject hitObject))
+        {
+            clicHold = true;
+            OnClicRightHold?.Invoke(hitObject);
         }
     }
 

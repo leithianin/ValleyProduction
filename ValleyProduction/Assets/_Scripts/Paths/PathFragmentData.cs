@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class PathFragmentData : MonoBehaviour
+[Serializable]
+public class PathFragmentData 
 {
     public IST_PathPoint endPoint;                          //Starting point of the FragmentPath
     public IST_PathPoint startPoint;                        //Ending point of the FragmentPath

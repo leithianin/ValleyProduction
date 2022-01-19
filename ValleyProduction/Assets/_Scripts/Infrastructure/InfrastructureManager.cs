@@ -12,6 +12,19 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static InfrastructurePreview GetCurrentPreview => instance.currentPreview;
 
+    private static LayerMask layerIgnoreRaycast = 2;
+    private static LayerMask layerInfrastructure = 0;
+
+    private GameObject toMove;
+
+    private void Update()
+    {
+        //Move Infrastructure when MoveInfrastructure()
+        if(toMove != null)
+        {
+            toMove.transform.position = PlayerInputManager.GetMousePosition;
+        }
+    }
 
     public static void ChooseInfrastructure(InfrastructurePreview newPreview)
     {
@@ -48,6 +61,32 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         toDelete.RemoveObject();
     }
 
+    /// <summary>
+    /// Déplace l'infrastructure lors du maintient du clic.
+    /// </summary>
+    /// <param name="toMove"></param>
+    public static void MoveInfrastructure(Infrastructure toMove)
+    {
+        instance.currentSelectedStructure = toMove;
+        instance.toMove = toMove.gameObject;
+        instance.toMove.layer = layerIgnoreRaycast;
+        instance.currentSelectedStructure.MoveObject();
+    }
+
+    public static void OnHoldRightClic(InfrastructureType tool, Infrastructure toHoldRightClic)
+    {
+        instance.currentSelectedStructure = toHoldRightClic;
+        instance.currentSelectedStructure.HoldRightClic();
+    }
+
+    /// <summary>
+    /// Place l'infrastructure déplacé lorsqu'on lâche le maintient.
+    /// </summary>
+    public static void ReplaceInfrastructure()
+    {
+        instance.toMove.layer = layerInfrastructure;
+        instance.toMove = null;
+    }
 
     /// <summary>
     /// Gère l'intéraction avec une structure.
@@ -64,6 +103,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                 DeleteInfrastructure(interactedStructure);
                 break;
             case InfrastructureType.PathTools:
+                instance.SelectInfrastructure(interactedStructure);
                 break;
         }
     }

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class PathData : MonoBehaviour
+public class PathData
 {
-    public PathPoint startPoint;                                                             //Starting point of the path
+    public IST_PathPoint startPoint;                                                             //Starting point of the path
     public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
 
     /// <summary>
@@ -14,7 +14,7 @@ public class PathData : MonoBehaviour
     /// </summary>
     /// <param name="toCheck">The point to check.</param>
     /// <returns>Return TRUE if the path has the point. Else return FALSE.</returns>
-    public bool ContainsPoint(PathPoint toCheck)
+    public bool ContainsPoint(IST_PathPoint toCheck)
     {
         for (int i = 0; i < pathFragment.Count; i++)
         {
@@ -28,7 +28,7 @@ public class PathData : MonoBehaviour
     }
 
     //Différence avec celle du haut ? Ca retourne true dans tous les cas si ToCheck = startPoint
-    public bool ContainsPointWithStart(PathPoint toCheck)
+    public bool ContainsPointWithStart(IST_PathPoint toCheck)
     {
         if (startPoint == toCheck)
         {
@@ -55,7 +55,7 @@ public class PathData : MonoBehaviour
     /// </summary>
     /// <param name="toCheck">Point to check.</param>
     /// <returns>Return TRUE if the path has a startPoint and contain the point toCheck.</returns>
-    public bool IsUsable(PathPoint toCheck)
+    public bool IsUsable(IST_PathPoint toCheck)
     {
         return startPoint != null && ContainsPoint(toCheck);
     }
@@ -66,7 +66,7 @@ public class PathData : MonoBehaviour
     /// <param name="currentPoint">Visitor's currentPoint.</param>
     /// <param name="lastPoint">Visitor's lastPoint he want to reach.</param>
     /// <returns>The new path.</returns>
-    public PathFragmentData GetRandomDestination(PathPoint currentPoint, PathPoint lastPoint)
+    public PathFragmentData GetRandomDestination(IST_PathPoint currentPoint, IST_PathPoint lastPoint)
     {
         List<PathFragmentData> availablePaths = new List<PathFragmentData>(GetAvailablesPath(currentPoint, lastPoint));
 
@@ -84,7 +84,7 @@ public class PathData : MonoBehaviour
     /// <param name="currentPoint">Visitor's currentPoint.</param>
     /// <param name="lastPoint">Visitor's lastPoint he want to reach.</param>
     /// <returns>A list of paths.</returns>
-    private List<PathFragmentData> GetAvailablesPath(PathPoint currentPoint, PathPoint lastPoint)
+    private List<PathFragmentData> GetAvailablesPath(IST_PathPoint currentPoint, IST_PathPoint lastPoint)
     {
         List<PathFragmentData> toReturn = new List<PathFragmentData>();
         for (int i = 0; i < pathFragment.Count; i++)
@@ -108,7 +108,8 @@ public class PathData : MonoBehaviour
     /// <param name="endPoint">FragmentData's endPoint.</param>
     /// <param name="startPoint">FragmentData's startPoint.</param>
     /// <returns>Return PathFragment to Remove if points are valide, else return null.</returns>
-    public PathFragmentData RemoveFragment(PathPoint endPoint, PathPoint startPoint)
+    /*
+    public PathFragmentData RemoveFragment(IST_PathPoint endPoint, IST_PathPoint startPoint)
     {
         PathFragmentData toReturn = null;
         for (int i = pathFragment.Count - 1; i >= 0; i--)
@@ -121,5 +122,10 @@ public class PathData : MonoBehaviour
             }
         }
         return toReturn;
+    }*/
+
+    public void RemoveFragment(PathFragmentData pfd)
+    {
+        pathFragment.Remove(pfd);
     }
 }
