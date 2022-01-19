@@ -225,6 +225,43 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    public static void SelectPathWithPathData(PathData pathdata)
+    {
+        instance.currentPathData = pathdata;
+
+        for (int i = 0; i <= pathdata.pathFragment.Count - 1; i++)
+        {
+            instance.pathFragmentDataList.Add(pathdata.pathFragment[i]);
+
+            if (i == pathdata.pathFragment.Count - 1)
+            {
+                TriPathpointList(pathdata.pathFragment[i], instance.pathpointList, true);
+            }
+            else
+            {
+                TriPathpointList(pathdata.pathFragment[i], instance.pathpointList);
+            }
+        }
+    }
+
+    public static bool HasManyPath(IST_PathPoint pathpoint)
+    {
+        int nb = 0;
+        foreach(PathData pd in instance.pathDataList)
+        {
+            if(pd.ContainsPoint(pathpoint))
+            {
+                nb++;
+
+                if(nb > 1)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Juste un tri des points pour ne pas mettre les mêmes.
     /// </summary>
@@ -237,17 +274,6 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             pathpointList.Add(pfd.endPoint);
         }
-
-        /*
-        if (!pathpointList.Contains(pfd.startPoint))
-        {
-            pathpointList.Add(pfd.startPoint);
-        }
-        if (!pathpointList.Contains(pfd.endPoint))
-        {
-            pathpointList.Add(pfd.endPoint);
-        }
-        */
     }
 
     public static bool IsPathpointOnCurrentList(IST_PathPoint pathpoint)

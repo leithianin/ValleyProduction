@@ -39,7 +39,15 @@ public class IST_PathPoint : Infrastructure
         }
         else
         {
-            PathManager.SelectPath(this);
+            //Check si plusieurs PathData
+            if (PathManager.HasManyPath(this))
+            {
+                UIManager.ArrangePathButton(this);
+            }
+            else
+            {
+                PathManager.SelectPath(this);
+            }
         }
     }
 
