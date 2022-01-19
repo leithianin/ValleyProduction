@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UIManager : VLY_Singleton<UIManager>
 {
+    public List<GameObject> pathButtonList = new List<GameObject>();
+
     //Use in Path Button On Click()
     public void OnToolCreatePath()
     {   

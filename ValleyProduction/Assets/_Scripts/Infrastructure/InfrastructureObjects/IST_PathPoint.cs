@@ -33,7 +33,6 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnSelectObject()
     {
-        //if (PathManager.IsPathpointOnCurrentList(this))
         if(!PathManager.IsPathpointListEmpty())
         {
             PathManager.PlacePoint(this, transform.position);

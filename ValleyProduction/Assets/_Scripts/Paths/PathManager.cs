@@ -190,7 +190,6 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         if (instance.pathpointList.Count == 0)
         {
-
             //CreatePathData();                                                           //Si il selectionne un autre chemin, on save celui en cours quand même
 
             foreach (PathData pd in instance.pathDataList)
