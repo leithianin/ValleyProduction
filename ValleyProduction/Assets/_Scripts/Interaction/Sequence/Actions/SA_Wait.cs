@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SA_TestAction : InteractionActions
+public class SA_Wait : InteractionActions
 {
+    [SerializeField] private Vector2 timeToWait;
     protected override void OnEndAction(InteractionHandler caller)
     {
         
@@ -16,7 +17,8 @@ public class SA_TestAction : InteractionActions
 
     IEnumerator WaitForNextAction(InteractionHandler caller)
     {
-        yield return new WaitForSeconds(.5f);
+        float toWait = Random.Range(timeToWait.x, timeToWait.y);
+        yield return new WaitForSeconds(toWait);
         EndAction(caller);
     }
 }
