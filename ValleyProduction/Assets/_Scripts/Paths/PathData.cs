@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class PathData
 {
+    //Name du chemin pour plus tard
     public IST_PathPoint startPoint;                                                             //Starting point of the path
     public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
 

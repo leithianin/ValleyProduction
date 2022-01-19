@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : VLY_Singleton<UIManager>
 {
     public List<GameObject> pathButtonList = new List<GameObject>();
+    public Camera sceneCamera;
 
     //Use in Path Button On Click()
     public void OnToolCreatePath()
@@ -37,6 +38,8 @@ public class UIManager : VLY_Singleton<UIManager>
                 }
             }
         }
+
+        ButtonsOffset(pathpoint.gameObject);
     }
 
     public static void ChooseButton(ButtonPathData buttonPath)
@@ -47,5 +50,22 @@ public class UIManager : VLY_Singleton<UIManager>
         }
 
         PathManager.SelectPathWithPathData(buttonPath.pathData);
+    }
+
+    public static void ButtonsOffset(GameObject pathpoint)
+    {
+        Vector3 positionButtons = pathpoint.transform.position;
+
+        float offsetPosY = positionButtons.y + 1.5f;
+        float offsetPosX = positionButtons.x + 8f;
+
+        Vector3 offsetPos = new Vector3(offsetPosX, offsetPosY, positionButtons.z);
+
+        Vector2 canvasPos;
+        Vector2 screenPoint = instance.sceneCamera.WorldToScreenPoint(offsetPos);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(instance.pathButtonList[0].transform.parent.parent.GetComponent<RectTransform>(), screenPoint, null, out canvasPos);
+
+        instance.pathButtonList[0].transform.parent.transform.localPosition = canvasPos;
     }
 }
