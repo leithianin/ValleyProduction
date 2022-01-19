@@ -168,6 +168,12 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 //Création PathData
                 PathData newPathData = new PathData();
+
+                //Random du chemin pour varier les infos
+                newPathData.name = RandomPathName.GetRandomName();
+                newPathData.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+
+                //Remplissage des infos qu'on a 
                 newPathData.pathFragment = new List<PathFragmentData>(instance.pathFragmentDataList);
                 newPathData.startPoint = instance.pathpointList[0];
                 instance.pathDataList.Add(newPathData);            
@@ -197,6 +203,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 if (pd.ContainsPoint(pathpoint))
                 {
                     instance.currentPathData = pd;
+                    UIManager.ShowRoadsInfos(pd);
 
                     //Il faut trouver les pathpoints
                     for (int i = 0; i <= pd.pathFragment.Count - 1; i++)
@@ -228,6 +235,7 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void SelectPathWithPathData(PathData pathdata)
     {
         instance.currentPathData = pathdata;
+        UIManager.ShowRoadsInfos(pathdata);
 
         for (int i = 0; i <= pathdata.pathFragment.Count - 1; i++)
         {

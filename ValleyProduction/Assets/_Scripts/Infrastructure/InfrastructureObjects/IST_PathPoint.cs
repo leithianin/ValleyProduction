@@ -29,6 +29,7 @@ public class IST_PathPoint : Infrastructure
     {
         PathManager.CreatePathData();
         PathManager.PlacePoint(this, transform.position);
+        UIManager.HideRoadsInfo();
     }
 
     protected override void OnSelectObject()

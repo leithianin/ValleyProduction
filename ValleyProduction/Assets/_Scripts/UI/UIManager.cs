@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : VLY_Singleton<UIManager>
 {
     public List<GameObject> pathButtonList = new List<GameObject>();
+    public ChangeRoadInfo RoadInfo;
     public Camera sceneCamera;
 
     //Use in Path Button On Click()
@@ -42,6 +43,24 @@ public class UIManager : VLY_Singleton<UIManager>
         ButtonsOffset(pathpoint.gameObject);
     }
 
+    public static void ShowRoadsInfos(PathData pathdata)
+    {
+        instance.RoadInfo.UpdateTitle(pathdata.name);
+        instance.RoadInfo.UpdateColor(pathdata.color);
+        instance.RoadInfo.UpdateStamina(pathdata.difficulty);
+
+        //Il faut avoir des valeurs fixes et les get selon la difficulté
+        instance.RoadInfo.UpdateGaugeStamina(1);
+
+        instance.RoadInfo.gameObject.SetActive(true);
+    }
+
+    public static void HideRoadsInfo()
+    {
+        instance.RoadInfo.gameObject.SetActive(false);
+    }
+
+    //Clique sur un des boutons
     public static void ChooseButton(ButtonPathData buttonPath)
     {
         foreach(GameObject go in instance.pathButtonList)
@@ -52,6 +71,7 @@ public class UIManager : VLY_Singleton<UIManager>
         PathManager.SelectPathWithPathData(buttonPath.pathData);
     }
 
+    //Buttons Offset de modifier un chemin 
     public static void ButtonsOffset(GameObject pathpoint)
     {
         Vector3 positionButtons = pathpoint.transform.position;
