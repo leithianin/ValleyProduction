@@ -8,7 +8,9 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is placed.")] private UnityEvent PlayOnPlace;
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
     [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnSelect;
-    [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnUnselect;
+    [SerializeField, Tooltip("Actions to play when the construction is unselected.")] private UnityEvent PlayOnUnselect;
+    [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnMove;
+    [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
 
     /// <summary>
     /// Used to do specific action when a construction is placed.
@@ -19,7 +21,7 @@ public abstract class Infrastructure : MonoBehaviour
     /// <summary>
     /// Used to do specific action when a construction is removed.
     /// </summary>
-    protected abstract void OnRemoveObject();
+    protected abstract bool OnRemoveObject();
 
     /// <summary>
     /// Used to do specific action when a construction is selected.
@@ -30,6 +32,16 @@ public abstract class Infrastructure : MonoBehaviour
     /// Used to do specific action when a construction is unselected.
     /// </summary>
     protected abstract void OnUnselectObject();
+
+    /// <summary>
+    /// Used to do specific action when a construction is moved.
+    /// </summary>
+    protected abstract void OnMoveObject();
+
+    /// <summary>
+    /// Hold Right Clic action.
+    /// </summary>
+    protected abstract void OnHoldRightClic();
 
     /// <summary>
     /// Play the feedbacks and special actions when the object is placed.
@@ -47,9 +59,26 @@ public abstract class Infrastructure : MonoBehaviour
     public void RemoveObject()
     {
         PlayOnDelete?.Invoke();
-        OnRemoveObject();
 
-        Destroy(gameObject);
+        if(OnRemoveObject())
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Play the feedbacks and special actions when the object is moved.
+    /// </summary>
+    public void MoveObject()
+    {
+        PlayOnMove?.Invoke();
+        OnMoveObject();
+    }
+
+    public void HoldRightClic()
+    {
+        PlayOnHoldRightClic?.Invoke();
+        OnHoldRightClic();
     }
 
     /// <summary>

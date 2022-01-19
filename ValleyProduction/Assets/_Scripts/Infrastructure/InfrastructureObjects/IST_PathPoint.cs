@@ -6,17 +6,49 @@ public class IST_PathPoint : Infrastructure
 {
     protected override void OnPlaceObject(Vector3 position)
     {
-        Debug.Log("Place Pathpoint");
+        PathManager.PlacePoint(this, position);
     }
 
-    protected override void OnRemoveObject()
+    protected override bool OnRemoveObject()
     {
-        Debug.Log("Remove Pathpoint");
+        if(PathManager.CanDeleteGameobject(this))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected override void OnMoveObject()
+    {
+        Debug.Log("Moving PathPoint");
+    }
+
+    //Pas sur de ce que je fais là
+    protected override void OnHoldRightClic()
+    {
+        PathManager.CreatePathData();
+        PathManager.PlacePoint(this, transform.position);
     }
 
     protected override void OnSelectObject()
     {
-        Debug.Log("Select Pathpoint");
+        if(!PathManager.IsPathpointListEmpty())
+        {
+            PathManager.PlacePoint(this, transform.position);
+        }
+        else
+        {
+            //Check si plusieurs PathData
+            if (PathManager.HasManyPath(this))
+            {
+                UIManager.ArrangePathButton(this);
+            }
+            else
+            {
+                PathManager.SelectPath(this);
+            }
+        }
     }
 
     protected override void OnUnselectObject()
