@@ -75,6 +75,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
         else
         {
+            //Crée le chemin si déselectionne l'outil
             if(instance.selectedStructureType == InfrastructureType.PathTools)
             {
                 PathManager.CreatePathData();
@@ -112,7 +113,8 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Input pour désélectionner l'outil.
     /// </summary>
     public static void UnselectInfrastructureType()
-    {   
+    {
+        InfrastructureManager.SetCurrentSelectedStructureToNull();                                                          //Reset CurrentSelectedStructure
         instance.OnSelectInfrastructureType(InfrastructureType.None);
     }
 

@@ -132,4 +132,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
         instance.currentSelectedStructure = null;
     }
+
+    public static void SetCurrentSelectedStructureToNull()
+    {
+        instance.currentSelectedStructure = null;
+    }
 }

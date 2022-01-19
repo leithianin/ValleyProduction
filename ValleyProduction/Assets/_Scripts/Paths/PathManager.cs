@@ -118,27 +118,44 @@ public class PathManager : VLY_Singleton<PathManager>
         return true;
     }
 
+    //Delete pathpoint
     public static void DeletePoint(IST_PathPoint ist_pp)
     {
+        //Remove PathFragmentData
         if (instance.pathFragmentDataList.Count != 0)
         {
-            instance.currentPathData.RemoveFragment(instance.pathFragmentDataList[instance.pathFragmentDataList.Count-1]);
+            if (instance.currentPathData != null)
+            {
+                instance.currentPathData.RemoveFragment(instance.pathFragmentDataList[instance.pathFragmentDataList.Count - 1]);
+            }
+
             instance.pathFragmentDataList.RemoveAt(instance.pathFragmentDataList.Count - 1);
         }
+        else
+        {
+            //Remove PathData (Puisqu'il est vide)         
+            instance.pathDataList.Remove(instance.currentPathData);
+            instance.currentPathData = null;
+        }
+
+        //Remove Pathpoint
         instance.pathpointList.RemoveAt(instance.pathpointList.Count-1);
 
-        if (instance.pathFragmentDataList.Count != 0)
+        //Change le Previous Pathpoint
+        if (instance.pathpointList.Count != 0)
         {
             previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
         }
     }
 
+    //Create pathdata
     public static void CreatePathData()
     {
         if (instance.pathpointList.Count > 0)
         {
             if (instance.currentPathData != null)
             {
+                //Mise à jour du PathData existant
                 foreach (PathFragmentData pfd in instance.pathFragmentDataList)
                 {
                     if (!instance.currentPathData.pathFragment.Contains(pfd))
@@ -146,22 +163,23 @@ public class PathManager : VLY_Singleton<PathManager>
                         instance.currentPathData.pathFragment.Add(pfd);
                     }
                 }
-
-                instance.pathFragmentDataList.Clear();
-                instance.pathpointList.Clear();
-                previousPathpoint = null;
             }
             else
             {
+                //Création PathData
                 PathData newPathData = new PathData();
                 newPathData.pathFragment = new List<PathFragmentData>(instance.pathFragmentDataList);
                 newPathData.startPoint = instance.pathpointList[0];
-                instance.pathDataList.Add(newPathData);
-                instance.pathFragmentDataList.Clear();
-                instance.pathpointList.Clear();
-                previousPathpoint = null;
+                instance.pathDataList.Add(newPathData);            
             }
+
+            //Reset les currents Data puisqu'on deselectionne le chemin
+            instance.pathFragmentDataList.Clear();
+            instance.pathpointList.Clear();
+            instance.currentPathData = null;
+            previousPathpoint = null;
         }
+
     }
 
     /// <summary>
@@ -170,38 +188,42 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pathpoint"></param>
     public static void SelectPath(IST_PathPoint pathpoint)
     {
-        CreatePathData();                                                           //Si il selectionne un autre chemin, on save celui en cours quand même
-
-        foreach(PathData pd in instance.pathDataList)
+        if (instance.pathpointList.Count == 0)
         {
-            if(pd.ContainsPoint(pathpoint))
+
+            //CreatePathData();                                                           //Si il selectionne un autre chemin, on save celui en cours quand même
+
+            foreach (PathData pd in instance.pathDataList)
             {
-                instance.currentPathData = pd;
-
-                //Il faut trouver les pathpoints
-                for (int i = 0; i <= pd.pathFragment.Count-1; i++)
+                if (pd.ContainsPoint(pathpoint))
                 {
-                    instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+                    instance.currentPathData = pd;
 
-                    if (i == pd.pathFragment.Count - 1)
+                    //Il faut trouver les pathpoints
+                    for (int i = 0; i <= pd.pathFragment.Count - 1; i++)
                     {
-                        TriPathpointList(pd.pathFragment[i], instance.pathpointList, true);
+                        instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+
+                        if (i == pd.pathFragment.Count - 1)
+                        {
+                            TriPathpointList(pd.pathFragment[i], instance.pathpointList, true);
+                        }
+                        else
+                        {
+                            TriPathpointList(pd.pathFragment[i], instance.pathpointList);
+                        }
                     }
-                    else
+
+                    /*foreach (PathFragmentData pfd in pd.pathFragment)
                     {
-                        TriPathpointList(pd.pathFragment[i], instance.pathpointList);
-                    }
+                        instance.pathFragmentDataList.Add(pfd);
+                        TriPathpointList(pfd, instance.pathpointList);
+                    }*/
                 }
-
-                /*foreach (PathFragmentData pfd in pd.pathFragment)
-                {
-                    instance.pathFragmentDataList.Add(pfd);
-                    TriPathpointList(pfd, instance.pathpointList);
-                }*/
             }
-        }
 
-        previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
+            previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
+        }
     }
 
     /// <summary>
