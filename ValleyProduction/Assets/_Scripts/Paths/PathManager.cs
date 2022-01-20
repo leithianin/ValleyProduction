@@ -5,7 +5,6 @@ using UnityEngine;
 public class PathManager : VLY_Singleton<PathManager>
 {
     //Get Data + Update Data
-
     private PathData currentPathData = null; 
     public List<PathData> pathDataList = new List<PathData>();
     public List<PathFragmentData> pathFragmentDataList = new List<PathFragmentData>();
@@ -178,6 +177,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 {
                     if (!instance.currentPathData.pathFragment.Contains(pfd))
                     {
+                        pfd.CheckAvailableInterestPoint();
                         instance.currentPathData.pathFragment.Add(pfd);
                     }
                 }
@@ -193,6 +193,11 @@ public class PathManager : VLY_Singleton<PathManager>
 
                 //Remplissage des infos qu'on a 
                 newPathData.pathFragment = new List<PathFragmentData>(instance.pathFragmentDataList);
+                foreach(PathFragmentData pfd in newPathData.pathFragment)
+                {
+                    pfd.CheckAvailableInterestPoint();
+                }
+
                 newPathData.startPoint = instance.pathpointList[0];
                 instance.pathDataList.Add(newPathData);            
             }
@@ -266,7 +271,6 @@ public class PathManager : VLY_Singleton<PathManager>
 
         return false;
     }
-
 
     public static void SelectPathWithPathData(PathData pathdata)
     {
