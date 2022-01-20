@@ -52,10 +52,6 @@ public class VisitorBehavior : MonoBehaviour
 
             movement.WalkOnNewPath(currentPathFragment.path);
         }
-        else
-        {
-            Debug.Log("No Fragment");
-        }
     }
 
     public void UnsetVisitor()
@@ -76,10 +72,8 @@ public class VisitorBehavior : MonoBehaviour
     {
         // Check si despawn ou autre
 
-        Debug.Log("Reach");
         if (currentPathFragment.endPoint == spawnPoint)
         {
-            Debug.Log("Despawn");
             VisitorManager.DeleteVisitor(this);
         }
         else
@@ -131,7 +125,6 @@ public class VisitorBehavior : MonoBehaviour
         for(int i = 0; i < currentPath.pathFragment.Count; i++)
         {
             int neighbourValue = currentPath.pathFragment[i].IsFragmentNeighbours(currentPathFragment);
-            Debug.Log(neighbourValue + " && " + currentPath.pathFragment[i].IsSameFragment(currentPathFragment));
             if (neighbourValue != 0 && !currentPath.pathFragment[i].IsSameFragment(currentPathFragment))
             {
                 if(neighbourValue > 0)

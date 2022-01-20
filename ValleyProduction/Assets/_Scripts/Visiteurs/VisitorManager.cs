@@ -46,12 +46,8 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         NavMeshHit hit;
 
-        //Debug.Log(spawnPosition.ToString("F4"));
-        Debug.Log(NavMesh.SamplePosition(spawnPosition, out hit, .5f, NavMesh.AllAreas));
-
         if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
         {
-            Debug.Log("TrySpawn Path on Navmesh");
             VisitorScriptable visitorType = ChooseVisitorType();
 
             PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
@@ -59,10 +55,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             if (chosenPath != null)
             {
                 newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
-            }
-            else
-            {
-                Debug.Log("No Path");
             }
         }
     }
