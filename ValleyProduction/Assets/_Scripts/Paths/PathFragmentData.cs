@@ -45,10 +45,6 @@ public class PathFragmentData
                 }
             }
         }
-        //Spawn les points sur le chemin
-        //Check si un point touche le collider du point d'interet
-        //Si il le touche, le ranger dans interestPointList
-        //ValleyUtilities.GetVectorPoint3D()
     }
 
     public void AddInterestPoint(InterestPoint interest_p)
