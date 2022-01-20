@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class InteractionSpot : MonoBehaviour
 {
+    public InterestPointType type;
+
     public Action<InteractionHandler> PlayOnInteractionEnd;
     public Action<InteractionHandler> PlayOnInteractionStart;
 

@@ -19,13 +19,17 @@ public class VisitorBehavior : MonoBehaviour
     private IST_PathPoint lastPoint;
     private IST_PathPoint currentPoint;
 
-    public VisitorScriptable visitorType;
+    private VisitorScriptable visitorType;
 
     private AnimationHandler visitorDisplay;
 
     List<Vector3> interuptedPath = new List<Vector3>();
 
+    [SerializeField] private UnityEvent<VisitorBehavior> OnSetVisitor;
+
     public CPN_Movement Movement => movement;
+
+    public VisitorScriptable VisitorType => visitorType;
 
     private void Start()
     {
@@ -58,6 +62,8 @@ public class VisitorBehavior : MonoBehaviour
             visitorDisplay = Instantiate(visitorType.Display, transform);
 
             SearchDestination();
+
+            OnSetVisitor?.Invoke(this);
         }
     }
 

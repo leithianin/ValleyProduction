@@ -8,6 +8,8 @@ public class InteractionHandler : MonoBehaviour
 {
     [SerializeField] private CPN_Movement movement;
 
+    public List<InterestPointType> possibleInteractions;
+
     public CPN_Movement Movement => movement;
 
     /*[SerializeField] private List<MonoBehaviour> interactionsTypes;

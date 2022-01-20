@@ -7,14 +7,15 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 {
     [SerializeField] private List<IST_PathPoint> visitorSpawnPoints;
 
-    //Visitor types
-
     [SerializeField] private float timeBetweenSpawn = 10f;
     [SerializeField] private Vector2Int visitorToSpawnNb = Vector2Int.zero;
     [SerializeField] private float spawnDistanceFromSpawnPoint = 0.8f;
     [SerializeField] private int maxSpawn = 100;
 
     [SerializeField] private VisitorScriptable[] visitorTypes;
+
+    // CODE REVIEW : Voir si on peut pas faire le choix du Landmark autre part.
+    [SerializeField] private InterestPoint[] landmarks;
 
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
@@ -53,6 +54,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, .5f, NavMesh.AllAreas))
         {
             newVisitor.SetVisitor(wantedSpawn, spawnPosition, ChooseVisitorType());
+
+            //Choix objectif
+            InterestPoint objective = ChooseObjective(newVisitor.VisitorType.LandmarkTarget);
         }
     }
 
@@ -90,6 +94,19 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
 
         return toReturn;
+    }
+
+    private InterestPoint ChooseObjective(InterestPointType wantedType)
+    {
+        for (int i = 0; i < landmarks.Length; i++)
+        {
+            if (landmarks[i].Type == wantedType)
+            {
+                return landmarks[i];
+            }
+        }
+
+        return null;
     }
 
     public void ChoosePath()
