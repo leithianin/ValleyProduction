@@ -58,7 +58,11 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if(previousPathpoint != null)
         {
-            List<Vector3> allPoints = new List<Vector3>(PathCreationManager.navmeshPositionsList);
+            //List<Vector3> allPoints = new List<Vector3>(PathCreationManager.navmeshPositionsList);
+            List<Vector3> allPoints = new List<Vector3>();
+            allPoints.Add(previousPathpoint.transform.position);
+            allPoints.Add(pathpoint.transform.position);
+
             instance.pathFragmentDataList.Add(new PathFragmentData(previousPathpoint, pathpoint, allPoints));
             previousPathpoint = pathpoint;
         }

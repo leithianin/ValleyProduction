@@ -48,7 +48,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             else if(Input.GetMouseButtonUp(0))                      //Clic gauche relaché
             {
                 StopAllCoroutines();
-                Debug.Log("Coroutines Stop");
+                //Debug.Log("Coroutines Stop");
                 CallLeftMouseInputs();
             }
 
@@ -60,7 +60,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             {
                 CallRightMouseInputs();
                 StopAllCoroutines();
-                Debug.Log("Coroutines Stop");
+                //Debug.Log("Coroutines Stop");
             }
         }
 

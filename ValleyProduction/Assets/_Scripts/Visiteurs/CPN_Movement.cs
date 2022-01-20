@@ -13,7 +13,7 @@ public class CPN_Movement : MonoBehaviour
     private bool isWalking;
 
     // A list of all the position the visitor will reach before reaching its destination.
-    [HideInInspector] public List<Vector3> pathToTake = new List<Vector3>();
+    public List<Vector3> pathToTake = new List<Vector3>();
 
     private int currentPathIndex;
 

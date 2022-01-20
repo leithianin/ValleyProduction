@@ -38,9 +38,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private void SpawnVisitor()
     {
-
-        //Check si on peut ou non spawn un visiteur
-
         VisitorBehavior newVisitor = GetAvailableVisitor();
 
         Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
@@ -49,8 +46,12 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         NavMeshHit hit;
 
-        if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, .5f, NavMesh.AllAreas))
+        //Debug.Log(spawnPosition.ToString("F4"));
+        Debug.Log(NavMesh.SamplePosition(spawnPosition, out hit, .5f, NavMesh.AllAreas));
+
+        if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
         {
+            Debug.Log("TrySpawn Path on Navmesh");
             VisitorScriptable visitorType = ChooseVisitorType();
 
             PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
@@ -113,6 +114,13 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             possiblePath.Add(allPath[i]);
         }
 
-        return possiblePath[Random.Range(0, possiblePath.Count)];
+        if (possiblePath.Count > 0)
+        {
+            return possiblePath[Random.Range(0, possiblePath.Count)];
+        }
+        else
+        {
+            return null;
+        }
     }
 }

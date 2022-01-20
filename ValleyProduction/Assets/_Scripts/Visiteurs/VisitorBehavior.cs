@@ -10,7 +10,7 @@ public class VisitorBehavior : MonoBehaviour
 
     private IST_PathPoint spawnPoint;
     private PathData currentPath;
-    private PathFragmentData currentPathFragment;
+    private PathFragmentData currentPathFragment = null;
 
     public VisitorScriptable visitorType;
 
@@ -67,17 +67,19 @@ public class VisitorBehavior : MonoBehaviour
 
     public void SearchDestination()
     {
-        PathFragmentData nextFragment = SearchNextPathFragment();
+        currentPathFragment = SearchNextPathFragment();
 
-        movement.WalkOnNewPath(nextFragment.path);
+        movement.WalkOnNewPath(currentPathFragment.path);
     }
 
     public void ReachDestination()
     {
         // Check si despawn ou autre
 
-        if (Vector3.Distance(spawnPoint.transform.position, transform.position) < 2f)
+        Debug.Log("Reach");
+        if (currentPathFragment.endPoint == spawnPoint)
         {
+            Debug.Log("Despawn");
             VisitorManager.DeleteVisitor(this);
         }
         else
@@ -129,6 +131,7 @@ public class VisitorBehavior : MonoBehaviour
         for(int i = 0; i < currentPath.pathFragment.Count; i++)
         {
             int neighbourValue = currentPath.pathFragment[i].IsFragmentNeighbours(currentPathFragment);
+            Debug.Log(neighbourValue + " && " + currentPath.pathFragment[i].IsSameFragment(currentPathFragment));
             if (neighbourValue != 0 && !currentPath.pathFragment[i].IsSameFragment(currentPathFragment))
             {
                 if(neighbourValue > 0)
@@ -150,6 +153,7 @@ public class VisitorBehavior : MonoBehaviour
             }
             else
             {
+                Debug.Log("Same fragment");
                 possibleNextFragment.Add(new PathFragmentData(currentPathFragment.endPoint, currentPathFragment.startPoint, currentPathFragment.GetReversePath()));
             }
         }
