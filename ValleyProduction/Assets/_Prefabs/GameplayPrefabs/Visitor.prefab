@@ -143,12 +143,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3d7be0480ee8243beef3469119a7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testInt: 0
   paths:
   - pathPoints:
     - {fileID: 0}
     - {fileID: 0}
   movement: {fileID: 7603813357234534011}
-  visitorType: {fileID: 0}
+  OnSetVisitor:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7603813357234534015}
+        m_TargetAssemblyTypeName: InteractionHandler, Assembly-CSharp
+        m_MethodName: SetProfile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7603813357234534011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 7603813357234534011}
+  possibleInteractions: 
 --- !u!1 &7603813357492896078
 GameObject:
   m_ObjectHideFlags: 0

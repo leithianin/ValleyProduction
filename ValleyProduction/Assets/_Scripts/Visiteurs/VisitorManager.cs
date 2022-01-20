@@ -56,7 +56,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             newVisitor.SetVisitor(wantedSpawn, spawnPosition, ChooseVisitorType());
 
             //Choix objectif
-            InterestPoint objective = ChooseObjective(newVisitor.VisitorType.LandmarkTarget);
+            InterestPoint objective = ChooseObjective(newVisitor.VisitorType.LandmarkTarget[0]);
         }
     }
 

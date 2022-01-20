@@ -12,6 +12,10 @@ public class VisitorBehavior : MonoBehaviour
         public List<Transform> pathPoints;
     }
 
+    public int testInt;
+
+    public int TestInt => testInt;
+
     [SerializeField] private List<TestPath> paths;
     [SerializeField] private CPN_Movement movement;
 
@@ -25,7 +29,7 @@ public class VisitorBehavior : MonoBehaviour
 
     List<Vector3> interuptedPath = new List<Vector3>();
 
-    [SerializeField] private UnityEvent<VisitorBehavior> OnSetVisitor;
+    [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitor;
 
     public CPN_Movement Movement => movement;
 
@@ -63,7 +67,7 @@ public class VisitorBehavior : MonoBehaviour
 
             SearchDestination();
 
-            OnSetVisitor?.Invoke(this);
+            OnSetVisitor?.Invoke(visitorType);
         }
     }
 

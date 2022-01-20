@@ -12,28 +12,8 @@ public class InteractionHandler : MonoBehaviour
 
     public CPN_Movement Movement => movement;
 
-    /*[SerializeField] private List<MonoBehaviour> interactionsTypes;
-
-    public void GetInteractionElement<T>(ref T element) where T : MonoBehaviour
+    public void SetProfile(IInteractionProfile profile)
     {
-        Debug.Log(element);
-        for (int i = 0; i < interactionsTypes.Count; i++)
-        {
-            if (interactionsTypes[i] as T != null)
-            {
-                element = interactionsTypes[i] as T;
-            }
-        }
-    }*/
-
-    // Voir si on peut pas stocker une liste d'action directement au niveau des personnages
-
-    /*  Sur les interractions
-     *  - Liste d'action à faire par le personnage
-     *  - Quand un personnage rentre dans la zone, il appel la fonction d'interaction avec la liste des actions à faire
-     *  Sur les personnages
-     *  - Fonction d'interraction : Récupère la liste d'action à faire
-     * 
-     * 
-     */
+        possibleInteractions = profile.GetInterests();
+    }
 }
