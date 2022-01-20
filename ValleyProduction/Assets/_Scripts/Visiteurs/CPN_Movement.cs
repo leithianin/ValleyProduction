@@ -22,6 +22,8 @@ public class CPN_Movement : MonoBehaviour
     public UnityEvent PlayOnStopWalking;
     public UnityEvent PlayOnEndWalking;
 
+    private Action reachDestinationCallback;
+
     // Update is called once per frame
     void Update()
     {
@@ -41,6 +43,17 @@ public class CPN_Movement : MonoBehaviour
 
     public void ContinueOnInteruptedPath()
     {
+        StartWalk();
+    }
+
+    public void WalkOnNewPath(List<Vector3> nPathToTake, Action callback)
+    {
+        reachDestinationCallback = callback;
+
+        pathToTake = new List<Vector3>(nPathToTake);
+
+        currentPathIndex = 0;
+
         StartWalk();
     }
 
@@ -98,12 +111,18 @@ public class CPN_Movement : MonoBehaviour
         {
             StopWalk();
 
+            reachDestinationCallback?.Invoke();
+
+            reachDestinationCallback = null;
+
             PlayOnEndWalking?.Invoke();
         }
     }
 
     public List<Vector3> InteruptWalk()
     {
+        reachDestinationCallback = null;
+
         List<Vector3> toReturn = new List<Vector3>();
 
         if(isWalking)

@@ -10,14 +10,6 @@ public class InteractionHandler : MonoBehaviour
 
     public CPN_Movement Movement => movement;
 
-    // Dégueulasse ? CODE REVIEW
-    public Action<InteractionHandler> onMovementEnd;
-
-    public void OnEndMovement()
-    {
-        onMovementEnd?.Invoke(this);
-    }
-
     /*[SerializeField] private List<MonoBehaviour> interactionsTypes;
 
     public void GetInteractionElement<T>(ref T element) where T : MonoBehaviour

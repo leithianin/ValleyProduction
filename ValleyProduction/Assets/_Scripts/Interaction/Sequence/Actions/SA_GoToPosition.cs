@@ -20,14 +20,14 @@ public class SA_GoToPosition : InteractionActions
             }
 
             inte = caller;
-            caller.Movement.WalkOnNewPath(vectorPath);
-            caller.onMovementEnd += EndAction;
+            caller.Movement.WalkOnNewPath(vectorPath, () => EndAction(caller));
+            //caller.onMovementEnd += EndAction;
         }
     }
 
     protected override void OnEndAction(InteractionHandler caller)
     {
-        caller.onMovementEnd -= EndAction;
+        //caller.onMovementEnd -= EndAction;
     }
 
     private void EndWalk()
