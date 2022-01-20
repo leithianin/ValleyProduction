@@ -11,7 +11,18 @@ public class IST_PathPoint : Infrastructure
 
     protected override bool OnRemoveObject()
     {
-        if(PathManager.CanDeleteGameobject(this))
+        /*if (PathManager.HasManyPath(this))
+        {
+            UIManager.ArrangePathButton(this);
+        }*/
+
+        if (!PathManager.IsOnCurrentPathData(this))
+        {
+            PathManager.CreatePathData();
+            PathManager.SelectPath(this);
+        }
+
+        if (PathManager.CanDeleteGameobject(this))
         {
             return true;
         }
