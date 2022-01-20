@@ -30,6 +30,11 @@ public class PathData
             }
         }
 
+        if(startPoint == toCheck)
+        {
+            return true;
+        }
+
         return false;
     }
 

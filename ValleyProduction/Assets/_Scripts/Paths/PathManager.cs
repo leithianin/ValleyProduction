@@ -62,7 +62,6 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if (ist_pp != instance.pathpointList[instance.pathpointList.Count - 1])                                                  //Last pathpoint ?
         {
-            Debug.Log("return 1");
             return false;
         }
 
@@ -77,7 +76,6 @@ public class PathManager : VLY_Singleton<PathManager>
             if (nb > 1)                                                                                                          //If yes, delete the pathpoint but not the gameobject
             {
                 DeletePoint(ist_pp);
-                Debug.Log("return 2");
                 return false;
             }
         }
@@ -108,13 +106,11 @@ public class PathManager : VLY_Singleton<PathManager>
             if (nb > 1)                                                                                                          //If yes, delete the pathpoint but not the gameobject
             {
                 DeletePoint(ist_pp);
-                Debug.Log("return 3");
                 return false;
             }
         }
 
         DeletePoint(ist_pp);
-        Debug.Log("return 4");
         return true;
     }
 
@@ -139,6 +135,7 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         //Remove Pathpoint
+        Debug.Log(instance.pathpointList.Count);
         instance.pathpointList.RemoveAt(instance.pathpointList.Count-1);
 
         //Change le Previous Pathpoint
@@ -185,7 +182,6 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.currentPathData = null;
             previousPathpoint = null;
         }
-
     }
 
     /// <summary>
@@ -194,6 +190,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pathpoint"></param>
     public static void SelectPath(IST_PathPoint pathpoint)
     {
+        //Si la liste est vide c'est qu'aucun chemin n'est selectionné
         if (instance.pathpointList.Count == 0)
         {
             //CreatePathData();                                                           //Si il selectionne un autre chemin, on save celui en cours quand même
@@ -228,12 +225,32 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
             }
 
-            previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
+            if (instance.pathpointList.Count != 0)
+            {
+                previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
+            }
         }
     }
 
+    //Check si le pathpoint est dans le current PathData
+    public static bool IsOnCurrentPathData(IST_PathPoint pathpoint)
+    {
+        if (instance.currentPathData != null)
+        {
+            if (instance.currentPathData.ContainsPoint(pathpoint))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     public static void SelectPathWithPathData(PathData pathdata)
     {
+        CreatePathData();
+
         instance.currentPathData = pathdata;
         UIManager.ShowRoadsInfos(pathdata);
 
