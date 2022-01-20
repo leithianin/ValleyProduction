@@ -21,6 +21,8 @@ public class PathManager : VLY_Singleton<PathManager>
     public GameObject DebugLineRenderer;
     private static List<GameObject> lineRendererList = new List<GameObject>();
 
+    public static List<PathData> GetAllPath => instance.pathDataList;
+
     private void Update()
     {
         if (instance.debugMode)
@@ -32,6 +34,21 @@ public class PathManager : VLY_Singleton<PathManager>
             debugCheck = false;
             DebugClear();       
         }
+    }
+
+    public static List<PathData> GetAllUsablePath(IST_PathPoint spawnPoint)
+    {
+        List<PathData> possiblePath = new List<PathData>();
+
+        for(int i = 0; i < GetAllPath.Count; i++)
+        {
+            if(GetAllPath[i].ContainsPoint(spawnPoint))
+            {
+                possiblePath.Add(GetAllPath[i]);
+            }
+        }
+
+        return new List<PathData>(possiblePath);
     }
 
     //Create PathFragmentData

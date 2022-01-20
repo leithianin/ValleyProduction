@@ -28,4 +28,23 @@ public class PathFragmentData
         }
         return toReturn;
     }
+
+    public bool IsSameFragment(PathFragmentData toCheck)
+    {
+        return ((toCheck.endPoint == endPoint && toCheck.startPoint == startPoint) || (toCheck.startPoint == endPoint || toCheck.endPoint == startPoint));
+    }
+
+    public int IsFragmentNeighbours(PathFragmentData possibleNeighbour)
+    {
+        if(possibleNeighbour.endPoint == endPoint) //On check si le chemin est dans la même direction
+        {
+            return 1;
+        }
+        else if (possibleNeighbour.endPoint == startPoint) //On check si le chemin est dansla direction inverse
+        {
+            return -1;
+        }
+
+        return 0;
+    }
 }

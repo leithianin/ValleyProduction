@@ -6,18 +6,11 @@ using UnityEngine.Events;
 
 public class VisitorBehavior : MonoBehaviour
 {
-    [Serializable]
-    public class TestPath
-    {
-        public List<Transform> pathPoints;
-    }
-
-    [SerializeField] private List<TestPath> paths;
     [SerializeField] private CPN_Movement movement;
 
     private IST_PathPoint spawnPoint;
-    private IST_PathPoint lastPoint;
-    private IST_PathPoint currentPoint;
+    private PathData currentPath;
+    private PathFragmentData currentPathFragment;
 
     public VisitorScriptable visitorType;
 
@@ -32,19 +25,19 @@ public class VisitorBehavior : MonoBehaviour
         movement.PlayOnEndWalking.AddListener(ReachDestination);
     }
 
-    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType)
+    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, PathData nPath)
     {
-        TestPath wantedPath = SearchPath();
+        currentPath = nPath;
 
-        if(wantedPath != null)
+        spawnPoint = nSpawnPoint;
+
+        currentPathFragment = SearchFirstPathFragment(nSpawnPoint);
+
+        if(currentPathFragment != null)
         {
             visitorType = nVisitorType;
 
             movement.SetSpeed(visitorType.Speed);
-
-            spawnPoint = nSpawnPoint;
-            lastPoint = nSpawnPoint;
-            currentPoint = nSpawnPoint;
 
             transform.position = spawnPosition;
 
@@ -57,29 +50,26 @@ public class VisitorBehavior : MonoBehaviour
 
             visitorDisplay = Instantiate(visitorType.Display, transform);
 
-            SearchDestination();
+            movement.WalkOnNewPath(currentPathFragment.path);
+        }
+        else
+        {
+            Debug.Log("No Fragment");
         }
     }
 
     public void UnsetVisitor()
     {
-        currentPoint = null;
+        currentPathFragment = null;
 
         gameObject.SetActive(false);
     }
 
     public void SearchDestination()
     {
-        // Récupération du prochain chemin
+        PathFragmentData nextFragment = SearchNextPathFragment();
 
-        List<Vector3> vectPath = new List<Vector3>();
-        List<Transform> wantedPath = SearchPath().pathPoints;
-        foreach (Transform t in wantedPath)
-        {
-            vectPath.Add(t.position);
-        }
-
-        movement.WalkOnNewPath(vectPath);
+        movement.WalkOnNewPath(nextFragment.path);
     }
 
     public void ReachDestination()
@@ -108,10 +98,63 @@ public class VisitorBehavior : MonoBehaviour
         movement.WalkOnNewPath(interuptedPath);
     }
 
-    // TEMPORAIRE
-    private TestPath SearchPath()
+    private PathFragmentData SearchFirstPathFragment(IST_PathPoint startPoint)
     {
-        return paths[UnityEngine.Random.Range(0, paths.Count)];
+        List<PathFragmentData> possibleNextFragment = new List<PathFragmentData>();
+
+        for (int i = 0; i < currentPath.pathFragment.Count; i++)
+        {
+            if(currentPath.pathFragment[i].startPoint == startPoint)
+            {
+                possibleNextFragment.Add(currentPath.pathFragment[i]);
+            }
+            else if(currentPath.pathFragment[i].endPoint == startPoint)
+            {
+                possibleNextFragment.Add(new PathFragmentData(currentPath.pathFragment[i].endPoint, currentPath.pathFragment[i].startPoint, currentPath.pathFragment[i].GetReversePath()));
+            }
+        }
+
+        if (possibleNextFragment.Count == 0)
+        {
+            return null;
+        }
+
+        return possibleNextFragment[UnityEngine.Random.Range(0, possibleNextFragment.Count)];
+    }
+
+    private PathFragmentData SearchNextPathFragment()
+    {
+        List<PathFragmentData> possibleNextFragment = new List<PathFragmentData>();
+        
+        for(int i = 0; i < currentPath.pathFragment.Count; i++)
+        {
+            int neighbourValue = currentPath.pathFragment[i].IsFragmentNeighbours(currentPathFragment);
+            if (neighbourValue != 0 && !currentPath.pathFragment[i].IsSameFragment(currentPathFragment))
+            {
+                if(neighbourValue > 0)
+                {
+                    possibleNextFragment.Add(currentPath.pathFragment[i]);
+                }
+                else
+                {
+                    possibleNextFragment.Add(new PathFragmentData(currentPath.pathFragment[i].endPoint, currentPath.pathFragment[i].startPoint, currentPath.pathFragment[i].GetReversePath()));
+                }
+            }
+        }
+
+        if(possibleNextFragment.Count == 0)
+        {
+            if (currentPathFragment == null)
+            {
+                return null;
+            }
+            else
+            {
+                possibleNextFragment.Add(new PathFragmentData(currentPathFragment.endPoint, currentPathFragment.startPoint, currentPathFragment.GetReversePath()));
+            }
+        }
+
+        return possibleNextFragment[UnityEngine.Random.Range(0, possibleNextFragment.Count)];
     }
 
     public void PlayMovementAnimation()
