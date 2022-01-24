@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -39,9 +38,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private void SpawnVisitor()
     {
-
-        //Check si on peut ou non spawn un visiteur
-
         VisitorBehavior newVisitor = GetAvailableVisitor();
 
         Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
@@ -50,9 +46,16 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         NavMeshHit hit;
 
-        if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, .5f, NavMesh.AllAreas))
+        if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
         {
-            newVisitor.SetVisitor(wantedSpawn, spawnPosition, ChooseVisitorType());
+            VisitorScriptable visitorType = ChooseVisitorType();
+
+            PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
+
+            if (chosenPath != null)
+            {
+                newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
+            }
         }
     }
 
@@ -92,8 +95,24 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         return toReturn;
     }
 
-    public void ChoosePath()
+    public PathData ChoosePath(VisitorScriptable visitorType, IST_PathPoint spawnPoint)
     {
-        // TO DO
+        List<PathData> allPath = PathManager.GetAllUsablePath(spawnPoint);
+        List<PathData> possiblePath = new List<PathData>();
+
+        for(int i = 0; i < allPath.Count; i++)
+        {
+            //Check des Priorités des Paths
+            possiblePath.Add(allPath[i]);
+        }
+
+        if (possiblePath.Count > 0)
+        {
+            return possiblePath[Random.Range(0, possiblePath.Count)];
+        }
+        else
+        {
+            return null;
+        }
     }
 }
