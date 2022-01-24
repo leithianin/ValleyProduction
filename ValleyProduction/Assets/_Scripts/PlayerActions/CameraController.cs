@@ -7,29 +7,31 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private float axisSpeed;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Transform lookTarget;
 
     [SerializeField] private AnimationCurve cameraSpeedCoef;
     [SerializeField] private AnimationCurve decelerationCurve;
     [SerializeField] private float decelerationSpeed = 0.3f;
-    [SerializeField] private float angleByScroll = 10f;
+    [SerializeField] private float zoomPercentByScroll = 10f;
+    /*[SerializeField] private float angleByScroll = 10f;
     [SerializeField] private float angleLimitUp = -70f;
-    [SerializeField] private float angleLimitDown = -10f;
-    [SerializeField] private float positionLimitDown = 10f;
-    [SerializeField] private float positionLimitUp = 40f;
+    [SerializeField] private float angleLimitDown = -10f;*/
+    [SerializeField] private Vector2 positionLimitDown = new Vector2(0f, 10f);
+    [SerializeField] private Vector2 positionLimitUp = new Vector2(-20f, 40f);
 
 
     [SerializeField] private Rigidbody rbody;
     private Vector3 moveInput;
 
     private float zoomAcceleration;
-    private float currentAngle = 70f;
+    private float zoomLevel;
     private float scrollSpeed;
     private float currentDeceleration = 0;
 
     private float lerpTarget = 0;
     private float startLerp = 0;
 
-    private float ZoomPercent => (currentAngle - angleLimitDown) / (angleLimitUp - angleLimitDown);
+    private float ZoomPercent => zoomLevel / 100f;
 
     private void Awake()
     {
@@ -38,14 +40,14 @@ public class CameraController : MonoBehaviour
             Debug.LogError("Rigidbody2D is NULL");
         }
 
-        currentAngle = angleLimitUp;
+        zoomLevel = 100;
     }
 
     private void Start()
     {
-        transform.position = new Vector3(transform.position.x, positionLimitUp + positionLimitDown, transform.position.z);
+        cameraTransform.localPosition = CalculatePosition(ZoomPercent);
 
-        cameraTransform.localEulerAngles = new Vector3(angleLimitUp, cameraTransform.localEulerAngles.y, cameraTransform.localEulerAngles.z);
+        cameraTransform.forward = lookTarget.position - cameraTransform.position;
     }
 
     private void OnEnable()
@@ -65,6 +67,13 @@ public class CameraController : MonoBehaviour
         UpdateCameraZoom();
     }
 
+    private Vector3 CalculatePosition(float percent)
+    {
+        return new Vector3(transform.forward.x * (positionLimitUp.x - positionLimitDown.x) * percent + positionLimitDown.x,
+                           (positionLimitUp.y - positionLimitDown.y) * percent + positionLimitDown.y,
+                           transform.forward.z * (positionLimitUp.x - positionLimitDown.x) * percent + positionLimitDown.x);
+    }
+
     private void MoveCamera(Vector2 direction)
     {
         moveInput = new Vector3(direction.x, 0, direction.y);
@@ -82,21 +91,21 @@ public class CameraController : MonoBehaviour
         {
             currentDeceleration = 1;
 
-            startLerp = currentAngle;
+            startLerp = zoomLevel;
             if (scrollSpeed < 0)
             {
-                lerpTarget = angleByScroll + startLerp;
-                if (lerpTarget > angleLimitUp)
+                lerpTarget = zoomPercentByScroll + startLerp;
+                if (lerpTarget > 100)
                 {
-                    lerpTarget = angleLimitUp;
+                    lerpTarget = 100;
                 }
             }
             else if (scrollSpeed > 0)
             {
-                lerpTarget = -angleByScroll + startLerp;
-                if (lerpTarget < angleLimitDown)
+                lerpTarget = -zoomPercentByScroll + startLerp;
+                if (lerpTarget < 0)
                 {
-                    lerpTarget = angleLimitDown;
+                    lerpTarget = 0;
                 }
             }
         }
@@ -106,10 +115,12 @@ public class CameraController : MonoBehaviour
         if (currentDeceleration != 0)
         {
             zoomAcceleration = decelerationCurve.Evaluate(1 - currentDeceleration);
-            currentAngle = Mathf.Lerp(startLerp, lerpTarget, zoomAcceleration);
 
-            cameraTransform.localPosition = new Vector3(cameraTransform.localPosition.x, CalculatePosition(), cameraTransform.localPosition.z);
-            cameraTransform.localEulerAngles = new Vector3(currentAngle, cameraTransform.localEulerAngles.y, cameraTransform.localEulerAngles.z);
+            zoomLevel = Mathf.Lerp(startLerp, lerpTarget, zoomAcceleration);
+
+            cameraTransform.localPosition = CalculatePosition(ZoomPercent);
+
+            cameraTransform.forward = lookTarget.position - cameraTransform.position;
 
             currentDeceleration -= decelerationSpeed * Time.deltaTime;
             if (currentDeceleration < 0)
@@ -117,10 +128,5 @@ public class CameraController : MonoBehaviour
                 currentDeceleration = 0;
             }
         }
-    }
-
-    private float CalculatePosition()
-    {
-        return ((currentAngle - angleLimitDown) / (angleLimitUp - angleLimitDown)) * positionLimitUp + positionLimitDown;
     }
 }
