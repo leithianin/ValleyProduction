@@ -10,6 +10,7 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnSelect;
     [SerializeField, Tooltip("Actions to play when the construction is unselected.")] private UnityEvent PlayOnUnselect;
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnMove;
+    [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnReplace;
     [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
 
     /// <summary>
@@ -37,6 +38,8 @@ public abstract class Infrastructure : MonoBehaviour
     /// Used to do specific action when a construction is moved.
     /// </summary>
     protected abstract void OnMoveObject();
+
+    protected abstract void OnReplaceObject();
 
     /// <summary>
     /// Hold Right Clic action.
@@ -73,6 +76,12 @@ public abstract class Infrastructure : MonoBehaviour
     {
         PlayOnMove?.Invoke();
         OnMoveObject();
+    }
+
+    public void ReplaceObject()
+    {
+        PlayOnReplace?.Invoke();
+        OnReplaceObject();
     }
 
     public void HoldRightClic()

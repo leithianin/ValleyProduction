@@ -22,6 +22,7 @@ public class PathManager : VLY_Singleton<PathManager>
     public LineRenderer currentLineDebug;
 
     public static List<PathData> GetAllPath => instance.pathDataList;
+    public static PathData GetCurrentPathData => instance.currentPathData;
 
     private void Update()
     {
@@ -299,6 +300,7 @@ public class PathManager : VLY_Singleton<PathManager>
         return false;
     }
 
+    //Selectionner un chemin avec les bouttons UI
     public static void SelectPathWithPathData(PathData pathdata)
     {
         CreatePathData();
@@ -329,6 +331,7 @@ public class PathManager : VLY_Singleton<PathManager>
         DebugPoint(previousPathpoint, instance.currentPathData.color);
     }
 
+    //Retourne si il y'a plusieurs chemin pour un pathpoint
     public static bool HasManyPath(IST_PathPoint pathpoint)
     {
         int nb = 0;
@@ -345,6 +348,11 @@ public class PathManager : VLY_Singleton<PathManager>
             }
         }
         return false;
+    }
+
+    public static void UpdateLine()
+    {
+
     }
 
     /// <summary>
@@ -384,7 +392,7 @@ public class PathManager : VLY_Singleton<PathManager>
     }
 
     #region DEBUG
-
+    //Linerenderer de tous le chemin
     public static void DebugLineR(PathData pathData)
     {
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
@@ -406,6 +414,7 @@ public class PathManager : VLY_Singleton<PathManager>
         DestroyLineList();
     }
 
+    //Destroy le lineRenderer du pathData
     public static void DestroyLinePath(PathData pathData)
     {
         Destroy(pathData.pathLineRenderer);
@@ -424,6 +433,7 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    //LineRenderer entre chaque point
     public static void DebugPoint(IST_PathPoint pathpoint, Color color = default(Color))
     {
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
@@ -439,6 +449,7 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.currentLineDebug.SetPosition(0, pathpoint.transform.position);
     }
 
+    //Destroy la list de lineRenderer (Puisque je fais un line renderer pour tout le path)
     public static void DestroyLineList()
     {
         foreach(GameObject go in instance.lineRendererDebugList)
@@ -447,6 +458,7 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    //Destroy le dernier LineRenderer 
     public static void DestroyPreviousLine()
     {
         instance.lineRendererDebugList.Remove(instance.currentLineDebug.gameObject);
@@ -459,6 +471,18 @@ public class PathManager : VLY_Singleton<PathManager>
         else
         {
             instance.currentLineDebug = null;
+        }
+    }
+
+    public static void UpdateLineWhenMoving(IST_PathPoint pp)
+    {
+        foreach(PathData pd in instance.pathDataList)
+        {
+            if(pd.ContainsPoint(pp))
+            {
+                Destroy(pd.pathLineRenderer);
+                DebugLineR(pd);
+            }
         }
     }
     #endregion
