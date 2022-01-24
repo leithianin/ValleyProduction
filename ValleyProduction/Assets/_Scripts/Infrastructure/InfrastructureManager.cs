@@ -114,7 +114,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// <param name="selectedStructure">L'Infrastructure à sélectionner.</param>
     private void SelectInfrastructure(Infrastructure selectedStructure)
     {
-        if (selectedStructure != currentSelectedStructure)
+        //if (selectedStructure != currentSelectedStructure)
         {
             currentSelectedStructure = selectedStructure;
             selectedStructure.SelectObject();
