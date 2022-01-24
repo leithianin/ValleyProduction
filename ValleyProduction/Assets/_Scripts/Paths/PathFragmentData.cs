@@ -19,6 +19,18 @@ public class PathFragmentData
         path = new List<Vector3>(nPath);
     }
 
+    public bool HasThisPathpoint(IST_PathPoint pp)
+    {
+        if(endPoint == pp || startPoint == pp)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public List<Vector3> GetReversePath()
     {
         List<Vector3> toReturn = new List<Vector3>();
@@ -64,10 +76,6 @@ public class PathFragmentData
                 }
             }
         }
-        //Spawn les points sur le chemin
-        //Check si un point touche le collider du point d'interet
-        //Si il le touche, le ranger dans interestPointList
-        //ValleyUtilities.GetVectorPoint3D()
     }
 
     public void AddInterestPoint(InterestPoint interest_p)
