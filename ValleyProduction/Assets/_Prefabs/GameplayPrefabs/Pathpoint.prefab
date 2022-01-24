@@ -76,6 +76,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4747495304014378980}
+        m_TargetAssemblyTypeName: PlayShader, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   PlayOnDelete:
     m_PersistentCalls:
       m_Calls: []
@@ -189,6 +201,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7391390632780759603, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
   m_PrefabInstance: {fileID: 2017912002382719128}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8526166255190289500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7661211545297142980, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
+  m_PrefabInstance: {fileID: 2017912002382719128}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4747495304014378980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8526166255190289500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482ce4349369b1d458edd4296693246e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderMaterial: {fileID: 2100000, guid: f3f055bd4cdd7604ab81a6b451b8926c, type: 2}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.3018243
+      value: -0.6592474
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.9235427
+      value: 0.8494711
+      inSlope: 9.46527
+      outSlope: 9.46527
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.031477984
+    - serializedVersion: 3
+      time: 2.7505658
+      value: 0.6364371
+      inSlope: 1.9392776
+      outSlope: 1.9392776
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shader_variable_name: Squash
 --- !u!1001 &6824719624705274249
 PrefabInstance:
   m_ObjectHideFlags: 0
