@@ -350,6 +350,11 @@ public class PathManager : VLY_Singleton<PathManager>
         return false;
     }
 
+    public static void UpdateLine()
+    {
+
+    }
+
     /// <summary>
     /// Juste un tri des points pour ne pas mettre les mêmes.
     /// </summary>
@@ -466,6 +471,18 @@ public class PathManager : VLY_Singleton<PathManager>
         else
         {
             instance.currentLineDebug = null;
+        }
+    }
+
+    public static void UpdateLineWhenMoving(IST_PathPoint pp)
+    {
+        foreach(PathData pd in instance.pathDataList)
+        {
+            if(pd.ContainsPoint(pp))
+            {
+                Destroy(pd.pathLineRenderer);
+                DebugLineR(pd);
+            }
         }
     }
     #endregion
