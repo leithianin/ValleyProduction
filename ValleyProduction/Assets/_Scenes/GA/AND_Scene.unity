@@ -20666,7 +20666,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5316315, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -20739,6 +20739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axisSpeed: 40
   cameraTransform: {fileID: 778654323}
+  lookTarget: {fileID: 0}
   cameraSpeedCoef:
     serializedVersion: 2
     m_Curve:
@@ -20788,11 +20789,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   decelerationSpeed: 1.6
-  angleByScroll: 4
-  angleLimitUp: 45
-  angleLimitDown: 35
-  positionLimitDown: 10
-  positionLimitUp: 60
+  zoomPercentByScroll: 10
+  positionLimitDown: {x: 0, y: 10}
+  positionLimitUp: {x: -20, y: 40}
   rbody: {fileID: 778654319}
 --- !u!114 &778654321
 MonoBehaviour:
@@ -40356,6 +40355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usedCamera: {fileID: 778654316}
   usedEventSystem: {fileID: 0}
+  holdDuration: 0
   OnClicLeft:
     m_PersistentCalls:
       m_Calls: []
@@ -40389,6 +40389,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnClicLeftHold:
+    m_PersistentCalls:
+      m_Calls: []
   OnClicRight:
     m_PersistentCalls:
       m_Calls: []
@@ -40410,6 +40413,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnClicRightHold:
+    m_PersistentCalls:
+      m_Calls: []
   OnKeyReturn:
     m_PersistentCalls:
       m_Calls: []
@@ -72708,7 +72714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4423948282179464717, guid: 122959e8f03c1e24a826aced9ea33cb8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.7010736
+      value: 33.85
       objectReference: {fileID: 0}
     - target: {fileID: 4423948282179464717, guid: 122959e8f03c1e24a826aced9ea33cb8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -72716,7 +72722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4423948282179464717, guid: 122959e8f03c1e24a826aced9ea33cb8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.553036
+      value: 0.57
       objectReference: {fileID: 0}
     - target: {fileID: 4423948282179464717, guid: 122959e8f03c1e24a826aced9ea33cb8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -83884,7 +83890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2420697756423519678, guid: 73b2abb5244b04d4298738975320dc63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.7010736
+      value: 27.27
       objectReference: {fileID: 0}
     - target: {fileID: 2420697756423519678, guid: 73b2abb5244b04d4298738975320dc63, type: 3}
       propertyPath: m_LocalPosition.y
@@ -83892,7 +83898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2420697756423519678, guid: 73b2abb5244b04d4298738975320dc63, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.553036
+      value: 5.14
       objectReference: {fileID: 0}
     - target: {fileID: 2420697756423519678, guid: 73b2abb5244b04d4298738975320dc63, type: 3}
       propertyPath: m_LocalRotation.w
