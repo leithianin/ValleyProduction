@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayShader : MonoBehaviour, IFeedbackPlayer
 {
-    public Material shaderMaterial;
+    public Renderer renderer;
     public AnimationCurve curve;
     public string shader_variable_name;
+
+    private MaterialPropertyBlock materialBlock;
 
     private float timer;
     private float base_value;
@@ -18,16 +20,19 @@ public class PlayShader : MonoBehaviour, IFeedbackPlayer
         {
             enabled = false;
         }
-        else 
-        { 
-            shaderMaterial.SetFloat(shader_variable_name, curve.Evaluate(timer)); 
+        else
+        {
+            materialBlock.SetFloat(shader_variable_name, curve.Evaluate(timer));
+
+            renderer.SetPropertyBlock(materialBlock);
         }
     }
 
     public void Play()
     {
-       
-        base_value = shaderMaterial.GetFloat(shader_variable_name);
+        materialBlock = new MaterialPropertyBlock();
+        renderer.GetPropertyBlock(materialBlock);
+        base_value = materialBlock.GetFloat(shader_variable_name);
         timer = 0f;
         enabled = true;
     }
