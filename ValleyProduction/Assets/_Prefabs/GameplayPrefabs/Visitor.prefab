@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2346167869409749038}
   - component: {fileID: 5841812645359664046}
   - component: {fileID: 4577991275926444387}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Noise
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 7603813357234534012}
   - component: {fileID: 7603813357234534011}
   - component: {fileID: 7603813357234534015}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Visitor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,9 +120,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 10
-  m_Acceleration: 8
+  m_Acceleration: 10
   avoidancePriority: 1
-  m_AngularSpeed: 240
+  m_AngularSpeed: 360
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -143,10 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3d7be0480ee8243beef3469119a7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paths:
-  - pathPoints:
-    - {fileID: 0}
-    - {fileID: 0}
   movement: {fileID: 7603813357234534011}
   visitorType: {fileID: 0}
 --- !u!114 &7603813357234534011
@@ -233,7 +229,7 @@ GameObject:
   - component: {fileID: 7603813357492896065}
   - component: {fileID: 7603813357492896066}
   - component: {fileID: 7603813357492896064}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,18 @@ public class IST_PathPoint : Infrastructure
 
     protected override bool OnRemoveObject()
     {
-        if(PathManager.CanDeleteGameobject(this))
+        /*if (PathManager.HasManyPath(this))
+        {
+            UIManager.ArrangePathButton(this);
+        }*/
+
+        /*if (!PathManager.IsOnCurrentPathData(this))
+        {
+            PathManager.CreatePathData();
+            PathManager.SelectPath(this);
+        }*/
+
+        if (PathManager.CanDeleteGameobject(this))
         {
             return true;
         }
@@ -24,6 +35,11 @@ public class IST_PathPoint : Infrastructure
         Debug.Log("Moving PathPoint");
     }
 
+    protected override void OnReplaceObject()
+    {
+        PathManager.UpdateLineWhenMoving(this);
+    }
+
     //Pas sur de ce que je fais là
     protected override void OnHoldRightClic()
     {
@@ -34,20 +50,28 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnSelectObject()
     {
-        if(!PathManager.IsPathpointListEmpty())
+        if (this == PathManager.previousPathpoint)
         {
-            PathManager.PlacePoint(this, transform.position);
+            PathManager.CreatePathData();
+            UIManager.HideRoadsInfo();
         }
         else
         {
-            //Check si plusieurs PathData
-            if (PathManager.HasManyPath(this))
+            if (!PathManager.IsPathpointListEmpty())
             {
-                UIManager.ArrangePathButton(this);
+                PathManager.PlacePoint(this, transform.position);
             }
             else
             {
-                PathManager.SelectPath(this);
+                //Check si plusieurs PathData
+                if (PathManager.HasManyPath(this))
+                {
+                    UIManager.ArrangePathButton(this);
+                }
+                else
+                {
+                    PathManager.SelectPath(this);
+                }
             }
         }
     }

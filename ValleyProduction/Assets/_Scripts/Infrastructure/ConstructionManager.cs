@@ -68,21 +68,31 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
     public static void DestroyStructure(GameObject touchedObject)
     {
-        Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
-        if (infraComponent != null)
+        if (PathManager.GetCurrentPathData != null)
         {
-            InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, infraComponent);
-        }
-        else
-        {
-            //Crée le chemin si déselectionne l'outil
-            if(instance.selectedStructureType == InfrastructureType.PathTools)
+            Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
+            if (infraComponent != null)
             {
-                UIManager.HideRoadsInfo();
-                PathManager.CreatePathData();
+                InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, infraComponent);
             }
+            else
+            {
+                if (instance.selectedStructureType == InfrastructureType.PathTools)
+                {
+                    if (PathManager.previousPathpoint != null)
+                    {
+                        InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, PathManager.previousPathpoint);
+                    }
+                }
+                //Crée le chemin si déselectionne l'outil
+                /*if(instance.selectedStructureType == InfrastructureType.PathTools)
+                {
+                    UIManager.HideRoadsInfo();
+                    PathManager.CreatePathData();
+                }
 
-            UnselectInfrastructureType();
+                UnselectInfrastructureType();*/
+            }
         }
     }
 
