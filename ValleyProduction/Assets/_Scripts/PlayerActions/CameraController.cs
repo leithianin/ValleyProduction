@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Vector4 cameraBounds;
+    [SerializeField] private Vector4 cameraBounds = new Vector4(0, 250, 0, 250);
 
     [SerializeField] private float axisSpeed;
     [SerializeField] private Transform cameraTransform;
