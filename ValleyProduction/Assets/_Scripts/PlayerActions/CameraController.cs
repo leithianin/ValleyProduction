@@ -5,6 +5,8 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private Vector4 cameraBounds;
+
     [SerializeField] private float axisSpeed;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform lookTarget;
@@ -80,8 +82,29 @@ public class CameraController : MonoBehaviour
     {
         float yPosition = mainTerrain.SampleHeight(rbody.transform.position) - (distanceFromTerrain + rbody.transform.position.y);
 
+        float speed = axisSpeed * cameraSpeedCoef.Evaluate(ZoomPercent);
+
         moveInput = new Vector3(direction.x, yPosition, direction.y);
-        rbody.velocity = moveInput * (axisSpeed * cameraSpeedCoef.Evaluate(ZoomPercent));
+        rbody.velocity = moveInput * speed;
+
+        if (rbody.position.x > cameraBounds.y)
+        {
+            rbody.transform.position = new Vector3(cameraBounds.y, rbody.transform.position.y, rbody.transform.position.z);
+        }
+        else if (rbody.position.x < cameraBounds.x)
+        {
+            rbody.transform.position = new Vector3(cameraBounds.x, rbody.transform.position.y, rbody.transform.position.z);
+        }
+
+        if (rbody.position.z > cameraBounds.w)
+        {
+            rbody.transform.position = new Vector3(rbody.transform.position.x, rbody.transform.position.y, cameraBounds.w);
+        }
+        else if(rbody.position.z < cameraBounds.z)
+        {
+            rbody.transform.position = new Vector3(rbody.transform.position.x, rbody.transform.position.y, cameraBounds.z);
+        }
+
     }
 
     private void UpdateCameraZoomSpeed(float newScrollSpeed)
