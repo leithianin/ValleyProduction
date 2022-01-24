@@ -184,10 +184,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CheckForMovementInput()
     {
-        int xDirection = 0;
-        int yDirection = 0;
+        float xDirection = Input.GetAxis("Horizontal");
+        float yDirection = Input.GetAxis("Vertical");
 
-        if(Input.GetKey(KeyCode.UpArrow))
+        /*if(Input.GetKey(KeyCode.UpArrow))
         {
             yDirection++;
         }
@@ -203,7 +203,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             xDirection--;
-        }
+        }*/
 
         OnKeyMove?.Invoke(new Vector2(xDirection, yDirection));
     }
