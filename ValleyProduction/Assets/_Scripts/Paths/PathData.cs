@@ -15,6 +15,9 @@ public class PathData
     public IST_PathPoint startPoint;                                                             //Starting point of the path
     public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
 
+    //Debug Path --> J'ai besoin de savoir à qui il appartient lors de la suppression
+    public LineRenderer pathLineRenderer;
+
     /// <summary>
     /// Check if the path has the point.
     /// </summary>

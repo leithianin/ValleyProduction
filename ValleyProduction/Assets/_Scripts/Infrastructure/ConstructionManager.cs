@@ -75,14 +75,21 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
         else
         {
-            //Crée le chemin si déselectionne l'outil
-            if(instance.selectedStructureType == InfrastructureType.PathTools)
+            if (instance.selectedStructureType == InfrastructureType.PathTools)
             {
-                UIManager.HideRoadsInfo();
-                PathManager.CreatePathData();
+                if (PathManager.previousPathpoint != null)
+                {
+                    InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, PathManager.previousPathpoint);
+                }
             }
+            //Crée le chemin si déselectionne l'outil
+                /*if(instance.selectedStructureType == InfrastructureType.PathTools)
+                {
+                    UIManager.HideRoadsInfo();
+                    PathManager.CreatePathData();
+                }
 
-            UnselectInfrastructureType();
+                UnselectInfrastructureType();*/
         }
     }
 

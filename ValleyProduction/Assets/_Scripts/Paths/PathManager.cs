@@ -23,7 +23,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
     private void Update()
     {
-        if (debugMode && ConstructionManager.HasSelectedStructureType)
+        if (debugMode && ConstructionManager.HasSelectedStructureType && currentLineDebug != null)
         {
             currentLineDebug.SetPosition(1, PlayerInputManager.GetMousePosition);
         }
@@ -50,7 +50,6 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         DebugPoint(previousPathpoint);
-
     }
 
     /// <summary>
@@ -145,6 +144,16 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
         }
+        else
+        {
+            UIManager.HideRoadsInfo();
+        }
+
+        //Remove LineRenderer
+        if(instance.debugMode && instance.lineRendererDebugList.Count != 0)
+        {
+            DestroyPreviousLine();
+        }
     }
 
     //Create pathdata
@@ -162,6 +171,12 @@ public class PathManager : VLY_Singleton<PathManager>
                         pfd.CheckAvailableInterestPoint();
                         instance.currentPathData.pathFragment.Add(pfd);
                     }
+                }
+
+                if (instance.debugMode)
+                {
+                    Debug.Log("Feedback visuel");
+                    DebugLineR(instance.currentPathData);
                 }
             }
             else
@@ -181,7 +196,13 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
 
                 newPathData.startPoint = instance.pathpointList[0];
-                instance.pathDataList.Add(newPathData);            
+                instance.pathDataList.Add(newPathData);
+
+                if (instance.debugMode)
+                {
+                    Debug.Log("Feedback visuel");
+                    DebugLineR(newPathData);
+                }
             }
 
             //Reset les currents Data puisqu'on deselectionne le chemin
@@ -189,12 +210,6 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.pathpointList.Clear();
             instance.currentPathData = null;
             previousPathpoint = null;
-        }
-
-        if(instance.debugMode)
-        {
-            Debug.Log("Feedback visuel");
-            DebugLineR();
         }
     }
 
@@ -244,6 +259,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
             }
 
+            DestroyLinePath(instance.currentPathData);
             DebugPoint(previousPathpoint, instance.currentPathData.color);
         }
     }
@@ -282,6 +298,14 @@ public class PathManager : VLY_Singleton<PathManager>
                 TriPathpointList(pathdata.pathFragment[i], instance.pathpointList);
             }
         }
+
+        if (instance.pathpointList.Count != 0)
+        {
+            previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
+        }
+
+        DestroyLinePath(instance.currentPathData);
+        DebugPoint(previousPathpoint, instance.currentPathData.color);
     }
 
     public static bool HasManyPath(IST_PathPoint pathpoint)
@@ -340,25 +364,43 @@ public class PathManager : VLY_Singleton<PathManager>
 
     #region DEBUG
 
-    public static void DebugLineR()
+    public static void DebugLineR(PathData pathData)
     {
-        foreach(PathData pd in instance.pathDataList)
-        {
-            GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
-            DEBUG.GetComponent<LineRenderer>().material.color = pd.color;
+        GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
+        DEBUG.GetComponent<LineRenderer>().material.color = pathData.color;
 
-            int i = 0;
-            DEBUG.GetComponent<LineRenderer>().positionCount = pd.pathFragment.Count * 2;
-            foreach (PathFragmentData pfd in pd.pathFragment)
-            {
-                DEBUG.GetComponent<LineRenderer>().SetPosition(i, pfd.startPoint.transform.position);
-                i++;
-                DEBUG.GetComponent<LineRenderer>().SetPosition(i, pfd.endPoint.transform.position);
-                i++;
-            }
+        int i = 0;
+        DEBUG.GetComponent<LineRenderer>().positionCount = pathData.pathFragment.Count * 2;
+        foreach (PathFragmentData pfd in pathData.pathFragment)
+        {
+            DEBUG.GetComponent<LineRenderer>().SetPosition(i, pfd.startPoint.transform.position);
+            i++;
+            DEBUG.GetComponent<LineRenderer>().SetPosition(i, pfd.endPoint.transform.position);
+            i++;
         }
 
+        //Je garde le chemin en mémoire 
+        pathData.pathLineRenderer = DEBUG.GetComponent<LineRenderer>();
+
         DestroyLineList();
+    }
+
+    public static void DestroyLinePath(PathData pathData)
+    {
+        Destroy(pathData.pathLineRenderer);
+        pathData.pathLineRenderer = null;
+
+        //Create Line Renderer
+        foreach(PathFragmentData pfd in pathData.pathFragment)
+        {
+            GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
+            DEBUG.GetComponent<LineRenderer>().SetPosition(0, pfd.startPoint.transform.position);
+            DEBUG.GetComponent<LineRenderer>().SetPosition(1, pfd.endPoint.transform.position);
+
+            DEBUG.GetComponent<LineRenderer>().material.color = pathData.color;
+
+            instance.lineRendererDebugList.Add(DEBUG);
+        }
     }
 
     public static void DebugPoint(IST_PathPoint pathpoint, Color color = default(Color))
@@ -366,9 +408,9 @@ public class PathManager : VLY_Singleton<PathManager>
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
         instance.currentLineDebug = DEBUG.GetComponent<LineRenderer>();
 
-        if(color != default(Color))
+        if(instance.currentPathData != null)
         {
-            instance.currentLineDebug.GetComponent<LineRenderer>().material.color = color;
+            instance.currentLineDebug.GetComponent<LineRenderer>().material.color = instance.currentPathData.color;
         }
 
         instance.lineRendererDebugList.Add(DEBUG);
@@ -381,6 +423,21 @@ public class PathManager : VLY_Singleton<PathManager>
         foreach(GameObject go in instance.lineRendererDebugList)
         {
             Destroy(go);
+        }
+    }
+
+    public static void DestroyPreviousLine()
+    {
+        instance.lineRendererDebugList.Remove(instance.currentLineDebug.gameObject);
+        Destroy(instance.currentLineDebug.gameObject);
+
+        if(instance.pathpointList.Count != 0)
+        {
+            instance.currentLineDebug = instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>();
+        }
+        else
+        {
+            instance.currentLineDebug = null;
         }
     }
     #endregion

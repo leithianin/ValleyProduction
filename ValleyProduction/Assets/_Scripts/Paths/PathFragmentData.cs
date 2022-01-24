@@ -19,6 +19,18 @@ public class PathFragmentData
         path = new List<Vector3>(nPath);
     }
 
+    public bool HasThisPathpoint(IST_PathPoint pp)
+    {
+        if(endPoint == pp || startPoint == pp)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public List<Vector3> GetReversePath()
     {
         List<Vector3> toReturn = new List<Vector3>();
