@@ -22,6 +22,7 @@ public class PathManager : VLY_Singleton<PathManager>
     public LineRenderer currentLineDebug;
 
     public static List<PathData> GetAllPath => instance.pathDataList;
+    public static PathData GetCurrentPathData => instance.currentPathData;
 
     private void Update()
     {
