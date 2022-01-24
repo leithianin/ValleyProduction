@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private AnimationCurve decelerationCurve;
     [SerializeField] private float decelerationSpeed = 0.3f;
     [SerializeField] private float zoomPercentByScroll = 10f;
+    [SerializeField] private float distanceFromTerrain = 10f;
     [SerializeField] private Vector2 positionLimitDown = new Vector2(0f, 10f);
     [SerializeField] private Vector2 positionLimitUp = new Vector2(-20f, 40f);
 
@@ -30,6 +31,8 @@ public class CameraController : MonoBehaviour
 
     private float ZoomPercent => zoomLevel / 100f;
 
+    [SerializeField] private Terrain mainTerrain;
+
     private void Awake()
     {
         if (rbody == null)
@@ -45,6 +48,8 @@ public class CameraController : MonoBehaviour
         cameraTransform.localPosition = CalculatePosition(ZoomPercent);
 
         cameraTransform.forward = lookTarget.position - cameraTransform.position;
+
+        mainTerrain = Terrain.activeTerrains[0];
     }
 
     private void OnEnable()
@@ -73,7 +78,9 @@ public class CameraController : MonoBehaviour
 
     private void MoveCamera(Vector2 direction)
     {
-        moveInput = new Vector3(direction.x, 0, direction.y);
+        float yPosition = mainTerrain.SampleHeight(rbody.transform.position) - (distanceFromTerrain + rbody.transform.position.y);
+
+        moveInput = new Vector3(direction.x, yPosition, direction.y);
         rbody.velocity = moveInput * (axisSpeed * cameraSpeedCoef.Evaluate(ZoomPercent));
     }
 
