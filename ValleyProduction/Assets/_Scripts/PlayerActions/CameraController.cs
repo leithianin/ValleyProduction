@@ -23,9 +23,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Rigidbody rbody;
     private Vector3 moveInput;
 
-    private float zoomAcceleration;
-    private float zoomLevel;
-    private float scrollSpeed;
+    private float zoomAcceleration = 0;
+    private float zoomLevel = 0;
+    private float scrollSpeed = 0;
     private float currentDeceleration = 0;
 
     private float lerpTarget = 0;
@@ -69,6 +69,10 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         UpdateCameraZoom();
+        if(rbody.velocity.magnitude < 1f)
+        {
+            rbody.velocity = Vector3.zero;
+        }
     }
 
     private Vector3 CalculatePosition(float percent)
@@ -103,6 +107,11 @@ public class CameraController : MonoBehaviour
         else if(rbody.position.z < cameraBounds.z)
         {
             rbody.transform.position = new Vector3(rbody.transform.position.x, rbody.transform.position.y, cameraBounds.z);
+        }
+
+        if(rbody.transform.position.y < distanceFromTerrain)
+        {
+            rbody.transform.position = new Vector3(rbody.transform.position.x, distanceFromTerrain, rbody.transform.position.z);
         }
 
     }
