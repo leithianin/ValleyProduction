@@ -5,6 +5,7 @@ using UnityEngine;
 public class InfrastructurePreviewHandler : MonoBehaviour
 {
     private InfrastructurePreview currentPreview;
+    public bool snaping = false;
 
     public void SetInfrastructurePreview(InfrastructurePreview preview)
     {
@@ -39,7 +40,10 @@ public class InfrastructurePreviewHandler : MonoBehaviour
 
     private void Update()
     {
-        transform.position = PlayerInputManager.GetMousePosition;
-        currentPreview.CheckAvailability();
+        if (!snaping)
+        {
+            transform.position = PlayerInputManager.GetMousePosition;
+            currentPreview.CheckAvailability();
+        }
     }
 }
