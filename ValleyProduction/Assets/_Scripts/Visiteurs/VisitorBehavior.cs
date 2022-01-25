@@ -45,7 +45,7 @@ public class VisitorBehavior : MonoBehaviour
 
             if(visitorDisplay != null)
             {
-                Destroy(visitorDisplay);
+                Destroy(visitorDisplay.gameObject);
             }
 
             visitorDisplay = Instantiate(visitorType.Display, transform);
