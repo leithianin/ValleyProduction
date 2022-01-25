@@ -13,7 +13,6 @@ public class OB_ControlsIntro : OnBoarding
 
     protected override void OnPlay()
     {
-        Debug.Log("here");
         PlayerInputManager.OnMouseScroll += OnScroll;
         PlayerInputManager.OnKeyMove += OnMove;
         //PlayerInputManager.OnMouseScroll.AddListener(OnScroll);
@@ -33,9 +32,12 @@ public class OB_ControlsIntro : OnBoarding
 
     public void OnMove(Vector2 direction )
     {
-        OnMoving?.Invoke();
-        PlayerInputManager.OnKeyMove -= OnMove;
-        CheckAction();
+        if (direction != Vector2.zero)
+        {
+            OnMoving?.Invoke();
+            PlayerInputManager.OnKeyMove -= OnMove;
+            CheckAction();
+        }
     }
 
     public void CheckAction()
