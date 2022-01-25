@@ -138,4 +138,17 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         instance.currentSelectedStructure = null;
     }
+
+    public static void SnapInfrastructure(Infrastructure infrastructure)
+    {
+        Debug.Log("Snap");
+        instance.previewHandler.snaping = true;
+        instance.previewHandler.transform.position = infrastructure.transform.position;
+    }
+
+    public static void DesnapInfrastructure(Infrastructure infrastructure)
+    {
+        Debug.Log("nap");
+        instance.previewHandler.snaping = false;
+    }
 }
