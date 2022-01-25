@@ -26,8 +26,7 @@ public class ChangeFontStyle : MonoBehaviour, IFeedbackPlayer
 
             case FontStyles.Strikethrough:                                                          // 64
                 font = FontStyles.Strikethrough;
-                break;
-                
+                break;                
         }
 
         Play();
