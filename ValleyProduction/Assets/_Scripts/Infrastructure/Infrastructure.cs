@@ -109,7 +109,7 @@ public abstract class Infrastructure : MonoBehaviour
     }
 
     //L'enfant est prioritaire par rapport à son parent
-    /*private void OnMouseOver()
+    private void OnMouseOver()
     {
         InfrastructureManager.SnapInfrastructure(this);
         PlayOnMouseOver?.Invoke();
@@ -119,5 +119,5 @@ public abstract class Infrastructure : MonoBehaviour
     private void OnMouseExit()
     {
         InfrastructureManager.DesnapInfrastructure(this);
-    }*/
+    }
 }
