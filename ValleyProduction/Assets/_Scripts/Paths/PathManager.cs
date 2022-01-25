@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PathManager : VLY_Singleton<PathManager>
 {
+    [SerializeField] private List<IST_PathPoint> spawnPoints;
+
+    public static List<IST_PathPoint> SpawnPoints => instance.spawnPoints;
+
     //Get Data + Update Data
     private PathData currentPathData = null; 
     public List<PathData> pathDataList = new List<PathData>();
@@ -134,6 +138,11 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         DeletePoint(ist_pp);
+
+        if(SpawnPoints.Contains(ist_pp))
+        {
+            return false;
+        }
         return true;
     }
 
@@ -345,6 +354,18 @@ public class PathManager : VLY_Singleton<PathManager>
                 {
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    public static bool HasOnePath(IST_PathPoint pathpoint)
+    {
+        foreach (PathData pd in instance.pathDataList)
+        {
+            if (pd.ContainsPoint(pathpoint))
+            {
+                return true;
             }
         }
         return false;

@@ -70,7 +70,14 @@ public class IST_PathPoint : Infrastructure
                 }
                 else
                 {
-                    PathManager.SelectPath(this);
+                    if(PathManager.HasOnePath(this))
+                    {
+                        PathManager.SelectPath(this);
+                    }
+                    else
+                    {
+                        PathManager.PlacePoint(this, transform.position);
+                    }
                 }
             }
         }
