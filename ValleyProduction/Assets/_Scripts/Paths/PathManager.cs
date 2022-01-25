@@ -28,6 +28,8 @@ public class PathManager : VLY_Singleton<PathManager>
     public static List<PathData> GetAllPath => instance.pathDataList;
     public static PathData GetCurrentPathData => instance.currentPathData;
 
+    public static PathManager GetInstance => instance;
+
     private void Update()
     {
         if (debugMode && ConstructionManager.HasSelectedStructureType && currentLineDebug != null)
@@ -58,6 +60,8 @@ public class PathManager : VLY_Singleton<PathManager>
     //Create PathFragmentData
     public static void PlacePoint(IST_PathPoint pathpoint, Vector3 position)
     {
+        List<Vector3> navmeshPoints = new List<Vector3>(PathCreationManager.navmeshPositionsList);
+
         instance.pathpointList.Add(pathpoint);
 
         if(previousPathpoint != null)
@@ -67,7 +71,9 @@ public class PathManager : VLY_Singleton<PathManager>
             allPoints.Add(previousPathpoint.transform.position);
             allPoints.Add(pathpoint.transform.position);
 
-            instance.pathFragmentDataList.Add(new PathFragmentData(previousPathpoint, pathpoint, allPoints));
+            //ChangementPathFragment
+            //instance.pathFragmentDataList.Add(new PathFragmentData(previousPathpoint, pathpoint, allPoints));
+            instance.pathFragmentDataList.Add(new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints));
             previousPathpoint = pathpoint;
         }
         else
@@ -420,13 +426,23 @@ public class PathManager : VLY_Singleton<PathManager>
         DEBUG.GetComponent<LineRenderer>().material.color = pathData.color;
 
         int i = 0;
-        DEBUG.GetComponent<LineRenderer>().positionCount = pathData.pathFragment.Count * 2;
+        //DEBUG.GetComponent<LineRenderer>().positionCount = pathData.pathFragment.Count * 2;
+        DEBUG.GetComponent<LineRenderer>().positionCount = 0;
         foreach (PathFragmentData pfd in pathData.pathFragment)
         {
+            foreach(Vector3 vector in pfd.path)
+            {
+                DEBUG.GetComponent<LineRenderer>().positionCount++;
+                DEBUG.GetComponent<LineRenderer>().SetPosition(i, vector);
+                i++;
+            }
+
+            /*
             DEBUG.GetComponent<LineRenderer>().SetPosition(i, pfd.startPoint.transform.position);
             i++;
             DEBUG.GetComponent<LineRenderer>().SetPosition(i, pfd.endPoint.transform.position);
             i++;
+           */
         }
 
         //Je garde le chemin en mémoire 
