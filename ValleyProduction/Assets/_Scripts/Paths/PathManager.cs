@@ -199,7 +199,7 @@ public class PathManager : VLY_Singleton<PathManager>
     //Create pathdata
     public static void CreatePathData()
     {
-        if (instance.pathpointList.Count > 0)
+        if (instance.pathpointList.Count > 1)
         {
             if (instance.currentPathData != null)
             {
@@ -408,6 +408,24 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             return true;
         }
+    }
+
+    public static bool IsSpawnPoint(IST_PathPoint pp)
+    {
+        if(GetCurrentPathData != null)
+        {
+            if(GetCurrentPathData.startPoint == pp)
+            {
+                return true;
+            }
+        }
+
+        if(instance.pathpointList[0] == pp)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     #region DEBUG

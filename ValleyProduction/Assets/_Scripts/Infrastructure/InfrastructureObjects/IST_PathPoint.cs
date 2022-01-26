@@ -60,6 +60,11 @@ public class IST_PathPoint : Infrastructure
             if (!PathManager.IsPathpointListEmpty())
             {
                 PathManager.PlacePoint(this, transform.position);
+                if(PathManager.IsSpawnPoint(this))
+                {
+                    PathManager.CreatePathData();
+                    UIManager.HideRoadsInfo();
+                }
             }
             else
             {
