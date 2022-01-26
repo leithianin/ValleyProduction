@@ -5,15 +5,16 @@ using UnityEngine.Events;
 
 public class StartingZoneCollider : MonoBehaviour
 {
-    public UnityEvent<IST_PathPoint> OnPlacePathpoint;
+    //public UnityEvent<IST_PathPoint> OnPlacePathpoint;
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject);
         IST_PathPoint pathpoint = other.gameObject.GetComponent<IST_PathPoint>();
 
         if (pathpoint != null)
         {
-            OnPlacePathpoint?.Invoke(pathpoint);
+            VisitorManager.GetVisitorSpawnPoints.Add(pathpoint);
         }
     }
 }

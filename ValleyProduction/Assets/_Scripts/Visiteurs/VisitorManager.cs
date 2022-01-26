@@ -19,6 +19,8 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private float nextSpawnTime = 5f;
 
+    public static List<IST_PathPoint> GetVisitorSpawnPoints => instance.visitorSpawnPoints;
+
     private void Update()
     {
         if(Time.time > nextSpawnTime)
