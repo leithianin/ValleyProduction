@@ -32,12 +32,12 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnMoveObject()
     {
-        PathManager.UpdateLineWhenMoving(this);
+        //PathManager.UpdateLineWhenMoving(this);
     }
 
     protected override void OnReplaceObject()
     {
-        PathManager.UpdateLineWhenMoving(this);
+        PathManager.UpdateAfterMoving(this);
     }
 
     //Pas sur de ce que je fais là

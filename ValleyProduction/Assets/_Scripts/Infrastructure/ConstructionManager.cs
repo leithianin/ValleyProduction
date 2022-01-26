@@ -55,7 +55,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// <param name="touchedObject"></param>
     public static void MoveStructure(GameObject touchedObject)
     {
-        InfrastructureManager.MoveInfrastructure(touchedObject.GetComponent<Infrastructure>());
+        //InfrastructureManager.MoveInfrastructure(touchedObject.GetComponent<Infrastructure>());
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// </summary>
     public static void ReplaceStructure()
     {
-        InfrastructureManager.ReplaceInfrastructure();
+        //InfrastructureManager.ReplaceInfrastructure();
     }
 
     public static void DestroyStructure(GameObject touchedObject)
