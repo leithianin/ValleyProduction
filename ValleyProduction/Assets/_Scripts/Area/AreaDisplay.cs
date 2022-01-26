@@ -7,14 +7,17 @@ using UnityEngine;
 public class AreaDisplayDataHandler
 {
     public AreaDataType dataTypeToCheck;
+    [SerializeField] private int wantedScore;
+    [SerializeField] private bool needHigher = true;
     [HideInInspector] public int score;
-    public float coef;
+
+    public bool IsValid => (score >= wantedScore && needHigher) || (score <= wantedScore && !needHigher);
 }
 
 public abstract class AreaDisplay : MonoBehaviour
 {
     /// Liste des type de data utilisé par l'AreaDisplay et leur degré d'importance.
-    [SerializeField] private List<AreaDisplayDataHandler> datas;
+    [SerializeField] private List<AreaDisplayDataHandler> scoreData;
 
     public Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
@@ -23,16 +26,7 @@ public abstract class AreaDisplay : MonoBehaviour
     /// Appelé quand le score est modifié.
     /// </summary>
     /// <param name="newScore">Le nouveau score.</param>
-    public abstract void OnUpdateScore(float newScore);
-
-    /*private void Start()
-    {
-        Area selfArea = AreaManager.GetAreaAtPosition(transform.position);
-        if (selfArea != null)
-        {
-            AffectToArea(selfArea.datas);
-        }
-    }*/
+    public abstract void OnUpdateScore(int newScore);
 
     /// <summary>
     /// S'inscrit à l'action "OnUpdateScore" des Area voulues.
@@ -59,20 +53,21 @@ public abstract class AreaDisplay : MonoBehaviour
     /// <param name="data">Le type de data voulu.</param>
     private void UpdateData(int score, AreaDataType data)
     {
-        int totalScore = 0;
-        float totalCoef = 0;
-        for(int i = 0; i < datas.Count; i++)
+        int reachedDataLevels = 0;
+        for(int i = 0; i < scoreData.Count; i++)
         {
-            if(datas[i].dataTypeToCheck == data)
+            if(scoreData[i].dataTypeToCheck == data)
             {
-                datas[i].score = score;
+                scoreData[i].score = score;
             }
 
-            totalScore += datas[i].score;
-            totalCoef += datas[i].coef;
+            if(scoreData[i].IsValid)
+            {
+                reachedDataLevels++;
+            }
         }
 
-        OnUpdateScore(totalScore / totalCoef);
+        OnUpdateScore(reachedDataLevels);
     }
 
     /// <summary>
@@ -84,9 +79,9 @@ public abstract class AreaDisplay : MonoBehaviour
     {
         bool toReturn = false;
 
-        for (int i = 0; i < datas.Count; i++)
+        for (int i = 0; i < scoreData.Count; i++)
         {
-            if(datas[i].dataTypeToCheck == dataType)
+            if(scoreData[i].dataTypeToCheck == dataType)
             {
                 toReturn = true;
             }

@@ -36,6 +36,9 @@ public class InteractionSequence : InteractionActions
 
     protected override void OnInteruptAction(InteractionHandler caller)
     {
-        sequence[currentSequenceIndex].InteruptAction(caller);
+        if (currentSequenceIndex >= 0)
+        {
+            sequence[currentSequenceIndex].InteruptAction(caller);
+        }
     }
 }

@@ -40,7 +40,6 @@ public abstract class InteractionActions : MonoBehaviour
 
         for (int i = 0; i < callbacksToTry.Count; i++)
         {
-            Debug.Log(callbacksToTry[i].caller.gameObject.name);
             if (callbacksToTry[i].caller == caller)
             {
                 callbacksToTry[i].callback?.Invoke();
