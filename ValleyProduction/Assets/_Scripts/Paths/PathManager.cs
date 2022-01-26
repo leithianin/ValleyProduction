@@ -377,11 +377,6 @@ public class PathManager : VLY_Singleton<PathManager>
         return false;
     }
 
-    public static void UpdateLine()
-    {
-
-    }
-
     /// <summary>
     /// Juste un tri des points pour ne pas mettre les mêmes.
     /// </summary>

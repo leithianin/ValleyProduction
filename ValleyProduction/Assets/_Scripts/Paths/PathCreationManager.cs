@@ -24,43 +24,48 @@ public class PathCreationManager : MonoBehaviour
     {
         if(PathManager.GetInstance.currentLineDebug)
         {
-            LineRenderer lineRenderer = PathManager.GetInstance.currentLineDebug;
-            navPath = new NavMeshPath();
+            CalculateCurrentPath();
+        }
+    }
 
-            NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position + offsetPathCalcul, PlayerInputManager.GetMousePosition + offsetPathCalcul, NavMesh.AllAreas, navPath);
-            //lineRenderer.positionCount = index+1;
-            //lineRenderer.SetPosition(index, PlayerInputManager.GetMousePosition + offsetPathCalcul);
-            List<Vector3> points = new List<Vector3>();
+    public void CalculateCurrentPath()
+    {
+        LineRenderer lineRenderer = PathManager.GetInstance.currentLineDebug;
+        navPath = new NavMeshPath();
 
-            int j = 1;
+        NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position + offsetPathCalcul, PlayerInputManager.GetMousePosition + offsetPathCalcul, NavMesh.AllAreas, navPath);
+        //lineRenderer.positionCount = index+1;
+        //lineRenderer.SetPosition(index, PlayerInputManager.GetMousePosition + offsetPathCalcul);
+        List<Vector3> points = new List<Vector3>();
 
-            while(j < navPath.corners.Length)
+        int j = 1;
+
+        while (j < navPath.corners.Length)
+        {
+            //lineRenderer.positionCount = navPath.corners.Length;
+            points = new List<Vector3>(navPath.corners);
+
+            for (int k = 0; k < points.Count; k++)
             {
-                //lineRenderer.positionCount = navPath.corners.Length;
-                points = new List<Vector3>(navPath.corners);
-
-                for(int k = 0; k < points.Count; k++)
-                {
-                    //lineRenderer.SetPosition(k, points[k]);
-                }
-
-                j++;
+                //lineRenderer.SetPosition(k, points[k]);
             }
 
-            if(j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
-            {
-                navmeshPositionsList = new List<Vector3>(points);
-            }
+            j++;
+        }
 
-            //DebugNavmesh();
-            //index = lineRenderer.positionCount -1;
+        if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
+        {
+            navmeshPositionsList = new List<Vector3>(points);
+        }
 
-            lineRenderer.positionCount = 0;
-            foreach(Vector3 vec in navmeshPositionsList)
-            {
-                lineRenderer.positionCount++;
-                lineRenderer.SetPosition(lineRenderer.positionCount - 1, vec);
-            }
+        //DebugNavmesh();
+        //index = lineRenderer.positionCount -1;
+
+        lineRenderer.positionCount = 0;
+        foreach (Vector3 vec in navmeshPositionsList)
+        {
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(lineRenderer.positionCount - 1, vec);
         }
     }
 
