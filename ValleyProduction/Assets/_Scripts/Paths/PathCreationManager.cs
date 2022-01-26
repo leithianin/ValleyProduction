@@ -55,12 +55,12 @@ public class PathCreationManager : MonoBehaviour
             //DebugNavmesh();
             //index = lineRenderer.positionCount -1;
 
-            /*lineRenderer.positionCount = 0;
+            lineRenderer.positionCount = 0;
             foreach(Vector3 vec in navmeshPositionsList)
             {
                 lineRenderer.positionCount++;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, vec);
-            }*/
+            }
         }
     }
 
