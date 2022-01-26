@@ -25,6 +25,13 @@ public class VisitorBehavior : MonoBehaviour
         movement.PlayOnEndWalking.AddListener(ReachDestination);
     }
 
+    /// <summary>
+    /// Active le visiteur.
+    /// </summary>
+    /// <param name="nSpawnPoint">Le point de spawn du visiteur.</param>
+    /// <param name="spawnPosition">La position de spawn du visiteur.</param>
+    /// <param name="nVisitorType">Le type de visiteur voulut.</param>
+    /// <param name="nPath">Le chemin choisit par le visiteur.</param>
     public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, PathData nPath)
     {
         currentPath = nPath;
@@ -54,6 +61,9 @@ public class VisitorBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Désactive le visiteur.
+    /// </summary>
     public void UnsetVisitor()
     {
         currentPathFragment = null;
@@ -61,6 +71,9 @@ public class VisitorBehavior : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Cherche le prochain Pathpoint à atteindre.
+    /// </summary>
     public void SearchDestination()
     {
         currentPathFragment = SearchNextPathFragment();
@@ -68,6 +81,9 @@ public class VisitorBehavior : MonoBehaviour
         movement.WalkOnNewPath(currentPathFragment.path);
     }
 
+    /// <summary>
+    /// Appelé quand le visiteur atteint un PathPoint.
+    /// </summary>
     public void ReachDestination()
     {
         // Check si despawn ou autre
@@ -82,18 +98,29 @@ public class VisitorBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Interromp le déplacement du visiteur.
+    /// </summary>
     public void InteruptWalk()
     {
         movement.PlayOnEndWalking.RemoveListener(ReachDestination);
         interuptedPath = new List<Vector3>(movement.InteruptWalk());
     }
 
+    /// <summary>
+    /// Reprend le déplacement du visiteur où il s'était arrété sur le chemin.
+    /// </summary>
     public void ContinueWalk()
     {
         movement.PlayOnEndWalking.AddListener(ReachDestination);
         movement.WalkOnNewPath(interuptedPath);
     }
 
+    /// <summary>
+    /// Cherche le premier PathFragment à parcourir.
+    /// </summary>
+    /// <param name="startPoint">Le point de départ du PathFragment recherché.</param>
+    /// <returns>Le PathFragment à parcourir.</returns>
     private PathFragmentData SearchFirstPathFragment(IST_PathPoint startPoint)
     {
         List<PathFragmentData> possibleNextFragment = new List<PathFragmentData>();
@@ -118,6 +145,10 @@ public class VisitorBehavior : MonoBehaviour
         return possibleNextFragment[UnityEngine.Random.Range(0, possibleNextFragment.Count)];
     }
 
+    /// <summary>
+    /// Cherche le prochain PathFragment à parcourir.
+    /// </summary>
+    /// <returns>Le PathFragment à parcourir.</returns>
     private PathFragmentData SearchNextPathFragment()
     {
         List<PathFragmentData> possibleNextFragment = new List<PathFragmentData>();
@@ -154,11 +185,17 @@ public class VisitorBehavior : MonoBehaviour
         return possibleNextFragment[UnityEngine.Random.Range(0, possibleNextFragment.Count)];
     }
 
+    /// <summary>
+    /// Joue l'animation de mouvement.
+    /// </summary>
     public void PlayMovementAnimation()
     {
         visitorDisplay.PlayBodyAnim(BodyAnimationType.Walk);
     }
 
+    /// <summary>
+    /// Stop l'animation de mouvement.
+    /// </summary>
     public void StopMovementAnimation()
     {
         visitorDisplay.StopBodyAnim(BodyAnimationType.Walk);

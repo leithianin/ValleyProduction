@@ -34,7 +34,6 @@ public abstract class AreaDisplay : MonoBehaviour
     /// <param name="possibleDatas">Liste des gestionaire de data continue dans l'Area.</param>
     public void AffectToArea(List<AreaData> possibleDatas)
     {
-        // CODE REVIEW : Voir comment on différencie quel display est affecté par quel score
         for (int i = 0; i < possibleDatas.Count; i++)
         {
             AreaData areaData = possibleDatas[i];

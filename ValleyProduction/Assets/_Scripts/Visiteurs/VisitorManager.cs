@@ -6,8 +6,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 {
     [SerializeField] private List<IST_PathPoint> visitorSpawnPoints;
 
-    //Visitor types
-
     [SerializeField] private float timeBetweenSpawn = 10f;
     [SerializeField] private Vector2Int visitorToSpawnNb = Vector2Int.zero;
     [SerializeField] private float spawnDistanceFromSpawnPoint = 0.8f;
@@ -36,6 +34,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
 
+    /// <summary>
+    /// Demande à faire appraître un visiteur.
+    /// </summary>
     private void SpawnVisitor()
     {
         VisitorBehavior newVisitor = GetAvailableVisitor();
@@ -59,16 +60,28 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
 
+    /// <summary>
+    /// Désactive un visiteur.
+    /// </summary>
+    /// <param name="toDelete">Le visiteur à désactiver.</param>
     public static void DeleteVisitor(VisitorBehavior toDelete)
     {
         toDelete.UnsetVisitor();
     }
 
+    /// <summary>
+    /// Choisit aléatoirement un type de visiteur.
+    /// </summary>
+    /// <returns>Le type de visiteur choisit.</returns>
     private VisitorScriptable ChooseVisitorType()
     {
         return visitorTypes[Random.Range(0, visitorTypes.Length)];
     }
 
+    /// <summary>
+    /// Cherche le premier VisitorBehavior qui n'est pas actif.
+    /// </summary>
+    /// <returns>Un VisitorBehavior inactif.</returns>
     private VisitorBehavior GetAvailableVisitor()
     {
         for (int i = 0; i < visitorPool.Count; i++)
@@ -81,6 +94,10 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         return null;
     }
 
+    /// <summary>
+    /// Vérifie le nombre de visiteur actif.
+    /// </summary>
+    /// <returns>Le nombre de vitieur actif.</returns>
     private int UsedVisitorNumber()
     {
         int toReturn = 0;
@@ -95,6 +112,12 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         return toReturn;
     }
 
+    /// <summary>
+    /// Choisit le chemin que devra emprunter un visiteur.
+    /// </summary>
+    /// <param name="visitorType">Le type de visiteur qui doit emprunter le chemin.</param>
+    /// <param name="spawnPoint">Le point de spawn du chemin.</param>
+    /// <returns>Le chemin que decra parcourir le visiteur.</returns>
     public PathData ChoosePath(VisitorScriptable visitorType, IST_PathPoint spawnPoint)
     {
         List<PathData> allPath = PathManager.GetAllUsablePath(spawnPoint);

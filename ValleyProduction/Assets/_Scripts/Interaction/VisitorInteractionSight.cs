@@ -6,7 +6,7 @@ public class VisitorInteractionSight : InteractionSight
 {
     [SerializeField] private VisitorBehavior visitor;
 
-    public override void OnEndInteraction(InteractionHandler spotInteractor)
+    public override void OnEndInteraction()
     {
         visitor.ContinueWalk();
     }
