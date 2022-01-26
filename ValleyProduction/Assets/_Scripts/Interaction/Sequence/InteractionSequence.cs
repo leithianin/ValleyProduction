@@ -33,4 +33,9 @@ public class InteractionSequence : InteractionActions
             sequence[currentSequenceIndex].PlayAction(caller, () => PlayNextStep(caller));
         }
     }
+
+    protected override void OnInteruptAction(InteractionHandler caller)
+    {
+        sequence[currentSequenceIndex].InteruptAction(caller);
+    }
 }

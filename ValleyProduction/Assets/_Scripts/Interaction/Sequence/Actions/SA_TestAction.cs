@@ -9,6 +9,11 @@ public class SA_TestAction : InteractionActions
         
     }
 
+    protected override void OnInteruptAction(InteractionHandler caller)
+    {
+        StopCoroutine(WaitForNextAction(caller));
+    }
+
     protected override void OnPlayAction(InteractionHandler caller)
     {
         StartCoroutine(WaitForNextAction(caller));

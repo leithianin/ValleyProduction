@@ -59,6 +59,8 @@ public class CPN_Movement : MonoBehaviour
 
     public void WalkOnNewPath(List<Vector3> nPathToTake)
     {
+        reachDestinationCallback = null;
+
         pathToTake = new List<Vector3>(nPathToTake);
 
         currentPathIndex = 0;
@@ -112,8 +114,6 @@ public class CPN_Movement : MonoBehaviour
             StopWalk();
 
             reachDestinationCallback?.Invoke();
-
-            reachDestinationCallback = null;
 
             PlayOnEndWalking?.Invoke();
         }
