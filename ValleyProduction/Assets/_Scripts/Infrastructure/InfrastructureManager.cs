@@ -85,8 +85,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void ReplaceInfrastructure()
     {
         instance.toMove.layer = layerInfrastructure;
-        instance.currentSelectedStructure.ReplaceObject();
         instance.toMove = null;
+        instance.currentSelectedStructure.ReplaceObject();
     }
 
     /// <summary>
