@@ -62,7 +62,6 @@ GameObject:
   - component: {fileID: 1557000171641930265}
   - component: {fileID: 1557000171641930264}
   - component: {fileID: 1557000171641930270}
-  - component: {fileID: 1557000171641930269}
   - component: {fileID: 1557000171641930268}
   - component: {fileID: 1557000171641930267}
   m_Layer: 0
@@ -183,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e05315a22f4a44289a3e9db3aa1075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axisSpeed: 40
+  axisSpeed: 50
   cameraTransform: {fileID: 1557000171641930247}
   lookTarget: {fileID: 1557000172411172752}
   cameraSpeedCoef:
@@ -234,27 +233,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  decelerationSpeed: 0.8
-  zoomPercentByScroll: 25
-  positionLimitDown: {x: 0, y: 10}
-  positionLimitUp: {x: -50, y: 40}
+  decelerationSpeed: 2
+  zoomPercentByScroll: 20
+  positionLimitDown: {x: 0, y: 12}
+  positionLimitUp: {x: -45, y: 50}
   rbody: {fileID: 1557000171398170227}
---- !u!54 &1557000171641930269
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557000171641930246}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &1557000171641930268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +301,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.0923913, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

@@ -35,6 +35,11 @@ public class IST_PathPoint : Infrastructure
         Debug.Log("Moving PathPoint");
     }
 
+    protected override void OnReplaceObject()
+    {
+        PathManager.UpdateLineWhenMoving(this);
+    }
+
     //Pas sur de ce que je fais là
     protected override void OnHoldRightClic()
     {
