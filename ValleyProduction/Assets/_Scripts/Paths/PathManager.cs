@@ -34,7 +34,7 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         if (debugMode && ConstructionManager.HasSelectedStructureType && currentLineDebug != null)
         {
-            currentLineDebug.SetPosition(1, PlayerInputManager.GetMousePosition);
+            //currentLineDebug.SetPosition(1, PlayerInputManager.GetMousePosition);
         }
         else
         {
@@ -375,11 +375,6 @@ public class PathManager : VLY_Singleton<PathManager>
             }
         }
         return false;
-    }
-
-    public static void UpdateLine()
-    {
-
     }
 
     /// <summary>
