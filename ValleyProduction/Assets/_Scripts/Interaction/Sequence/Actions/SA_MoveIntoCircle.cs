@@ -23,7 +23,7 @@ public class SA_MoveIntoCircle : InteractionActions
         }
 
         NavMeshHit hit;
-        NavMesh.SamplePosition(randomPosition, out hit, maxDistanceByMovement, NavMesh.AllAreas);
+        NavMesh.SamplePosition(randomPosition, out hit, circleRadius, NavMesh.AllAreas);
         randomPosition = hit.position;
 
         pathToTake = new NavMeshPath();
@@ -42,6 +42,7 @@ public class SA_MoveIntoCircle : InteractionActions
         }
         else
         {
+            Debug.Log("No path");
             EndAction(caller);
         }
     }
