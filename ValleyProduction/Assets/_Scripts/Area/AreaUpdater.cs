@@ -28,7 +28,7 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 
     private void OnDisable()
     {
-        AreaManager.RemoveAreaIpdater(this);
+        AreaManager.RemoveAreaUpdater(this);
     }
 
     public override void UpdateData()

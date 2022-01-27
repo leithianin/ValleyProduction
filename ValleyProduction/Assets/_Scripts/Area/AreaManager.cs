@@ -103,7 +103,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Retire un AreaUpdater de la liste.
     /// </summary>
     /// <param name="toAdd">L'AreaUpdater à retirer.</param>
-    public static void RemoveAreaIpdater(AreaUpdater toRemove)
+    public static void RemoveAreaUpdater(AreaUpdater toRemove)
     {
         if (allUpdaters.Contains(toRemove))
         {
