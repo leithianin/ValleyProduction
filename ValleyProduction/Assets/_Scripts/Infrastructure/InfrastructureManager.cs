@@ -85,8 +85,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void ReplaceInfrastructure()
     {
         instance.toMove.layer = layerInfrastructure;
-        instance.currentSelectedStructure.ReplaceObject();
         instance.toMove = null;
+        instance.currentSelectedStructure.ReplaceObject();
     }
 
     /// <summary>
@@ -137,5 +137,16 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void SetCurrentSelectedStructureToNull()
     {
         instance.currentSelectedStructure = null;
+    }
+
+    public static void SnapInfrastructure(Infrastructure infrastructure)
+    {
+        instance.previewHandler.snaping = true;
+        instance.previewHandler.transform.position = infrastructure.transform.position;
+    }
+
+    public static void DesnapInfrastructure(Infrastructure infrastructure)
+    {
+        instance.previewHandler.snaping = false;
     }
 }

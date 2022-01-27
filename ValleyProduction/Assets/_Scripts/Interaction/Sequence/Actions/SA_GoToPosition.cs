@@ -6,8 +6,6 @@ public class SA_GoToPosition : InteractionActions
 {
     [SerializeField] private List<Transform> pathToTake;
 
-    InteractionHandler inte;
-
     protected override void OnPlayAction(InteractionHandler caller)
     {
         if (caller.Movement != null)
@@ -19,19 +17,17 @@ public class SA_GoToPosition : InteractionActions
                 vectorPath.Add(pathToTake[i].position);
             }
 
-            inte = caller;
             caller.Movement.WalkOnNewPath(vectorPath, () => EndAction(caller));
-            //caller.onMovementEnd += EndAction;
         }
     }
 
     protected override void OnEndAction(InteractionHandler caller)
     {
-        //caller.onMovementEnd -= EndAction;
+        
     }
 
-    private void EndWalk()
+    protected override void OnInteruptAction(InteractionHandler caller)
     {
-        EndAction(inte);
+        caller.Movement.InteruptWalk();
     }
 }

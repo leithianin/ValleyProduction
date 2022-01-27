@@ -65,7 +65,13 @@ public class TimerManager : VLY_Singleton<TimerManager>
     // Update is called once per frame
     void Update()
     {
-        while(gameTimer[0].EndTime <= Time.time)
+        if (gameTimer.Count <= 0)
+        {
+            enabled = false;
+            return;
+        }
+
+        while (gameTimer[0].EndTime <= Time.time)
         {
             gameTimer[0].Execute();
             

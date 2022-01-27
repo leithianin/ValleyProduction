@@ -32,12 +32,12 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnMoveObject()
     {
-        Debug.Log("Moving PathPoint");
+        //PathManager.UpdateLineWhenMoving(this);
     }
 
     protected override void OnReplaceObject()
     {
-        PathManager.UpdateLineWhenMoving(this);
+        PathManager.UpdateAfterMoving(this);
     }
 
     //Pas sur de ce que je fais là
@@ -60,6 +60,11 @@ public class IST_PathPoint : Infrastructure
             if (!PathManager.IsPathpointListEmpty())
             {
                 PathManager.PlacePoint(this, transform.position);
+                if(PathManager.IsSpawnPoint(this))
+                {
+                    PathManager.CreatePathData();
+                    UIManager.HideRoadsInfo();
+                }
             }
             else
             {
@@ -70,7 +75,14 @@ public class IST_PathPoint : Infrastructure
                 }
                 else
                 {
-                    PathManager.SelectPath(this);
+                    if(PathManager.HasOnePath(this))
+                    {
+                        PathManager.SelectPath(this);
+                    }
+                    else
+                    {
+                        PathManager.PlacePoint(this, transform.position);
+                    }
                 }
             }
         }
@@ -80,4 +92,20 @@ public class IST_PathPoint : Infrastructure
     {
         Debug.Log("Unselect Pathpoint");
     }
+
+    //UnityEvent Feedback ?
+    protected override void InfrastructureOnMouseOver()
+    {
+       
+    }
+
+    /*private void OnMouseOver()
+    {
+        Debug.Log("testOver");
+    }
+
+    private void OnMouseExit()
+    {
+        Debug.Log("testExit");
+    }*/
 }

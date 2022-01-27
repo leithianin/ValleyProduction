@@ -5,6 +5,8 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private Vector4 cameraBounds = new Vector4(0, 250, 0, 250);
+
     [SerializeField] private float axisSpeed;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform lookTarget;
@@ -13,6 +15,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private AnimationCurve decelerationCurve;
     [SerializeField] private float decelerationSpeed = 0.3f;
     [SerializeField] private float zoomPercentByScroll = 10f;
+    [SerializeField] private float distanceFromTerrain = 10f;
     [SerializeField] private Vector2 positionLimitDown = new Vector2(0f, 10f);
     [SerializeField] private Vector2 positionLimitUp = new Vector2(-20f, 40f);
 
@@ -20,15 +23,17 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Rigidbody rbody;
     private Vector3 moveInput;
 
-    private float zoomAcceleration;
-    private float zoomLevel;
-    private float scrollSpeed;
+    private float zoomAcceleration = 0;
+    private float zoomLevel = 0;
+    private float scrollSpeed = 0;
     private float currentDeceleration = 0;
 
     private float lerpTarget = 0;
     private float startLerp = 0;
 
     private float ZoomPercent => zoomLevel / 100f;
+
+    [SerializeField] private Terrain mainTerrain;
 
     private void Awake()
     {
@@ -45,6 +50,8 @@ public class CameraController : MonoBehaviour
         cameraTransform.localPosition = CalculatePosition(ZoomPercent);
 
         cameraTransform.forward = lookTarget.position - cameraTransform.position;
+
+        mainTerrain = Terrain.activeTerrains[0];
     }
 
     private void OnEnable()
@@ -62,6 +69,10 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         UpdateCameraZoom();
+        if(new Vector2(rbody.velocity.x, rbody.velocity.z).magnitude < 1f)
+        {
+            rbody.velocity = Vector3.zero;
+        }
     }
 
     private Vector3 CalculatePosition(float percent)
@@ -73,8 +84,37 @@ public class CameraController : MonoBehaviour
 
     private void MoveCamera(Vector2 direction)
     {
-        moveInput = new Vector3(direction.x, 0, direction.y);
-        rbody.velocity = moveInput * (axisSpeed * cameraSpeedCoef.Evaluate(ZoomPercent));
+        float yPosition = mainTerrain.SampleHeight(rbody.transform.position) - (distanceFromTerrain + rbody.transform.position.y);
+
+        float speed = axisSpeed * cameraSpeedCoef.Evaluate(ZoomPercent);
+
+        moveInput = new Vector3(direction.x, yPosition, direction.y);
+        rbody.velocity = moveInput * speed;
+
+        if (rbody.position.x > cameraBounds.y)
+        {
+            rbody.transform.position = new Vector3(cameraBounds.y, rbody.transform.position.y, rbody.transform.position.z);
+        }
+        else if (rbody.position.x < cameraBounds.x)
+        {
+            rbody.transform.position = new Vector3(cameraBounds.x, rbody.transform.position.y, rbody.transform.position.z);
+        }
+
+        if (rbody.position.z > cameraBounds.w)
+        {
+            rbody.transform.position = new Vector3(rbody.transform.position.x, rbody.transform.position.y, cameraBounds.w);
+        }
+        else if(rbody.position.z < cameraBounds.z)
+        {
+            rbody.transform.position = new Vector3(rbody.transform.position.x, rbody.transform.position.y, cameraBounds.z);
+        }
+
+        if(rbody.transform.position.y < distanceFromTerrain)
+        {
+            Debug.Log("Allo");
+            rbody.transform.position = new Vector3(rbody.transform.position.x, distanceFromTerrain, rbody.transform.position.z);
+        }
+
     }
 
     private void UpdateCameraZoomSpeed(float newScrollSpeed)
