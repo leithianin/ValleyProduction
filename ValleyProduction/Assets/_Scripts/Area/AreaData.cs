@@ -6,10 +6,11 @@ using UnityEngine;
 //https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
 public abstract class AreaData
 {
+    public Area linkedArea;
     /// Score actuel de l'Area.
-    protected int score = 0;
+    protected int realScore = 0;
     /// Getter du Score
-    public int GetScore => score;
+    public int GetRealScore => realScore;
     /// Callback appelé à chaque fois que le score est modifé.
     public Action<int> OnUpdateScore;
 
@@ -24,6 +25,11 @@ public abstract class AreaData
     /// </summary>
     /// <returns>Score calculé.</returns>
     public abstract int CalculateScore();
+
+    /// <summary>
+    /// Appelé quand l'un des voisins a mit à jour son score.
+    /// </summary>
+    public abstract void UpdateScoreFromNeighbours();
 }
 
 /// <summary>
@@ -88,9 +94,44 @@ public abstract class AreaData<T> : AreaData
     /// <returns>Score calculé.</returns>
     public override int CalculateScore()
     {
-        score = ScoreCalculation();
-        OnUpdateScore?.Invoke(score);
+        realScore = ScoreCalculation();
 
-        return score;
+        List<Area> neighbours = AreaManager.GetNeighbours(linkedArea);
+
+        int neighboursScore = 0;
+
+        for(int i = 0; i < neighbours.Count; i++)
+        {
+            List<AreaData<T>> neighboursDatas = neighbours[i].GetData<T>();
+
+            for(int j = 0; j < neighboursDatas.Count; j++)
+            {
+                neighboursScore += Mathf.RoundToInt(neighboursDatas[j].GetRealScore * 0.5f);
+                neighboursDatas[j].UpdateScoreFromNeighbours();
+            }
+        }
+
+        OnUpdateScore?.Invoke(realScore + neighboursScore);
+
+        return realScore;
+    }
+
+    public override void UpdateScoreFromNeighbours()
+    {
+        List<Area> neighbours = AreaManager.GetNeighbours(linkedArea);
+
+        int neighboursScore = 0;
+
+        for (int i = 0; i < neighbours.Count; i++)
+        {
+            List<AreaData<T>> neighboursDatas = neighbours[i].GetData<T>();
+
+            for (int j = 0; j < neighboursDatas.Count; j++)
+            {
+                neighboursScore += Mathf.RoundToInt(neighboursDatas[j].GetRealScore * 0.5f);
+            }
+        }
+
+        OnUpdateScore?.Invoke(realScore + neighboursScore);
     }
 }
