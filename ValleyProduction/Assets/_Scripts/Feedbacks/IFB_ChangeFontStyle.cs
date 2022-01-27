@@ -4,10 +4,10 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class ChangeFontStyle : MonoBehaviour, IFeedbackPlayer
+public class IFB_ChangeFontStyle : MonoBehaviour, IFeedbackPlayer
 {
     public TMP_Text text;
-    public FontStyles font;
+    private FontStyles font;
     
     public void Play()
     {
@@ -17,8 +17,7 @@ public class ChangeFontStyle : MonoBehaviour, IFeedbackPlayer
     public void Play(int i)
     {
         FontStyles currentFont = (FontStyles)i;
-
-        switch(currentFont)
+        switch (currentFont)
         {
             case FontStyles.Normal:                                                                 // 0
                 font = FontStyles.Normal;
@@ -26,7 +25,11 @@ public class ChangeFontStyle : MonoBehaviour, IFeedbackPlayer
 
             case FontStyles.Strikethrough:                                                          // 64
                 font = FontStyles.Strikethrough;
-                break;                
+                break;
+
+            case FontStyles.Underline:                                                              //4
+                font = FontStyles.Underline;
+                break;
         }
 
         Play();
