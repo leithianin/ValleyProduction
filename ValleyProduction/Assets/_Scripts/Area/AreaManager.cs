@@ -28,6 +28,14 @@ public class AreaManager : VLY_Singleton<AreaManager>
     private void Start()
     {
         CreateGrid();
+
+        for(int i = 0; i < areas.Count; i++)
+        {
+            for(int j = 0; j < areas[i].datas.Count; j++)
+            {
+                areas[i].datas[j].CalculateScore();
+            }
+        }
     }
 
     /// <summary>

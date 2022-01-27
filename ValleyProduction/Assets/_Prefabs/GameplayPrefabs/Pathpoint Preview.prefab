@@ -61,14 +61,42 @@ MonoBehaviour:
   realInfrastructure: {fileID: 6225881508748953926, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
   navMeshSensitivity: 5
   mesh: {fileID: 7038590224401053495}
-  availableMaterial: {fileID: -3455417477155109636, guid: 435f9a731818a4846abee440e2694896, type: 3}
-  unavailableMaterial: {fileID: 2100000, guid: 0c44d8a7292ee7a479372445e6bc28f4, type: 2}
   PlayOnAskToPlaceTrue:
     m_PersistentCalls:
       m_Calls: []
   PlayOnAskToPlaceFalse:
     m_PersistentCalls:
       m_Calls: []
+  PrevisualiseOnAskToPlaceTrue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5091319152096674114}
+        m_TargetAssemblyTypeName: IFB_PlayShaderBoolean, Assembly-CSharp
+        m_MethodName: SetShader
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  PrevisualiseOnAskToPlaceFalse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5091319152096674114}
+        m_TargetAssemblyTypeName: IFB_PlayShaderBoolean, Assembly-CSharp
+        m_MethodName: SetShader
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1224121183907566118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,8 +159,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7391390632780759603, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
   m_PrefabInstance: {fileID: 1224121183907566118}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8840254856982271714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7661211545297142980, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
+  m_PrefabInstance: {fileID: 1224121183907566118}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &7038590224401053495 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8165847732139943185, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
   m_PrefabInstance: {fileID: 1224121183907566118}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5091319152096674114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840254856982271714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a861019fb0458f0498cc48f85cfb214d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  renderer: {fileID: 7038590224401053495}
+  shader_variable_name: CanBePlaced
