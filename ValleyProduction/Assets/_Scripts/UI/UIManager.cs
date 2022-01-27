@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : VLY_Singleton<UIManager>
 {
@@ -32,6 +33,7 @@ public class UIManager : VLY_Singleton<UIManager>
                     if(!instance.pathButtonList[i].activeSelf)
                     {
                         instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd;
+                        instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
                         instance.pathButtonList[i].SetActive(true);
                         break;
                     }
@@ -75,8 +77,8 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         Vector3 positionButtons = pathpoint.transform.position;
 
-        float offsetPosY = positionButtons.y + 1.5f;
-        float offsetPosX = positionButtons.x + 8f;
+        float offsetPosY = positionButtons.y + 40f;
+        float offsetPosX = positionButtons.x + 10f;
 
         Vector3 offsetPos = new Vector3(offsetPosX, offsetPosY, positionButtons.z);
 
