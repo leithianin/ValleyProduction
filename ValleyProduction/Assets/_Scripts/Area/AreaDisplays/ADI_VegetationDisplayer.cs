@@ -22,7 +22,7 @@ public class ADI_VegetationDisplayer : AreaDisplay
             {
                 for (int j = 0; j < vegetByValidScore[i].toDisplay.Count; j++)
                 {
-                    if (!vegetByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                    if (!vegetByValidScore[i].toDisplay[j].IsSet)
                     {
                         vegetByValidScore[i].toDisplay[j].SetTree();
                     }
@@ -32,7 +32,7 @@ public class ADI_VegetationDisplayer : AreaDisplay
             {
                 for (int j = 0; j < vegetByValidScore[i].toDisplay.Count; j++)
                 {
-                    if (vegetByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                    if (vegetByValidScore[i].toDisplay[j].IsSet)
                     {
                         vegetByValidScore[i].toDisplay[j].UnsetTree();
                     }

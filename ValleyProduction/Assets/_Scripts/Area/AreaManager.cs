@@ -59,6 +59,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 newArea.datas.Add(new AD_Noise());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
 
+                newArea.datas.Add(new AD_PlantHealthyness());
+                newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
+
                 areas.Add(newArea);
             }
         }

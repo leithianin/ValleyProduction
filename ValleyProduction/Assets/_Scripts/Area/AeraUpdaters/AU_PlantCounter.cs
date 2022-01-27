@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AU_PlantCounter : MonoBehaviour
+public class AU_PlantCounter : AreaUpdater<TreeBehavior>
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void SetData(TreeBehavior newData)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        data = newData;
     }
 }

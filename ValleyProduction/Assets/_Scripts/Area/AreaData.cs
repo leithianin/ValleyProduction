@@ -111,10 +111,6 @@ public abstract class AreaData<T> : AreaData
             }
         }
 
-        if (linkedArea.arrayPosition == new Vector2Int(13, 18))
-        {
-            Debug.Log(realScore + neighboursScore);
-        }
         OnUpdateScore?.Invoke(realScore + neighboursScore);
 
         return realScore;
@@ -136,10 +132,6 @@ public abstract class AreaData<T> : AreaData
             }
         }
 
-        if (linkedArea.arrayPosition == new Vector2Int(13, 18))
-        {
-            Debug.Log(realScore + neighboursScore);
-        }
         OnUpdateScore?.Invoke(realScore + neighboursScore);
     }
 }

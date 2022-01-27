@@ -5,6 +5,10 @@ using UnityEngine.Events;
 
 public class TreeBehavior : MonoBehaviour
 {
+    [SerializeField] private int healthyScore;
+
+    [HideInInspector] public int currentScore = 0;
+
     public MeshFilter meshComponent;
 
     public Mesh OnSetMesh;
@@ -13,14 +17,22 @@ public class TreeBehavior : MonoBehaviour
     [SerializeField] private UnityEvent OnSet;
     [SerializeField] private UnityEvent OnUnset;
 
+    private bool isSet = false;
+
+    public bool IsSet => isSet;
+
     public void SetTree()
     {
+        isSet = true;
+        currentScore = healthyScore;
         meshComponent.mesh = OnSetMesh;
         OnSet?.Invoke();
     }
 
     public void UnsetTree()
     {
+        isSet = false;
+        currentScore = 0;
         meshComponent.mesh = OnUnsetMesh;
         OnUnset?.Invoke();
     }
