@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class StartingZoneCollider : MonoBehaviour
 {
-    //public UnityEvent<IST_PathPoint> OnPlacePathpoint;
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject);
