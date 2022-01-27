@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IFB_DesactivateAfterTime : MonoBehaviour, IFeedbackPlayer
 {
-    public float timer = 0;
+    private float timer = 0;
 
     public void Play()
     {
