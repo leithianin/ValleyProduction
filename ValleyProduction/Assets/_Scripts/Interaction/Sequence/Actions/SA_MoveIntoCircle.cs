@@ -16,24 +16,34 @@ public class SA_MoveIntoCircle : InteractionActions
         Vector3 randomDirection = Random.insideUnitCircle * circleRadius;
         Vector3 randomPosition = circleCenter.position + new Vector3(randomDirection.x, 0, randomDirection.y);
 
-        if(Vector3.Distance(caller.transform.position, randomPosition) > maxDistanceByMovement)
+        if (Vector3.Distance(caller.transform.position, randomPosition) > maxDistanceByMovement)
         {
             randomDirection = (randomPosition - caller.transform.position).normalized;
             randomPosition = circleCenter.position + randomDirection * maxDistanceByMovement;
         }
 
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomPosition, out hit, maxDistanceByMovement, NavMesh.AllAreas);
+        randomPosition = hit.position;
+
         pathToTake = new NavMeshPath();
 
-        NavMesh.CalculatePath(caller.transform.position, randomPosition, NavMesh.AllAreas, pathToTake);
-
-        List<Vector3> path = new List<Vector3>();
-
-        for (int i = 0; i < pathToTake.corners.Length; i++)
+        if (NavMesh.CalculatePath(caller.transform.position, randomPosition, NavMesh.AllAreas, pathToTake))
         {
-            path.Add(pathToTake.corners[i]);
-        }
 
-        caller.Movement.WalkOnNewPath(path, () => EndAction(caller));
+            List<Vector3> path = new List<Vector3>();
+
+            for (int i = 0; i < pathToTake.corners.Length; i++)
+            {
+                path.Add(pathToTake.corners[i]);
+            }
+            
+            caller.Movement.WalkOnNewPath(path, () => EndAction(caller));
+        }
+        else
+        {
+            EndAction(caller);
+        }
     }
 
     protected override void OnEndAction(InteractionHandler caller)
