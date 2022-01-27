@@ -25,10 +25,21 @@ public abstract class InteractionSight : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Actions spécifiques à faire lors du commencement d'une interaction.
+    /// </summary>
+    /// <param name="spot">L'objet avec lequel il interagit.</param>
     public abstract void OnStartInteraction(InteractionSpot spot);
 
-    public abstract void OnEndInteraction(InteractionHandler spotInteractor);
+    /// <summary>
+    /// Actions spécifiques à faire lors de la fin d'une interaction.
+    /// </summary>
+    public abstract void OnEndInteraction();
 
+    /// <summary>
+    /// Appelé quand on demande à interagir avec un Spot.
+    /// </summary>
+    /// <param name="spot"></param>
     public void StartInteraction(InteractionSpot spot)
     {
         currentSpot = spot;
@@ -39,13 +50,17 @@ public abstract class InteractionSight : MonoBehaviour
         spot.Interact(interactor);
     }
 
+    /// <summary>
+    /// Appelé quand l'interaction avec le Spot se finit.
+    /// </summary>
+    /// <param name="spotInteractor">L'InteractionHandler qui vient de finir l'interaction.</param>
     private void EndInteraction(InteractionHandler spotInteractor)
     {
         if(spotInteractor == interactor)
         {
             currentSpot.PlayOnInteractionEnd -= EndInteraction;
             isInteracting = false;
-            OnEndInteraction(spotInteractor);
+            OnEndInteraction();
         }
     }
 }

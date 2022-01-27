@@ -18,15 +18,14 @@ public abstract class InfrastructurePreview : MonoBehaviour
     // The mesh renderer of the preview.
     [SerializeField] private MeshRenderer mesh;
 
-    // The preview material when the player can place the object.
-    [SerializeField] protected Material availableMaterial;
-    // The preview material when the player can't place the object.
-    [SerializeField] protected Material unavailableMaterial;
-
     [SerializeField, Tooltip("Feedbacks to play when the player succeed to place the object.")] protected UnityEvent PlayOnAskToPlaceTrue;
     [SerializeField, Tooltip("Feedbacks to play when the player try to place the object without being able to.")] protected UnityEvent PlayOnAskToPlaceFalse;
 
+    [SerializeField, Tooltip("Feedbacks to play when the player succeed to place the object.")] protected UnityEvent PrevisualiseOnAskToPlaceTrue;
+    [SerializeField, Tooltip("Feedbacks to play when the player try to place the object without being able to.")] protected UnityEvent PrevisualiseOnAskToPlaceFalse;
+
     protected bool availabilityState = true;
+    protected bool lastFrameAvailabilityState = true;
 
     /// <summary>
     /// Getter for the Infrastructure.
@@ -115,15 +114,20 @@ public abstract class InfrastructurePreview : MonoBehaviour
         if (CanPlaceObject(transform.position) != availabilityState)
         {
             availabilityState = CanPlaceObject(transform.position);
-            if (availabilityState)
+            if (lastFrameAvailabilityState != availabilityState)
             {
-                mesh.material = availableMaterial;
-            }
-            else
-            {
-                mesh.material = unavailableMaterial;
+                if (availabilityState)
+                {
+                    PrevisualiseOnAskToPlaceTrue?.Invoke();
+                }
+                else
+                {
+                    PrevisualiseOnAskToPlaceFalse?.Invoke();
+                }
             }
         }
+
+        lastFrameAvailabilityState = availabilityState;
     }
 
 

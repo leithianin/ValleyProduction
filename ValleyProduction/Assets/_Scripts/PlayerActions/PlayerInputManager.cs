@@ -205,7 +205,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             xDirection--;
         }*/
 
-        OnKeyMove?.Invoke(new Vector2(xDirection, yDirection));
+        if (xDirection != 0 || yDirection != 0)
+        {
+            OnKeyMove?.Invoke(new Vector2(xDirection, yDirection));
+        }
     }
 
     private bool GetHitMouseGameobject(out GameObject hitObject)

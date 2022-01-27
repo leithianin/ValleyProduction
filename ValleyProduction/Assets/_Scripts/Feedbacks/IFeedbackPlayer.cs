@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IFeedbackPlayer
 {
     public void Play();
+
 }
