@@ -69,7 +69,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         UpdateCameraZoom();
-        if(rbody.velocity.magnitude < 1f)
+        if(new Vector2(rbody.velocity.x, rbody.velocity.z).magnitude < 1f)
         {
             rbody.velocity = Vector3.zero;
         }
@@ -111,6 +111,7 @@ public class CameraController : MonoBehaviour
 
         if(rbody.transform.position.y < distanceFromTerrain)
         {
+            Debug.Log("Allo");
             rbody.transform.position = new Vector3(rbody.transform.position.x, distanceFromTerrain, rbody.transform.position.z);
         }
 
