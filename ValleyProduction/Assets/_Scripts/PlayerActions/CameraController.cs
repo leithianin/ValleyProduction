@@ -13,9 +13,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private AnimationCurve decelerationCurve;
     [SerializeField] private float decelerationSpeed = 0.3f;
     [SerializeField] private float zoomPercentByScroll = 10f;
-    /*[SerializeField] private float angleByScroll = 10f;
-    [SerializeField] private float angleLimitUp = -70f;
-    [SerializeField] private float angleLimitDown = -10f;*/
     [SerializeField] private Vector2 positionLimitDown = new Vector2(0f, 10f);
     [SerializeField] private Vector2 positionLimitUp = new Vector2(-20f, 40f);
 
