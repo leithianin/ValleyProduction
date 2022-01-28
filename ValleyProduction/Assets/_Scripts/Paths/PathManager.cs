@@ -226,7 +226,8 @@ public class PathManager : VLY_Singleton<PathManager>
 
                 //Random du chemin pour varier les infos
                 newPathData.name = RandomPathName.GetRandomName();
-                newPathData.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+                //newPathData.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+                newPathData.color = new Color(Random.Range(0f, 1f),Random.Range(0f, 1f),Random.Range(0f, 1f),1f);
 
                 //Remplissage des infos qu'on a 
                 newPathData.pathFragment = new List<PathFragmentData>(instance.pathFragmentDataList);
@@ -494,6 +495,8 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.lineRendererDebugList.Add(DEBUG);
 
         instance.currentLineDebug.SetPosition(0, pathpoint.transform.position);
+
+        instance.currentLineDebug.enabled = false;
     }
 
     //Destroy la list de lineRenderer (Puisque je fais un line renderer pour tout le path)

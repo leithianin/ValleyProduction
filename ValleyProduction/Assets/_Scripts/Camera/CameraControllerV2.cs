@@ -9,6 +9,7 @@ public class CameraControllerV2 : MonoBehaviour
     [SerializeField] private float tClampMax = default;
     [SerializeField] private float movingSpeed = default;
     [SerializeField] private float minDistToEnviro = default;
+    [SerializeField] private bool cameraEdgeScorlling = default;
 
     [Header("Space Boundaries")]
     [SerializeField] private float minCameraHeight = default;
@@ -52,7 +53,7 @@ public class CameraControllerV2 : MonoBehaviour
         Vector3 dir = obj.forward * Input.GetAxis("Vertical") + obj.right * Input.GetAxis("Horizontal");
         dir.Normalize();
 
-        if (MouseCollideWithScreenBorders() && !Input.GetKey(KeyCode.Mouse2))
+        if (MouseCollideWithScreenBorders() && !Input.GetKey(KeyCode.Mouse2) && cameraEdgeScorlling)
         {
             Vector2 mouseDirection = GetMouseDirection();
             dir = obj.forward * mouseDirection.y + obj.right * mouseDirection.x;
