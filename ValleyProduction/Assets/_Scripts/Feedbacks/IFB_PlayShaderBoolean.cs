@@ -24,6 +24,7 @@ public class IFB_PlayShaderBoolean : MonoBehaviour, IFeedbackPlayer
     public void SetShader(bool value)
     {
         state = value;
+        Debug.Log(state);
         Play();
     }
 }
