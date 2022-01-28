@@ -111,7 +111,6 @@ public class CameraController : MonoBehaviour
 
         if(rbody.transform.position.y < distanceFromTerrain)
         {
-            Debug.Log("Allo");
             rbody.transform.position = new Vector3(rbody.transform.position.x, distanceFromTerrain, rbody.transform.position.z);
         }
 
