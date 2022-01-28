@@ -12,6 +12,7 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnMove;
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnReplace;
     [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
+    [SerializeField, Tooltip("Actions to play when the construction is on mouse over")] private UnityEvent PlayOnMouseOver;
 
     /// <summary>
     /// Used to do specific action when a construction is placed.
@@ -40,6 +41,8 @@ public abstract class Infrastructure : MonoBehaviour
     protected abstract void OnMoveObject();
 
     protected abstract void OnReplaceObject();
+
+    protected abstract void InfrastructureOnMouseOver();
 
     /// <summary>
     /// Hold Right Clic action.
@@ -103,5 +106,18 @@ public abstract class Infrastructure : MonoBehaviour
     {
         PlayOnUnselect?.Invoke();
         OnUnselectObject();
+    }
+
+    //L'enfant est prioritaire par rapport à son parent
+    private void OnMouseOver()
+    {
+        InfrastructureManager.SnapInfrastructure(this);
+        PlayOnMouseOver?.Invoke();
+        InfrastructureOnMouseOver();
+    }
+
+    private void OnMouseExit()
+    {
+        InfrastructureManager.DesnapInfrastructure(this);
     }
 }

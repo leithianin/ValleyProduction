@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: d168a7946de2d464ea49d38c1a05ec49, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ccf77605f8e5a4d40a5715ff52f4da4b, type: 2}
 --- !u!114 &3748184 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6225881508748953926, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
@@ -1719,6 +1719,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3725632401066845127, guid: 141a2f6266d633446b0d3b1391694a70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 141a2f6266d633446b0d3b1391694a70, type: 3}
 --- !u!1001 &395787969
@@ -3127,6 +3131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452fabe9d50174842a77180ae536ea8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoints: []
   pathDataList: []
   pathFragmentDataList: []
   pathpointList: []
@@ -5521,6 +5526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aaba6c5b141c724dba17df8b7a127f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snaping: 0
 --- !u!4 &1525967314
 Transform:
   m_ObjectHideFlags: 0
@@ -7916,38 +7922,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930247, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930247, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930247, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930270, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: mainTerrain
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930270, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: cameraBounds.w
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930270, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: cameraBounds.x
-      value: 330
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930270, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: cameraBounds.y
-      value: 750
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557000171641930270, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
-      propertyPath: cameraBounds.z
-      value: 300
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1557000171641930269, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b8fd046d07cd5948bfbf163820529ab, type: 3}

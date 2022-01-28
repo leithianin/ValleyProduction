@@ -28,6 +28,14 @@ public class AreaManager : VLY_Singleton<AreaManager>
     private void Start()
     {
         CreateGrid();
+
+        for(int i = 0; i < areas.Count; i++)
+        {
+            for(int j = 0; j < areas[i].datas.Count; j++)
+            {
+                areas[i].datas[j].CalculateScore();
+            }
+        }
     }
 
     /// <summary>
@@ -49,6 +57,10 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 newArea.worldPosition = new Vector2(areaHeight / 2f + areaHeight * i, areaHeight / 2f + areaHeight * j);
 
                 newArea.datas.Add(new AD_Noise());
+                newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
+
+                newArea.datas.Add(new AD_PlantHealthyness());
+                newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
 
                 areas.Add(newArea);
             }
@@ -94,7 +106,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Retire un AreaUpdater de la liste.
     /// </summary>
     /// <param name="toAdd">L'AreaUpdater à retirer.</param>
-    public static void RemoveAreaIpdater(AreaUpdater toRemove)
+    public static void RemoveAreaUpdater(AreaUpdater toRemove)
     {
         if (allUpdaters.Contains(toRemove))
         {
@@ -117,7 +129,12 @@ public class AreaManager : VLY_Singleton<AreaManager>
         int columnIndex = Mathf.RoundToInt((position.x - AreaHeight / 2) / AreaHeight);
         int lineIndex = Mathf.RoundToInt((position.y - AreaHeight / 2) / AreaHeight);
 
-        int realIndex = columnIndex * gridDimension.y + lineIndex;
+        return GetAreaAtIndex(new Vector2Int(columnIndex, lineIndex));
+    }
+
+    public static Area GetAreaAtIndex(Vector2Int index)
+    {
+        int realIndex = index.x * gridDimension.y + index.y;
 
         if (realIndex >= 0 && realIndex < areas.Count)
         {
@@ -180,6 +197,28 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 dataAreaToUpdate[i].RefreshData(dataToRemove, dataToAdd);
             }
         }
+    }
+
+    public static List<Area> GetNeighbours(Area toCheck)
+    {
+        List<Area> neighbours = new List<Area>();
+
+        for(int i = -1; i <= 1; i++)
+        {
+            for(int j = -1; j <= 1; j++)
+            {
+                if ((i == 0 || j == 0) && j != i)
+                {
+                    Vector2Int indexToCheck = new Vector2Int(i, j);
+                    if (GetAreaAtIndex(toCheck.arrayPosition + indexToCheck) != null)
+                    {
+                        neighbours.Add(GetAreaAtIndex(toCheck.arrayPosition + indexToCheck));
+                    }
+                }
+            }
+        }
+
+        return neighbours;
     }
 
     private void OnDrawGizmos()
