@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 6225881508748953926}
   - component: {fileID: 2081739497460383008}
   - component: {fileID: 4604670140881424748}
+  - component: {fileID: 1096573408472218059}
   m_Layer: 2
   m_Name: Pathpoint
   m_TagString: Untagged
@@ -153,7 +154,19 @@ MonoBehaviour:
       m_Calls: []
   PlayOnMouseOver:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1096573408472218059}
+        m_TargetAssemblyTypeName: IFB_ChangeLayer, Assembly-CSharp
+        m_MethodName: PlayInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!208 &2081739497460383008
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -183,6 +196,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0.5
+--- !u!114 &1096573408472218059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583442100236828276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2b1abea7cd6ea4598438a9d451f5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2017912002382719128
 PrefabInstance:
   m_ObjectHideFlags: 0
