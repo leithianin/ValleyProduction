@@ -14,6 +14,8 @@ public class VisitorBehavior : MonoBehaviour
 
     public VisitorScriptable visitorType;
 
+    [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitorWithType;
+
     private AnimationHandler visitorDisplay;
 
     List<Vector3> interuptedPath = new List<Vector3>();
@@ -43,6 +45,8 @@ public class VisitorBehavior : MonoBehaviour
         if(currentPathFragment != null)
         {
             visitorType = nVisitorType;
+
+            OnSetVisitorWithType?.Invoke(visitorType);
 
             movement.SetSpeed(visitorType.Speed);
 
