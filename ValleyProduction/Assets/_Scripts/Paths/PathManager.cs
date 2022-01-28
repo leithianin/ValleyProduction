@@ -494,6 +494,8 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.lineRendererDebugList.Add(DEBUG);
 
         instance.currentLineDebug.SetPosition(0, pathpoint.transform.position);
+
+        instance.currentLineDebug.enabled = false;
     }
 
     //Destroy la list de lineRenderer (Puisque je fais un line renderer pour tout le path)

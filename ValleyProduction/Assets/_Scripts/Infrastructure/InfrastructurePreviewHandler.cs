@@ -7,6 +7,8 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     private InfrastructurePreview currentPreview;
     public bool snaping = false;
 
+    public InfrastructurePreview GetPreview => currentPreview;
+
     public void SetInfrastructurePreview(InfrastructurePreview preview)
     {
         if (preview != null)

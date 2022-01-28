@@ -76,9 +76,23 @@ public class VisitorBehavior : MonoBehaviour
     /// </summary>
     public void SearchDestination()
     {
+        if (currentPathFragment != null)
+        {
+            currentPathFragment.endPoint.OnDestroyPathPoint -= UnsetVisitor;
+        }
+
         currentPathFragment = SearchNextPathFragment();
 
-        movement.WalkOnNewPath(currentPathFragment.path);
+        if (currentPathFragment == null)
+        {
+            UnsetVisitor();
+        }
+        else
+        {
+            currentPathFragment.endPoint.OnDestroyPathPoint += UnsetVisitor;
+
+            movement.WalkOnNewPath(currentPathFragment.path);
+        }
     }
 
     /// <summary>
@@ -171,7 +185,7 @@ public class VisitorBehavior : MonoBehaviour
 
         if(possibleNextFragment.Count == 0)
         {
-            if (currentPathFragment == null)
+            if (currentPathFragment == null || currentPath.pathFragment.Count <= 0)
             {
                 return null;
             }

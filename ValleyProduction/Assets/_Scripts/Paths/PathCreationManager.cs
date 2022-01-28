@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PathCreationManager : VLY_Singleton<PathCreationManager>
 {
-    public GameObject Debug;
+    public GameObject debugObject;
     public List<GameObject> DebugList;
 
     public static List<Vector3> navmeshPositionsList = new List<Vector3>();
@@ -35,7 +35,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
         if (PathManager.previousPathpoint != null)
         {
-            NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position + offsetPathCalcul, PlayerInputManager.GetMousePosition + offsetPathCalcul, NavMesh.AllAreas, navPath);
+            NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position + offsetPathCalcul, InfrastructureManager.GetCurrentPreview.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
         }
 
 
@@ -57,6 +57,22 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         //DebugNavmesh();
 
         ShowPathLine(navmeshPositionsList);
+    }
+
+    public static bool IsPathShortEnough(float maxDistance)
+    {
+        float currentDistance = 0;
+
+        for(int i = 0; i < navmeshPositionsList.Count - 1; i++)
+        {
+            currentDistance += Vector3.Distance(navmeshPositionsList[i], navmeshPositionsList[i + 1]);
+
+            if(currentDistance > maxDistance)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void CalculatePath(IST_PathPoint ppstart, IST_PathPoint ppend, PathFragmentData pathFrag)
@@ -105,7 +121,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
         foreach(Vector3 vec in navmeshPositionsList)
         {
-            GameObject newGo = Instantiate(Debug, vec, Quaternion.identity);
+            GameObject newGo = Instantiate(debugObject, vec, Quaternion.identity);
             DebugList.Add(newGo);
         }
     }
@@ -113,6 +129,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public void ShowPathLine(List<Vector3> path)
     {
         LineRenderer lineRenderer = PathManager.GetInstance.currentLineDebug;
+
+        if(!lineRenderer.enabled)
+        {
+            lineRenderer.enabled = true;
+        }
 
         lineRenderer.positionCount = 0;
         foreach (Vector3 vec in path)

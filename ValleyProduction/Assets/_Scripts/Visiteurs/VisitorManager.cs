@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class VisitorManager : VLY_Singleton<VisitorManager>
 {
-    [SerializeField] private List<IST_PathPoint> visitorSpawnPoints;
+    [SerializeField] private List<IST_PathPoint> visitorSpawnPoints = new List<IST_PathPoint>();
 
     [SerializeField] private float timeBetweenSpawn = 10f;
     [SerializeField] private Vector2Int visitorToSpawnNb = Vector2Int.zero;
@@ -41,23 +41,27 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// </summary>
     private void SpawnVisitor()
     {
-        VisitorBehavior newVisitor = GetAvailableVisitor();
-
-        Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
-        IST_PathPoint wantedSpawn = visitorSpawnPoints[Random.Range(0, visitorSpawnPoints.Count)];
-        Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
-
-        NavMeshHit hit;
-
-        if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
+        if (visitorSpawnPoints.Count > 0)
         {
-            VisitorScriptable visitorType = ChooseVisitorType();
 
-            PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
+            VisitorBehavior newVisitor = GetAvailableVisitor();
 
-            if (chosenPath != null)
+            Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
+            IST_PathPoint wantedSpawn = visitorSpawnPoints[Random.Range(0, visitorSpawnPoints.Count)];
+            Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
+
+            NavMeshHit hit;
+
+            if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
             {
-                newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
+                VisitorScriptable visitorType = ChooseVisitorType();
+
+                PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
+
+                if (chosenPath != null)
+                {
+                    newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
+                }
             }
         }
     }
