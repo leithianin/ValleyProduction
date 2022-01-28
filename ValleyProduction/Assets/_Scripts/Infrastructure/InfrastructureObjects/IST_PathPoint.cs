@@ -104,6 +104,11 @@ public class IST_PathPoint : Infrastructure
        
     }
 
+    protected override void InfrastructureOnMouseExit()
+    {
+        
+    }
+
     /*private void OnMouseOver()
     {
         Debug.Log("testOver");
