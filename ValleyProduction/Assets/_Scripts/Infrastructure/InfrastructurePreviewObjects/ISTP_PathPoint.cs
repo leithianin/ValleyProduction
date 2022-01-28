@@ -13,7 +13,7 @@ public class ISTP_PathPoint : InfrastructurePreview
 
     protected override bool OnCanPlaceObject(Vector3 position)
     {
-        if (PathManager.previousPathpoint == null || Vector3.Distance(position, PathManager.previousPathpoint.transform.position) <= maxDistance)
+        if (PathManager.previousPathpoint == null || PathCreationManager.IsPathShortEnough(maxDistance))
         {
             return true;
         }

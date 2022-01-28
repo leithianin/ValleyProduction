@@ -14,6 +14,8 @@ public class VisitorBehavior : MonoBehaviour
 
     public VisitorScriptable visitorType;
 
+    [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitorWithType;
+
     private AnimationHandler visitorDisplay;
 
     List<Vector3> interuptedPath = new List<Vector3>();
@@ -43,6 +45,8 @@ public class VisitorBehavior : MonoBehaviour
         if(currentPathFragment != null)
         {
             visitorType = nVisitorType;
+
+            OnSetVisitorWithType?.Invoke(visitorType);
 
             movement.SetSpeed(visitorType.Speed);
 
@@ -76,9 +80,23 @@ public class VisitorBehavior : MonoBehaviour
     /// </summary>
     public void SearchDestination()
     {
+        if (currentPathFragment != null)
+        {
+            currentPathFragment.endPoint.OnDestroyPathPoint -= UnsetVisitor;
+        }
+
         currentPathFragment = SearchNextPathFragment();
 
-        movement.WalkOnNewPath(currentPathFragment.path);
+        if (currentPathFragment == null)
+        {
+            UnsetVisitor();
+        }
+        else
+        {
+            currentPathFragment.endPoint.OnDestroyPathPoint += UnsetVisitor;
+
+            movement.WalkOnNewPath(currentPathFragment.path);
+        }
     }
 
     /// <summary>
@@ -171,7 +189,7 @@ public class VisitorBehavior : MonoBehaviour
 
         if(possibleNextFragment.Count == 0)
         {
-            if (currentPathFragment == null)
+            if (currentPathFragment == null || currentPath.pathFragment.Count <= 0)
             {
                 return null;
             }

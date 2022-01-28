@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class InteractionSpot : MonoBehaviour
 {
+    public InteractionType interactionType;
+
     public Action<InteractionHandler> PlayOnInteractionEnd;
     public Action<InteractionHandler> PlayOnInteractionStart;
 

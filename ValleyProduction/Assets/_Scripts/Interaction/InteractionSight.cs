@@ -39,15 +39,18 @@ public abstract class InteractionSight : MonoBehaviour
     /// <summary>
     /// Appelé quand on demande à interagir avec un Spot.
     /// </summary>
-    /// <param name="spot"></param>
+    /// <param name="spot">The spot the interactor want to interact with.</param>
     public void StartInteraction(InteractionSpot spot)
     {
-        currentSpot = spot;
-        OnStartInteraction(spot);
-        isInteracting = true;
-        spot.PlayOnInteractionEnd += EndInteraction;
+        if (interactor.IsInterested(spot.interactionType))
+        {
+            currentSpot = spot;
+            OnStartInteraction(spot);
+            isInteracting = true;
+            spot.PlayOnInteractionEnd += EndInteraction;
 
-        spot.Interact(interactor);
+            spot.Interact(interactor);
+        }
     }
 
     /// <summary>

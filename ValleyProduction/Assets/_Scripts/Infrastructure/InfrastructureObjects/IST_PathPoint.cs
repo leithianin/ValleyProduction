@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class IST_PathPoint : Infrastructure
 {
+    public Action OnDestroyPathPoint;
+
     protected override void OnPlaceObject(Vector3 position)
     {
         PathManager.PlacePoint(this, position);
@@ -24,6 +27,8 @@ public class IST_PathPoint : Infrastructure
 
         if (PathManager.CanDeleteGameobject(this))
         {
+            OnDestroyPathPoint?.Invoke();
+
             return true;
         }
 

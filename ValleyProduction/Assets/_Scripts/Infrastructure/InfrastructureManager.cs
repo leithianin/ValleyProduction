@@ -5,12 +5,10 @@ using UnityEngine;
 public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 {
     [SerializeField] private InfrastructurePreviewHandler previewHandler;
-    
-    private InfrastructurePreview currentPreview;
 
     private Infrastructure currentSelectedStructure;
 
-    public static InfrastructurePreview GetCurrentPreview => instance.currentPreview;
+    public static InfrastructurePreview GetCurrentPreview => instance.previewHandler.GetPreview;
 
     private static LayerMask layerIgnoreRaycast = 2;
     private static LayerMask layerInfrastructure = 0;
@@ -28,11 +26,10 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void ChooseInfrastructure(InfrastructurePreview newPreview)
     {
-        if(newPreview != instance.currentPreview)
+        if(newPreview != GetCurrentPreview)
         {
             instance.previewHandler.SetInfrastructurePreview(newPreview);
         }
-        instance.currentPreview = newPreview;
     }
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
