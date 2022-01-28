@@ -5,10 +5,11 @@ using UnityEngine;
 public class IFB_ChangeLayer : MonoBehaviour, IFeedbackPlayer
 {
     private int layerInt;
+    public GameObject meshGameObject;
 
     public void Play()
     {
-        gameObject.layer = layerInt;
+        meshGameObject.layer = layerInt;
     }
 
     public void PlayInt(int i)
