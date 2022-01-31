@@ -13,8 +13,28 @@ public class StartingZoneCollider : MonoBehaviour
 
         if (pathpoint != null)
         {
-            VisitorManager.GetVisitorSpawnPoints.Add(pathpoint);
-            PathManager.SpawnPoints.Add(pathpoint);
+            if (!IsPathAlreadyHaveASpawnPoint())
+            {
+                PathManager.isOnSpawn?.Invoke(true);
+                VisitorManager.GetVisitorSpawnPoints.Add(pathpoint);
+                PathManager.SpawnPoints.Add(pathpoint);
+            }
         }
+    }
+
+    private bool IsPathAlreadyHaveASpawnPoint()
+    {
+        foreach(IST_PathPoint ist_pp in PathManager.GetCurrentPathpointList)
+        {
+            foreach(IST_PathPoint ist_spawn in PathManager.SpawnPoints)
+            {
+                if(ist_pp == ist_spawn)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -72,6 +72,10 @@ public class PathFragmentData
             {
                 if(c.gameObject.GetComponent<InterestPoint>())
                 {
+                    if(c.gameObject.name.Contains("Watermill")) 
+                    {
+                        OnBoardingManager.OnWaterMill?.Invoke(true); 
+                    }
                     AddInterestPoint(c.gameObject.GetComponent<InterestPoint>());
                 }
             }
