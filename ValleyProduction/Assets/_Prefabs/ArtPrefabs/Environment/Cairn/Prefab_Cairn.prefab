@@ -113,7 +113,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 87d272e66b6d31a499f2c52a60717b9d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7d84712bd7fa1d6428d4a162e2f09f87, type: 2}
+      objectReference: {fileID: 2100000, guid: f3f055bd4cdd7604ab81a6b451b8926c, type: 2}
     - target: {fileID: 919132149155446097, guid: 87d272e66b6d31a499f2c52a60717b9d, type: 3}
       propertyPath: m_Name
       value: SM_Cairn_01_LOD0
@@ -124,6 +124,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87d272e66b6d31a499f2c52a60717b9d, type: 3}
+--- !u!1 &7661211545297142980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 87d272e66b6d31a499f2c52a60717b9d, type: 3}
+  m_PrefabInstance: {fileID: 7391390633308715413}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6996843277496262270 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 87d272e66b6d31a499f2c52a60717b9d, type: 3}
@@ -134,3 +139,59 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 87d272e66b6d31a499f2c52a60717b9d, type: 3}
   m_PrefabInstance: {fileID: 7391390633308715413}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4747495304014378980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7661211545297142980}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482ce4349369b1d458edd4296693246e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 8165847732139943185}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.2
+      value: 0.5
+      inSlope: 0.0016661038
+      outSlope: 0.0016661038
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.75
+      value: -0.25
+      inSlope: -0.012660053
+      outSlope: -0.012660053
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20227431
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.006859281
+      outSlope: -0.006859281
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13974604
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shader_variable_name: Squash

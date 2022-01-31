@@ -8,17 +8,17 @@ public class InteractionHandler : MonoBehaviour
 {
     [SerializeField] private CPN_Movement movement;
 
-    private IInteractableData interactableDatas;
+    [SerializeField] private List<InteractionType> interactionTypes;
 
     public CPN_Movement Movement => movement;
 
     public bool IsInterested(InteractionType wantedType)
     {
-        return interactableDatas.GetInteractionTypes().Contains(wantedType);
+        return interactionTypes.Contains(wantedType);
     }
 
     public void SetInteractableData(IInteractableData newDatas)
     {
-        interactableDatas = newDatas;
+        interactionTypes = newDatas.GetInteractionTypes();
     }
 }
