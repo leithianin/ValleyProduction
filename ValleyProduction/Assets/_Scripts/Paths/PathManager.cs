@@ -30,6 +30,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static List<PathData> GetAllPath => instance.pathDataList;
     public static PathData GetCurrentPathData => instance.currentPathData;
+    public static List<IST_PathPoint> GetCurrentPathpointList => instance.pathpointList;
 
     public static PathManager GetInstance => instance;
 
@@ -150,7 +151,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if(SpawnPoints.Contains(ist_pp))
         {
-            return false;
+            SpawnPoints.Remove(ist_pp);
         }
         return true;
     }
