@@ -187,7 +187,15 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6696637773474874608, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6696637773474874610, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696637773569955125, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -285,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696637774869748116, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
@@ -3096,6 +3104,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6696637773569955125, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
   m_PrefabInstance: {fileID: 31610582}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &650312067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650312066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4236b691af8194c9ccdc681befb4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 0}
 --- !u!4 &650395701 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6708448232794319889, guid: 2f4da95fd8658c54994640f5f7a54a1d, type: 3}
@@ -6320,6 +6341,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6696637773474874610, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
   m_PrefabInstance: {fileID: 31610582}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1482118115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482118114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4236b691af8194c9ccdc681befb4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 0}
 --- !u!1 &1534504169
 GameObject:
   m_ObjectHideFlags: 0
@@ -7270,6 +7304,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6696637774869748116, guid: 2af93d5d99828d544aa2a3831407d99c, type: 3}
   m_PrefabInstance: {fileID: 31610582}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1698530086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698530085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4236b691af8194c9ccdc681befb4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 0}
 --- !u!1001 &1715489872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9437,41 +9484,29 @@ MonoBehaviour:
   PlayOnStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482118114}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2222160492932056945}
+        m_TargetAssemblyTypeName: IFB_ActivateAfterTime, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.5
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1698530085}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2222160492932056944}
+        m_TargetAssemblyTypeName: IFB_ActivateAfterTime, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.5
           m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 650312066}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
   PlayOnEnd:
     m_PersistentCalls:
@@ -9510,6 +9545,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2222160492932056943}
   - component: {fileID: 2222160492932056940}
+  - component: {fileID: 2222160492932056945}
+  - component: {fileID: 2222160492932056944}
   m_Layer: 0
   m_Name: Action (3)
   m_TagString: Untagged
@@ -9531,6 +9568,32 @@ Transform:
   m_Father: {fileID: 2222160493379698049}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2222160492932056944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222160492932056942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4236b691af8194c9ccdc681befb4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 650312066}
+--- !u!114 &2222160492932056945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222160492932056942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4236b691af8194c9ccdc681befb4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 1482118114}
 --- !u!114 &2222160493021011576
 MonoBehaviour:
   m_ObjectHideFlags: 0
