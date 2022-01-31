@@ -6814,6 +6814,23 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1843324881019480809, guid: 0c53f069a027fd240bbb1279f18d686b, type: 3}
   m_PrefabInstance: {fileID: 2222160492488373403}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1636224892 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1843324881019480811, guid: 0c53f069a027fd240bbb1279f18d686b, type: 3}
+  m_PrefabInstance: {fileID: 2222160492488373403}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1636224893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636224890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c897da6c0300a104c83025c07d65d739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1645803094
 GameObject:
   m_ObjectHideFlags: 0
@@ -9571,15 +9588,27 @@ MonoBehaviour:
   PlayOnEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1636224890}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1636224892}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
+          m_StringArgument: Activate
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1636224893}
+        m_TargetAssemblyTypeName: IFB_DesactivateAfterTime, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
