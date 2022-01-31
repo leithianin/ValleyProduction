@@ -65,6 +65,7 @@ public class CameraControllerV2 : MonoBehaviour
             dir = obj.forward * mouseDirection.y + obj.right * mouseDirection.x;
             dir.Normalize();
         }
+        cameraBehaviour.direction = dir;
         obj.position = obj.position + dir * movingSpeed * (t * 5) * Time.deltaTime;
 
     }
