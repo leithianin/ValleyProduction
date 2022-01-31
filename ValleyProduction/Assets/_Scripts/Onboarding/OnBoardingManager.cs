@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
     public bool activateOnBoarding = false;
+    public static Action<bool> OnWaterMill;
 
     public OB_Sequence sequence;
 
