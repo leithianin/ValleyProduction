@@ -25,6 +25,7 @@ public class CameraControllerV2 : MonoBehaviour
 
 
     [Header("References")]
+    [SerializeField] private Transform cameraViewXZTarget = default;
     [SerializeField] private Transform cameraViewTarget = default;
     [SerializeField] private Transform cameraPosTarget = default;
     [SerializeField] private Transform cameraAnchorXZ = default;
@@ -40,17 +41,22 @@ public class CameraControllerV2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveXZ(cameraViewTarget);
+        MoveXZ(cameraViewXZTarget);
+        ObjectPositionLerp(cameraViewTarget, cameraViewXZTarget);
+
+        RotateYAxis(cameraViewXZTarget);
         RotateYAxis(cameraViewTarget);
+
         GetScrolling();
         MoveY(cameraAnchorY);
+
         MoveCameraPositionTarget();
     }
 
     //Move the camera parent in the player's inputs direction
     void MoveXZ(Transform obj)
     {
-        Vector3 dir = obj.forward * Input.GetAxis("Vertical") + obj.right * Input.GetAxis("Horizontal");
+        Vector3 dir = obj.forward * Input.GetAxisRaw("Vertical") + obj.right * Input.GetAxisRaw("Horizontal");
         dir.Normalize();
 
         if (MouseCollideWithScreenBorders() && !Input.GetKey(KeyCode.Mouse2) && cameraEdgeScorlling)
@@ -61,6 +67,11 @@ public class CameraControllerV2 : MonoBehaviour
         }
         obj.position = obj.position + dir * movingSpeed * (t * 5) * Time.deltaTime;
 
+    }
+
+    void ObjectPositionLerp(Transform obj, Transform target)
+    {
+        obj.position = Vector3.Lerp(obj.position, target.position, 0.1f);
     }
 
     //Move the camera position target depending on the position of the others anchors
