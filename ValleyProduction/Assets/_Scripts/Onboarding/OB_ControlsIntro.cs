@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class OB_ControlsIntro : OnBoarding
 {
+    public float time = 0.5f;
+
     public UnityEvent OnMouseScroll;
     public UnityEvent OnMoving;
 
@@ -44,11 +46,17 @@ public class OB_ControlsIntro : OnBoarding
     {
         if(hasDoneAction)
         {
-            Over();
+            StartCoroutine(DesactivateAfterTime());
         }
         else
         {
             hasDoneAction = true;
         }
+    }
+
+    IEnumerator DesactivateAfterTime()
+    {
+        yield return new WaitForSeconds(time);
+        Over();
     }
 }

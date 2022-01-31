@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1662746747366280875}
   - component: {fileID: 1662746747366280876}
+  - component: {fileID: 8942163829147800003}
+  - component: {fileID: 2677734243906822857}
+  - component: {fileID: 2975233706737288519}
   m_Layer: 0
   m_Name: Prefab_Watermill
   m_TagString: Untagged
@@ -30,6 +33,7 @@ Transform:
   m_Children:
   - {fileID: 1196262219020981452}
   - {fileID: 1196262217752722723}
+  - {fileID: 640830492193749101}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41,18 +45,18 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662746747366280874}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.38714433, y: 2.6597657, z: 0.5633378}
+  m_LocalReferencePoint: {x: 0.3871441, y: 2.6597981, z: 0.5633371}
   m_Size: 15.123333
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.22669925
+  - screenRelativeHeight: 0.1282111
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3953936006201242520}
     - renderer: {fileID: 4987661236239665438}
-  - screenRelativeHeight: 0.0028739003
+  - screenRelativeHeight: 0.034792554
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6230363591855565396}
@@ -60,9 +64,52 @@ LODGroup:
   - screenRelativeHeight: 0
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
+    - renderer: {fileID: 9207909080357028133}
+    - renderer: {fileID: 4846369413716928255}
   m_Enabled: 1
+--- !u!208 &8942163829147800003
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662746747366280874}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!136 &2677734243906822857
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662746747366280874}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 10
+  m_Height: 16.47054
+  m_Direction: 1
+  m_Center: {x: -4, y: 0, z: -3}
+--- !u!114 &2975233706737288519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662746747366280874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec9660a99bcf6247b9d028e023cabfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactions: []
 --- !u!1001 &1662746745824228135
 PrefabInstance:
   m_ObjectHideFlags: 0

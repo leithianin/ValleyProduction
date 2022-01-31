@@ -28,9 +28,13 @@ public class PathManager : VLY_Singleton<PathManager>
     public List<GameObject> lineRendererDebugList = new List<GameObject>();
     public LineRenderer currentLineDebug;
 
+    [Header("Action")]
+    public static System.Action<bool> isOnSpawn;
+    public static System.Action<bool> isOnFinishPath;
+
     public static List<PathData> GetAllPath => instance.pathDataList;
     public static PathData GetCurrentPathData => instance.currentPathData;
-
+    public static List<IST_PathPoint> GetCurrentPathpointList => instance.pathpointList;
     public static PathManager GetInstance => instance;
 
     private void Update()
@@ -76,7 +80,12 @@ public class PathManager : VLY_Singleton<PathManager>
 
             //ChangementPathFragment
             //instance.pathFragmentDataList.Add(new PathFragmentData(previousPathpoint, pathpoint, allPoints));
-            instance.pathFragmentDataList.Add(new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints));
+            PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
+            instance.pathFragmentDataList.Add(new_pfd);
+
+            //IF ONBOARDING SEQUENCE 
+            new_pfd.CheckAvailableInterestPoint();
+
             previousPathpoint = pathpoint;
         }
         else
@@ -150,7 +159,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if(SpawnPoints.Contains(ist_pp))
         {
-            return false;
+            SpawnPoints.Remove(ist_pp);
         }
         return true;
     }
@@ -245,6 +254,9 @@ public class PathManager : VLY_Singleton<PathManager>
                     DebugLineR(newPathData);
                 }
             }
+
+            //IF ONBOARDING SEQUENCE 
+            isOnFinishPath?.Invoke(true);
 
             //Reset les currents Data puisqu'on deselectionne le chemin
             instance.pathFragmentDataList.Clear();
