@@ -13,7 +13,6 @@ public class OB_VisitorsProfilesIntro : OnBoarding
 
     protected override void OnPlay()
     {
-        Debug.Log("InfoVisitor");
         OnBoardingManager.ShowVisitorsProfileIntro();
     }
 
