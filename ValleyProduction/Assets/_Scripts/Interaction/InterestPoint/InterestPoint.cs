@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class InterestPoint : MonoBehaviour
 {
+    [SerializeField] private bool isLandmark;
+
     [SerializeField] private InteractionSpot[] interactions;
 
     public bool IsUsable => GetUsableInteractions().Count > 0;
+
+    public bool IsLandmark => isLandmark;
 
     public InteractionSpot GetRandomSpot()
     {

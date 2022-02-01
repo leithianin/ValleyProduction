@@ -70,13 +70,14 @@ public class PathFragmentData
 
             foreach(Collider c in colliderTab)
             {
-                if(c.gameObject.GetComponent<InterestPoint>())
+                InterestPoint foundInterestPoint = c.gameObject.GetComponent<InterestPoint>();
+                if (foundInterestPoint != null && foundInterestPoint.IsLandmark)
                 {
                     if(c.gameObject.name.Contains("Watermill")) 
                     {
                         OnBoardingManager.OnWaterMill?.Invoke(true); 
                     }
-                    AddInterestPoint(c.gameObject.GetComponent<InterestPoint>());
+                    AddInterestPoint(foundInterestPoint);
                 }
             }
         }
