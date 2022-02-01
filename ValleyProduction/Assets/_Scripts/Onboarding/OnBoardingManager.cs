@@ -12,6 +12,8 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public OB_Sequence sequence;
 
+    public GameObject UI_OB_VisitorsProfileInfo;
+
     private void Start()
     {
         if (activateOnBoarding)
@@ -27,5 +29,15 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         //instance.onBoardingList[instance.increment]?.Play();
 
         //
+    }
+
+    public static void ShowVisitorsProfileIntro()
+    {
+        instance.UI_OB_VisitorsProfileInfo.SetActive(true);
+    }
+
+    public static void HideVisitorsProfileIntro()
+    {
+        instance.UI_OB_VisitorsProfileInfo.SetActive(false);
     }
 }
