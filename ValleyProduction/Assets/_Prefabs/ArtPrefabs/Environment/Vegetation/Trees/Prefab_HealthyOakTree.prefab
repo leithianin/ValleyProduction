@@ -89,6 +89,9 @@ GameObject:
   - component: {fileID: 2955778270783914342}
   - component: {fileID: 1710061413351401939}
   - component: {fileID: -1773550315648494616}
+  - component: {fileID: 3707500937226023476}
+  - component: {fileID: 1384855667979930405}
+  - component: {fileID: 5737507716250037085}
   m_Layer: 0
   m_Name: Prefab_HealthyOakTree
   m_TagString: Untagged
@@ -155,6 +158,54 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 3.51, z: 0}
   m_TimeToStationary: 0.5
+--- !u!135 &3707500937226023476
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376275344081132500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1384855667979930405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376275344081132500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 5737507716250037085}
+--- !u!114 &5737507716250037085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376275344081132500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthyScore: 1
+  currentScore: 0
+  OnSetMesh: {fileID: 1039732564222255185}
+  OnUnsetMesh: {fileID: 3441481119875741570}
+  OnSet:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnset:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1001612078845791688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -216,6 +267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2b659e9ed57220478911eb84194c3b8, type: 3}
+--- !u!1 &3441481119875741570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2460346629055593034, guid: a2b659e9ed57220478911eb84194c3b8, type: 3}
+  m_PrefabInstance: {fileID: 1001612078845791688}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3441481119875741571 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2460346629055593035, guid: a2b659e9ed57220478911eb84194c3b8, type: 3}
