@@ -9,7 +9,6 @@ public class StartingZoneCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("tt");
         IST_PathPoint pathpoint = other.gameObject.GetComponent<IST_PathPoint>();
 
         if (pathpoint != null)

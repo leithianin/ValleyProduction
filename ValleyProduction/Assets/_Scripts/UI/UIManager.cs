@@ -11,6 +11,10 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public bool OnMenuOption = false;
 
+    [Header("Visitors Informations")]
+    public TouristType kikersInfo;
+    public TouristType touristInfo;
+
     //Use in Path Button On Click()
     public void OnToolCreatePath()
     {   
@@ -96,4 +100,16 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         instance.OnMenuOption = !instance.OnMenuOption;
     }
+
+    #region Info Visitors
+    public static void ShowInfoVisitor()
+    {
+        Debug.Log("Infoqfqdfsd");
+    }
+
+    public static void ChangeInfoVisitor(GameObject UI_visitorsInfo)
+    {
+        //Get le gameObject qui doit être modifi
+    }
+    #endregion
 }
