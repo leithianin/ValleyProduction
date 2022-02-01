@@ -18,7 +18,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private void Update()
     {
-        if(Time.time > nextSpawnTime)
+        if(Time.time > nextSpawnTime && !OnBoardingManager.instance.activateOnBoarding)
         {
             int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
             for (int i = 0; i < spawnNb; i++)
@@ -36,11 +36,10 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// <summary>
     /// Demande à faire appraître un visiteur.
     /// </summary>
-    private void SpawnVisitor()
+    private void SpawnVisitor(VisitorScriptable type = null)
     {
         if (PathManager.SpawnPoints.Count > 0)
         {
-
             VisitorBehavior newVisitor = GetAvailableVisitor();
 
             Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
@@ -51,7 +50,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
             if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
             {
-                VisitorScriptable visitorType = ChooseVisitorType();
+                VisitorScriptable visitorType;
+                if (type != null) { visitorType = type; }
+                else { visitorType = ChooseVisitorType(); }
 
                 PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
 
@@ -61,6 +62,22 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Spawn un visiteur de type touriste
+    /// </summary>
+    public static void SpawnTourist()
+    {
+        instance.SpawnVisitor(instance.visitorTypes[0]);
+    }
+
+    /// <summary>
+    /// Spawn un visiteur de type Hiker
+    /// </summary>
+    public static void SpawnHiker()
+    {
+        instance.SpawnVisitor(instance.visitorTypes[1]);
     }
 
     /// <summary>

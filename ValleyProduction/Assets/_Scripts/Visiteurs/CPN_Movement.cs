@@ -146,7 +146,7 @@ public class CPN_Movement : MonoBehaviour
         {
             StopWalk();
 
-            Debug.Log("Reach Destination");
+            //Debug.Log("Reach Destination");
             reachDestinationCallback?.Invoke();
 
             PlayOnEndWalking?.Invoke();
@@ -159,7 +159,7 @@ public class CPN_Movement : MonoBehaviour
     /// <returns>La liste des points qu'il lui reste à faire pour finir son déplacement.</returns>
     public List<Vector3> InteruptWalk()
     {
-        Debug.Log("Remove Callback");
+        //Debug.Log("Remove Callback");
         reachDestinationCallback = null;
 
         List<Vector3> toReturn = new List<Vector3>();
