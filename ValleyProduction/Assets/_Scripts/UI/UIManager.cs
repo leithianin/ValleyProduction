@@ -9,6 +9,8 @@ public class UIManager : VLY_Singleton<UIManager>
     public ChangeRoadInfo RoadInfo;
     public Camera sceneCamera;
 
+    public bool OnMenuOption = false;
+
     //Use in Path Button On Click()
     public void OnToolCreatePath()
     {   
@@ -88,5 +90,10 @@ public class UIManager : VLY_Singleton<UIManager>
         RectTransformUtility.ScreenPointToLocalPointInRectangle(instance.pathButtonList[0].transform.parent.parent.GetComponent<RectTransform>(), screenPoint, null, out canvasPos);
 
         instance.pathButtonList[0].transform.parent.transform.localPosition = canvasPos;
+    }
+
+    public static void ChangeMenuOptionBool()
+    {
+        instance.OnMenuOption = !instance.OnMenuOption;
     }
 }
