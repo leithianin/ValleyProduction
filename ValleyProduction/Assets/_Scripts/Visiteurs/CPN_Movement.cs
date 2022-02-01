@@ -118,8 +118,9 @@ public class CPN_Movement : MonoBehaviour
             targetPosition = pathToTake[pathIndex];
         }
 
-        if (Vector3.Distance(transform.position, targetPosition) <= 2f)
+        if (Vector3.Distance(transform.position, targetPosition) <= agent.stoppingDistance)
         {
+            Debug.Log("Close to current Pos");
             ReachDestination();
         }
         else
@@ -127,7 +128,6 @@ public class CPN_Movement : MonoBehaviour
             Vector3 randomPosition = pathToTake[pathIndex] + UnityEngine.Random.insideUnitSphere * 2f;
 
             agent.destination = randomPosition;
-            StartWalk();
         }
     }
 
@@ -145,7 +145,7 @@ public class CPN_Movement : MonoBehaviour
         {
             StopWalk();
 
-            //Debug.Log("Reach Destination");
+            Debug.Log("Reach Destination : " + Time.time);
             reachDestinationCallback?.Invoke();
 
             PlayOnEndWalking?.Invoke();

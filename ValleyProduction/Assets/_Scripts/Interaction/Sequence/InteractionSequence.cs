@@ -5,40 +5,71 @@ using UnityEngine;
 
 public class InteractionSequence : InteractionActions
 {
+    private class SequenceHandler
+    {
+        public int currentSequenceIndex;
+        public InteractionHandler caller;
+    }
+
     [SerializeField] private List<InteractionActions> sequence;
 
-    private int currentSequenceIndex = -1;
+    private List<SequenceHandler> sequenceUser = new List<SequenceHandler>();
 
     protected override void OnPlayAction(InteractionHandler caller)
     {
-        currentSequenceIndex = -1;
+        SequenceHandler newHandler = new SequenceHandler();
+        newHandler.currentSequenceIndex = -1;
+        newHandler.caller = caller;
+
+        sequenceUser.Add(newHandler);
 
         PlayNextStep(caller);
     }
 
     protected override void OnEndAction(InteractionHandler caller)
     {
-        
+        for (int i = 0; i < sequenceUser.Count; i++)
+        {
+            if (sequenceUser[i].caller == caller)
+            {
+                sequenceUser.RemoveAt(i);
+                break;
+            }
+        }
     }
 
     private void PlayNextStep(InteractionHandler caller)
     {
-        currentSequenceIndex++;
-        if (currentSequenceIndex >= sequence.Count)
+        for (int i = 0; i < sequenceUser.Count; i++)
         {
-            EndAction(caller);
-        }
-        else
-        {
-            sequence[currentSequenceIndex].PlayAction(caller, () => PlayNextStep(caller));
+            if (sequenceUser[i].caller == caller)
+            {
+                sequenceUser[i].currentSequenceIndex++;
+                if (sequenceUser[i].currentSequenceIndex >= sequence.Count)
+                {
+                    EndAction(caller);
+                }
+                else
+                {
+                    sequence[sequenceUser[i].currentSequenceIndex].PlayAction(caller, () => PlayNextStep(caller));
+                }
+                break;
+            }
         }
     }
 
     protected override void OnInteruptAction(InteractionHandler caller)
     {
-        if (currentSequenceIndex >= 0)
+        for (int i = 0; i < sequenceUser.Count; i++)
         {
-            sequence[currentSequenceIndex].InteruptAction(caller);
+            if (sequenceUser[i].caller == caller)
+            {
+                if (sequenceUser[i].currentSequenceIndex >= 0)
+                {
+                    sequence[sequenceUser[i].currentSequenceIndex].InteruptAction(caller);
+                }
+            }
+            break;
         }
     }
 }

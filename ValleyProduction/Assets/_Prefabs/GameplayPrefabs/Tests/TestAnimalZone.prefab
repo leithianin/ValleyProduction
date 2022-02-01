@@ -705,6 +705,96 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &1136301892050048613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2686669538086507180}
+  - component: {fileID: 9136321935739015590}
+  m_Layer: 0
+  m_Name: Target (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2686669538086507180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136301892050048613}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2582569642053295141}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9136321935739015590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136301892050048613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952d8d599e7873a479bd7460af06163c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathToTake:
+  - {fileID: 2686669538086507180}
+--- !u!1 &1705714079827016491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 479514851969386159}
+  - component: {fileID: 7531293942637713448}
+  m_Layer: 0
+  m_Name: Target (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &479514851969386159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705714079827016491}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2582569642053295141}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7531293942637713448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705714079827016491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952d8d599e7873a479bd7460af06163c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathToTake:
+  - {fileID: 479514851969386159}
 --- !u!1 &1708677131005720009
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +824,8 @@ Transform:
   m_Children:
   - {fileID: 2957360123951554531}
   - {fileID: 2957360123709368682}
+  - {fileID: 479514851969386159}
+  - {fileID: 2686669538086507180}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -830,7 +922,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2957360123951554531}
   - component: {fileID: 2957360123951554530}
-  - component: {fileID: 2957360123951554557}
   - component: {fileID: 2957360123951554556}
   m_Layer: 0
   m_Name: AnimalSequence
@@ -866,23 +957,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sequence:
-  - {fileID: 2957360123951554557}
+  - {fileID: 7531293942637713448}
   - {fileID: 2957360123951554556}
---- !u!114 &2957360123951554557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2957360123951554559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309dc81e7313f514985f9ad9e198a46a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  circleCenter: {fileID: 2957360123951554531}
-  circleRadius: 100
-  maxDistanceByMovement: 10
+  - {fileID: 9136321935739015590}
 --- !u!114 &2957360123951554556
 MonoBehaviour:
   m_ObjectHideFlags: 0
