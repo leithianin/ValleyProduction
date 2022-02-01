@@ -12,6 +12,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
     public UnityEvent OnSelectPathTool;
     public UnityEvent OnUnselectPathTool;
+    public UnityEvent OnUnselectOneMore;
 
     public static bool HasSelectedStructureType => instance.selectedStructureType != InfrastructureType.None && instance.selectedStructureType != InfrastructureType.DeleteStructure;
 
@@ -124,6 +125,11 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// </summary>
     public static void UnselectInfrastructureType()
     {
+        if(InfrastructureManager.GetCurrentSelectedStructure == null)
+        {
+            instance.OnUnselectOneMore?.Invoke();
+        }
+
         InfrastructureManager.SetCurrentSelectedStructureToNull();                                                          //Reset CurrentSelectedStructure
         instance.OnSelectInfrastructureType(InfrastructureType.None);
     }

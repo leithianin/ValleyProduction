@@ -9,6 +9,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     private Infrastructure currentSelectedStructure;
 
     public static InfrastructurePreview GetCurrentPreview => instance.previewHandler.GetPreview;
+    public static Infrastructure GetCurrentSelectedStructure => instance.currentSelectedStructure;
 
     private static LayerMask layerIgnoreRaycast = 2;
     private static LayerMask layerInfrastructure = 0;
@@ -95,7 +96,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         switch (tool)
         {
             case InfrastructureType.None:
-                instance.SelectInfrastructure(interactedStructure);
+                //instance.SelectInfrastructure(interactedStructure);
                 break;
             case InfrastructureType.DeleteStructure:
                 DeleteInfrastructure(interactedStructure);
