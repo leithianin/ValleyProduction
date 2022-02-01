@@ -14,7 +14,10 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     private void Start()
     {
-        sequence.Play();
+        if (activateOnBoarding)
+        {
+            sequence.Play();
+        }
     }
 
     public static void PlayNextEvent()
