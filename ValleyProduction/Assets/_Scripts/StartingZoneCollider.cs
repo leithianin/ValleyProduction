@@ -16,7 +16,6 @@ public class StartingZoneCollider : MonoBehaviour
             if (!IsPathAlreadyHaveASpawnPoint())
             {
                 PathManager.isOnSpawn?.Invoke(true);
-                VisitorManager.GetVisitorSpawnPoints.Add(pathpoint);
                 PathManager.SpawnPoints.Add(pathpoint);
             }
         }

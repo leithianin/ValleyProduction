@@ -195,7 +195,6 @@ public class VisitorBehavior : MonoBehaviour
             }
             else
             {
-                Debug.Log("Same fragment");
                 possibleNextFragment.Add(new PathFragmentData(currentPathFragment.endPoint, currentPathFragment.startPoint, currentPathFragment.GetReversePath()));
             }
         }

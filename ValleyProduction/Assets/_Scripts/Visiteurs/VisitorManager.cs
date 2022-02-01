@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class VisitorManager : VLY_Singleton<VisitorManager>
 {
-    [SerializeField] private List<IST_PathPoint> visitorSpawnPoints = new List<IST_PathPoint>();
-
     [SerializeField] private float timeBetweenSpawn = 10f;
     [SerializeField] private Vector2Int visitorToSpawnNb = Vector2Int.zero;
     [SerializeField] private float spawnDistanceFromSpawnPoint = 0.8f;
@@ -17,8 +15,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
     private float nextSpawnTime = 5f;
-
-    public static List<IST_PathPoint> GetVisitorSpawnPoints => instance.visitorSpawnPoints;
 
     private void Update()
     {
@@ -42,13 +38,13 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// </summary>
     private void SpawnVisitor()
     {
-        if (visitorSpawnPoints.Count > 0)
+        if (PathManager.SpawnPoints.Count > 0)
         {
 
             VisitorBehavior newVisitor = GetAvailableVisitor();
 
             Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
-            IST_PathPoint wantedSpawn = visitorSpawnPoints[Random.Range(0, visitorSpawnPoints.Count)];
+            IST_PathPoint wantedSpawn = PathManager.SpawnPoints[Random.Range(0, PathManager.SpawnPoints.Count)];
             Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
 
             NavMeshHit hit;

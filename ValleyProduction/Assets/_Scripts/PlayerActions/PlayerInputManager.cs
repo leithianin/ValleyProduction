@@ -107,17 +107,17 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     IEnumerator TimerHoldLeft()
     {
-        Debug.Log("Left Coroutine Start");
+        //Debug.Log("Left Coroutine Start");
         yield return new WaitForSeconds(holdDuration);
-        Debug.Log("Left Coroutine End");
+        //Debug.Log("Left Coroutine End");
         CallLeftHoldMouseInput();
     }
 
     IEnumerator TimerHoldRight()
     {
-        Debug.Log("Right Coroutine Start");
+        //Debug.Log("Right Coroutine Start");
         yield return new WaitForSeconds(holdDuration);
-        Debug.Log("Right Coroutine End");
+        //Debug.Log("Right Coroutine End");
         CallRightHoldMouseInput();
     }
 
