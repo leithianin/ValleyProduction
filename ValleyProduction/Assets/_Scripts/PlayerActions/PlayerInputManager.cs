@@ -39,28 +39,31 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         //Handle Mouse input outside UI
 
-        if (usedEventSystem.currentSelectedGameObject == null)
+        if (!UIManager.instance.OnMenuOption)
         {
-            if (Input.GetMouseButtonDown(0))                        //Clic gauche enfoncé
+            if (usedEventSystem.currentSelectedGameObject == null)
             {
-                StartCoroutine(TimerHoldLeft());
-            }
-            else if(Input.GetMouseButtonUp(0))                      //Clic gauche relaché
-            {
-                StopAllCoroutines();
-                //Debug.Log("Coroutines Stop");
-                CallLeftMouseInputs();
-            }
+                if (Input.GetMouseButtonDown(0))                        //Clic gauche enfoncé
+                {
+                    StartCoroutine(TimerHoldLeft());
+                }
+                else if (Input.GetMouseButtonUp(0))                      //Clic gauche relaché
+                {
+                    StopAllCoroutines();
+                    //Debug.Log("Coroutines Stop");
+                    CallLeftMouseInputs();
+                }
 
-            if (Input.GetMouseButtonDown(1))                        //Clic droit enfoncé           
-            {
-                StartCoroutine(TimerHoldRight());
-            }
-            else if(Input.GetMouseButtonUp(1))
-            {
-                CallRightMouseInputs();
-                StopAllCoroutines();
-                //Debug.Log("Coroutines Stop");
+                if (Input.GetMouseButtonDown(1))                        //Clic droit enfoncé           
+                {
+                    StartCoroutine(TimerHoldRight());
+                }
+                else if (Input.GetMouseButtonUp(1))
+                {
+                    CallRightMouseInputs();
+                    StopAllCoroutines();
+                    //Debug.Log("Coroutines Stop");
+                }
             }
         }
 
@@ -93,7 +96,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ConstructionManager.UnselectInfrastructureType();
+            //ConstructionManager.UnselectInfrastructureType();
         }
         if (Input.GetKeyDown(KeyCode.T))
         {

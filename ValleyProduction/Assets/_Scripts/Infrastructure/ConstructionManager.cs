@@ -125,7 +125,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// </summary>
     public static void UnselectInfrastructureType()
     {
-        if(InfrastructureManager.GetCurrentSelectedStructure == null)
+        if(!HasSelectedStructureType)
         {
             instance.OnUnselectOneMore?.Invoke();
         }
