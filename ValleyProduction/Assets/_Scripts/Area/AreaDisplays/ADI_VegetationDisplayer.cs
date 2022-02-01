@@ -12,7 +12,7 @@ public class ADI_VegetationDisplayer : AreaDisplay
     }
 
     //[SerializeField] private List<VegetationDisplayData> vegetByValidScore;
-    [SerializeField] private List<TreeBehavior> treesInArea;
+    [SerializeField] private List<TreeBehavior> treesInArea = new List<TreeBehavior>();
 
     [SerializeField] private List<int> treeToDisable;
 
@@ -39,25 +39,30 @@ public class ADI_VegetationDisplayer : AreaDisplay
     public override void OnUpdateScore(int newScore)
     {
         score = newScore;
-        int currentTreeIndex = 0;
+        int currentTreeIndex = -1;
 
         for(int i = 0; i < treeToDisable.Count; i++)
         {
-            if (i < newScore)
+            for(int j = 0; j < treeToDisable[i]; j++)
             {
-                if (!treesInArea[currentTreeIndex].IsSet)
-                {
-                    treesInArea[currentTreeIndex].SetTree();
-                }
                 currentTreeIndex++;
-            }
-            else
-            {
-                if (treesInArea[currentTreeIndex].IsSet)
+                if (currentTreeIndex < treesInArea.Count)
                 {
-                    treesInArea[currentTreeIndex].UnsetTree();
+                    if (i < newScore)
+                    {
+                        if (!treesInArea[currentTreeIndex].IsSet)
+                        {
+                            treesInArea[currentTreeIndex].SetTree();
+                        }
+                    }
+                    else
+                    {
+                        if (treesInArea[currentTreeIndex].IsSet)
+                        {
+                            treesInArea[currentTreeIndex].UnsetTree();
+                        }
+                    }
                 }
-                currentTreeIndex++;
             }
         }
 

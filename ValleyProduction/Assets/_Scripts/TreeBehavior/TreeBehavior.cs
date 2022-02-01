@@ -7,7 +7,7 @@ public class TreeBehavior : MonoBehaviour
 {
     [SerializeField] private int healthyScore;
 
-    [HideInInspector] public int currentScore = 0;
+    public int currentScore = 0;
 
     public GameObject OnSetMesh;
     public GameObject OnUnsetMesh;
@@ -36,6 +36,7 @@ public class TreeBehavior : MonoBehaviour
     public void UnsetTree()
     {
         isSet = false;
+        Debug.Log("UsetTree");
         currentScore = 0;
         OnSetMesh.SetActive(false);
         OnUnsetMesh.SetActive(true);
