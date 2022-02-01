@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OB_VisitorsProfilesIntro : OnBoarding
 {
+    public bool playOnce = false;
+
     protected override void OnEnd()
     {
         
@@ -11,11 +13,16 @@ public class OB_VisitorsProfilesIntro : OnBoarding
 
     protected override void OnPlay()
     {
+        Debug.Log("InfoVisitor");
         OnBoardingManager.ShowVisitorsProfileIntro();
     }
 
     public void OnVisitorReach()
     {
-        OnPlay();
+        if (!playOnce)
+        {
+            playOnce = true;
+            OnPlay();
+        }
     }
 }
