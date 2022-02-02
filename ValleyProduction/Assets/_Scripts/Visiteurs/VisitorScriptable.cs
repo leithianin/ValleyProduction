@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Visitor", menuName = "Visitor/Create Visitor")]
-public class VisitorScriptable : ScriptableObject, IInteractableData, CPN_Data_Stamina
+public class VisitorScriptable : ScriptableObject, IInteractableData, CPN_Data_Stamina, CPN_Data_Movement
 {
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
     [SerializeField, Tooltip("The speed of the visitor.")] private float speed;
     [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> interactionTypes;
+
+    [SerializeField] private float maxStamina;
+    [SerializeField] private float slopeCoef;
+    [SerializeField] private float staminaRegenCoef;
 
     public float noiseMade;
 
@@ -22,20 +26,23 @@ public class VisitorScriptable : ScriptableObject, IInteractableData, CPN_Data_S
         return interactionTypes;
     }
 
-    [SerializeField] private float maxStamine;
-
     public float MaxStamina()
     {
-        return maxStamine;
+        return maxStamina;
     }
 
     public float SlopeCoef()
     {
-        throw new System.NotImplementedException();
+        return slopeCoef;
     }
 
     public float RegenCoef()
     {
-        throw new System.NotImplementedException();
+        return staminaRegenCoef;
+    }
+
+    float CPN_Data_Movement.Speed()
+    {
+        return speed;
     }
 }
