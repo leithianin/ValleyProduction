@@ -9,10 +9,12 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
     public bool activateOnBoarding = false;
     public static Action<bool> OnWaterMill;
+    public static Action<bool> OnClickVisitor;
 
     public OB_Sequence sequence;
 
     public GameObject UI_OB_VisitorsProfileInfo;
+    public GameObject UI_OB_HikerIntro;
 
     private void Start()
     {
@@ -36,8 +38,9 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         instance.UI_OB_VisitorsProfileInfo.SetActive(true);
     }
 
-    public static void HideVisitorsProfileIntro()
+    public static void ShowHikerProfileIntro()
     {
         instance.UI_OB_VisitorsProfileInfo.SetActive(false);
+        instance.UI_OB_HikerIntro.SetActive(true);
     }
 }
