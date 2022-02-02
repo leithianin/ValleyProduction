@@ -12,7 +12,7 @@ public class UIManager : VLY_Singleton<UIManager>
     public bool OnMenuOption = false;
 
     [Header("Visitors Informations")]
-    public TouristType kikersInfo;
+    public TouristType hikersInfo;
     public TouristType touristInfo;
 
     //Use in Path Button On Click()
@@ -102,9 +102,21 @@ public class UIManager : VLY_Singleton<UIManager>
     }
 
     #region Info Visitors
-    public static void ShowInfoVisitor()
+    public static void InteractWithVisitors(GameObject touchedObject)
     {
-        Debug.Log("Infoqfqdfsd");
+        VisitorScriptable visitorScript = touchedObject.GetComponent<VisitorBehavior>().visitorType;
+        if (visitorScript != null)
+        {
+            //Check si Hiker + OnBoarding en cours
+            OnBoardingManager.ShowHikerProfileIntro();
+                
+            ShowInfoVisitor();
+        }
+    }
+
+    public static void ShowInfoVisitor()
+    {      
+       instance.hikersInfo.gameObject.SetActive(true);
     }
 
     public static void ChangeInfoVisitor(GameObject UI_visitorsInfo)

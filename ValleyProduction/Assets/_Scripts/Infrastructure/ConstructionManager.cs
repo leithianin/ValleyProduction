@@ -34,19 +34,10 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// <param name="touchedObject">L'objet touché.</param>
     public static void InteractWithStructure(GameObject touchedObject)
     {
-        //Ce qu'il faut faire si en mode edition, ignore raycast on visitors sinon prendre en compte les raycast
-
         Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
         if(infraComponent != null)
         {
             InfrastructureManager.InteractWithStructure(instance.selectedStructureType, infraComponent);
-        }
-
-        //If click on visitor 
-        VisitorScriptable visitorScript = touchedObject.GetComponent<VisitorBehavior>().visitorType;
-        if(visitorScript != null)
-        {
-            //Click Visitor
         }
     }
 
@@ -160,6 +151,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
                 switch (newStructureType)
                 {
                     case InfrastructureType.PathTools:
+                        PlayerInputManager.ChangeLayerMaskForPathTools();
                         InfrastructureManager.ChooseInfrastructure(pathPointPreview);
                         OnSelectPathTool?.Invoke();
                         break;
@@ -176,6 +168,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         switch (selectedStructureType)
         {
             case InfrastructureType.PathTools:
+                PlayerInputManager.ChangeLayerMaskForNoTools();
                 InfrastructureManager.ChooseInfrastructure(null);
                 OnUnselectPathTool?.Invoke();
                 break;
