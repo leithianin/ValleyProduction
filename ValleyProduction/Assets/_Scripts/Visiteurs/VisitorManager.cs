@@ -14,7 +14,11 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
+    [SerializeField] private Terrain mainTerrain;
+
     private float nextSpawnTime = 5f;
+
+    public static Terrain GetMainTerrain => instance.mainTerrain;
 
     private void Update()
     {

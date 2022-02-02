@@ -15,10 +15,9 @@ public class AnimalBehavior : MonoBehaviour
 
     public void SetAnimal(InteractionSequence nSequence)
     {
-        NavMeshHit hit;
-        NavMesh.SamplePosition(transform.position, out hit, 10f, NavMesh.AllAreas);
+        float yPosition = VisitorManager.GetMainTerrain.SampleHeight(transform.position) + VisitorManager.GetMainTerrain.transform.position.y;
 
-        transform.position = hit.position;
+        transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
 
         sequence = nSequence;
         gameObject.SetActive(true);
