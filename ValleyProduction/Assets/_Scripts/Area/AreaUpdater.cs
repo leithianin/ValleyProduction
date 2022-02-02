@@ -42,11 +42,13 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
                 AreaManager.RemoveDataToArea<T>(currentArea, lastUpdatedData);
             }
             currentArea = toCheck;
+
             AreaManager.AddDataToArea<T>(currentArea, data);
         }
         else
         {
             currentArea = toCheck;
+
             if (lastUpdatedData != null)
             {
                 AreaManager.RefreshDataToArea<T>(currentArea, lastUpdatedData, data);

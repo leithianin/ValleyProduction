@@ -42,9 +42,9 @@ public class CPN_Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// Set la vitesse de déplacement.
+    /// Set la vitesse de dï¿½placement.
     /// </summary>
-    /// <param name="speed">La nouvelle vitesse de déplacement.</param>
+    /// <param name="speed">La nouvelle vitesse de dï¿½placement.</param>
     public void SetSpeed(float speed)
     {
         agent.speed = speed;
@@ -59,13 +59,13 @@ public class CPN_Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// Demande à se déplacer selon un chemin définit, puis joue une Action à la fin du déplacement.
+    /// Demande ï¿½ se dï¿½placer selon un chemin dï¿½finit, puis joue une Action ï¿½ la fin du dï¿½placement.
     /// </summary>
-    /// <param name="nPathToTake">Le chemin à prendre.</param>
-    /// <param name="callback">L'Action qui sera effectuée à la fin du déplacement.</param>
+    /// <param name="nPathToTake">Le chemin ï¿½ prendre.</param>
+    /// <param name="callback">L'Action qui sera effectuï¿½e ï¿½ la fin du dï¿½placement.</param>
     public void WalkOnNewPath(List<Vector3> nPathToTake, Action callback)
     {
-        Debug.Log("Add Callback");
+        //Debug.Log("Add Callback");
         reachDestinationCallback += callback;
 
         pathToTake = new List<Vector3>(nPathToTake);
@@ -76,12 +76,11 @@ public class CPN_Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// Demande à se déplacer selon un chemin définit.
+    /// Demande ï¿½ se dï¿½placer selon un chemin dï¿½finit.
     /// </summary>
-    /// <param name="nPathToTake">Le chemin à prendre.</param>
+    /// <param name="nPathToTake">Le chemin ï¿½ prendre.</param>
     public void WalkOnNewPath(List<Vector3> nPathToTake)
     {
-        Debug.Log("Remove Callback");
         reachDestinationCallback = null;
 
         pathToTake = new List<Vector3>(nPathToTake);
@@ -92,7 +91,7 @@ public class CPN_Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// Demande au personnage de commencer à parcourir son chemin.
+    /// Demande au personnage de commencer ï¿½ parcourir son chemin.
     /// </summary>
     private void StartWalk()
     {
@@ -108,9 +107,9 @@ public class CPN_Movement : MonoBehaviour
     }
     
     /// <summary>
-    /// Demande de se déplacer vers la prochaine destination.
+    /// Demande de se dï¿½placer vers la prochaine destination.
     /// </summary>
-    /// <param name="pathIndex">L'index de la position visée sur la liste du chemin à parcourir.</param>
+    /// <param name="pathIndex">L'index de la position visï¿½e sur la liste du chemin ï¿½ parcourir.</param>
     private void SetNextDestination(int pathIndex)
     {
         Vector3 targetPosition = transform.position;
@@ -119,8 +118,9 @@ public class CPN_Movement : MonoBehaviour
             targetPosition = pathToTake[pathIndex];
         }
 
-        if (Vector3.Distance(transform.position, targetPosition) <= 2f)
+        if (Vector3.Distance(transform.position, targetPosition) <= agent.stoppingDistance)
         {
+            Debug.Log("Close to current Pos");
             ReachDestination();
         }
         else
@@ -128,12 +128,11 @@ public class CPN_Movement : MonoBehaviour
             Vector3 randomPosition = pathToTake[pathIndex] + UnityEngine.Random.insideUnitSphere * 2f;
 
             agent.destination = randomPosition;
-            StartWalk();
         }
     }
 
     /// <summary>
-    /// Appelé quand la destination est atteinte. Vérifie si le chemin est finit ou non.
+    /// Appelï¿½ quand la destination est atteinte. Vï¿½rifie si le chemin est finit ou non.
     /// </summary>
     private void ReachDestination()
     {
@@ -146,7 +145,7 @@ public class CPN_Movement : MonoBehaviour
         {
             StopWalk();
 
-            //Debug.Log("Reach Destination");
+            //Debug.Log("Reach Destination : " + Time.time);
             reachDestinationCallback?.Invoke();
 
             PlayOnEndWalking?.Invoke();
@@ -154,9 +153,9 @@ public class CPN_Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// Intérromp le déplacement.
+    /// Intï¿½rromp le dï¿½placement.
     /// </summary>
-    /// <returns>La liste des points qu'il lui reste à faire pour finir son déplacement.</returns>
+    /// <returns>La liste des points qu'il lui reste ï¿½ faire pour finir son dï¿½placement.</returns>
     public List<Vector3> InteruptWalk()
     {
         //Debug.Log("Remove Callback");
@@ -178,7 +177,7 @@ public class CPN_Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// Fait s'arrêter le personnage.
+    /// Fait s'arrï¿½ter le personnage.
     /// </summary>
     private void StopWalk()
     {

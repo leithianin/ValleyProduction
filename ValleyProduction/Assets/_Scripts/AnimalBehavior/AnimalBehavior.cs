@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class AnimalBehavior : MonoBehaviour
@@ -14,6 +15,11 @@ public class AnimalBehavior : MonoBehaviour
 
     public void SetAnimal(InteractionSequence nSequence)
     {
+        NavMeshHit hit;
+        NavMesh.SamplePosition(transform.position, out hit, 10f, NavMesh.AllAreas);
+
+        transform.position = hit.position;
+
         sequence = nSequence;
         gameObject.SetActive(true);
         OnSet?.Invoke();

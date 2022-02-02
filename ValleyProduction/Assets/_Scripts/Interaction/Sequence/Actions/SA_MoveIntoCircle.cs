@@ -42,7 +42,7 @@ public class SA_MoveIntoCircle : InteractionActions
         }
         else
         {
-            Debug.Log("No path");
+            //Debug.Log("No path");
             StartCoroutine(EndNotPath(caller));
         }
     }

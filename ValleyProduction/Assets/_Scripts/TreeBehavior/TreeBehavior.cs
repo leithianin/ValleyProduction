@@ -7,12 +7,10 @@ public class TreeBehavior : MonoBehaviour
 {
     [SerializeField] private int healthyScore;
 
-    [HideInInspector] public int currentScore = 0;
+    public int currentScore = 0;
 
-    public MeshFilter meshComponent;
-
-    public Mesh OnSetMesh;
-    public Mesh OnUnsetMesh;
+    public GameObject OnSetMesh;
+    public GameObject OnUnsetMesh;
 
     [SerializeField] private UnityEvent OnSet;
     [SerializeField] private UnityEvent OnUnset;
@@ -21,11 +19,17 @@ public class TreeBehavior : MonoBehaviour
 
     public bool IsSet => isSet;
 
+    private void Start()
+    {
+        currentScore = healthyScore;
+    }
+
     public void SetTree()
     {
         isSet = true;
         currentScore = healthyScore;
-        meshComponent.mesh = OnSetMesh;
+        OnUnsetMesh.SetActive(false);
+        OnSetMesh.SetActive(true);
         OnSet?.Invoke();
     }
 
@@ -33,7 +37,8 @@ public class TreeBehavior : MonoBehaviour
     {
         isSet = false;
         currentScore = 0;
-        meshComponent.mesh = OnUnsetMesh;
+        OnSetMesh.SetActive(false);
+        OnUnsetMesh.SetActive(true);
         OnUnset?.Invoke();
     }
 }

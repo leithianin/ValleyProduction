@@ -45,7 +45,10 @@ public abstract class InteractionActions : MonoBehaviour
                 callbacksToTry[i].callback?.Invoke();
                 callbacksToTry[i].callback = null;
 
-                askedCallbacks.RemoveAt(i);
+                if (askedCallbacks.Count > i)
+                {
+                    askedCallbacks.RemoveAt(i);
+                }
 
                 callbacksToTry.RemoveAt(i);
                 i--;
