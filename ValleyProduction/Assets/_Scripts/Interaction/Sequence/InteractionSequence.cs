@@ -8,14 +8,14 @@ public class InteractionSequence : InteractionActions
     private class SequenceHandler
     {
         public int currentSequenceIndex;
-        public InteractionHandler caller;
+        public CPN_InteractionHandler caller;
     }
 
     [SerializeField] private List<InteractionActions> sequence;
 
     private List<SequenceHandler> sequenceUser = new List<SequenceHandler>();
 
-    protected override void OnPlayAction(InteractionHandler caller)
+    protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         SequenceHandler newHandler = new SequenceHandler();
         newHandler.currentSequenceIndex = -1;
@@ -26,7 +26,7 @@ public class InteractionSequence : InteractionActions
         PlayNextStep(caller);
     }
 
-    protected override void OnEndAction(InteractionHandler caller)
+    protected override void OnEndAction(CPN_InteractionHandler caller)
     {
         for (int i = 0; i < sequenceUser.Count; i++)
         {
@@ -38,7 +38,7 @@ public class InteractionSequence : InteractionActions
         }
     }
 
-    private void PlayNextStep(InteractionHandler caller)
+    private void PlayNextStep(CPN_InteractionHandler caller)
     {
         for (int i = 0; i < sequenceUser.Count; i++)
         {
@@ -58,7 +58,7 @@ public class InteractionSequence : InteractionActions
         }
     }
 
-    protected override void OnInteruptAction(InteractionHandler caller)
+    protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
         for (int i = 0; i < sequenceUser.Count; i++)
         {

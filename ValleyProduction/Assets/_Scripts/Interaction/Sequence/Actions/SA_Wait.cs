@@ -6,14 +6,14 @@ public class SA_Wait : InteractionActions
 {
     private class WaiterData
     {
-        public InteractionHandler caller;
+        public CPN_InteractionHandler caller;
         public TimerManager.Timer timer;
     }
 
     [SerializeField] private Vector2 waitTime;
     private List<WaiterData> waiters = new List<WaiterData>();
 
-    protected override void OnEndAction(InteractionHandler caller)
+    protected override void OnEndAction(CPN_InteractionHandler caller)
     {
         for(int i = 0; i < waiters.Count; i++)
         {
@@ -25,7 +25,7 @@ public class SA_Wait : InteractionActions
         }
     }
 
-    protected override void OnInteruptAction(InteractionHandler caller)
+    protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
         for (int i = 0; i < waiters.Count; i++)
         {
@@ -38,7 +38,7 @@ public class SA_Wait : InteractionActions
         }
     }
 
-    protected override void OnPlayAction(InteractionHandler caller)
+    protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         WaiterData newWaiter = new WaiterData();
         newWaiter.caller = caller;

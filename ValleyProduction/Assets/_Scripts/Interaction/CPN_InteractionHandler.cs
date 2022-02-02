@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InteractionHandler : MonoBehaviour
+public class CPN_InteractionHandler : MonoBehaviour
 {
     [SerializeField] private CPN_Movement movement;
 

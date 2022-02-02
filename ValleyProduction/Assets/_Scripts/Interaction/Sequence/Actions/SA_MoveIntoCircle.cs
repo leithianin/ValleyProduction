@@ -11,7 +11,7 @@ public class SA_MoveIntoCircle : InteractionActions
 
     NavMeshPath pathToTake;
 
-    protected override void OnPlayAction(InteractionHandler caller)
+    protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         Vector3 randomDirection = Random.insideUnitCircle * circleRadius;
         Vector3 randomPosition = circleCenter.position + new Vector3(randomDirection.x, 0, randomDirection.y);
@@ -47,18 +47,18 @@ public class SA_MoveIntoCircle : InteractionActions
         }
     }
 
-    IEnumerator EndNotPath(InteractionHandler caller)
+    IEnumerator EndNotPath(CPN_InteractionHandler caller)
     {
         yield return new WaitForSeconds(Time.deltaTime);
         EndAction(caller);
     }
 
-    protected override void OnEndAction(InteractionHandler caller)
+    protected override void OnEndAction(CPN_InteractionHandler caller)
     {
         
     }
 
-    protected override void OnInteruptAction(InteractionHandler caller)
+    protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
         caller.Movement.InteruptWalk();
     }

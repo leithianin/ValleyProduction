@@ -6,7 +6,7 @@ public class SA_GoToPosition : InteractionActions
 {
     [SerializeField] private List<Transform> pathToTake;
 
-    protected override void OnPlayAction(InteractionHandler caller)
+    protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         if (caller.Movement != null)
         {
@@ -21,12 +21,12 @@ public class SA_GoToPosition : InteractionActions
         }
     }
 
-    protected override void OnEndAction(InteractionHandler caller)
+    protected override void OnEndAction(CPN_InteractionHandler caller)
     {
         
     }
 
-    protected override void OnInteruptAction(InteractionHandler caller)
+    protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
         caller.Movement.InteruptWalk();
     }

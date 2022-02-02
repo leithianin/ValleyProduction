@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class AnimalBehavior : MonoBehaviour
 {
-    [SerializeField] private InteractionHandler interaction;
+    [SerializeField] private CPN_InteractionHandler interaction;
     private InteractionSequence sequence;
     [SerializeField] private Transform spawnPosition;
 

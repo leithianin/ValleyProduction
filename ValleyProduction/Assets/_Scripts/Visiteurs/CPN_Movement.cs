@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 
-public class CPN_Movement : MonoBehaviour
+public class CPN_Movement : VLY_Component<CPN_Data_Movement>
 {
     [SerializeField] private NavMeshAgent agent;
 
@@ -187,5 +187,10 @@ public class CPN_Movement : MonoBehaviour
             agent.isStopped = true;
             PlayOnStopWalking?.Invoke();
         }
+    }
+
+    public override void SetData(CPN_Data_Movement dataToSet)
+    {
+        throw new NotImplementedException();
     }
 }
