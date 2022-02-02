@@ -4,13 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CPN_InteractionHandler : MonoBehaviour
+public class CPN_InteractionHandler : VLY_Component
 {
-    [SerializeField] private CPN_Movement movement;
+    [SerializeField] private VLY_ComponentHandler handler;
 
     [SerializeField] private List<InteractionType> interactionTypes;
 
-    public CPN_Movement Movement => movement;
+    public VLY_ComponentHandler Handler => handler;
+
+    public bool HasComponent<T>(ref T wantedComponent) where T : VLY_Component
+    {
+        T inHandler = null;
+        handler.GetComponentOfType<T>(ref inHandler);
+
+        wantedComponent = inHandler;
+
+        return wantedComponent != null;
+    }
 
     public bool IsInterested(InteractionType wantedType)
     {

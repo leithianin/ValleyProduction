@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AD_Noise : AreaData<NoiseMaker>
+public class AD_Noise : AreaData<CPN_NoiseMaker>
 {
     /// <summary>
     /// NOTES :
@@ -14,19 +14,19 @@ public class AD_Noise : AreaData<NoiseMaker>
     ///     On récupère alors toute ces données et on en calcul le score ICI.
     /// </summary>
     
-    private List<NoiseMaker> noiseInArea = new List<NoiseMaker>();
+    private List<CPN_NoiseMaker> noiseInArea = new List<CPN_NoiseMaker>();
 
     public override AreaDataType GetDataType()
     {
         return AreaDataType.Noise;
     }
 
-    protected override void OnAddData(NoiseMaker data)
+    protected override void OnAddData(CPN_NoiseMaker data)
     {
         noiseInArea.Add(data);
     }
 
-    protected override void OnRemoveData(NoiseMaker data)
+    protected override void OnRemoveData(CPN_NoiseMaker data)
     {
         noiseInArea.Remove(data);
     }
