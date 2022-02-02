@@ -145,7 +145,7 @@ public class CPN_Movement : MonoBehaviour
         {
             StopWalk();
 
-            Debug.Log("Reach Destination : " + Time.time);
+            //Debug.Log("Reach Destination : " + Time.time);
             reachDestinationCallback?.Invoke();
 
             PlayOnEndWalking?.Invoke();

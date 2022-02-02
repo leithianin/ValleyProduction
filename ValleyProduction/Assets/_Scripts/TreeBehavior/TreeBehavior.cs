@@ -36,7 +36,6 @@ public class TreeBehavior : MonoBehaviour
     public void UnsetTree()
     {
         isSet = false;
-        Debug.Log("UsetTree");
         currentScore = 0;
         OnSetMesh.SetActive(false);
         OnUnsetMesh.SetActive(true);

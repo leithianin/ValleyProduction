@@ -7,4 +7,9 @@ public class NoiseMaker : MonoBehaviour
     [SerializeField] private float noiseMade;
 
     public float NoiseMade => noiseMade;
+
+    public void SetNoise(float nNoise)
+    {
+        noiseMade = nNoise;
+    }
 }

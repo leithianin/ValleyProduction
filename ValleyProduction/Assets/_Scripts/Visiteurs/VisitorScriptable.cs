@@ -9,6 +9,8 @@ public class VisitorScriptable : ScriptableObject, IInteractableData
     [SerializeField, Tooltip("The speed of the visitor.")] private float speed;
     [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> interactionTypes;
 
+    public float noiseMade;
+
     /// <summary>
     /// Get a random skin for the visitor.
     /// </summary>
