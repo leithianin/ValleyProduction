@@ -191,6 +191,6 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
 
     public override void SetData(CPN_Data_Movement dataToSet)
     {
-        throw new NotImplementedException();
+        SetSpeed(dataToSet.Speed());
     }
 }

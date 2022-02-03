@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CPN_InteractionHandler : VLY_Component
+public class CPN_InteractionHandler : VLY_Component<CPN_Data_Interaction>
 {
     [SerializeField] private VLY_ComponentHandler handler;
 
@@ -27,8 +27,8 @@ public class CPN_InteractionHandler : VLY_Component
         return interactionTypes.Contains(wantedType);
     }
 
-    public void SetInteractableData(IInteractableData newDatas)
+    public override void SetData(CPN_Data_Interaction dataToSet)
     {
-        interactionTypes = newDatas.GetInteractionTypes();
+        interactionTypes = new List<InteractionType>(dataToSet.InteractionInterest());
     }
 }

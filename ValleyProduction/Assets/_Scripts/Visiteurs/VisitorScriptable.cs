@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Visitor", menuName = "Visitor/Create Visitor")]
-public class VisitorScriptable : ScriptableObject, IInteractableData, CPN_Data_Stamina, CPN_Data_Movement
+public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Movement, CPN_Data_Interaction, CPN_Data_Noise
 {
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
     [SerializeField, Tooltip("The speed of the visitor.")] private float speed;
@@ -20,11 +20,6 @@ public class VisitorScriptable : ScriptableObject, IInteractableData, CPN_Data_S
     /// </summary>
     public AnimationHandler Display => display[Random.Range(0, display.Count)];
     public float Speed => speed;
-
-    public List<InteractionType> GetInteractionTypes()
-    {
-        return interactionTypes;
-    }
 
     public float MaxStamina()
     {
@@ -44,5 +39,15 @@ public class VisitorScriptable : ScriptableObject, IInteractableData, CPN_Data_S
     float CPN_Data_Movement.Speed()
     {
         return speed;
+    }
+
+    public List<InteractionType> InteractionInterest()
+    {
+        return interactionTypes;
+    }
+
+    public float NoiseMade()
+    {
+        return noiseMade;
     }
 }
