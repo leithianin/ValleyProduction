@@ -10,7 +10,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public bool activateOnBoarding = false;
     public static Action<bool> OnWaterMill;
     public static Action<bool> OnClickVisitor;
-    public static bool canClickVisitors = false;
+    public static bool firstClickVisitors = false;
 
     public OB_Sequence sequence;
 

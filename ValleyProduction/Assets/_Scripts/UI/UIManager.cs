@@ -123,10 +123,10 @@ public class UIManager : VLY_Singleton<UIManager>
        switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
-                if (OnBoardingManager.canClickVisitors)
+                if (OnBoardingManager.firstClickVisitors)
                 {
                     OnBoardingManager.ShowHikerProfileIntro();
-                    OnBoardingManager.canClickVisitors = false;
+                    OnBoardingManager.firstClickVisitors = false;
                     break;
                 }
                 ChangeInfoVisitor(instance.hikersInfo, cpn_Inf);
@@ -149,5 +149,7 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
     }
+
+    
     #endregion
 }
