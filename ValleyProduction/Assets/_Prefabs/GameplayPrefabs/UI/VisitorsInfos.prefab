@@ -2935,6 +2935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1451359862255603808}
   - component: {fileID: 1891385111200444547}
+  - component: {fileID: 588490395}
   m_Layer: 0
   m_Name: TouristInfos
   m_TagString: Untagged
@@ -2959,7 +2960,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -218.5}
+  m_AnchoredPosition: {x: 757.00006, y: 62.5}
   m_SizeDelta: {x: 298, y: 437}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!95 &1891385111200444547
@@ -2981,6 +2982,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &588490395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451359862255603809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0052e7571014a4d8615fed02ecd053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: {fileID: 1451359860884409498}
+  stamina: {fileID: 1451359862013933270}
+  goal: {fileID: 1451359862055317595}
+  note: {fileID: 1451359860939924729}
 --- !u!1 &1451359862303184455
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,13 +3141,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1451359862353054337}
+  - component: {fileID: 588490389}
   m_Layer: 0
   m_Name: HikerInfos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1451359862353054337
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3151,6 +3169,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 298, y: 437}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &588490389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451359862353054338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0052e7571014a4d8615fed02ecd053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: {fileID: 1451359862671840549}
+  stamina: {fileID: 1451359862198248725}
+  goal: {fileID: 1451359861806619429}
+  note: {fileID: 1451359862303184453}
 --- !u!1 &1451359862481041083
 GameObject:
   m_ObjectHideFlags: 0
