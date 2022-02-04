@@ -107,8 +107,11 @@ public class UIManager : VLY_Singleton<UIManager>
         VisitorScriptable visitorScript = touchedObject.GetComponent<VisitorBehavior>().visitorType;
         if (visitorScript != null)
         {
-            //Check si Hiker + OnBoarding en cours
-            OnBoardingManager.ShowHikerProfileIntro();
+            if (OnBoardingManager.canClickVisitors)
+            {
+                OnBoardingManager.ShowHikerProfileIntro();
+                OnBoardingManager.canClickVisitors = false;
+            }
                 
             ShowInfoVisitor();
         }

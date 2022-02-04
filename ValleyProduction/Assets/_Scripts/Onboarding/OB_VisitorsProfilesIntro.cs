@@ -15,6 +15,7 @@ public class OB_VisitorsProfilesIntro : OnBoarding
     {
         if(ConstructionManager.HasSelectedStructureType) { ConstructionManager.UnselectInfrastructureType(); }
         OnBoardingManager.ShowVisitorsProfileIntro();
+        OnBoardingManager.canClickVisitors = true;
         Over();
     }
 
