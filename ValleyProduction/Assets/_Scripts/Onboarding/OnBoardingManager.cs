@@ -30,8 +30,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         Debug.Log("Play next Event");
         //instance.increment++;
         //instance.onBoardingList[instance.increment]?.Play();
-
-        //
     }
 
     public static void ShowVisitorsProfileIntro()
@@ -43,5 +41,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     {
         instance.UI_OB_VisitorsProfileInfo.SetActive(false);
         instance.UI_OB_HikerIntro.SetActive(true);
+        instance.activateOnBoarding = false;
     }
 }

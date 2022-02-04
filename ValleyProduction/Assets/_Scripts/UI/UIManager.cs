@@ -104,27 +104,50 @@ public class UIManager : VLY_Singleton<UIManager>
     #region Info Visitors
     public static void InteractWithVisitors(GameObject touchedObject)
     {
-        VisitorScriptable visitorScript = touchedObject.GetComponent<VisitorBehavior>().visitorType;
-        if (visitorScript != null)
+        CPN_Informations visitorInfo = touchedObject.GetComponent<CPN_Informations>();
+        if (visitorInfo != null)
         {
-            if (OnBoardingManager.canClickVisitors)
-            {
-                OnBoardingManager.ShowHikerProfileIntro();
-                OnBoardingManager.canClickVisitors = false;
-            }
-                
-            ShowInfoVisitor();
+            ShowInfoVisitor(visitorInfo);
+        }
+        else
+        {
+            HideInfoVisitor();
         }
     }
 
-    public static void ShowInfoVisitor()
-    {      
-       instance.hikersInfo.gameObject.SetActive(true);
+    //Show les informations des visiteurs on click
+    public static void ShowInfoVisitor(CPN_Informations cpn_Inf)
+    {
+        HideInfoVisitor();
+
+       switch (cpn_Inf.visitorType)
+        {
+            case TypeVisitor.Hiker:
+                if (OnBoardingManager.canClickVisitors)
+                {
+                    OnBoardingManager.ShowHikerProfileIntro();
+                    OnBoardingManager.canClickVisitors = false;
+                    break;
+                }
+                ChangeInfoVisitor(instance.hikersInfo, cpn_Inf);
+                instance.hikersInfo.gameObject.SetActive(true);
+                break;
+            case TypeVisitor.Tourist:
+                ChangeInfoVisitor(instance.touristInfo, cpn_Inf);
+                instance.touristInfo.gameObject.SetActive(true);
+                break;
+        }
     }
 
-    public static void ChangeInfoVisitor(GameObject UI_visitorsInfo)
+    public static void HideInfoVisitor()
     {
-        //Get le gameObject qui doit être modifi
+        instance.hikersInfo.gameObject.SetActive(false);
+        instance.touristInfo.gameObject.SetActive(false);
+    }
+
+    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
+    {
+        UI_visitorsInfo.name.text = cpn_Inf.GetName;
     }
     #endregion
 }

@@ -19,7 +19,6 @@ public class OB_EndOnboardingPath : OnBoarding
 
     public void Play()
     {
-
         EndOnBoardingPath?.Invoke();
     }
 }
