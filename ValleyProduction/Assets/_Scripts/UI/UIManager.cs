@@ -127,7 +127,6 @@ public class UIManager : VLY_Singleton<UIManager>
                 {
                     OnBoardingManager.ShowHikerProfileIntro();
                     OnBoardingManager.firstClickVisitors = false;
-                    break;
                 }
                 ChangeInfoVisitor(instance.hikersInfo, cpn_Inf);
                 instance.hikersInfo.gameObject.SetActive(true);
