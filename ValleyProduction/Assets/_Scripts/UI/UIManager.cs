@@ -56,7 +56,7 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.RoadInfo.UpdateColor(pathdata.color);
         instance.RoadInfo.UpdateStamina(pathdata.difficulty);
 
-        //Il faut avoir des valeurs fixes et les get selon la difficulté
+        //Il faut avoir des valeurs fixes et les get selon la difficultï¿½
         instance.RoadInfo.UpdateGaugeStamina(1);
 
         instance.RoadInfo.gameObject.SetActive(true);
@@ -127,7 +127,6 @@ public class UIManager : VLY_Singleton<UIManager>
                 {
                     OnBoardingManager.ShowHikerProfileIntro();
                     OnBoardingManager.firstClickVisitors = false;
-                    break;
                 }
                 ChangeInfoVisitor(instance.hikersInfo, cpn_Inf);
                 instance.hikersInfo.gameObject.SetActive(true);
