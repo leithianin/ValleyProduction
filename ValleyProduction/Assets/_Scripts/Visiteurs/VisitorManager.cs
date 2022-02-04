@@ -16,6 +16,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     [SerializeField] private Terrain mainTerrain;
 
+
     private float nextSpawnTime = 5f;
 
     public static Terrain GetMainTerrain => instance.mainTerrain;
@@ -57,12 +58,13 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 VisitorScriptable visitorType;
                 if (type != null) { visitorType = type; }
                 else { visitorType = ChooseVisitorType(); }
-
+   
                 PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
 
                 if (chosenPath != null)
                 {
                     newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
+                    SetType(newVisitor);             
                 }
             }
         }
@@ -100,6 +102,21 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     private VisitorScriptable ChooseVisitorType()
     {
         return visitorTypes[Random.Range(0, visitorTypes.Length)];
+    }
+
+    private void SetType(VisitorBehavior visitorBehav)
+    {
+        CPN_Informations cpn_Inf = visitorBehav.GetComponent<CPN_Informations>();
+
+        switch(visitorBehav.visitorType.name)
+        {
+            case "Hiker":
+                cpn_Inf.visitorType = TypeVisitor.Hiker;
+                break;
+            case "Tourist":
+                cpn_Inf.visitorType = TypeVisitor.Tourist;
+                break;
+        }
     }
 
     /// <summary>
