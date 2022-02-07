@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 
+
 public class VisitorManager : VLY_Singleton<VisitorManager>
 {
     [SerializeField] private float timeBetweenSpawn = 10f;
@@ -15,6 +16,8 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
     [SerializeField] private Terrain mainTerrain;
+
+    public static System.Action<bool> isOnDespawn;
 
 
     private float nextSpawnTime = 5f;
@@ -92,6 +95,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// <param name="toDelete">Le visiteur à désactiver.</param>
     public static void DeleteVisitor(VisitorBehavior toDelete)
     {
+        isOnDespawn?.Invoke(true);
         toDelete.UnsetVisitor();
     }
 
