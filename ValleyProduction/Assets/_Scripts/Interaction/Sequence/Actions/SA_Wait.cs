@@ -42,7 +42,7 @@ public class SA_Wait : InteractionActions
     {
         WaiterData newWaiter = new WaiterData();
         newWaiter.caller = caller;
-        newWaiter.timer = TimerManager.CreateTimer(Random.Range(waitTime.x, waitTime.y), () => EndAction(newWaiter.caller));
+        newWaiter.timer = TimerManager.CreateGameTimer(Random.Range(waitTime.x, waitTime.y), () => EndAction(newWaiter.caller));
 
         waiters.Add(newWaiter);
     }

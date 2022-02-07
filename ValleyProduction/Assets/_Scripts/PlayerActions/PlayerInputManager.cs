@@ -44,7 +44,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //Handle Mouse input outside UI
 

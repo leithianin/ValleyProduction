@@ -16,7 +16,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private GameObject toMove;
 
-    private void FixedUpdate()
+    private void Update()
     {
         //Move Infrastructure when MoveInfrastructure()
         if(toMove != null)

@@ -185,7 +185,6 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         //Remove Pathpoint
-        Debug.Log(instance.pathpointList.Count);
         instance.pathpointList.RemoveAt(instance.pathpointList.Count-1);
 
         //Change le Previous Pathpoint
