@@ -11,31 +11,17 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] private Transform cameraPosTarget = default;
     [SerializeField] private Transform playerCamera = default;
 
-
-    private List<RaycastHit> raycastHitList = new List<RaycastHit>();
-    RaycastHit hitBeneath;
-    RaycastHit hitFront;
-    RaycastHit hitRight;
-    RaycastHit hitBack;
-    RaycastHit hitLeft;
-    private List<float> raycastsLengths = new List<float>();
-    float hitBeneathDistance = default;
-    float hitFrontDistance = default;
-    float hitRightDistance = default;
-    float hitBackDistance = default;
-    float hitLeftDistance = default;
-
     float minOffsetLength = default;
-
-
 
     private Vector3 offset = default;
 
+    public Vector3 direction;
+
+    public Vector3 Direction { get; set; }
+
     private void Awake()
     {
-        AddRaycastsLengthsToList();
         minOffsetLength = 5;
-        Debug.Log(minOffsetLength);
     }
 
     // Update is called once per frame
@@ -43,22 +29,16 @@ public class CameraBehaviour : MonoBehaviour
     {
         MoveCamera();
         FixXRotation();
-        CheckDistancesToGround();
         SetOffset();
+        CheckDistanceToGround();
     }
 
-    void AddRaycastsLengthsToList()
-    {
-        raycastsLengths.Add(hitBeneathDistance);
-        raycastsLengths.Add(hitFrontDistance);
-        raycastsLengths.Add(hitRightDistance);
-        raycastsLengths.Add(hitBackDistance);
-        raycastsLengths.Add(hitLeftDistance);
-    }
 
     void MoveCamera()
     {
-        transform.position = Vector3.Lerp(transform.position, cameraPosTarget.position  + offset, 0.05f);
+        //transform.position = Vector3.Lerp(transform.position, cameraPosTarget.position + offset, 0.05f);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(cameraPosTarget.position.x, Mathf.Clamp(cameraPosTarget.position.y, Terrain.activeTerrain.SampleHeight(transform.position) + minDistToEnviro, 1000f), cameraPosTarget.position.z), 0.05f);
+        Debug.Log(Terrain.activeTerrain.SampleHeight(transform.position) + minDistToEnviro);
     }
 
     void FixXRotation()
@@ -69,106 +49,27 @@ public class CameraBehaviour : MonoBehaviour
 
     void SetOffset()
     {
-        //if ( hitBeneath.distance <= minDistToEnviro)
-        //{
-        //    offset = new Vector3(0f, minDistToEnviro - hitBeneath.distance, 0f);
-        //}
-        //else
+        if (raycastHitTest.distance <= minDistToEnviro)
+        {
+            offset = new Vector3(0f, (Terrain.activeTerrain.SampleHeight(transform.position) - cameraPosTarget.position.y) < 0 ? (Terrain.activeTerrain.SampleHeight(transform.position) - cameraPosTarget.position.y) : 0.0f + (minDistToEnviro - raycastHitTest.distance), 0f);
+            Debug.Log((Terrain.activeTerrain.SampleHeight(transform.position) - cameraPosTarget.position.y) < 0 ? (Terrain.activeTerrain.SampleHeight(transform.position) - cameraPosTarget.position.y) : 0.0f + (minDistToEnviro - raycastHitTest.distance));
+        }
+        //else if (raycastHitTest.distance > 5)
         //{
         //    offset = Vector3.zero;
-        //    offsetIncrement = 0;
         //}
-
-        for (int i = 0; i < raycastsLengths.Count; i++)
-        {
-            //Debug.Log(minOffsetLength);
-            if (raycastsLengths[i] < minOffsetLength)
-            {
-                //Debug.Log(raycastsLengths[i]);
-                minOffsetLength = raycastsLengths[i];
-
-            }
-        }
-
-        if (minOffsetLength <= minDistToEnviro)
-        {
-            //Debug.Log(minDistToEnviro);
-            offset = GetOffsetVector(minOffsetLength);
-        }
-        else
-        {
-            offset = Vector3.zero;
-            minOffsetLength = minDistToEnviro;
-        }
-
     }
 
-    Vector3 GetOffsetVector(float offsetLength)
+    RaycastHit raycastHitTest;
+    void CheckDistanceToGround()
     {
-        Vector3 beneathOffset = hitBeneath.distance <= minDistToEnviro ? Vector3.up : Vector3.zero;
-        Vector3 frontOffset = hitFront.distance <= minDistToEnviro ? Vector3.up + Vector3.back : Vector3.zero;
-        Vector3 rightOffset = hitRight.distance <= minDistToEnviro ? Vector3.up + Vector3.left : Vector3.zero;
-        Vector3 backOffset = hitBack.distance <= minDistToEnviro ? Vector3.up + Vector3.forward : Vector3.zero;
-        Vector3 leftOffset = hitLeft.distance <= minDistToEnviro ? Vector3.up + Vector3.right : Vector3.zero;
+        //Debug.Log(direction);
 
-        Vector3 offset = beneathOffset + frontOffset + rightOffset + backOffset + leftOffset;
-        offset.Normalize();
-        offset = offset * (minDistToEnviro - offsetLength);
-        return offset;
-    }
-
-    float offsetIncrement;
-    void OffsetIncrement()
-    {
-        if (hitFront.distance <= 3)
+        if (Physics.Raycast(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + direction)), out raycastHitTest, Mathf.Infinity))
         {
-            offsetIncrement = offsetIncrement + 0.05f;
-            Debug.Log(hitBeneath.distance);
-        }
-    }
-
-    void CheckDistancesToGround()
-    {
-        //Down
-        if (Physics.Raycast(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down)), out hitBeneath, Mathf.Infinity))
-        {
-            Debug.DrawRay(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down)) * hitBeneath.distance, Color.yellow);
-            raycastsLengths[0] = hitBeneath.distance;
-        }
-        //Down Front
-        if (Physics.Raycast(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.forward)), out hitFront, Mathf.Infinity))
-        {
-            Debug.DrawRay(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.forward)) * hitFront.distance, Color.yellow);
-            raycastsLengths[1] = hitFront.distance;
-        }
-        //Down Right
-        if (Physics.Raycast(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.right)), out hitRight, Mathf.Infinity))
-        {
-            Debug.DrawRay(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.right)) * hitRight.distance, Color.yellow);
-            raycastsLengths[2] = hitRight.distance;
-        }
-        //Down Back
-        if (Physics.Raycast(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.back)), out hitBack, Mathf.Infinity))
-        {
-            Debug.DrawRay(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.back)) * hitBack.distance, Color.yellow);
-            raycastsLengths[3] = hitBack.distance;
-
-        }
-        //Down Left
-        if (Physics.Raycast(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.left)), out hitLeft, Mathf.Infinity))
-        {
-            Debug.DrawRay(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + Vector3.left)) * hitLeft.distance, Color.yellow);
-            raycastsLengths[4] = hitLeft.distance;
-
+            Debug.DrawRay(playerCamera.position, cameraPosTarget.TransformDirection(Vector3.Normalize(Vector3.down + direction)) * raycastHitTest.distance, Color.blue);
         }
 
-    }
-
-    void CheckFrontDistance()
-    {
-        if (Physics.Raycast(cameraPosTarget.position, cameraPosTarget.TransformDirection(Vector3.forward), out hitFront, Mathf.Infinity))
-        {
-            Debug.DrawRay(cameraPosTarget.position, cameraPosTarget.TransformDirection(Vector3.forward) * hitFront.distance, Color.yellow);
-        }
+        
     }
 }
