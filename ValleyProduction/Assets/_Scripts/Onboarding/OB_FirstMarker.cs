@@ -20,6 +20,7 @@ public class OB_FirstMarker : OnBoarding
 
     public void OnPlaceSpawn(bool isOnPlaza)
     {
+        PathManager.isOnSpawn -= OnPlaceSpawn;
         OnFirstMarker?.Invoke();
     }
 }

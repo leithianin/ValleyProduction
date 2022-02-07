@@ -15,6 +15,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static bool firstClickVisitors = false;
 
     public OB_Sequence sequence;
+    public OB_EndOnboardingPath endOnboarding;
 
     public GameObject UI_OB_VisitorsProfileInfo;
     public GameObject UI_OB_HikerIntro;
@@ -30,6 +31,11 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         Debug.Log("Play next Event");
         //instance.increment++;
         //instance.onBoardingList[instance.increment]?.Play();
+    }
+
+    public static void PlayEndPathOnBoarding()
+    {
+        instance.endOnboarding.EndOnBoardingPath?.Invoke();
     }
 
     public static void ShowVisitorsProfileIntro()
