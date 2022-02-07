@@ -65,7 +65,12 @@ public class CPN_Stamina : VLY_Component<CPN_Data_Stamina>
 
     private float CalculateSlope()
     {
-        return Mathf.Abs(transform.position.y - lastPosition.y) * slopeCoef + 1;
+        float toReturn = (transform.position.y - lastPosition.y) *slopeCoef + 1;
+        if(toReturn > 1)
+        {
+            return toReturn;
+        }
+        return 1;
     }
 
     public override void SetData(CPN_Data_Stamina dataToSet)
