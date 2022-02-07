@@ -7,10 +7,11 @@ using UnityEngine.Events;
 public class OB_FinishPath : OnBoarding
 {
     public UnityEvent OnFinishPath;
+    public UnityEvent WhilePlayerDontClickOnHiker;
 
     protected override void OnEnd()
     {
-        
+        VisitorManager.isOnDespawn -= RespawnHiker;
     }
 
     protected override void OnPlay()
@@ -22,5 +23,11 @@ public class OB_FinishPath : OnBoarding
     {
         OnFinishPath?.Invoke();
         PathManager.isOnFinishPath -= OnFinish;
+        VisitorManager.isOnDespawn += RespawnHiker;
+    }
+
+    public void RespawnHiker(bool despawnCondition)
+    {
+        WhilePlayerDontClickOnHiker?.Invoke();
     }
 }
