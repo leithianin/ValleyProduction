@@ -5,7 +5,6 @@ using UnityEngine;
 public class PathManager : VLY_Singleton<PathManager>
 {
     [SerializeField] private List<IST_PathPoint> spawnPoints;
-
     public static List<IST_PathPoint> SpawnPoints => instance.spawnPoints;
 
     //Get Data + Update Data
