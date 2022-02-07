@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
     public bool activateOnBoarding = false;
+    public GameObject tool;
+
     public static Action<bool> OnWaterMill;
     public static Action<bool> OnClickVisitor;
     public static bool firstClickVisitors = false;
@@ -22,6 +24,10 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         if (activateOnBoarding)
         {
             sequence.Play();
+        }
+        else
+        {
+            tool.SetActive(true);
         }
     }
 
