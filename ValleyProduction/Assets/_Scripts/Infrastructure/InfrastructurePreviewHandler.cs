@@ -40,7 +40,7 @@ public class InfrastructurePreviewHandler : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!snaping)
         {

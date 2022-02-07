@@ -44,7 +44,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Handle Mouse input outside UI
 
@@ -98,22 +98,18 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             OnKeyEscape?.Invoke();
         }
 
-        // Input pour tester
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
-        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
-            //ConstructionManager.UnselectInfrastructureType();
+            VLY_Time.PauseTime();
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            ConstructionManager.SelectInfrastructureType(InfrastructureType.DeleteStructure);
+            VLY_Time.SetTimeScale(1);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ConstructionManager.UnselectStructure();
+            VLY_Time.SetTimeScale(2);
         }
     }
 
