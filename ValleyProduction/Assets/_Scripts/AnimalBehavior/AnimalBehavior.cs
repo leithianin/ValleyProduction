@@ -32,11 +32,6 @@ public class AnimalBehavior : MonoBehaviour
         DoBehavior();
     }
 
-    private void OnDisable()
-    {
-        sequence.InteruptAction(interaction);
-    }
-
     private void DoBehavior()
     {
         sequence.PlayAction(interaction, DoBehavior);

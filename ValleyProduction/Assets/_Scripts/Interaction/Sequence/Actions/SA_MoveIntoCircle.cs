@@ -43,8 +43,14 @@ public class SA_MoveIntoCircle : InteractionActions
         else
         {
             Debug.Log("No path");
-            EndAction(caller);
+            StartCoroutine(EndNotPath(caller));
         }
+    }
+
+    IEnumerator EndNotPath(InteractionHandler caller)
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+        EndAction(caller);
     }
 
     protected override void OnEndAction(InteractionHandler caller)

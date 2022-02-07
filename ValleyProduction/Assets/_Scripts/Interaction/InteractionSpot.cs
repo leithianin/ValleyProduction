@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InteractionSpot : MonoBehaviour
 {
     public InteractionType interactionType;
+
+    [SerializeField] private UnityEvent PlayOnStartInteract;
+    [SerializeField] private UnityEvent PlayOnEndInteract;
 
     public Action<InteractionHandler> PlayOnInteractionEnd;
     public Action<InteractionHandler> PlayOnInteractionStart;
@@ -27,8 +31,16 @@ public class InteractionSpot : MonoBehaviour
     /// <param name="interacter">L'InteractionHandler qui demande à intéragir avec l'objet.</param>
     public void Interact(InteractionHandler interacter)
     {
+        PlayOnStartInteract?.Invoke();
         PlayOnInteractionStart?.Invoke(interacter);
-        interactionAction.PlayAction(interacter, () => EndInteraction(interacter));
+        if (interactionAction != null)
+        {
+            interactionAction.PlayAction(interacter, () => EndInteraction(interacter));
+        }
+        else
+        {
+            EndInteraction(interacter);
+        }
     }
 
     /// <summary>
@@ -37,6 +49,7 @@ public class InteractionSpot : MonoBehaviour
     /// <param name="interacter">L'InteractionHandler qui finit son interaction.</param>
     public void EndInteraction(InteractionHandler interacter)
     {
+        PlayOnEndInteract?.Invoke();
         PlayOnInteractionEnd?.Invoke(interacter);
     }
 }

@@ -250,7 +250,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
                 if (instance.debugMode)
                 {
-                    Debug.Log("Feedback visuel");
+                    //Debug.Log("Feedback visuel");
                     DebugLineR(newPathData);
                 }
             }

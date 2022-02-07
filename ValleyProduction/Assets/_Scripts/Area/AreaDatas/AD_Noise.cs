@@ -33,11 +33,11 @@ public class AD_Noise : AreaData<NoiseMaker>
 
     protected override int ScoreCalculation()
     {
-        int toReturn = 0;
+        float toReturn = 0;
         for(int i = 0; i < noiseInArea.Count; i++)
         {
             toReturn += noiseInArea[i].NoiseMade;
         }
-        return toReturn;
+        return Mathf.RoundToInt(toReturn);
     }
 }

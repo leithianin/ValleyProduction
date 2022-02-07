@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NoiseMaker : MonoBehaviour
 {
-    [SerializeField] private int noiseMade;
+    [SerializeField] private float noiseMade;
 
-    public int NoiseMade => noiseMade;
+    public float NoiseMade => noiseMade;
 }
