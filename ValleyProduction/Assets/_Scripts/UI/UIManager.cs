@@ -30,6 +30,11 @@ public class UIManager : VLY_Singleton<UIManager>
     //Range les PathData dans la liste de boutons 
     public static void ArrangePathButton(IST_PathPoint pathpoint)
     {
+        foreach(GameObject go in instance.pathButtonList)
+        {
+            go.SetActive(false);
+        }
+
         foreach(PathData pd in PathManager.instance.pathDataList)
         {
             if(pd.ContainsPoint(pathpoint))
