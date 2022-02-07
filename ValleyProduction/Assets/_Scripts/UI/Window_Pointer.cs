@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Window_Pointer : MonoBehaviour
 {
-    private void Update()
+    public GameObject target;
+    public GameObject objectToInstantiate;
+
+    RectTransform rt;
+
+    void Start()
+    {
+        rt = GetComponent<RectTransform>();
+    }
+
+    void Update()
     {
         
     }
