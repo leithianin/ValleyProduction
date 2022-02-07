@@ -35,7 +35,7 @@ public class UIManager : VLY_Singleton<UIManager>
             go.SetActive(false);
         }
 
-        foreach(PathData pd in PathManager.instance.pathDataList)
+        foreach (PathData pd in PathManager.instance.pathDataList)
         {
             if(pd.ContainsPoint(pathpoint))
             {
