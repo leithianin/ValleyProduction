@@ -8,9 +8,9 @@ public abstract class InteractionActions : MonoBehaviour
     public class SequenceCallback
     {
         public Action callback;
-        public InteractionHandler caller;
+        public CPN_InteractionHandler caller;
 
-        public SequenceCallback(Action nCallback, InteractionHandler nCaller)
+        public SequenceCallback(Action nCallback, CPN_InteractionHandler nCaller)
         {
             callback = nCallback;
             caller = nCaller;
@@ -19,20 +19,20 @@ public abstract class InteractionActions : MonoBehaviour
 
     protected List<SequenceCallback> askedCallbacks = new List<SequenceCallback>();
 
-    protected abstract void OnPlayAction(InteractionHandler caller);
+    protected abstract void OnPlayAction(CPN_InteractionHandler caller);
 
-    protected abstract void OnEndAction(InteractionHandler caller);
+    protected abstract void OnEndAction(CPN_InteractionHandler caller);
 
-    protected abstract void OnInteruptAction(InteractionHandler caller);
+    protected abstract void OnInteruptAction(CPN_InteractionHandler caller);
 
-    public void PlayAction(InteractionHandler caller, Action callback)
+    public void PlayAction(CPN_InteractionHandler caller, Action callback)
     {
         askedCallbacks.Add(new SequenceCallback(callback, caller));
 
         OnPlayAction(caller);
     }
 
-    public void EndAction(InteractionHandler caller)
+    public void EndAction(CPN_InteractionHandler caller)
     {
         OnEndAction(caller);
 
@@ -45,7 +45,10 @@ public abstract class InteractionActions : MonoBehaviour
                 callbacksToTry[i].callback?.Invoke();
                 callbacksToTry[i].callback = null;
 
-                askedCallbacks.RemoveAt(i);
+                if (askedCallbacks.Count > i)
+                {
+                    askedCallbacks.RemoveAt(i);
+                }
 
                 callbacksToTry.RemoveAt(i);
                 i--;
@@ -53,7 +56,7 @@ public abstract class InteractionActions : MonoBehaviour
         }
     }
 
-    public void InteruptAction(InteractionHandler caller)
+    public void InteruptAction(CPN_InteractionHandler caller)
     {
         OnInteruptAction(caller);
 

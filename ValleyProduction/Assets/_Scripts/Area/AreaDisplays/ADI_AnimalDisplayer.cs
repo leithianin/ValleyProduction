@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ADI_AnimalDisplayer : AreaDisplay
 {
+    public int score = 0;
+
     [Serializable]
     private class AnimalDisplayData
     {
@@ -16,6 +18,7 @@ public class ADI_AnimalDisplayer : AreaDisplay
 
     public override void OnUpdateScore(int newScore)
     {
+        score = newScore;
         for(int i = 0; i < animalsByValidScore.Count; i++)
         {
             if(i < newScore)

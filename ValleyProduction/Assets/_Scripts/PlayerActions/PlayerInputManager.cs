@@ -30,9 +30,18 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public static bool clicHold = false;
 
+    private LayerMask currentLayerMask;
+    public LayerMask layerMaskNoTools;
+    public LayerMask layerMaskPathTool;
+
     public static Vector3 GetMousePosition => instance.GetGroundHitPoint();
 
     public static Vector2 GetMousePosition2D => new Vector2(GetMousePosition.x, GetMousePosition.z);
+
+    private void Start()
+    {
+        currentLayerMask = layerMaskNoTools;
+    }
 
     // Update is called once per frame
     void Update()
@@ -89,22 +98,18 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             OnKeyEscape?.Invoke();
         }
 
-        // Input pour tester
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
-        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
-            //ConstructionManager.UnselectInfrastructureType();
+            VLY_Time.PauseTime();
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            ConstructionManager.SelectInfrastructureType(InfrastructureType.DeleteStructure);
+            VLY_Time.SetTimeScale(1);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ConstructionManager.UnselectStructure();
+            VLY_Time.SetTimeScale(2);
         }
     }
 
@@ -218,11 +223,13 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100000.0f))
+
+        if (Physics.Raycast(ray, out hit, 100000.0f));//, currentLayerMask))
         {
             hitObject = hit.transform.gameObject;
             return true;
         }
+
         hitObject = null;
         return false;
     }
@@ -236,5 +243,15 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             return hit.point;
         }
         return Vector3.zero;
+    }
+
+    public static void ChangeLayerMaskForNoTools()
+    {
+        instance.currentLayerMask = instance.layerMaskNoTools;
+    }
+
+    public static void ChangeLayerMaskForPathTools()
+    {
+        instance.currentLayerMask = instance.layerMaskPathTool;
     }
 }

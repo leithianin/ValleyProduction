@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87968c9c83c740040834e4888718ff79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noiseMade: 0.5
+  noiseMade: 2
 --- !u!1 &7603813357234534010
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,8 +70,11 @@ GameObject:
   - component: {fileID: 7603813357234534014}
   - component: {fileID: 7603813357234534013}
   - component: {fileID: 7603813357234534012}
+  - component: {fileID: 3264530275645524567}
   - component: {fileID: 7603813357234534011}
-  - component: {fileID: 7603813357234534015}
+  - component: {fileID: 2368778678293667668}
+  - component: {fileID: 3973618983241115100}
+  - component: {fileID: 329369899851214195}
   m_Layer: 2
   m_Name: Visitor
   m_TagString: Untagged
@@ -148,9 +151,9 @@ MonoBehaviour:
   OnSetVisitorWithType:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7603813357234534015}
-        m_TargetAssemblyTypeName: InteractionHandler, Assembly-CSharp
-        m_MethodName: SetInteractableData
+      - m_Target: {fileID: 4577991275926444387}
+        m_TargetAssemblyTypeName: CPN_NoiseMaker, Assembly-CSharp
+        m_MethodName: SetData
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -160,6 +163,62 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2368778678293667668}
+        m_TargetAssemblyTypeName: CPN_Stamina, Assembly-CSharp
+        m_MethodName: SetData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7603813357234534011}
+        m_TargetAssemblyTypeName: CPN_Movement, Assembly-CSharp
+        m_MethodName: SetData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3973618983241115100}
+        m_TargetAssemblyTypeName: CPN_InteractionHandler, Assembly-CSharp
+        m_MethodName: SetData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnNoiseMadeTEMP:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3264530275645524567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7603813357234534010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9faf1ebdab2e47f40abe4d18f25aaea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  components:
+  - {fileID: 7603813357234534011}
+  - {fileID: 2368778678293667668}
+  - {fileID: 3973618983241115100}
+  - {fileID: 4577991275926444387}
 --- !u!114 &7603813357234534011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +266,7 @@ MonoBehaviour:
   PlayOnEndWalking:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7603813357234534015
+--- !u!114 &2368778678293667668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,11 +275,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 7603813357234534010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09028fdffae69084588dcba334827bc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 33162f322908a2447a3218f1c0bf313c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 7603813357234534011}
+  currentStamina: 0
+  lastStaminaState: 0
+  maxStamina: 20
+  OnIsExhausted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnIsNotExhausted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMoveWithoutStamina:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3973618983241115100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7603813357234534010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde81be73a053f046bc407391fe52c3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handler: {fileID: 3264530275645524567}
   interactionTypes: 
+--- !u!114 &329369899851214195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7603813357234534010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720004a39c405374fa647572a17c8288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visitorType: 0
 --- !u!1 &7603813357492896078
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856ba0ec854c2bc4da14023426e08a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactor: {fileID: 7603813357234534015}
+  interactor: {fileID: 3973618983241115100}
   visitor: {fileID: 7603813357234534012}
 --- !u!114 &7603813357492896064
 MonoBehaviour:

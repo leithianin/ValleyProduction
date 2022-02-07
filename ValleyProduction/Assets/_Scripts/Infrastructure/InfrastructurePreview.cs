@@ -75,6 +75,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
     {
         bool toReturn = true;
 
+        //position = new Vector3(position.x, 0, position.z);
+
         NavMeshHit hit;
         if (!NavMesh.SamplePosition(position, out hit, 1 / navMeshSensitivity, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {

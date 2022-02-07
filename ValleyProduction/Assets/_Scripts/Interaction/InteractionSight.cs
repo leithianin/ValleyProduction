@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class InteractionSight : MonoBehaviour
 {
-    [SerializeField] protected InteractionHandler interactor;
+    [SerializeField] protected CPN_InteractionHandler interactor;
 
     protected bool isInteracting;
 
@@ -57,7 +57,7 @@ public abstract class InteractionSight : MonoBehaviour
     /// Appelé quand l'interaction avec le Spot se finit.
     /// </summary>
     /// <param name="spotInteractor">L'InteractionHandler qui vient de finir l'interaction.</param>
-    private void EndInteraction(InteractionHandler spotInteractor)
+    private void EndInteraction(CPN_InteractionHandler spotInteractor)
     {
         if(spotInteractor == interactor)
         {

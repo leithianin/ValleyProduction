@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class AnimalBehavior : MonoBehaviour
 {
-    [SerializeField] private InteractionHandler interaction;
+    [SerializeField] private CPN_InteractionHandler interaction;
     private InteractionSequence sequence;
     [SerializeField] private Transform spawnPosition;
 
@@ -14,6 +15,10 @@ public class AnimalBehavior : MonoBehaviour
 
     public void SetAnimal(InteractionSequence nSequence)
     {
+        float yPosition = VisitorManager.GetMainTerrain.SampleHeight(transform.position) + VisitorManager.GetMainTerrain.transform.position.y;
+
+        transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
+
         sequence = nSequence;
         gameObject.SetActive(true);
         OnSet?.Invoke();

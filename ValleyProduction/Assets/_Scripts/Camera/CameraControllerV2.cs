@@ -41,7 +41,7 @@ public class CameraControllerV2 : MonoBehaviour
     void Update()
     {
         MoveXZ(cameraViewTarget);
-        RotateYAxis(cameraViewTarget);
+        //RotateYAxis(cameraViewTarget);
         GetScrolling();
         MoveY(cameraAnchorY);
         MoveCameraPositionTarget();
@@ -71,7 +71,7 @@ public class CameraControllerV2 : MonoBehaviour
 
     //Rotate the camera around the camera view target
     //Rotate with keyboard inputs or scrolling wheel
-    void RotateYAxis(Transform obj)
+    /*void RotateYAxis(Transform obj)
     {
         if (Input.GetKey(KeyCode.A))
         {
@@ -87,7 +87,7 @@ public class CameraControllerV2 : MonoBehaviour
             obj.Rotate(0.0f, temp, 0.0f, Space.Self);
 
         }
-    }
+    }*/
 
     //Move the Y axis anchor, allowing to raise the highest point reachable the camera
     void MoveY(Transform obj)

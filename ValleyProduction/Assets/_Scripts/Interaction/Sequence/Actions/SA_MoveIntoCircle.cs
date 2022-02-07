@@ -11,7 +11,7 @@ public class SA_MoveIntoCircle : InteractionActions
 
     NavMeshPath pathToTake;
 
-    protected override void OnPlayAction(InteractionHandler caller)
+    protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         Vector3 randomDirection = Random.insideUnitCircle * circleRadius;
         Vector3 randomPosition = circleCenter.position + new Vector3(randomDirection.x, 0, randomDirection.y);
@@ -37,29 +37,37 @@ public class SA_MoveIntoCircle : InteractionActions
             {
                 path.Add(pathToTake.corners[i]);
             }
-            
-            caller.Movement.WalkOnNewPath(path, () => EndAction(caller));
+
+            CPN_Movement movement = null;
+            if (caller.HasComponent<CPN_Movement>(ref movement))
+            {
+                movement.WalkOnNewPath(path, () => EndAction(caller));
+            }
         }
         else
         {
-            Debug.Log("No path");
+            //Debug.Log("No path");
             StartCoroutine(EndNotPath(caller));
         }
     }
 
-    IEnumerator EndNotPath(InteractionHandler caller)
+    IEnumerator EndNotPath(CPN_InteractionHandler caller)
     {
         yield return new WaitForSeconds(Time.deltaTime);
         EndAction(caller);
     }
 
-    protected override void OnEndAction(InteractionHandler caller)
+    protected override void OnEndAction(CPN_InteractionHandler caller)
     {
         
     }
 
-    protected override void OnInteruptAction(InteractionHandler caller)
+    protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
-        caller.Movement.InteruptWalk();
+        CPN_Movement movement = null;
+        if (caller.HasComponent<CPN_Movement>(ref movement))
+        {
+            movement.InteruptWalk();
+        }
     }
 }

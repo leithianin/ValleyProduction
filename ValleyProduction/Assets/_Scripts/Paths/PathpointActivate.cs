@@ -8,12 +8,11 @@ public class PathpointActivate : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(Activate());
+        TimerManager.CreateRealTimer(timer, Activate);
     }
 
-    IEnumerator Activate()
+    private void Activate()
     {
-        yield return new WaitForSeconds(timer);
         gameObject.layer = 0;
     }
 }
