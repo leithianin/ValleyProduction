@@ -9,7 +9,7 @@ public class ReadNameDataTSV : MonoBehaviour
     string[] lines;         //List of all tab's lines
     string[] blocks;        //List of each line's columns
 
-   /* public void Start()
+    /*public void Start()
     {
         ReadTSVFile();
     }*/
@@ -29,7 +29,7 @@ public class ReadNameDataTSV : MonoBehaviour
         {
             Debug.Log("Read Lines");
             //... add each column of the line in a list 'blocks'
-            lines[i] = lines[i].Replace(",", " ");
+            //lines[i] = lines[i].Replace(",", " ");
 
             GeneratorManager.GetNameScript.nameList.Add(lines[i]);     
         }
