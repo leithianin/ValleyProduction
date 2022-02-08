@@ -16,7 +16,6 @@ public class ReadNameDataTSV : MonoBehaviour
 
     public void ReadTSVFile()
     {
-
         //Load Text asset
         TextAsset TSVText = Resources.Load<TextAsset>("TextAssets/NameData");
 
@@ -34,10 +33,5 @@ public class ReadNameDataTSV : MonoBehaviour
 
             GeneratorManager.GetNameScript.nameList.Add(lines[i]);     
         }
-    }
-
-    public void UpdateScriptable()
-    {
-
     }
 }

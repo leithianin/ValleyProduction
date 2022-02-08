@@ -69,6 +69,10 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
                     SetType(newVisitor);             
                 }
+                else
+                {
+                    Debug.LogError("Error : ChosenPath est null.");
+                }
             }
         }
     }
