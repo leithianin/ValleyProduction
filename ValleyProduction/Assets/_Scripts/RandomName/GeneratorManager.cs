@@ -19,6 +19,11 @@ public class GeneratorManager : VLY_Singleton<GeneratorManager>
 
     public static string GetRandomVisitorName()
     {
+        /*foreach(string str in instance.nameScript.nameList)
+        {
+            Debug.Log(str);
+        }*/
+
         return instance.nameScript.nameList[Random.Range(0, instance.nameScript.nameList.Count)];
     }
 }
