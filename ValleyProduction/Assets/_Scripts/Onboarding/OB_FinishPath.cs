@@ -11,7 +11,7 @@ public class OB_FinishPath : OnBoarding
 
     protected override void OnEnd()
     {
-        VisitorManager.isOnDespawn -= RespawnHiker;
+       
     }
 
     protected override void OnPlay()
@@ -28,6 +28,8 @@ public class OB_FinishPath : OnBoarding
 
     public void RespawnHiker(bool despawnCondition)
     {
-        WhilePlayerDontClickOnHiker?.Invoke();
+        if (OnBoardingManager.firstClickVisitors) {WhilePlayerDontClickOnHiker?.Invoke()     ; }
+        else                                      {VisitorManager.isOnDespawn -= RespawnHiker; }
+
     }
 }
