@@ -99,10 +99,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         }
 
 
-        if (Input.GetKeyDown(KeyCode.E))
+        /*if (Input.GetKeyDown(KeyCode.E))
         {
             VLY_Time.PauseTime();
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.T))
         {
             VLY_Time.SetTimeScale(1);
