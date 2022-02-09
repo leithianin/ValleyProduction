@@ -19,6 +19,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
     private static int updaterIndex;
     [SerializeField] private int numberSataToUpdateInFrame;
 
+    [SerializeField] private Transform treeScoreHandler;
+    [SerializeField] private ADI_VegetationDisplayer treeScorePrefab;
+
     /// Liste de toutes les zones de la map
     private static List<Area> areas = new List<Area>();
 
@@ -36,6 +39,30 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 areas[i].datas[j].CalculateScore();
             }
         }
+    }
+
+    [ContextMenu("Set Trees")]
+    private void SetTrees()
+    {
+        int k = 0;
+        while (treeScoreHandler.childCount > 0 && k < 100)
+        {
+            DestroyImmediate(treeScoreHandler.GetChild(0).gameObject);
+            k++;
+        }
+
+        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaHeight), Mathf.RoundToInt(worldDimension.y / areaHeight));
+
+        for (int i = 0; i < gridDimension.x; i++)
+        {
+            for (int j = 0; j < gridDimension.y; j++)
+            {
+                ADI_VegetationDisplayer go = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
+                go.transform.position = new Vector3(areaHeight / 2f + areaHeight * i, 0, areaHeight / 2f + areaHeight * j);
+                go.SetTrees();
+            }
+        }
+
     }
 
     /// <summary>

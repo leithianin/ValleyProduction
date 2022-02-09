@@ -14,12 +14,12 @@ public class ADI_VegetationDisplayer : AreaDisplay
     //[SerializeField] private List<VegetationDisplayData> vegetByValidScore;
     [SerializeField] private List<TreeBehavior> treesInArea = new List<TreeBehavior>();
 
-    [SerializeField] private List<int> treeToDisable;
+    [SerializeField] private List<int> numberTreeEnabled;
 
     //[SerializeField] private List<InteractionSequence> possibleSequences;
 
     [ContextMenu("Set Trees")]
-    private void SetTrees()
+    public void SetTrees()
     {
         treesInArea = new List<TreeBehavior>();
 
@@ -32,6 +32,11 @@ public class ADI_VegetationDisplayer : AreaDisplay
                 treesInArea.Add(colliderInArea[i].GetComponent<TreeBehavior>());
             }
         }
+
+        if(treesInArea.Count == 0)
+        {
+            DestroyImmediate(gameObject);
+        }
     }
 
     public int score;
@@ -41,25 +46,25 @@ public class ADI_VegetationDisplayer : AreaDisplay
         score = newScore;
         int currentTreeIndex = -1;
 
-        for(int i = 0; i < treeToDisable.Count; i++)
+        for(int i = 0; i < numberTreeEnabled.Count; i++)
         {
-            for(int j = 0; j < treeToDisable[i]; j++)
+            for(int j = 0; j < numberTreeEnabled[i]; j++)
             {
                 currentTreeIndex++;
                 if (currentTreeIndex < treesInArea.Count)
                 {
-                    if (i < newScore)
-                    {
-                        if (!treesInArea[currentTreeIndex].IsSet)
-                        {
-                            treesInArea[currentTreeIndex].SetTree();
-                        }
-                    }
-                    else
+                    if (i < score)
                     {
                         if (treesInArea[currentTreeIndex].IsSet)
                         {
                             treesInArea[currentTreeIndex].UnsetTree();
+                        }
+                    }
+                    else
+                    {
+                        if (!treesInArea[currentTreeIndex].IsSet)
+                        {
+                            treesInArea[currentTreeIndex].SetTree();
                         }
                     }
                 }

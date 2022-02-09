@@ -71,7 +71,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 }
                 else
                 {
-                    Debug.LogError("Error : ChosenPath est null.");
+                    //Debug.LogError("Error : ChosenPath est null.");
                 }
             }
         }
