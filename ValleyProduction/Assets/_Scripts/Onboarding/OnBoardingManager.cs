@@ -8,17 +8,19 @@ using UnityEngine.UI;
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
     public bool activateOnBoarding = false;
-    public GameObject tool;
 
+    public OB_Sequence sequence;
+
+    [Header("On Boarding Path")]
+    public GameObject tool;
     public static Action<bool> OnWaterMill;
     public static Action<bool> OnClickVisitor;
     public static bool firstClickVisitors = false;
-
-    public OB_Sequence sequence;
-    public OB_EndOnboardingPath endOnboarding;
-
     public GameObject UI_OB_VisitorsProfileInfo;
     public GameObject UI_OB_HikerIntro;
+    public OB_EndOnboardingPath endOnboarding;
+
+//    [Header("On Boarding Ecosystem")]
 
     private void Start()
     {
@@ -33,6 +35,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         //instance.onBoardingList[instance.increment]?.Play();
     }
 
+    #region Path
     public static void PlayEndPathOnBoarding()
     {
         instance.endOnboarding.EndOnBoardingPath?.Invoke();
@@ -49,4 +52,9 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         instance.UI_OB_HikerIntro.SetActive(true);
         instance.activateOnBoarding = false;
     }
+    #endregion
+
+    #region Ecosystem
+
+    #endregion
 }
