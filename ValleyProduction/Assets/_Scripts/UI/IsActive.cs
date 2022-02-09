@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolsPanel : MonoBehaviour
+public class IsActive : MonoBehaviour
 {
     public void ChangeState()
     {

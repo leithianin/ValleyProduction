@@ -20,7 +20,9 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public GameObject UI_OB_HikerIntro;
     public OB_EndOnboardingPath endOnboarding;
 
-//    [Header("On Boarding Ecosystem")]
+    [Header("On Boarding Ecosystem")]
+    public static Action<bool> OnClickHeatmapNoise;
+    public static Action<bool> onClickVisitor;
 
     private void Start()
     {
@@ -55,6 +57,9 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     #endregion
 
     #region Ecosystem
-
+    public void OnHeatmapNoise()
+    {
+        OnClickHeatmapNoise?.Invoke(true);
+    }
     #endregion
 }
