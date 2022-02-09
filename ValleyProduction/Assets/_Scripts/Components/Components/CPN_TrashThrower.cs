@@ -18,6 +18,7 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
         }
         else
         {
+            gameObject.SetActive(true);
             throwRadius = dataToSet.ThrowRadius();
             throwTimeRange = dataToSet.ThrowTimeRange();
         }

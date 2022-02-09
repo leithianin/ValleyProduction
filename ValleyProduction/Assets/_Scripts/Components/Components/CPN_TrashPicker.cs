@@ -16,6 +16,7 @@ public class CPN_TrashPicker : VLY_Component<CPN_Data_TrashPicker>
         }
         else
         {
+            gameObject.SetActive(true);
             pickingDetector.radius = dataToSet.PickingRadius();
             pickupChance = dataToSet.PickupChance();
         }

@@ -140,6 +140,8 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (allUpdaters.Contains(toRemove))
         {
+            toRemove.RemoveData();
+
             allUpdaters.Remove(toRemove);
 
             if(allUpdaters.Count <= updaterIndex)

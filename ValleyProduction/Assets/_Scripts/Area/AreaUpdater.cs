@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class AreaUpdater : MonoBehaviour
 {
     public abstract void UpdateData();
+
+    public abstract void RemoveData();
 }
 
 /// <summary>
@@ -60,6 +62,11 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
         }
 
         SetLastUpdateData(data);
+    }
+
+    public override void RemoveData()
+    {
+        AreaManager.RemoveDataToArea<T>(currentArea, lastUpdatedData);
     }
 
     public abstract void SetData(T newData);
