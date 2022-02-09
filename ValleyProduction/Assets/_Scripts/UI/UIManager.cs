@@ -134,7 +134,9 @@ public class UIManager : VLY_Singleton<UIManager>
     //Show les informations des visiteurs on click
     public static void ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
-        HideInfoVisitor();
+       HideInfoVisitor();
+
+       OnBoardingManager.OnClickVisitor?.Invoke(true);
 
        switch (cpn_Inf.visitorType)
         {
