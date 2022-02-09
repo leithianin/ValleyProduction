@@ -17,6 +17,6 @@ public class CPN_Informations : MonoBehaviour
     //Genere aléatoirement les infos
     public void OnEnable()
     {
-        name = GeneratorManager.GetRandomVisitorName();
+        //name = GeneratorManager.GetRandomVisitorName();
     }
 }
