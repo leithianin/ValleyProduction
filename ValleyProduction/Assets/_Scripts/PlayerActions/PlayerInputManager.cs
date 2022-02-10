@@ -34,6 +34,9 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public LayerMask layerMaskNoTools;
     public LayerMask layerMaskPathTool;
 
+    private TimerManager.Timer holdRightTimer;
+    private TimerManager.Timer holdLeftTimer;
+
     public static Vector3 GetMousePosition => instance.GetGroundHitPoint();
 
     public static Vector2 GetMousePosition2D => new Vector2(GetMousePosition.x, GetMousePosition.z);
@@ -54,23 +57,29 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             {
                 if (Input.GetMouseButtonDown(0))                        //Clic gauche enfoncé
                 {
-                    StartCoroutine(TimerHoldLeft());
+                    holdLeftTimer = TimerManager.CreateRealTimer(holdDuration, CallLeftHoldMouseInput);
+                    //StartCoroutine(TimerHoldLeft());
                 }
                 else if (Input.GetMouseButtonUp(0))                      //Clic gauche relaché
                 {
-                    StopAllCoroutines();
+                    //StopAllCoroutines();
+                    holdLeftTimer?.Stop();
+                    holdLeftTimer = null;
                     //Debug.Log("Coroutines Stop");
                     CallLeftMouseInputs();
                 }
 
                 if (Input.GetMouseButtonDown(1))                        //Clic droit enfoncé           
                 {
-                    StartCoroutine(TimerHoldRight());
+                    holdRightTimer = TimerManager.CreateRealTimer(holdDuration, CallRightHoldMouseInput);
+                    //StartCoroutine(TimerHoldRight());
                 }
                 else if (Input.GetMouseButtonUp(1))
                 {
                     CallRightMouseInputs();
-                    StopAllCoroutines();
+                    //StopAllCoroutines();
+                    holdRightTimer?.Stop();
+                    holdRightTimer = null;
                     //Debug.Log("Coroutines Stop");
                 }
             }
@@ -99,10 +108,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         }
 
 
-        if (Input.GetKeyDown(KeyCode.E))
+        /*if (Input.GetKeyDown(KeyCode.E))
         {
             VLY_Time.PauseTime();
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.T))
         {
             VLY_Time.SetTimeScale(1);

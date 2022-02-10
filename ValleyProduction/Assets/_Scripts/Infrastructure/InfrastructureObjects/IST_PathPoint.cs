@@ -14,17 +14,6 @@ public class IST_PathPoint : Infrastructure
 
     protected override bool OnRemoveObject()
     {
-        /*if (PathManager.HasManyPath(this))
-        {
-            UIManager.ArrangePathButton(this);
-        }*/
-
-        /*if (!PathManager.IsOnCurrentPathData(this))
-        {
-            PathManager.CreatePathData();
-            PathManager.SelectPath(this);
-        }*/
-
         if (PathManager.CanDeleteGameobject(this))
         {
             OnDestroyPathPoint?.Invoke();
@@ -108,14 +97,4 @@ public class IST_PathPoint : Infrastructure
     {
         
     }
-
-    /*private void OnMouseOver()
-    {
-        Debug.Log("testOver");
-    }
-
-    private void OnMouseExit()
-    {
-        Debug.Log("testExit");
-    }*/
 }

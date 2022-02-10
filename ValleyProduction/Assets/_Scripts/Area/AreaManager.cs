@@ -17,7 +17,10 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
     private static List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
     private static int updaterIndex;
-    [SerializeField] private int numberSataToUpdateInFrame;
+    [SerializeField] private int numberDataToUpdateInFrame;
+
+    [SerializeField] private Transform treeScoreHandler;
+    [SerializeField] private ADI_VegetationDisplayer treeScorePrefab;
 
     /// Liste de toutes les zones de la map
     private static List<Area> areas = new List<Area>();
@@ -36,6 +39,30 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 areas[i].datas[j].CalculateScore();
             }
         }
+    }
+
+    [ContextMenu("Set Trees")]
+    private void SetTrees()
+    {
+        int k = 0;
+        while (treeScoreHandler.childCount > 0 && k < 100)
+        {
+            DestroyImmediate(treeScoreHandler.GetChild(0).gameObject);
+            k++;
+        }
+
+        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaHeight), Mathf.RoundToInt(worldDimension.y / areaHeight));
+
+        for (int i = 0; i < gridDimension.x; i++)
+        {
+            for (int j = 0; j < gridDimension.y; j++)
+            {
+                ADI_VegetationDisplayer go = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
+                go.transform.position = new Vector3(areaHeight / 2f + areaHeight * i, 0, areaHeight / 2f + areaHeight * j);
+                go.SetTrees();
+            }
+        }
+
     }
 
     /// <summary>
@@ -62,6 +89,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 newArea.datas.Add(new AD_PlantHealthyness());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
 
+                newArea.datas.Add(new AD_Pollution());
+                newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
+
                 areas.Add(newArea);
             }
         }
@@ -82,7 +112,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (allUpdaters.Count > 0)
         {
-            for (int i = 0; i < numberSataToUpdateInFrame; i++)
+            for (int i = 0; i < numberDataToUpdateInFrame; i++)
             {
                 updaterIndex = (updaterIndex + 1) % allUpdaters.Count;
                 allUpdaters[updaterIndex].UpdateData();
@@ -110,6 +140,8 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (allUpdaters.Contains(toRemove))
         {
+            toRemove.RemoveData();
+
             allUpdaters.Remove(toRemove);
 
             if(allUpdaters.Count <= updaterIndex)
