@@ -47,8 +47,6 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 
     public void ThrowPosition()
     {
-        Debug.Log("Throw pollution");
-
         Vector3 randomPosition = Random.insideUnitCircle * throwRadius;
 
         PollutionManager.ThrowTrash(transform.position + new Vector3(randomPosition.x, 0, randomPosition.y));

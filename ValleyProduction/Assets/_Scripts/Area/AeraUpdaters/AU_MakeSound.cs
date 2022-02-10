@@ -17,5 +17,9 @@ public class AU_MakeSound : AreaUpdater<AU_MakeSound>
     {
         data = this;
     }
+
+    public void SetNoiseScore(CPN_Data_Noise dataToSet)
+    {
+        SetScore(dataToSet.NoiseMade());
+    }
 }
- 
