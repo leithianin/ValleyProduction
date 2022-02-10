@@ -23,6 +23,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     [Header("On Boarding Ecosystem")]
     public static Action<bool> OnClickHeatmapNoise;
     public static Action<bool> onClickVisitor;
+    public static Action<bool> onHideVisitorInfo;
 
     private void Start()
     {
