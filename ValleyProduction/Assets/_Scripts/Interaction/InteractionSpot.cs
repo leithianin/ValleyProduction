@@ -11,8 +11,8 @@ public class InteractionSpot : MonoBehaviour
     [SerializeField] private UnityEvent PlayOnStartInteract;
     [SerializeField] private UnityEvent PlayOnEndInteract;
 
-    public Action<InteractionHandler> PlayOnInteractionEnd;
-    public Action<InteractionHandler> PlayOnInteractionStart;
+    public Action<CPN_InteractionHandler> PlayOnInteractionEnd;
+    public Action<CPN_InteractionHandler> PlayOnInteractionStart;
 
     public InteractionActions interactionAction;
 
@@ -29,7 +29,7 @@ public class InteractionSpot : MonoBehaviour
     /// Fait intéragir l'InteractionHandler avec l'interaction actuelle.
     /// </summary>
     /// <param name="interacter">L'InteractionHandler qui demande à intéragir avec l'objet.</param>
-    public void Interact(InteractionHandler interacter)
+    public void Interact(CPN_InteractionHandler interacter)
     {
         PlayOnStartInteract?.Invoke();
         PlayOnInteractionStart?.Invoke(interacter);
@@ -47,7 +47,7 @@ public class InteractionSpot : MonoBehaviour
     /// Met fin à l'interaction.
     /// </summary>
     /// <param name="interacter">L'InteractionHandler qui finit son interaction.</param>
-    public void EndInteraction(InteractionHandler interacter)
+    public void EndInteraction(CPN_InteractionHandler interacter)
     {
         PlayOnEndInteract?.Invoke();
         PlayOnInteractionEnd?.Invoke(interacter);

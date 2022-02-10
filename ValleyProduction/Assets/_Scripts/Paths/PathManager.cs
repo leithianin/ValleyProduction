@@ -234,7 +234,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 PathData newPathData = new PathData();
 
                 //Random du chemin pour varier les infos
-                newPathData.name = RandomPathName.GetRandomName();
+                newPathData.name = GeneratorManager.GetRandomPathName();
                 //newPathData.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
                 newPathData.color = new Color(Random.Range(0f, 1f),Random.Range(0f, 1f),Random.Range(0f, 1f),1f);
 

@@ -71,6 +71,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6373274642763142655}
   - component: {fileID: 5252404336967509779}
+  - component: {fileID: 2009781173825468461}
+  - component: {fileID: 5793997350195673622}
+  - component: {fileID: 1766797229471813176}
   m_Layer: 0
   m_Name: Prefab_HealthyFirTree
   m_TagString: Untagged
@@ -110,6 +113,54 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 3.8, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &2009781173825468461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955129779019573354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthyScore: 1
+  currentScore: 0
+  OnSetMesh: {fileID: 989478866762212875}
+  OnUnsetMesh: {fileID: 8257721897853707055}
+  OnSet:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnset:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5793997350195673622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955129779019573354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 2009781173825468461}
+--- !u!135 &1766797229471813176
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955129779019573354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1916686295321612430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -313,6 +364,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 988ae0f18ce99324589adcb176924128, type: 3}
+--- !u!1 &8257721897853707055 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2498257458286408887, guid: 988ae0f18ce99324589adcb176924128, type: 3}
+  m_PrefabInstance: {fileID: 5778898685549696920}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5274096230887525497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1802459272985861089, guid: 988ae0f18ce99324589adcb176924128, type: 3}

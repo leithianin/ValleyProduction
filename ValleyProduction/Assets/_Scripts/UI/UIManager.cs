@@ -11,6 +11,10 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public bool OnMenuOption = false;
 
+    [Header("Visitors Informations")]
+    public TouristType hikersInfo;
+    public TouristType touristInfo;
+
     //Use in Path Button On Click()
     public void OnToolCreatePath()
     {   
@@ -52,7 +56,7 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.RoadInfo.UpdateColor(pathdata.color);
         instance.RoadInfo.UpdateStamina(pathdata.difficulty);
 
-        //Il faut avoir des valeurs fixes et les get selon la difficulté
+        //Il faut avoir des valeurs fixes et les get selon la difficultï¿½
         instance.RoadInfo.UpdateGaugeStamina(1);
 
         instance.RoadInfo.gameObject.SetActive(true);
@@ -96,4 +100,55 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         instance.OnMenuOption = !instance.OnMenuOption;
     }
+
+    #region Info Visitors
+    public static void InteractWithVisitors(GameObject touchedObject)
+    {
+        CPN_Informations visitorInfo = touchedObject.GetComponent<CPN_Informations>();
+        if (visitorInfo != null)
+        {
+            ShowInfoVisitor(visitorInfo);
+        }
+        else
+        {
+            HideInfoVisitor();
+        }
+    }
+
+    //Show les informations des visiteurs on click
+    public static void ShowInfoVisitor(CPN_Informations cpn_Inf)
+    {
+        HideInfoVisitor();
+
+       switch (cpn_Inf.visitorType)
+        {
+            case TypeVisitor.Hiker:
+                if (OnBoardingManager.firstClickVisitors)
+                {
+                    OnBoardingManager.ShowHikerProfileIntro();
+                    OnBoardingManager.firstClickVisitors = false;
+                }
+                ChangeInfoVisitor(instance.hikersInfo, cpn_Inf);
+                instance.hikersInfo.gameObject.SetActive(true);
+                break;
+            case TypeVisitor.Tourist:
+                ChangeInfoVisitor(instance.touristInfo, cpn_Inf);
+                instance.touristInfo.gameObject.SetActive(true);
+                break;
+        }
+    }
+
+    public static void HideInfoVisitor()
+    {
+        instance.hikersInfo.gameObject.SetActive(false);
+        instance.touristInfo.gameObject.SetActive(false);
+    }
+
+    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
+    {
+        UI_visitorsInfo.name.text = cpn_Inf.GetName;
+    }
+
+    
+    #endregion
 }

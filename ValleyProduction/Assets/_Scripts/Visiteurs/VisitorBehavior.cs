@@ -15,6 +15,7 @@ public class VisitorBehavior : MonoBehaviour
     public VisitorScriptable visitorType;
 
     [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitorWithType;
+    [SerializeField] private UnityEvent<float> OnNoiseMadeTEMP; //TEMPORAIRE
 
     private AnimationHandler visitorDisplay;
 
@@ -45,6 +46,8 @@ public class VisitorBehavior : MonoBehaviour
         if(currentPathFragment != null)
         {
             visitorType = nVisitorType;
+
+            OnNoiseMadeTEMP?.Invoke(visitorType.noiseMade);
 
             OnSetVisitorWithType?.Invoke(visitorType);
 
