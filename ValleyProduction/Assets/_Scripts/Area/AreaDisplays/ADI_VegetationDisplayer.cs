@@ -14,7 +14,7 @@ public class ADI_VegetationDisplayer : AreaDisplay
     //[SerializeField] private List<VegetationDisplayData> vegetByValidScore;
     [SerializeField] private List<TreeBehavior> treesInArea = new List<TreeBehavior>();
 
-    [SerializeField] private List<int> numberTreeEnabled;
+    [SerializeField] private List<int> numberTreeToDisabled;
 
     //[SerializeField] private List<InteractionSequence> possibleSequences;
 
@@ -46,9 +46,9 @@ public class ADI_VegetationDisplayer : AreaDisplay
         score = newScore;
         int currentTreeIndex = -1;
 
-        for(int i = 0; i < numberTreeEnabled.Count; i++)
+        for(int i = 0; i < numberTreeToDisabled.Count; i++)
         {
-            for(int j = 0; j < numberTreeEnabled[i]; j++)
+            for(int j = 0; j < numberTreeToDisabled[i]; j++)
             {
                 currentTreeIndex++;
                 if (currentTreeIndex < treesInArea.Count)

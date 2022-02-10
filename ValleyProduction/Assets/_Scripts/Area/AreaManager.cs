@@ -17,7 +17,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
     private static List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
     private static int updaterIndex;
-    [SerializeField] private int numberSataToUpdateInFrame;
+    [SerializeField] private int numberDataToUpdateInFrame;
 
     [SerializeField] private Transform treeScoreHandler;
     [SerializeField] private ADI_VegetationDisplayer treeScorePrefab;
@@ -112,7 +112,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (allUpdaters.Count > 0)
         {
-            for (int i = 0; i < numberSataToUpdateInFrame; i++)
+            for (int i = 0; i < numberDataToUpdateInFrame; i++)
             {
                 updaterIndex = (updaterIndex + 1) % allUpdaters.Count;
                 allUpdaters[updaterIndex].UpdateData();
