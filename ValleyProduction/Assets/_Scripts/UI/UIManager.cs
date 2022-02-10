@@ -9,11 +9,15 @@ public class UIManager : VLY_Singleton<UIManager>
     public ChangeRoadInfo RoadInfo;
     public Camera sceneCamera;
 
+    [Header("Menu Option")]
     public bool OnMenuOption = false;
+    public Button ResumeButton;
 
     [Header("Visitors Informations")]
     public TouristType hikersInfo;
     public TouristType touristInfo;
+
+    public static bool GetIsOnMenuOption => instance.OnMenuOption;
 
     //Use in Path Button On Click()
     public void OnToolCreatePath()
@@ -30,7 +34,12 @@ public class UIManager : VLY_Singleton<UIManager>
     //Range les PathData dans la liste de boutons 
     public static void ArrangePathButton(IST_PathPoint pathpoint)
     {
-        foreach(PathData pd in PathManager.instance.pathDataList)
+        foreach(GameObject go in instance.pathButtonList)
+        {
+            go.SetActive(false);
+        }
+
+        foreach (PathData pd in PathManager.instance.pathDataList)
         {
             if(pd.ContainsPoint(pathpoint))
             {
@@ -96,10 +105,17 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.pathButtonList[0].transform.parent.transform.localPosition = canvasPos;
     }
 
+    #region Menu Option
     public static void ChangeMenuOptionBool()
     {
         instance.OnMenuOption = !instance.OnMenuOption;
     }
+    
+    public static void HideMenuOption()
+    {
+        instance.ResumeButton.onClick?.Invoke();
+    }
+    #endregion
 
     #region Info Visitors
     public static void InteractWithVisitors(GameObject touchedObject)
@@ -118,7 +134,9 @@ public class UIManager : VLY_Singleton<UIManager>
     //Show les informations des visiteurs on click
     public static void ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
-        HideInfoVisitor();
+       HideInfoVisitor();
+
+       OnBoardingManager.OnClickVisitor?.Invoke(true);
 
        switch (cpn_Inf.visitorType)
         {
@@ -140,6 +158,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static void HideInfoVisitor()
     {
+        OnBoardingManager.onHideVisitorInfo?.Invoke(true);
         instance.hikersInfo.gameObject.SetActive(false);
         instance.touristInfo.gameObject.SetActive(false);
     }
@@ -148,7 +167,5 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
     }
-
-    
     #endregion
 }

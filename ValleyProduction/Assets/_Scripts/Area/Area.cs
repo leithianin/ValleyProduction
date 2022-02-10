@@ -54,6 +54,7 @@ public class Area
                 if (AreaManager.GetAreaAtPosition(displays[j].Position) == this)
                 {
                     displays[j].AffectToArea(datas);
+                    //hitColliders[i].enabled = false;
                 }
             }
         }

@@ -10,7 +10,7 @@ public class IFB_InstantiateVFX : MonoBehaviour, IFeedbackPlayer
     {
         particlePrefab.playOnAwake = true;
         GameObject instantiatedObject = Instantiate(particlePrefab.gameObject, transform.position, Quaternion.identity);
-        TimerManager.CreateTimer(particlePrefab.main.duration, () => DespawnVfx(instantiatedObject));
+        TimerManager.CreateGameTimer(particlePrefab.main.duration, () => DespawnVfx(instantiatedObject));
         particlePrefab.playOnAwake = false;
     }
 

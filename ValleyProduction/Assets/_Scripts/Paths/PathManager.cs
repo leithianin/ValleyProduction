@@ -5,7 +5,6 @@ using UnityEngine;
 public class PathManager : VLY_Singleton<PathManager>
 {
     [SerializeField] private List<IST_PathPoint> spawnPoints;
-
     public static List<IST_PathPoint> SpawnPoints => instance.spawnPoints;
 
     //Get Data + Update Data
@@ -185,7 +184,6 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         //Remove Pathpoint
-        Debug.Log(instance.pathpointList.Count);
         instance.pathpointList.RemoveAt(instance.pathpointList.Count-1);
 
         //Change le Previous Pathpoint
