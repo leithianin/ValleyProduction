@@ -158,6 +158,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static void HideInfoVisitor()
     {
+        OnBoardingManager.onHideVisitorInfo?.Invoke(true);
         instance.hikersInfo.gameObject.SetActive(false);
         instance.touristInfo.gameObject.SetActive(false);
     }
