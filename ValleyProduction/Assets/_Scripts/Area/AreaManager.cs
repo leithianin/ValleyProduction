@@ -15,7 +15,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Layer mask contenant les AreaDisplay
     [SerializeField] private LayerMask areaDisplayMask;
 
-    private static List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
+    private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
     private static int updaterIndex;
     [SerializeField] private int numberDataToUpdateInFrame;
 
@@ -126,9 +126,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// <param name="toAdd">L'AreaUpdater à ajouter.</param>
     public static void AddAreaUpdater(AreaUpdater toAdd)
     {
-        if(!allUpdaters.Contains(toAdd))
+        if(!instance.allUpdaters.Contains(toAdd))
         {
-            allUpdaters.Add(toAdd);
+            instance.allUpdaters.Add(toAdd);
         }
     }
 
@@ -138,15 +138,15 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// <param name="toAdd">L'AreaUpdater à retirer.</param>
     public static void RemoveAreaUpdater(AreaUpdater toRemove)
     {
-        if (allUpdaters.Contains(toRemove))
+        if (instance.allUpdaters.Contains(toRemove))
         {
             toRemove.RemoveData();
 
-            allUpdaters.Remove(toRemove);
+            instance.allUpdaters.Remove(toRemove);
 
-            if(allUpdaters.Count <= updaterIndex)
+            if(instance.allUpdaters.Count <= updaterIndex)
             {
-                updaterIndex = allUpdaters.Count;
+                updaterIndex = instance.allUpdaters.Count;
             }
         }
     }

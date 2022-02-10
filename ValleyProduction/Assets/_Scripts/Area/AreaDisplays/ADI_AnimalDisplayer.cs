@@ -21,23 +21,26 @@ public class ADI_AnimalDisplayer : AreaDisplay
         score = newScore;
         for(int i = 0; i < animalsByValidScore.Count; i++)
         {
-            if(i < newScore)
+            if (animalsByValidScore[i].toDisplay[0] != null)
             {
-                for(int j = 0; j < animalsByValidScore[i].toDisplay.Count; j++)
+                if (i < newScore)
                 {
-                    if (!animalsByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                    for (int j = 0; j < animalsByValidScore[i].toDisplay.Count; j++)
                     {
-                        animalsByValidScore[i].toDisplay[j].SetAnimal(possibleSequences[UnityEngine.Random.Range(0, possibleSequences.Count)]);
+                        if (!animalsByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                        {
+                            animalsByValidScore[i].toDisplay[j].SetAnimal(possibleSequences[UnityEngine.Random.Range(0, possibleSequences.Count)]);
+                        }
                     }
                 }
-            }
-            else
-            {
-                for (int j = 0; j < animalsByValidScore[i].toDisplay.Count; j++)
+                else
                 {
-                    if (animalsByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                    for (int j = 0; j < animalsByValidScore[i].toDisplay.Count; j++)
                     {
-                        animalsByValidScore[i].toDisplay[j].UnsetAnimal();
+                        if (animalsByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                        {
+                            animalsByValidScore[i].toDisplay[j].UnsetAnimal();
+                        }
                     }
                 }
             }

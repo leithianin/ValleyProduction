@@ -120,7 +120,6 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
 
         if (Vector3.Distance(transform.position, targetPosition) <= agent.stoppingDistance)
         {
-            Debug.Log("Close to current Pos");
             ReachDestination();
         }
         else
