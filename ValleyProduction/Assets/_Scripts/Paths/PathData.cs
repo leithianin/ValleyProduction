@@ -7,7 +7,7 @@ using UnityEngine;
 public class PathData
 {
     //Informations
-    public string name;
+    public string name = string.Empty;
     public Color color;
     public float difficulty = 5f;
 

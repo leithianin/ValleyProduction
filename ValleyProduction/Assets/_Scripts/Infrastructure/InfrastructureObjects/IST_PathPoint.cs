@@ -7,21 +7,37 @@ public class IST_PathPoint : Infrastructure
 {
     public Action OnDestroyPathPoint;
 
+    //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)
     {
         PathManager.PlacePoint(this, position);
     }
 
-    protected override bool OnRemoveObject()
+    //Place on Click Infrastructure
+    protected override void OnPlaceObject()
     {
-        if (PathManager.CanDeleteGameobject(this))
+        //Si c'est le dernier PathPoint du chemin = Terminer chemin
+        if (this == PathManager.previousPathpoint)
+        {
+            PathManager.CreatePathData();
+            UIManager.HideRoadsInfo();
+            return;
+        }
+        else
+        {
+            PathManager.PlacePoint(this, transform.position);
+        }
+    }
+
+    protected override void OnRemoveObject()
+    {
+        PathManager.DeletePoint(this);
+        /*if (PathManager.CanDeleteGameobject(this))
         {
             OnDestroyPathPoint?.Invoke();
-
             return true;
-        }
-
-        return false;
+        
+        return false;*/
     }
 
     protected override void OnMoveObject()
@@ -44,14 +60,11 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnSelectObject()
     {
-        if (this == PathManager.previousPathpoint)
-        {
-            PathManager.CreatePathData();
-            UIManager.HideRoadsInfo();
-        }
-        else
-        {
-            if (!PathManager.IsPathpointListEmpty())
+        if (PathManager.HasManyPath(this)) {UIManager.ArrangePathButton(this)                          ;}
+        else                               {UIManager.ShowRoadsInfos(PathManager.GetPathData(this))    ;}
+
+        /*
+        if (!PathManager.IsPathpointListEmpty())
             {
                 PathManager.PlacePoint(this, transform.position);
                 if(PathManager.IsSpawnPoint(this))
@@ -62,24 +75,9 @@ public class IST_PathPoint : Infrastructure
             }
             else
             {
-                //Check si plusieurs PathData
-                if (PathManager.HasManyPath(this))
-                {
-                    UIManager.ArrangePathButton(this);
-                }
-                else
-                {
-                    if(PathManager.HasOnePath(this))
-                    {
-                        PathManager.SelectPath(this);
-                    }
-                    else
-                    {
-                        PathManager.PlacePoint(this, transform.position);
-                    }
-                }
+                //Check si plusieurs PathData    
             }
-        }
+        */
     }
 
     protected override void OnUnselectObject()

@@ -36,6 +36,13 @@ public class PathManager : VLY_Singleton<PathManager>
     public static List<IST_PathPoint> GetCurrentPathpointList => instance.pathpointList;
     public static PathManager GetInstance => instance;
 
+    public static bool IsOnCreatePath => (GetCurrentPathpointList.Count>0)?true:false;
+
+    private void Start()
+    {
+        instance.currentPathData = null;
+    }
+
     private void Update()
     {
         if (debugMode && ConstructionManager.HasSelectedStructureType && currentLineDebug != null)
@@ -61,6 +68,19 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         return new List<PathData>(possiblePath);
+    }
+
+    public static PathData GetPathData(IST_PathPoint pathpoint)
+    {
+        foreach(PathData pd in GetAllPath)
+        {
+            if(pd.ContainsPoint(pathpoint))
+            {
+                return pd;
+            }
+        }
+
+        return null;
     }
 
     //Create PathFragmentData
@@ -95,6 +115,7 @@ public class PathManager : VLY_Singleton<PathManager>
         DebugPoint(previousPathpoint);
     }
 
+    //Obsolete
     /// <summary>
     /// Check if we can Destroy the pathpoint Gameobject. We check if is the last pathpoint and if he have more than 1 way.
     /// </summary>
@@ -166,6 +187,9 @@ public class PathManager : VLY_Singleton<PathManager>
     //Delete pathpoint
     public static void DeletePoint(IST_PathPoint ist_pp)
     {
+
+
+        /*
         //Remove PathFragmentData
         if (instance.pathFragmentDataList.Count != 0)
         {
@@ -200,7 +224,7 @@ public class PathManager : VLY_Singleton<PathManager>
         if(instance.debugMode && instance.lineRendererDebugList.Count != 0)
         {
             DestroyPreviousLine();
-        }
+        }*/
     }
 
     //Create pathdata
@@ -208,8 +232,10 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         if (instance.pathpointList.Count > 1)
         {
-            if (instance.currentPathData != null)
+            //Obsolete pour le moment --> Pas de modifier un chemin existant
+            if (instance.currentPathData != null && instance.currentPathData.name != string.Empty)
             {
+                Debug.Log("String pas empty");
                 //Mise à jour du PathData existant
                 foreach (PathFragmentData pfd in instance.pathFragmentDataList)
                 {

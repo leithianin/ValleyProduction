@@ -8,7 +8,7 @@ public enum InfrastructureType
 public enum ToolType
 {
     None,
-    Create,
-    Modify,
+    Place,
+    Move,
     Delete
 }
