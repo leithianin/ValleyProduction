@@ -73,9 +73,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prefab_Rabbit_01
       objectReference: {fileID: 0}
+    - target: {fileID: 4723869480087001304, guid: 02e770b60fbc12943a5c500bc19f2542, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5387816910066106978, guid: 02e770b60fbc12943a5c500bc19f2542, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5387816910066106978, guid: 02e770b60fbc12943a5c500bc19f2542, type: 3}
       propertyPath: m_LocalPosition.x
@@ -119,3 +123,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02e770b60fbc12943a5c500bc19f2542, type: 3}
+--- !u!1 &4179215512069880568 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4723869480087001304, guid: 02e770b60fbc12943a5c500bc19f2542, type: 3}
+  m_PrefabInstance: {fileID: 8678718086596993568}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2521859856400751405 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6525278476214909197, guid: 02e770b60fbc12943a5c500bc19f2542, type: 3}
+  m_PrefabInstance: {fileID: 8678718086596993568}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4548140893170566124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179215512069880568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d9bfd6390bafe4fb1c874948dcb904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 2521859856400751405}
+--- !u!135 &3765918581603837043
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179215512069880568}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

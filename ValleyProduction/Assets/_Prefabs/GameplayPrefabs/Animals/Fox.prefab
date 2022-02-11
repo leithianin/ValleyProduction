@@ -117,5 +117,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prefab_Fox_01
       objectReference: {fileID: 0}
+    - target: {fileID: 4288793636193705268, guid: 3bbdd8f25b59bc746b6c8b70e2e52432, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bbdd8f25b59bc746b6c8b70e2e52432, type: 3}
+--- !u!1 &6190546841123900475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4288793636193705268, guid: 3bbdd8f25b59bc746b6c8b70e2e52432, type: 3}
+  m_PrefabInstance: {fileID: 7957269671216107791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5686289299590671854 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2343041029053594849, guid: 3bbdd8f25b59bc746b6c8b70e2e52432, type: 3}
+  m_PrefabInstance: {fileID: 7957269671216107791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1172881963514500134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6190546841123900475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d9bfd6390bafe4fb1c874948dcb904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 5686289299590671854}
+--- !u!135 &7145916346687028456
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6190546841123900475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

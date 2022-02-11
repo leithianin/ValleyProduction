@@ -13,6 +13,14 @@ public class AnimalBehavior : MonoBehaviour
     [SerializeField] private UnityEvent OnSet;
     [SerializeField] private UnityEvent OnUnset;
 
+    private void Start()
+    {
+        if(sequence == null)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     public void SetAnimal(InteractionSequence nSequence)
     {
         float yPosition = VisitorManager.GetMainTerrain.SampleHeight(transform.position) + VisitorManager.GetMainTerrain.transform.position.y;
@@ -33,8 +41,11 @@ public class AnimalBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.position = spawnPosition.position;
-        DoBehavior();
+        if (sequence != null)
+        {
+            transform.position = spawnPosition.position;
+            DoBehavior();
+        }
     }
 
     private void DoBehavior()

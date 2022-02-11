@@ -19,40 +19,43 @@ public class SA_MoveIntoCircle : InteractionActions
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         Vector3 randomDirection = Random.insideUnitCircle * circleRadius;
-        Vector3 randomPosition = circleCenter.position + new Vector3(randomDirection.x, 0, randomDirection.y);
-
-        if (Vector3.Distance(caller.transform.position, randomPosition) > maxDistanceByMovement)
+        if (circleCenter != null)
         {
-            randomDirection = (randomPosition - caller.transform.position).normalized;
-            randomPosition = circleCenter.position + randomDirection * maxDistanceByMovement;
-        }
+            Vector3 randomPosition = circleCenter.position + new Vector3(randomDirection.x, 0, randomDirection.y);
 
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomPosition, out hit, 10000f, NavMesh.AllAreas);
-        randomPosition = hit.position;
-
-        pathToTake = new NavMeshPath();
-
-        if (NavMesh.CalculatePath(caller.transform.position, randomPosition, NavMesh.AllAreas, pathToTake))
-        {
-
-            List<Vector3> path = new List<Vector3>();
-
-            for (int i = 0; i < pathToTake.corners.Length; i++)
+            if (Vector3.Distance(caller.transform.position, randomPosition) > maxDistanceByMovement)
             {
-                path.Add(pathToTake.corners[i]);
+                randomDirection = (randomPosition - caller.transform.position).normalized;
+                randomPosition = circleCenter.position + randomDirection * maxDistanceByMovement;
             }
 
-            CPN_Movement movement = null;
-            if (caller.HasComponent<CPN_Movement>(ref movement))
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomPosition, out hit, 10000f, NavMesh.AllAreas);
+            randomPosition = hit.position;
+
+            pathToTake = new NavMeshPath();
+
+            if (NavMesh.CalculatePath(caller.transform.position, randomPosition, NavMesh.AllAreas, pathToTake))
             {
-                movement.WalkOnNewPath(path, () => EndAction(caller));
+
+                List<Vector3> path = new List<Vector3>();
+
+                for (int i = 0; i < pathToTake.corners.Length; i++)
+                {
+                    path.Add(pathToTake.corners[i]);
+                }
+
+                CPN_Movement movement = null;
+                if (caller.HasComponent<CPN_Movement>(ref movement))
+                {
+                    movement.WalkOnNewPath(path, () => EndAction(caller));
+                }
             }
-        }
-        else
-        {
-            //Debug.Log("No path");
-            StartCoroutine(EndNotPath(caller));
+            else
+            {
+                //Debug.Log("No path");
+                StartCoroutine(EndNotPath(caller));
+            }
         }
     }
 
