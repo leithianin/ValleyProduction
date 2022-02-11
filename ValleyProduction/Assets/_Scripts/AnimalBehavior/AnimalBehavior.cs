@@ -33,8 +33,15 @@ public class AnimalBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.position = spawnPosition.position;
-        DoBehavior();
+        if (sequence != null)
+        {
+            transform.position = spawnPosition.position;
+            DoBehavior();
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void DoBehavior()
