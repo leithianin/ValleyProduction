@@ -34,7 +34,7 @@ public class ChunkGraphical : MonoBehaviour
             isVisible = true;
             for (int i = 0; i < meshHandler.Count; i++)
             {
-                meshHandler[i].mesh.enabled = true;
+                //meshHandler[i].mesh.enabled = true;
             }
         }
     }
@@ -46,7 +46,7 @@ public class ChunkGraphical : MonoBehaviour
             isVisible = false;
             for (int i = 0; i < meshHandler.Count; i++)
             {
-                meshHandler[i].mesh.enabled = false;
+                //meshHandler[i].mesh.enabled = false;
             }
         }
     }

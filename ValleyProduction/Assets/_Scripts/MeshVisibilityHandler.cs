@@ -1,21 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Entities;
 
-[RequireComponent(typeof(MeshRenderer))]
-public class MeshVisibilityHandler : MonoBehaviour
+public class MeshVisibilityHandler : SystemBase
 {
-    [SerializeField] public MeshRenderer mesh;
-
-    /*private void Update()
+    protected override void OnUpdate()
     {
-        if(!mesh.enabled && PlayerInputManager.GetCamera.IsObjectVisible(mesh))
+        Entities.WithAll<MeshVisibilityComponent>().ForEach((ref MeshVisibilityComponent meshVisibility) =>
         {
-            mesh.enabled = true;
-        }
-        else if (mesh.enabled && !PlayerInputManager.GetCamera.IsObjectVisible(mesh))
-        {
-            mesh.enabled = false;
-        }
-    }*/
+            MeshRenderer mesh = meshVisibility.mesh;
+            if (!mesh.enabled && PlayerInputManager.GetCamera.IsObjectVisible(mesh.bounds))
+            {
+                mesh.enabled = true;
+            }
+            else if (mesh.enabled && !PlayerInputManager.GetCamera.IsObjectVisible(mesh.bounds))
+            {
+                mesh.enabled = false;
+            }
+        }).Schedule();
+    }
 }
