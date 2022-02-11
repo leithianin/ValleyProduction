@@ -14,6 +14,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     private static Vector2Int gridDimension;
     /// Layer mask contenant les AreaDisplay
     [SerializeField] private LayerMask areaDisplayMask;
+    private Vector2 CenterPosition => new Vector2(transform.position.x, transform.position.z);
 
     private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
     private static int updaterIndex;
@@ -21,6 +22,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
     [SerializeField] private Transform treeScoreHandler;
     [SerializeField] private ADI_VegetationDisplayer treeScorePrefab;
+
+    [SerializeField] private Transform animalScoreHandler;
+    [SerializeField] private List<ADI_AnimalDisplayer> animalScorePrefab;
 
     /// Liste de toutes les zones de la map
     private static List<Area> areas = new List<Area>();
@@ -58,11 +62,36 @@ public class AreaManager : VLY_Singleton<AreaManager>
             for (int j = 0; j < gridDimension.y; j++)
             {
                 ADI_VegetationDisplayer go = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
-                go.transform.position = new Vector3(areaHeight / 2f + areaHeight * i, 0, areaHeight / 2f + areaHeight * j);
+                go.transform.position = new Vector3(areaHeight / 2f + areaHeight * i, 0, areaHeight / 2f + areaHeight * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 go.SetTrees();
             }
         }
 
+    }
+
+    [ContextMenu("Set Animals")]
+    private void SetAnimals()
+    {
+        int k = 0;
+        while (animalScoreHandler.childCount > 0 && k < 100)
+        {
+            DestroyImmediate(animalScoreHandler.GetChild(0).gameObject);
+            k++;
+        }
+
+        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaHeight), Mathf.RoundToInt(worldDimension.y / areaHeight));
+
+        for (int i = 0; i < gridDimension.x; i++)
+        {
+            for (int j = 0; j < gridDimension.y; j++)
+            {
+                for (int l = 0; l < animalScorePrefab.Count; l++)
+                {
+                    ADI_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ADI_AnimalDisplayer>();
+                    go.transform.position = new Vector3(areaHeight / 2f + areaHeight * i, 0, areaHeight / 2f + areaHeight * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -81,7 +110,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 Area newArea = new Area();
                 newArea.arrayPosition = new Vector2Int(i, j);
-                newArea.worldPosition = new Vector2(areaHeight / 2f + areaHeight * i, areaHeight / 2f + areaHeight * j);
+                newArea.worldPosition = new Vector2(areaHeight / 2f + areaHeight * i, areaHeight / 2f + areaHeight * j) + GetWorldPositionOffset();
 
                 newArea.datas.Add(new AD_Noise());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
@@ -151,6 +180,11 @@ public class AreaManager : VLY_Singleton<AreaManager>
         }
     }
 
+    private Vector2 GetWorldPositionOffset()
+    {
+        return CenterPosition - (worldDimension / 2f);
+    }
+
     /// <summary>
     /// Permet de récupérer une Area depuis une position (x,z).
     /// </summary>
@@ -158,8 +192,8 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// <returns>L'Area dans laquelle la position se trouve.</returns>
     public static Area GetAreaAtPosition(Vector2 position)
     {
-        int columnIndex = Mathf.RoundToInt((position.x - AreaHeight / 2) / AreaHeight);
-        int lineIndex = Mathf.RoundToInt((position.y - AreaHeight / 2) / AreaHeight);
+        int columnIndex = Mathf.RoundToInt((position.x - AreaHeight / 2 - instance.GetWorldPositionOffset().x) / AreaHeight);
+        int lineIndex = Mathf.RoundToInt((position.y - AreaHeight / 2 - instance.GetWorldPositionOffset().y) / AreaHeight);
 
         return GetAreaAtIndex(new Vector2Int(columnIndex, lineIndex));
     }

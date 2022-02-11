@@ -55,7 +55,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2582569642053295141}
-  m_Layer: 0
+  - component: {fileID: 7173698814621457068}
+  - component: {fileID: 2588738902510103858}
+  m_Layer: 7
   m_Name: TestAnimalRabbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,6 +81,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7173698814621457068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708677131005720009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d35efadf4fab714c9217315238692be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreData:
+  - dataTypeToCheck: 0
+    wantedScore: 2
+    needHigher: 1
+    score: 0
+  - dataTypeToCheck: 0
+    wantedScore: 4
+    needHigher: 1
+    score: 0
+  - dataTypeToCheck: 0
+    wantedScore: 7
+    needHigher: 1
+    score: 0
+  collider: {fileID: 2588738902510103858}
+  score: 0
+  animalsByValidScore:
+  - toDisplay:
+    - {fileID: 2855588554884274119}
+    - {fileID: 7829187377252434877}
+  - toDisplay:
+    - {fileID: 4938772219180334178}
+    - {fileID: 5585742538516309988}
+  - toDisplay:
+    - {fileID: 96275683217632267}
+    - {fileID: 6174512453359999884}
+  possibleSequences:
+  - {fileID: 2957360123951554530}
+--- !u!135 &2588738902510103858
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708677131005720009}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2957360123709368676
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,8 +142,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2957360123709368682}
-  - component: {fileID: 2957360123709368677}
-  - component: {fileID: 2957360123709368683}
   m_Layer: 7
   m_Name: AnimalDisplay
   m_TagString: Untagged
@@ -117,58 +169,6 @@ Transform:
   m_Father: {fileID: 2582569642053295141}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2957360123709368677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2957360123709368676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d35efadf4fab714c9217315238692be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 2
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 7
-    needHigher: 0
-    score: 0
-  collider: {fileID: 2957360123709368683}
-  score: 0
-  animalsByValidScore:
-  - toDisplay:
-    - {fileID: 2855588554884274119}
-    - {fileID: 7829187377252434877}
-  - toDisplay:
-    - {fileID: 4938772219180334178}
-    - {fileID: 5585742538516309988}
-  - toDisplay:
-    - {fileID: 96275683217632267}
-    - {fileID: 6174512453359999884}
-  possibleSequences:
-  - {fileID: 2957360123951554530}
---- !u!135 &2957360123709368683
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2957360123709368676}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2957360123951554559
 GameObject:
   m_ObjectHideFlags: 0

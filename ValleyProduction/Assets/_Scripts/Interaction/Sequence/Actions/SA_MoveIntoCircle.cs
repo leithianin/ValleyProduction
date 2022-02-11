@@ -11,6 +11,11 @@ public class SA_MoveIntoCircle : InteractionActions
 
     NavMeshPath pathToTake;
 
+    private void Start()
+    {
+        circleCenter.position = new Vector3(circleCenter.position.x, VisitorManager.GetMainTerrain.SampleHeight(circleCenter.position) + 5f, circleCenter.position.z);
+    }
+
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         Vector3 randomDirection = Random.insideUnitCircle * circleRadius;
@@ -23,7 +28,7 @@ public class SA_MoveIntoCircle : InteractionActions
         }
 
         NavMeshHit hit;
-        NavMesh.SamplePosition(randomPosition, out hit, circleRadius, NavMesh.AllAreas);
+        NavMesh.SamplePosition(randomPosition, out hit, 10000f, NavMesh.AllAreas);
         randomPosition = hit.position;
 
         pathToTake = new NavMeshPath();
