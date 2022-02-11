@@ -25,7 +25,10 @@ public class ChunkDisplayer : MonoBehaviour
     {
         for(int i= 0; i < meshes.Count; i++)
         {
-            meshes[i].enabled = true;
+            if (meshes[i] != null)
+            {
+                meshes[i].gameObject.SetActive(true);//.enabled = true;
+            }
         }
     }
 
@@ -33,7 +36,10 @@ public class ChunkDisplayer : MonoBehaviour
     {
         for (int i = 0; i < meshes.Count; i++)
         {
-            meshes[i].enabled = false;
+            if (meshes[i] != null)
+            {
+                meshes[i].gameObject.SetActive(false);//.enabled = false;
+            }
         }
     }
 
