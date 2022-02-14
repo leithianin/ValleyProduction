@@ -67,6 +67,8 @@ public class InteractionSequence : InteractionActions
                 if (sequenceUser[i].currentSequenceIndex >= 0)
                 {
                     sequence[sequenceUser[i].currentSequenceIndex].InteruptAction(caller);
+                    sequenceUser.RemoveAt(i);
+                    i--;
                 }
             }
             break;

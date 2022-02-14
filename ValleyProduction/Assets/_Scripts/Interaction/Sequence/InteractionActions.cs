@@ -27,31 +27,37 @@ public abstract class InteractionActions : MonoBehaviour
 
     public void PlayAction(CPN_InteractionHandler caller, Action callback)
     {
-        askedCallbacks.Add(new SequenceCallback(callback, caller));
+        if (caller != null)
+        {
+            askedCallbacks.Add(new SequenceCallback(callback, caller));
 
-        OnPlayAction(caller);
+            OnPlayAction(caller);
+        }
     }
 
     public void EndAction(CPN_InteractionHandler caller)
     {
-        OnEndAction(caller);
-
-        List<SequenceCallback> callbacksToTry = new List<SequenceCallback>(askedCallbacks);
-
-        for (int i = 0; i < callbacksToTry.Count; i++)
+        if (caller != null)
         {
-            if (callbacksToTry[i].caller == caller)
+            OnEndAction(caller);
+
+            List<SequenceCallback> callbacksToTry = new List<SequenceCallback>(askedCallbacks);
+
+            for (int i = 0; i < callbacksToTry.Count; i++)
             {
-                callbacksToTry[i].callback?.Invoke();
-                callbacksToTry[i].callback = null;
-
-                if (askedCallbacks.Count > i)
+                if (callbacksToTry[i].caller == caller)
                 {
-                    askedCallbacks.RemoveAt(i);
-                }
+                    callbacksToTry[i].callback?.Invoke();
+                    callbacksToTry[i].callback = null;
 
-                callbacksToTry.RemoveAt(i);
-                i--;
+                    if (askedCallbacks.Count > i)
+                    {
+                        askedCallbacks.RemoveAt(i);
+                    }
+
+                    callbacksToTry.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }

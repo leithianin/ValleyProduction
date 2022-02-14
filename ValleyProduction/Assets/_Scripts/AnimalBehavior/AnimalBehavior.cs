@@ -26,7 +26,6 @@ public class AnimalBehavior : MonoBehaviour
 
     public void UnsetAnimal()
     {
-        sequence.InteruptAction(interaction);
         gameObject.SetActive(false);
         OnUnset?.Invoke();
     }
@@ -42,6 +41,11 @@ public class AnimalBehavior : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private void OnDisable()
+    {
+        sequence?.InteruptAction(interaction);
     }
 
     private void DoBehavior()

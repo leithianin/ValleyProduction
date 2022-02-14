@@ -52,14 +52,8 @@ public class SA_MoveIntoCircle : InteractionActions
         else
         {
             //Debug.Log("No path");
-            StartCoroutine(EndNotPath(caller));
+            TimerManager.CreateGameTimer(Time.deltaTime * 2f, () => EndAction(caller));
         }
-    }
-
-    IEnumerator EndNotPath(CPN_InteractionHandler caller)
-    {
-        yield return new WaitForSeconds(Time.deltaTime);
-        EndAction(caller);
     }
 
     protected override void OnEndAction(CPN_InteractionHandler caller)

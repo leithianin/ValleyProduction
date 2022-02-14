@@ -7,21 +7,25 @@ public class TimerManager : VLY_Singleton<TimerManager>
 {
     public class Timer
     {
-        private float endTime;
+        private float duration;
 
-        private Action callback;
+        private Action callback = null;
 
-        public float EndTime => endTime;
+        public Coroutine coroutine;
+
+        public Action Callback => callback;
+
+        public float Duration => duration;
 
         public void SetAsGame(float duration, Action nCallback)
         {
-            endTime = Time.time + duration;
+            this.duration = duration;// Time.time + duration;
             callback = nCallback;
         }
 
         public void SetAsReal(float duration, Action nCallback)
         {
-            endTime = Time.unscaledTime + duration;
+            this.duration = duration;// Time.realtimeSinceStartup + duration;
             callback = nCallback;
         }
 
@@ -35,10 +39,12 @@ public class TimerManager : VLY_Singleton<TimerManager>
             {
                 realTimer.Remove(this);
             }
+            StopTimerRoutine(coroutine);
         }
 
         public void Execute()
         {
+            Debug.Log(callback);
             callback?.Invoke();
             Stop();
         }
@@ -67,13 +73,15 @@ public class TimerManager : VLY_Singleton<TimerManager>
     {
         for(int i = 0; i < gameTimer.Count; i++)
         {
-            if(gameTimer[i].EndTime > toAdd.EndTime)
+            if(gameTimer[i].Duration > toAdd.Duration)
             {
                 Timer tmp = gameTimer[i];
                 gameTimer[i] = toAdd;
                 toAdd = tmp;
             }
         }
+
+        toAdd.coroutine = StartCoroutine(GameTimerRoutine(toAdd));
 
         gameTimer.Add(toAdd);
 
@@ -87,13 +95,15 @@ public class TimerManager : VLY_Singleton<TimerManager>
     {
         for (int i = 0; i < realTimer.Count; i++)
         {
-            if (realTimer[i].EndTime > toAdd.EndTime)
+            if (realTimer[i].Duration > toAdd.Duration)
             {
                 Timer tmp = realTimer[i];
                 realTimer[i] = toAdd;
                 toAdd = tmp;
             }
         }
+
+        toAdd.coroutine = StartCoroutine(RealTimerRoutine(toAdd));
 
         realTimer.Add(toAdd);
 
@@ -103,8 +113,16 @@ public class TimerManager : VLY_Singleton<TimerManager>
         }
     }
 
+    private static void StopTimerRoutine(Coroutine toStop)
+    {
+        if (toStop != null)
+        {
+            instance.StopCoroutine(toStop);
+        }
+    }
+
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         if (gameTimer.Count <= 0 && realTimer.Count <= 0)
         {
@@ -115,31 +133,32 @@ public class TimerManager : VLY_Singleton<TimerManager>
         //Game Timer
         if (gameTimer.Count > 0)
         {
-            while (gameTimer[0].EndTime <= Time.time)
+            while (gameTimer[0].Duration <= Time.time)
             {
                 gameTimer[0].Execute();
-
-                if (gameTimer.Count <= 0)
-                {
-                    enabled = false;
-                    return;
-                }
             }
         }
 
         //Real Timer
         if(realTimer.Count > 0)
         {
-            while (realTimer[0].EndTime <= Time.unscaledTime)
+            while (realTimer[0].Duration <= Time.unscaledTime)
             {
                 realTimer[0].Execute();
-
-                if (realTimer.Count <= 0)
-                {
-                    enabled = false;
-                    return;
-                }
             }
         }
+    }*/
+
+    IEnumerator GameTimerRoutine(Timer timer)
+    {
+        yield return new WaitForSeconds(timer.Duration);
+        timer.Callback?.Invoke();
+        //timer.Execute();
+    }
+
+    IEnumerator RealTimerRoutine(Timer timer)
+    {
+        yield return new WaitForSecondsRealtime(timer.Duration);
+        timer.Execute();
     }
 }
