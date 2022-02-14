@@ -26,6 +26,11 @@ public class SA_MoveIntoCircle : InteractionActions
             randomDirection = (randomPosition - caller.transform.position).normalized;
             randomPosition = circleCenter.position + randomDirection * maxDistanceByMovement;
         }
+        else if(Vector3.Distance(caller.transform.position, randomPosition) <= 0.5f)
+        {
+            randomDirection = (randomPosition - caller.transform.position).normalized;
+            randomPosition = circleCenter.position + randomDirection * 1f;
+        }
 
         NavMeshHit hit;
         NavMesh.SamplePosition(randomPosition, out hit, 10000f, NavMesh.AllAreas);

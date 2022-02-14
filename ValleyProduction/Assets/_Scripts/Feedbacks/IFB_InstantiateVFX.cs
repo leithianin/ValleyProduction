@@ -20,9 +20,4 @@ public class IFB_InstantiateVFX : MonoBehaviour, IFeedbackPlayer
     {
         Destroy(toDespawn);
     }
-
-    void OnDisable()
-    {
-        timer?.Stop();
-    }
 }

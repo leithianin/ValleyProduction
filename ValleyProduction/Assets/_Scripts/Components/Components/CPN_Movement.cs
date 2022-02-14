@@ -65,7 +65,6 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
     /// <param name="callback">L'Action qui sera effectu�e � la fin du d�placement.</param>
     public void WalkOnNewPath(List<Vector3> nPathToTake, Action callback)
     {
-        //Debug.Log("Add Callback");
         reachDestinationCallback += callback;
 
         pathToTake = new List<Vector3>(nPathToTake);
