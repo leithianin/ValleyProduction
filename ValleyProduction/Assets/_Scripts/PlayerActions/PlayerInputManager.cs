@@ -41,6 +41,8 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public static Vector2 GetMousePosition2D => new Vector2(GetMousePosition.x, GetMousePosition.z);
 
+    public static Camera GetCamera => instance.usedCamera;
+
     private void Start()
     {
         currentLayerMask = layerMaskNoTools;

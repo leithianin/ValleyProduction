@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Area
 {
     /// Liste des différents types de datas prit en compte dans l'Area.
