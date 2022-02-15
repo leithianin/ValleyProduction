@@ -127,7 +127,8 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     {
         if(!HasSelectedStructureType)
         {
-            instance.OnUnselectOneMore?.Invoke();
+            if (UIManager.GetIsOnMenuOption) { UIManager.HideMenuOption()          ; }
+            else                             { instance.OnUnselectOneMore?.Invoke(); }
         }
 
         InfrastructureManager.SetCurrentSelectedStructureToNull();                                                          //Reset CurrentSelectedStructure
