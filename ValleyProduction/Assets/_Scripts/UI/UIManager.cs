@@ -20,8 +20,16 @@ public class UIManager : VLY_Singleton<UIManager>
     public static bool GetIsOnMenuOption => instance.OnMenuOption;
 
     //Use in Path Button On Click()
-    public void OnToolCreatePath()
-    {   
+    public void OnToolCreatePath(int i)
+    {  
+        if(i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i) {InfrastructureManager.instance.toolSelected = (ToolType)i  ;}
+        else                                                              {InfrastructureManager.instance.toolSelected = ToolType.None;}
+
+        if(PathManager.IsOnCreatePath)
+        {
+            PathManager.CreatePathData();
+        }
+
         ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);      
     }
 
@@ -48,6 +56,7 @@ public class UIManager : VLY_Singleton<UIManager>
                     if(!instance.pathButtonList[i].activeSelf)
                     {
                         instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd;
+                        instance.pathButtonList[i].GetComponent<ButtonPathData>().buttonPathpoint = pathpoint;
                         instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
                         instance.pathButtonList[i].SetActive(true);
                         break;
@@ -57,6 +66,25 @@ public class UIManager : VLY_Singleton<UIManager>
         }
 
         ButtonsOffset(pathpoint.gameObject);
+    }
+
+    //Clique sur un des boutons
+    public static void ChooseButton(ButtonPathData buttonPath)
+    {
+        foreach (GameObject go in instance.pathButtonList)
+        {
+            go.SetActive(false);
+        }
+
+        switch(InfrastructureManager.GetCurrentTool)
+        {
+            case ToolType.None:
+                ShowRoadsInfos(buttonPath.pathData);
+                break;
+            case ToolType.Delete:
+                buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
+                break;
+        }
     }
 
     public static void ShowRoadsInfos(PathData pathdata)
@@ -76,24 +104,13 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.RoadInfo.gameObject.SetActive(false);
     }
 
-    //Clique sur un des boutons
-    public static void ChooseButton(ButtonPathData buttonPath)
-    {
-        foreach(GameObject go in instance.pathButtonList)
-        {
-            go.SetActive(false);
-        }
-
-        PathManager.SelectPathWithPathData(buttonPath.pathData);
-    }
-
     //Buttons Offset de modifier un chemin 
     public static void ButtonsOffset(GameObject pathpoint)
     {
         Vector3 positionButtons = pathpoint.transform.position;
 
-        float offsetPosY = positionButtons.y + 40f;
-        float offsetPosX = positionButtons.x + 10f;
+        float offsetPosY = positionButtons.y;
+        float offsetPosX = positionButtons.x;
 
         Vector3 offsetPos = new Vector3(offsetPosX, offsetPosY, positionButtons.z);
 

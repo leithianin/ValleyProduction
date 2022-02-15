@@ -19,7 +19,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     public static System.Action<bool> isOnDespawn;
 
-
     private float nextSpawnTime = 5f;
 
     public static Terrain GetMainTerrain => instance.mainTerrain;
@@ -31,7 +30,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
             for (int i = 0; i < spawnNb; i++)
             {
-                if(UsedVisitorNumber() < maxSpawn)
+                if (UsedVisitorNumber() < maxSpawn)
                 {
                     SpawnVisitor();
                 }
