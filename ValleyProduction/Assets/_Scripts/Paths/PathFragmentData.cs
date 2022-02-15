@@ -8,7 +8,7 @@ public class PathFragmentData
 {
     public IST_PathPoint endPoint;                          //Starting point of the FragmentPath
     public IST_PathPoint startPoint;                        //Ending point of the FragmentPath
-    public List<Vector3> path;
+    public List<Vector3> path = new List<Vector3>();
     public List<InterestPoint> interestPointList = new List<InterestPoint>();
 
     public PathFragmentData(IST_PathPoint nStartPoint, IST_PathPoint nEndPoint, List<Vector3> nPath)
@@ -16,7 +16,7 @@ public class PathFragmentData
         endPoint   = nEndPoint  ;
         startPoint = nStartPoint;
 
-        path = new List<Vector3>(nPath);
+        path = new List<Vector3>(nPath);  
     }
 
     public bool HasThisPathpoint(IST_PathPoint pp)
@@ -29,6 +29,20 @@ public class PathFragmentData
         {
             return false;
         }
+    }
+
+    public bool HasThisStartingPoint(IST_PathPoint pp)
+    {
+        if(startPoint == pp) {return true;}
+
+        return false;
+    }
+
+    public bool HasThisEndingPoint(IST_PathPoint pp)
+    {
+        if (endPoint == pp) {return true;}
+
+        return false;
     }
 
     public List<Vector3> GetReversePath()
