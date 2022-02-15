@@ -23,21 +23,43 @@ public class IST_PathPoint : Infrastructure
             UIManager.HideRoadsInfo();
             return;
         }
-        else
+        if(PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
         {
             PathManager.PlacePoint(this, transform.position);
+            PathManager.CreatePathData();
+            UIManager.HideRoadsInfo();
+        }
+        else                                                                //Creer un nouveau chemin
+        {
+            //Check si le path est disconnected
+            if (!PathManager.IsDeconnected(this))
+            {
+                //Need to check le sens
+                PathManager.PlacePoint(this, transform.position);
+            }
+        } 
+    }
+
+    protected override bool OnRemoveObject()
+    {
+        if (PathManager.HasManyPath(this))
+        {
+            UIManager.ArrangePathButton(this);
+            return false;
+        }
+        else
+        {
+            PathManager.DeletePoint(this);
+            InfrastructureManager.DesnapInfrastructure(this);
+            return true;
         }
     }
 
-    protected override void OnRemoveObject()
+    //Remove à partir de l'UI
+    public void Remove(PathData pd)
     {
-        PathManager.DeletePoint(this);
-        /*if (PathManager.CanDeleteGameobject(this))
-        {
-            OnDestroyPathPoint?.Invoke();
-            return true;
-        
-        return false;*/
+        PathManager.DeletePoint(this, pd);
+        InfrastructureManager.DesnapInfrastructure(this);
     }
 
     protected override void OnMoveObject()
@@ -67,11 +89,7 @@ public class IST_PathPoint : Infrastructure
         if (!PathManager.IsPathpointListEmpty())
             {
                 PathManager.PlacePoint(this, transform.position);
-                if(PathManager.IsSpawnPoint(this))
-                {
-                    PathManager.CreatePathData();
-                    UIManager.HideRoadsInfo();
-                }
+              
             }
             else
             {

@@ -10,9 +10,15 @@ public class PathData
     public string name = string.Empty;
     public Color color;
     public float difficulty = 5f;
+    public bool isDisconnected = false;
 
     public IST_PathPoint startPoint;                                                             //Starting point of the path
     public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
+
+    [Header("Suppr.")]
+    List<PathFragmentData> listSuppr = new List<PathFragmentData>();
+
+    List<PathFragmentData> listGetPathFragment = new List<PathFragmentData>();
 
     //Debug Path --> J'ai besoin de savoir à qui il appartient lors de la suppression
     public LineRenderer pathLineRenderer;
@@ -115,7 +121,7 @@ public class PathData
         return toReturn;
     }
 
-    /// <summary>
+     /// <summary>
     /// Remove FragmentData with startPoint and endPoint.
     /// </summary>
     /// <param name="endPoint">FragmentData's endPoint.</param>
@@ -137,8 +143,84 @@ public class PathData
         return toReturn;
     }*/
 
+    public void checkWichFragmentToRemove(IST_PathPoint ist_pp)
+    {
+        if (pathFragment[0].HasThisStartingPoint(ist_pp))
+        {
+            pathFragment.RemoveAt(0);
+        }
+        else
+        {
+            pathFragment.RemoveAt(1);
+        }
+    }
+
+    public void RemoveFragmentAndNext(IST_PathPoint pathpoint)
+    {
+        listSuppr.Clear();
+        bool endingPointReach = false;
+
+        for (int i = 0; i < pathFragment.Count;i++)
+        {
+            if(endingPointReach)  
+            {
+                listSuppr.Add(pathFragment[i]);
+            }
+            else if(pathFragment[i].HasThisEndingPoint(pathpoint)) 
+            {
+                listSuppr.Add(pathFragment[i]);
+                endingPointReach = true;
+            }
+            else if (pathFragment[i].HasThisStartingPoint(pathpoint))
+            {
+                listSuppr.Add(pathFragment[i]);
+            }
+        }
+
+        foreach(PathFragmentData pfd in listSuppr)
+        {
+            pathFragment.Remove(pfd);
+        }
+    }
+
+    public List<PathFragmentData> GetAllNextPathFragment(IST_PathPoint pathpoint)
+    {
+        listGetPathFragment.Clear();
+        bool saveNextPfd = false;
+
+        for(int i = 0; i < pathFragment.Count; i++)
+        {
+            if(saveNextPfd)                                     { listGetPathFragment.Add(pathFragment[i]);}
+            if(pathFragment[i].HasThisStartingPoint(pathpoint)) { saveNextPfd = true       ;}
+        }
+
+        return listGetPathFragment;
+    }
+
     public void RemoveFragment(PathFragmentData pfd)
     {
         pathFragment.Remove(pfd);
+    }
+
+    public IST_PathPoint GetLastPoint()
+    {
+        return pathFragment[pathFragment.Count - 1].endPoint;
+    }
+
+    public void SafeCheck()
+    {
+        if(IsPathDataEmpty() || startPoint == null)
+        {
+            PathManager.DeletePath(this);     
+        }
+    }
+
+    public bool IsPathDataEmpty()
+    {
+        if(pathFragment.Count == 0 && startPoint != null)
+        {
+            return true;
+        }
+        return false;
     }
 }

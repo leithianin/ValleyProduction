@@ -26,7 +26,7 @@ public abstract class Infrastructure : MonoBehaviour
     /// <summary>
     /// Used to do specific action when a construction is removed.
     /// </summary>
-    protected abstract void OnRemoveObject();
+    protected abstract bool OnRemoveObject();
 
     /// <summary>
     /// Used to do specific action when a construction is selected.
@@ -77,8 +77,10 @@ public abstract class Infrastructure : MonoBehaviour
     {
         PlayOnDelete?.Invoke();
 
-        OnRemoveObject();     
-        Destroy(gameObject);
+        if (OnRemoveObject())
+        {
+            Destroy(gameObject);
+        }
         
     }
 

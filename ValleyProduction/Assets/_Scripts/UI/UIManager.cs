@@ -56,6 +56,7 @@ public class UIManager : VLY_Singleton<UIManager>
                     if(!instance.pathButtonList[i].activeSelf)
                     {
                         instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd;
+                        instance.pathButtonList[i].GetComponent<ButtonPathData>().buttonPathpoint = pathpoint;
                         instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
                         instance.pathButtonList[i].SetActive(true);
                         break;
@@ -75,7 +76,15 @@ public class UIManager : VLY_Singleton<UIManager>
             go.SetActive(false);
         }
 
-        ShowRoadsInfos(buttonPath.pathData);
+        switch(InfrastructureManager.GetCurrentTool)
+        {
+            case ToolType.None:
+                ShowRoadsInfos(buttonPath.pathData);
+                break;
+            case ToolType.Delete:
+                buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
+                break;
+        }
     }
 
     public static void ShowRoadsInfos(PathData pathdata)

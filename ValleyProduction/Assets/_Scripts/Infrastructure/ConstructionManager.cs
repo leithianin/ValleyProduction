@@ -153,28 +153,27 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
         OnUnselectInfrastructureType();
         if (lastToolType != InfrastructureManager.GetCurrentTool)
-        {         
+        {
             selectedStructureType = newStructureType;
             selectedToolType = InfrastructureManager.GetCurrentTool;
-           
+
             if (newStructureType != InfrastructureType.DeleteStructure)
             {
+                switch (InfrastructureManager.GetCurrentTool)
+                {
+                    case ToolType.None:
+                        break;
+                    case ToolType.Place:
+                        PlayerInputManager.ChangeLayerMaskForPathTools();
+                        InfrastructureManager.ChooseInfrastructure(pathPointPreview);
+                        OnSelectPathTool?.Invoke();
+                        break;
+                    case ToolType.Move:
+                        break;
+                    case ToolType.Delete:
 
-                        switch(InfrastructureManager.GetCurrentTool)
-                        {
-                            case ToolType.None:
-                                break;
-                            case ToolType.Place:
-                                PlayerInputManager.ChangeLayerMaskForPathTools();
-                                InfrastructureManager.ChooseInfrastructure(pathPointPreview);
-                                OnSelectPathTool?.Invoke();
-                                break;
-                            case ToolType.Move:
-                                break;
-                            case ToolType.Delete:
-                                break;
-                        }
-                
+                        break;
+                }
             }
         }
 
