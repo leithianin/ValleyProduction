@@ -147,12 +147,12 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// Vérifie le nombre de visiteur actif.
     /// </summary>
     /// <returns>Le nombre de vitieur actif.</returns>
-    private int UsedVisitorNumber()
+    public static int UsedVisitorNumber()
     {
         int toReturn = 0;
-        for (int i = 0; i < visitorPool.Count; i++)
+        for (int i = 0; i < instance.visitorPool.Count; i++)
         {
-            if (visitorPool[i].gameObject.activeSelf)
+            if (instance.visitorPool[i].gameObject.activeSelf)
             {
                 toReturn++;
             }
