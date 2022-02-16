@@ -25,10 +25,22 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 
     protected Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
-    private void OnEnable()
+    bool asSpawnOnce = false;
+
+    private void Start()
     {
+        asSpawnOnce = true;
         SetData();
         AreaManager.AddAreaUpdater(this);
+    }
+
+    private void OnEnable()
+    {
+        if (asSpawnOnce)
+        {
+            SetData();
+            AreaManager.AddAreaUpdater(this);
+        }
     }
 
     private void OnDisable()
