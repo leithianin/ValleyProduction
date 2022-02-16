@@ -20,9 +20,29 @@ public class UIManager : VLY_Singleton<UIManager>
     public static bool GetIsOnMenuOption => instance.OnMenuOption;
 
     //Use in Path Button On Click()
-    public void OnToolCreatePath()
-    {   
+    public void OnToolCreatePath(int i)
+    {  
+        if(i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i) {InfrastructureManager.instance.toolSelected = (ToolType)i  ;}
+        else                                                              {InfrastructureManager.instance.toolSelected = ToolType.None;}
+
+        if(PathManager.IsOnCreatePath)
+        {
+            PathManager.CreatePathData();
+        }
+
         ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);      
+    }
+
+    public void UnselectTool()
+    {
+        InfrastructureManager.instance.toolSelected = ToolType.None;
+
+        if (PathManager.IsOnCreatePath)
+        {
+            PathManager.CreatePathData();
+        }
+
+        ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
     }
 
     //Use in Construction Button On Click()
@@ -48,6 +68,7 @@ public class UIManager : VLY_Singleton<UIManager>
                     if(!instance.pathButtonList[i].activeSelf)
                     {
                         instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd;
+                        instance.pathButtonList[i].GetComponent<ButtonPathData>().buttonPathpoint = pathpoint;
                         instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
                         instance.pathButtonList[i].SetActive(true);
                         break;
@@ -59,8 +80,28 @@ public class UIManager : VLY_Singleton<UIManager>
         ButtonsOffset(pathpoint.gameObject);
     }
 
+    //Clique sur un des boutons
+    public static void ChooseButton(ButtonPathData buttonPath)
+    {
+        foreach (GameObject go in instance.pathButtonList)
+        {
+            go.SetActive(false);
+        }
+
+        switch(InfrastructureManager.GetCurrentTool)
+        {
+            case ToolType.None:
+                ShowRoadsInfos(buttonPath.pathData);
+                break;
+            case ToolType.Delete:
+                buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
+                break;
+        }
+    }
+
     public static void ShowRoadsInfos(PathData pathdata)
     {
+        instance.RoadInfo.pathData = pathdata;
         instance.RoadInfo.UpdateTitle(pathdata.name);
         instance.RoadInfo.UpdateColor(pathdata.color);
         instance.RoadInfo.UpdateStamina(pathdata.difficulty);
@@ -68,7 +109,20 @@ public class UIManager : VLY_Singleton<UIManager>
         //Il faut avoir des valeurs fixes et les get selon la difficult�
         instance.RoadInfo.UpdateGaugeStamina(1);
 
+        OnBoardingManager.onClickPath?.Invoke(true);
         instance.RoadInfo.gameObject.SetActive(true);
+    }
+
+    public static void ConfirmDelete(PathData pathdata)
+    {
+        //Show UI
+    }
+
+    public static void DeletePath(PathData pathData)
+    {
+        OnBoardingManager.onDestroyPath?.Invoke(true);
+        HideRoadsInfo();
+        PathManager.DeletePath(pathData);
     }
 
     public static void HideRoadsInfo()
@@ -76,24 +130,13 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.RoadInfo.gameObject.SetActive(false);
     }
 
-    //Clique sur un des boutons
-    public static void ChooseButton(ButtonPathData buttonPath)
-    {
-        foreach(GameObject go in instance.pathButtonList)
-        {
-            go.SetActive(false);
-        }
-
-        PathManager.SelectPathWithPathData(buttonPath.pathData);
-    }
-
     //Buttons Offset de modifier un chemin 
     public static void ButtonsOffset(GameObject pathpoint)
     {
         Vector3 positionButtons = pathpoint.transform.position;
 
-        float offsetPosY = positionButtons.y + 40f;
-        float offsetPosX = positionButtons.x + 10f;
+        float offsetPosY = positionButtons.y;
+        float offsetPosX = positionButtons.x;
 
         Vector3 offsetPos = new Vector3(offsetPosX, offsetPosY, positionButtons.z);
 
@@ -134,7 +177,9 @@ public class UIManager : VLY_Singleton<UIManager>
     //Show les informations des visiteurs on click
     public static void ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
-        HideInfoVisitor();
+       HideInfoVisitor();
+
+       OnBoardingManager.OnClickVisitor?.Invoke(true);
 
        switch (cpn_Inf.visitorType)
         {
@@ -156,6 +201,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static void HideInfoVisitor()
     {
+        OnBoardingManager.onHideVisitorInfo?.Invoke(true);
         instance.hikersInfo.gameObject.SetActive(false);
         instance.touristInfo.gameObject.SetActive(false);
     }

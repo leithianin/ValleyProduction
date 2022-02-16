@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
+[Serializable]
 public abstract class AreaData
 {
     public Area linkedArea;
@@ -36,6 +37,7 @@ public abstract class AreaData
 /// Gère le calcul du score à partir des objets de type T contenant la data (Exemple : voir le AD_Noise (système de bruit))
 /// </summary>
 /// <typeparam name="T">Type d'objet à prendre en compte.</typeparam>
+[Serializable]
 public abstract class AreaData<T> : AreaData
 {
     /// <summary>

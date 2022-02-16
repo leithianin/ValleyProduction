@@ -7,32 +7,59 @@ public class IST_PathPoint : Infrastructure
 {
     public Action OnDestroyPathPoint;
 
+    //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)
     {
         PathManager.PlacePoint(this, position);
     }
 
-    protected override bool OnRemoveObject()
+    //Place on Click Infrastructure
+    protected override void OnPlaceObject()
     {
-        /*if (PathManager.HasManyPath(this))
-        {
-            UIManager.ArrangePathButton(this);
-        }*/
-
-        /*if (!PathManager.IsOnCurrentPathData(this))
+        //Si c'est le dernier PathPoint du chemin = Terminer chemin
+        if (this == PathManager.previousPathpoint)
         {
             PathManager.CreatePathData();
-            PathManager.SelectPath(this);
-        }*/
-
-        if (PathManager.CanDeleteGameobject(this))
+            UIManager.HideRoadsInfo();
+            return;
+        }
+        if(PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
         {
-            OnDestroyPathPoint?.Invoke();
+            PathManager.PlacePoint(this, transform.position);
+            PathManager.CreatePathData();
+            UIManager.HideRoadsInfo();
+        }
+        else                                                                //Creer un nouveau chemin
+        {
+            //Check si le path est disconnected
+            if (!PathManager.IsDeconnected(this))
+            {
+                //Need to check le sens
+                PathManager.PlacePoint(this, transform.position);
+            }
+        } 
+    }
 
+    protected override bool OnRemoveObject()
+    {
+        if (PathManager.HasManyPath(this))
+        {
+            UIManager.ArrangePathButton(this);
+            return false;
+        }
+        else
+        {
+            PathManager.DeletePoint(this);
+            InfrastructureManager.DesnapInfrastructure(this);
             return true;
         }
+    }
 
-        return false;
+    //Remove à partir de l'UI
+    public void Remove(PathData pd)
+    {
+        PathManager.DeletePoint(this, pd);
+        InfrastructureManager.DesnapInfrastructure(this);
     }
 
     protected override void OnMoveObject()
@@ -55,42 +82,20 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnSelectObject()
     {
-        if (this == PathManager.previousPathpoint)
-        {
-            PathManager.CreatePathData();
-            UIManager.HideRoadsInfo();
-        }
-        else
-        {
-            if (!PathManager.IsPathpointListEmpty())
+        if (PathManager.HasManyPath(this)) {UIManager.ArrangePathButton(this)                          ;}
+        else                               {UIManager.ShowRoadsInfos(PathManager.GetPathData(this))    ;}
+
+        /*
+        if (!PathManager.IsPathpointListEmpty())
             {
                 PathManager.PlacePoint(this, transform.position);
-                if(PathManager.IsSpawnPoint(this))
-                {
-                    PathManager.CreatePathData();
-                    UIManager.HideRoadsInfo();
-                }
+              
             }
             else
             {
-                //Check si plusieurs PathData
-                if (PathManager.HasManyPath(this))
-                {
-                    UIManager.ArrangePathButton(this);
-                }
-                else
-                {
-                    if(PathManager.HasOnePath(this))
-                    {
-                        PathManager.SelectPath(this);
-                    }
-                    else
-                    {
-                        PathManager.PlacePoint(this, transform.position);
-                    }
-                }
+                //Check si plusieurs PathData    
             }
-        }
+        */
     }
 
     protected override void OnUnselectObject()
@@ -108,14 +113,4 @@ public class IST_PathPoint : Infrastructure
     {
         
     }
-
-    /*private void OnMouseOver()
-    {
-        Debug.Log("testOver");
-    }
-
-    private void OnMouseExit()
-    {
-        Debug.Log("testExit");
-    }*/
 }

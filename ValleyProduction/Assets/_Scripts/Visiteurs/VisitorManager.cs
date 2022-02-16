@@ -19,7 +19,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     public static System.Action<bool> isOnDespawn;
 
-
     private float nextSpawnTime = 5f;
 
     public static Terrain GetMainTerrain => instance.mainTerrain;
@@ -31,7 +30,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
             for (int i = 0; i < spawnNb; i++)
             {
-                if(UsedVisitorNumber() < maxSpawn)
+                if (UsedVisitorNumber() < maxSpawn)
                 {
                     SpawnVisitor();
                 }
@@ -68,6 +67,10 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 {
                     newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
                     SetType(newVisitor);             
+                }
+                else
+                {
+                    //Debug.LogError("Error : ChosenPath est null.");
                 }
             }
         }
@@ -143,12 +146,12 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// Vérifie le nombre de visiteur actif.
     /// </summary>
     /// <returns>Le nombre de vitieur actif.</returns>
-    private int UsedVisitorNumber()
+    public static int UsedVisitorNumber()
     {
         int toReturn = 0;
-        for (int i = 0; i < visitorPool.Count; i++)
+        for (int i = 0; i < instance.visitorPool.Count; i++)
         {
-            if (visitorPool[i].gameObject.activeSelf)
+            if (instance.visitorPool[i].gameObject.activeSelf)
             {
                 toReturn++;
             }

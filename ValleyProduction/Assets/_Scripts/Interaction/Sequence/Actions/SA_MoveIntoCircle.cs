@@ -11,6 +11,11 @@ public class SA_MoveIntoCircle : InteractionActions
 
     NavMeshPath pathToTake;
 
+    private void Start()
+    {
+        circleCenter.position = new Vector3(circleCenter.position.x, VisitorManager.GetMainTerrain.SampleHeight(circleCenter.position) + 5f, circleCenter.position.z);
+    }
+
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         Vector3 randomDirection = Random.insideUnitCircle * circleRadius;
@@ -21,9 +26,14 @@ public class SA_MoveIntoCircle : InteractionActions
             randomDirection = (randomPosition - caller.transform.position).normalized;
             randomPosition = circleCenter.position + randomDirection * maxDistanceByMovement;
         }
+        else if(Vector3.Distance(caller.transform.position, randomPosition) <= 0.5f)
+        {
+            randomDirection = (randomPosition - caller.transform.position).normalized;
+            randomPosition = circleCenter.position + randomDirection * 1f;
+        }
 
         NavMeshHit hit;
-        NavMesh.SamplePosition(randomPosition, out hit, circleRadius, NavMesh.AllAreas);
+        NavMesh.SamplePosition(randomPosition, out hit, 10000f, NavMesh.AllAreas);
         randomPosition = hit.position;
 
         pathToTake = new NavMeshPath();
@@ -47,14 +57,8 @@ public class SA_MoveIntoCircle : InteractionActions
         else
         {
             //Debug.Log("No path");
-            StartCoroutine(EndNotPath(caller));
+            TimerManager.CreateGameTimer(Time.deltaTime * 2f, () => EndAction(caller));
         }
-    }
-
-    IEnumerator EndNotPath(CPN_InteractionHandler caller)
-    {
-        yield return new WaitForSeconds(Time.deltaTime);
-        EndAction(caller);
     }
 
     protected override void OnEndAction(CPN_InteractionHandler caller)

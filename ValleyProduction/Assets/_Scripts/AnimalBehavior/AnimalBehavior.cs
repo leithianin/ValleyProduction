@@ -26,15 +26,26 @@ public class AnimalBehavior : MonoBehaviour
 
     public void UnsetAnimal()
     {
-        sequence.InteruptAction(interaction);
         gameObject.SetActive(false);
         OnUnset?.Invoke();
     }
 
     private void OnEnable()
     {
-        transform.position = spawnPosition.position;
-        DoBehavior();
+        if (sequence != null)
+        {
+            transform.position = spawnPosition.position;
+            DoBehavior();
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDisable()
+    {
+        sequence?.InteruptAction(interaction);
     }
 
     private void DoBehavior()

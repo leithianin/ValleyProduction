@@ -4,3 +4,11 @@ public enum InfrastructureType
     DeleteStructure,
     PathTools
 }
+
+public enum ToolType
+{
+    None,
+    Place,
+    Move,
+    Delete
+}

@@ -7,23 +7,36 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Dimensions de la map
     [SerializeField] private Vector2 worldDimension;
     /// Taille de la grille
-    [SerializeField] private float areaHeight;
+    [SerializeField] private float areaSize;
     [SerializeField] private bool showGizmos;
 
     /// Dimensions de la grille
     private static Vector2Int gridDimension;
     /// Layer mask contenant les AreaDisplay
     [SerializeField] private LayerMask areaDisplayMask;
+    private Vector2 CenterPosition => new Vector2(transform.position.x, transform.position.z);
 
-    private static List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
+    private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
     private static int updaterIndex;
-    [SerializeField] private int numberSataToUpdateInFrame;
+    [SerializeField] private int numberDataToUpdateInFrame;
+
+    [SerializeField] private Transform treeScoreHandler;
+    [SerializeField] private ADI_VegetationDisplayer treeScorePrefab;
+
+    [SerializeField] private Transform animalScoreHandler;
+    [SerializeField] private List<ADI_AnimalDisplayer> animalScorePrefab;
+
+    [SerializeField] private Transform chunkHandler;
+    [SerializeField] private ChunkDisplayer chunkDisplayerPrefab;
+    private List<ChunkDisplayer> allChunks;
 
     /// Liste de toutes les zones de la map
-    private static List<Area> areas = new List<Area>();
+    private List<Area> areas = new List<Area>();
+
+    private static List<Area> Areas => instance.areas;
 
     /// Taille de la map (Getter)
-    private static float AreaHeight => instance.areaHeight;
+    private static float AreaHeight => instance.areaSize;
 
     private void Start()
     {
@@ -38,6 +51,114 @@ public class AreaManager : VLY_Singleton<AreaManager>
         }
     }
 
+    [ContextMenu("Set Datas")]
+    private void SetAreaDatas()
+    {
+        int k = 0;
+        while (treeScoreHandler.childCount > 0 && k < 1000)
+        {
+            DestroyImmediate(treeScoreHandler.GetChild(0).gameObject);
+            k++;
+        }
+        k = 0;
+        /*while (animalScoreHandler.childCount > 0 && k < 1000)
+        {
+            DestroyImmediate(animalScoreHandler.GetChild(0).gameObject);
+            k++;
+        }*/
+        k = 0;
+        while (chunkHandler.childCount > 0 && k < 1000)
+        {
+            DestroyImmediate(chunkHandler.GetChild(0).gameObject);
+            k++;
+        }
+
+        allChunks = new List<ChunkDisplayer>();
+
+        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaSize), Mathf.RoundToInt(worldDimension.y / areaSize));
+
+        for (int i = 0; i < gridDimension.x; i++)
+        {
+            for (int j = 0; j < gridDimension.y; j++)
+            {
+                ADI_VegetationDisplayer vegetation = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
+                vegetation.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                vegetation.SetTrees();
+
+                /*for (int l = 0; l < animalScorePrefab.Count; l++)
+                {
+                    ADI_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ADI_AnimalDisplayer>();
+                    go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                }*/
+
+                ChunkDisplayer displayer = Instantiate(chunkDisplayerPrefab.gameObject, chunkHandler).GetComponent<ChunkDisplayer>();
+                displayer.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                allChunks.Add(displayer);
+            }
+        }
+
+        var meshesInMap = FindObjectsOfType<MeshRenderer>();
+
+        foreach(MeshRenderer m in meshesInMap)
+        {
+            int chunkIndex = GetListIndexFromPosition(new Vector2(m.transform.position.x, m.transform.position.z));
+            if (chunkIndex >= 0 && chunkIndex < allChunks.Count)
+            {
+                allChunks[chunkIndex].AddMeshes(m);
+            }
+        }
+    }
+
+    [ContextMenu("Set Trees")]
+    private void SetTrees()
+    {
+        int k = 0;
+        while (treeScoreHandler.childCount > 0 && k < 1000)
+        {
+            DestroyImmediate(treeScoreHandler.GetChild(0).gameObject);
+            k++;
+        }
+
+        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaSize), Mathf.RoundToInt(worldDimension.y / areaSize));
+
+        for (int i = 0; i < gridDimension.x; i++)
+        {
+            for (int j = 0; j < gridDimension.y; j++)
+            {
+                ADI_VegetationDisplayer go = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
+                go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                go.SetTrees();
+            }
+        }
+    }
+
+    [ContextMenu("Set Animals")]
+    private void SetAnimals()
+    {
+        int k = 0;
+        while (animalScoreHandler.childCount > 0 && k < 1000)
+        {
+            DestroyImmediate(animalScoreHandler.GetChild(0).gameObject);
+            k++;
+        }
+
+        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaSize), Mathf.RoundToInt(worldDimension.y / areaSize));
+
+        for (int i = 0; i < gridDimension.x; i++)
+        {
+            for (int j = 0; j < gridDimension.y; j++)
+            {
+                for (int l = 0; l < animalScorePrefab.Count; l++)
+                {
+                    ADI_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ADI_AnimalDisplayer>();
+                    go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                }
+            }
+        }
+    }
+
+
+
     /// <summary>
     /// Crée la grille, et assigne tous les AreaDisplay aux zones.
     /// </summary>
@@ -46,7 +167,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         areas = new List<Area>();
 
-        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaHeight), Mathf.RoundToInt(worldDimension.y / areaHeight));
+        gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaSize), Mathf.RoundToInt(worldDimension.y / areaSize));
 
         for (int i = 0; i < gridDimension.x; i++)
         {
@@ -54,12 +175,15 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 Area newArea = new Area();
                 newArea.arrayPosition = new Vector2Int(i, j);
-                newArea.worldPosition = new Vector2(areaHeight / 2f + areaHeight * i, areaHeight / 2f + areaHeight * j);
+                newArea.worldPosition = new Vector2(areaSize / 2f + areaSize * i, areaSize / 2f + areaSize * j) + GetWorldPositionOffset();
 
                 newArea.datas.Add(new AD_Noise());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
 
                 newArea.datas.Add(new AD_PlantHealthyness());
+                newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
+
+                newArea.datas.Add(new AD_Pollution());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
 
                 areas.Add(newArea);
@@ -70,7 +194,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
         {
             for (int i = 0; i < areas.Count; i++)
             {
-                areas[i].SetAllDisplay(areaHeight, areaDisplayMask);
+                areas[i].SetAllDisplay(areaSize, areaDisplayMask);
             }
         }
     }
@@ -82,7 +206,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         if (allUpdaters.Count > 0)
         {
-            for (int i = 0; i < numberSataToUpdateInFrame; i++)
+            for (int i = 0; i < numberDataToUpdateInFrame; i++)
             {
                 updaterIndex = (updaterIndex + 1) % allUpdaters.Count;
                 allUpdaters[updaterIndex].UpdateData();
@@ -96,9 +220,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// <param name="toAdd">L'AreaUpdater à ajouter.</param>
     public static void AddAreaUpdater(AreaUpdater toAdd)
     {
-        if(!allUpdaters.Contains(toAdd))
+        if(!instance.allUpdaters.Contains(toAdd))
         {
-            allUpdaters.Add(toAdd);
+            instance.allUpdaters.Add(toAdd);
         }
     }
 
@@ -108,15 +232,30 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// <param name="toAdd">L'AreaUpdater à retirer.</param>
     public static void RemoveAreaUpdater(AreaUpdater toRemove)
     {
-        if (allUpdaters.Contains(toRemove))
+        if (instance.allUpdaters.Contains(toRemove))
         {
-            allUpdaters.Remove(toRemove);
+            toRemove.RemoveData();
 
-            if(allUpdaters.Count <= updaterIndex)
+            instance.allUpdaters.Remove(toRemove);
+
+            if(instance.allUpdaters.Count <= updaterIndex)
             {
-                updaterIndex = allUpdaters.Count;
+                updaterIndex = instance.allUpdaters.Count;
             }
         }
+    }
+
+    private Vector2 GetWorldPositionOffset()
+    {
+        return CenterPosition - (worldDimension / 2f);
+    }
+
+    private int GetListIndexFromPosition(Vector2 position)
+    {
+        int columnIndex = Mathf.RoundToInt((position.x - areaSize / 2 - GetWorldPositionOffset().x) / areaSize);
+        int lineIndex = Mathf.RoundToInt((position.y - areaSize / 2 - GetWorldPositionOffset().y) / areaSize);
+
+        return columnIndex * gridDimension.y + lineIndex;
     }
 
     /// <summary>
@@ -126,8 +265,8 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// <returns>L'Area dans laquelle la position se trouve.</returns>
     public static Area GetAreaAtPosition(Vector2 position)
     {
-        int columnIndex = Mathf.RoundToInt((position.x - AreaHeight / 2) / AreaHeight);
-        int lineIndex = Mathf.RoundToInt((position.y - AreaHeight / 2) / AreaHeight);
+        int columnIndex = Mathf.RoundToInt((position.x - AreaHeight / 2 - instance.GetWorldPositionOffset().x) / AreaHeight);
+        int lineIndex = Mathf.RoundToInt((position.y - AreaHeight / 2 - instance.GetWorldPositionOffset().y) / AreaHeight);
 
         return GetAreaAtIndex(new Vector2Int(columnIndex, lineIndex));
     }
@@ -136,9 +275,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
     {
         int realIndex = index.x * gridDimension.y + index.y;
 
-        if (realIndex >= 0 && realIndex < areas.Count)
+        if (realIndex >= 0 && realIndex < Areas.Count)
         {
-            return areas[realIndex];
+            return Areas[realIndex];
         }
 
         return null;
@@ -228,7 +367,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             Gizmos.color = Color.yellow;
             for (int i = 0; i < areas.Count; i++)
             {
-                Gizmos.DrawWireCube(areas[i].GetWorldPosition, Vector3.one * areaHeight);
+                Gizmos.DrawWireCube(areas[i].GetWorldPosition, Vector3.one * areaSize);
             }
         }
     }

@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class AreaUpdater : MonoBehaviour
 {
     public abstract void UpdateData();
+
+    public abstract void RemoveData();
 }
 
 /// <summary>
@@ -13,7 +15,9 @@ public abstract class AreaUpdater : MonoBehaviour
 /// <typeparam name="T">Le type contenant la data.</typeparam>
 public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 {
-    [SerializeField] protected T data;
+    [SerializeField] private float scoreProduced;
+
+    protected T data;
 
     protected T lastUpdatedData;
 
@@ -23,6 +27,7 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 
     private void OnEnable()
     {
+        SetData();
         AreaManager.AddAreaUpdater(this);
     }
 
@@ -31,38 +36,54 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
         AreaManager.RemoveAreaUpdater(this);
     }
 
+    public void SetScore(float nScore)
+    {
+        scoreProduced = nScore;
+    }
+
+    public float GetScore => scoreProduced;
+
     public override void UpdateData()
     {
-        Area toCheck = AreaManager.GetAreaAtPosition(Position);
-
-        if (toCheck != currentArea)
+        if (data != null)
         {
-            if (lastUpdatedData != null)
-            {
-                AreaManager.RemoveDataToArea<T>(currentArea, lastUpdatedData);
-            }
-            currentArea = toCheck;
+            Area toCheck = AreaManager.GetAreaAtPosition(Position);
 
-            AreaManager.AddDataToArea<T>(currentArea, data);
-        }
-        else
-        {
-            currentArea = toCheck;
-
-            if (lastUpdatedData != null)
+            if (toCheck != currentArea)
             {
-                AreaManager.RefreshDataToArea<T>(currentArea, lastUpdatedData, data);
+                if (lastUpdatedData != null)
+                {
+                    AreaManager.RemoveDataToArea<T>(currentArea, lastUpdatedData);
+                }
+                currentArea = toCheck;
+
+                AreaManager.AddDataToArea<T>(currentArea, data);
             }
             else
             {
-                AreaManager.AddDataToArea<T>(currentArea, data);
-            }
-        }
+                currentArea = toCheck;
 
-        SetLastUpdateData(data);
+                if (lastUpdatedData != null)
+                {
+                    AreaManager.RefreshDataToArea<T>(currentArea, lastUpdatedData, data);
+                }
+                else
+                {
+                    AreaManager.AddDataToArea<T>(currentArea, data);
+                }
+            }
+
+            SetLastUpdateData(data);
+        }
+    }
+
+    public override void RemoveData()
+    {
+        AreaManager.RemoveDataToArea<T>(currentArea, lastUpdatedData);
     }
 
     public abstract void SetData(T newData);
+    public abstract void SetData();
 
     protected virtual void SetLastUpdateData(T lastData)
     {

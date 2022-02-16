@@ -11,10 +11,15 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static InfrastructurePreview GetCurrentPreview => instance.previewHandler.GetPreview;
     public static Infrastructure GetCurrentSelectedStructure => instance.currentSelectedStructure;
 
+    public static ToolType GetCurrentTool => instance.toolSelected;
+
     private static LayerMask layerIgnoreRaycast = 2;
     private static LayerMask layerInfrastructure = 0;
 
     private GameObject toMove;
+    public ToolType toolSelected = ToolType.None;
+
+
 
     private void Update()
     {
@@ -31,11 +36,17 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             instance.previewHandler.SetInfrastructurePreview(newPreview);
         }
-    }
+    }   
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
         instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
+    }
+
+    private void PlaceInfrastructure(Infrastructure selectedStructure)
+    {
+        currentSelectedStructure = selectedStructure;
+        selectedStructure.PlaceObject();
     }
 
     private bool PlaceInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
@@ -91,7 +102,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// Gère l'intéraction avec une structure.
     /// </summary>
     /// <param name="interactedStructure">L'Infrastructure qui a été cliqué.</param>
-    public static void InteractWithStructure(InfrastructureType tool, Infrastructure interactedStructure)
+    /*public static void InteractWithStructure(InfrastructureType tool, Infrastructure interactedStructure)
     {
         switch (tool)
         {
@@ -103,6 +114,27 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                 break;
             case InfrastructureType.PathTools:
                 instance.SelectInfrastructure(interactedStructure);
+                break;
+        }
+    }*/
+
+    public static void InteractWithStructure(ToolType tool, Infrastructure interactedStructure)
+    {
+        switch (tool)
+        {
+            //Just select l'infrastructure (Info)
+            case ToolType.None:
+                instance.SelectInfrastructure(interactedStructure);
+                //instance.SelectInfrastructure(interactedStructure);
+                break;      
+            case ToolType.Place:
+                instance.PlaceInfrastructure(interactedStructure);
+                //Usable by balise, je suis entrain de placer, je clique sur une infrastructure.
+                break;
+            case ToolType.Move:
+                break;
+            case ToolType.Delete:
+                DeleteInfrastructure(interactedStructure);
                 break;
         }
     }
