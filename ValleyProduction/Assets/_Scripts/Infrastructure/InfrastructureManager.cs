@@ -98,26 +98,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         instance.currentSelectedStructure.ReplaceObject();
     }
 
-    /// <summary>
-    /// Gère l'intéraction avec une structure.
-    /// </summary>
-    /// <param name="interactedStructure">L'Infrastructure qui a été cliqué.</param>
-    /*public static void InteractWithStructure(InfrastructureType tool, Infrastructure interactedStructure)
-    {
-        switch (tool)
-        {
-            case InfrastructureType.None:
-                //instance.SelectInfrastructure(interactedStructure);
-                break;
-            case InfrastructureType.DeleteStructure:
-                DeleteInfrastructure(interactedStructure);
-                break;
-            case InfrastructureType.PathTools:
-                instance.SelectInfrastructure(interactedStructure);
-                break;
-        }
-    }*/
-
     public static void InteractWithStructure(ToolType tool, Infrastructure interactedStructure)
     {
         switch (tool)

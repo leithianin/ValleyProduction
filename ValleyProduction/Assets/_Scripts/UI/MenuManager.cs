@@ -11,7 +11,7 @@ public class MenuManager : VLY_Singleton<MenuManager>
 
     public void Awake()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
     public void Play(int i)
