@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &42053802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 42053803}
+  m_Layer: 0
+  m_Name: Chunks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &42053803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42053802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5209237266425241728}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &306155113865030271
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldDimension: {x: 500, y: 350}
-  areaHeight: 25
+  areaSize: 25
   showGizmos: 1
   areaDisplayMask:
     serializedVersion: 2
@@ -127,9 +157,11 @@ MonoBehaviour:
   treeScorePrefab: {fileID: 4668885155472284702, guid: 678642e540dd46f4988ca1d5eb2b7ff0, type: 3}
   animalScoreHandler: {fileID: 3855040358641986820}
   animalScorePrefab:
-  - {fileID: 7249551366391030698, guid: e37aaf66144fe65478be061ff87253d6, type: 3}
-  - {fileID: 8378836725287962837, guid: 8bb255a059db7954dafa4f5486eb1a09, type: 3}
-  - {fileID: 7173698814621457068, guid: 5cad5c7a7e6977f47a2c818a2bcce1fc, type: 3}
+  - {fileID: 8695579791995061886, guid: 4cbf997e9a7fe39479b76f862c2ff944, type: 3}
+  - {fileID: 1733199571718354055, guid: 9d70470d77fb6c04aaa3ac3653832359, type: 3}
+  - {fileID: 2302865588194345808, guid: 80c7ed655996d234ca7802d604f450e4, type: 3}
+  chunkHandler: {fileID: 42053803}
+  chunkDisplayerPrefab: {fileID: 2644180695288406216, guid: 7ee3e5429390ceb448ae6f4075cae336, type: 3}
 --- !u!1 &5209237266425241743
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +181,7 @@ GameObject:
   - component: {fileID: 838523332}
   - component: {fileID: 4442775087009201159}
   - component: {fileID: 857432156584763243}
+  - component: {fileID: 1931327289}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -173,6 +206,7 @@ Transform:
   - {fileID: 3969582871561374489}
   - {fileID: 3855040358641986820}
   - {fileID: 1999015100698152557}
+  - {fileID: 42053803}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -308,18 +342,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   layerMaskNoTools:
     serializedVersion: 2
     m_Bits: 257
@@ -362,7 +384,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+        m_MethodName: 
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -409,6 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previewHandler: {fileID: 5209237266696560537}
+  toolSelected: 0
 --- !u!114 &5209237266425241733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +461,7 @@ MonoBehaviour:
   pathFragmentDataList: []
   pathpointList: []
   debugMode: 1
+  PathReverse: 0
   DebugLineRenderer: {fileID: 0}
   lineRendererDebugList: []
   currentLineDebug: {fileID: 0}
@@ -495,6 +519,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trashPrefab: {fileID: 808926896532056847, guid: d76f5d898bb4d0045be8f357b7da380f, type: 3}
   trashHandler: {fileID: 3969582871561374489}
+--- !u!114 &1931327289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209237266425241743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109d0bdecbd2bde4aa83d353257f1b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ressourceProductionSpeed: 10
+  ressourceByVisitor: 0.2
+  ressourceGainedBase: 1
+  currentRessources: 0
+  OnGainRessource:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLoseRessource:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5209237266696560536
 GameObject:
   m_ObjectHideFlags: 0

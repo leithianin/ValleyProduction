@@ -7,34 +7,31 @@ public class TimerManager : VLY_Singleton<TimerManager>
 {
     public class Timer
     {
-        private float endTime;
+        private float duration;
 
-        private Action callback;
+        private Action callback = null;
 
-        public float EndTime => endTime;
+        public Coroutine coroutine;
+
+        public Action Callback => callback;
+
+        public float Duration => duration;
 
         public void SetAsGame(float duration, Action nCallback)
         {
-            endTime = Time.time + duration;
+            this.duration = duration;
             callback = nCallback;
         }
 
         public void SetAsReal(float duration, Action nCallback)
         {
-            endTime = Time.unscaledTime + duration;
+            this.duration = duration;
             callback = nCallback;
         }
 
         public void Stop()
         {
-            if (gameTimer.Contains(this))
-            {
-                gameTimer.Remove(this);
-            }
-            else
-            {
-                realTimer.Remove(this);
-            }
+            StopTimerRoutine(coroutine);
         }
 
         public void Execute()
@@ -44,14 +41,11 @@ public class TimerManager : VLY_Singleton<TimerManager>
         }
     }
 
-    private static List<Timer> gameTimer = new List<Timer>();
-    private static List<Timer> realTimer = new List<Timer>();
-
     public static Timer CreateGameTimer(float time, Action callback)
     {
         Timer toReturn = new Timer();
         toReturn.SetAsGame(time, callback);
-        instance.AddGameTimer(toReturn);
+        toReturn.coroutine = instance.StartCoroutine(instance.GameTimerRoutine(toReturn));
         return toReturn;
     }
 
@@ -59,87 +53,27 @@ public class TimerManager : VLY_Singleton<TimerManager>
     {
         Timer toReturn = new Timer();
         toReturn.SetAsReal(time, callback);
-        instance.AddRealTimer(toReturn);
+        toReturn.coroutine = instance.StartCoroutine(instance.RealTimerRoutine(toReturn));
         return toReturn;
     }
 
-    private void AddGameTimer(Timer toAdd)
+    private static void StopTimerRoutine(Coroutine toStop)
     {
-        for(int i = 0; i < gameTimer.Count; i++)
+        if (toStop != null)
         {
-            if(gameTimer[i].EndTime > toAdd.EndTime)
-            {
-                Timer tmp = gameTimer[i];
-                gameTimer[i] = toAdd;
-                toAdd = tmp;
-            }
-        }
-
-        gameTimer.Add(toAdd);
-
-        if (!enabled)
-        {
-            enabled = true;
+            instance.StopCoroutine(toStop);
         }
     }
 
-    private void AddRealTimer(Timer toAdd)
+    IEnumerator GameTimerRoutine(Timer timer)
     {
-        for (int i = 0; i < realTimer.Count; i++)
-        {
-            if (realTimer[i].EndTime > toAdd.EndTime)
-            {
-                Timer tmp = realTimer[i];
-                realTimer[i] = toAdd;
-                toAdd = tmp;
-            }
-        }
-
-        realTimer.Add(toAdd);
-
-        if (!enabled)
-        {
-            enabled = true;
-        }
+        yield return new WaitForSeconds(timer.Duration);
+        timer.Execute();
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator RealTimerRoutine(Timer timer)
     {
-        if (gameTimer.Count <= 0 && realTimer.Count <= 0)
-        {
-            enabled = false;
-            return;
-        }
-
-        //Game Timer
-        if (gameTimer.Count > 0)
-        {
-            while (gameTimer[0].EndTime <= Time.time)
-            {
-                gameTimer[0].Execute();
-
-                if (gameTimer.Count <= 0)
-                {
-                    enabled = false;
-                    return;
-                }
-            }
-        }
-
-        //Real Timer
-        if(realTimer.Count > 0)
-        {
-            while (realTimer[0].EndTime <= Time.unscaledTime)
-            {
-                realTimer[0].Execute();
-
-                if (realTimer.Count <= 0)
-                {
-                    enabled = false;
-                    return;
-                }
-            }
-        }
+        yield return new WaitForSecondsRealtime(timer.Duration);
+        timer.Execute();
     }
 }

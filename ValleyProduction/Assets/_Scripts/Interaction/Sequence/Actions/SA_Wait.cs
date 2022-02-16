@@ -33,7 +33,7 @@ public class SA_Wait : InteractionActions
             {
                 waiters[i].timer.Stop();
                 waiters.RemoveAt(i);
-                break;
+                i--;
             }
         }
     }

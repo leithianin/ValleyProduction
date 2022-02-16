@@ -17,7 +17,7 @@ public class VisitorBehavior : MonoBehaviour
     [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitorWithType;
     [SerializeField] private UnityEvent<float> OnNoiseMadeTEMP; //TEMPORAIRE
 
-    private AnimationHandler visitorDisplay;
+    private AnimationHandler visitorDisplay = null;
 
     List<Vector3> interuptedPath = new List<Vector3>();
 

@@ -21,6 +21,8 @@ public abstract class Infrastructure : MonoBehaviour
     /// <param name="position">The position where the construction is placed.</param>
     protected abstract void OnPlaceObject(Vector3 position);
 
+    protected abstract void OnPlaceObject();
+
     /// <summary>
     /// Used to do specific action when a construction is removed.
     /// </summary>
@@ -62,6 +64,12 @@ public abstract class Infrastructure : MonoBehaviour
         OnPlaceObject(position);
     }
 
+    public void PlaceObject()
+    {
+        PlayOnPlace?.Invoke();
+        OnPlaceObject();
+    }
+
     /// <summary>
     /// Play the feedbacks and special actions when the object is removed.
     /// </summary>
@@ -69,10 +77,11 @@ public abstract class Infrastructure : MonoBehaviour
     {
         PlayOnDelete?.Invoke();
 
-        if(OnRemoveObject())
+        if (OnRemoveObject())
         {
             Destroy(gameObject);
         }
+        
     }
 
     /// <summary>
