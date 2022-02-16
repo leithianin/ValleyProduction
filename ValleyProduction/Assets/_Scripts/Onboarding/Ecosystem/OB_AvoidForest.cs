@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OB_TrashCan : OnBoarding
+public class OB_AvoidForest : OnBoarding
 {
     protected override void OnEnd()
     {
-       
+        
     }
 
     protected override void OnPlay()
     {
-        OnBoardingManager.onDestroyPath += OnClick;
+        OnBoardingManager.OnWaterMill += OnClick;
     }
 
     public void OnClick(bool condition)
     {
-        Debug.Log("Path Destroy");
-        OnBoardingManager.onDestroyPath -= OnClick;
+        Debug.Log("WaterMill");
+        OnBoardingManager.OnWaterMill -= OnClick;
         Over();
     }
 }
