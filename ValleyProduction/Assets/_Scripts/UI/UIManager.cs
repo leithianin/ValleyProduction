@@ -101,6 +101,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static void ShowRoadsInfos(PathData pathdata)
     {
+        instance.RoadInfo.pathData = pathdata;
         instance.RoadInfo.UpdateTitle(pathdata.name);
         instance.RoadInfo.UpdateColor(pathdata.color);
         instance.RoadInfo.UpdateStamina(pathdata.difficulty);
@@ -108,7 +109,20 @@ public class UIManager : VLY_Singleton<UIManager>
         //Il faut avoir des valeurs fixes et les get selon la difficult�
         instance.RoadInfo.UpdateGaugeStamina(1);
 
+        OnBoardingManager.onClickPath?.Invoke(true);
         instance.RoadInfo.gameObject.SetActive(true);
+    }
+
+    public static void ConfirmDelete(PathData pathdata)
+    {
+        //Show UI
+    }
+
+    public static void DeletePath(PathData pathData)
+    {
+        OnBoardingManager.onDestroyPath?.Invoke(true);
+        HideRoadsInfo();
+        PathManager.DeletePath(pathData);
     }
 
     public static void HideRoadsInfo()

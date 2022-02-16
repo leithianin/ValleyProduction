@@ -11,6 +11,13 @@ public class OB_DestroyPath : OnBoarding
 
     protected override void OnPlay()
     {
+        OnBoardingManager.onClickPath += OnClick;
         Debug.Log("Action 6");
+    }
+
+    public void OnClick(bool condition)
+    {
+        OnBoardingManager.onClickPath -= OnClick;
+        Over();
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ChangeRoadInfo : MonoBehaviour
 {
+    public PathData pathData;
+
     public TMP_Text title;
     public TMP_Text stamina;
     public Image colorRoad;
@@ -29,5 +31,10 @@ public class ChangeRoadInfo : MonoBehaviour
     public void UpdateGaugeStamina(float staminaNb)
     {
         gaugeStamina.fillAmount = staminaNb;
+    }
+
+    public void DeletePath()
+    {
+        UIManager.DeletePath(pathData);
     }
 }

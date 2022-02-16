@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldDimension: {x: 500, y: 350}
-  areaHeight: 25
+  areaSize: 0
   showGizmos: 1
   areaDisplayMask:
     serializedVersion: 2
@@ -130,6 +130,8 @@ MonoBehaviour:
   - {fileID: 7249551366391030698, guid: e37aaf66144fe65478be061ff87253d6, type: 3}
   - {fileID: 8378836725287962837, guid: 8bb255a059db7954dafa4f5486eb1a09, type: 3}
   - {fileID: 7173698814621457068, guid: 5cad5c7a7e6977f47a2c818a2bcce1fc, type: 3}
+  chunkHandler: {fileID: 0}
+  chunkDisplayerPrefab: {fileID: 0}
 --- !u!1 &5209237266425241743
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,18 +310,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   layerMaskNoTools:
     serializedVersion: 2
     m_Bits: 257
@@ -362,7 +352,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+        m_MethodName: 
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -409,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previewHandler: {fileID: 5209237266696560537}
+  toolSelected: 0
 --- !u!114 &5209237266425241733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +429,7 @@ MonoBehaviour:
   pathFragmentDataList: []
   pathpointList: []
   debugMode: 1
+  PathReverse: 0
   DebugLineRenderer: {fileID: 0}
   lineRendererDebugList: []
   currentLineDebug: {fileID: 0}
