@@ -11,6 +11,6 @@ public class OB_DestroyPath : OnBoarding
 
     protected override void OnPlay()
     {
-       
+        Debug.Log("Action 6");
     }
 }

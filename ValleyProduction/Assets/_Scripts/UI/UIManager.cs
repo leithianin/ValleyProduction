@@ -33,6 +33,18 @@ public class UIManager : VLY_Singleton<UIManager>
         ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);      
     }
 
+    public void UnselectTool()
+    {
+        InfrastructureManager.instance.toolSelected = ToolType.None;
+
+        if (PathManager.IsOnCreatePath)
+        {
+            PathManager.CreatePathData();
+        }
+
+        ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
+    }
+
     //Use in Construction Button On Click()
     public void OnToolCreateConstruction()
     {
