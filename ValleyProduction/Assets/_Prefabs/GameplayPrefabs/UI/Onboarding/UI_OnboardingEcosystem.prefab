@@ -877,6 +877,7 @@ RectTransform:
   - {fileID: 6435476078301448434}
   - {fileID: 7715197180356440404}
   - {fileID: 1330256706444838434}
+  - {fileID: 7988122966081178755}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -950,10 +951,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Now it\u2019s time to learn more about the inhabitants of the Valley !\nYou
-    have to take care of the <color=#B8EF6F>animals</color> that live here as well
-    as the <color=#F8A539>visitors</color> that come every day.\nHere you can see
-    many visitors but no animals."
+  m_text: "Now it\u2019s time to learn more about the <b>inhabitants</b> of the Valley
+    !\nYou have to take care of the <color=#B8EF6F>animals</color> that live here
+    as well as the <color=#F8A539>visitors</color> that come every day.\nHere you
+    can see many visitors but no animals."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d4c2ea064267874aadc96e01e7344fa, type: 2}
   m_sharedMaterial: {fileID: -5196172489567466955, guid: 4d4c2ea064267874aadc96e01e7344fa, type: 2}
@@ -1966,7 +1967,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4717147790357359347, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_text
-      value: Now click on a visitor profil
+      value: Now click on a visitor <b>profil</b>
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_Pivot.x
@@ -2058,7 +2059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703863, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
@@ -2076,12 +2077,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4717147790357359347, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_text
-      value: 'Each of them has a noise stat. They therefore have a significant impact
-        on the <color=#B8EF6F>environment</color>.
+      value: 'Each of them has a <b>noise stat</b>. They therefore have a significant
+        impact on the <color=#B8EF6F>environment</color>.
 
 
-        <i>Click anywhere on
-        the screen to close.'
+        <i>Click anywhere
+        on the screen to close.'
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_Pivot.x
@@ -2173,7 +2174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703863, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2183,12 +2184,167 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 340
       objectReference: {fileID: 0}
+    - target: {fileID: 6890542466884811181, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -172
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890542466884811182, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890542466884811182, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890542466884811182, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: OB_Noise, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890542466884811182, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
 --- !u!224 &7715197180356440404 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
   m_PrefabInstance: {fileID: 3055496741877545378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3435454247690060917
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6811188821292293712}
+    m_Modifications:
+    - target: {fileID: 4717147790357359347, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_text
+      value: "Let\u2019s fix the situation. First, we will destroy the existing path.
+        Click on the <color=#F8A539>path</color>."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703863, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_Name
+      value: TrashCan
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791422703863, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890542466884811181, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+--- !u!224 &7988122966081178755 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+  m_PrefabInstance: {fileID: 3435454247690060917}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3554287220835332185
 PrefabInstance:
@@ -2199,12 +2355,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4717147790357359347, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_text
-      value: 'It seems like the visitors are making a lot of noises which scares
-        the animals away.
+      value: 'It seems like the <color=#89AFF3>visitors</color> are making a lot
+        of <b>noises</b> which scares the <color=#B8EF6F>animals</color> away.
 
 
-        Click on the cross or anywhere on the screen
-        to close.'
+        <i>Click
+        again on the heatmap button to close.'
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_Pivot.x
@@ -2296,7 +2452,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703863, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 620
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 330
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
@@ -2315,7 +2479,7 @@ PrefabInstance:
     - target: {fileID: 4717147790357359347, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_text
       value: "Let\u2019s fix the situation. First, we will destroy the existing path.
-        Click on the edit menu."
+        Click on the <color=#F8A539>path</color>."
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_Pivot.x
@@ -2407,7 +2571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703863, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2439,8 +2603,8 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Let''s try to figure out what''s going on.
 
-        Click on the heatmap
-        to retrieve information on the state of the valley.'
+        Click on the<color=#C23618>
+        heatmap</color> to retrieve <b>information</b> on the state of the valley.'
       objectReference: {fileID: 0}
     - target: {fileID: 4717147791422703862, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_Pivot.x
@@ -2533,6 +2697,14 @@ PrefabInstance:
     - target: {fileID: 4717147791422703863, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 570
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717147791470133707, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 282
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b850b5e8ea888c548b4926812f669b19, type: 3}
