@@ -16,6 +16,7 @@ public class OB_TrashCan : OnBoarding
 
     public void OnClick(bool condition)
     {
+        Debug.Log("Path Destroy");
         OnBoardingManager.onDestroyPath -= OnClick;
         Over();
     }
