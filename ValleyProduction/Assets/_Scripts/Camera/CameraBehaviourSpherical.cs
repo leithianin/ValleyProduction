@@ -9,11 +9,6 @@ public class CameraBehaviourSpherical : MonoBehaviour
     [SerializeField] private Transform cameraTargetOrigin = default;
     [SerializeField] private float lerpValue;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -30,10 +25,12 @@ public class CameraBehaviourSpherical : MonoBehaviour
     void JoinTarget()
     {
         transform.position = Vector3.Lerp(transform.position, cameraTarget.position, lerpValue);
+        //transform.position = cameraTarget.position;
     }
 
     void SetCameraForward()
     {
         transform.forward = Vector3.Lerp(transform.forward,cameraTarget.forward, 0.1f);
+        //transform.forward = cameraTarget.forward;
     }
 }
