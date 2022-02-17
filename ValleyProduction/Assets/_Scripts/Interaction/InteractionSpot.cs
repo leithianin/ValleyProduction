@@ -8,6 +8,8 @@ public class InteractionSpot : MonoBehaviour
 {
     public InteractionType interactionType;
 
+    [SerializeField] private int maxInteractionAtSameTime = -1;
+
     [SerializeField] private UnityEvent PlayOnStartInteract;
     [SerializeField] private UnityEvent PlayOnEndInteract;
 
@@ -16,13 +18,15 @@ public class InteractionSpot : MonoBehaviour
 
     public InteractionActions interactionAction;
 
+    private List<CPN_InteractionHandler> callerInSpot = new List<CPN_InteractionHandler>();
+
     /// <summary>
     /// Vérifie si l'interaction peut être faite.
     /// </summary>
     /// <returns>Renvoie TRUE si l'interaction peut être utilisé.</returns>
     public virtual bool IsUsable()
     {
-        return true;
+        return maxInteractionAtSameTime > 0 && callerInSpot.Count < maxInteractionAtSameTime;
     }
 
     /// <summary>
@@ -31,6 +35,8 @@ public class InteractionSpot : MonoBehaviour
     /// <param name="interacter">L'InteractionHandler qui demande à intéragir avec l'objet.</param>
     public void Interact(CPN_InteractionHandler interacter)
     {
+        callerInSpot.Add(interacter);
+
         PlayOnStartInteract?.Invoke();
         PlayOnInteractionStart?.Invoke(interacter);
         if (interactionAction != null)
@@ -49,6 +55,8 @@ public class InteractionSpot : MonoBehaviour
     /// <param name="interacter">L'InteractionHandler qui finit son interaction.</param>
     public void EndInteraction(CPN_InteractionHandler interacter)
     {
+        callerInSpot.Remove(interacter);
+
         PlayOnEndInteract?.Invoke();
         PlayOnInteractionEnd?.Invoke(interacter);
     }

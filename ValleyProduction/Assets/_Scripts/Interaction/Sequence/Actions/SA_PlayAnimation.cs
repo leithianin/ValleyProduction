@@ -19,7 +19,7 @@ public class SA_PlayAnimation : InteractionActions
     [SerializeField] private string animationName;
     [SerializeField] private float timePlayed;
 
-    private List<PlayedAnimation> animationPlayed;
+    private List<PlayedAnimation> animationPlayed = new List<PlayedAnimation>();
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {

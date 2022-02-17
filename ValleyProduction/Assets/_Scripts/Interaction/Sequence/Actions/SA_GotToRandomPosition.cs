@@ -16,9 +16,9 @@ public class SA_GotToRandomPosition : InteractionActions
         }
     }
 
-    [SerializeField] private List<Transform> possiblePoints;
+    [SerializeField] private List<Transform> possiblePoints = new List<Transform>();
 
-    private List<UsedPoint> pointUsed;
+    private List<UsedPoint> pointUsed = new List<UsedPoint>();
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
