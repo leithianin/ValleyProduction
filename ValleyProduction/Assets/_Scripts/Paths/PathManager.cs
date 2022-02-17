@@ -667,7 +667,6 @@ public class PathManager : VLY_Singleton<PathManager>
         }
         else
         {
-            Debug.Log("DebugLineR : " + pathData.name);
             foreach (PathFragmentData pfd in pathData.pathFragment)
             {
                 foreach (Vector3 vector in pfd.path)

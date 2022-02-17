@@ -19,6 +19,8 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static bool GetIsOnMenuOption => instance.OnMenuOption;
 
+    public static UIManager UIinstance => instance;
+
     //Use in Path Button On Click()
     public void OnToolCreatePath(int i)
     {  

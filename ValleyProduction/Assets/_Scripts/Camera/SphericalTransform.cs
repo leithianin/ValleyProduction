@@ -1,33 +1,53 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
-[ExecuteAlways]
+[ExecuteAlways, DisallowMultipleComponent]
 public class SphericalTransform : MonoBehaviour
 {
     [SerializeField] private Transform origin = default;
 
-    [SerializeField] private Vector3 coordinates = default;
+    [Space(10)]
+    [Header("Object Spherical Coordinates")]
+    [SerializeField, Tooltip("Object Spherical Transform coordinates, x = Radius, y = Azimuthal Angle, z = Polar Angle")] 
+    private Vector3 coordinates = default;
+    [Space(10)]
     [SerializeField, Tooltip("In degrees")] private float verticalOffset = 0.5f;
     [SerializeField] private float minPolarValue = 0.0f;
     [SerializeField] private float maxPolarValue = 100.0f;
+
+    [Header("Radius values")]
     [SerializeField] private float minRadiusValue = 1.0f;
     [SerializeField] private float maxRadiusValue = 30.0f;
 
+    [Header("Offset")]
     [SerializeField, Range(0f, 5f)] private float originVisualOffset;
 
-    [SerializeField] private bool belowTerrain;
+    [SerializeField, ReadOnly] private bool belowTerrain;
 
     private Vector3 cameraTarget = default;
+    private Vector3 originStrartPosition;
+
+    public Transform Origin
+    {
+        get
+        {
+            return origin;
+        }
+    }
+    public Vector3 OiriginStartPosition { get; set; }
 
     private Vector3 touchDown = default;
 
     private void Update()
     {
         TestHeight();
-        SetCameraTarget();
         SetOriginHeight();
         SetOriginForward();
+        SetCameraTarget();
         SetTargetForward();
     }
 
@@ -57,6 +77,8 @@ public class SphericalTransform : MonoBehaviour
 
     public void ChangeLength(float deltaMagnitude, float scrollingSpeed)
     {
+        //float target = coordinates.x + deltaMagnitude * scrollingSpeed * Time.deltaTime;
+        //coordinates.x = Mathf.Lerp(coordinates.x, target, 0.1f);
         coordinates.x += deltaMagnitude * scrollingSpeed * Time.deltaTime;
     }
 
@@ -105,6 +127,11 @@ public class SphericalTransform : MonoBehaviour
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.deltaTime;
     }
 
+    public void MoveOriginFromStartPosition(Vector3 startPos, Vector3 movingVector)
+    {
+        origin.position = startPos + movingVector;
+    }
+
     void SetOriginHeight()
     {
         Debug.DrawLine(origin.position + Vector3.up * 1000f, origin.position + Vector3.down * 5000.0f, Color.red);
@@ -137,6 +164,11 @@ public class SphericalTransform : MonoBehaviour
         return cameraTarget;
     }
 
+    public float GetTargetDistanceToOrigin()
+    {
+        return coordinates.x;
+    }
+
     Vector3 GetOriginForwardVector()
     {
         return Vector3.Normalize(new Vector3(origin.position.x - transform.position.x, 0.0f, origin.position.z - transform.position.z));
@@ -156,7 +188,6 @@ public class SphericalTransform : MonoBehaviour
         coordinates.z = Mathf.Clamp(coordinates.z,minPolarValue, Vector3.Angle(touchDown - origin.position, origin.up) - verticalOffset);
         coordinates.x = Mathf.Clamp(coordinates.x, minRadiusValue, maxRadiusValue);
     }
-
 
 
     private void OnDrawGizmos()
