@@ -61,6 +61,15 @@ public class SA_GotToRandomPosition : InteractionActions
         if (caller.HasComponent<CPN_Movement>(ref movement))
         {
             movement.InteruptWalk();
+            for (int i = 0; i < pointUsed.Count; i++)
+            {
+                if (pointUsed[i].caller == caller)
+                {
+                    possiblePoints.Add(pointUsed[i].point);
+                    pointUsed.RemoveAt(i);
+                    break;
+                }
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationHandler : MonoBehaviour
+public class AnimationHandler : VLY_Component
 {
     public AnimateFace face;
     private Animator body;
