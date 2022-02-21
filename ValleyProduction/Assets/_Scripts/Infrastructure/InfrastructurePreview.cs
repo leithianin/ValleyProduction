@@ -13,7 +13,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
     protected List<GameObject> objectBlockingPose = new List<GameObject>();
 
     // The senvitivity with which the preview will check the Navmesh.
-    [SerializeField] protected float navMeshSensitivity = .5f;
+    protected float navMeshSensitivity = 1f;
 
     // The mesh renderer of the preview.
     [SerializeField] private MeshRenderer mesh;
@@ -78,6 +78,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
         //position = new Vector3(position.x, 0, position.z);
 
         NavMeshHit hit;
+        Debug.Log(navMeshSensitivity);
+        Debug.Log(1f/navMeshSensitivity);
         if (!NavMesh.SamplePosition(position, out hit, 1 / navMeshSensitivity, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {
             toReturn = false;

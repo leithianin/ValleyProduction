@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
     public bool activateOnBoarding = false;
+    public bool canSpawnVisitors = true;
 
     public OB_Sequence sequence;
 
@@ -29,8 +30,10 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     private void Start()
     {
-        sequence.Play();
-        //tool.SetActive(true);}
+        if(activateOnBoarding)
+        {
+            sequence.Play();
+        }
     }
 
     public static void PlayNextEvent()
@@ -41,6 +44,11 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     }
 
     #region Path
+    public static void SetCanSpawnVisitors(bool cond)
+    {
+        instance.canSpawnVisitors = cond;
+    }
+
     public static void PlayEndPathOnBoarding()
     {
         instance.endOnboarding.EndOnBoardingPath?.Invoke();

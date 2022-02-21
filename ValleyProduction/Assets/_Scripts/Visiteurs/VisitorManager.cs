@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
-
+using UnityEngine.Assertions;
 
 public class VisitorManager : VLY_Singleton<VisitorManager>
 {
@@ -25,9 +25,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private void Update()
     {
-        if(Time.time > nextSpawnTime && OnBoardingManager.instance == null)
+        if (Time.time > nextSpawnTime && OnBoardingManager.instance.canSpawnVisitors)
         {
-            int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
+            int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y + 1);
             for (int i = 0; i < spawnNb; i++)
             {
                 if (UsedVisitorNumber() < maxSpawn)
@@ -39,6 +39,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             nextSpawnTime += timeBetweenSpawn;
         }
     }
+    
 
     /// <summary>
     /// Demande à faire appraître un visiteur.
