@@ -25,7 +25,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private void Update()
     {
-        if(Time.time > nextSpawnTime && !OnBoardingManager.instance.activateOnBoarding)
+        if(Time.time > nextSpawnTime && OnBoardingManager.instance == null)
         {
             int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
             for (int i = 0; i < spawnNb; i++)
