@@ -19,6 +19,8 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static bool firstClickVisitors = false;
     public GameObject UI_OB_VisitorsProfileInfo;
     public GameObject UI_OB_HikerIntro;
+    public GameObject UI_Arrow_Chapel;
+    public GameObject UI_ZoneChapel;
     public OB_EndOnboardingPath endOnboarding;
 
     [Header("On Boarding Ecosystem")]
@@ -63,6 +65,8 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     {
         instance.UI_OB_VisitorsProfileInfo.SetActive(false);
         instance.UI_OB_HikerIntro.SetActive(true);
+        instance.UI_Arrow_Chapel.SetActive(true);
+        instance.UI_ZoneChapel.SetActive(true);
         instance.activateOnBoarding = false;
     }
 
