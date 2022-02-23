@@ -65,6 +65,12 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         instance.UI_OB_HikerIntro.SetActive(true);
         instance.activateOnBoarding = false;
     }
+
+    public static void DesactivateTool()
+    {
+        InfrastructureManager.instance.toolSelected = ToolType.None;
+        ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
+    }
     #endregion
 
     #region Ecosystem
