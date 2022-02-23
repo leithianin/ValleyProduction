@@ -10,12 +10,14 @@ public class IST_PathPoint : Infrastructure
     //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)
     {
+        Debug.Log("Test1");
         PathManager.PlacePoint(this, position);
     }
 
     //Place on Click Infrastructure
     protected override void OnPlaceObject()
     {
+        Debug.Log("Test2");
         //Si c'est le dernier PathPoint du chemin = Terminer chemin
         if (this == PathManager.previousPathpoint)
         {
