@@ -15,6 +15,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     [Header("On Boarding Path")]
     public GameObject tool;
     public static Action<bool> OnWaterMill;
+    public static Action<bool> OnChapel;
     public static Action<bool> OnClickVisitor;
     public static bool firstClickVisitors = false;
     public GameObject UI_OB_VisitorsProfileInfo;
@@ -22,6 +23,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public GameObject UI_Arrow_Chapel;
     public GameObject UI_ZoneChapel;
     public OB_EndOnboardingPath endOnboarding;
+    public OB_OnReachChapel chapelOnboarding;
 
     [Header("On Boarding Ecosystem")]
     public static Action<bool> OnClickHeatmapNoise;
@@ -67,6 +69,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         instance.UI_OB_HikerIntro.SetActive(true);
         instance.UI_Arrow_Chapel.SetActive(true);
         instance.UI_ZoneChapel.SetActive(true);
+        instance.chapelOnboarding.Play();
         instance.activateOnBoarding = false;
     }
 

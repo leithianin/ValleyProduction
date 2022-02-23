@@ -91,6 +91,11 @@ public class PathFragmentData
                     {
                         OnBoardingManager.OnWaterMill?.Invoke(true); 
                     }
+
+                    if(c.gameObject.name.Contains("Chapel"))
+                    {
+                        OnBoardingManager.OnChapel?.Invoke(true);
+                    }
                     AddInterestPoint(foundInterestPoint);
                 }
             }
