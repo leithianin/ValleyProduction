@@ -6,7 +6,7 @@ public class OB_AvoidForest : OnBoarding
 {
     protected override void OnEnd()
     {
-        
+        //Cinematiquuuee
     }
 
     protected override void OnPlay()
