@@ -181,13 +181,12 @@ public class UIManager : VLY_Singleton<UIManager>
     {
        HideInfoVisitor();
 
-       OnBoardingManager.OnClickVisitor?.Invoke(true);
-
        switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
                 if (OnBoardingManager.firstClickVisitors)
                 {
+                    OnBoardingManager.OnClickVisitor?.Invoke(true);
                     OnBoardingManager.ShowHikerProfileIntro();
                     OnBoardingManager.firstClickVisitors = false;
                 }
