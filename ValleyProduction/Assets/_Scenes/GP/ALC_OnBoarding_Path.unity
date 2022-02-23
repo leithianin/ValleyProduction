@@ -5452,18 +5452,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5574826529643373631}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 525805122}
         m_TargetAssemblyTypeName: VisitorManager, Assembly-CSharp
         m_MethodName: SpawnHiker
@@ -6191,7 +6179,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 5574826529643373631}
+      - m_Target: {fileID: 1070733465}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -6203,7 +6191,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1070733465}
+      - m_Target: {fileID: 5574826529643373631}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -6268,6 +6256,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Over
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 5574826529643373631}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
   OnClick:
     m_PersistentCalls:
@@ -52869,6 +52869,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7533033213143584566}
+  - component: {fileID: 5574826529643373632}
   m_Layer: 5
   m_Name: Window_Pointer
   m_TagString: Untagged
@@ -52876,6 +52877,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &5574826529643373632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574826529643373631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538a0211acb017c44bb0f8b09519141b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1070733465}
+  image: {fileID: 6625624}
+  cam: {fileID: 518034169}
 --- !u!1 &6696637774323594885 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5499214744312338491, guid: 3a52b32f96bf71742974c4819963060b, type: 3}
