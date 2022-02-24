@@ -24,7 +24,7 @@ public class OB_Tools : OnBoarding
 
     public void OnClickBuild()
     {
-        if(!isClickOnBuild)
+        if (!isClickOnBuild)
         {
             isClickOnBuild = true;
             OnClickBuildEvent?.Invoke();
