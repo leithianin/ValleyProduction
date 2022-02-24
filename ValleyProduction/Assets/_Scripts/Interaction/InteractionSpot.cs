@@ -35,6 +35,7 @@ public class InteractionSpot : MonoBehaviour
     /// <param name="interacter">L'InteractionHandler qui demande à intéragir avec l'objet.</param>
     public void Interact(CPN_InteractionHandler interacter)
     {
+        Debug.Log("Interaction");
         callerInSpot.Add(interacter);
 
         PlayOnStartInteract?.Invoke();

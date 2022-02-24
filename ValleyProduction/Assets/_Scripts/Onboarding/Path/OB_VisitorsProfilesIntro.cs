@@ -13,9 +13,9 @@ public class OB_VisitorsProfilesIntro : OnBoarding
 
     protected override void OnPlay()
     {
-        Debug.Log("Nik");
         if(ConstructionManager.HasSelectedStructureType) { UIManager.UIinstance.OnToolCreatePath(0); }
         OnBoardingManager.ShowVisitorsProfileIntro();
+        OnBoardingManager.SetCanSpawnVisitors(true);
         OnBoardingManager.firstClickVisitors = true;
         Over();
     }
