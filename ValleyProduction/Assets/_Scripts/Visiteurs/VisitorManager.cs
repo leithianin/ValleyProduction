@@ -33,6 +33,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 if (UsedVisitorNumber() < maxSpawn)
                 {
                     SpawnVisitor();
+                    UIManager.UpdateNbVisitors(UsedVisitorNumber());
                 }
             }
 
@@ -159,6 +160,19 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
 
         return toReturn;
+    }
+
+    public static GameObject FindActiveHiker()
+    {
+        for (int i = 0; i < instance.visitorPool.Count; i++)
+        {
+            if (instance.visitorPool[i].gameObject.activeSelf && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
+            {
+                return instance.visitorPool[i].gameObject;
+            }
+        }
+
+        return null;
     }
 
     /// <summary>

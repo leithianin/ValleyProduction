@@ -22,6 +22,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public GameObject UI_OB_HikerIntro;
     public GameObject UI_Arrow_Chapel;
     public GameObject UI_ZoneChapel;
+    public OB_VisitorsProfilesIntro visitorProfileIntroOnBoarding;
     public OB_EndOnboardingPath endOnboarding;
     public OB_OnReachChapel chapelOnboarding;
 
@@ -55,18 +56,23 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static void PlayEndPathOnBoarding()
     {
+        Debug.Log("ddd");
+        VLY_Time.SetTimeScale(1);
         instance.endOnboarding.EndOnBoardingPath?.Invoke();
     }
 
     public static void ShowVisitorsProfileIntro()
     {
-        instance.UI_OB_VisitorsProfileInfo.SetActive(true);
+        //instance.UI_OB_VisitorsProfileInfo.SetActive(true);
+        instance.visitorProfileIntroOnBoarding.OnShowInfo?.Invoke();
+        instance.visitorProfileIntroOnBoarding.OnReach?.Invoke();
     }
 
     public static void ShowHikerProfileIntro()
     {
-        instance.UI_OB_VisitorsProfileInfo.SetActive(false);
-        instance.UI_OB_HikerIntro.SetActive(true);
+        instance.visitorProfileIntroOnBoarding.Over();
+        //instance.UI_OB_VisitorsProfileInfo.SetActive(false);
+        //instance.UI_OB_HikerIntro.SetActive(true);
         instance.UI_Arrow_Chapel.SetActive(true);
         instance.UI_ZoneChapel.SetActive(true);
         instance.chapelOnboarding.Play();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : VLY_Singleton<UIManager>
 {
@@ -16,6 +17,7 @@ public class UIManager : VLY_Singleton<UIManager>
     [Header("Visitors Informations")]
     public TouristType hikersInfo;
     public TouristType touristInfo;
+    public TMP_Text nbVisitors;
 
     public static bool GetIsOnMenuOption => instance.OnMenuOption;
 
@@ -163,6 +165,11 @@ public class UIManager : VLY_Singleton<UIManager>
     #endregion
 
     #region Info Visitors
+    public static void UpdateNbVisitors(int nb)
+    {
+        instance.nbVisitors.text = nb.ToString();
+    }
+
     public static void InteractWithVisitors(GameObject touchedObject)
     {
         CPN_Informations visitorInfo = touchedObject.GetComponent<CPN_Informations>();
