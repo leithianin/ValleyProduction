@@ -10,7 +10,6 @@ public class ChangeAlpha : MonoBehaviour, IFeedbackPlayer
 
     public void Play()
     {
-        Debug.Log("Change Alpha");
         image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
     }
 

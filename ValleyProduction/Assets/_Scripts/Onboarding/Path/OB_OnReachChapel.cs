@@ -17,6 +17,12 @@ public class OB_OnReachChapel : OnBoarding
     public void OnReachChapel(bool condition)
     {
         OnBoardingManager.OnChapel -= OnReachChapel;
+        PathManager.isOnFinishPath += OnFinishPath;
+    }
+
+    public void OnFinishPath(bool condition)
+    {
+        PathManager.isOnFinishPath -= OnFinishPath;
         Over();
     }
 }
