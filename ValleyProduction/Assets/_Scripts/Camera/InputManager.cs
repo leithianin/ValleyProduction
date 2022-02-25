@@ -7,9 +7,18 @@ public class InputManager : MonoBehaviour
     [SerializeField] private SphericalTransform cameraTransform = default;
     [SerializeField] private Transform cameraOrigin = default;
 
-    [SerializeField] private bool edgeScrolling;
-
     [SerializeField] private float movingSpeed = 10.0f;
+
+    [Header("Edge Scrolling")]
+    [SerializeField] private bool useEdgeScrolling;
+    [SerializeField, Range(1,20)] private float edgeScrollingMovingSpeed = 10f;
+
+    [Header("Mouse Scrolling")]
+    [SerializeField] private bool useMouseScrolling;
+    [SerializeField, Range(1, 20)] private float mouseScrollingMovingSpeed = 10f;
+
+
+    [Header("Mouse Wheel Values")]
     [SerializeField, Tooltip("Degrees per second")] private float rotationSpeed = 90.0f;
     [SerializeField, Tooltip("When Scrolling Wheel is pressed")] private float wheelRotationSpeed = 90.0f;
 
@@ -29,7 +38,7 @@ public class InputManager : MonoBehaviour
         SetDistanceToOrigin();
         RotateCamera();
         RotateWithScrollWheel();
-        //MouseCameraMovement();
+        MouseCameraMovement();
     }
 
     void MoveOrigin()
@@ -71,7 +80,10 @@ public class InputManager : MonoBehaviour
 
     void EdgeScrolling()
     {
-        if (!edgeScrolling)
+        if (!useEdgeScrolling)
+            return;
+
+        if (Input.GetKey(KeyCode.Mouse1))
             return;
 
         if (Input.mousePosition.x > 0 && Input.mousePosition.x < Screen.width && Input.mousePosition.y > 0 && Input.mousePosition.y < Screen.height) //Check if the mouse is on the borders of the screen
@@ -79,25 +91,20 @@ public class InputManager : MonoBehaviour
 
         Vector2 mouseDirection = new Vector2(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2)); //Convert Mouse position into direction vector for moving origin
         mouseDirection.Normalize();
-        cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, movingSpeed);
+        cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, edgeScrollingMovingSpeed);
     }
 
     void MouseCameraMovement()
     {
+        if (!useMouseScrolling)
+            return;
+
         if (!Input.GetKey(KeyCode.Mouse1))
             return;
 
-        Vector3 mouseOriginPosition = Vector3.zero;
-        Vector3 originPosition;
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            mouseOriginPosition = Input.mousePosition;
-            cameraTransform.OiriginStartPosition = cameraTransform.Origin.position;
-        }
-
-
-        Vector2 movingVector = Input.mousePosition - mouseOriginPosition;
+        Vector2 mouseDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        mouseDirection = -mouseDirection;
+        cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, mouseDirection.magnitude * mouseScrollingMovingSpeed);
 
 
     }
