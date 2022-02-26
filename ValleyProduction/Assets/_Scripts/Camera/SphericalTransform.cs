@@ -1,14 +1,11 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
 [ExecuteAlways, DisallowMultipleComponent]
 public class SphericalTransform : MonoBehaviour
 {
     [SerializeField] private Transform origin = default;
+    [SerializeField] private Transform originLookAtTarget = default;
 
     [Space(10)]
     [Header("Object Spherical Coordinates")]
@@ -23,13 +20,15 @@ public class SphericalTransform : MonoBehaviour
     [SerializeField] private float minRadiusValue = 1.0f;
     [SerializeField] private float maxRadiusValue = 30.0f;
 
+    [Header("LookAt")]
+    [SerializeField, Range(0,1)] private float lookAtLerpValue = 0.1f;
+
     [Header("Offset")]
     [SerializeField, Range(0f, 5f)] private float originVisualOffset;
 
     [SerializeField, ReadOnly] private bool belowTerrain;
 
     private Vector3 cameraTarget = default;
-    private Vector3 originStrartPosition;
 
     public Transform Origin
     {
@@ -49,6 +48,7 @@ public class SphericalTransform : MonoBehaviour
         SetOriginForward();
         SetCameraTarget();
         SetTargetForward();
+        MoveOriginLookAtTarget();
     }
 
     private void LateUpdate()
@@ -122,6 +122,7 @@ public class SphericalTransform : MonoBehaviour
         }
     }
 
+    #region Origin
     public void MoveOrigin(float xInput, float yInput, float speed)
     {
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.deltaTime;
@@ -130,6 +131,15 @@ public class SphericalTransform : MonoBehaviour
     public void MoveOriginFromStartPosition(Vector3 startPos, Vector3 movingVector)
     {
         origin.position = startPos + movingVector;
+    }
+
+    private void MoveOriginLookAtTarget()
+    {
+        originLookAtTarget.position = Vector3.Lerp(originLookAtTarget.position, origin.position, lookAtLerpValue);
+    }
+    void SetOriginForward()
+    {
+        origin.forward = GetOriginForwardVector();
     }
 
     void SetOriginHeight()
@@ -143,17 +153,15 @@ public class SphericalTransform : MonoBehaviour
             origin.position = hit.point;
         }
     }
+    #endregion
+
 
     void SetCameraTarget()
     {
         cameraTarget = transform.position;
     }
 
-    void SetOriginForward()
-    {
-        origin.forward = GetOriginForwardVector();
-    }
-
+    
     void SetTargetForward()
     {
         transform.forward = origin.position - transform.position + new Vector3(0.0f, originVisualOffset, 0.0f);
@@ -216,3 +224,4 @@ public class SphericalTransform : MonoBehaviour
 
     }
 }
+

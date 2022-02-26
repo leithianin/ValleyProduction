@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1440979086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1440979087}
+  m_Layer: 0
+  m_Name: OriginLookAtTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1440979087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440979086}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 484.6007, y: -0.0036621094, z: 340.8006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1162757707294999572}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1869349335
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,6 +109,7 @@ Transform:
   - {fileID: 724654950491024178}
   - {fileID: 1869349336}
   - {fileID: 743631117021658582}
+  - {fileID: 1440979087}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -108,7 +139,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724654950380066896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 483.9001, y: -0.0036621094, z: 344.5}
+  m_LocalPosition: {x: 484.6007, y: -0.0036621094, z: 340.8006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1162757707294999572}
@@ -162,7 +193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724654950491024183}
   m_LocalRotation: {x: 0.44566983, y: -0, z: -0, w: 0.8951974}
-  m_LocalPosition: {x: 483.9001, y: 17.193382, z: 334.28915}
+  m_LocalPosition: {x: 484.6007, y: 17.193382, z: 330.58975}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 1162757707294999572}
@@ -181,12 +212,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   origin: {fileID: 724654950380066908}
+  originLookAtTarget: {fileID: 1440979087}
   coordinates: {x: 20, y: 270, z: 30.7}
   verticalOffset: 5
   minPolarValue: 1
   maxPolarValue: 100
   minRadiusValue: 5
   maxRadiusValue: 30
+  lookAtLerpValue: 0.1
   originVisualOffset: 3.68
   belowTerrain: 0
 --- !u!114 &724654950491024182
@@ -203,8 +236,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 724654950491024179}
   cameraOrigin: {fileID: 0}
-  edgeScrolling: 0
   movingSpeed: 10
+  useEdgeScrolling: 0
+  edgeScrollingMovingSpeed: 10
+  useMouseScrolling: 0
+  mouseScrollingMovingSpeed: 10
   rotationSpeed: 180
   wheelRotationSpeed: 500
   scrollingSpeed: 3000
@@ -246,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5214258109624083011}
   m_LocalRotation: {x: 0.44566983, y: -0, z: -0, w: 0.89519745}
-  m_LocalPosition: {x: 483.9001, y: 17.193382, z: 334.28915}
+  m_LocalPosition: {x: 484.6007, y: 17.193382, z: 330.58975}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1162757707294999572}
@@ -350,6 +386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 724654950491024178}
   cameraTargetOrigin: {fileID: 724654950380066908}
+  originLookAtTarget: {fileID: 1440979087}
   lerpValue: 0.1
 --- !u!114 &5965266355428144852
 MonoBehaviour:

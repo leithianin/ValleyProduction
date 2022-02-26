@@ -7,6 +7,7 @@ public class CameraBehaviourSpherical : MonoBehaviour
 {
     [SerializeField] private Transform cameraTarget = default;
     [SerializeField] private Transform cameraTargetOrigin = default;
+    [SerializeField] private Transform originLookAtTarget = default;
     [SerializeField] private float lerpValue;
 
 
@@ -18,19 +19,14 @@ public class CameraBehaviourSpherical : MonoBehaviour
 
     }
 
-    private void LateUpdate()
-    {
-    }
-
     void JoinTarget()
     {
         transform.position = Vector3.Lerp(transform.position, cameraTarget.position, lerpValue);
-        //transform.position = cameraTarget.position;
+
     }
 
     void SetCameraForward()
     {
-        transform.forward = Vector3.Lerp(transform.forward,cameraTarget.forward, 0.1f);
-        //transform.forward = cameraTarget.forward;
+        transform.forward = new Vector3(originLookAtTarget.position.x - transform.position.x, originLookAtTarget.position.y - transform.position.y, originLookAtTarget.position.z - transform.position.z);
     }
 }
