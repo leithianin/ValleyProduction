@@ -33,15 +33,20 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        EdgeScrolling();
-        MoveOrigin();
+        //Move Camera functions
+        MoveCameraOriginWithEdgeScrolling();
+        MoveCameraOriginWithKeyboard();
+        MoveCameraOriginWithMouseDrag();
+
+        //Zoom in-out function
         SetDistanceToOrigin();
-        RotateCamera();
-        RotateWithScrollWheel();
-        MouseCameraMovement();
+
+        //Rotate Camera functions
+        RotateCameraWithKeyboard();
+        RotateCameraWithScrollWheel();
     }
 
-    void MoveOrigin()
+    void MoveCameraOriginWithKeyboard()
     {
         if (!cameraTransform)
             return;
@@ -49,36 +54,7 @@ public class InputManager : MonoBehaviour
         cameraTransform.MoveOrigin(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), movingSpeed);
     }
 
-    void RotateCamera()
-    {
-        if (!cameraTransform)
-            return;
-
-        cameraTransform.AzimuthalRotation(Input.GetAxis("Azimuthal"), rotationSpeed);
-        cameraTransform.PolarRotation(Input.GetAxis("Polar"), rotationSpeed);
-    }
-
-    void SetDistanceToOrigin()
-    {
-        if (!cameraTransform)
-            return;
-
-        cameraTransform.ChangeLength(Input.GetAxis("Mouse ScrollWheel"), -scrollingSpeed);
-    }
-
-    void RotateWithScrollWheel()
-    {
-        if (!cameraTransform)
-            return;
-
-        if (!Input.GetKey(KeyCode.Mouse2))
-            return;
-
-        cameraTransform.AzimuthalRotation(Input.GetAxis("Mouse X"), wheelRotationSpeed);
-        cameraTransform.PolarRotation(Input.GetAxis("Mouse Y"), wheelRotationSpeed);
-    }
-
-    void EdgeScrolling()
+    void MoveCameraOriginWithEdgeScrolling()
     {
         if (!useEdgeScrolling)
             return;
@@ -94,7 +70,7 @@ public class InputManager : MonoBehaviour
         cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, edgeScrollingMovingSpeed);
     }
 
-    void MouseCameraMovement()
+    void MoveCameraOriginWithMouseDrag()
     {
         if (!useMouseScrolling)
             return;
@@ -105,7 +81,37 @@ public class InputManager : MonoBehaviour
         Vector2 mouseDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         mouseDirection = -mouseDirection;
         cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, mouseDirection.magnitude * mouseScrollingMovingSpeed);
-
-
     }
+
+
+    void SetDistanceToOrigin()
+    {
+        if (!cameraTransform)
+            return;
+
+        cameraTransform.ChangeLength(Input.GetAxis("Mouse ScrollWheel"), -scrollingSpeed);
+    }
+
+    void RotateCameraWithKeyboard()
+    {
+        if (!cameraTransform)
+            return;
+
+        cameraTransform.AzimuthalRotation(Input.GetAxis("Azimuthal"), rotationSpeed);
+        cameraTransform.PolarRotation(Input.GetAxis("Polar"), rotationSpeed);
+    }
+
+    void RotateCameraWithScrollWheel()
+    {
+        if (!cameraTransform)
+            return;
+
+        if (!Input.GetKey(KeyCode.Mouse2))
+            return;
+
+        cameraTransform.AzimuthalRotation(Input.GetAxis("Mouse X"), wheelRotationSpeed);
+        cameraTransform.PolarRotation(Input.GetAxis("Mouse Y"), wheelRotationSpeed);
+    }
+
+
 }
