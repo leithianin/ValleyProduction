@@ -19,6 +19,14 @@ public class UIManager : VLY_Singleton<UIManager>
     public TouristType touristInfo;
     public TMP_Text nbVisitors;
 
+    [Header("Tooltips")]
+    public Tooltip tooltip;
+
+    [Header("Goals")]
+    public TextsDictionary textsScriptable;
+
+    public static Tooltip GetTooltip => instance.tooltip;
+
     public static bool GetIsOnMenuOption => instance.OnMenuOption;
 
     public static UIManager UIinstance => instance;

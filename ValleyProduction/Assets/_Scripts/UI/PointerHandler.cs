@@ -19,11 +19,12 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         onEnter?.Invoke(this);
 
         var message = $"<b>{ValleyText.Title}</b>\n{ValleyText.Description}";
-        //Trasmettre au tooltip
+        UIManager.GetTooltip.ShowTooltip(message, tooltipPos, 1);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         onExit?.Invoke(this);
+        UIManager.GetTooltip.HideTooltip();
     }
 }
