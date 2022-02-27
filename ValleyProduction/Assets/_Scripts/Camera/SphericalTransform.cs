@@ -37,6 +37,7 @@ public class SphericalTransform : MonoBehaviour
             return origin;
         }
     }
+
     public Vector3 OiriginStartPosition { get; set; }
 
     private Vector3 touchDown = default;
@@ -180,6 +181,21 @@ public class SphericalTransform : MonoBehaviour
     Vector3 GetOriginForwardVector()
     {
         return Vector3.Normalize(new Vector3(origin.position.x - transform.position.x, 0.0f, origin.position.z - transform.position.z));
+    }
+
+    public void SetRadius(float value)
+    {
+        coordinates.x = value;
+    }
+
+    public void SetPolarAngle(float value)
+    {
+        coordinates.z = value;
+    }
+
+    public void SetAzimuthalAngle(float value)
+    {
+        coordinates.y = value;
     }
 
     void ConstraintAngles()
