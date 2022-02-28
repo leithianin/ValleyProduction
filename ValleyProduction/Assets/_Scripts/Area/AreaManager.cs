@@ -17,7 +17,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     private Vector2 CenterPosition => new Vector2(transform.position.x, transform.position.z);
 
     private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
-    private static int updaterIndex;
+    private int updaterIndex;
     [SerializeField] private int numberDataToUpdateInFrame;
 
     [SerializeField] private Transform treeScoreHandler;
@@ -238,9 +238,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
             instance.allUpdaters.Remove(toRemove);
 
-            if(instance.allUpdaters.Count <= updaterIndex)
+            if(instance.allUpdaters.Count <= instance.updaterIndex)
             {
-                updaterIndex = instance.allUpdaters.Count;
+                instance.updaterIndex = instance.allUpdaters.Count;
             }
         }
     }

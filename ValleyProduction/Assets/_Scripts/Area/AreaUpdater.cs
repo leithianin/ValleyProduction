@@ -27,6 +27,8 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 
     bool asSpawnOnce = false;
 
+    bool isApplicationQuitting = false;
+
     private void Start()
     {
         asSpawnOnce = true;
@@ -43,9 +45,17 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        isApplicationQuitting = true;
+    }
+
     private void OnDisable()
     {
-        AreaManager.RemoveAreaUpdater(this);
+        if (!isApplicationQuitting)
+        {
+            AreaManager.RemoveAreaUpdater(this);
+        }
     }
 
     public void SetScore(float nScore)
@@ -101,4 +111,6 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
     {
         lastUpdatedData = lastData;
     }
+
+    //protected abstract bool IsLastDataSame(T currentData, T lastData);
 }

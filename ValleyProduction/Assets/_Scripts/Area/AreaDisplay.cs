@@ -30,6 +30,13 @@ public abstract class AreaDisplay : MonoBehaviour
         {
             TimerManager.CreateRealTimer(Time.deltaTime, () => collider.enabled = false);
         }
+
+        OnStart();
+    }
+
+    protected virtual void OnStart()
+    {
+
     }
 
     /// <summary>
