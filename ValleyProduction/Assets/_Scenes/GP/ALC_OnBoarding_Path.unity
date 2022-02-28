@@ -1052,17 +1052,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "Hikers like to <cspace=-0.05em><b>climb mountains</b></cspace>
-            and get away from the cabin to discover hidden places. There is an old
-            <b>chapel</b> on top of the northern mountain, they may want to see it
-            so let\u2019s build a <color=#F8A539>path</color> for them!"
+          m_StringArgument: PTH_008
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 213249345}
@@ -1118,16 +1115,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: You can speed up time by clicking on the arrows or using
-            the 2 and 3 keys (keyboard). Click play or 1 (keyboard) to return to
-            speed 1.
+          m_StringArgument: PTH_009
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &213249345
@@ -2444,6 +2439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 256040404}
+  textsList: {fileID: 0}
 --- !u!114 &256040408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2457,6 +2453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 256040406}
+  textsList: {fileID: 0}
 --- !u!114 &257212357 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2701047239325643594, guid: 64aecd28b129c9c4480c3c1ca1b863aa, type: 3}
@@ -2874,16 +2871,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "The visitors seem happy, but some of them are not impressed.
-            There are different <color=#89AFF3>types of visitors</color> in the valley.
-            Let\u2019s click on them to see their <cspace=-0.05em><b>profiles</b></cspace>."
+          m_StringArgument: PTH_007
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!4 &356459758
@@ -3251,6 +3246,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1989842936}
     m_Modifications:
+    - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60.200027
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 33.400017
+      objectReference: {fileID: 0}
     - target: {fileID: 495711263419197918, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_Name
       value: Camera Group
@@ -4187,6 +4190,8 @@ MonoBehaviour:
   hikersInfo: {fileID: 1227045347}
   touristInfo: {fileID: 1596628243}
   nbVisitors: {fileID: 1046834443}
+  tooltip: {fileID: 0}
+  textsScriptable: {fileID: 0}
 --- !u!114 &545907773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5916,14 +5921,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: BLANK
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 257212357}
@@ -6635,16 +6640,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "Now place the following markers to reach the <cspace=-0.05><b>water
-            mill</b></cspace>, but remember: you can\u2019t place a marker too far
-            away from the previous one."
+          m_StringArgument: PTH_005
           m_BoolArgument: 1
         m_CallState: 2
   PlayOnEnd:
@@ -6727,16 +6730,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Once you are done, click on the <cspace=-0.05em><b>last
-            marker</b></cspace> you placed to validate the path and welcome your
-            first visitors to the <color=#B8EF6F>valley</color>.
+          m_StringArgument: PTH_006
           m_BoolArgument: 0
         m_CallState: 2
   OnClick:
@@ -8986,15 +8987,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Now place your first <cspace=-0.05em><b>marker</b></cspace>
-            around the <color=#F8A539>plaza</color> to start a new path.
+          m_StringArgument: PTH_004
           m_BoolArgument: 1
         m_CallState: 2
   PlayOnEnd:
@@ -48015,30 +48015,16 @@ MonoBehaviour:
   PlayOnStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 256040408}
-        m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "Let\u2019s begin with a new <color=#F8A539>path</color>!
-            There is a <cspace=-0.05em><b>water mill</b></cspace> not far away, our
-            visitors may want to see it. "
+          m_StringArgument: PTH_001
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 2222160492214754525}
@@ -48082,14 +48068,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: BLANK
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 257212357}
@@ -48219,15 +48205,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Here is the <font="Sniglet-Regular SDF"><color=#C23618>build
-            button</color></font>, try clicking on it!
+          m_StringArgument: PTH_002
           m_BoolArgument: 1
         m_CallState: 2
   PlayOnEnd:
@@ -48286,14 +48271,14 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256040407}
         m_TargetAssemblyTypeName: IFB_ChangeText, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: UpdateGoal
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Now click on the marker and place it on the plaza
+          m_StringArgument: PTH_003
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &2222160492932056942
