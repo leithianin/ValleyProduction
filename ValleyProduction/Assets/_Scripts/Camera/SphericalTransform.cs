@@ -12,11 +12,16 @@ public class SphericalTransform : MonoBehaviour
     [SerializeField, Tooltip("Object Spherical Transform coordinates, x = Radius, y = Azimuthal Angle, z = Polar Angle")] 
     private Vector3 coordinates = default;
     [Space(10)]
+    [Header("Moving Constraints")]
+    [SerializeField] private LayerMask layerMask = default;
+    [SerializeField] private Collider BoundariesCollider = default;
+
+    [Header("Polar Values")]
     [SerializeField, Tooltip("In degrees")] private float verticalOffset = 0.5f;
     [SerializeField] private float minPolarValue = 0.0f;
     [SerializeField] private float maxPolarValue = 100.0f;
 
-    [Header("Radius values")]
+    [Header("Radius Values")]
     [SerializeField] private float minRadiusValue = 1.0f;
     [SerializeField] private float maxRadiusValue = 30.0f;
 
@@ -30,15 +35,7 @@ public class SphericalTransform : MonoBehaviour
 
     private Vector3 cameraTarget = default;
 
-    public Transform Origin
-    {
-        get
-        {
-            return origin;
-        }
-    }
 
-    public Vector3 OiriginStartPosition { get; set; }
 
     private Vector3 touchDown = default;
 
@@ -55,8 +52,10 @@ public class SphericalTransform : MonoBehaviour
     private void LateUpdate()
     {
         ConstraintAngles();
+        ConstraintOriginPosition();
         ConvertCameraTargetTransformIntoCarthesianCoords();
     }
+
 
     #region Controls
 
@@ -107,7 +106,7 @@ public class SphericalTransform : MonoBehaviour
         Debug.DrawLine(transform.position + Vector3.up * 1000f, transform.position + Vector3.down*5000.0f, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up * 1000f, Vector3.down, out hit, 5000.0f))
+        if (Physics.Raycast(transform.position + Vector3.up * 1000f, Vector3.down, out hit, 5000.0f, layerMask))
         {
             Debug.DrawLine(transform.position + Vector3.up * 1000f, transform.position + Vector3.up * 1000f + Vector3.down * hit.distance, Color.green);
             touchDown = hit.point;
@@ -148,7 +147,7 @@ public class SphericalTransform : MonoBehaviour
         Debug.DrawLine(origin.position + Vector3.up * 1000f, origin.position + Vector3.down * 5000.0f, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(origin.position + Vector3.up * 1000f, Vector3.down, out hit, 5000.0f))
+        if (Physics.Raycast(origin.position + Vector3.up * 1000f, Vector3.down, out hit, 5000.0f, layerMask))
         {
             Debug.DrawLine(origin.position + Vector3.up * 1000.0f, origin.position + Vector3.up * 1000.0f + Vector3.down * hit.distance, Color.green);
             origin.position = hit.point;
@@ -183,6 +182,7 @@ public class SphericalTransform : MonoBehaviour
         return Vector3.Normalize(new Vector3(origin.position.x - transform.position.x, 0.0f, origin.position.z - transform.position.z));
     }
 
+    #region Set Spherical Coordinates
     public void SetRadius(float value)
     {
         coordinates.x = value;
@@ -197,7 +197,9 @@ public class SphericalTransform : MonoBehaviour
     {
         coordinates.y = value;
     }
+    #endregion
 
+    #region Constraints
     void ConstraintAngles()
     {
         if (coordinates.y >= 360f)
@@ -213,7 +215,16 @@ public class SphericalTransform : MonoBehaviour
         coordinates.x = Mathf.Clamp(coordinates.x, minRadiusValue, maxRadiusValue);
     }
 
+    void ConstraintOriginPosition()
+    {
+        float xOriginClamped = Mathf.Clamp(origin.position.x, BoundariesCollider.bounds.center.x - BoundariesCollider.bounds.extents.x, BoundariesCollider.bounds.center.x + BoundariesCollider.bounds.extents.x);
+        float zOriginClamped = Mathf.Clamp(origin.position.z, BoundariesCollider.bounds.center.z - BoundariesCollider.bounds.extents.z, BoundariesCollider.bounds.center.z + BoundariesCollider.bounds.extents.z);
 
+        origin.position = new Vector3(xOriginClamped, origin.position.y, zOriginClamped);
+    }
+    #endregion
+
+    #region Debug
     private void OnDrawGizmos()
     {
         if (!origin)
@@ -237,7 +248,7 @@ public class SphericalTransform : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(cameraTarget, 0.25f);
 
-
     }
+    #endregion
 }
 
