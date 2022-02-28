@@ -13,13 +13,15 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private TextHolder relay;
 
     [SerializeField] private RectTransform tooltipPos;
+    [SerializeField] private int index;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         onEnter?.Invoke(this);
-
-        var message = $"<b>{ValleyText.Title}</b>\n{ValleyText.Description}";
-        UIManager.GetTooltip.ShowTooltip(message, tooltipPos, 1);
+        var message = "";
+        if (ValleyText.Title != "") { message = $"<b>{ValleyText.Title}</b>\n{ValleyText.Description}"; }
+        else                                  { message = $"{ValleyText.Description}"; }
+        UIManager.GetTooltip.ShowTooltip(message, tooltipPos, index);
     }
 
     public void OnPointerExit(PointerEventData eventData)
