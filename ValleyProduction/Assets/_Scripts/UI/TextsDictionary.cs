@@ -8,10 +8,11 @@ public class TextsDictionary : ScriptableObject
     [SerializeField] private TextBase[] pathTutorial;
     [SerializeField] private TextBase[] ecosystemTutorial;
     [SerializeField] private TextBase[] quests;
+    [SerializeField] private TextBase blank;
 
     public TextBase GetTextAsset(string id)
     {
-        var fragId = id.Substring(0, 2);
+        var fragId = id.Substring(0, 3);
 
         switch (fragId)
         {
@@ -44,6 +45,8 @@ public class TextsDictionary : ScriptableObject
                     }
                 }
                 break;
+            case "BLK":
+                return blank;
         }
 
         return null;
