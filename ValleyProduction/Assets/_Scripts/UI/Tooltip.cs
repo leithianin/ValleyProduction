@@ -50,7 +50,8 @@ public class Tooltip : MonoBehaviour
 
         switch (index)
         {
-            case 1:
+            case 1:                                                       //Upper
+                Debug.Log("1");
                 RectTransform.anchorMin = new Vector2(0.5f, 1);
                 RectTransform.anchorMax = new Vector2(0.5f, 1);
                 RectTransform.pivot = new Vector2(0.5f, 1);
@@ -58,10 +59,29 @@ public class Tooltip : MonoBehaviour
                 RectTransform.position = transform.position;
                 break;
 
-            case 2:
+            case 2:                                                       //Bottom
+                Debug.Log("2");
                 RectTransform.anchorMin = new Vector2(0.5f, 0);
                 RectTransform.anchorMax = new Vector2(0.5f, 0);
                 RectTransform.pivot = new Vector2(0.5f, 0);
+
+                RectTransform.position = transform.position;
+                break;
+
+            case 3:                                                       //Left
+                Debug.Log("3");
+                RectTransform.anchorMin = new Vector2(0f, 0.5f);
+                RectTransform.anchorMax = new Vector2(0f, 0.5f);
+                RectTransform.pivot = new Vector2(0f, 0.5f);
+
+                RectTransform.position = transform.position;
+                break;
+
+            case 4:                                                       //Right
+                Debug.Log("4");
+                RectTransform.anchorMin = new Vector2(1f, 0.5f);
+                RectTransform.anchorMax = new Vector2(1f, 0.5f);
+                RectTransform.pivot = new Vector2(1f, 0.5f);
 
                 RectTransform.position = transform.position;
                 break;
