@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class VLY_ComponentHandler : MonoBehaviour
 {
+    [SerializeField] private MeshRenderer meshRnd;
     [SerializeField] private List<VLY_Component> components;
+
+    public MeshRenderer MeshRnd => meshRnd;
 
     public void GetComponentOfType<T>(ref T wantedComponent) where T : VLY_Component
     {
@@ -16,26 +19,5 @@ public class VLY_ComponentHandler : MonoBehaviour
                 break;
             }
         }
-    }
-
-    [ContextMenu("Test 1")]
-    public void Test1()
-    {
-        CPN_Stamina stam = null;
-        GetComponentOfType<CPN_Stamina>(ref stam);
-
-        if(stam != null)
-        {
-            Debug.Log(stam.GetStamina);
-        }
-    }
-
-    [ContextMenu("Test 2")]
-    public void Test2()
-    {
-        CPN_Movement stam = null;
-        GetComponentOfType<CPN_Movement>(ref stam);
-
-        Debug.Log(stam.gameObject.name);
     }
 }
