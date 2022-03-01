@@ -133,10 +133,26 @@ public class SphericalTransform : MonoBehaviour
         origin.position = startPos + movingVector;
     }
 
+    public void SetOriginPosition(Vector3 posToGo)
+    {
+        origin.position = new Vector3(posToGo.x, origin.position.y, posToGo.z);
+    }
+
+    public Vector3 GetOriginPosition()
+    {
+        return origin.position;
+    }
+
     private void MoveOriginLookAtTarget()
     {
         originLookAtTarget.position = Vector3.Lerp(originLookAtTarget.position, origin.position, lookAtLerpValue);
     }
+
+    public void SetOriginLookAtTarget()
+    {
+        originLookAtTarget.position = origin.position;
+    }
+
     void SetOriginForward()
     {
         origin.forward = GetOriginForwardVector();
@@ -251,4 +267,3 @@ public class SphericalTransform : MonoBehaviour
     }
     #endregion
 }
-

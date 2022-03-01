@@ -5,6 +5,7 @@ using UnityEngine;
 public class CinematicCameraBehaviour : MonoBehaviour
 {
     [SerializeField] private SphericalTransform cameraTransform = default;
+    [SerializeField] private Collider cameraBoundaries = default;
 
     [SerializeField] private Vector2 timeRange = default;
 
@@ -35,9 +36,8 @@ public class CinematicCameraBehaviour : MonoBehaviour
         inCinematicMode = true;
         yield return new WaitForSeconds(0.5f);
 
-        cameraTransform.SetRadius(Random.Range(radiusRange.x, radiusRange.y));
-        cameraTransform.SetPolarAngle(Random.Range(polarAngleRange.x, polarAngleRange.y));
-        cameraTransform.SetAzimuthalAngle(Random.Range(0, 360));
+        SelectDestination();
+        SelectAngles();
 
         int rotateDir = (int)Mathf.Sign(Random.value - 0.5f);
         float referenceTime = Random.Range(timeRange.x, timeRange.y);
@@ -50,6 +50,27 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
         FadeReset();
         inCinematicMode = false;
+    }
+
+    void SelectDestination()
+    {
+        if (!cameraBoundaries)
+        {
+            Debug.LogError("No Boundaries Collider is set on the Cinematic Camera Behaviour");
+        }
+
+        float xPos = cameraBoundaries.bounds.center.x + Random.Range(-cameraBoundaries.bounds.extents.x, cameraBoundaries.bounds.extents.x);
+        float zPos = cameraBoundaries.bounds.center.z + Random.Range(-cameraBoundaries.bounds.extents.z, cameraBoundaries.bounds.extents.z);
+        Vector3 newPos = new Vector3(xPos, cameraTransform.GetOriginPosition().y, zPos);
+        cameraTransform.SetOriginPosition(newPos);
+        cameraTransform.SetOriginLookAtTarget();
+    }
+
+    void SelectAngles()
+    {
+        cameraTransform.SetRadius(Random.Range(radiusRange.x, radiusRange.y));
+        cameraTransform.SetPolarAngle(Random.Range(polarAngleRange.x, polarAngleRange.y));
+        cameraTransform.SetAzimuthalAngle(Random.Range(0, 360));
     }
 
     public void FadeReset()
