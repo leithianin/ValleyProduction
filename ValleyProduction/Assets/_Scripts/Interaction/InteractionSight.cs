@@ -8,7 +8,8 @@ public abstract class InteractionSight : MonoBehaviour
 
     protected bool isInteracting;
 
-    private InteractionSpot currentSpot;
+    [SerializeField] private InteractionSpot currentSpot;
+    [SerializeField] private float timeBetweenInteractions = 5f;
 
     public bool IsInteracting => isInteracting;
 
@@ -62,6 +63,7 @@ public abstract class InteractionSight : MonoBehaviour
         if(spotInteractor == interactor)
         {
             currentSpot.PlayOnInteractionEnd -= EndInteraction;
+            TimerManager.CreateGameTimer(timeBetweenInteractions, () => isInteracting = false);
             isInteracting = false;
             OnEndInteraction();
         }

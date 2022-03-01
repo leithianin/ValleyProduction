@@ -45,8 +45,11 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private void PlaceInfrastructure(Infrastructure selectedStructure)
     {
-        currentSelectedStructure = selectedStructure;
-        selectedStructure.PlaceObject();
+        if (ConstructionManager.GetSelectedStructureType == selectedStructure.structureType)
+        {
+            currentSelectedStructure = selectedStructure;
+            selectedStructure.PlaceObject();
+        }
     }
 
     private bool PlaceInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
