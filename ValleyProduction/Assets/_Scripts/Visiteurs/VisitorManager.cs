@@ -142,7 +142,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     {
         for (int i = 0; i < visitorPool.Count; i++)
         {
-            if (!visitorPool[i].gameObject.activeSelf)
+            if (!visitorPool[i].IsUsed)
             {
                 return visitorPool[i];
             }
@@ -159,7 +159,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         int toReturn = 0;
         for (int i = 0; i < instance.visitorPool.Count; i++)
         {
-            if (instance.visitorPool[i].gameObject.activeSelf)
+            if (instance.visitorPool[i].IsUsed)
             {
                 toReturn++;
             }
@@ -172,7 +172,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     {
         for (int i = 0; i < instance.visitorPool.Count; i++)
         {
-            if (instance.visitorPool[i].gameObject.activeSelf && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
+            if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
             {
                 return instance.visitorPool[i].gameObject;
             }

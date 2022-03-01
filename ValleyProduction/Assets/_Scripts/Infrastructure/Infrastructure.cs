@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public abstract class Infrastructure : MonoBehaviour
 {
+    public InfrastructureType structureType;
+
     [SerializeField, Tooltip("Actions to play when the construction is placed.")] private UnityEvent PlayOnPlace;
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
     [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnSelect;
