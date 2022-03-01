@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class AnimalBehavior : MonoBehaviour
 {
     [SerializeField] private CPN_InteractionHandler interaction;
-    private InteractionSequence sequence;
+    [SerializeField] private InteractionSequence sequence;
     [SerializeField] private Transform spawnPosition;
 
     [SerializeField] private UnityEvent OnSet;

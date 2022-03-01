@@ -87,15 +87,8 @@ public class PathFragmentData
                 InterestPoint foundInterestPoint = c.gameObject.GetComponent<InterestPoint>();
                 if (foundInterestPoint != null)// && foundInterestPoint.IsLandmark)
                 {
-                    if(c.gameObject.name.Contains("Watermill")) 
-                    {
-                        OnBoardingManager.OnWaterMill?.Invoke(true); 
-                    }
+                    ActionInvoke(c.gameObject.name);
 
-                    if(c.gameObject.name.Contains("Chapel"))
-                    {
-                        OnBoardingManager.OnChapel?.Invoke(true);
-                    }
                     AddInterestPoint(foundInterestPoint);
                 }
             }
@@ -108,6 +101,26 @@ public class PathFragmentData
         {
             interestPointList.Add(interest_p);
             Debug.Log("Add interest point : " + interest_p.name);
+        }
+    }
+
+    public void ActionInvoke(string name)
+    {
+        if (name.Contains("Watermill"))
+        {
+            OnBoardingManager.OnWaterMill?.Invoke(true);
+        }
+        else if (name.Contains("Chapel"))
+        {
+            OnBoardingManager.OnChapel?.Invoke(true);
+        }
+        else if (name.Contains("Windmill"))
+        {
+            OnBoardingManager.OnWindMill?.Invoke(true);
+        }
+        else
+        {
+            Debug.Log("No Invoke on this Landmark");
         }
     }
 }

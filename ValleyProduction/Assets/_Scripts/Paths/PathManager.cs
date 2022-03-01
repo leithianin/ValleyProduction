@@ -747,6 +747,8 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             Destroy(go);
         }
+
+        instance.lineRendererDebugList.Clear();
     }
 
     public static void DestroyLineRenderer(LineRenderer lineR)
