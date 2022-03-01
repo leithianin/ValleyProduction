@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ADI_VegetationDisplayer : AreaDisplay
 {
@@ -11,12 +12,14 @@ public class ADI_VegetationDisplayer : AreaDisplay
         public List<TreeBehavior> toDisplay;
     }
 
-    //[SerializeField] private List<VegetationDisplayData> vegetByValidScore;
+    [SerializeField] private float scoreByTree;
+    private float currentTreeScore = 0;
+
     [SerializeField] private List<TreeBehavior> treesInArea = new List<TreeBehavior>();
 
     [SerializeField] private List<int> numberTreeToDisabled;
 
-    //[SerializeField] private List<InteractionSequence> possibleSequences;
+    [SerializeField] private UnityEvent<float> OnChangeScore;
 
     [ContextMenu("Set Trees")]
     public void SetTrees()
@@ -39,11 +42,16 @@ public class ADI_VegetationDisplayer : AreaDisplay
         }
     }
 
-    public int score;
+    protected override void OnStart()
+    {
+        //OnUpdateScore(-1);
+
+        currentTreeScore = treesInArea.Count * scoreByTree;
+        OnChangeScore?.Invoke(currentTreeScore);
+    }
 
     public override void OnUpdateScore(int newScore)
     {
-        score = newScore;
         int currentTreeIndex = -1;
 
         for(int i = 0; i < numberTreeToDisabled.Count; i++)
@@ -53,46 +61,30 @@ public class ADI_VegetationDisplayer : AreaDisplay
                 currentTreeIndex++;
                 if (currentTreeIndex < treesInArea.Count)
                 {
-                    if (i < score)
+                    if (i < newScore)
                     {
+                        //Debug.Log(currentTreeIndex + " New score");
                         if (treesInArea[currentTreeIndex].IsSet)
                         {
+                            //Debug.Log(currentTreeIndex + "IsSet");
                             treesInArea[currentTreeIndex].UnsetTree();
+                            currentTreeScore -= scoreByTree;
                         }
                     }
                     else
                     {
+                        //Debug.Log(currentTreeIndex + " NOT New Score");
                         if (!treesInArea[currentTreeIndex].IsSet)
                         {
+                            //Debug.Log(currentTreeIndex + "NOT IsSet");
                             treesInArea[currentTreeIndex].SetTree();
+                            currentTreeScore += scoreByTree;
                         }
                     }
                 }
             }
         }
 
-        /*for (int i = 0; i < vegetByValidScore.Count; i++)
-        {
-            if (i < newScore)
-            {
-                for (int j = 0; j < vegetByValidScore[i].toDisplay.Count; j++)
-                {
-                    if (!vegetByValidScore[i].toDisplay[j].IsSet)
-                    {
-                        vegetByValidScore[i].toDisplay[j].SetTree();
-                    }
-                }
-            }
-            else
-            {
-                for (int j = 0; j < vegetByValidScore[i].toDisplay.Count; j++)
-                {
-                    if (vegetByValidScore[i].toDisplay[j].IsSet)
-                    {
-                        vegetByValidScore[i].toDisplay[j].UnsetTree();
-                    }
-                }
-            }
-        }*/
+        OnChangeScore?.Invoke(currentTreeScore);
     }
 }

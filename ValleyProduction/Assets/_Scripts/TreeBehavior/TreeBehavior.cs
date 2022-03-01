@@ -15,7 +15,7 @@ public class TreeBehavior : MonoBehaviour
 
     [SerializeField] private UnityEvent<float> OnChangeScore;
 
-    private bool isSet = false;
+    private bool isSet = true;
 
     public bool IsSet => isSet;
 
