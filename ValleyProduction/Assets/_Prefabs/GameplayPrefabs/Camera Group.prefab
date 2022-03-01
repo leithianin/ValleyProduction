@@ -68,7 +68,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440979086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 485.23, y: -0.0036621103, z: 370.7306}
+  m_LocalPosition: {x: 484.5436, y: -0.0036621103, z: 348.54303}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1162757707294999572}
@@ -183,7 +183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724654950380066896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 485.23013, y: -0.0036621094, z: 370.7307}
+  m_LocalPosition: {x: 484.54373, y: -0.0036621094, z: 348.54315}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1162757707294999572}
@@ -225,7 +225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724654950491024183}
   m_LocalRotation: {x: 0.39579484, y: -0, z: -0, w: 0.918339}
-  m_LocalPosition: {x: 485.23013, y: 16.51726, z: 358.78033}
+  m_LocalPosition: {x: 484.54373, y: 16.51726, z: 336.59277}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 1162757707294999572}
@@ -272,14 +272,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 724654950491024179}
   cinematicCameraBehaviour: {fileID: 518034171}
-  cameraOrigin: {fileID: 0}
+  hud: {fileID: 0}
   movingSpeed: 10
-  useEdgeScrolling: 1
+  useEdgeScrolling: 0
   edgeScrollingMovingSpeed: 10
-  useMouseScrolling: 1
+  useMouseScrolling: 0
   mouseScrollingMovingSpeed: 10
+  invertHorizontalWheelRotation: 0
+  invertVerticaleWheelRotation: 0
   rotationSpeed: 180
-  wheelRotationSpeed: 500
+  wheelRotationSpeed: 250
   scrollingSpeed: 3000
   inCinematicMode: 0
 --- !u!114 &518034171
@@ -295,10 +297,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 724654950491024179}
-  cameraBoundaries: {fileID: 0}
+  cameraBoundaries: {fileID: 1292608334}
   timeRange: {x: 3, y: 10}
   radiusRange: {x: 10, y: 50}
-  polarAngleRange: {x: 10, y: 90}
+  polarAngleRange: {x: 10, y: 80}
   rotationSpeed: 10
   cinematicModeTriggered: 0
   inCinematicMode: 0
@@ -374,7 +376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5214258109624083011}
   m_LocalRotation: {x: 0.39579484, y: -0, z: -0, w: 0.91833895}
-  m_LocalPosition: {x: 485.23013, y: 16.51726, z: 358.78033}
+  m_LocalPosition: {x: 484.54373, y: 16.51726, z: 336.59277}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1162757707294999572}
@@ -479,7 +481,7 @@ MonoBehaviour:
   cameraTarget: {fileID: 724654950491024178}
   cameraTargetOrigin: {fileID: 724654950380066908}
   originLookAtTarget: {fileID: 1440979087}
-  cinematicCameraBehaviour: {fileID: 0}
+  cinematicCameraBehaviour: {fileID: 518034171}
   lerpValue: 0.1
 --- !u!114 &5965266355428144852
 MonoBehaviour:
