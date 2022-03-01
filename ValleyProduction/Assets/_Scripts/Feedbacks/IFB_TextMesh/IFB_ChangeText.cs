@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class IFB_ChangeText : MonoBehaviour, IFeedbackPlayer
 {
+    public RectTransform rtGoalDescription;
+    public RectTransform rtGoalBar;
+
     public TMP_Text description;
     public TMP_Text title;
     private string stringText = string.Empty;
@@ -14,9 +17,10 @@ public class IFB_ChangeText : MonoBehaviour, IFeedbackPlayer
 
     public void Play()
     {
+        if (txt.Title != string.Empty) { title.text = $"{txt.Title}"; }
         description.text = $"{txt.Description}";
-        title.text = $"{txt.Title}";
 
+        UpdateBackgroundSize();
     }
 
     public void UpdateGoal(string id)
@@ -27,7 +31,10 @@ public class IFB_ChangeText : MonoBehaviour, IFeedbackPlayer
 
     public void UpdateBackgroundSize()
     {
-        //Carré noir ref = preferedSize du texte //         var bgSize = new Vector2(300, tooltip.preferredHeight + 20);
-        //Barre changer height *1.03 
+        var bgSize = new Vector2(304, description.preferredHeight + 100);
+        rtGoalDescription.sizeDelta = bgSize;
+
+        bgSize = new Vector2(41, (description.preferredHeight + 250));
+        rtGoalBar.sizeDelta = bgSize;
     }
 }
