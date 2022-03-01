@@ -63,7 +63,6 @@ public class CinematicCameraBehaviour : MonoBehaviour
         float zPos = cameraBoundaries.bounds.center.z + Random.Range(-cameraBoundaries.bounds.extents.z, cameraBoundaries.bounds.extents.z);
         Vector3 newPos = new Vector3(xPos, cameraTransform.GetOriginPosition().y, zPos);
         cameraTransform.SetOriginPosition(newPos);
-        cameraTransform.SetOriginLookAtTarget();
     }
 
     void SelectAngles()

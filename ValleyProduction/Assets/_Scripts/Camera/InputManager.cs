@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private SphericalTransform cameraTransform = default;
     [SerializeField] private CinematicCameraBehaviour cinematicCameraBehaviour = default;
     [SerializeField] private Transform cameraOrigin = default;
+    [SerializeField] private GameObject hud = default;
 
     [SerializeField] private float movingSpeed = 10.0f;
 
@@ -131,6 +132,7 @@ public class InputManager : MonoBehaviour
             return;
 
         cinematicCameraBehaviour.cinematicModeTriggered = true;
+        hud.SetActive(false);
     }
 
     void StopCinematicMode()
@@ -144,6 +146,7 @@ public class InputManager : MonoBehaviour
             cinematicCameraBehaviour.inCinematicMode = false;
             cinematicCameraBehaviour.FadeReset();
             cinematicCameraBehaviour.StopAllCoroutines();
+            hud.SetActive(true);
         }
     }
 }
