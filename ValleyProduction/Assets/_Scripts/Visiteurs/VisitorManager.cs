@@ -33,7 +33,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 if (UsedVisitorNumber() < maxSpawn)
                 {
                     SpawnVisitor();
-                    UIManager.UpdateNbVisitors(UsedVisitorNumber());
+                    //UIManager.UpdateNbVisitors(UsedVisitorNumber());
                 }
             }
 

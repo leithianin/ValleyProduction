@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2544051740242619854}
   - component: {fileID: 5968187655919664718}
+  - component: {fileID: 7080500207362148344}
   m_Layer: 2
   m_Name: NoiseMaker
   m_TagString: Untagged
@@ -44,3 +45,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreProduced: 0
+--- !u!114 &7080500207362148344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7774005756235633070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87968c9c83c740040834e4888718ff79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnChangeScore:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7080500207362148344}
+        m_TargetAssemblyTypeName: CPN_NoiseMaker, Assembly-CSharp
+        m_MethodName: SetData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
