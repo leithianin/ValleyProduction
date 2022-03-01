@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
 [ExecuteAlways, DisallowMultipleComponent]
@@ -126,10 +127,16 @@ public class SphericalTransform : MonoBehaviour
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.deltaTime;
     }
 
-    public void MoveOrigin(Transform target, float speed)
+    public IEnumerator MoveCameraOriginToCustomTarget(Transform target, float speed)
     {
-        Vector2 dir = new Vector2(target.position.x - origin.position.x, target.position.z - origin.position.z);
-        origin.position += Vector3.Normalize(origin.forward * dir.x + origin.right * dir.y) * speed * Time.deltaTime;
+        Vector3 startPos = origin.position;
+        float referenceTime = Vector3.Distance(startPos, target.position) / speed;
+
+        for (float time = referenceTime; time > 0; time -= Time.deltaTime)
+        {
+            origin.position = Vector3.Lerp(target.position, startPos, time / referenceTime);
+            yield return null;
+        }
     }
 
     public void MoveOriginFromStartPosition(Vector3 startPos, Vector3 movingVector)
