@@ -21,6 +21,10 @@ public class VisitorBehavior : MonoBehaviour
 
     List<Vector3> interuptedPath = new List<Vector3>();
 
+    private bool isUsed = false;
+
+    public bool IsUsed => isUsed;
+
     public CPN_Movement Movement => movement;
 
     private void Start()
@@ -62,6 +66,8 @@ public class VisitorBehavior : MonoBehaviour
                 Destroy(visitorDisplay.gameObject);
             }
 
+            isUsed = true;
+
             visitorDisplay = Instantiate(visitorType.Display, transform);
 
             movement.WalkOnNewPath(currentPathFragment.path);
@@ -73,6 +79,8 @@ public class VisitorBehavior : MonoBehaviour
     /// </summary>
     public void UnsetVisitor()
     {
+        isUsed = false;
+
         currentPathFragment = null;
 
         gameObject.SetActive(false);
