@@ -8,6 +8,7 @@ public class CameraBehaviourSpherical : MonoBehaviour
     [SerializeField] private Transform cameraTarget = default;
     [SerializeField] private Transform cameraTargetOrigin = default;
     [SerializeField] private Transform originLookAtTarget = default;
+    [SerializeField] private CinematicCameraBehaviour cinematicCameraBehaviour = default;
     [SerializeField] private float lerpValue;
 
 
@@ -15,6 +16,7 @@ public class CameraBehaviourSpherical : MonoBehaviour
     void Update()
     {
         JoinTarget();
+        JoinTargetNoInterpolation();
         SetCameraForward();
 
     }
@@ -23,6 +25,17 @@ public class CameraBehaviourSpherical : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, cameraTarget.position, lerpValue);
 
+    }
+
+    void JoinTargetNoInterpolation()
+    {
+        if (!cinematicCameraBehaviour)
+            return;
+
+        if (!cinematicCameraBehaviour.inCinematicMode)
+            return;
+
+        transform.position = cameraTarget.position;
     }
 
     void SetCameraForward()

@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private SphericalTransform cameraTransform = default;
+    [SerializeField] private CinematicCameraBehaviour cinematicCameraBehaviour = default;
     [SerializeField] private Transform cameraOrigin = default;
 
     [SerializeField] private float movingSpeed = 10.0f;
@@ -23,6 +25,9 @@ public class InputManager : MonoBehaviour
     [SerializeField, Tooltip("When Scrolling Wheel is pressed")] private float wheelRotationSpeed = 90.0f;
 
     [SerializeField] private float scrollingSpeed = 100f;
+
+    [Header("Cinematic Mode")]
+    [SerializeField, ReadOnly] private bool inCinematicMode = false;
 
     private void OnEnable()
     {
@@ -44,6 +49,10 @@ public class InputManager : MonoBehaviour
         //Rotate Camera functions
         RotateCameraWithKeyboard();
         RotateCameraWithScrollWheel();
+
+        //Handle Cinematic Mode
+        StopCinematicMode();
+        LaunchCinematicMode();
     }
 
     void MoveCameraOriginWithKeyboard()
@@ -113,5 +122,28 @@ public class InputManager : MonoBehaviour
         cameraTransform.PolarRotation(Input.GetAxis("Mouse Y"), wheelRotationSpeed);
     }
 
+    void LaunchCinematicMode()
+    {
+        if (!Input.GetKeyDown(KeyCode.C))
+            return;
 
+        if (cinematicCameraBehaviour.inCinematicMode)
+            return;
+
+        cinematicCameraBehaviour.cinematicModeTriggered = true;
+    }
+
+    void StopCinematicMode()
+    {
+        if (!cinematicCameraBehaviour.cinematicModeTriggered)
+            return;
+
+        if (Input.anyKeyDown)
+        {
+            cinematicCameraBehaviour.cinematicModeTriggered = false;
+            cinematicCameraBehaviour.inCinematicMode = false;
+            cinematicCameraBehaviour.FadeReset();
+            cinematicCameraBehaviour.StopAllCoroutines();
+        }
+    }
 }
