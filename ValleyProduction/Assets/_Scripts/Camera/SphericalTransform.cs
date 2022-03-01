@@ -35,8 +35,6 @@ public class SphericalTransform : MonoBehaviour
 
     private Vector3 cameraTarget = default;
 
-
-
     private Vector3 touchDown = default;
 
     private void Update()
@@ -128,6 +126,12 @@ public class SphericalTransform : MonoBehaviour
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.deltaTime;
     }
 
+    public void MoveOrigin(Transform target, float speed)
+    {
+        Vector2 dir = new Vector2(target.position.x - origin.position.x, target.position.z - origin.position.z);
+        origin.position += Vector3.Normalize(origin.forward * dir.x + origin.right * dir.y) * speed * Time.deltaTime;
+    }
+
     public void MoveOriginFromStartPosition(Vector3 startPos, Vector3 movingVector)
     {
         origin.position = startPos + movingVector;
@@ -136,6 +140,7 @@ public class SphericalTransform : MonoBehaviour
     public void SetOriginPosition(Vector3 posToGo)
     {
         origin.position = new Vector3(posToGo.x, origin.position.y, posToGo.z);
+        originLookAtTarget.position = origin.position;
     }
 
     public Vector3 GetOriginPosition()
@@ -148,10 +153,6 @@ public class SphericalTransform : MonoBehaviour
         originLookAtTarget.position = Vector3.Lerp(originLookAtTarget.position, origin.position, lookAtLerpValue);
     }
 
-    public void SetOriginLookAtTarget()
-    {
-        originLookAtTarget.position = origin.position;
-    }
 
     void SetOriginForward()
     {
