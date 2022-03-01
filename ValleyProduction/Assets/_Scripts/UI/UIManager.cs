@@ -31,18 +31,43 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static UIManager UIinstance => instance;
 
-    //Use in Path Button On Click()
-    public void OnToolCreatePath(int i)
-    {  
-        if(i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i) {InfrastructureManager.instance.toolSelected = (ToolType)i  ;}
-        else                                                              {InfrastructureManager.instance.toolSelected = ToolType.None;}
-
-        if(PathManager.IsOnCreatePath)
+    public void SelectStructure(int structureID)
+    {
+        switch((InfrastructureType)structureID)
         {
-            PathManager.CreatePathData();
+            case InfrastructureType.Path:
+                if (PathManager.IsOnCreatePath)
+                {
+                    PathManager.CreatePathData();
+                }
+                break;
         }
 
-        ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);      
+        ConstructionManager.SelectInfrastructureType((InfrastructureType)structureID);
+    }
+
+    //Use in Path Button On Click()
+    public void OnToolCreatePath(int i)
+    {
+        if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
+        {
+            InfrastructureManager.instance.toolSelected = (ToolType)i;
+        }
+        else
+        {
+            InfrastructureManager.instance.toolSelected = ToolType.None;
+        }
+
+        switch (InfrastructureManager.GetCurrentTool)
+        {
+            case ToolType.Place:
+                ConstructionManager.SelectInfrastructureType(InfrastructureType.None);
+                break;
+            case ToolType.Move:
+                break;
+            case ToolType.Delete:
+                break;
+        }
     }
 
     public void UnselectTool()
@@ -54,7 +79,7 @@ public class UIManager : VLY_Singleton<UIManager>
             PathManager.CreatePathData();
         }
 
-        ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);
+        ConstructionManager.SelectInfrastructureType(InfrastructureType.Path);
     }
 
     //Use in Construction Button On Click()

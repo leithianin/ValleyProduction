@@ -22,4 +22,14 @@ public class AU_MakeSound : AreaUpdater<AU_MakeSound>
     {
         SetScore(dataToSet.NoiseMade());
     }
+
+    public void AddNoide(float toAdd)
+    {
+        SetScore(GetScore + toAdd);
+    }
+
+    public void RemoveNoide(float toRemove)
+    {
+        SetScore(GetScore - toRemove);
+    }
 }

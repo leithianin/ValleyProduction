@@ -1,8 +1,9 @@
 public enum InfrastructureType
 {
     None,
-    DeleteStructure,
-    PathTools
+    Path,
+    Refuge,
+    Banc
 }
 
 public enum ToolType

@@ -10,12 +10,15 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     private ToolType selectedToolType = ToolType.None;
 
     [SerializeField] private InfrastructurePreview pathPointPreview;
+    [SerializeField] private List<InfrastructurePreview> previews;
 
     public UnityEvent OnSelectPathTool;
     public UnityEvent OnUnselectPathTool;
     public UnityEvent OnUnselectOneMore;
 
-    public static bool HasSelectedStructureType => instance.selectedStructureType != InfrastructureType.None && instance.selectedStructureType != InfrastructureType.DeleteStructure;
+    public static bool HasSelectedStructureType => instance.selectedStructureType != InfrastructureType.None;// && instance.selectedStructureType != InfrastructureType.DeleteStructure;
+
+    public static InfrastructureType GetSelectedStructureType => instance.selectedStructureType;
 
     /// <summary>
     /// Prend en compte l'Input pour placer une infrastructure.
@@ -23,7 +26,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// <param name="posePosition">La position du clic.</param>
     public static void PlaceInfrastructure(Vector3 posePosition)
     {
-        if (InfrastructureManager.GetCurrentTool == ToolType.Place)
+        if (InfrastructureManager.GetCurrentTool == ToolType.Place && HasSelectedStructureType)
         {
             InfrastructureManager.PlaceInfrastructure(posePosition);
         }
@@ -84,7 +87,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
             }
             else
             {
-                if (instance.selectedStructureType == InfrastructureType.PathTools)
+                if (instance.selectedStructureType == InfrastructureType.Path)
                 {
                     if (PathManager.previousPathpoint != null)
                     {
@@ -149,35 +152,23 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// <param name="newStructureType">L'outil sélectionné.</param>
     private void OnSelectInfrastructureType(InfrastructureType newStructureType)
     {
-        ToolType lastToolType = selectedToolType;
+        InfrastructureType lastStructureType = selectedStructureType;
 
         OnUnselectInfrastructureType();
-        if (lastToolType != InfrastructureManager.GetCurrentTool)
+        if (lastStructureType != newStructureType && newStructureType != InfrastructureType.None)
         {
             selectedStructureType = newStructureType;
-            selectedToolType = InfrastructureManager.GetCurrentTool;
 
-            if (newStructureType != InfrastructureType.DeleteStructure)
+            InfrastructureManager.ChooseInfrastructure(previews[(int)newStructureType - 1]);
+
+            switch (selectedStructureType)
             {
-                switch (InfrastructureManager.GetCurrentTool)
-                {
-                    case ToolType.None:
-                        break;
-                    case ToolType.Place:
-                        PlayerInputManager.ChangeLayerMaskForPathTools();
-                        InfrastructureManager.ChooseInfrastructure(pathPointPreview);
-                        OnSelectPathTool?.Invoke();
-                        break;
-                    case ToolType.Move:
-                        break;
-                    case ToolType.Delete:
-
-                        break;
-                }
+                case InfrastructureType.Path:
+                    PlayerInputManager.ChangeLayerMaskForPathTools();
+                    OnSelectPathTool?.Invoke();
+                    break;
             }
         }
-
-        Debug.Log(InfrastructureManager.GetCurrentTool);
     }
 
     /// <summary>
@@ -185,32 +176,16 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// </summary>
     private void OnUnselectInfrastructureType()
     {
-        PlayerInputManager.ChangeLayerMaskForNoTools();
         InfrastructureManager.ChooseInfrastructure(null);
-        OnUnselectPathTool?.Invoke();
 
-        switch (InfrastructureManager.GetCurrentTool)
+        switch(selectedStructureType)
         {
-            case ToolType.Place:
-                PlayerInputManager.ChangeLayerMaskForPathTools();
-                InfrastructureManager.ChooseInfrastructure(null);
-                OnSelectPathTool?.Invoke();
-                break;
-            case ToolType.Move:
-                break;
-            case ToolType.Delete:
-                break;
-        }
-
-        /*
-        switch (selectedStructureType)
-        {
-            case InfrastructureType.PathTools:
+            case InfrastructureType.Path:
                 PlayerInputManager.ChangeLayerMaskForNoTools();
-                InfrastructureManager.ChooseInfrastructure(null);
                 OnUnselectPathTool?.Invoke();
                 break;
         }
-        selectedStructureType = InfrastructureType.None;*/
+
+        selectedStructureType = InfrastructureType.None;
     }
 }

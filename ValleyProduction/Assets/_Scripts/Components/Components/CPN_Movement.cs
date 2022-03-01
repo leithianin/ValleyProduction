@@ -14,6 +14,7 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
 
     // A list of all the position the visitor will reach before reaching its destination.
     public List<Vector3> pathToTake = new List<Vector3>();
+    private float positionRandomness = 2f;
 
     private int currentPathIndex;
 
@@ -63,8 +64,10 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
     /// </summary>
     /// <param name="nPathToTake">Le chemin � prendre.</param>
     /// <param name="callback">L'Action qui sera effectu�e � la fin du d�placement.</param>
-    public void WalkOnNewPath(List<Vector3> nPathToTake, Action callback)
+    public void WalkOnNewPath(List<Vector3> nPathToTake, Action callback, float randomness = 2f)
     {
+        positionRandomness = randomness;
+
         reachDestinationCallback += callback;
 
         pathToTake = new List<Vector3>(nPathToTake);
@@ -123,7 +126,7 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
         }
         else
         {
-            Vector3 randomPosition = pathToTake[pathIndex] + UnityEngine.Random.insideUnitSphere * 2f;
+            Vector3 randomPosition = pathToTake[pathIndex] + UnityEngine.Random.insideUnitSphere * positionRandomness;
 
             agent.destination = randomPosition;
         }

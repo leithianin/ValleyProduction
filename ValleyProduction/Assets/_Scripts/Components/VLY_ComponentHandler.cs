@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class VLY_ComponentHandler : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer meshRnd;
     [SerializeField] private List<VLY_Component> components;
-
-    public MeshRenderer MeshRnd => meshRnd;
 
     public void GetComponentOfType<T>(ref T wantedComponent) where T : VLY_Component
     {

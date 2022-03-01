@@ -85,7 +85,7 @@ public class PathFragmentData
             foreach(Collider c in colliderTab)
             {
                 InterestPoint foundInterestPoint = c.gameObject.GetComponent<InterestPoint>();
-                if (foundInterestPoint != null && foundInterestPoint.IsLandmark)
+                if (foundInterestPoint != null)// && foundInterestPoint.IsLandmark)
                 {
                     if(c.gameObject.name.Contains("Watermill")) 
                     {
