@@ -51,7 +51,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private bool PlaceInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
     {
-        if(toPlace.AskToPlace(positionToPlace))
+        if (toPlace.AskToPlace(positionToPlace) && !previewHandler.snaping)
         {
             Infrastructure placedInfrastructure = Instantiate(toPlace.RealInfrastructure, positionToPlace, Quaternion.identity);
 
