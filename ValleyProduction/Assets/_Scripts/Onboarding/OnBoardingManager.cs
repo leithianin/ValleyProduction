@@ -39,6 +39,10 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         {
             sequence.Play();
         }
+        else
+        {
+            VisitorManager.SetVisitorSpawn(true);
+        }
     }
 
     public static void PlayNextEvent()
