@@ -6,13 +6,18 @@ using UnityEngine.Events;
 public class OB_AvoidForest : OnBoarding
 {
     public UnityEvent fakeBehavior;
+    public UnityEvent endMessage;
+    [SerializeField] public List<Vector3> vectorList;
     protected override void OnEnd()
     {
         Debug.Log("END");
+        foreach(IST_PathPoint pp in PathManager.GetCurrentPathpointList)
+        {
+            vectorList.Add(pp.transform.position);
+        }
+
         PathManager.CreatePathData();
         StartCoroutine(Wait());
-
-        //Cinematiquuuee
     }
 
     IEnumerator Wait()
@@ -36,5 +41,17 @@ public class OB_AvoidForest : OnBoarding
     public void PlayFakeBehavior()
     {
         fakeBehavior?.Invoke();
+        StartCoroutine(EndEcosystem());
+    }
+
+    public void PlayEndMessage()
+    {
+        endMessage?.Invoke();
+    }
+
+    IEnumerator EndEcosystem()
+    {
+        yield return new WaitForSeconds(3f);
+        PlayEndMessage();
     }
 }
