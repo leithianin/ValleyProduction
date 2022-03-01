@@ -21,6 +21,8 @@ public class PathManager : VLY_Singleton<PathManager>
     //Navmesh needs
     private static List<PathFragmentData> pfdNavmeshUpdate = new List<PathFragmentData>();
 
+    [SerializeField] private BoxCollider roadDetectorPrefab;
+
     [Header("DEBUG")]
     public bool debugMode = false;
     public bool PathReverse = false;
