@@ -21,11 +21,13 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private float nextSpawnTime = 5f;
 
+     [SerializeField] private bool allowVisitorSpawn;
+
     public static Terrain GetMainTerrain => instance.mainTerrain;
 
     private void Update()
     {
-        if (Time.time > nextSpawnTime && OnBoardingManager.instance.canSpawnVisitors)
+        if (Time.time > nextSpawnTime && allowVisitorSpawn)
         {
             int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y + 1);
             for (int i = 0; i < spawnNb; i++)
@@ -41,6 +43,10 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
     
+    public static void SetVisitorSpawn(bool doesAllow)
+    {
+        instance.allowVisitorSpawn = doesAllow;
+    }
 
     /// <summary>
     /// Demande à faire appraître un visiteur.

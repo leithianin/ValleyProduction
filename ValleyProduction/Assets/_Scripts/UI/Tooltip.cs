@@ -45,7 +45,7 @@ public class Tooltip : MonoBehaviour
 
     public void ShowTooltip(string tooltipString, RectTransform transform, int index)
     {
-        Debug.LogError("Mouse");
+        //Debug.LogError("Mouse");
         gameObject.SetActive(true);
 
         switch (index)

@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
     public bool activateOnBoarding = false;
-    public bool canSpawnVisitors = true;
 
     public OB_Sequence sequence;
 
@@ -51,7 +50,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     #region Path
     public static void SetCanSpawnVisitors(bool cond)
     {
-        instance.canSpawnVisitors = cond;
+        VisitorManager.SetVisitorSpawn(cond);
     }
 
     public static void PlayEndPathOnBoarding()
