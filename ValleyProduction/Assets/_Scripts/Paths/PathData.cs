@@ -221,7 +221,7 @@ public class PathData
     {
         if(IsPathDataEmpty() || startPoint == null)
         {
-            PathManager.DeletePath(this);     
+            PathManager.DeleteFullPath(this);     
         }
     }
 

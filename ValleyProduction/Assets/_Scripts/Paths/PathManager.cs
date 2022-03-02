@@ -368,19 +368,32 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    public static void DeleteFullPath(PathData toDelete)
+    {
+        List<IST_PathPoint> pointsToDelete = new List<IST_PathPoint>();
+
+        for(int i = toDelete.pathFragment.Count -1; i >= 0; i--)
+        {
+            if (!pointsToDelete.Contains(toDelete.pathFragment[i].endPoint))
+            {
+                pointsToDelete.Add(toDelete.pathFragment[i].endPoint);
+            }
+            
+            if (!pointsToDelete.Contains(toDelete.pathFragment[i].startPoint))
+            {
+                pointsToDelete.Add(toDelete.pathFragment[i].startPoint);
+            }
+        }
+
+        for(int j = 0; j < pointsToDelete.Count; j++)
+        {
+            pointsToDelete[j].RemoveObject();
+        }
+    }
+
+
     public static void DeletePath(PathData pathdata)
     {
-        foreach (PathFragmentData pfd in pathdata.pathFragment)
-        {
-            Destroy(pfd.startPoint.gameObject);
-            Destroy(pfd.endPoint.gameObject);
-        }
-
-        if(pathdata.startPoint != null)
-        {
-            Destroy(pathdata.startPoint.gameObject);
-        }
-
         DestroyLineRenderer(pathdata.pathLineRenderer);
 
         pathdata.DeletePathData();

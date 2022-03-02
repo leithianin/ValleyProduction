@@ -49,6 +49,8 @@ public class UIManager : VLY_Singleton<UIManager>
     //Use in Path Button On Click()
     public void OnToolCreatePath(int i)
     {
+        ConstructionManager.SelectInfrastructureType(null);
+
         if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
         {
             InfrastructureManager.instance.toolSelected = (ToolType)i;
@@ -61,7 +63,6 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.Place:
-                ConstructionManager.SelectInfrastructureType(null);
                 break;
             case ToolType.Move:
                 break;
@@ -159,7 +160,7 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         OnBoardingManager.onDestroyPath?.Invoke(true);
         HideRoadsInfo();
-        PathManager.DeletePath(pathData);
+        PathManager.DeleteFullPath(pathData);
     }
 
     public static void HideRoadsInfo()

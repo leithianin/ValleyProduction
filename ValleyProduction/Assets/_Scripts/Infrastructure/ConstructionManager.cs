@@ -8,9 +8,6 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 {
     private InfrastructureType selectedStructureType = InfrastructureType.None;
 
-    [SerializeField] private InfrastructurePreview pathPointPreview;
-    [SerializeField] private List<InfrastructurePreview> previews;
-
     public UnityEvent OnSelectPathTool;
     public UnityEvent OnUnselectPathTool;
     public UnityEvent OnUnselectOneMore;

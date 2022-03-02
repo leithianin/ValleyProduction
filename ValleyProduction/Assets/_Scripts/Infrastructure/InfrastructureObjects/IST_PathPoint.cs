@@ -51,6 +51,9 @@ public class IST_PathPoint : Infrastructure
         {
             PathManager.DeletePoint(this);
             InfrastructureManager.DesnapInfrastructure(this);
+
+            Debug.Log("Remove object");
+            OnDestroyPathPoint?.Invoke();
             return true;
         }
     }
@@ -58,6 +61,7 @@ public class IST_PathPoint : Infrastructure
     //Remove à partir de l'UI
     public void Remove(PathData pd)
     {
+        OnDestroyPathPoint?.Invoke();
         PathManager.DeletePoint(this, pd);
         InfrastructureManager.DesnapInfrastructure(this);
     }
