@@ -21,7 +21,7 @@ public class PathManager : VLY_Singleton<PathManager>
     //Navmesh needs
     private static List<PathFragmentData> pfdNavmeshUpdate = new List<PathFragmentData>();
 
-    [SerializeField] private BoxCollider roadDetectorPrefab;
+    [SerializeField] private InterestPointDetector roadDetectorPrefab;
 
     [Header("DEBUG")]
     public bool debugMode = false;
@@ -382,6 +382,9 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         DestroyLineRenderer(pathdata.pathLineRenderer);
+
+        pathdata.DeletePathData();
+
         instance.pathDataList.Remove(pathdata);
     }
 
@@ -683,7 +686,86 @@ public class PathManager : VLY_Singleton<PathManager>
         //Je garde le chemin en mémoire 
         pathData.pathLineRenderer = DEBUG.GetComponent<LineRenderer>();
 
+        List<InterestPointDetector> pathDetector = instance.GenerateDetectorsOnLine(pathData.pathLineRenderer);
+
+        for(int j = 0; j < pathDetector.Count; j++)
+        {
+            pathData.AddInterestPointDetector(pathDetector[i]);
+        }
+
         DestroyLineList();
+    }
+
+    public float pointDistance = 2f;
+
+    public InterestPointDetector CreateDetector(Vector3 position, LineRenderer lineRenderer)
+    {
+        Vector3 target = position;
+        InterestPointDetector detector = Instantiate(roadDetectorPrefab, lineRenderer.transform);
+        detector.transform.position = target;
+
+        return detector;
+        
+    }
+
+    private List<InterestPointDetector> GenerateDetectorsOnLine(LineRenderer lineRenderer)
+    {
+        if (lineRenderer.positionCount <= 1)
+        {
+            return new List<InterestPointDetector>();
+        }
+
+        List<InterestPointDetector> pathDetectors = new List<InterestPointDetector>();
+
+        Vector3 start = lineRenderer.GetPosition(0);
+        Vector3 next = lineRenderer.GetPosition(1);
+        pathDetectors.Add(CreateDetector(start, lineRenderer));
+        float distance = 0;
+        float remainingDistance = 0;
+        int size = lineRenderer.positionCount;
+        int i = 1;
+        int j = 0;
+        while (true)
+        {
+            j++;
+            if (CheckNextStepOnLine(start, next, ref distance, ref remainingDistance, out Vector3 point))
+            {
+                pathDetectors.Add(CreateDetector(point, lineRenderer));
+                start = point;
+            }
+            else
+            {
+                i++;
+                if (i == size)
+                {
+                    break;
+                }
+                start = next;
+                next = lineRenderer.GetPosition(i);
+            }
+            if (j == 10000)
+            {
+                Debug.Log("10000 force stop");
+                return new List<InterestPointDetector>();
+            }
+        }
+        return pathDetectors;
+    }
+
+    public bool CheckNextStepOnLine(Vector3 start, Vector3 next, ref float distance, ref float remainingDistance, out Vector3 point)
+    {
+        Vector3 direction = (next - start).normalized;
+        float contextDistance = Vector3.Distance(start, next);
+        distance += contextDistance;
+        if (distance > pointDistance)
+        {
+            point = start + (direction * (pointDistance - remainingDistance));
+            remainingDistance = distance = 0;
+            return true;
+        }
+        point = default;
+        remainingDistance = distance;
+        return false;
     }
 
     //Destroy le lineRenderer du pathData et crée les line renderer pour chaque PathFragment

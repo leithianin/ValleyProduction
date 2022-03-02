@@ -15,13 +15,16 @@ public class PathData
     public IST_PathPoint startPoint;                                                             //Starting point of the path
     public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
 
-    [Header("Suppr.")]
     List<PathFragmentData> listSuppr = new List<PathFragmentData>();
 
     List<PathFragmentData> listGetPathFragment = new List<PathFragmentData>();
 
+    [SerializeField] private List<InterestPoint> interestPointsOnPath = new List<InterestPoint>();
+
     //Debug Path --> J'ai besoin de savoir à qui il appartient lors de la suppression
     public LineRenderer pathLineRenderer;
+
+    private List<InterestPointDetector> interestPointDetectors = new List<InterestPointDetector>();
 
     /// <summary>
     /// Check if the path has the point.
@@ -215,6 +218,15 @@ public class PathData
         }
     }
 
+    public void DeletePathData()
+    {
+        for(int i = 0; i < interestPointDetectors.Count; i++)
+        {
+            interestPointDetectors[i].OnDiscoverInterestPoint -= AddInterestPoint;
+            interestPointDetectors[i].OnRemoveInterestPoint -= RemoveInterestPoint;
+        }
+    }
+
     public bool IsPathDataEmpty()
     {
         if(pathFragment.Count == 0 && startPoint != null)
@@ -222,5 +234,43 @@ public class PathData
             return true;
         }
         return false;
+    }
+
+    public void AddInterestPointDetector(InterestPointDetector detector)
+    {
+        if(!interestPointDetectors.Contains(detector))
+        {
+            interestPointDetectors.Add(detector);
+            detector.OnDiscoverInterestPoint += AddInterestPoint;
+            detector.OnRemoveInterestPoint += RemoveInterestPoint;
+        }
+    }
+
+    public void RemoveInterestPointDetector(InterestPointDetector detector)
+    {
+        if (interestPointDetectors.Contains(detector))
+        {
+            interestPointDetectors.Remove(detector);
+            detector.OnDiscoverInterestPoint -= AddInterestPoint;
+            detector.OnRemoveInterestPoint -= RemoveInterestPoint;
+        }
+    }
+
+    private void AddInterestPoint(InterestPoint newInterestPoint)
+    {
+        Debug.Log(newInterestPoint);
+        if (!interestPointsOnPath.Contains(newInterestPoint))
+        {
+            Debug.Log("No Contains");
+            interestPointsOnPath.Add(newInterestPoint);
+        }
+    }
+
+    private void RemoveInterestPoint(InterestPoint newInterestPoint)
+    {
+        if (interestPointsOnPath.Contains(newInterestPoint))
+        {
+            interestPointsOnPath.Remove(newInterestPoint);
+        }
     }
 }
