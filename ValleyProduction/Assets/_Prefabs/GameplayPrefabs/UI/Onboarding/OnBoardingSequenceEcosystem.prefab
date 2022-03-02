@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 8721386734400590335}
   - component: {fileID: 1224960333}
   - component: {fileID: 1224960334}
+  - component: {fileID: 1470424736}
   m_Layer: 0
   m_Name: E_Action (1)
   m_TagString: Untagged
@@ -320,6 +321,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go: {fileID: 0}
 --- !u!114 &1224960334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5731405852479848140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4236b691af8194c9ccdc681befb4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 0}
+--- !u!114 &1470424736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -654,6 +668,7 @@ GameObject:
   - component: {fileID: 929905802255729602}
   - component: {fileID: 5086653071921268942}
   - component: {fileID: 1567982096726854027}
+  - component: {fileID: 300895387}
   m_Layer: 0
   m_Name: OnBoardingSequenceEcosystem
   m_TagString: Untagged
@@ -741,6 +756,39 @@ MonoBehaviour:
   visitorProfileIntroOnBoarding: {fileID: 0}
   endOnboarding: {fileID: 0}
   chapelOnboarding: {fileID: 0}
+--- !u!114 &300895387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8495292109396087990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdea36ef8b192be4584e2085efcbf560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  treeParent: {fileID: 0}
 --- !u!1 &8522893466013620569
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +976,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 300895387}
+        m_TargetAssemblyTypeName: GetAllTrees, Assembly-CSharp
+        m_MethodName: SetAllTreesToHealthly
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   endMessage:
     m_PersistentCalls:
       m_Calls:
@@ -996,6 +1056,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 929905802255729602}
     m_Modifications:
+    - target: {fileID: 6747029808063773728, guid: b2b03bb611fd87341b01dc29187a493f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c83b18ec35e2464383f9f6feb2d346e, type: 2}
     - target: {fileID: 6747029808063773729, guid: b2b03bb611fd87341b01dc29187a493f, type: 3}
       propertyPath: m_Enabled
       value: 1
