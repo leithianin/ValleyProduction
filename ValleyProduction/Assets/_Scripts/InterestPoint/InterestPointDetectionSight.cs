@@ -18,6 +18,4 @@ public class InterestPointDetectionSight : MonoBehaviour
             }
         }
     }
-
-    //Faire une fonction pour vérifier si c'est un InterestPoint voulut par le visiteur
 }

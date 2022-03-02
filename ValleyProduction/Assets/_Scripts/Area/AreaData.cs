@@ -118,6 +118,9 @@ public abstract class AreaData<T> : AreaData
         return realScore;
     }
 
+    /// <summary>
+    /// Calcul le score sans calculer celui des voisins.
+    /// </summary>
     public override void UpdateScoreFromNeighbours()
     {
         List<Area> neighbours = AreaManager.GetNeighbours(linkedArea);
