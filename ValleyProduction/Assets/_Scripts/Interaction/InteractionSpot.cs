@@ -8,6 +8,8 @@ public class InteractionSpot : MonoBehaviour
 {
     public InteractionType interactionType;
 
+    [SerializeField] private List<InteractionCondition> conditions;
+
     [SerializeField] private int maxInteractionAtSameTime = -1;
 
     [SerializeField] private UnityEvent PlayOnStartInteract;
@@ -24,9 +26,23 @@ public class InteractionSpot : MonoBehaviour
     /// Vérifie si l'interaction peut être faite.
     /// </summary>
     /// <returns>Renvoie TRUE si l'interaction peut être utilisé.</returns>
-    public virtual bool IsUsable()
+    public virtual bool IsUsable(CPN_InteractionHandler interacter)
     {
-        return maxInteractionAtSameTime > 0 && callerInSpot.Count < maxInteractionAtSameTime;
+        bool isConditionTrue = maxInteractionAtSameTime > 0 && callerInSpot.Count < maxInteractionAtSameTime;
+
+        if (isConditionTrue == true)
+        {
+            for (int i = 0; i < conditions.Count; i++)
+            {
+                if (!conditions[i].IsConditionTrue(interacter))
+                {
+                    isConditionTrue = false;
+                    break;
+                }
+            }
+        }
+
+        return isConditionTrue;
     }
 
     /// <summary>

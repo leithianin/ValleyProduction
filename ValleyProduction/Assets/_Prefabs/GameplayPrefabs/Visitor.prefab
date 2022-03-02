@@ -283,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9faf1ebdab2e47f40abe4d18f25aaea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshRnd: {fileID: 0}
   components:
   - {fileID: 7603813357234534011}
   - {fileID: 2368778678293667668}
@@ -433,7 +432,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7603813357492896066
 MonoBehaviour:
@@ -448,6 +447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactor: {fileID: 3973618983241115100}
+  currentSpot: {fileID: 0}
+  timeBetweenInteractions: 5
   visitor: {fileID: 7603813357234534012}
 --- !u!114 &7603813357492896064
 MonoBehaviour:

@@ -9,13 +9,16 @@ public class InterestPoint : MonoBehaviour
 
     [SerializeField] private InteractionSpot[] interactions;
 
-    public bool IsUsable => GetUsableInteractions().Count > 0;
+    public bool IsUsable(CPN_InteractionHandler interactor)
+    {
+        return GetUsableInteractions(interactor).Count > 0;
+    }
 
     public bool IsLandmark => isLandmark;
 
-    public InteractionSpot GetRandomSpot()
+    public InteractionSpot GetRandomSpot(CPN_InteractionHandler interactor)
     {
-        List<InteractionSpot> usableInteractions = GetUsableInteractions();
+        List<InteractionSpot> usableInteractions = GetUsableInteractions(interactor);
 
         if (usableInteractions.Count > 0)
         {
@@ -24,13 +27,13 @@ public class InterestPoint : MonoBehaviour
         return null;
     }
 
-    private List<InteractionSpot> GetUsableInteractions()
+    private List<InteractionSpot> GetUsableInteractions(CPN_InteractionHandler interactor)
     {
         List<InteractionSpot> usableInteractions = new List<InteractionSpot>();
 
         for(int i = 0; i < interactions.Length; i++)
         {
-            if(interactions[i].IsUsable())
+            if(interactions[i].IsUsable(interactor))
             {
                 usableInteractions.Add(interactions[i]);
             }

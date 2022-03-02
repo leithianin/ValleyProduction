@@ -2,8 +2,7 @@ public enum InfrastructureType
 {
     None,
     Path,
-    Refuge,
-    Banc
+    Base
 }
 
 public enum ToolType

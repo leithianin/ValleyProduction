@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2267647233806571992}
   - component: {fileID: 3091002062700103276}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: UnHide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,9 @@ GameObject:
   - component: {fileID: 4186370685204689686}
   - component: {fileID: 4784454985005984352}
   - component: {fileID: 2349589115752647012}
-  m_Layer: 0
+  - component: {fileID: 6943963318853157212}
+  - component: {fileID: 3915016858210089840}
+  m_Layer: 6
   m_Name: Refuge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,6 +133,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreProduced: 0
+--- !u!65 &6943963318853157212
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038716181695467713}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3915016858210089840
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038716181695467713}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.5, y: 10, z: 2.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5361690103232404279
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6831475512012579123}
   - component: {fileID: 2290461683238553262}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: MoveToEntry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6471249311633317078}
   - component: {fileID: 9066667408472897092}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: SetStamina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,8 +263,8 @@ GameObject:
   - component: {fileID: 7146875287765694551}
   - component: {fileID: 6651034410580906832}
   - component: {fileID: 5963093504635812861}
-  - component: {fileID: 3245377512742384220}
-  m_Layer: 2
+  - component: {fileID: 1576376173911760861}
+  m_Layer: 12
   m_Name: Refuge Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,6 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionType: 0
+  conditions: []
   maxInteractionAtSameTime: 2
   PlayOnStartInteract:
     m_PersistentCalls:
@@ -328,7 +360,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &3245377512742384220
+--- !u!54 &1576376173911760861
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -354,7 +386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3381408217588086889}
   - component: {fileID: 6844656605503792106}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: Wait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +431,6 @@ GameObject:
   - component: {fileID: 5472897733341523517}
   - component: {fileID: 9072669393558786597}
   - component: {fileID: 6422098880081432767}
-  - component: {fileID: 7107892008677611540}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -471,19 +502,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7107892008677611540
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5875338225585339992}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6180952178367448944
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4615794176780337216}
   - component: {fileID: 5431005649105514368}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: Hide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7781876085137278912}
   - component: {fileID: 4054682070733229829}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: Sequence
   m_TagString: Untagged
   m_Icon: {fileID: 0}

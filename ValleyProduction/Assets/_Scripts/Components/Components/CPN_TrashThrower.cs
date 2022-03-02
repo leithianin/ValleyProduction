@@ -24,6 +24,15 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
         }
     }
 
+    public float TimeBeforeThrow()
+    {
+        if(newThrowTimer != null)
+        {
+            return newThrowTimer.DurationLeft;
+        }
+        return -1;
+    }
+
     private void OnEnable()
     {
         StartTimer();

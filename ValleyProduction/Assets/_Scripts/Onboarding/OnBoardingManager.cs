@@ -86,7 +86,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void DesactivateTool()
     {
         InfrastructureManager.instance.toolSelected = ToolType.None;
-        ConstructionManager.SelectInfrastructureType(InfrastructureType.Path);
+        ConstructionManager.SelectInfrastructureType(null);
     }
     #endregion
 

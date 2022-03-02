@@ -235,7 +235,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, 100000.0f));//, currentLayerMask))
+        if (Physics.Raycast(ray, out hit, 100000.0f, currentLayerMask))
         {
             hitObject = hit.transform.gameObject;
             return true;
@@ -249,7 +249,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100000.0f))
+        if (Physics.Raycast(ray, out hit, 100000.0f, currentLayerMask))
         {
             return hit.point;
         }
