@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SA_SetSamina : InteractionActions
+public class SA_SetStamina : InteractionActions
 {
     [SerializeField] private float staminaPercentageToPut;
 
