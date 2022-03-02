@@ -31,9 +31,9 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static UIManager UIinstance => instance;
 
-    public void SelectStructure(int structureID)
+    public void SelectStructure(InfrastructurePreview structure)
     {
-        switch((InfrastructureType)structureID)
+        switch(structure.RealInfrastructure.structureType)
         {
             case InfrastructureType.Path:
                 if (PathManager.IsOnCreatePath)
@@ -43,7 +43,7 @@ public class UIManager : VLY_Singleton<UIManager>
                 break;
         }
 
-        ConstructionManager.SelectInfrastructureType((InfrastructureType)structureID);
+        ConstructionManager.SelectInfrastructureType(structure);
     }
 
     //Use in Path Button On Click()
@@ -61,7 +61,7 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.Place:
-                ConstructionManager.SelectInfrastructureType(InfrastructureType.None);
+                ConstructionManager.SelectInfrastructureType(null);
                 break;
             case ToolType.Move:
                 break;
@@ -79,7 +79,7 @@ public class UIManager : VLY_Singleton<UIManager>
             PathManager.CreatePathData();
         }
 
-        ConstructionManager.SelectInfrastructureType(InfrastructureType.Path);
+        ConstructionManager.SelectInfrastructureType(null);
     }
 
     //Use in Construction Button On Click()
