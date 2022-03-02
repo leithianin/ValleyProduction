@@ -120,7 +120,7 @@ public class PathFragmentData
         }
         else
         {
-            Debug.Log("No Invoke on this Landmark");
+            //Debug.Log("No Invoke on this Landmark");
         }
     }
 }
