@@ -17,7 +17,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     private Vector2 CenterPosition => new Vector2(transform.position.x, transform.position.z);
 
     private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
-    private static int updaterIndex;
+    private int updaterIndex;
     [SerializeField] private int numberDataToUpdateInFrame;
 
     [SerializeField] private Transform treeScoreHandler;
@@ -85,19 +85,16 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 vegetation.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 vegetation.SetTrees();
 
-                /*for (int l = 0; l < animalScorePrefab.Count; l++)
+                /*if (chunkDisplayerPrefab != null)
                 {
-                    ADI_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ADI_AnimalDisplayer>();
-                    go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                    ChunkDisplayer displayer = Instantiate(chunkDisplayerPrefab.gameObject, chunkHandler).GetComponent<ChunkDisplayer>();
+                    displayer.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
+                    allChunks.Add(displayer);
                 }*/
-
-                ChunkDisplayer displayer = Instantiate(chunkDisplayerPrefab.gameObject, chunkHandler).GetComponent<ChunkDisplayer>();
-                displayer.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
-                allChunks.Add(displayer);
             }
         }
 
-        var meshesInMap = FindObjectsOfType<MeshRenderer>();
+        /*var meshesInMap = FindObjectsOfType<MeshRenderer>();
 
         foreach(MeshRenderer m in meshesInMap)
         {
@@ -106,7 +103,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 allChunks[chunkIndex].AddMeshes(m);
             }
-        }
+        }*/
     }
 
     [ContextMenu("Set Trees")]
@@ -238,9 +235,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
             instance.allUpdaters.Remove(toRemove);
 
-            if(instance.allUpdaters.Count <= updaterIndex)
+            if(instance.allUpdaters.Count <= instance.updaterIndex)
             {
-                updaterIndex = instance.allUpdaters.Count;
+                instance.updaterIndex = instance.allUpdaters.Count;
             }
         }
     }

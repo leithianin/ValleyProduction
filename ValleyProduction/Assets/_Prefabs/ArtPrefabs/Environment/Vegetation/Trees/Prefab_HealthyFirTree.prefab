@@ -71,9 +71,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6373274642763142655}
   - component: {fileID: 5252404336967509779}
-  - component: {fileID: 2009781173825468461}
-  - component: {fileID: 5793997350195673622}
   - component: {fileID: 1766797229471813176}
+  - component: {fileID: 5793997350195673622}
+  - component: {fileID: 2009781173825468461}
   m_Layer: 0
   m_Name: Prefab_HealthyFirTree
   m_TagString: Untagged
@@ -113,6 +113,32 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 3.8, z: 0}
   m_TimeToStationary: 0.5
+--- !u!135 &1766797229471813176
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955129779019573354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5793997350195673622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955129779019573354}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreProduced: 0
 --- !u!114 &2009781173825468461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,33 +175,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5793997350195673622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5955129779019573354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreProduced: 0
-  data: {fileID: 2009781173825468461}
---- !u!135 &1766797229471813176
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5955129779019573354}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1916686295321612430
 PrefabInstance:
   m_ObjectHideFlags: 0

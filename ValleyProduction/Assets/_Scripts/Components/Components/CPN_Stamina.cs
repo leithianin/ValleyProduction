@@ -83,4 +83,9 @@ public class CPN_Stamina : VLY_Component<CPN_Data_Stamina>
     }
 
     public float GetStamina => currentStamina;
+
+    public void SetStaminaPercentage(float percent)
+    {
+        currentStamina = maxStamina * percent;
+    }
 }

@@ -17,25 +17,4 @@ public class VLY_ComponentHandler : MonoBehaviour
             }
         }
     }
-
-    [ContextMenu("Test 1")]
-    public void Test1()
-    {
-        CPN_Stamina stam = null;
-        GetComponentOfType<CPN_Stamina>(ref stam);
-
-        if(stam != null)
-        {
-            Debug.Log(stam.GetStamina);
-        }
-    }
-
-    [ContextMenu("Test 2")]
-    public void Test2()
-    {
-        CPN_Movement stam = null;
-        GetComponentOfType<CPN_Movement>(ref stam);
-
-        Debug.Log(stam.gameObject.name);
-    }
 }

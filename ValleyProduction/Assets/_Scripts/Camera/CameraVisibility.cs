@@ -9,3 +9,4 @@ public static class CameraVisibility
         return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(@this), bounds);
     }
 }
+

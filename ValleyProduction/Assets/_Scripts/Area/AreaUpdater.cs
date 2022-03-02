@@ -25,15 +25,37 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
 
     protected Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
-    private void OnEnable()
+    bool asSpawnOnce = false;
+
+    bool isApplicationQuitting = false;
+
+    private void Start()
     {
+        asSpawnOnce = true;
         SetData();
         AreaManager.AddAreaUpdater(this);
     }
 
+    private void OnEnable()
+    {
+        if (asSpawnOnce)
+        {
+            SetData();
+            AreaManager.AddAreaUpdater(this);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        isApplicationQuitting = true;
+    }
+
     private void OnDisable()
     {
-        AreaManager.RemoveAreaUpdater(this);
+        if (!isApplicationQuitting)
+        {
+            AreaManager.RemoveAreaUpdater(this);
+        }
     }
 
     public void SetScore(float nScore)
@@ -89,4 +111,6 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
     {
         lastUpdatedData = lastData;
     }
+
+    //protected abstract bool IsLastDataSame(T currentData, T lastData);
 }

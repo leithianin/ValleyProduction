@@ -18,7 +18,7 @@ public class SA_GoToPosition : InteractionActions
                 vectorPath.Add(pathToTake[i].position);
             }
 
-            movement.WalkOnNewPath(vectorPath, () => EndAction(caller));
+            movement.WalkOnNewPath(vectorPath, () => EndAction(caller), 0);
         }
         else
         {

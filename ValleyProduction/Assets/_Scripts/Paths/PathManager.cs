@@ -21,6 +21,8 @@ public class PathManager : VLY_Singleton<PathManager>
     //Navmesh needs
     private static List<PathFragmentData> pfdNavmeshUpdate = new List<PathFragmentData>();
 
+    [SerializeField] private BoxCollider roadDetectorPrefab;
+
     [Header("DEBUG")]
     public bool debugMode = false;
     public bool PathReverse = false;
@@ -667,7 +669,6 @@ public class PathManager : VLY_Singleton<PathManager>
         }
         else
         {
-            Debug.Log("DebugLineR : " + pathData.name);
             foreach (PathFragmentData pfd in pathData.pathFragment)
             {
                 foreach (Vector3 vector in pfd.path)
@@ -746,6 +747,8 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             Destroy(go);
         }
+
+        instance.lineRendererDebugList.Clear();
     }
 
     public static void DestroyLineRenderer(LineRenderer lineR)

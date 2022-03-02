@@ -23,7 +23,7 @@ public class IST_PathPoint : Infrastructure
             UIManager.HideRoadsInfo();
             return;
         }
-        if(PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
+        if (PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
         {
             PathManager.PlacePoint(this, transform.position);
             PathManager.CreatePathData();
@@ -37,7 +37,7 @@ public class IST_PathPoint : Infrastructure
                 //Need to check le sens
                 PathManager.PlacePoint(this, transform.position);
             }
-        } 
+        }
     }
 
     protected override bool OnRemoveObject()

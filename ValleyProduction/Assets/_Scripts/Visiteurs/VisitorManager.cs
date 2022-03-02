@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
-
+using UnityEngine.Assertions;
 
 public class VisitorManager : VLY_Singleton<VisitorManager>
 {
@@ -21,23 +21,31 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     private float nextSpawnTime = 5f;
 
+     [SerializeField] private bool allowVisitorSpawn;
+
     public static Terrain GetMainTerrain => instance.mainTerrain;
 
     private void Update()
     {
-        if(Time.time > nextSpawnTime && !OnBoardingManager.instance.activateOnBoarding)
+        if (Time.time > nextSpawnTime && allowVisitorSpawn)
         {
-            int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y+1);
+            int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y + 1);
             for (int i = 0; i < spawnNb; i++)
             {
                 if (UsedVisitorNumber() < maxSpawn)
                 {
                     SpawnVisitor();
+                    //UIManager.UpdateNbVisitors(UsedVisitorNumber());
                 }
             }
 
             nextSpawnTime += timeBetweenSpawn;
         }
+    }
+    
+    public static void SetVisitorSpawn(bool doesAllow)
+    {
+        instance.allowVisitorSpawn = doesAllow;
     }
 
     /// <summary>
@@ -134,7 +142,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     {
         for (int i = 0; i < visitorPool.Count; i++)
         {
-            if (!visitorPool[i].gameObject.activeSelf)
+            if (!visitorPool[i].IsUsed)
             {
                 return visitorPool[i];
             }
@@ -151,13 +159,26 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         int toReturn = 0;
         for (int i = 0; i < instance.visitorPool.Count; i++)
         {
-            if (instance.visitorPool[i].gameObject.activeSelf)
+            if (instance.visitorPool[i].IsUsed)
             {
                 toReturn++;
             }
         }
 
         return toReturn;
+    }
+
+    public static GameObject FindActiveHiker()
+    {
+        for (int i = 0; i < instance.visitorPool.Count; i++)
+        {
+            if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
+            {
+                return instance.visitorPool[i].gameObject;
+            }
+        }
+
+        return null;
     }
 
     /// <summary>

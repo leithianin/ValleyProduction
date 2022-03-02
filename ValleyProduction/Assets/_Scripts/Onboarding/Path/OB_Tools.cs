@@ -8,6 +8,10 @@ using UnityEngine.EventSystems;
 public class OB_Tools : OnBoarding
 {
     private bool isFirstClick = false;
+    private bool isClickOnBuild = false;
+
+    public UnityEvent OnClickBuildEvent;
+    
     protected override void OnPlay()
     {
         
@@ -16,6 +20,15 @@ public class OB_Tools : OnBoarding
     protected override void OnEnd()
     {
         
+    }
+
+    public void OnClickBuild()
+    {
+        if (!isClickOnBuild)
+        {
+            isClickOnBuild = true;
+            OnClickBuildEvent?.Invoke();
+        }
     }
 
     public void OnClick()

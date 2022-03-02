@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : VLY_Singleton<UIManager>
 {
@@ -16,21 +17,69 @@ public class UIManager : VLY_Singleton<UIManager>
     [Header("Visitors Informations")]
     public TouristType hikersInfo;
     public TouristType touristInfo;
+    public TMP_Text nbVisitors;
+
+    [Header("Tooltips")]
+    public Tooltip tooltip;
+
+    [Header("Goals")]
+    public TextsDictionary textsScriptable;
+
+    public static Tooltip GetTooltip => instance.tooltip;
 
     public static bool GetIsOnMenuOption => instance.OnMenuOption;
 
+    public static UIManager UIinstance => instance;
+
+    public void SelectStructure(int structureID)
+    {
+        switch((InfrastructureType)structureID)
+        {
+            case InfrastructureType.Path:
+                if (PathManager.IsOnCreatePath)
+                {
+                    PathManager.CreatePathData();
+                }
+                break;
+        }
+
+        ConstructionManager.SelectInfrastructureType((InfrastructureType)structureID);
+    }
+
     //Use in Path Button On Click()
     public void OnToolCreatePath(int i)
-    {  
-        if(i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i) {InfrastructureManager.instance.toolSelected = (ToolType)i  ;}
-        else                                                              {InfrastructureManager.instance.toolSelected = ToolType.None;}
+    {
+        if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
+        {
+            InfrastructureManager.instance.toolSelected = (ToolType)i;
+        }
+        else
+        {
+            InfrastructureManager.instance.toolSelected = ToolType.None;
+        }
 
-        if(PathManager.IsOnCreatePath)
+        switch (InfrastructureManager.GetCurrentTool)
+        {
+            case ToolType.Place:
+                ConstructionManager.SelectInfrastructureType(InfrastructureType.None);
+                break;
+            case ToolType.Move:
+                break;
+            case ToolType.Delete:
+                break;
+        }
+    }
+
+    public void UnselectTool()
+    {
+        InfrastructureManager.instance.toolSelected = ToolType.None;
+
+        if (PathManager.IsOnCreatePath)
         {
             PathManager.CreatePathData();
         }
 
-        ConstructionManager.SelectInfrastructureType(InfrastructureType.PathTools);      
+        ConstructionManager.SelectInfrastructureType(InfrastructureType.Path);
     }
 
     //Use in Construction Button On Click()
@@ -89,6 +138,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static void ShowRoadsInfos(PathData pathdata)
     {
+        instance.RoadInfo.pathData = pathdata;
         instance.RoadInfo.UpdateTitle(pathdata.name);
         instance.RoadInfo.UpdateColor(pathdata.color);
         instance.RoadInfo.UpdateStamina(pathdata.difficulty);
@@ -96,7 +146,20 @@ public class UIManager : VLY_Singleton<UIManager>
         //Il faut avoir des valeurs fixes et les get selon la difficult�
         instance.RoadInfo.UpdateGaugeStamina(1);
 
+        OnBoardingManager.onClickPath?.Invoke(true);
         instance.RoadInfo.gameObject.SetActive(true);
+    }
+
+    public static void ConfirmDelete(PathData pathdata)
+    {
+        //Show UI
+    }
+
+    public static void DeletePath(PathData pathData)
+    {
+        OnBoardingManager.onDestroyPath?.Invoke(true);
+        HideRoadsInfo();
+        PathManager.DeletePath(pathData);
     }
 
     public static void HideRoadsInfo()
@@ -135,6 +198,11 @@ public class UIManager : VLY_Singleton<UIManager>
     #endregion
 
     #region Info Visitors
+    public static void UpdateNbVisitors(int nb)
+    {
+        instance.nbVisitors.text = nb.ToString();
+    }
+
     public static void InteractWithVisitors(GameObject touchedObject)
     {
         CPN_Informations visitorInfo = touchedObject.GetComponent<CPN_Informations>();
@@ -153,13 +221,13 @@ public class UIManager : VLY_Singleton<UIManager>
     {
        HideInfoVisitor();
 
-       OnBoardingManager.OnClickVisitor?.Invoke(true);
-
+       OnBoardingManager.OnClickVisitorEco?.Invoke(true);
        switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
                 if (OnBoardingManager.firstClickVisitors)
                 {
+                    OnBoardingManager.OnClickVisitorPath?.Invoke(true);
                     OnBoardingManager.ShowHikerProfileIntro();
                     OnBoardingManager.firstClickVisitors = false;
                 }

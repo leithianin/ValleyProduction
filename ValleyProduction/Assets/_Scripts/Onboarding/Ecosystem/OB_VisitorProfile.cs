@@ -11,12 +11,12 @@ public class OB_VisitorProfile : OnBoarding
 
     protected override void OnPlay()
     {
-        OnBoardingManager.OnClickVisitor += OnClick; 
+        OnBoardingManager.OnClickVisitorEco += OnClick; 
     }
 
     public void OnClick(bool condition)
     {
-        OnBoardingManager.OnClickVisitor -= OnClick;
+        OnBoardingManager.OnClickVisitorEco -= OnClick;
         Over();
     }
 }

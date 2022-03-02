@@ -5,17 +5,36 @@ using UnityEngine;
 
 public class IFB_ChangeText : MonoBehaviour, IFeedbackPlayer
 {
-    public TMP_Text text;
+    public RectTransform rtGoalDescription;
+    public RectTransform rtGoalBar;
+
+    public TMP_Text description;
+    public TMP_Text title;
     private string stringText = string.Empty;
+
+    public TextsDictionary textsList;
+    private TextBase txt;
 
     public void Play()
     {
-        text.text = stringText;
+        if (txt.Title != string.Empty) { title.text = $"{txt.Title}"; }
+        description.text = $"{txt.Description}";
+
+        UpdateBackgroundSize();
     }
 
-    public void Play(string newText)
+    public void UpdateGoal(string id)
     {
-        stringText = newText;
+        txt = textsList.GetTextAsset(id);
         Play();
+    }
+
+    public void UpdateBackgroundSize()
+    {
+        var bgSize = new Vector2(304, description.preferredHeight + 100);
+        rtGoalDescription.sizeDelta = bgSize;
+
+        bgSize = new Vector2(41, (description.preferredHeight + 250));
+        rtGoalBar.sizeDelta = bgSize;
     }
 }

@@ -45,13 +45,16 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private void PlaceInfrastructure(Infrastructure selectedStructure)
     {
-        currentSelectedStructure = selectedStructure;
-        selectedStructure.PlaceObject();
+        if (ConstructionManager.GetSelectedStructureType == selectedStructure.structureType)
+        {
+            currentSelectedStructure = selectedStructure;
+            selectedStructure.PlaceObject();
+        }
     }
 
     private bool PlaceInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
     {
-        if(toPlace.AskToPlace(positionToPlace))
+        if (toPlace.AskToPlace(positionToPlace) && !previewHandler.snaping)
         {
             Infrastructure placedInfrastructure = Instantiate(toPlace.RealInfrastructure, positionToPlace, Quaternion.identity);
 
@@ -97,26 +100,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         instance.toMove = null;
         instance.currentSelectedStructure.ReplaceObject();
     }
-
-    /// <summary>
-    /// Gère l'intéraction avec une structure.
-    /// </summary>
-    /// <param name="interactedStructure">L'Infrastructure qui a été cliqué.</param>
-    /*public static void InteractWithStructure(InfrastructureType tool, Infrastructure interactedStructure)
-    {
-        switch (tool)
-        {
-            case InfrastructureType.None:
-                //instance.SelectInfrastructure(interactedStructure);
-                break;
-            case InfrastructureType.DeleteStructure:
-                DeleteInfrastructure(interactedStructure);
-                break;
-            case InfrastructureType.PathTools:
-                instance.SelectInfrastructure(interactedStructure);
-                break;
-        }
-    }*/
 
     public static void InteractWithStructure(ToolType tool, Infrastructure interactedStructure)
     {

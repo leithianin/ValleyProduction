@@ -17,9 +17,13 @@ public class VisitorBehavior : MonoBehaviour
     [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitorWithType;
     [SerializeField] private UnityEvent<float> OnNoiseMadeTEMP; //TEMPORAIRE
 
-    private AnimationHandler visitorDisplay;
+    private AnimationHandler visitorDisplay = null;
 
     List<Vector3> interuptedPath = new List<Vector3>();
+
+    private bool isUsed = false;
+
+    public bool IsUsed => isUsed;
 
     public CPN_Movement Movement => movement;
 
@@ -62,6 +66,8 @@ public class VisitorBehavior : MonoBehaviour
                 Destroy(visitorDisplay.gameObject);
             }
 
+            isUsed = true;
+
             visitorDisplay = Instantiate(visitorType.Display, transform);
 
             movement.WalkOnNewPath(currentPathFragment.path);
@@ -73,6 +79,8 @@ public class VisitorBehavior : MonoBehaviour
     /// </summary>
     public void UnsetVisitor()
     {
+        isUsed = false;
+
         currentPathFragment = null;
 
         gameObject.SetActive(false);

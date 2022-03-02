@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Visitor", menuName = "Visitor/Create Visitor")]
+[CreateAssetMenu(fileName = "NewVisitor", menuName = "Valley/Visitor")]
 public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Movement, CPN_Data_Interaction, CPN_Data_Noise, CPN_Data_TrashThrower, CPN_Data_TrashPicker
 {
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
