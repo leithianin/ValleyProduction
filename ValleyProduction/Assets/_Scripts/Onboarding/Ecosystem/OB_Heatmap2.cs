@@ -27,6 +27,7 @@ public class OB_Heatmap2 : OnBoarding
     {
         if(isWaitingCloseAction)
         {
+            isWaitingCloseAction = false;
             OnBoardingManager.OnClickHeatmapNoise -= OnClick;
             Over();
         }
