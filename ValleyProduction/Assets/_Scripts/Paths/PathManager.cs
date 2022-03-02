@@ -690,7 +690,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for(int j = 0; j < pathDetector.Count; j++)
         {
-            pathData.AddInterestPointDetector(pathDetector[i]);
+            pathData.AddInterestPointDetector(pathDetector[j]);
         }
 
         DestroyLineList();

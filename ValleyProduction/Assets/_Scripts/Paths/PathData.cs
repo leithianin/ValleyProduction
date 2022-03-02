@@ -19,7 +19,14 @@ public class PathData
 
     List<PathFragmentData> listGetPathFragment = new List<PathFragmentData>();
 
-    [SerializeField] private List<InterestPoint> interestPointsOnPath = new List<InterestPoint>();
+    [Serializable]
+    private class InterestPointDetected
+    {
+        public InterestPoint interestPoint = null;
+        public int detectedCount;
+    }
+
+    [SerializeField] private List<InterestPointDetected> interestPointsOnPath = new List<InterestPointDetected>();
 
     //Debug Path --> J'ai besoin de savoir à qui il appartient lors de la suppression
     public LineRenderer pathLineRenderer;
@@ -256,21 +263,50 @@ public class PathData
         }
     }
 
+    private int ContrainsInterestPoint(InterestPoint toCheck)
+    {
+        int toReturn = -1;
+
+        for(int i = 0; i < interestPointsOnPath.Count; i++)
+        {
+            if(interestPointsOnPath[i].interestPoint == toCheck)
+            {
+                toReturn = i;
+                break;
+            }
+        }
+
+        return toReturn;
+    }
+
     private void AddInterestPoint(InterestPoint newInterestPoint)
     {
-        Debug.Log(newInterestPoint);
-        if (!interestPointsOnPath.Contains(newInterestPoint))
+        int containerIndex = ContrainsInterestPoint(newInterestPoint);
+        if (containerIndex >= 0)
         {
-            Debug.Log("No Contains");
-            interestPointsOnPath.Add(newInterestPoint);
+            interestPointsOnPath[containerIndex].detectedCount++;
+        }
+        else
+        {
+            Debug.Log("Add point");
+            interestPointsOnPath.Add(new InterestPointDetected());
+            interestPointsOnPath[interestPointsOnPath.Count - 1].detectedCount = 1;
+            interestPointsOnPath[interestPointsOnPath.Count - 1].interestPoint = newInterestPoint;
         }
     }
 
     private void RemoveInterestPoint(InterestPoint newInterestPoint)
     {
-        if (interestPointsOnPath.Contains(newInterestPoint))
+        int containerIndex = ContrainsInterestPoint(newInterestPoint);
+        if (containerIndex >= 0)
         {
-            interestPointsOnPath.Remove(newInterestPoint);
+            interestPointsOnPath[containerIndex].detectedCount--;
+            if(interestPointsOnPath[containerIndex].detectedCount <= 0)
+            {
+                Debug.Log("Remove point");
+                interestPointsOnPath.RemoveAt(containerIndex);
+            }
         }
+
     }
 }
