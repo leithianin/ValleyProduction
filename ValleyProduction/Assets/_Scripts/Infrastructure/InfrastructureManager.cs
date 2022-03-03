@@ -36,7 +36,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             instance.previewHandler.SetInfrastructurePreview(newPreview);
         }
-    }   
+    }
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {

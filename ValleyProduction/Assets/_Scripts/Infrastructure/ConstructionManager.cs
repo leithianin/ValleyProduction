@@ -177,6 +177,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         switch(selectedStructureType)
         {
             case InfrastructureType.Path:
+                PathManager.CreatePathData();
                 PlayerInputManager.ChangeLayerMaskForNoTools();
                 OnUnselectPathTool?.Invoke();
                 break;

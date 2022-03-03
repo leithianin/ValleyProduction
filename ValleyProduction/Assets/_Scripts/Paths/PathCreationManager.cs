@@ -33,7 +33,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     {
         navPath = new NavMeshPath();
 
-        if (PathManager.previousPathpoint != null)
+        if (PathManager.previousPathpoint != null && InfrastructureManager.GetCurrentPreview != null)
         {
             NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position + offsetPathCalcul, InfrastructureManager.GetCurrentPreview.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
         }

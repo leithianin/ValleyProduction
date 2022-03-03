@@ -480,14 +480,20 @@ public class PathManager : VLY_Singleton<PathManager>
                 instance.pathDataList.Remove(instance.disconnectedPathData);
             }
 
-            //IF ONBOARDING SEQUENCE 
-            isOnFinishPath?.Invoke(true);
-
             //Reset les currents Data puisqu'on deselectionne le chemin
             instance.pathFragmentDataList.Clear();
             instance.pathpointList.Clear();
             instance.currentPathData = null;
             previousPathpoint = null;
+
+
+            //IF ONBOARDING SEQUENCE 
+            isOnFinishPath?.Invoke(true);
+        }
+        else if (instance.pathpointList.Count > 0)
+        {
+            instance.pathpointList[0].RemoveObject();
+            instance.pathpointList.Clear();
         }
     }
 
