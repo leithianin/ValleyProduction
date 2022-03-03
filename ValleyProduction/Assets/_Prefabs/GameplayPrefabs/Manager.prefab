@@ -128,7 +128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438296611544555519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 500, y: 0, z: 450}
+  m_LocalPosition: {x: 50, y: 0, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5209237266425241728}
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f48a2d0b3258fb74486e218e61a5f23a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldDimension: {x: 500, y: 350}
+  worldDimension: {x: 125, y: 125}
   areaSize: 25
   showGizmos: 1
   areaDisplayMask:
@@ -342,6 +342,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   layerMaskNoTools:
     serializedVersion: 2
     m_Bits: 257
@@ -372,7 +384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8e2395da2c354469b814e0bf6324d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathPointPreview: {fileID: 895858103023706932, guid: a5198121cf5c54e42b01a11979e9082b, type: 3}
   OnSelectPathTool:
     m_PersistentCalls:
       m_Calls: []
@@ -384,7 +395,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -460,11 +471,13 @@ MonoBehaviour:
   pathDataList: []
   pathFragmentDataList: []
   pathpointList: []
+  roadDetectorPrefab: {fileID: 1278767380387114619, guid: 6a4e1cfd6a81634408167444e9a9a5f7, type: 3}
   debugMode: 1
   PathReverse: 0
   DebugLineRenderer: {fileID: 0}
   lineRendererDebugList: []
   currentLineDebug: {fileID: 0}
+  pointDistance: 2
 --- !u!114 &5209237266425241735
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,17 +5,18 @@ using UnityEngine;
 public class IFB_MoveCameraToTarget : MonoBehaviour, IFeedbackPlayer
 {
     public GameObject target;
-    private Camera cam;
-    private Transform origin;
+    public SphericalTransform camSphericalTr;
 
-    private void Start()
-    {
-        cam = Camera.main;
-        origin = cam.transform.parent.GetChild(0).transform;
-    }
+    private int speed = 0;
 
     public void Play()
     {
-        origin.position = target.transform.position;
+        StartCoroutine(camSphericalTr.MoveCameraOriginToCustomTarget(target.transform, speed));
+    }
+
+    public void Play(int newSpeed)
+    {
+        speed = newSpeed;
+        Play();
     }
 }
