@@ -187,7 +187,7 @@ public class PathData
             }
         }
 
-        foreach(PathFragmentData pfd in listSuppr)
+        foreach (PathFragmentData pfd in listSuppr)
         {
             pathFragment.Remove(pfd);
         }

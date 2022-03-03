@@ -23,9 +23,7 @@ public class SA_PlayAnimation : InteractionActions
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
-        AnimationHandler animHandler = null;
-
-        if(caller.HasComponent<AnimationHandler>(ref animHandler))
+        if(caller.HasComponent<AnimationHandler>(out AnimationHandler animHandler))
         {
             // Jouer animation
 

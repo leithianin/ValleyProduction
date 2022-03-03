@@ -63,7 +63,7 @@ public class SphericalTransform : MonoBehaviour
         if (rotationValue < -1f || rotationValue > 1f)
             Debug.LogWarning("Rotation Value is not set correctly");
 
-        coordinates.y += rotationValue * speed * Time.deltaTime;
+        coordinates.y += rotationValue * speed * Time.unscaledDeltaTime;
     }
 
     public void PolarRotation(float rotationValue, float speed)
@@ -71,14 +71,12 @@ public class SphericalTransform : MonoBehaviour
         if (rotationValue < -1f || rotationValue > 1f)
             Debug.LogWarning("Rotation Value is not set correctly");
 
-        coordinates.z += rotationValue * speed * Time.deltaTime;
+        coordinates.z += rotationValue * speed * Time.unscaledDeltaTime;
     }
 
     public void ChangeLength(float deltaMagnitude, float scrollingSpeed)
     {
-        //float target = coordinates.x + deltaMagnitude * scrollingSpeed * Time.deltaTime;
-        //coordinates.x = Mathf.Lerp(coordinates.x, target, 0.1f);
-        coordinates.x += deltaMagnitude * scrollingSpeed * Time.deltaTime;
+        coordinates.x += deltaMagnitude * scrollingSpeed * Time.unscaledDeltaTime;
     }
 
     #endregion
@@ -124,7 +122,7 @@ public class SphericalTransform : MonoBehaviour
     #region Origin
     public void MoveOrigin(float xInput, float yInput, float speed)
     {
-        origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.deltaTime;
+        origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.unscaledDeltaTime;
     }
 
     public IEnumerator MoveCameraOriginToCustomTarget(Transform target, float speed)
@@ -132,7 +130,7 @@ public class SphericalTransform : MonoBehaviour
         Vector3 startPos = origin.position;
         float referenceTime = Vector3.Distance(startPos, target.position) / speed;
 
-        for (float time = referenceTime; time > 0; time -= Time.deltaTime)
+        for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
         {
             origin.position = Vector3.Lerp(target.position, startPos, time / referenceTime);
             yield return null;

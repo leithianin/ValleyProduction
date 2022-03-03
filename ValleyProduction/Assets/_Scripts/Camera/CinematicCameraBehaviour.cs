@@ -42,7 +42,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         int rotateDir = (int)Mathf.Sign(Random.value - 0.5f);
         float referenceTime = Random.Range(timeRange.x, timeRange.y);
 
-        for (float time = referenceTime; time > 0; time -= Time.deltaTime)
+        for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
         {
             cameraTransform.AzimuthalRotation(rotateDir, rotationSpeed);
             yield return null;
@@ -98,7 +98,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         fadeTexture.SetPixel(0, 0, new Color(0, 0, 0, textureAlpha));
         fadeTexture.Apply();
 
-        fadeTime += Time.deltaTime;
+        fadeTime += Time.unscaledDeltaTime;
         textureAlpha = fadeCurve.Evaluate(fadeTime / fadeDuration);
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeTexture);
 

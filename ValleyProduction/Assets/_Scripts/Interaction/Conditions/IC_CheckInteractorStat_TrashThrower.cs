@@ -10,9 +10,7 @@ public class IC_CheckInteractorStat_TrashThrower : InteractionCondition
     {
         bool toReturn = true;
 
-        CPN_TrashThrower thrower = null;
-
-        if (interacter.HasComponent<CPN_TrashThrower>(ref thrower))
+        if (interacter.HasComponent<CPN_TrashThrower>(out CPN_TrashThrower thrower))
         {
             if(timeBeforeThrow >= 0)
             {

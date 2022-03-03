@@ -142,7 +142,6 @@ public class PathManager : VLY_Singleton<PathManager>
     //Lié le current Path avec un chemin Déconnecté
     public static void LinkDcPathToCurrentPath(PathData pd , bool startPoint)
     {
-        IST_PathPoint pathPointRef = instance.pathpointList[instance.pathpointList.Count-1];
         List<Vector3> navmeshPoints = new List<Vector3>(PathCreationManager.navmeshPositionsList);           //Doit prendre en compte le navmesh
 
         if (startPoint)
@@ -310,11 +309,18 @@ public class PathManager : VLY_Singleton<PathManager>
                 return;
             }
 
-            /*#region 1 pathFragment
+            #region 1 pathFragment
             if (pdToModify.pathFragment.Count == 1)
             {
-                pdToModify.RemoveFragmentAndNext(ist_pp);
-                DeleteFullPath(pdToModify);
+                DeletePath(pdToModify);
+                if (pdToModify.pathFragment[0].startPoint != ist_pp)
+                {
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
+                }
+                else
+                {
+                    pdToModify.pathFragment[0].endPoint.RemoveObject();
+                }
                 return;
             }
             #endregion
@@ -324,8 +330,9 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
                 {
-                    pdToModify.RemoveFragmentAndNext(ist_pp);
-                    DeleteFullPath(pdToModify);
+                    DeletePath(pdToModify);
+                    pdToModify.pathFragment[1].endPoint.RemoveObject();
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
                     return;
                 }
                 else
@@ -336,7 +343,7 @@ public class PathManager : VLY_Singleton<PathManager>
                     return;
                 }
             }
-            #endregion*/
+            #endregion
 
             //Si ce n'est pas le dernier point
             if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
@@ -357,8 +364,6 @@ public class PathManager : VLY_Singleton<PathManager>
                 if (pdToModify.startPoint == ist_pp)
                 {
                     instance.pathDataList.Remove(pdToModify);
-                    //pdToModify.startPoint.RemoveObject();
-                    //Destroy(pdToModify.startPoint.gameObject);
                 }
                 else
                 {
@@ -373,8 +378,6 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 Debug.Log("LastPoint");
                 pdToModify.RemoveFragmentAndNext(ist_pp);
-                //pdToModify.GetLastPoint().RemoveObject();
-                //Destroy(pdToModify.GetLastPoint().gameObject);
                 DestroyLineRenderer(pdToModify.pathLineRenderer);
                 DebugLineR(pdToModify);
             }
