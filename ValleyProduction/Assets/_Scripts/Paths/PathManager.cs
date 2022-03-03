@@ -302,69 +302,72 @@ public class PathManager : VLY_Singleton<PathManager>
             pdToModify = pd;
         }
 
-        #region 1 pathFragment
-        if (pdToModify.pathFragment.Count == 1)
+        if (pdToModify != null)
         {
-            DeletePath(pdToModify);
-            return;
-        }
-        #endregion
-
-        #region 2 pathFragment
-        if (pdToModify.pathFragment.Count == 2)
-        {
-            if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
+            #region 1 pathFragment
+            if (pdToModify.pathFragment.Count <= 1)
             {
                 DeletePath(pdToModify);
                 return;
             }
+            #endregion
+
+            #region 2 pathFragment
+            if (pdToModify.pathFragment.Count == 2)
+            {
+                if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
+                {
+                    DeletePath(pdToModify);
+                    return;
+                }
+                else
+                {
+                    pdToModify.checkWichFragmentToRemove(ist_pp);
+                    DestroyLineRenderer(pdToModify.pathLineRenderer);
+                    DebugLineR(pdToModify);
+                    return;
+                }
+            }
+            #endregion
+
+            //Si ce n'est pas le dernier point
+            if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
+            {
+                //Get les points après le pathpoint supprimé 
+                List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);
+
+                //Delete les PathFragment ou il y'a le pathpoint + Les pathFragment apres qu'on a save juste avant
+                pdToModify.RemoveFragmentAndNext(ist_pp);
+
+                //Créer un pathData avec le chemin fermé + Line renderer path fermé
+                CreatePathDataClose(pfdSecondPath);
+
+                //Delete line renderer 
+                DestroyLineRenderer(pdToModify.pathLineRenderer);
+
+                //Si StartPoint
+                if (pdToModify.startPoint == ist_pp)
+                {
+                    Destroy(pdToModify.startPoint.gameObject);
+                    instance.pathDataList.Remove(pdToModify);
+                }
+                else
+                {
+                    //Refaire LineRenderer pathData
+                    //DebugLine pour avant
+                    DebugLineR(pdToModify);
+                }
+
+                pdToModify.SafeCheck();
+            }
             else
             {
-                pdToModify.checkWichFragmentToRemove(ist_pp);
+                Debug.Log("LastPoint");
+                Destroy(pdToModify.GetLastPoint().gameObject);
+                pdToModify.RemoveFragmentAndNext(ist_pp);
                 DestroyLineRenderer(pdToModify.pathLineRenderer);
                 DebugLineR(pdToModify);
-                return;
             }
-        }
-        #endregion 
-
-        //Si ce n'est pas le dernier point
-        if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count-1].startPoint != ist_pp)
-        {
-            //Get les points après le pathpoint supprimé 
-            List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);
-
-            //Delete les PathFragment ou il y'a le pathpoint + Les pathFragment apres qu'on a save juste avant
-            pdToModify.RemoveFragmentAndNext(ist_pp);
-
-            //Créer un pathData avec le chemin fermé + Line renderer path fermé
-            CreatePathDataClose(pfdSecondPath);
-
-            //Delete line renderer 
-            DestroyLineRenderer(pdToModify.pathLineRenderer);
-
-            //Si StartPoint
-            if(pdToModify.startPoint == ist_pp)
-            {
-                Destroy(pdToModify.startPoint.gameObject);
-                instance.pathDataList.Remove(pdToModify);
-            }
-            else
-            {
-                //Refaire LineRenderer pathData
-                //DebugLine pour avant
-                DebugLineR(pdToModify);
-            }
-
-            pdToModify.SafeCheck();
-        }
-        else
-        {
-            Debug.Log("LastPoint");
-            Destroy(pdToModify.GetLastPoint().gameObject);
-            pdToModify.RemoveFragmentAndNext(ist_pp);
-            DestroyLineRenderer(pdToModify.pathLineRenderer);
-            DebugLineR(pdToModify);
         }
     }
 
