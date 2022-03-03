@@ -304,10 +304,17 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if (pdToModify != null)
         {
-            #region 1 pathFragment
-            if (pdToModify.pathFragment.Count <= 1)
+            if(pdToModify.pathFragment.Count == 0)
             {
                 DeletePath(pdToModify);
+                return;
+            }
+
+            /*#region 1 pathFragment
+            if (pdToModify.pathFragment.Count == 1)
+            {
+                pdToModify.RemoveFragmentAndNext(ist_pp);
+                DeleteFullPath(pdToModify);
                 return;
             }
             #endregion
@@ -317,7 +324,8 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
                 {
-                    DeletePath(pdToModify);
+                    pdToModify.RemoveFragmentAndNext(ist_pp);
+                    DeleteFullPath(pdToModify);
                     return;
                 }
                 else
@@ -328,7 +336,7 @@ public class PathManager : VLY_Singleton<PathManager>
                     return;
                 }
             }
-            #endregion
+            #endregion*/
 
             //Si ce n'est pas le dernier point
             if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
@@ -348,8 +356,9 @@ public class PathManager : VLY_Singleton<PathManager>
                 //Si StartPoint
                 if (pdToModify.startPoint == ist_pp)
                 {
-                    Destroy(pdToModify.startPoint.gameObject);
                     instance.pathDataList.Remove(pdToModify);
+                    //pdToModify.startPoint.RemoveObject();
+                    //Destroy(pdToModify.startPoint.gameObject);
                 }
                 else
                 {
@@ -363,8 +372,9 @@ public class PathManager : VLY_Singleton<PathManager>
             else
             {
                 Debug.Log("LastPoint");
-                Destroy(pdToModify.GetLastPoint().gameObject);
                 pdToModify.RemoveFragmentAndNext(ist_pp);
+                //pdToModify.GetLastPoint().RemoveObject();
+                //Destroy(pdToModify.GetLastPoint().gameObject);
                 DestroyLineRenderer(pdToModify.pathLineRenderer);
                 DebugLineR(pdToModify);
             }
@@ -373,22 +383,27 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static void DeleteFullPath(PathData toDelete)
     {
+        DeleteFullPathWithoutOnePoint(toDelete, null);
+    }
+
+    public static void DeleteFullPathWithoutOnePoint(PathData toDelete, IST_PathPoint toIgnore)
+    {
         List<IST_PathPoint> pointsToDelete = new List<IST_PathPoint>();
 
-        for(int i = toDelete.pathFragment.Count -1; i >= 0; i--)
+        for (int i = toDelete.pathFragment.Count - 1; i >= 0; i--)
         {
-            if (!pointsToDelete.Contains(toDelete.pathFragment[i].endPoint))
+            if (!pointsToDelete.Contains(toDelete.pathFragment[i].endPoint) && toDelete.pathFragment[i].endPoint != toIgnore)
             {
                 pointsToDelete.Add(toDelete.pathFragment[i].endPoint);
             }
-            
-            if (!pointsToDelete.Contains(toDelete.pathFragment[i].startPoint))
+
+            if (!pointsToDelete.Contains(toDelete.pathFragment[i].startPoint) && toDelete.pathFragment[i].startPoint != toIgnore)
             {
                 pointsToDelete.Add(toDelete.pathFragment[i].startPoint);
             }
         }
 
-        for(int j = 0; j < pointsToDelete.Count; j++)
+        for (int j = 0; j < pointsToDelete.Count; j++)
         {
             pointsToDelete[j].RemoveObject();
         }
