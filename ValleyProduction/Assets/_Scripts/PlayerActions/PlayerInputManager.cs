@@ -51,9 +51,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Update");
         //Handle Mouse input outside UI
 
-        if (!UIManager.instance.OnMenuOption)
+        if (!UIManager.instance.OnMenuOption && !usedEventSystem.IsPointerOverGameObject())
         {
             if (usedEventSystem.currentSelectedGameObject == null)
             {
