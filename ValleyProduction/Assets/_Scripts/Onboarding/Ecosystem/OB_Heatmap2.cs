@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OB_Heatmap2 : OnBoarding
 {
-    private bool isFirstClick = false;
+    private bool isWaitingCloseAction = false;
 
     protected override void OnEnd()
     {
@@ -14,11 +14,22 @@ public class OB_Heatmap2 : OnBoarding
     protected override void OnPlay()
     {
         OnBoardingManager.OnClickHeatmapNoise += OnClick;
+        isWaitingCloseAction = true;
     }
 
     public void OnClick(bool condition)
     {
         OnBoardingManager.OnClickHeatmapNoise -= OnClick;
         Over();
+    }
+
+    public void OnClickHeatmap()
+    {
+        if(isWaitingCloseAction)
+        {
+            isWaitingCloseAction = false;
+            OnBoardingManager.OnClickHeatmapNoise -= OnClick;
+            Over();
+        }
     }
 }

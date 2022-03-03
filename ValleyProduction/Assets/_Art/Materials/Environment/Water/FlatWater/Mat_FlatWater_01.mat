@@ -13,7 +13,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2950
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -81,6 +81,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_3d9ef5297e3e4eb5ad53eb95e7ca3c1d_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 8eb2cd6b484ca1d43a7a0a04364d04d8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -119,11 +123,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - DeepWaterAlpha: 4.12
     - DepthWaterAlpha: 1
-    - EdgeFoamAmount: 0.52
-    - EdgeFoamCutoff: 1.57
-    - EdgeFoamDetails: 100
-    - EdgeFoamScale: 8.61
+    - EdgeFoamAmount: 1.68
+    - EdgeFoamCutoff: 1.74
+    - EdgeFoamDetails: 71.91
+    - EdgeFoamScale: 1
     - EdgeFoamSpeed: 0.01
     - FoamAmount: 1.18
     - FoamCutoff: 3.31
@@ -131,6 +136,7 @@ Material:
     - FoamSpeed: 0.52
     - FoamStrength: 0.12
     - HighlightSensibility: 0.105
+    - HightlightsSensibility: 50
     - RefractionScale: 1
     - RefractionSpeed: 0
     - RefractionStrength: 2
@@ -145,12 +151,15 @@ Material:
     - RipplesStrength: 1
     - Roughness: 1
     - Scale: 9.24
-    - ShallowWaterAlpha: 0.1
+    - ShallowWaterAlpha: 0.34
+    - Smoothness: 1
+    - SmoothnessIntensity01: 0.42
+    - SmoothnessIntensity02: 1.14
     - Speed: 0.2
     - Tiling: -1.7
-    - WaterDepth: 0.79
-    - WavesAmount: 256.6
-    - WavesHeight: 0.001
+    - WaterDepth: 7.93
+    - WavesAmount: 2.49
+    - WavesHeight: 0.22
     - WavesSpeed: 0.001
     - _AORemapMax: 1
     - _AORemapMin: 0
@@ -266,16 +275,20 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - BaseColor: {r: 0, g: 0.7992902, b: 1, a: 1}
-    - DeepWaterColor: {r: 0.24586153, g: 0.54501253, b: 0.6132076, a: 1}
-    - EdgeFoamColor: {r: 1, g: 1, b: 1, a: 0.2901961}
+    - DeepWaterColor: {r: 0.040005337, g: 0.20870171, b: 0.2735849, a: 1}
+    - EdgeFoamColor: {r: 1, g: 1, b: 1, a: 0.27058825}
     - FoamColor: {r: 0.6509434, g: 0.22414559, b: 0.5878936, a: 0.45490196}
     - HighlightColor: {r: 1, g: 1, b: 1, a: 1}
     - HighlightColor01: {r: 1, g: 1, b: 1, a: 0}
     - HighlightColor02: {r: 0, g: 0, b: 0, a: 0}
+    - HighlightsColor: {r: 1, g: 1, b: 1, a: 1}
     - RippleColor: {r: 0.256408, g: 0.8113208, b: 0.8113208, a: 1}
     - RipplesColor: {r: 1, g: 0.627451, b: 0.71247643, a: 1}
-    - ShallowWaterColor: {r: 0.63529414, g: 0.8431373, b: 0.8941177, a: 1}
-    - WavesDirection: {r: 0.001, g: 0.001, b: 0, a: 0}
+    - ShallowWaterColor: {r: 0.09838911, g: 0.48545846, b: 0.6320754, a: 1}
+    - WavesDirection: {r: 66.7, g: 29, b: 0, a: 0}
+    - WavesDirection02: {r: 1, g: 1, b: 1, a: 0}
+    - WavesDirectionSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - WavesTilling: {r: 52.4, g: 21.8, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

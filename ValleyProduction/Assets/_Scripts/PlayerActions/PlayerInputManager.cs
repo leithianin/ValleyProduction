@@ -114,13 +114,17 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         {
             VLY_Time.PauseTime();
         }*/
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             VLY_Time.SetTimeScale(1);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             VLY_Time.SetTimeScale(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            VLY_Time.SetTimeScale(3);
         }
     }
 

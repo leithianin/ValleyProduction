@@ -1,40 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class IFB_ChangeText : MonoBehaviour, IFeedbackPlayer
 {
-    public RectTransform rtGoalDescription;
-    public RectTransform rtGoalBar;
-
-    public TMP_Text description;
-    public TMP_Text title;
-    private string stringText = string.Empty;
-
-    public TextsDictionary textsList;
-    private TextBase txt;
+    public TMP_Text textComponent;
+    private string textString;
 
     public void Play()
     {
-        if (txt.Title != string.Empty) { title.text = $"{txt.Title}"; }
-        description.text = $"{txt.Description}";
-
-        UpdateBackgroundSize();
+        textComponent.text = textString;
     }
 
-    public void UpdateGoal(string id)
+    public void Play(string newText)
     {
-        txt = textsList.GetTextAsset(id);
+        textString = newText;
         Play();
-    }
-
-    public void UpdateBackgroundSize()
-    {
-        var bgSize = new Vector2(304, description.preferredHeight + 100);
-        rtGoalDescription.sizeDelta = bgSize;
-
-        bgSize = new Vector2(41, (description.preferredHeight + 250));
-        rtGoalBar.sizeDelta = bgSize;
     }
 }
