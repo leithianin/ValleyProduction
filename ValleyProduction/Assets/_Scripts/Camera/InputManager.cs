@@ -72,6 +72,9 @@ public class InputManager : MonoBehaviour
         if (!useEdgeScrolling)
             return;
 
+        //if (cinematicCameraBehaviour.inCinematicMode)
+        //    return;
+
         if (Input.GetKey(KeyCode.Mouse1))
             return;
 
