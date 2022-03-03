@@ -47,6 +47,18 @@ public class TimerManager : VLY_Singleton<TimerManager>
         }
     }
 
+    private static bool isUsable = true;
+
+    private void OnDestroy()
+    {
+        isUsable = false;
+    }
+
+    private void Awake()
+    {
+        isUsable = true;
+    }
+
     public static Timer CreateGameTimer(float time, Action callback)
     {
         Timer toReturn = new Timer();
@@ -65,7 +77,7 @@ public class TimerManager : VLY_Singleton<TimerManager>
 
     private static void StopTimerRoutine(Coroutine toStop)
     {
-        if (toStop != null)
+        if (toStop != null && isUsable)
         {
             instance.StopCoroutine(toStop);
         }

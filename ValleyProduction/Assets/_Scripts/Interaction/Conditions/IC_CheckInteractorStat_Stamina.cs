@@ -11,9 +11,7 @@ public class IC_CheckInteractorStat_Stamina : InteractionCondition
     {
         bool toReturn = true;
 
-        CPN_Stamina stamina = null;
-
-        if (interacter.HasComponent<CPN_Stamina>(ref stamina))
+        if (interacter.HasComponent<CPN_Stamina>(out CPN_Stamina stamina))
         {
             if (staminaLimit >= 0)
             {

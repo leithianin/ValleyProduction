@@ -6,15 +6,15 @@ public class VLY_ComponentHandler : MonoBehaviour
 {
     [SerializeField] private List<VLY_Component> components;
 
-    public void GetComponentOfType<T>(ref T wantedComponent) where T : VLY_Component
+    public T GetComponentOfType<T>() where T : VLY_Component
     {
         for(int i = 0; i < components.Count; i++)
         {
-            if(components[i] as T != null)
+            if(components[i] != null && components[i] is T)
             {
-                wantedComponent = components[i] as T;
-                break;
+                return components[i] as T;
             }
         }
+        return null;
     }
 }

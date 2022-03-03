@@ -18,8 +18,7 @@ public class SA_SetStamina : InteractionActions
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
-        CPN_Stamina staminaHandler = null;
-        if(caller.HasComponent<CPN_Stamina>(ref staminaHandler))
+        if(caller.HasComponent<CPN_Stamina>(out CPN_Stamina staminaHandler))
         {
             staminaHandler.SetStaminaPercentage(staminaPercentageToPut);
         }

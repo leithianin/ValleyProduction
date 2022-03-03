@@ -12,10 +12,9 @@ public class CPN_InteractionHandler : VLY_Component<CPN_Data_Interaction>
 
     public VLY_ComponentHandler Handler => handler;
 
-    public bool HasComponent<T>(ref T wantedComponent) where T : VLY_Component
+    public bool HasComponent<T>(out T wantedComponent) where T : VLY_Component
     {
-        T inHandler = null;
-        handler.GetComponentOfType<T>(ref inHandler);
+        T inHandler = handler.GetComponentOfType<T>();
 
         wantedComponent = inHandler;
 
