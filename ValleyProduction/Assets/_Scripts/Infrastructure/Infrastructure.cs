@@ -8,6 +8,7 @@ public abstract class Infrastructure : MonoBehaviour
     public InfrastructureType structureType;
 
     [SerializeField, Tooltip("Actions to play when the construction is placed.")] private UnityEvent PlayOnPlace;
+    [SerializeField, Tooltip("Actions to play when the construction is placed on an other construction.")] private UnityEvent PlayOnPlaceOverObject;
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
     [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnSelect;
     [SerializeField, Tooltip("Actions to play when the construction is unselected.")] private UnityEvent PlayOnUnselect;
@@ -68,7 +69,7 @@ public abstract class Infrastructure : MonoBehaviour
 
     public void PlaceObject()
     {
-        PlayOnPlace?.Invoke();
+        PlayOnPlaceOverObject?.Invoke();
         OnPlaceObject();
     }
 

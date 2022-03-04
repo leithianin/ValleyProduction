@@ -31,7 +31,6 @@ public class SA_Wait : InteractionActions
         {
             if (waiters[i].caller == caller)
             {
-                Debug.Log(caller.name);
                 waiters[i].timer.Stop();
                 waiters.RemoveAt(i);
                 i--;
