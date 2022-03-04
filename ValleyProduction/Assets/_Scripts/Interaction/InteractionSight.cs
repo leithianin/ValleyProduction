@@ -64,9 +64,13 @@ public abstract class InteractionSight : MonoBehaviour
     {
         if(spotInteractor == interactor)
         {
+            if(!interactor.gameObject.activeSelf)
+            {
+                interactor.gameObject.SetActive(true);
+            }
+
             currentSpot.PlayOnInteractionEnd -= EndInteraction;
             TimerManager.CreateGameTimer(timeBetweenInteractions, () => isInteracting = false);
-            isInteracting = false;
             OnEndInteraction();
         }
     }

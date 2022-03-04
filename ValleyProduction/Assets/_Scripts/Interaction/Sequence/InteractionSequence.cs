@@ -51,7 +51,7 @@ public class InteractionSequence : InteractionActions
                 }
                 else
                 {
-                    sequence[sequenceUser[i].currentSequenceIndex].PlayAction(caller, () => PlayNextStep(caller));
+                    sequence[sequenceUser[i].currentSequenceIndex].PlayAction(caller, () => PlayNextStep(caller), null);
                 }
                 break;
             }
@@ -60,15 +60,15 @@ public class InteractionSequence : InteractionActions
 
     protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
-        for (int i = 0; i < sequenceUser.Count; i++)
+        for (int l = 0; l < sequenceUser.Count; l++)
         {
-            if (sequenceUser[i].caller == caller)
+            if (sequenceUser[l].caller == caller)
             {
-                if (sequenceUser[i].currentSequenceIndex >= 0)
+                if (sequenceUser[l].currentSequenceIndex >= 0)
                 {
-                    sequence[sequenceUser[i].currentSequenceIndex].InteruptAction(caller);
-                    sequenceUser.RemoveAt(i);
-                    i--;
+                    sequence[sequenceUser[l].currentSequenceIndex].InteruptAction(caller);
+                    sequenceUser.RemoveAt(l);
+                    l--;
                 }
             }
             break;

@@ -8,6 +8,7 @@ public class VisitorInteractionSight : InteractionSight
 
     public override void OnEndInteraction()
     {
+        Debug.Log("End Interaction");
         visitor.ContinueWalk();
     }
 

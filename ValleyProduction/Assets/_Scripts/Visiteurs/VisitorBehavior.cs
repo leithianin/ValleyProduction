@@ -55,7 +55,7 @@ public class VisitorBehavior : MonoBehaviour
 
             OnSetVisitorWithType?.Invoke(visitorType);
 
-            movement.SetSpeed(visitorType.Speed);
+            movement.SetSpeed(UnityEngine.Random.Range(visitorType.Speed.x, visitorType.Speed.y));
 
             transform.position = spawnPosition;
 
