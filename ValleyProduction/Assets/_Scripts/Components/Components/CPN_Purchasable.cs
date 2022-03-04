@@ -13,9 +13,9 @@ public class CPN_Purchasable : VLY_Component<CPN_Data_Purchasable>
         cost = dataToSet.Cost();
     }
 
-    public bool IsPurchasable(float currentRessourceAmount)
+    public bool IsPurchasable()
     {
-        return currentRessourceAmount >= cost;
+        return VLY_RessourceManager.GetRessource >= cost;
     }
 
     public void Buy()
