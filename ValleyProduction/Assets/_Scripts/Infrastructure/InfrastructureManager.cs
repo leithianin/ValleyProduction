@@ -16,17 +16,18 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     private static LayerMask layerIgnoreRaycast = 2;
     private static LayerMask layerInfrastructure = 0;
 
-    private GameObject toMove;
+    private GameObject movedObject = null;
     public ToolType toolSelected = ToolType.None;
 
+    public static GameObject GetMovedObject => instance.movedObject;
 
 
     private void Update()
     {
         //Move Infrastructure when MoveInfrastructure()
-        if(toMove != null)
+        if(movedObject != null)
         {
-            toMove.transform.position = PlayerInputManager.GetMousePosition;
+            movedObject.transform.position = PlayerInputManager.GetMousePosition;
         }
     }
 
@@ -80,8 +81,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void MoveInfrastructure(Infrastructure toMove)
     {
         instance.currentSelectedStructure = toMove;
-        instance.toMove = toMove.gameObject;
-        instance.toMove.layer = layerIgnoreRaycast;
+        instance.movedObject = toMove.gameObject;
+        instance.movedObject.layer = layerIgnoreRaycast;
         instance.currentSelectedStructure.MoveObject();
     }
 
@@ -94,10 +95,10 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// <summary>
     /// Place l'infrastructure déplacé lorsqu'on lâche le maintient.
     /// </summary>
-    public static void ReplaceInfrastructure()
+    public static void ReplaceInfrastructure(Vector3 position)
     {
-        instance.toMove.layer = layerInfrastructure;
-        instance.toMove = null;
+        instance.movedObject.layer = layerInfrastructure;
+        instance.movedObject = null;
         instance.currentSelectedStructure.ReplaceObject();
     }
 
@@ -115,6 +116,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                 //Usable by balise, je suis entrain de placer, je clique sur une infrastructure.
                 break;
             case ToolType.Move:
+                Debug.Log("dd");
+                MoveInfrastructure(interactedStructure);
                 break;
             case ToolType.Delete:
                 DeleteInfrastructure(interactedStructure);

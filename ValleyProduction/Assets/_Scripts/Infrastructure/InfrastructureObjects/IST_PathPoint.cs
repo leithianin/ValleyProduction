@@ -68,7 +68,7 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnMoveObject()
     {
-        //PathManager.UpdateLineWhenMoving(this);
+        PathManager.UpdateLineWhenMoving(this);
     }
 
     protected override void OnReplaceObject()

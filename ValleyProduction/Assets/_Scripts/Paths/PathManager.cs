@@ -896,6 +896,13 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static void UpdateLineWhenMoving(IST_PathPoint pp)
     {
+        //DestroyLine du path ou il y'a le Pathpoint
+        foreach(PathData pd in instance.pathDataList)
+        {
+
+        }
+
+
         //Get Path Navmesh + Save Data
     }
 
