@@ -281,16 +281,17 @@ public class PathManager : VLY_Singleton<PathManager>
 
         DeletePoint(ist_pp);
 
-        if(SpawnPoints.Contains(ist_pp))
-        {
-            SpawnPoints.Remove(ist_pp);
-        }
         return true;
     }
 
     //Delete pathpoint
     public static void DeletePoint(IST_PathPoint ist_pp, PathData pd = null)
     {
+        if (SpawnPoints.Contains(ist_pp))
+        {
+            SpawnPoints.Remove(ist_pp);
+        }
+
         PathData pdToModify = new PathData();
         if (pd == null)
         {
