@@ -6,7 +6,7 @@ using UnityEngine;
 public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Movement, CPN_Data_Interaction, CPN_Data_Noise, CPN_Data_TrashThrower, CPN_Data_TrashPicker
 {
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
-    [SerializeField, Tooltip("The speed of the visitor.")] private float speed;
+    [SerializeField, Tooltip("The speed of the visitor.")] private Vector2 speed;
     [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> interactionTypes;
 
     [Header("Stamina")]
@@ -27,7 +27,7 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
     /// Get a random skin for the visitor.
     /// </summary>
     public AnimationHandler Display => display[Random.Range(0, display.Count)];
-    public float Speed => speed;
+    public Vector2 Speed => speed;
 
     public float MaxStamina()
     {
@@ -44,7 +44,7 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
         return staminaRegenCoef;
     }
 
-    float CPN_Data_Movement.Speed()
+    Vector2 CPN_Data_Movement.Speed()
     {
         return speed;
     }

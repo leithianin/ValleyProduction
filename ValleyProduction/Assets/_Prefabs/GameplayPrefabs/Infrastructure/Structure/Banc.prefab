@@ -132,7 +132,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  PlayOnInteruptInteract:
+    m_PersistentCalls:
+      m_Calls: []
   interactionAction: {fileID: 4916972303867436299}
+  callerInSpot: []
 --- !u!114 &2317164502492051413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +283,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  PlayOnInteruptInteract:
+    m_PersistentCalls:
+      m_Calls: []
   interactionAction: {fileID: 6857376306608711649}
+  callerInSpot: []
 --- !u!114 &3055070422808548557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,6 +683,7 @@ GameObject:
   - component: {fileID: 2669113691794064004}
   - component: {fileID: 4671862942104361624}
   - component: {fileID: 4247980692096423381}
+  - component: {fileID: -4423526170718072364}
   m_Layer: 6
   m_Name: Banc
   m_TagString: Untagged
@@ -711,12 +720,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   structureType: 3
+  purchaseBehavior: {fileID: 0}
   PlayOnPlace:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4423526170718072364}
+        m_TargetAssemblyTypeName: CPN_Purchasable, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  PlayOnPlaceOverObject:
     m_PersistentCalls:
       m_Calls: []
   PlayOnDelete:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2580404554216117027}
+        m_TargetAssemblyTypeName: InteractionSpot, Assembly-CSharp
+        m_MethodName: AskToInterupt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6443843107343539039}
+        m_TargetAssemblyTypeName: InteractionSpot, Assembly-CSharp
+        m_MethodName: AskToInterupt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -4423526170718072364}
+        m_TargetAssemblyTypeName: CPN_Purchasable, Assembly-CSharp
+        m_MethodName: Sell
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   PlayOnSelect:
     m_PersistentCalls:
       m_Calls: []
@@ -767,6 +828,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &-4423526170718072364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5567826772177991717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8cdf1d94de085640a1ccb5157b02887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
 --- !u!1 &6097774352662208650
 GameObject:
   m_ObjectHideFlags: 0

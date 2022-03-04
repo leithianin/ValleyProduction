@@ -50,13 +50,13 @@ public class AnimalBehavior : MonoBehaviour
 
     private void DoBehavior()
     {
-        sequence.PlayAction(interaction, DoBehavior);
+        sequence.PlayAction(interaction, DoBehavior, null);
         //sequence.PlayAction(interaction, () => StartCoroutine(StartBehavior()));
     }
 
-    IEnumerator StartBehavior()
+    IEnumerator DelayBehavior()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(1f);
         DoBehavior();
     }
 }

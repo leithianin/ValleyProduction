@@ -219,6 +219,18 @@ public class SphericalTransform : MonoBehaviour
     {
         coordinates.y = value;
     }
+
+    public IEnumerator ChangeRadiusOverTime(float targetRadius, float speed)
+    {
+        float startRadius = coordinates.x;
+        float referenceTime = Mathf.Abs(startRadius - targetRadius) / speed;
+
+        for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
+        {
+            coordinates.x = Mathf.Lerp(targetRadius, startRadius, time / referenceTime);
+            yield return null;
+        }
+    }
     #endregion
 
     #region Constraints

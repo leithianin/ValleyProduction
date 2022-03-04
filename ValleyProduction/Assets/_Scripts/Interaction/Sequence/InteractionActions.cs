@@ -7,12 +7,14 @@ public abstract class InteractionActions : MonoBehaviour
 {
     public class SequenceCallback
     {
-        public Action callback;
+        public Action endCallback;
+        public Action interuptCallback;
         public CPN_InteractionHandler caller;
 
-        public SequenceCallback(Action nCallback, CPN_InteractionHandler nCaller)
+        public SequenceCallback(Action nEndCallbeck, Action nInteruptCallback, CPN_InteractionHandler nCaller)
         {
-            callback = nCallback;
+            endCallback = nEndCallbeck;
+            interuptCallback = nInteruptCallback;
             caller = nCaller;
         }
     }
@@ -25,11 +27,11 @@ public abstract class InteractionActions : MonoBehaviour
 
     protected abstract void OnInteruptAction(CPN_InteractionHandler caller);
 
-    public void PlayAction(CPN_InteractionHandler caller, Action callback)
+    public void PlayAction(CPN_InteractionHandler caller, Action endCallback, Action interuptCallback)
     {
         if (caller != null)
         {
-            askedCallbacks.Add(new SequenceCallback(callback, caller));
+            askedCallbacks.Add(new SequenceCallback(endCallback, interuptCallback, caller));
 
             OnPlayAction(caller);
         }
@@ -47,8 +49,8 @@ public abstract class InteractionActions : MonoBehaviour
             {
                 if (callbacksToTry[i].caller == caller)
                 {
-                    callbacksToTry[i].callback?.Invoke();
-                    callbacksToTry[i].callback = null;
+                    callbacksToTry[i].endCallback?.Invoke();
+                    callbacksToTry[i].endCallback = null;
 
                     if (askedCallbacks.Count > i)
                     {
@@ -70,7 +72,10 @@ public abstract class InteractionActions : MonoBehaviour
         {
             if (askedCallbacks[i].caller == caller)
             {
-                askedCallbacks[i].callback = null;
+                askedCallbacks[i].interuptCallback?.Invoke();
+                askedCallbacks[i].interuptCallback = null;
+
+                askedCallbacks[i].endCallback = null;
 
                 askedCallbacks.RemoveAt(i);
                 i--;

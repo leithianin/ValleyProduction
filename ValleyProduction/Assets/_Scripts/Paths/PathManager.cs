@@ -281,16 +281,17 @@ public class PathManager : VLY_Singleton<PathManager>
 
         DeletePoint(ist_pp);
 
-        if(SpawnPoints.Contains(ist_pp))
-        {
-            SpawnPoints.Remove(ist_pp);
-        }
         return true;
     }
 
     //Delete pathpoint
     public static void DeletePoint(IST_PathPoint ist_pp, PathData pd = null)
     {
+        if (SpawnPoints.Contains(ist_pp))
+        {
+            SpawnPoints.Remove(ist_pp);
+        }
+
         PathData pdToModify = new PathData();
         if (pd == null)
         {
@@ -896,6 +897,13 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static void UpdateLineWhenMoving(IST_PathPoint pp)
     {
+        //DestroyLine du path ou il y'a le Pathpoint
+        foreach(PathData pd in instance.pathDataList)
+        {
+
+        }
+
+
         //Get Path Navmesh + Save Data
     }
 
