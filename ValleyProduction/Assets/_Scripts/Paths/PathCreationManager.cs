@@ -14,8 +14,29 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
     private Vector3 offsetPathCalcul = new Vector3(0f, 0f, 0.5f); // -0.5f en z
 
+    public List<LineRenderer> modifyLinesRenderer = new List<LineRenderer>();
+
+    public static List<ModifyListClass> ModifyList = new List<ModifyListClass>();
+    public static bool isModifyPath = false;
+
+    //List des pathFragment à modifier avec leur LineRenderer
+    public class ModifyListClass 
+    {
+        public LineRenderer modifyLinesRenderer;
+        public PathFragmentData modifyPathFragment;
+
+        public ModifyListClass(LineRenderer modifyLinesRendererV, PathFragmentData modifyPathFragmentV)
+        {
+            modifyLinesRenderer = modifyLinesRendererV;
+            modifyPathFragment = modifyPathFragmentV;
+        }
+    }
+
+    public static void GetUpdateSeveralLine() => instance.UpdateSeveralLines();
+
     private void Awake()
     {
+        instance = this;
         navPath = new NavMeshPath();
     }
 
@@ -25,6 +46,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         if(PathManager.GetInstance.currentLineDebug)
         {
             CalculateCurrentPath();
+        }
+
+        if(isModifyPath)
+        {
+            UpdateSeveralLines();
         }
     }
 
@@ -37,7 +63,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         {
             NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position + offsetPathCalcul, InfrastructureManager.GetCurrentPreview.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
         }
-
 
         List<Vector3> points = new List<Vector3>();
 
@@ -57,6 +82,35 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         //DebugNavmesh();
 
         ShowPathLine(navmeshPositionsList);
+    }
+
+    public void UpdateSeveralLines()
+    {
+        foreach (ModifyListClass mlc in ModifyList)
+        {
+            navPath = new NavMeshPath();
+
+            NavMesh.CalculatePath(mlc.modifyPathFragment.startPoint.transform.position + offsetPathCalcul, mlc.modifyPathFragment.endPoint.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
+            
+            List<Vector3> points = new List<Vector3>();
+
+            int j = 1;
+
+            while (j < navPath.corners.Length)
+            {
+                points = new List<Vector3>(navPath.corners);
+                j++;
+            }
+
+            if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
+            {
+                navmeshPositionsList = new List<Vector3>(points);
+            }
+
+            //DebugNavmesh();
+
+            ShowPathLine(navmeshPositionsList, mlc.modifyLinesRenderer);
+        }
     }
 
     public static bool IsPathShortEnough(float maxDistance)
@@ -126,9 +180,17 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         }
     }
 
-    public void ShowPathLine(List<Vector3> path)
+    public void ShowPathLine(List<Vector3> path, LineRenderer rendererLine = null)
     {
-        LineRenderer lineRenderer = PathManager.GetInstance.currentLineDebug;
+        LineRenderer lineRenderer;
+        if (rendererLine != null) 
+        {
+            lineRenderer = rendererLine;
+        }
+        else
+        {
+            lineRenderer = PathManager.GetInstance.currentLineDebug;
+        }
 
         if(!lineRenderer.enabled)
         {
