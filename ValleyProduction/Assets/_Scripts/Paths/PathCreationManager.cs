@@ -104,6 +104,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
             if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
             {
+                mlc.modifyPathFragment.path = new List<Vector3>(points);
                 navmeshPositionsList = new List<Vector3>(points);
             }
 

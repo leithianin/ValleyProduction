@@ -433,7 +433,7 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 Debug.Log("String pas empty");
                 //Mise à jour du PathData existant
-                foreach (PathFragmentData pfd in instance.pathFragmentDataList)
+                foreach (PathFragmentData pfd in instance.currentPathData.pathFragment)
                 {
                     if (!instance.currentPathData.pathFragment.Contains(pfd))
                     {
@@ -896,6 +896,7 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    //Destroy le line renderer du pathData pour mettre un line sur chaque pathpoint (Comme à la création)
     public static void UpdateLineWhenMoving(IST_PathPoint pp)
     {
         //DestroyLine du path ou il y'a le Pathpoint
@@ -910,6 +911,13 @@ public class PathManager : VLY_Singleton<PathManager>
             Debug.Log(pd.pathFragment.Count);
             for(int i = 0; i < pd.pathFragment.Count; i++)
             {
+                instance.pathpointList.Add(pd.pathFragment[i].startPoint);
+
+                if (i == pd.pathFragment.Count-1)
+                {
+                    instance.pathpointList.Add(pd.pathFragment[i].endPoint);
+                }
+                
                 DebugBetween2Points(pd.pathFragment[i].startPoint, pd.pathFragment[i].endPoint);
 
                 if (pd.pathFragment[i].startPoint == pp || pd.pathFragment[i].endPoint == pp)
@@ -925,28 +933,9 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static void UpdateAfterMoving(IST_PathPoint pp)
     {
-        //Get les pathFragmentData
-        //Pour chaque PathFragment Data faire un calcul de Navmesh --> Liste de vector3
-        //Remplacer les Paths du path fragment
-
-        foreach(PathData pd in instance.pathDataList)
-        {
-            if(pd.ContainsPoint(pp))
-            {
-                foreach(PathFragmentData pfd in pd.pathFragment)
-                {
-                    if(pfd.HasThisPathpoint(pp))
-                    {
-                        pfdNavmeshUpdate.Add(pfd);
-                    }
-                }
-            }
-        }
-
-        if(pfdNavmeshUpdate.Count != 0)
-        {
-            PathCreationManager.instance.UpdateLineRendererAfterMoving(pfdNavmeshUpdate);
-        }
+        PathCreationManager.isModifyPath = false;
+        PathCreationManager.ModifyList.Clear();
+        CreatePathData();
     }
     #endregion
 }
