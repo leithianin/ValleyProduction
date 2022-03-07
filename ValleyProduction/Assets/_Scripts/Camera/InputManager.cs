@@ -42,8 +42,6 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
-
         //Move Camera functions
         MoveCameraOriginWithEdgeScrolling();
         MoveCameraOriginWithKeyboard();
