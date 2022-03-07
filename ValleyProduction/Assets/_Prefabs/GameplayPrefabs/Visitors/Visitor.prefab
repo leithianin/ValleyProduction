@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3417065030396455275}
   - component: {fileID: 3898088066656520254}
-  m_Layer: 0
+  - component: {fileID: 7933645770622368188}
+  - component: {fileID: 4228856039466728645}
+  m_Layer: 20
   m_Name: SatisfactionHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +55,32 @@ MonoBehaviour:
   hatedInteractions: 
   maxSatisfaction: 5
   maxTiredSatisfaction: 5
+--- !u!114 &7933645770622368188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976325078726078194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fbc8e59381c7bc45a61a2cbb94a83cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  satisfactionHandler: {fileID: 3898088066656520254}
+--- !u!135 &4228856039466728645
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976325078726078194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6796140070818361765
 GameObject:
   m_ObjectHideFlags: 0

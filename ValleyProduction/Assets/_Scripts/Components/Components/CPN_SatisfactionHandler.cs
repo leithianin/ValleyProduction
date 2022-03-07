@@ -11,7 +11,7 @@ public class CPN_SatisfactionHandler : VLY_Component<CPN_Data_SatisfactionHandle
     [SerializeField] private List<InteractionType> likedInteractions;
     [SerializeField] private List<InteractionType> hatedInteractions;
 
-    private float currentSatisfaction;
+    [SerializeField] private float currentSatisfaction;
 
     [SerializeField] private float maxSatisfaction = 5f;
     [SerializeField] private float maxTiredSatisfaction;
@@ -23,14 +23,26 @@ public class CPN_SatisfactionHandler : VLY_Component<CPN_Data_SatisfactionHandle
     private void Start()
     {
         currentPossibleMax = maxSatisfaction;
-
-        currentSatisfaction = Random.Range(0f, 5f);
     }
 
     public override void SetData(CPN_Data_SatisfactionHandler dataToSet)
     {
         likedInteractions = new List<InteractionType>(dataToSet.LikedInteractions());
         hatedInteractions = new List<InteractionType>(dataToSet.HatedInteractions());
+    }
+
+    public int GetAppreciationLevel(InteractionType satisfactionPointType)
+    {
+        if(likedInteractions.Contains(satisfactionPointType))
+        {
+            return 1;
+        }
+        else if (hatedInteractions.Contains(satisfactionPointType))
+        {
+            return -1;
+        }
+
+        return 0;
     }
 
     public void AddSatisfaction(float toAdd)

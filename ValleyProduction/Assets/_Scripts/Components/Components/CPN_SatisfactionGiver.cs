@@ -6,20 +6,22 @@ public class CPN_SatisfactionGiver : VLY_Component<CPN_Data_SatisfactionGiver>
 {
     [SerializeField] private float satisfactionGiven;
 
-    [SerializeField] private InteractionType interactionType;
+    [SerializeField] private InteractionType satisfactionType;
 
     public float SatisfactionGiven => satisfactionGiven;
+
+    public InteractionType SatisfactionGiverType => satisfactionType;
 
     public override void SetData(CPN_Data_SatisfactionGiver dataToSet)
     {
         satisfactionGiven = dataToSet.SatisfactionGiven();
 
-        interactionType = dataToSet.InteractionTypeUsed();
+        satisfactionType = dataToSet.InteractionTypeUsed();
     }
 
     public bool IsSameInteractionType(InteractionType toCheck)
     {
-        return interactionType == toCheck;
+        return satisfactionType == toCheck;
     }
 
 
