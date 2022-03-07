@@ -7,23 +7,23 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
 {
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
     [SerializeField, Tooltip("The speed of the visitor.")] private Vector2 speed;
-    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> interactionTypes;
-    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> likedInterestType;
-    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> hatedInterestType;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildsTypes> interactionTypes;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildsTypes> likedInterestType;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildsTypes> hatedInterestType;
 
     [Header("Stamina")]
-    [SerializeField] private float maxStamina;
-    [SerializeField] private float slopeCoef;
-    [SerializeField] private float staminaRegenCoef;
+    [SerializeField, Tooltip("Limite de stamina.")] private float maxStamina;
+    [SerializeField, Tooltip("Degré d'influence d'une pente.")] private float slopeCoef;
+    [SerializeField, Tooltip("Degré de récupération de stamina.")] private float staminaRegenCoef;
 
     [Header("Noise")]
-    public float noiseMade;
+    [Tooltip("Bruit émit par le visiteur.")] public float noiseMade;
 
     [Header("Pollution")]
-    [SerializeField] private float throwRadius;
-    [SerializeField] private Vector2 throwTimeRange;
-    [SerializeField] private float pickupChance;
-    [SerializeField] private float pickupRadius;
+    [SerializeField, Tooltip("Rayon dans lequel le visiteur va lancer son déchet.")] private float throwRadius;
+    [SerializeField, Tooltip("Délai minimum/maximum entre chaque jeté de déchet.")] private Vector2 throwTimeRange;
+    [SerializeField, Tooltip("Chance de ramasser un déchet qu'il croise.")] private float pickupChance;
+    [SerializeField, Tooltip("Rayon dans lequel le visiteur va ramasser un déchet.")] private float pickupRadius;
 
     /// <summary>
     /// Get a random skin for the visitor.
@@ -51,7 +51,7 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
         return speed;
     }
 
-    public List<InteractionType> InteractionInterest()
+    public List<BuildsTypes> InteractionInterest()
     {
         return interactionTypes;
     }
@@ -81,12 +81,12 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
         return pickupRadius;
     }
 
-    public List<InteractionType> LikedInteractions()
+    public List<BuildsTypes> LikedInteractions()
     {
         return likedInterestType;
     }
 
-    public List<InteractionType> HatedInteractions()
+    public List<BuildsTypes> HatedInteractions()
     {
         return hatedInterestType;
     }

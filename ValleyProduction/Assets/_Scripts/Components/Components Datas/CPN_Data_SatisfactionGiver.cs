@@ -6,5 +6,5 @@ public interface CPN_Data_SatisfactionGiver
 {
     public float SatisfactionGiven();
 
-    public InteractionType InteractionTypeUsed();
+    public BuildsTypes InteractionTypeUsed();
 }

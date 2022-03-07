@@ -8,8 +8,8 @@ public class CPN_SatisfactionHandler : VLY_Component<CPN_Data_SatisfactionHandle
     [SerializeField] private UnityEvent OnGainSatisfaction;
     [SerializeField] private UnityEvent OnLoseSatisfaction;
 
-    [SerializeField] private List<InteractionType> likedInteractions;
-    [SerializeField] private List<InteractionType> hatedInteractions;
+    [SerializeField] private List<BuildsTypes> likedInteractions;
+    [SerializeField] private List<BuildsTypes> hatedInteractions;
 
     [SerializeField] private float currentSatisfaction;
 
@@ -27,11 +27,11 @@ public class CPN_SatisfactionHandler : VLY_Component<CPN_Data_SatisfactionHandle
 
     public override void SetData(CPN_Data_SatisfactionHandler dataToSet)
     {
-        likedInteractions = new List<InteractionType>(dataToSet.LikedInteractions());
-        hatedInteractions = new List<InteractionType>(dataToSet.HatedInteractions());
+        likedInteractions = new List<BuildsTypes>(dataToSet.LikedInteractions());
+        hatedInteractions = new List<BuildsTypes>(dataToSet.HatedInteractions());
     }
 
-    public int GetAppreciationLevel(InteractionType satisfactionPointType)
+    public int GetAppreciationLevel(BuildsTypes satisfactionPointType)
     {
         if(likedInteractions.Contains(satisfactionPointType))
         {
