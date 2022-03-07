@@ -21,7 +21,7 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 
     public static void GainRessource(float amount)
     {
-        instance.currentRessources += amount;
+        instance.currentRessources += amount * Mathf.Ceil(AttractivityManager.AttractivityScore);
         instance.OnGainRessource?.Invoke(GetRessource);
     }
 

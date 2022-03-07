@@ -122,6 +122,7 @@ public class SphericalTransform : MonoBehaviour
     #region Origin
     public void MoveOrigin(float xInput, float yInput, float speed)
     {
+
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.unscaledDeltaTime;
     }
 

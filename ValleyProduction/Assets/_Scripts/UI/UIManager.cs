@@ -33,7 +33,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public void SelectStructure(InfrastructurePreview structure)
     {
-        switch(structure.RealInfrastructure.structureType)
+        switch(structure.RealInfrastructure.StructureType)
         {
             case InfrastructureType.Path:
                 if (PathManager.IsOnCreatePath)

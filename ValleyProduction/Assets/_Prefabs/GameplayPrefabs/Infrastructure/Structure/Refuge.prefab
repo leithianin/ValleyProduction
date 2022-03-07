@@ -93,8 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4587d817ba793204287e0fa5ee15227b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structureType: 2
-  purchaseBehavior: {fileID: 0}
+  datas: {fileID: 11400000, guid: 4ad9f17085661364aa8c78106fd9f757, type: 2}
+  purchaseBehavior: {fileID: 1688512389191840399}
   PlayOnPlace:
     m_PersistentCalls:
       m_Calls:
@@ -161,6 +161,21 @@ MonoBehaviour:
   PlayOnMouseExit:
     m_PersistentCalls:
       m_Calls: []
+  OnSetData:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1688512389191840399}
+        m_TargetAssemblyTypeName: CPN_Purchasable, Assembly-CSharp
+        m_MethodName: SetData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2349589115752647012
 MonoBehaviour:
   m_ObjectHideFlags: 0

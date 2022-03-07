@@ -168,6 +168,26 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         return toReturn;
     }
 
+    public static List<VisitorBehavior> GetUsedVisitors()
+    {
+        return instance.UsedVisitorList();
+    }
+
+    private List<VisitorBehavior> UsedVisitorList()
+    {
+        List<VisitorBehavior> toReturn = new List<VisitorBehavior>();
+
+        for (int i = 0; i < visitorPool.Count; i++)
+        {
+            if (visitorPool[i].IsUsed)
+            {
+                toReturn.Add(visitorPool[i]);
+            }
+        }
+
+        return toReturn;
+    }
+
     public static GameObject FindActiveHiker()
     {
         for (int i = 0; i < instance.visitorPool.Count; i++)
