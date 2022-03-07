@@ -14,10 +14,13 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
     private Vector3 offsetPathCalcul = new Vector3(0f, 0f, 0.5f); // -0.5f en z
 
-    public List<LineRenderer> modifyLinesRenderer = new List<LineRenderer>();
-
+    [Header("Modify Button")]
     public static List<ModifyListClass> ModifyList = new List<ModifyListClass>();
+    private List<AdditionalPathpointClass> additionalPathpointList = new List<AdditionalPathpointClass>();
     public static bool isModifyPath = false;
+    private float distance = 0f;
+
+    public GameObject testPathpoint;
 
     //List des pathFragment à modifier avec leur LineRenderer
     public class ModifyListClass 
@@ -30,6 +33,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             modifyLinesRenderer = modifyLinesRendererV;
             modifyPathFragment = modifyPathFragmentV;
         }
+    }
+
+    public class AdditionalPathpointClass
+    {
+        public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
     }
 
     public static void GetUpdateSeveralLine() => instance.UpdateSeveralLines();
@@ -86,12 +94,29 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
     public void UpdateSeveralLines()
     {
-        foreach (ModifyListClass mlc in ModifyList)
+        while(ModifyList.Count > additionalPathpointList.Count)
         {
+            additionalPathpointList.Add(new AdditionalPathpointClass());
+        }
+
+        for (int i = 0; i < ModifyList.Count; i++)
+        {
+            //Check distance entre chaque point
+            if (IsPathShortEnough(ModifyList[i].modifyPathFragment.startPoint, ModifyList[i].modifyPathFragment.endPoint))
+            {
+                //Debug.Log(i + " Proche");
+                AddMarkers(distance, i);
+            }
+            else
+            {
+                AddMarkers(distance, i);
+                //Debug.Log(i + " Loin");
+            }
+
             navPath = new NavMeshPath();
 
-            NavMesh.CalculatePath(mlc.modifyPathFragment.startPoint.transform.position + offsetPathCalcul, mlc.modifyPathFragment.endPoint.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
-            
+            NavMesh.CalculatePath(ModifyList[i].modifyPathFragment.startPoint.transform.position + offsetPathCalcul, ModifyList[i].modifyPathFragment.endPoint.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
+
             List<Vector3> points = new List<Vector3>();
 
             int j = 1;
@@ -104,13 +129,13 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
             if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
             {
-                mlc.modifyPathFragment.path = new List<Vector3>(points);
+                ModifyList[i].modifyPathFragment.path = new List<Vector3>(points);
                 navmeshPositionsList = new List<Vector3>(points);
             }
 
             //DebugNavmesh();
 
-            ShowPathLine(navmeshPositionsList, mlc.modifyLinesRenderer);
+            ShowPathLine(navmeshPositionsList, ModifyList[i].modifyLinesRenderer);
         }
     }
 
@@ -128,6 +153,64 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             }
         }
         return true;
+    }
+
+    public static bool IsPathShortEnough(IST_PathPoint pp1, IST_PathPoint pp2)
+    {
+        float currentDistance = 0;
+
+        currentDistance += Vector3.Distance(pp1.transform.position, pp2.transform.position);
+
+        if (currentDistance > 20f)
+        {
+            instance.distance = currentDistance;
+            return false;
+        }
+
+        instance.distance = currentDistance;
+        return true;
+    }
+
+    public void AddMarkers(float distance, int index)
+    {
+        Debug.Log("Add markers");
+        //Debug.Log(distance + " %20 = " + result);
+
+        int result = (int)distance / 20;
+
+        for (int i = 0; i < result; i++)
+        {        
+            if(i >= additionalPathpointList[index].pathpointList.Count)
+            {
+                additionalPathpointList[index].pathpointList.Add(new IST_PathPoint());
+            }
+
+            if (additionalPathpointList[index].pathpointList[i] == null)
+            {
+                Debug.Log("Instantiate new Pathpoint");
+                GameObject pathpoint = Instantiate(testPathpoint, PlayerInputManager.GetMousePosition, Quaternion.identity);
+                additionalPathpointList[index].pathpointList[i] = pathpoint.GetComponent<IST_PathPoint>();
+                //Creer pathpoint
+                //Add à la liste
+                //Placer à l'endroit même ou est le joueur
+                //Update line ? => Il faut qu'il parte du point qu'on place
+            }
+            else
+            {
+                Debug.Log("Existe déjà dans la liste");
+                //Existe déjà dans la liste, update ?
+            }
+        }
+
+        //Si il y'en a plus dans la liste qu'on en a parcouru dans le for --> Delete les points
+        if (result < additionalPathpointList[index].pathpointList.Count)
+        {
+            for(int i = additionalPathpointList[index].pathpointList.Count; additionalPathpointList[index].pathpointList.Count > result; i--)
+            {
+                Destroy(additionalPathpointList[index].pathpointList[additionalPathpointList[index].pathpointList.Count-1].gameObject);
+                additionalPathpointList[index].pathpointList.RemoveAt(additionalPathpointList[index].pathpointList.Count-1);
+            }
+        }
     }
 
     public void CalculatePath(IST_PathPoint ppstart, IST_PathPoint ppend, PathFragmentData pathFrag)

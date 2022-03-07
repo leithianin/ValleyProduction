@@ -908,7 +908,6 @@ public class PathManager : VLY_Singleton<PathManager>
                 instance.currentPathData = pd;
             }
 
-            Debug.Log(pd.pathFragment.Count);
             for(int i = 0; i < pd.pathFragment.Count; i++)
             {
                 instance.pathpointList.Add(pd.pathFragment[i].startPoint);
