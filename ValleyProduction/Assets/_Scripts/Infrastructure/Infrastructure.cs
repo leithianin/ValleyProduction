@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public abstract class Infrastructure : MonoBehaviour
 {
-    public InfrastructureType structureType;
+    [SerializeField] private InfrastructureData datas;
 
     [SerializeField] private CPN_Purchasable purchaseBehavior;
 
@@ -19,6 +19,13 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
     [SerializeField, Tooltip("Actions to play when the construction is on mouse over")] private UnityEvent PlayOnMouseOver;
     [SerializeField, Tooltip("Actions to play when the construction is on mouse over")] private UnityEvent PlayOnMouseExit;
+
+    [Header("Data setup")]
+    [SerializeField] private UnityEvent<InfrastructureData> OnSetData;
+
+    public InfrastructureData Data => datas;
+
+    public InfrastructureType StructureType => datas.StructureType;
 
     public CPN_Purchasable Purchasable => purchaseBehavior;
 
@@ -67,6 +74,8 @@ public abstract class Infrastructure : MonoBehaviour
     /// <param name="position">The position where the object is placed.</param>
     public void PlaceObject(Vector3 position)
     {
+        OnSetData?.Invoke(datas);
+
         PlayOnPlace?.Invoke();
         OnPlaceObject(position);
     }

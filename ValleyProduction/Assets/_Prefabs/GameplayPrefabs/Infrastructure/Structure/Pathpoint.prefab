@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25eb7df128733274295aba27d9097087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structureType: 1
+  datas: {fileID: 11400000, guid: 52d1573058ecd7e47a8a53961806e509, type: 2}
   purchaseBehavior: {fileID: 9028505647349876764}
   PlayOnPlace:
     m_PersistentCalls:
@@ -159,6 +159,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: IFB_ChangeLayer, Assembly-CSharp
         m_MethodName: PlayInt
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSetData:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9028505647349876764}
+        m_TargetAssemblyTypeName: CPN_Purchasable, Assembly-CSharp
+        m_MethodName: SetData
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

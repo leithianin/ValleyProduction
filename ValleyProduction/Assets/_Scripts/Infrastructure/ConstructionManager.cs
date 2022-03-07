@@ -157,9 +157,9 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         InfrastructureType lastStructureType = selectedStructureType;
 
         OnUnselectInfrastructureType();
-        if (newStructureType != null && lastStructureType != newStructureType.RealInfrastructure.structureType)
+        if (newStructureType != null && lastStructureType != newStructureType.RealInfrastructure.StructureType)
         {
-            selectedStructureType = newStructureType.RealInfrastructure.structureType;
+            selectedStructureType = newStructureType.RealInfrastructure.StructureType;
 
             InfrastructureManager.ChooseInfrastructure(newStructureType);
 
