@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewVisitor", menuName = "Valley/Visitor")]
-public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Movement, CPN_Data_Interaction, CPN_Data_Noise, CPN_Data_TrashThrower, CPN_Data_TrashPicker
+public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Movement, CPN_Data_Interaction, CPN_Data_SatisfactionHandler, CPN_Data_Noise, CPN_Data_TrashThrower, CPN_Data_TrashPicker
 {
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
     [SerializeField, Tooltip("The speed of the visitor.")] private Vector2 speed;
     [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> interactionTypes;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> likedInterestType;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<InteractionType> hatedInterestType;
 
     [Header("Stamina")]
     [SerializeField] private float maxStamina;
@@ -77,5 +79,15 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
     public float PickingRadius()
     {
         return pickupRadius;
+    }
+
+    public List<InteractionType> LikedInteractions()
+    {
+        return likedInterestType;
+    }
+
+    public List<InteractionType> HatedInteractions()
+    {
+        return hatedInterestType;
     }
 }
