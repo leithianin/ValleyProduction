@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface CPN_Data_Interaction
 {
-    public List<BuildsTypes> InteractionInterest();
+    public List<BuildTypes> InteractionInterest();
 }

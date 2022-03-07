@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface CPN_Data_SatisfactionHandler
 {
-    public List<BuildsTypes> LikedInteractions();
-    public List<BuildsTypes> HatedInteractions();
+    public List<BuildTypes> LikedInteractions();
+    public List<BuildTypes> HatedInteractions();
 }
