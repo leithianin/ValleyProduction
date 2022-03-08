@@ -26,12 +26,15 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public class ModifyListClass 
     {
         public LineRenderer modifyLinesRenderer;
+        //public List<LineRenderer> 
         public PathFragmentData modifyPathFragment;
+        public bool inverse;
 
-        public ModifyListClass(LineRenderer modifyLinesRendererV, PathFragmentData modifyPathFragmentV)
+        public ModifyListClass(LineRenderer modifyLinesRendererV, PathFragmentData modifyPathFragmentV, bool isInverse)
         {
             modifyLinesRenderer = modifyLinesRendererV;
             modifyPathFragment = modifyPathFragmentV;
+            inverse = isInverse;
         }
     }
 
@@ -101,18 +104,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
         for (int i = 0; i < ModifyList.Count; i++)
         {
-            //Check distance entre chaque point
-            if (IsPathShortEnough(ModifyList[i].modifyPathFragment.startPoint, ModifyList[i].modifyPathFragment.endPoint))
-            {
-                //Debug.Log(i + " Proche");
-                AddMarkers(distance, i);
-            }
-            else
-            {
-                AddMarkers(distance, i);
-                //Debug.Log(i + " Loin");
-            }
-
             navPath = new NavMeshPath();
 
             NavMesh.CalculatePath(ModifyList[i].modifyPathFragment.startPoint.transform.position + offsetPathCalcul, ModifyList[i].modifyPathFragment.endPoint.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
@@ -132,6 +123,8 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                 ModifyList[i].modifyPathFragment.path = new List<Vector3>(points);
                 navmeshPositionsList = new List<Vector3>(points);
             }
+
+            AddMarkersTest(navmeshPositionsList, i, ModifyList[i].inverse);
 
             //DebugNavmesh();
 
@@ -171,6 +164,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         return true;
     }
 
+    /*
     public void AddMarkers(float distance, int index)
     {
         Debug.Log("Add markers");
@@ -209,6 +203,97 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             {
                 Destroy(additionalPathpointList[index].pathpointList[additionalPathpointList[index].pathpointList.Count-1].gameObject);
                 additionalPathpointList[index].pathpointList.RemoveAt(additionalPathpointList[index].pathpointList.Count-1);
+            }
+        }
+    }*/
+
+    public void AddMarkersTest(List<Vector3> vectors, int index, bool isInverse)
+    {
+        float distance = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
+        int result = (int)distance / 20;
+
+        if (result > 0)
+        {
+            for (int i = 1; i <= result; i++)
+            {
+                if (additionalPathpointList[index].pathpointList.Count < result)
+                {
+                    additionalPathpointList[index].pathpointList.Add(new IST_PathPoint());
+                }
+
+                float distancemax = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
+
+
+                //La distance qu'il faut parcourir à partir du point qu'on déplace
+                float distanceNeed = distancemax - (i * 20f);
+
+                if (!isInverse)
+                {
+                    for (int y = 0; y < vectors.Count - 1; y++)
+                    {
+                        float distanceToSave = Vector3.Distance(vectors[y], vectors[y + 1]);
+
+                        //Debug.Log(distanceNeed +" < " + distanceToSave);
+
+                        if (distanceNeed < distanceToSave)
+                        {
+                            if (additionalPathpointList[index].pathpointList[i - 1] == null)
+                            {
+                                //Placer le point
+                                Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
+
+                                GameObject pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                additionalPathpointList[index].pathpointList[i - 1] = pathpoint.GetComponent<IST_PathPoint>();
+                            }
+                            else
+                            {
+                                //Update point
+                                additionalPathpointList[index].pathpointList[i - 1].transform.position = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            distanceNeed -= Vector3.Distance(vectors[y], vectors[y + 1]);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int y = vectors.Count - 1; y > 0; y--)
+                    {
+                        float distanceToSave = Vector3.Distance(vectors[y], vectors[y - 1]);
+
+                        if (distanceNeed < distanceToSave)
+                        {
+                            if (additionalPathpointList[index].pathpointList[i - 1] == null)
+                            {
+                                //Placer le point
+                                Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
+                                GameObject pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                additionalPathpointList[index].pathpointList[i - 1] = pathpoint.GetComponent<IST_PathPoint>();
+                            }
+                            else
+                            {
+                                additionalPathpointList[index].pathpointList[i - 1].transform.position = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            distanceNeed -= Vector3.Distance(vectors[y], vectors[y - 1]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (result < additionalPathpointList[index].pathpointList.Count)
+        {
+            for (int i = additionalPathpointList[index].pathpointList.Count; additionalPathpointList[index].pathpointList.Count > result; i--)
+            {
+                Destroy(additionalPathpointList[index].pathpointList[additionalPathpointList[index].pathpointList.Count - 1].gameObject);
+                additionalPathpointList[index].pathpointList.RemoveAt(additionalPathpointList[index].pathpointList.Count - 1);
             }
         }
     }

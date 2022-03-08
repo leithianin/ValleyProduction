@@ -921,7 +921,14 @@ public class PathManager : VLY_Singleton<PathManager>
 
                 if (pd.pathFragment[i].startPoint == pp || pd.pathFragment[i].endPoint == pp)
                 {
-                    PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count-1].GetComponent<LineRenderer>(), pd.pathFragment[i]));
+                    if (pd.pathFragment[i].endPoint == pp)
+                    {
+                        PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i],true));
+                    }
+                    else
+                    {
+                        PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i], false));
+                    }
                 }
             }
         }
