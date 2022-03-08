@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4604670140881424748}
   - component: {fileID: 1096573408472218059}
   - component: {fileID: 9028505647349876764}
+  - component: {fileID: 1950444411236423360}
   m_Layer: 2
   m_Name: Pathpoint
   m_TagString: Untagged
@@ -182,6 +183,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  node: {fileID: 1950444411236423360}
 --- !u!208 &2081739497460383008
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -237,6 +239,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 0
+--- !u!114 &1950444411236423360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583442100236828276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecd17776a4b84e4d9942bfcfca52d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usableFragments: []
+  dataByLandmark:
+  - landmark: 1
+    distanceFromLandmark: -1
+    parent: {fileID: 0}
+    linkedToLandmark: 0
+  - landmark: 3
+    distanceFromLandmark: -1
+    parent: {fileID: 0}
+    linkedToLandmark: 0
 --- !u!1001 &2017912002382719128
 PrefabInstance:
   m_ObjectHideFlags: 0

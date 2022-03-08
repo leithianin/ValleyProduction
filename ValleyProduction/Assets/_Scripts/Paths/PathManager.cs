@@ -104,6 +104,9 @@ public class PathManager : VLY_Singleton<PathManager>
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
             instance.pathFragmentDataList.Add(new_pfd);
 
+            pathpoint.Node.AddFragment(new_pfd);
+            previousPathpoint.Node.AddFragment(new_pfd);
+
             //IF ONBOARDING SEQUENCE 
             new_pfd.CheckAvailableInterestPoint();
 
@@ -113,6 +116,8 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             previousPathpoint = pathpoint;
         }
+
+        pathpoint.Node.PlaceNode();
 
         DebugPoint(previousPathpoint);
     }

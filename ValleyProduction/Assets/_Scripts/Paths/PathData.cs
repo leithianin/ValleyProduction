@@ -157,11 +157,11 @@ public class PathData
     {
         if (pathFragment[0].HasThisStartingPoint(ist_pp))
         {
-            pathFragment.RemoveAt(0);
+            RemovePathFragment(pathFragment[0]);
         }
         else
         {
-            pathFragment.RemoveAt(1);
+            RemovePathFragment(pathFragment[1]);
         }
     }
 
@@ -189,8 +189,16 @@ public class PathData
 
         foreach (PathFragmentData pfd in listSuppr)
         {
-            pathFragment.Remove(pfd);
+            RemovePathFragment(pfd);
         }
+    }
+
+    private void RemovePathFragment(PathFragmentData toRemove)
+    {
+        pathFragment.Remove(toRemove);
+
+        toRemove.startPoint.Node.RemoveFragment(toRemove);
+        toRemove.endPoint.Node.RemoveFragment(toRemove);
     }
 
     public List<PathFragmentData> GetAllNextPathFragment(IST_PathPoint pathpoint)

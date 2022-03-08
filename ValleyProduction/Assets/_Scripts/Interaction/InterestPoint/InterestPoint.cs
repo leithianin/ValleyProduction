@@ -16,6 +16,20 @@ public class InterestPoint : MonoBehaviour
 
     public bool IsLandmark => isLandmark;
 
+    public List<BuildTypes> InteractionTypeInInterestPoint()
+    {
+        List<BuildTypes> toReturn = new List<BuildTypes>();
+
+        for (int i = 0; i < interactions.Length; i++)
+        {
+            if(!toReturn.Contains(interactions[i].interactionType))
+            {
+                toReturn.Add(interactions[i].interactionType);
+            }
+        }
+        return toReturn;
+    }
+
     public InteractionSpot GetRandomSpot(CPN_InteractionHandler interactor)
     {
         List<InteractionSpot> usableInteractions = GetUsableInteractions(interactor);

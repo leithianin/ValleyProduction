@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class IST_PathPoint : Infrastructure
 {
+    [SerializeField] private PathNode node;
+
     public Action OnDestroyPathPoint;
+
+    public PathNode Node => node;
 
     //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)
@@ -23,6 +27,7 @@ public class IST_PathPoint : Infrastructure
             UIManager.HideRoadsInfo();
             return;
         }
+
         if (PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
         {
             PathManager.PlacePoint(this, transform.position);
@@ -44,11 +49,14 @@ public class IST_PathPoint : Infrastructure
     {
         if (PathManager.HasManyPath(this))
         {
+            node.UpdateNode();
             UIManager.ArrangePathButton(this);
             return false;
         }
         else
         {
+            node.DeleteNode();
+
             PathManager.DeletePoint(this);
             InfrastructureManager.DesnapInfrastructure(this);
 
@@ -61,6 +69,8 @@ public class IST_PathPoint : Infrastructure
     //Remove à partir de l'UI
     public void Remove(PathData pd)
     {
+        node.DeleteNode();
+
         OnDestroyPathPoint?.Invoke();
         PathManager.DeletePoint(this, pd);
         InfrastructureManager.DesnapInfrastructure(this);
