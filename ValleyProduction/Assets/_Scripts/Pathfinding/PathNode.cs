@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PathNode : MonoBehaviour
@@ -13,17 +14,30 @@ public class PathNode : MonoBehaviour
 
     public bool IsBeingUpdated => isBeingUpdated;
 
+    /// <summary>
+    /// Add a PathFragmentData to the list of usable path fragment.
+    /// </summary>
+    /// <param name="toAdd">The PAthFragmentData to add.</param>
     public void AddFragment(PathFragmentData toAdd)
     {
         usableFragments.Add(toAdd);
     }
 
+    /// <summary>
+    /// Remove a PathFragmentData to the list of usable path fragment.
+    /// </summary>
+    /// <param name="toRemove">The PAthFragmentData to remove.</param>
     public void RemoveFragment(PathFragmentData toRemove)
     {
         usableFragments.Remove(toRemove);
     }
 
-    public PathFragmentData GetMostInterestingPath(BuildTypes target)
+    /// <summary>
+    /// Search for the most interesting path depending on several datas.
+    /// </summary>
+    /// <param name="target">The Landmark to search for.</param>
+    /// <returns>The PathFragmentData for the visitor to follow.</returns>
+    public PathFragmentData GetMostInterestingPath(LandmarkType target)
     {
         List<PathNode> neighbours = GetNeighbours();
 
@@ -41,10 +55,20 @@ public class PathNode : MonoBehaviour
             }
         }
 
+        if(toReturn == null)
+        {
+            toReturn = usableFragments[UnityEngine.Random.Range(0, usableFragments.Count)];
+        }
+
         return toReturn;
     }
 
-    public NodePathData GetDataForLandmarkType(BuildTypes landmarkTarget)
+    /// <summary>
+    /// Search for a NodePathData that contains the LandmarkType wanted.
+    /// </summary>
+    /// <param name="landmarkTarget">The LandmarkType to search for.</param>
+    /// <returns>Return the NodePathData that contains the LandmarkType. Return null if the LandmarkType is unknown.</returns>
+    public NodePathData GetDataForLandmarkType(LandmarkType landmarkTarget)
     {
         for (int i = 0; i < dataByLandmark.Count; i++)
         {
@@ -56,18 +80,21 @@ public class PathNode : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Check if the PathNode is next to a Landmark and Update the node.
+    /// </summary>
     public void PlaceNode()
     {
         Collider[] colliderTab = Physics.OverlapSphere(transform.position, 0.5f);
 
         foreach (Collider c in colliderTab)
         {
-            InterestPoint foundInterestPoint = c.gameObject.GetComponent<InterestPoint>();
+            CPN_IsLandmark foundInterestPoint = c.gameObject.GetComponent<CPN_IsLandmark>();
             if (foundInterestPoint != null)
             {
                 for (int i = 0; i < dataByLandmark.Count; i++)
                 {
-                    if (foundInterestPoint.InteractionTypeInInterestPoint().Contains(dataByLandmark[i].landmark))
+                    if (foundInterestPoint.Type == dataByLandmark[i].landmark)
                     {
                         dataByLandmark[i].distanceFromLandmark = 0;
                         dataByLandmark[i].linkedToLandmark = true;
@@ -79,6 +106,9 @@ public class PathNode : MonoBehaviour
         UpdateNode();
     }
 
+    /// <summary>
+    /// Tell the neighbours that the Node has been deleted.
+    /// </summary>
     public void DeleteNode()
     {
         List<PathNode> neighbours = GetNeighbours();
@@ -87,11 +117,30 @@ public class PathNode : MonoBehaviour
         {
             if (neighbours[i].HasParent(this))
             {
-                neighbours[i].UpdateNode();
+                neighbours[i].UpdateFromDeletedNode(this);
             }
         }
     }
 
+    public void UpdateFromDeletedNode(PathNode deletedNode)
+    {
+        for (int i = 0; i < dataByLandmark.Count; i++)
+        {
+            if (dataByLandmark[i].parent == deletedNode && !dataByLandmark[i].linkedToLandmark)
+            {
+                dataByLandmark[i].distanceFromLandmark = -1;
+                dataByLandmark[i].parent = null;
+            }
+        }
+
+        DeleteNode();
+
+        UpdateNode();
+    }
+
+    /// <summary>
+    /// Update the node for all known LandmarkType.
+    /// </summary>
     public void UpdateNode()
     {
         isBeingUpdated = true;
@@ -137,6 +186,11 @@ public class PathNode : MonoBehaviour
         isBeingUpdated = false;
     }
 
+    /// <summary>
+    /// Check if the node has "parentToCheck" as a parent for one of the Landmark.
+    /// </summary>
+    /// <param name="parentToCheck">The parent to search for.</param>
+    /// <returns>True if the variable is used as a parent.</returns>
     public bool HasParent(PathNode parentToCheck)
     {
         for (int i = 0; i < dataByLandmark.Count; i++)
@@ -149,6 +203,10 @@ public class PathNode : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Search for all neighbours PathNode.
+    /// </summary>
+    /// <returns>A list of all the PathNode linked to the node.</returns>
     private List<PathNode> GetNeighbours()
     {
         List<PathNode> toReturn = new List<PathNode>();
@@ -166,5 +224,28 @@ public class PathNode : MonoBehaviour
         }
 
         return toReturn;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (Selection.activeGameObject != transform.gameObject)
+        {
+            return;
+        }
+
+        int i = 0;
+
+        PathNode parent = this;
+
+        while (i < 100 && parent != null)
+        {
+            i++;
+            PathNode lastParent = parent;
+            parent = parent.dataByLandmark[1].parent;
+            if (parent != null)
+            {
+                Gizmos.DrawLine(lastParent.WorldPosition, parent.WorldPosition);
+            }
+        }
     }
 }

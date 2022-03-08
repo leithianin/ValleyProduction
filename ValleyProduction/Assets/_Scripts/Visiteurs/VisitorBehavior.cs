@@ -22,7 +22,7 @@ public class VisitorBehavior : MonoBehaviour
 
     private bool isUsed = false;
 
-    private BuildTypes currentObjective;
+    private LandmarkType currentObjective;
 
     public bool IsUsed => isUsed;
 
@@ -42,7 +42,7 @@ public class VisitorBehavior : MonoBehaviour
     /// <param name="nPath">Le chemin choisit par le visiteur.</param>
     public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, PathData nPath)
     {
-        currentObjective = BuildTypes.Fauna;
+        currentObjective = LandmarkType.Ruin;
 
         currentPath = nPath;
 
@@ -183,7 +183,7 @@ public class VisitorBehavior : MonoBehaviour
     {
         if(currentPathFragment.endPoint.Node.GetDataForLandmarkType(currentObjective).linkedToLandmark)
         {
-            currentObjective = BuildTypes.Spawn;
+            currentObjective = LandmarkType.Spawn;
         }
 
         PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective);

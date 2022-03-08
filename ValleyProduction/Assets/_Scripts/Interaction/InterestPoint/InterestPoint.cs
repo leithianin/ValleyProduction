@@ -5,16 +5,12 @@ using UnityEngine.Events;
 
 public class InterestPoint : MonoBehaviour
 {
-    [SerializeField] private bool isLandmark;
-
     [SerializeField] private InteractionSpot[] interactions;
 
     public bool IsUsable(CPN_InteractionHandler interactor)
     {
         return GetUsableInteractions(interactor).Count > 0;
     }
-
-    public bool IsLandmark => isLandmark;
 
     public List<BuildTypes> InteractionTypeInInterestPoint()
     {

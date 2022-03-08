@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class NodePathData
 {
-    public BuildTypes landmark;
+    public LandmarkType landmark;
     public float distanceFromLandmark = -1f;
     public PathNode parent;
 
