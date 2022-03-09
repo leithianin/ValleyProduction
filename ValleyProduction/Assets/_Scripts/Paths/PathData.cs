@@ -31,6 +31,8 @@ public class PathData
     //Debug Path --> J'ai besoin de savoir à qui il appartient lors de la suppression
     public LineRenderer pathLineRenderer;
 
+    [Obsolete]
+
     private List<InterestPointDetector> interestPointDetectors = new List<InterestPointDetector>();
 
     /// <summary>
@@ -251,6 +253,7 @@ public class PathData
         return false;
     }
 
+    [Obsolete]
     public void AddInterestPointDetector(InterestPointDetector detector)
     {
         if(!interestPointDetectors.Contains(detector))
@@ -261,6 +264,7 @@ public class PathData
         }
     }
 
+    [Obsolete]
     public void RemoveInterestPointDetector(InterestPointDetector detector)
     {
         if (interestPointDetectors.Contains(detector))
