@@ -481,11 +481,7 @@ public class PathManager : VLY_Singleton<PathManager>
             }
 
             //Reset les currents Data puisqu'on deselectionne le chemin
-            instance.pathFragmentDataList.Clear();
-            instance.pathpointList.Clear();
-            instance.currentPathData = null;
-            previousPathpoint = null;
-
+            instance.ResetCurrentData();
 
             //IF ONBOARDING SEQUENCE 
             isOnFinishPath?.Invoke(true);
@@ -495,6 +491,38 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.pathpointList[0].RemoveObject();
             instance.pathpointList.Clear();
         }
+    }
+
+    /// <summary>
+    /// Update Pathfragments data of a Path data
+    /// </summary>
+    public static void UpdatePathFragmentData()
+    {
+        GetCurrentPathData.pathFragment.Clear();
+
+        for(int i = 0; i < GetCurrentPathpointList.Count-1; i++)
+        {
+            PathFragmentData new_pfd = new PathFragmentData(GetCurrentPathpointList[i], GetCurrentPathpointList[i+1], PathCreationManager.instance.CalculatePath(GetCurrentPathpointList[i], GetCurrentPathpointList[i + 1]));
+            GetCurrentPathData.pathFragment.Add(new_pfd);
+        }
+
+        if (instance.debugMode)
+        {
+            Debug.Log("Feedback visuel");
+            DebugLineR(instance.currentPathData);
+        }
+
+        instance.ResetCurrentData();
+    }
+
+    public void ResetCurrentData()
+    {
+        instance.pathFragmentDataList.Clear();
+        instance.pathpointList.Clear();
+        instance.currentPathData = null;
+        previousPathpoint = null;
+
+        PathCreationManager.ResetData();
     }
 
     public static void CreatePathDataClose(List<PathFragmentData> listPathFragment)
@@ -932,7 +960,9 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
             }
         }
-        PathCreationManager.GetUpdateSeveralLine();
+        PathCreationManager.refList = GetCurrentPathpointList;
+        PathCreationManager.instance.newPathFragmentData = new List<PathFragmentData>(GetCurrentPathData.pathFragment);
+        PathCreationManager.GetUpdateSeveralLine(pp);
         PathCreationManager.isModifyPath = true;
         //Get Path Navmesh + Save Data
     }
@@ -941,7 +971,7 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         PathCreationManager.isModifyPath = false;
         PathCreationManager.ModifyList.Clear();
-        CreatePathData();
+        UpdatePathFragmentData();
     }
     #endregion
 }

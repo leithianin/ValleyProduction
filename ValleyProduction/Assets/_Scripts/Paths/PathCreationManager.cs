@@ -15,6 +15,9 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     private Vector3 offsetPathCalcul = new Vector3(0f, 0f, 0.5f); // -0.5f en z
 
     [Header("Modify Button")]
+    public static List<IST_PathPoint> refList;                                                                     //Copie de la liste de pathpoint de pathManager
+    public List<PathFragmentData> newPathFragmentData;
+    private IST_PathPoint movingPathpoint;
     public static List<ModifyListClass> ModifyList = new List<ModifyListClass>();
     private List<AdditionalPathpointClass> additionalPathpointList = new List<AdditionalPathpointClass>();
     public static bool isModifyPath = false;
@@ -23,7 +26,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public GameObject testPathpoint;
 
     //List des pathFragment à modifier avec leur LineRenderer
-    public class ModifyListClass 
+    public class ModifyListClass
     {
         public LineRenderer modifyLinesRenderer;
         //public List<LineRenderer> 
@@ -41,9 +44,10 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public class AdditionalPathpointClass
     {
         public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
+        public bool isBefore = false;
     }
 
-    public static void GetUpdateSeveralLine() => instance.UpdateSeveralLines();
+    public static void GetUpdateSeveralLine(IST_PathPoint pp) => instance.UpdateSeveralLines(pp);
 
     private void Awake()
     {
@@ -54,15 +58,23 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     // Update is called once per frame
     void Update()
     {
-        if(PathManager.GetInstance.currentLineDebug)
+        if (PathManager.GetInstance.currentLineDebug)
         {
             CalculateCurrentPath();
         }
 
-        if(isModifyPath)
+        if (isModifyPath)
         {
-            UpdateSeveralLines();
+            UpdateSeveralLines(movingPathpoint);
         }
+    }
+
+    public static void ResetData()
+    {
+        isModifyPath = false;
+        instance.newPathFragmentData.Clear();
+        instance.additionalPathpointList.Clear();
+        ModifyList.Clear();
     }
 
     //Calculate Path each frame you're editing a path
@@ -95,9 +107,35 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         ShowPathLine(navmeshPositionsList);
     }
 
-    public void UpdateSeveralLines()
+    public List<Vector3> CalculatePath(IST_PathPoint ppstart, IST_PathPoint ppend)
     {
-        while(ModifyList.Count > additionalPathpointList.Count)
+        navPath = new NavMeshPath();
+
+        NavMesh.CalculatePath(ppstart.transform.position + offsetPathCalcul, ppend.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
+
+        List<Vector3> points = new List<Vector3>();
+
+        int j = 1;
+
+        while (j < navPath.corners.Length)
+        {
+            points = new List<Vector3>(navPath.corners);
+            j++;
+        }
+
+        if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
+        {
+            navmeshPositionsList = new List<Vector3>(points);
+        }
+
+        return navmeshPositionsList;
+    }
+
+    public void UpdateSeveralLines(IST_PathPoint pp)
+    {
+        movingPathpoint = pp;
+
+        while (ModifyList.Count > additionalPathpointList.Count)
         {
             additionalPathpointList.Add(new AdditionalPathpointClass());
         }
@@ -124,7 +162,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                 navmeshPositionsList = new List<Vector3>(points);
             }
 
-            AddMarkersTest(navmeshPositionsList, i, ModifyList[i].inverse);
+            AddMarkers(navmeshPositionsList, i, ModifyList[i].inverse);
 
             //DebugNavmesh();
 
@@ -136,11 +174,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     {
         float currentDistance = 0;
 
-        for(int i = 0; i < navmeshPositionsList.Count - 1; i++)
+        for (int i = 0; i < navmeshPositionsList.Count - 1; i++)
         {
             currentDistance += Vector3.Distance(navmeshPositionsList[i], navmeshPositionsList[i + 1]);
 
-            if(currentDistance > maxDistance)
+            if (currentDistance > maxDistance)
             {
                 return false;
             }
@@ -148,66 +186,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         return true;
     }
 
-    public static bool IsPathShortEnough(IST_PathPoint pp1, IST_PathPoint pp2)
-    {
-        float currentDistance = 0;
-
-        currentDistance += Vector3.Distance(pp1.transform.position, pp2.transform.position);
-
-        if (currentDistance > 20f)
-        {
-            instance.distance = currentDistance;
-            return false;
-        }
-
-        instance.distance = currentDistance;
-        return true;
-    }
-
-    /*
-    public void AddMarkers(float distance, int index)
-    {
-        Debug.Log("Add markers");
-        //Debug.Log(distance + " %20 = " + result);
-
-        int result = (int)distance / 20;
-
-        for (int i = 0; i < result; i++)
-        {        
-            if(i >= additionalPathpointList[index].pathpointList.Count)
-            {
-                additionalPathpointList[index].pathpointList.Add(new IST_PathPoint());
-            }
-
-            if (additionalPathpointList[index].pathpointList[i] == null)
-            {
-                Debug.Log("Instantiate new Pathpoint");
-                GameObject pathpoint = Instantiate(testPathpoint, PlayerInputManager.GetMousePosition, Quaternion.identity);
-                additionalPathpointList[index].pathpointList[i] = pathpoint.GetComponent<IST_PathPoint>();
-                //Creer pathpoint
-                //Add à la liste
-                //Placer à l'endroit même ou est le joueur
-                //Update line ? => Il faut qu'il parte du point qu'on place
-            }
-            else
-            {
-                Debug.Log("Existe déjà dans la liste");
-                //Existe déjà dans la liste, update ?
-            }
-        }
-
-        //Si il y'en a plus dans la liste qu'on en a parcouru dans le for --> Delete les points
-        if (result < additionalPathpointList[index].pathpointList.Count)
-        {
-            for(int i = additionalPathpointList[index].pathpointList.Count; additionalPathpointList[index].pathpointList.Count > result; i--)
-            {
-                Destroy(additionalPathpointList[index].pathpointList[additionalPathpointList[index].pathpointList.Count-1].gameObject);
-                additionalPathpointList[index].pathpointList.RemoveAt(additionalPathpointList[index].pathpointList.Count-1);
-            }
-        }
-    }*/
-
-    public void AddMarkersTest(List<Vector3> vectors, int index, bool isInverse)
+    public void AddMarkers(List<Vector3> vectors, int index, bool isInverse)
     {
         float distance = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
         int result = (int)distance / 20;
@@ -223,17 +202,16 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
                 float distancemax = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
 
-
                 //La distance qu'il faut parcourir à partir du point qu'on déplace
                 float distanceNeed = distancemax - (i * 20f);
 
                 if (!isInverse)
                 {
+                    additionalPathpointList[index].isBefore = true;
+
                     for (int y = 0; y < vectors.Count - 1; y++)
                     {
                         float distanceToSave = Vector3.Distance(vectors[y], vectors[y + 1]);
-
-                        //Debug.Log(distanceNeed +" < " + distanceToSave);
 
                         if (distanceNeed < distanceToSave)
                         {
@@ -241,9 +219,10 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                             {
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
-
                                 GameObject pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                UpdateData(pathpoint.GetComponent<IST_PathPoint>(), vectors, false);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint.GetComponent<IST_PathPoint>();
+
                             }
                             else
                             {
@@ -271,6 +250,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
                                 GameObject pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                UpdateData(pathpoint.GetComponent<IST_PathPoint>(), vectors, true);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint.GetComponent<IST_PathPoint>();
                             }
                             else
@@ -292,45 +272,46 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         {
             for (int i = additionalPathpointList[index].pathpointList.Count; additionalPathpointList[index].pathpointList.Count > result; i--)
             {
+                PathManager.instance.pathpointList.Remove(additionalPathpointList[index].pathpointList[additionalPathpointList[index].pathpointList.Count - 1]);
                 Destroy(additionalPathpointList[index].pathpointList[additionalPathpointList[index].pathpointList.Count - 1].gameObject);
                 additionalPathpointList[index].pathpointList.RemoveAt(additionalPathpointList[index].pathpointList.Count - 1);
+                //Delete PathPoint dans la liste
             }
         }
     }
 
-    public void CalculatePath(IST_PathPoint ppstart, IST_PathPoint ppend, PathFragmentData pathFrag)
+    //Update les info du pathdata de PathManager 
+    //PathFragment à update ici aussi
+    public void UpdateData(IST_PathPoint pp, List<Vector3> vectors, bool isBefore)
     {
-        NavMesh.CalculatePath(ppstart.transform.position + offsetPathCalcul, ppend.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
+        int index = refList.IndexOf(movingPathpoint);
+        refList.Add(pp);
 
-        List<Vector3> points = new List<Vector3>();
-
-        int j = 1;
-
-        while (j < navPath.corners.Length)
+        //Je pars du dernier point et je reviens vers l'index de celui que je bouge
+        for (int i = refList.Count-1; i >= index; i--)
         {
-            points = new List<Vector3>(navPath.corners);
-            j++;
-        }
+            refList[i] = refList[i - 1];
 
-        if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
-        {
-            navmeshPositionsList = new List<Vector3>(points);
-        }
+            if (isBefore)
+            {
+                if(i == index)
+                {
+                    refList[i] = pp;
+                    //update pathf
 
-        foreach (Vector3 vec in navmeshPositionsList)
-        {
-            pathFrag.path.Add(vec);
-        }
-    }
+                    break;
+                }
+            }
+            else
+            {
+                if(i == (index+1))
+                {
+                    refList[i] = pp;
+                    //update  athf
 
-    //Calculate Path after moving
-    public void UpdateLineRendererAfterMoving(List<PathFragmentData> pfdList)
-    {
-        //Je reçois la liste 
-
-        foreach(PathFragmentData pfd in pfdList)
-        {
-            CalculatePath(pfd.startPoint, pfd.endPoint, pfd);
+                    break;
+                }
+            }
         }
     }
 

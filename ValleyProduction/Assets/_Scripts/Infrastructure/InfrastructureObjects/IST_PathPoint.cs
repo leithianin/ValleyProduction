@@ -73,7 +73,6 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnReplaceObject()
     {
-        //Remettra un Line Renderer sur tout le pathData
         PathManager.UpdateAfterMoving(this);
     }
 
