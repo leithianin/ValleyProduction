@@ -10,7 +10,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private GameObject hud = default;
     [SerializeField] private bool allowRotation = true;
 
-    [SerializeField] private float movingSpeed = 10.0f;
+    [SerializeField] private float movingSpeed = 5.0f;
+    [SerializeField] private float fastMovingSpeed = 10.0f;
 
     [Header("Edge Scrolling")]
     [SerializeField] private bool useEdgeScrolling;
@@ -64,7 +65,7 @@ public class InputManager : MonoBehaviour
         if (!cameraTransform)
             return;
 
-        cameraTransform.MoveOrigin(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), movingSpeed);
+        cameraTransform.MoveOrigin(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), Input.GetKey(KeyCode.LeftShift) ? fastMovingSpeed :  movingSpeed);
     }
 
     void MoveCameraOriginWithEdgeScrolling()
