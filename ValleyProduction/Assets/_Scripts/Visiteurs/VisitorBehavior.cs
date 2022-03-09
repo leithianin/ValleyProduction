@@ -9,19 +9,20 @@ public class VisitorBehavior : MonoBehaviour
     [SerializeField] private CPN_Movement movement;
 
     private IST_PathPoint spawnPoint;
-    private PathData currentPath;
+    //private PathData currentPath;
     private PathFragmentData currentPathFragment = null;
 
     public VisitorScriptable visitorType;
 
     [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitorWithType;
-    [SerializeField] private UnityEvent<float> OnNoiseMadeTEMP; //TEMPORAIRE
 
     private AnimationHandler visitorDisplay = null;
 
     List<Vector3> interuptedPath = new List<Vector3>();
 
     private bool isUsed = false;
+
+    private LandmarkType currentObjective;
 
     public bool IsUsed => isUsed;
 
@@ -39,9 +40,11 @@ public class VisitorBehavior : MonoBehaviour
     /// <param name="spawnPosition">La position de spawn du visiteur.</param>
     /// <param name="nVisitorType">Le type de visiteur voulut.</param>
     /// <param name="nPath">Le chemin choisit par le visiteur.</param>
-    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, PathData nPath)
+    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, LandmarkType obective)
     {
-        currentPath = nPath;
+        currentObjective = obective;
+
+        //currentPath = nPath;
 
         spawnPoint = nSpawnPoint;
 
@@ -50,8 +53,6 @@ public class VisitorBehavior : MonoBehaviour
         if(currentPathFragment != null)
         {
             visitorType = nVisitorType;
-
-            OnNoiseMadeTEMP?.Invoke(visitorType.noiseMade);
 
             OnSetVisitorWithType?.Invoke(visitorType);
 
@@ -152,26 +153,14 @@ public class VisitorBehavior : MonoBehaviour
     /// <returns>Le PathFragment à parcourir.</returns>
     private PathFragmentData SearchFirstPathFragment(IST_PathPoint startPoint)
     {
-        List<PathFragmentData> possibleNextFragment = new List<PathFragmentData>();
+        PathFragmentData pathToTake = startPoint.Node.GetMostInterestingPath(currentObjective);
 
-        for (int i = 0; i < currentPath.pathFragment.Count; i++)
+        if (pathToTake != null && pathToTake.endPoint == startPoint)
         {
-            if(currentPath.pathFragment[i].startPoint == startPoint)
-            {
-                possibleNextFragment.Add(currentPath.pathFragment[i]);
-            }
-            else if(currentPath.pathFragment[i].endPoint == startPoint)
-            {
-                possibleNextFragment.Add(new PathFragmentData(currentPath.pathFragment[i].endPoint, currentPath.pathFragment[i].startPoint, currentPath.pathFragment[i].GetReversePath()));
-            }
+            pathToTake = new PathFragmentData(pathToTake.endPoint, pathToTake.startPoint, pathToTake.GetReversePath());
         }
 
-        if (possibleNextFragment.Count == 0)
-        {
-            return null;
-        }
-
-        return possibleNextFragment[UnityEngine.Random.Range(0, possibleNextFragment.Count)];
+        return pathToTake;
     }
 
     /// <summary>
@@ -180,37 +169,21 @@ public class VisitorBehavior : MonoBehaviour
     /// <returns>Le PathFragment à parcourir.</returns>
     private PathFragmentData SearchNextPathFragment()
     {
-        List<PathFragmentData> possibleNextFragment = new List<PathFragmentData>();
-        
-        for(int i = 0; i < currentPath.pathFragment.Count; i++)
+        NodePathData nodeData = currentPathFragment.endPoint.Node.GetDataForLandmarkType(currentObjective);
+
+        if (nodeData != null && nodeData.linkedToLandmark)
         {
-            int neighbourValue = currentPath.pathFragment[i].IsFragmentNeighbours(currentPathFragment);
-            if (neighbourValue != 0 && !currentPath.pathFragment[i].IsSameFragment(currentPathFragment))
-            {
-                if(neighbourValue > 0)
-                {
-                    possibleNextFragment.Add(currentPath.pathFragment[i]);
-                }
-                else
-                {
-                    possibleNextFragment.Add(new PathFragmentData(currentPath.pathFragment[i].endPoint, currentPath.pathFragment[i].startPoint, currentPath.pathFragment[i].GetReversePath()));
-                }
-            }
+            currentObjective = LandmarkType.Spawn;
         }
 
-        if(possibleNextFragment.Count == 0)
+        PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective);
+
+        if(pathToTake != null && pathToTake.endPoint == currentPathFragment.endPoint)
         {
-            if (currentPathFragment == null || currentPath.pathFragment.Count <= 0)
-            {
-                return null;
-            }
-            else
-            {
-                possibleNextFragment.Add(new PathFragmentData(currentPathFragment.endPoint, currentPathFragment.startPoint, currentPathFragment.GetReversePath()));
-            }
+            pathToTake = new PathFragmentData(pathToTake.endPoint, pathToTake.startPoint, pathToTake.GetReversePath());
         }
 
-        return possibleNextFragment[UnityEngine.Random.Range(0, possibleNextFragment.Count)];
+        return pathToTake;
     }
 
     /// <summary>

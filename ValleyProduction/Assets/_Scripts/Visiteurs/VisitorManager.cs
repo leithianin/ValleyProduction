@@ -57,28 +57,38 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         {
             VisitorBehavior newVisitor = GetAvailableVisitor();
 
-            Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
-            IST_PathPoint wantedSpawn = PathManager.SpawnPoints[Random.Range(0, PathManager.SpawnPoints.Count)];
-            Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
-
-            NavMeshHit hit;
-
-            if (newVisitor != null && NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
+            if (newVisitor != null)
             {
                 VisitorScriptable visitorType;
                 if (type != null) { visitorType = type; }
                 else { visitorType = ChooseVisitorType(); }
-   
-                PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
 
-                if (chosenPath != null)
+                Vector2 rng = Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
+                IST_PathPoint wantedSpawn = SearchSpawnPoint(visitorType);
+
+                LandmarkType visitorObjective = SearchObjective(visitorType, wantedSpawn.Node);
+
+                Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
+
+                NavMeshHit hit;
+
+                if (NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
                 {
-                    newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
-                    SetType(newVisitor);             
-                }
-                else
-                {
-                    //Debug.LogError("Error : ChosenPath est null.");
+
+                    newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, visitorObjective); //CODE REVIEW
+                    SetType(newVisitor);
+
+                    /*PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
+
+                    if (chosenPath != null)
+                    {
+                        newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
+                        SetType(newVisitor);
+                    }
+                    else
+                    {
+                        //Debug.LogError("Error : ChosenPath est null.");
+                    }*/
                 }
             }
         }
@@ -117,6 +127,47 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     private VisitorScriptable ChooseVisitorType()
     {
         return visitorTypes[Random.Range(0, visitorTypes.Length)];
+    }
+
+    private IST_PathPoint SearchSpawnPoint(VisitorScriptable visitorType)
+    {
+        List<IST_PathPoint> possiblePathpoints = new List<IST_PathPoint>();
+        List<IST_PathPoint> allSpawns = new List<IST_PathPoint>(PathManager.SpawnPoints);
+
+        for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
+        {
+            for (int j = 0; j < allSpawns.Count; j++)
+            {
+                if (allSpawns[j].Node.HasValidPathForLandmark(visitorType.LandmarksWanted[i]))
+                {
+                    possiblePathpoints.Add(allSpawns[j]);
+                }
+            }
+
+            if(possiblePathpoints.Count > 0)
+            {
+                break;
+            }
+        }
+
+        if(possiblePathpoints.Count <= 0)
+        {
+            possiblePathpoints = allSpawns;
+        }
+
+        return possiblePathpoints[Random.Range(0,possiblePathpoints.Count)];
+    }
+
+    private LandmarkType SearchObjective(VisitorScriptable visitorType, PathNode spawnPoint)
+    {
+        for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
+        {
+            if(spawnPoint.HasValidPathForLandmark(visitorType.LandmarksWanted[i]))
+            {
+                return visitorType.LandmarksWanted[i];
+            }
+        }
+        return LandmarkType.None;
     }
 
     private void SetType(VisitorBehavior visitorBehav)
@@ -207,7 +258,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// <param name="visitorType">Le type de visiteur qui doit emprunter le chemin.</param>
     /// <param name="spawnPoint">Le point de spawn du chemin.</param>
     /// <returns>Le chemin que decra parcourir le visiteur.</returns>
-    public PathData ChoosePath(VisitorScriptable visitorType, IST_PathPoint spawnPoint)
+    [System.Obsolete] public PathData ChoosePath(VisitorScriptable visitorType, IST_PathPoint spawnPoint)
     {
         List<PathData> allPath = PathManager.GetAllUsablePath(spawnPoint);
         List<PathData> possiblePath = new List<PathData>();
