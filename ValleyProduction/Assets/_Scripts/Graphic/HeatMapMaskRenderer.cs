@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HeatMapMaskRenderer : MonoBehaviour
 {
-    private static List<NoiseEntity> entities;
+    private static List<Area> chunks;
 
-    public static void RegisterEntities(NoiseEntity entity)
-    {
-        entities.Add(entity);
-    }
+    public static void RegisterChunks(Area chunk) { chunks.Add(chunk); }
 
     //Properties
     [SerializeField] private ComputeShader computeShader = null;
@@ -38,4 +36,43 @@ public class HeatMapMaskRenderer : MonoBehaviour
     private static readonly int color0Id = Shader.PropertyToID("_Color0");
     private static readonly int color1Id = Shader.PropertyToID("_Color1");
     private static readonly int color2Id = Shader.PropertyToID("_Color2");
+
+    private static readonly int noiseTexId = Shader.PropertyToID("_NoiseTex");
+    private static readonly int noiseDetailId = Shader.PropertyToID("_NoiseDetail");
+
+    private static readonly int maskTextureId = Shader.PropertyToID("_Mask");
+
+    private static readonly int chunkBufferId = Shader.PropertyToID("_ChunkBuffer");
+
+    //Chunk info filled in a buffer
+    private struct ChunkBufferElement
+    {
+        public float PositionX;
+        public float PositionY;
+        public float Range;
+        public float Noise;
+    }
+
+    private List<ChunkBufferElement> bufferElements;
+    private ComputeBuffer buffer = null;
+
+    private void Awake()
+    {
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+        maskTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear)
+#else
+        maskTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGB32)
+#endif
+        {
+            enableRandomWrite = true
+        };
+        maskTexture.Create();
+
+        computeShader.SetInt(textureSizeId, TextureSize);
+        computeShader.SetTexture(0, maskTextureId, maskTexture);
+
+        computeShader.SetFloat(blendId, BlendDistance);
+
+        computeShader.SetVector(color0Id, MaskColor0);
+    }
 }
