@@ -13,6 +13,9 @@ public class PathpointActivate : MonoBehaviour
 
     private void Activate()
     {
-        gameObject.layer = 0;
+        if (this != null)
+        {
+            gameObject.layer = 0;
+        }
     }
 }

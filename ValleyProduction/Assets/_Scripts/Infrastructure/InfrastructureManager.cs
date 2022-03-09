@@ -97,9 +97,15 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void ReplaceInfrastructure(Vector3 position)
     {
-        instance.movedObject.layer = layerInfrastructure;
+        GameObject saveObject = instance.movedObject;
+        TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));     
         instance.movedObject = null;
         instance.currentSelectedStructure.ReplaceObject();
+    }
+
+    public static void ReplaceInfrastructureChangeLyer(GameObject saveObject)
+    {
+        saveObject.layer = layerInfrastructure;
     }
 
     public static void InteractWithStructure(ToolType tool, Infrastructure interactedStructure)
@@ -116,7 +122,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                 //Usable by balise, je suis entrain de placer, je clique sur une infrastructure.
                 break;
             case ToolType.Move:
-                Debug.Log("dd");
                 MoveInfrastructure(interactedStructure);
                 break;
             case ToolType.Delete:
