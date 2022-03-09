@@ -40,6 +40,16 @@ public class PathNode : MonoBehaviour
         usableFragments.Remove(toRemove);
     }
 
+    public bool HasValidPathForLandmark(LandmarkType landmarkToSearch)
+    {
+        NodePathData dataToCheck =  GetDataForLandmarkType(landmarkToSearch);
+        if(dataToCheck.parent != null || dataToCheck.linkedToLandmark)
+        {
+            return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// Search for the most interesting path depending on several datas.
     /// </summary>
@@ -56,7 +66,7 @@ public class PathNode : MonoBehaviour
         for(int i = 0; i < neighbours.Count; i++)
         {
             NodePathData dataToCheck = neighbours[i].GetDataForLandmarkType(target);
-            if (1f/dataToCheck.distanceFromLandmark > score)
+            if (dataToCheck != null && 1f / dataToCheck.distanceFromLandmark > score)
             {
                 score = 1f / dataToCheck.distanceFromLandmark;
                 toReturn = usableFragments[i];

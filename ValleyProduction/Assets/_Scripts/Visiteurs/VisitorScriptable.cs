@@ -7,6 +7,7 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
 {
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
     [SerializeField, Tooltip("The speed of the visitor.")] private Vector2 speed;
+    [SerializeField, Tooltip("List of all the Landmark by interest.")] private List<LandmarkType> landmarksWanted;
     [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildTypes> interactionTypes;
     [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildTypes> likedInterestType;
     [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildTypes> hatedInterestType;
@@ -30,6 +31,8 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
     /// </summary>
     public AnimationHandler Display => display[Random.Range(0, display.Count)];
     public Vector2 Speed => speed;
+
+    public List<LandmarkType> LandmarksWanted => landmarksWanted;
 
     public float MaxStamina()
     {
