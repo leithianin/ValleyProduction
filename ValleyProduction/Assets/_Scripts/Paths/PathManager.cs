@@ -87,6 +87,14 @@ public class PathManager : VLY_Singleton<PathManager>
         return null;
     }
 
+    private void AddPathfragmentToList(PathFragmentData toAdd)
+    {
+        pathFragmentDataList.Add(toAdd);
+
+        toAdd.startPoint.Node.AddFragment(toAdd);
+        toAdd.endPoint.Node.AddFragment(toAdd);
+    }
+
     //Create PathFragmentData
     public static void PlacePoint(IST_PathPoint pathpoint, Vector3 position)
     {
@@ -102,10 +110,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
             //ChangementPathFragment
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
-            instance.pathFragmentDataList.Add(new_pfd);
-
-            pathpoint.Node.AddFragment(new_pfd);
-            previousPathpoint.Node.AddFragment(new_pfd);
+            instance.AddPathfragmentToList(new_pfd);
 
             //IF ONBOARDING SEQUENCE 
             new_pfd.CheckAvailableInterestPoint();
@@ -149,10 +154,10 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         List<Vector3> navmeshPoints = new List<Vector3>(PathCreationManager.navmeshPositionsList);           //Doit prendre en compte le navmesh
 
-        if (startPoint)
+        if (startPoint) //Logique quand le chemin est dans le bon sens
         {
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pd.startPoint, navmeshPoints);
-            instance.pathFragmentDataList.Add(new_pfd);
+            instance.AddPathfragmentToList(new_pfd);
         
             for (int i = 0; i < pd.pathFragment.Count; i++)
             {
@@ -172,13 +177,13 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
 
                 //Add les pathFragment
-                instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+                instance.AddPathfragmentToList(pd.pathFragment[i]);
             }
         }
-        else
+        else //Logique quand le chemin est inversé
         {
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pd.pathFragment[pd.pathFragment.Count - 1].endPoint, navmeshPoints);
-            instance.pathFragmentDataList.Add(new_pfd);
+            instance.AddPathfragmentToList(new_pfd);
 
             //Utiliser ça l'a haut directement
             for (int i = pd.pathFragment.Count-1; i >= 0; i--)
@@ -206,7 +211,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
 
                 //Add les pathFragment
-                instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+                instance.AddPathfragmentToList(pd.pathFragment[i]);
                 instance.PathReverse = true;
             }
         }
@@ -230,7 +235,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// </summary>
     /// <param name="ist_pp"></param>
     /// <returns></returns>
-    public static bool CanDeleteGameobject(IST_PathPoint ist_pp)
+    [System.Obsolete] public static bool CanDeleteGameobject(IST_PathPoint ist_pp)
     {
         listAllPathPoints.Clear();
 
@@ -541,7 +546,7 @@ public class PathManager : VLY_Singleton<PathManager>
                     //Il faut trouver les pathpoints
                     for (int i = 0; i <= pd.pathFragment.Count - 1; i++)
                     {
-                        instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+                        instance.AddPathfragmentToList(pd.pathFragment[i]);
 
                         if (i == pd.pathFragment.Count - 1)
                         {
@@ -589,7 +594,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for (int i = 0; i <= pathdata.pathFragment.Count - 1; i++)
         {
-            instance.pathFragmentDataList.Add(pathdata.pathFragment[i]);
+            instance.AddPathfragmentToList(pathdata.pathFragment[i]);
 
             if (i == pathdata.pathFragment.Count - 1)
             {
@@ -699,19 +704,19 @@ public class PathManager : VLY_Singleton<PathManager>
     //Linerenderer de tous le chemin
     public static void DebugLineR(PathData pathData)
     {
-        GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
-        DEBUG.GetComponent<LineRenderer>().material.color = pathData.color;
+        LineRenderer DEBUG = Instantiate(instance.DebugLineRenderer).GetComponent<LineRenderer>();
+        DEBUG.material.color = pathData.color;
 
         int i = 0;
         //DEBUG.GetComponent<LineRenderer>().positionCount = pathData.pathFragment.Count * 2;
-        DEBUG.GetComponent<LineRenderer>().positionCount = 0;
+        DEBUG.positionCount = 0;
         if (instance.PathReverse)
         {
             //Pas réussi avec le path
             for (int j = 0; j < instance.pathpointList.Count; j++)
             {
-                DEBUG.GetComponent<LineRenderer>().positionCount++;
-                DEBUG.GetComponent<LineRenderer>().SetPosition(j, instance.pathpointList[j].transform.position);
+                DEBUG.positionCount++;
+                DEBUG.SetPosition(j, instance.pathpointList[j].transform.position);
             }
 
             instance.PathReverse = false;
@@ -722,17 +727,20 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 foreach (Vector3 vector in pfd.path)
                 {
-                    DEBUG.GetComponent<LineRenderer>().positionCount++;
-                    DEBUG.GetComponent<LineRenderer>().SetPosition(i, vector);
+                    DEBUG.positionCount++;
+                    DEBUG.SetPosition(i, vector);
                     i++;
                 }
             }
         }
 
-        //Je garde le chemin en mémoire 
-        pathData.pathLineRenderer = DEBUG.GetComponent<LineRenderer>();
+        //FAIRE LA DETECTION SUR LES PATHFRAGMENT
 
-        List<InterestPointDetector> pathDetector = instance.GenerateDetectorsOnLine(pathData.pathLineRenderer);
+        //List<InterestPointDetector> pathDetector = instance.GenerateDetectorsOnLine(DEBUG);
+        List<InterestPointDetector> pathDetector = new List<InterestPointDetector>();
+
+        //Je garde le chemin en mémoire 
+        pathData.pathLineRenderer = DEBUG;
 
         for(int j = 0; j < pathDetector.Count; j++)
         {
@@ -754,16 +762,48 @@ public class PathManager : VLY_Singleton<PathManager>
         
     }
 
-    private List<InterestPointDetector> GenerateDetectorsOnLine(LineRenderer lineRenderer)
+    private List<InterestPointDetector> GenerateDetectorsOnLine(List<Vector3> path)
     {
-        if (lineRenderer.positionCount <= 1)
+        if (path.Count <= 1)
         {
             return new List<InterestPointDetector>();
         }
 
         List<InterestPointDetector> pathDetectors = new List<InterestPointDetector>();
 
-        Vector3 start = lineRenderer.GetPosition(0);
+        float lineLength = 0;
+        for(int i = 0; i < path.Count-1; i++)
+        {
+            lineLength += Vector3.Distance(path[i], path[i + 1]);
+        }
+
+        float distanceBetweenPoints = 2f;
+        int numDist = (int)(lineLength / distanceBetweenPoints);
+
+        /*PSEUDO CODE A TESTER
+         * 
+         * float pointPosition = 0.0f;
+        float prevSegmentsLength = 0.0f;
+        float segmentsLength = 0.0f;
+        int currentSegment = 0;
+        Segment segment = polyline[0];
+
+        for (int i = 0; i <= numDist; i++)
+        {
+            while (pointPosition > segmentsLength)
+            {
+                prevSegmentsLength = segmentsLength;
+                segment = polyline.Segment[currentSegment];
+                segmentsLength += segment.Length;
+                currentSegment++;
+            }
+            var point = Interpolate(segment, pointPosition - prevSegmentsLength);
+            pointList.Add(point);
+            pointPosition += pointDist;
+        }*/
+
+
+        /*Vector3 start = lineRenderer.GetPosition(0);
         Vector3 next = lineRenderer.GetPosition(1);
         pathDetectors.Add(CreateDetector(start, lineRenderer));
         float distance = 0;
@@ -794,7 +834,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 Debug.Log("10000 force stop");
                 return new List<InterestPointDetector>();
             }
-        }
+        }*/
         return pathDetectors;
     }
 

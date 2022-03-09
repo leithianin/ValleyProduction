@@ -10,6 +10,7 @@ public class PathFragmentData
     public IST_PathPoint startPoint;                        //Ending point of the FragmentPath
     public List<Vector3> path = new List<Vector3>();
     public List<InterestPoint> interestPointList = new List<InterestPoint>();
+    public List<InterestPointDetector> interestPointDetectors = new List<InterestPointDetector>();
 
     public PathFragmentData(IST_PathPoint nStartPoint, IST_PathPoint nEndPoint, List<Vector3> nPath)
     {
@@ -85,7 +86,7 @@ public class PathFragmentData
             foreach(Collider c in colliderTab)
             {
                 InterestPoint foundInterestPoint = c.gameObject.GetComponent<InterestPoint>();
-                if (foundInterestPoint != null)// && foundInterestPoint.IsLandmark)
+                if (foundInterestPoint != null)
                 {
                     ActionInvoke(c.gameObject.name);
 

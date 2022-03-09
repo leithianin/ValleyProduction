@@ -49,7 +49,6 @@ public class IST_PathPoint : Infrastructure
     {
         if (PathManager.HasManyPath(this))
         {
-            node.UpdateNode();
             UIManager.ArrangePathButton(this);
             return false;
         }
@@ -58,9 +57,7 @@ public class IST_PathPoint : Infrastructure
             node.DeleteNode();
 
             PathManager.DeletePoint(this);
-
             InfrastructureManager.DesnapInfrastructure(this);
-
             Debug.Log("Remove object");
             OnDestroyPathPoint?.Invoke();
             return true;
