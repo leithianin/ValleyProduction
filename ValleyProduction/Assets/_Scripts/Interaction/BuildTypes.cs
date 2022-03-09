@@ -5,7 +5,9 @@ using UnityEngine;
 public enum BuildTypes
 {
     Build,
+    Spawn,
     Flora,
     Fauna,
-    Ruins
+    Ruins,
+
 }

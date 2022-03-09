@@ -10,6 +10,7 @@ public class PathFragmentData
     public IST_PathPoint startPoint;                        //Ending point of the FragmentPath
     public List<Vector3> path = new List<Vector3>();
     public List<InterestPoint> interestPointList = new List<InterestPoint>();
+    public List<InterestPointDetector> interestPointDetectors = new List<InterestPointDetector>();
 
     public PathFragmentData(IST_PathPoint nStartPoint, IST_PathPoint nEndPoint, List<Vector3> nPath)
     {
@@ -17,6 +18,14 @@ public class PathFragmentData
         startPoint = nStartPoint;
 
         path = new List<Vector3>(nPath);  
+    }
+
+    public void DeleteFragmentData()
+    {
+        while(interestPointDetectors.Count > 0)
+        {
+            RemoveInterestPointDetector(interestPointDetectors[0]);
+        }
     }
 
     public bool HasThisPathpoint(IST_PathPoint pp)
@@ -75,6 +84,7 @@ public class PathFragmentData
         return 0;
     }
 
+    [Obsolete]
     public void CheckAvailableInterestPoint()
     {
         float f_increment = 1f/4f;
@@ -85,7 +95,7 @@ public class PathFragmentData
             foreach(Collider c in colliderTab)
             {
                 InterestPoint foundInterestPoint = c.gameObject.GetComponent<InterestPoint>();
-                if (foundInterestPoint != null)// && foundInterestPoint.IsLandmark)
+                if (foundInterestPoint != null)
                 {
                     ActionInvoke(c.gameObject.name);
 
@@ -101,6 +111,14 @@ public class PathFragmentData
         {
             interestPointList.Add(interest_p);
             Debug.Log("Add interest point : " + interest_p.name);
+        }
+    }
+
+    public void RemoveInterestPoint(InterestPoint toRemove)
+    {
+        if (interestPointList.Contains(toRemove))
+        {
+            interestPointList.Remove(toRemove);
         }
     }
 
@@ -123,4 +141,25 @@ public class PathFragmentData
             //Debug.Log("No Invoke on this Landmark");
         }
     }
+
+    public void AddInterestPointDetector(InterestPointDetector detector)
+    {
+        if (!interestPointDetectors.Contains(detector))
+        {
+            interestPointDetectors.Add(detector);
+            detector.OnDiscoverInterestPoint += AddInterestPoint;
+            detector.OnRemoveInterestPoint += RemoveInterestPoint;
+        }
+    }
+
+    public void RemoveInterestPointDetector(InterestPointDetector detector)
+    {
+        if (interestPointDetectors.Contains(detector))
+        {
+            interestPointDetectors.Remove(detector);
+            detector.OnDiscoverInterestPoint -= AddInterestPoint;
+            detector.OnRemoveInterestPoint -= RemoveInterestPoint;
+        }
+    }
+
 }
