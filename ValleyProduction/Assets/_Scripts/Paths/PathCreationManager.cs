@@ -23,7 +23,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public static bool isModifyPath = false;
     private float distance = 0f;
 
-    public GameObject testPathpoint;
+    public IST_PathPoint testPathpoint;
 
     //List des pathFragment à modifier avec leur LineRenderer
     public class ModifyListClass
@@ -219,9 +219,9 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                             {
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
-                                GameObject pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
-                                UpdateData(pathpoint.GetComponent<IST_PathPoint>(), vectors, false);
-                                additionalPathpointList[index].pathpointList[i - 1] = pathpoint.GetComponent<IST_PathPoint>();
+                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                UpdateData(pathpoint, vectors, false);
+                                additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
 
                             }
                             else
@@ -249,9 +249,9 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                             {
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
-                                GameObject pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
-                                UpdateData(pathpoint.GetComponent<IST_PathPoint>(), vectors, true);
-                                additionalPathpointList[index].pathpointList[i - 1] = pathpoint.GetComponent<IST_PathPoint>();
+                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                UpdateData(pathpoint, vectors, true);
+                                additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
                             }
                             else
                             {

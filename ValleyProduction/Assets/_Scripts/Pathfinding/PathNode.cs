@@ -28,7 +28,10 @@ public class PathNode : MonoBehaviour
     /// <param name="toAdd">The PAthFragmentData to add.</param>
     public void AddFragment(PathFragmentData toAdd)
     {
-        usableFragments.Add(toAdd);
+        if (!usableFragments.Contains(toAdd))
+        {
+            usableFragments.Add(toAdd);
+        }
     }
 
     /// <summary>
@@ -98,6 +101,12 @@ public class PathNode : MonoBehaviour
         return null;
     }
 
+    public void PlaceAndUpdateNode()
+    {
+        PlaceNode();
+        UpdateNode();
+    }
+
     /// <summary>
     /// Check if the PathNode is next to a Landmark and Update the node.
     /// </summary>
@@ -120,8 +129,6 @@ public class PathNode : MonoBehaviour
                 }
             }
         }
-
-        UpdateNode();
     }
 
     /// <summary>

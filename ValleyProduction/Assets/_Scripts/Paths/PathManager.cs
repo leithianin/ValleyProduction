@@ -122,7 +122,7 @@ public class PathManager : VLY_Singleton<PathManager>
             previousPathpoint = pathpoint;
         }
 
-        pathpoint.Node.PlaceNode();
+        pathpoint.Node.PlaceAndUpdateNode();
 
         DebugPoint(previousPathpoint);
     }
@@ -509,13 +509,19 @@ public class PathManager : VLY_Singleton<PathManager>
     /// </summary>
     public static void UpdatePathFragmentData()
     {
-        GetCurrentPathData.pathFragment.Clear();
+        while(GetCurrentPathData.pathFragment.Count > 0)
+        {
+            GetCurrentPathData.RemovePathFragment(GetCurrentPathData.pathFragment[0]);
+        }
 
         for(int i = 0; i < GetCurrentPathpointList.Count-1; i++)
         {
             PathFragmentData new_pfd = new PathFragmentData(GetCurrentPathpointList[i], GetCurrentPathpointList[i+1], PathCreationManager.instance.CalculatePath(GetCurrentPathpointList[i], GetCurrentPathpointList[i + 1]));
-            GetCurrentPathData.pathFragment.Add(new_pfd);
+            GetCurrentPathData.AddPathFragment(new_pfd);
         }
+
+        //CODE REVIEW Voir pour corriger l'Update des nodes. Voir pour placer les nouveaux points
+        GetCurrentPathData.pathFragment[0].startPoint.Node.UpdateNode();
 
         if (instance.debugMode)
         {

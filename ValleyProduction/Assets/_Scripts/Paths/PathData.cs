@@ -195,12 +195,20 @@ public class PathData
         }
     }
 
-    private void RemovePathFragment(PathFragmentData toRemove)
+    public void RemovePathFragment(PathFragmentData toRemove)
     {
         pathFragment.Remove(toRemove);
 
         toRemove.startPoint.Node.RemoveFragment(toRemove);
         toRemove.endPoint.Node.RemoveFragment(toRemove);
+    }
+
+    public void AddPathFragment(PathFragmentData toAdd)
+    {
+        pathFragment.Add(toAdd);
+
+        toAdd.startPoint.Node.AddFragment(toAdd);
+        toAdd.endPoint.Node.AddFragment(toAdd);
     }
 
     public List<PathFragmentData> GetAllNextPathFragment(IST_PathPoint pathpoint)
