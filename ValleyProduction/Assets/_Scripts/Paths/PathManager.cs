@@ -112,6 +112,8 @@ public class PathManager : VLY_Singleton<PathManager>
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
             instance.AddPathfragmentToList(new_pfd);
 
+            PathCreationManager.instance.pathRendererManager.ManagePathRenderer(previousPathpoint, pathpoint, navmeshPoints);
+
             //IF ONBOARDING SEQUENCE 
             new_pfd.CheckAvailableInterestPoint();
 
@@ -122,7 +124,7 @@ public class PathManager : VLY_Singleton<PathManager>
             previousPathpoint = pathpoint;
         }
 
-        pathpoint.Node.PlaceAndUpdateNode();
+        pathpoint.Node.PlaceNode();
 
         DebugPoint(previousPathpoint);
     }
@@ -393,6 +395,8 @@ public class PathManager : VLY_Singleton<PathManager>
                 DebugLineR(pdToModify);
             }
         }
+
+        NodePathProcess.UpdateAllNodes();
     }
 
     public static void DeleteFullPath(PathData toDelete)
@@ -483,6 +487,8 @@ public class PathManager : VLY_Singleton<PathManager>
                 {
                     DebugLineR(newPathData);
                 }
+
+                NodePathProcess.UpdateAllNodes();
             }
 
             if(instance.disconnectedPathData != null)
@@ -495,7 +501,7 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.ResetCurrentData();
 
             //IF ONBOARDING SEQUENCE 
-            isOnFinishPath?.Invoke(true);
+            TimerManager.CreateRealTimer(0.5f, () => isOnFinishPath?.Invoke(true));
         }
         else if (instance.pathpointList.Count > 0)
         {
@@ -509,7 +515,9 @@ public class PathManager : VLY_Singleton<PathManager>
     /// </summary>
     public static void UpdatePathFragmentData()
     {
-        while(GetCurrentPathData.pathFragment.Count > 0)
+        PathCreationManager.MovingPathPoint.Node.ResetNodeData();
+
+        while (GetCurrentPathData.pathFragment.Count > 0)
         {
             GetCurrentPathData.RemovePathFragment(GetCurrentPathData.pathFragment[0]);
         }
@@ -520,8 +528,34 @@ public class PathManager : VLY_Singleton<PathManager>
             GetCurrentPathData.AddPathFragment(new_pfd);
         }
 
+
+        /*List<PathNode> pointsToCheck = PathCreationManager.GetMovingBorderPoints;
+
+        for (int i = 0; i < pointsToCheck.Count; i++)
+        {
+            pointsToCheck[i].ResetNodeData();
+        }*/
+
+        NodePathProcess.UpdateAllNodes();
+
+        /*for(int i = 0; i < PathCreationManager.GetAdditionnalPoints.Count; i++)
+        {
+            List<IST_PathPoint> pathPointAdditionnals = PathCreationManager.GetAdditionnalPoints[i].pathpointList;
+
+            for(int j = 0; j < pathPointAdditionnals.Count; j++)
+            {
+                pathPointAdditionnals[j].Node.ResetNodeAndNeighbours();
+            }
+        }*/
+
+        /*List<PathNode> pointsToCheck = PathCreationManager.GetMovingBorderPoints;
+
+        instance.UpdateModifiedPathNodeDatas(pointsToCheck);*/
+
+        //PathCreationManager.MovingPathPoint.Node.UpdateNode();
+
         //CODE REVIEW Voir pour corriger l'Update des nodes. Voir pour placer les nouveaux points
-        GetCurrentPathData.pathFragment[0].startPoint.Node.UpdateNode();
+        //GetCurrentPathData.pathFragment[0].startPoint.Node.UpdateNode();
 
         if (instance.debugMode)
         {
@@ -530,6 +564,16 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         instance.ResetCurrentData();
+    }
+
+    private void UpdateModifiedPathNodeDatas(List<PathNode> nodesToUpdates)
+    {
+        if(nodesToUpdates.Count > 0)
+        {
+            nodesToUpdates[0].UpdateNode();
+            nodesToUpdates.RemoveAt(0);
+            TimerManager.CreateRealTimer(Time.deltaTime, () => UpdateModifiedPathNodeDatas(new List<PathNode>(nodesToUpdates)));
+        }
     }
 
     public void ResetCurrentData()

@@ -18,12 +18,20 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public static List<IST_PathPoint> refList;                                                                     //Copie de la liste de pathpoint de pathManager
     public List<PathFragmentData> newPathFragmentData;
     private IST_PathPoint movingPathpoint;
+    private List<PathNode> movingBorderPointsDatas;
     public static List<ModifyListClass> ModifyList = new List<ModifyListClass>();
     private List<AdditionalPathpointClass> additionalPathpointList = new List<AdditionalPathpointClass>();
     public static bool isModifyPath = false;
     private float distance = 0f;
 
+    [Header("PathRenderer")]
+    public PathRendererManager pathRendererManager;
+
     public IST_PathPoint testPathpoint;
+
+    public static IST_PathPoint MovingPathPoint => instance.movingPathpoint;
+    public static List<AdditionalPathpointClass> GetAdditionnalPoints => instance.additionalPathpointList;
+    public static List<PathNode> GetMovingBorderPoints => instance.movingBorderPointsDatas;
 
     //List des pathFragment à modifier avec leur LineRenderer
     public class ModifyListClass
@@ -103,7 +111,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         }
 
         //DebugNavmesh();
-
         ShowPathLine(navmeshPositionsList);
     }
 
@@ -134,6 +141,8 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public void UpdateSeveralLines(IST_PathPoint pp)
     {
         movingPathpoint = pp;
+
+        movingBorderPointsDatas = movingPathpoint.Node.GetNeighbours();
 
         while (ModifyList.Count > additionalPathpointList.Count)
         {
