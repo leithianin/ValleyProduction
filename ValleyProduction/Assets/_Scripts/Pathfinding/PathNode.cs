@@ -43,6 +43,16 @@ public class PathNode : MonoBehaviour
         usableFragments.Remove(toRemove);
     }
 
+    public bool IsNextToLandmark(LandmarkType landmarkToSearch)
+    {
+        NodePathData dataToCheck = GetDataForLandmarkType(landmarkToSearch);
+        if (dataToCheck.linkedToLandmark)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public bool HasValidPathForLandmark(LandmarkType landmarkToSearch)
     {
         NodePathData dataToCheck =  GetDataForLandmarkType(landmarkToSearch);
@@ -101,11 +111,11 @@ public class PathNode : MonoBehaviour
         return null;
     }
 
-    public void PlaceAndUpdateNode()
+    /*public void PlaceAndUpdateNode()
     {
         PlaceNode();
-        UpdateNode();
-    }
+        NodePathProcess.UpdateAllNodes();
+    }*/
 
     /// <summary>
     /// Check if the PathNode is next to a Landmark and Update the node.
@@ -125,6 +135,7 @@ public class PathNode : MonoBehaviour
                     {
                         dataByLandmark[i].distanceFromLandmark = 0;
                         dataByLandmark[i].linkedToLandmark = true;
+                        NodePathProcess.AddNodeNextLandmark(this);
                     }
                 }
             }
@@ -153,13 +164,9 @@ public class PathNode : MonoBehaviour
 
     public void DeleteNode()
     {
-        for (int i = 0; i < dataByLandmark.Count; i++)
-        {
-            dataByLandmark[i].distanceFromLandmark = -1;
-            dataByLandmark[i].parent = null;
-        }
+        NodePathProcess.RemoveNodeNextLandmark(this);
 
-        CheckNeighboursOnDelete();
+        ResetNodeData();
     }
 
     public void UpdateFromDeletedNode(PathNode deletedNode)
@@ -174,34 +181,68 @@ public class PathNode : MonoBehaviour
         }
 
         CheckNeighboursOnDelete();
-
-        UpdateNode();
     }
 
-    /// <summary>
-    /// Update the node for all known LandmarkType.
-    /// </summary>
-    public void UpdateNode()
+    [Obsolete]
+    public void ResetNodeAndNeighbours()
     {
-        isBeingUpdated = true;
+        ResetNodeData();
 
-        NodePathProcess.UpdateNode(this);
+        List<PathNode> neighbours = GetNeighbours();
 
+        for (int i = 0; i < neighbours.Count; i++)
+        {
+            neighbours[i].ResetNodeData();
+        }
+    }
+
+    [Obsolete]
+    public void UpdateNeighbours()
+    {
+        List<PathNode> neighbours = GetNeighbours();
+
+        for (int i = 0; i < neighbours.Count; i++)
+        {
+            neighbours[i].UpdateSelfData();
+        }
+    }
+
+    public void ResetNodeData()
+    {
+        Debug.Log("Reset Node");
+
+        for (int i = 0; i < dataByLandmark.Count; i++)
+        {
+            if (!dataByLandmark[i].linkedToLandmark)
+            {
+                dataByLandmark[i].distanceFromLandmark = -1;
+                dataByLandmark[i].parent = null;
+            }
+        }
+
+        CheckNeighboursOnDelete();
+    }
+
+    public List<PathNode> UpdateSelfData()
+    {
+        Debug.Log("Update Self Data");
         List<PathNode> neighbours = GetNeighbours();
 
         List<PathNode> toUpdate = new List<PathNode>();
 
         for (int i = 0; i < neighbours.Count; i++)
         {
-            if(!neighbours[i].IsBeingDeleted)
+            if (!neighbours[i].IsBeingDeleted)
             {
                 for (int j = 0; j < dataByLandmark.Count; j++)
                 {
                     NodePathData dataToCheck = neighbours[i].GetDataForLandmarkType(dataByLandmark[j].landmark);
 
+                    float distanceFromNeighbour = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition);
+
                     if (dataToCheck.distanceFromLandmark >= 0 && (dataByLandmark[j].distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark < dataByLandmark[j].distanceFromLandmark))
                     {
-                        dataByLandmark[j].distanceFromLandmark = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition) + dataToCheck.distanceFromLandmark;
+                        dataByLandmark[j].distanceFromLandmark = distanceFromNeighbour + dataToCheck.distanceFromLandmark;
                         dataByLandmark[j].parent = neighbours[i];
 
                         if (!neighbours[i].IsBeingUpdated)
@@ -211,7 +252,7 @@ public class PathNode : MonoBehaviour
                     }
                     else if (dataByLandmark[j].distanceFromLandmark >= 0 && (dataToCheck.distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark > dataByLandmark[j].distanceFromLandmark))
                     {
-                        dataToCheck.distanceFromLandmark = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition) + dataByLandmark[j].distanceFromLandmark;
+                        dataToCheck.distanceFromLandmark = distanceFromNeighbour + dataByLandmark[j].distanceFromLandmark;
                         dataToCheck.parent = this;
 
                         if (!neighbours[i].IsBeingUpdated)
@@ -222,6 +263,20 @@ public class PathNode : MonoBehaviour
                 }
             }
         }
+
+        return toUpdate;
+    }
+
+    /// <summary>
+    /// Update the node for all known LandmarkType.
+    /// </summary>
+    public void UpdateNode()
+    {
+        isBeingUpdated = true;
+
+        NodePathProcess.SetNodeUpdating(this);
+
+        List<PathNode> toUpdate = UpdateSelfData();
 
         for (int i = 0; i < toUpdate.Count; i++)
         {
@@ -258,7 +313,7 @@ public class PathNode : MonoBehaviour
     /// Search for all neighbours PathNode.
     /// </summary>
     /// <returns>A list of all the PathNode linked to the node.</returns>
-    private List<PathNode> GetNeighbours()
+    public List<PathNode> GetNeighbours()
     {
         List<PathNode> toReturn = new List<PathNode>();
 

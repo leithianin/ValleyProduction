@@ -230,6 +230,26 @@ public class PathData
         pathFragment.Remove(pfd);
     }
 
+    public List<IST_PathPoint> GetAllPoints()
+    {
+        List<IST_PathPoint> toReturn = new List<IST_PathPoint>();
+
+        for(int i = 0; i < pathFragment.Count; i++)
+        {
+            if(!toReturn.Contains(pathFragment[i].startPoint))
+            {
+                toReturn.Add(pathFragment[i].startPoint);
+            }
+
+            if (!toReturn.Contains(pathFragment[i].endPoint))
+            {
+                toReturn.Add(pathFragment[i].endPoint);
+            }
+        }
+
+        return toReturn;
+    }
+
     public IST_PathPoint GetLastPoint()
     {
         return pathFragment[pathFragment.Count - 1].endPoint;
