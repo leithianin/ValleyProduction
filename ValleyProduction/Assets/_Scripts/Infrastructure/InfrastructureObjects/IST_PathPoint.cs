@@ -57,6 +57,7 @@ public class IST_PathPoint : Infrastructure
             node.DeleteNode();
 
             PathManager.DeletePoint(this);
+
             InfrastructureManager.DesnapInfrastructure(this);
             Debug.Log("Remove object");
             OnDestroyPathPoint?.Invoke();
@@ -85,6 +86,7 @@ public class IST_PathPoint : Infrastructure
     }
 
     //Pas sur de ce que je fais là
+    [Obsolete]
     protected override void OnHoldRightClic()
     {
         PathManager.CreatePathData();
