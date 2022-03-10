@@ -23,6 +23,9 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public static bool isModifyPath = false;
     private float distance = 0f;
 
+    [Header("PathRenderer")]
+    public PathRendererManager pathRendererManager;
+
     public IST_PathPoint testPathpoint;
 
     //List des pathFragment à modifier avec leur LineRenderer
@@ -103,7 +106,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         }
 
         //DebugNavmesh();
-
         ShowPathLine(navmeshPositionsList);
     }
 

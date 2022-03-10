@@ -112,6 +112,8 @@ public class PathManager : VLY_Singleton<PathManager>
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
             instance.AddPathfragmentToList(new_pfd);
 
+            PathCreationManager.instance.pathRendererManager.ManagePathRenderer(previousPathpoint, pathpoint, navmeshPoints);
+
             //IF ONBOARDING SEQUENCE 
             new_pfd.CheckAvailableInterestPoint();
 
