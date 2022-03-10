@@ -501,7 +501,7 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.ResetCurrentData();
 
             //IF ONBOARDING SEQUENCE 
-            isOnFinishPath?.Invoke(true);
+            TimerManager.CreateRealTimer(0.5f, () => isOnFinishPath?.Invoke(true));
         }
         else if (instance.pathpointList.Count > 0)
         {
