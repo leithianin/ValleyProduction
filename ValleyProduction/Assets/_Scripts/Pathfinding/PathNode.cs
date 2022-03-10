@@ -162,6 +162,20 @@ public class PathNode : MonoBehaviour
         isBeingDeleted = false;
     }
 
+    public bool HasNeighboursLinkedToSpawn()
+    {
+        List<PathNode> neighbours = GetNeighbours();
+
+        for (int i = 0; i < neighbours.Count; i++)
+        {
+            if (neighbours[i].HasParent(this))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void DeleteNode()
     {
         NodePathProcess.RemoveNodeNextLandmark(this);

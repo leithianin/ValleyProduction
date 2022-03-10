@@ -66,29 +66,20 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 Vector2 rng = Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
                 IST_PathPoint wantedSpawn = SearchSpawnPoint(visitorType);
 
-                LandmarkType visitorObjective = SearchObjective(visitorType, wantedSpawn.Node);
-
-                Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
-
-                NavMeshHit hit;
-
-                if (NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
+                if (wantedSpawn != null)
                 {
 
-                    newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, visitorObjective); //CODE REVIEW
-                    SetType(newVisitor);
+                    LandmarkType visitorObjective = SearchObjective(visitorType, wantedSpawn.Node);
 
-                    /*PathData chosenPath = ChoosePath(visitorType, wantedSpawn);
+                    Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
 
-                    if (chosenPath != null)
+                    NavMeshHit hit;
+
+                    if (NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
                     {
-                        newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, chosenPath);
+                        newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, visitorObjective); //CODE REVIEW
                         SetType(newVisitor);
                     }
-                    else
-                    {
-                        //Debug.LogError("Error : ChosenPath est null.");
-                    }*/
                 }
             }
         }
@@ -152,10 +143,23 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         if(possiblePathpoints.Count <= 0)
         {
-            possiblePathpoints = allSpawns;
+            for (int j = 0; j < allSpawns.Count; j++)
+            {
+                if (allSpawns[j].Node.GetDataForLandmarkType(LandmarkType.Spawn).linkedToLandmark == true && allSpawns[j].Node.HasNeighboursLinkedToSpawn())
+                {
+                    possiblePathpoints.Add(allSpawns[j]);
+                }
+            }
         }
 
-        return possiblePathpoints[Random.Range(0,possiblePathpoints.Count)];
+        if (possiblePathpoints.Count > 0)
+        {
+            return possiblePathpoints[Random.Range(0, possiblePathpoints.Count)];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private LandmarkType SearchObjective(VisitorScriptable visitorType, PathNode spawnPoint)
