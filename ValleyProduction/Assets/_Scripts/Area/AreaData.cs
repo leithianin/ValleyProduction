@@ -9,6 +9,11 @@ public abstract class AreaData
 {
     public Area linkedArea;
     /// Score actuel de l'Area.
+    /// 
+    private int currentScore;
+
+    public int Score => currentScore;
+
     protected int realScore = 0;
     /// Getter du Score
     public int GetRealScore => realScore;
@@ -31,6 +36,13 @@ public abstract class AreaData
     /// Appelé quand l'un des voisins a mit à jour son score.
     /// </summary>
     public abstract void UpdateScoreFromNeighbours();
+
+    protected void SetScore(int nScore)
+    {
+        currentScore = nScore;
+
+        OnUpdateScore?.Invoke(currentScore);
+    }
 }
 
 /// <summary>
@@ -113,7 +125,7 @@ public abstract class AreaData<T> : AreaData
             }
         }
 
-        OnUpdateScore?.Invoke(realScore + neighboursScore);
+        SetScore(realScore + neighboursScore);
 
         return realScore;
     }
@@ -137,6 +149,6 @@ public abstract class AreaData<T> : AreaData
             }
         }
 
-        OnUpdateScore?.Invoke(realScore + neighboursScore);
+        SetScore(realScore + neighboursScore);
     }
 }

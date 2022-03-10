@@ -175,7 +175,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 Area newArea = new Area();
                 newArea.arrayPosition = new Vector2Int(i, j);
-                newArea.worldPosition = new Vector2(areaSize / 2f + areaSize * i, areaSize / 2f + areaSize * j) + GetWorldPositionOffset();
+                newArea.SetWorldPosition(new Vector2(areaSize / 2f + areaSize * i, areaSize / 2f + areaSize * j) + GetWorldPositionOffset());
 
                 newArea.datas.Add(new AD_Noise());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;

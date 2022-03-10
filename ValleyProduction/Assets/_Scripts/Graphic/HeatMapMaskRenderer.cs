@@ -29,13 +29,14 @@ public class HeatMapMaskRenderer : MonoBehaviour
 
     //Caching shader properties
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
-    private static readonly int entityCountId = Shader.PropertyToID("_EntityCount");
+    private static readonly int chunkCountId = Shader.PropertyToID("_ChunkCount");
     private static readonly int mapSizeId = Shader.PropertyToID("_MapSize");
     private static readonly int blendId = Shader.PropertyToID("_Blend");
 
     private static readonly int color0Id = Shader.PropertyToID("_Color0");
     private static readonly int color1Id = Shader.PropertyToID("_Color1");
     private static readonly int color2Id = Shader.PropertyToID("_Color2");
+    private static readonly int color3Id = Shader.PropertyToID("_Color3");
 
     private static readonly int noiseTexId = Shader.PropertyToID("_NoiseTex");
     private static readonly int noiseDetailId = Shader.PropertyToID("_NoiseDetail");
@@ -49,7 +50,6 @@ public class HeatMapMaskRenderer : MonoBehaviour
     {
         public float PositionX;
         public float PositionY;
-        public float Range;
         public float Noise;
     }
 
@@ -74,5 +74,49 @@ public class HeatMapMaskRenderer : MonoBehaviour
         computeShader.SetFloat(blendId, BlendDistance);
 
         computeShader.SetVector(color0Id, MaskColor0);
+        computeShader.SetVector(color1Id, MaskColor1);
+        computeShader.SetVector(color2Id, MaskColor2);
+        computeShader.SetVector(color3Id, MaskColor3);
+
+        computeShader.SetTexture(0, noiseTexId, NoiseTexture);
+        computeShader.SetFloat(noiseDetailId, NoiseDetail);
+
+        Shader.SetGlobalTexture(maskTextureId, maskTexture);
+        Shader.SetGlobalFloat(mapSizeId, MapSize);
+
+        bufferElements = new List<ChunkBufferElement>();
+    }
+
+    private void OnDestroy()
+    {
+        buffer?.Dispose();
+
+        if (maskTexture != null) DestroyImmediate(maskTexture);
+    }
+
+    private void Update()
+    {
+        bufferElements.Clear();
+
+        foreach(Area chunk in chunks)
+        {
+            ChunkBufferElement element = new ChunkBufferElement
+            {
+                PositionX = chunk.GetWorldPosition.x,
+                PositionY = chunk.GetWorldPosition.z,
+                Noise = chunk.GetData<AU_MakeSound>()[0].Score,
+            };
+            bufferElements.Add(element);
+        }
+
+        buffer?.Release();
+        buffer = new ComputeBuffer(bufferElements.Count * 4, sizeof(float));
+
+        buffer.SetData(bufferElements);
+        computeShader.SetBuffer(0, chunkBufferId, buffer);
+
+        computeShader.SetInt(chunkCountId, bufferElements.Count);
+
+        computeShader.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
     }
 }
