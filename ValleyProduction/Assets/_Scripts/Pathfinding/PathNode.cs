@@ -209,8 +209,6 @@ public class PathNode : MonoBehaviour
 
     public void ResetNodeData()
     {
-        Debug.Log("Reset Node");
-
         for (int i = 0; i < dataByLandmark.Count; i++)
         {
             if (!dataByLandmark[i].linkedToLandmark)
@@ -225,7 +223,6 @@ public class PathNode : MonoBehaviour
 
     public List<PathNode> UpdateSelfData()
     {
-        Debug.Log("Update Self Data");
         List<PathNode> neighbours = GetNeighbours();
 
         List<PathNode> toUpdate = new List<PathNode>();
