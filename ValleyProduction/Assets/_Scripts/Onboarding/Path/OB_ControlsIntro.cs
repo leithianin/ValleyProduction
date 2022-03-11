@@ -10,6 +10,7 @@ public class OB_ControlsIntro : OnBoarding
 
     public UnityEvent OnMouseScroll;
     public UnityEvent OnMoving;
+    public UnityEvent OnRotate;
 
     public bool hasDoneAction = false;
 
@@ -41,6 +42,11 @@ public class OB_ControlsIntro : OnBoarding
             CheckAction();
         }
     }
+    
+    /*public void OnRotate()
+    {
+
+    }*/
 
     public void CheckAction()
     {

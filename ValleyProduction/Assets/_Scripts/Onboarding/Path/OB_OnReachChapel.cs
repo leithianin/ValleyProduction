@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class OB_OnReachChapel : OnBoarding
 {
+    public UnityEvent OnClick;
+
     protected override void OnEnd()
     {
        
@@ -24,5 +27,10 @@ public class OB_OnReachChapel : OnBoarding
     {
         PathManager.isOnFinishPath -= OnFinishPath;
         Over();
+    }
+
+    public void OnClickButtonPTH_008()
+    {
+        OnClick?.Invoke();
     }
 }
