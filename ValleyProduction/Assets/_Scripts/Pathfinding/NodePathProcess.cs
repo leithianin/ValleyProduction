@@ -42,6 +42,17 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
         }
     }
 
+    private void EndUpdatePath()
+    {
+        isProcessingPath = false;
+        for (int i = 0; i < updatedNodes.Count; i++)
+        {
+            updatedNodes[i].ResetUpdateState();
+        }
+
+        updatedNodes.Clear();
+    }
+
     private void UpdateFirstLandmarkNode(List<PathNode> leftToUpdates)
     {
         if(leftToUpdates.Count > 0)
@@ -49,7 +60,13 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
             UpdateNode(leftToUpdates[0]);
             leftToUpdates.RemoveAt(0);
 
-            TimerManager.CreateRealTimer(Time.deltaTime, () => UpdateFirstLandmarkNode(new List<PathNode>(leftToUpdates)));
+            UpdateFirstLandmarkNode(new List<PathNode>(leftToUpdates));
+
+            //TimerManager.CreateRealTimer(Time.deltaTime, () => UpdateFirstLandmarkNode(new List<PathNode>(leftToUpdates)));
+        }
+        else
+        {
+            EndUpdatePath();
         }
     }
 
@@ -61,15 +78,5 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
     public static void SetNodeUpdating(PathNode toSet)
     {
         instance.updatedNodes.Add(toSet);
-    }
-
-    private void LateUpdate()
-    {
-        for(int i = 0; i < updatedNodes.Count; i++)
-        {
-            updatedNodes[i].ResetUpdateState();
-        }
-
-        updatedNodes.Clear();
     }
 }

@@ -48,12 +48,12 @@ public class VisitorBehavior : MonoBehaviour
 
         spawnPoint = nSpawnPoint;
 
+        visitorType = nVisitorType;
+
         currentPathFragment = SearchFirstPathFragment(nSpawnPoint);
 
         if(currentPathFragment != null)
         {
-            visitorType = nVisitorType;
-
             OnSetVisitorWithType?.Invoke(visitorType);
 
             movement.SetSpeed(UnityEngine.Random.Range(visitorType.Speed.x, visitorType.Speed.y));
@@ -153,7 +153,7 @@ public class VisitorBehavior : MonoBehaviour
     /// <returns>Le PathFragment à parcourir.</returns>
     private PathFragmentData SearchFirstPathFragment(IST_PathPoint startPoint)
     {
-        PathFragmentData pathToTake = startPoint.Node.GetMostInterestingPath(currentObjective);
+        PathFragmentData pathToTake = startPoint.Node.GetMostInterestingPath(currentObjective, null, visitorType.LikedInteractions(), visitorType.HatedInteractions());
 
         if (pathToTake != null && pathToTake.endPoint == startPoint)
         {
@@ -176,7 +176,7 @@ public class VisitorBehavior : MonoBehaviour
             currentObjective = LandmarkType.Spawn;
         }
 
-        PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective);
+        PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective, currentPathFragment, visitorType.LikedInteractions(), visitorType.HatedInteractions());
 
         if(pathToTake != null && pathToTake.endPoint == currentPathFragment.endPoint)
         {

@@ -51,4 +51,23 @@ public class InterestPoint : MonoBehaviour
 
         return usableInteractions;
     }
+
+    public float GetAttractivityScore(List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    {
+        float toReturn = 0;
+
+        for(int i = 0; i < interactions.Length; i++)
+        {
+            if(likedTypes.Contains(interactions[i].interactionType))
+            {
+                toReturn += interactions[i].attractivityLevel;
+            }
+            else if(hatedTypes.Contains(interactions[i].interactionType))
+            {
+                toReturn -= interactions[i].attractivityLevel;
+            }
+        }
+        
+        return toReturn;
+    }
 }
