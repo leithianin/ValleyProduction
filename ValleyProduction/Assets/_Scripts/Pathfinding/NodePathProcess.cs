@@ -79,14 +79,4 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
     {
         instance.updatedNodes.Add(toSet);
     }
-
-    /*private void LateUpdate()
-    {
-        for(int i = 0; i < updatedNodes.Count; i++)
-        {
-            updatedNodes[i].ResetUpdateState();
-        }
-
-        updatedNodes.Clear();
-    }*/
 }

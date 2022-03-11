@@ -9,8 +9,10 @@ public class PathFragmentData
     public IST_PathPoint endPoint;                          //Starting point of the FragmentPath
     public IST_PathPoint startPoint;                        //Ending point of the FragmentPath
     public List<Vector3> path = new List<Vector3>();
-    public List<InterestPoint> interestPointList = new List<InterestPoint>();
+    private List<InterestPoint> interestPointList = new List<InterestPoint>();
     public List<InterestPointDetector> interestPointDetectors = new List<InterestPointDetector>();
+
+    public List<InterestPoint> InterestPointsOnFragment => interestPointList;
 
     public PathFragmentData(IST_PathPoint nStartPoint, IST_PathPoint nEndPoint, List<Vector3> nPath)
     {
