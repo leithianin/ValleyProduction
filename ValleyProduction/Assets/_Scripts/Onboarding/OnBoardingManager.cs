@@ -60,7 +60,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static void PlayEndPathOnBoarding()
     {
-        Debug.Log("ddd");
         VLY_Time.SetTimeScale(1);
         instance.endOnboarding.EndOnBoardingPath?.Invoke();
     }
