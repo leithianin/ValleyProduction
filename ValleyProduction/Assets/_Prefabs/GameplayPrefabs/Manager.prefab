@@ -220,7 +220,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5209237266425241743}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e583b33b0276b62409f09a08949a361d, type: 3}
   m_Name: 
@@ -359,10 +359,10 @@ MonoBehaviour:
         m_CallState: 2
   layerMaskNoTools:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 2369
   layerMaskPathTool:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2049
 --- !u!114 &5209237266425241729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,43 +395,7 @@ MonoBehaviour:
       m_Calls: []
   OnUnselectOneMore:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ChangeMenuOptionBool
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &5209237266425241731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,7 +462,7 @@ MonoBehaviour:
   index: 1
   newPathFragmentData: []
   pathRendererManager: {fileID: 7872933226384271932}
-  testPathpoint: {fileID: 5583442100236828276, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
+  testPathpoint: {fileID: 6225881508748953926, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
 --- !u!114 &7872933226384271932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,7 +531,7 @@ MonoBehaviour:
   ressourceProductionSpeed: 10
   ressourceByVisitor: 0.2
   ressourceGainedBase: 1
-  currentRessources: 0
+  currentRessources: 200
   OnGainRessource:
     m_PersistentCalls:
       m_Calls: []
@@ -586,8 +550,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed267bc3464c854c82ebe973cc0abc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenUpdates: 0
-  attractivityScore: 0
+  timeBetweenUpdates: 5
+  attractivityScore: 2.5
 --- !u!114 &6452573747395027205
 MonoBehaviour:
   m_ObjectHideFlags: 0

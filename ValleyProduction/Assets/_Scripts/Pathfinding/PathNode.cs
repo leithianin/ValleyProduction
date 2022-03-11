@@ -19,6 +19,7 @@ public class PathNode : MonoBehaviour
 
     public void ResetUpdateState()
     {
+        Debug.Log(WorldPosition);
         isBeingUpdated = false;
     }
 

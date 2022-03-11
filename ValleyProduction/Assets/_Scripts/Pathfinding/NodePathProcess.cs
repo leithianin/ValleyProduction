@@ -45,12 +45,6 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
     private void EndUpdatePath()
     {
         isProcessingPath = false;
-        for (int i = 0; i < updatedNodes.Count; i++)
-        {
-            updatedNodes[i].ResetUpdateState();
-        }
-
-        updatedNodes.Clear();
     }
 
     private void UpdateFirstLandmarkNode(List<PathNode> leftToUpdates)
@@ -59,6 +53,13 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
         {
             UpdateNode(leftToUpdates[0]);
             leftToUpdates.RemoveAt(0);
+
+            for (int i = 0; i < updatedNodes.Count; i++)
+            {
+                updatedNodes[i].ResetUpdateState();
+            }
+
+            updatedNodes.Clear();
 
             UpdateFirstLandmarkNode(new List<PathNode>(leftToUpdates));
 
