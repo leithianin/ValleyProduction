@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AreaManager : VLY_Singleton<AreaManager>
 {
@@ -33,7 +34,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Liste de toutes les zones de la map
     private List<Area> areas = new List<Area>();
 
-    private static List<Area> Areas => instance.areas;
+    [SerializeField] public UnityEvent OnCreateGrid;
+
+    public static List<Area> Areas => instance.areas;
 
     /// Taille de la map (Getter)
     private static float AreaHeight => instance.areaSize;
@@ -172,7 +175,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 Area newArea = new Area();
                 newArea.arrayPosition = new Vector2Int(i, j);
-                newArea.worldPosition = new Vector2(areaSize / 2f + areaSize * i, areaSize / 2f + areaSize * j) + GetWorldPositionOffset();
+                newArea.SetWorldPosition(new Vector2(areaSize / 2f + areaSize * i, areaSize / 2f + areaSize * j) + GetWorldPositionOffset());
 
                 newArea.datas.Add(new AD_Noise());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
@@ -194,6 +197,10 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 areas[i].SetAllDisplay(areaSize, areaDisplayMask);
             }
         }
+
+        foreach(Area a in areas){ HeatMapMaskRenderer.RegisterChunks(a); }
+
+        //OnCreateGrid?.Invoke();
     }
 
     /// <summary>

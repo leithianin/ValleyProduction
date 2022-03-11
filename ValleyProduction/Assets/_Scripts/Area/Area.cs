@@ -11,9 +11,14 @@ public class Area
     /// Position dans la grille.
     public Vector2Int arrayPosition;
     /// Position dans le monde.
-    public Vector2 worldPosition;
+    private Vector2 worldPosition;
     /// Position dans le monde, convertie en Vecteur 3.
     public Vector3 GetWorldPosition => new Vector3(worldPosition.x, 0, worldPosition.y);
+
+    public void SetWorldPosition(Vector2 newPosition)
+    {
+        worldPosition = newPosition;
+    }
 
     /// <summary>
     /// Récupère le gestionaire de data du type voulut.
