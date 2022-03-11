@@ -40,7 +40,6 @@ public class InputManager : MonoBehaviour
             Debug.LogError("Cannot find Camera Transform");
     }
 
-
     void Update()
     {
         //Move Camera functions
@@ -98,6 +97,7 @@ public class InputManager : MonoBehaviour
         Vector2 mouseDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         mouseDirection = -mouseDirection;
         cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, mouseDirection.magnitude * mouseScrollingMovingSpeed);
+        PlayerInputManager.OnKeyMove?.Invoke(mouseDirection);
     }
 
 

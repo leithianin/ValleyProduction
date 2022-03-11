@@ -362,6 +362,7 @@ public class PathNode : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        /*
         if (Selection.activeGameObject != transform.gameObject)
         {
             return;
@@ -380,6 +381,6 @@ public class PathNode : MonoBehaviour
             {
                 Gizmos.DrawLine(lastParent.WorldPosition, parent.WorldPosition);
             }
-        }
+        }*/
     }
 }
