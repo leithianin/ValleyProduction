@@ -5,8 +5,10 @@ using UnityEngine.Events;
 
 public class OB_AvoidForest : OnBoarding
 {
+    public float time = 5f;
     public UnityEvent fakeBehavior;
     public UnityEvent endMessage;
+    public UnityEvent HideUI;
     [SerializeField] public List<Vector3> vectorList;
     protected override void OnEnd()
     {
@@ -27,6 +29,7 @@ public class OB_AvoidForest : OnBoarding
         yield return new WaitForSeconds(0.5f);
         PlayFakeBehavior();
     }
+
     protected override void OnPlay()
     {
         OnBoardingManager.OnWindMill += OnClick;
@@ -51,7 +54,8 @@ public class OB_AvoidForest : OnBoarding
 
     IEnumerator EndEcosystem()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(time);
+        HideUI?.Invoke();
         PlayEndMessage();
     }
 }
