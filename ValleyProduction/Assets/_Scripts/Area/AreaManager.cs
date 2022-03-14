@@ -17,7 +17,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     [SerializeField] private LayerMask areaDisplayMask;
     private Vector2 CenterPosition => new Vector2(transform.position.x, transform.position.z);
 
-    private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
+    [SerializeField] private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
     private int updaterIndex;
     [SerializeField] private int numberDataToUpdateInFrame;
 
@@ -198,7 +198,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             }
         }
 
-        foreach(Area a in areas){ HeatMapMaskRenderer.RegisterChunks(a); }
+        //foreach(Area a in areas){ HeatMapMaskRenderer.RegisterChunks(a); }
 
         //OnCreateGrid?.Invoke();
     }

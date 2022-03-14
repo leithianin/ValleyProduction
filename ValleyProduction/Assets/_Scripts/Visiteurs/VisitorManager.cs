@@ -13,6 +13,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     [SerializeField] private VisitorScriptable[] visitorTypes;
 
+    [Header("Feedbacks")]
+    [SerializeField] private UnityEvent<int> OnUpdateVisitorNumber;
+
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
     [SerializeField] private Terrain mainTerrain;
@@ -79,6 +82,8 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     {
                         newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, visitorObjective); //CODE REVIEW
                         SetType(newVisitor);
+
+                        OnUpdateVisitorNumber?.Invoke(UsedVisitorNumber());
                     }
                 }
             }
@@ -109,6 +114,8 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     {
         isOnDespawn?.Invoke(true);
         toDelete.UnsetVisitor();
+
+        instance.OnUpdateVisitorNumber?.Invoke(UsedVisitorNumber());
     }
 
     /// <summary>

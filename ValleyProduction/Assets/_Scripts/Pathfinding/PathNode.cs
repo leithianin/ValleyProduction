@@ -19,7 +19,6 @@ public class PathNode : MonoBehaviour
 
     public void ResetUpdateState()
     {
-        Debug.Log(WorldPosition);
         isBeingUpdated = false;
     }
 
@@ -337,6 +336,11 @@ public class PathNode : MonoBehaviour
     private float CalculateScore(PathFragmentData fragmentToCalculate, LandmarkType landmarkWanted, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
     {
         NodePathData dataToCheck = null;
+
+        float distanceScore = 100f;
+
+        float attractivityScore = 0;
+
         if (fragmentToCalculate.startPoint.Node != this)
         {
             dataToCheck = fragmentToCalculate.startPoint.Node.GetDataForLandmarkType(landmarkWanted);
@@ -346,9 +350,10 @@ public class PathNode : MonoBehaviour
             dataToCheck = fragmentToCalculate.endPoint.Node.GetDataForLandmarkType(landmarkWanted);
         }
 
-        float distanceScore = 100f - dataToCheck.distanceFromLandmark;
-
-        float attractivityScore = 0;
+        if(dataToCheck != null)
+        {
+            distanceScore -= dataToCheck.distanceFromLandmark;
+        }
 
         for(int i = 0; i < fragmentToCalculate.InterestPointsOnFragment.Count; i++)
         {
