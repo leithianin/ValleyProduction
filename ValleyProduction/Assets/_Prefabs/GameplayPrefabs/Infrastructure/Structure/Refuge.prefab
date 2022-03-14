@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 5343914574396323122}
   - component: {fileID: 7146875287765694551}
   - component: {fileID: 6651034410580906832}
+  - component: {fileID: 7083835216949562407}
   - component: {fileID: 5963093504635812861}
   - component: {fileID: 1576376173911760861}
   m_Layer: 12
@@ -383,7 +384,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionType: 0
   attractivityLevel: 100
-  conditions: []
+  conditions:
+  - {fileID: 7083835216949562407}
   maxInteractionAtSameTime: 10
   PlayOnStartInteract:
     m_PersistentCalls:
@@ -420,6 +422,20 @@ MonoBehaviour:
       m_Calls: []
   interactionAction: {fileID: 4054682070733229829}
   callerInSpot: []
+--- !u!114 &7083835216949562407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515355796801782564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72f94f619963b9e498b5bc2677615961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStaminaOver: 0
+  staminaLimit: 2
 --- !u!135 &5963093504635812861
 SphereCollider:
   m_ObjectHideFlags: 0
