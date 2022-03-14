@@ -29,16 +29,16 @@ public class HeatMapMaskRenderer : MonoBehaviour
 
     //Caching shader properties
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
-    private static readonly int chunkCountId = Shader.PropertyToID("_ChunkCount");
-    private static readonly int mapSizeId = Shader.PropertyToID("_MapSize");
-    private static readonly int blendId = Shader.PropertyToID("_Blend");
+    private static readonly int chunkCountId  = Shader.PropertyToID("_ChunkCount" );
+    private static readonly int mapSizeId     = Shader.PropertyToID("_MapSize"    );
+    private static readonly int blendId       = Shader.PropertyToID("_Blend"      );
 
     private static readonly int color0Id = Shader.PropertyToID("_Color0");
     private static readonly int color1Id = Shader.PropertyToID("_Color1");
     private static readonly int color2Id = Shader.PropertyToID("_Color2");
     private static readonly int color3Id = Shader.PropertyToID("_Color3");
 
-    private static readonly int noiseTexId = Shader.PropertyToID("_NoiseTex");
+    private static readonly int noiseTexId    = Shader.PropertyToID("_NoiseTex"   );
     private static readonly int noiseDetailId = Shader.PropertyToID("_NoiseDetail");
 
     private static readonly int maskTextureId = Shader.PropertyToID("_Mask");
@@ -50,6 +50,7 @@ public class HeatMapMaskRenderer : MonoBehaviour
     {
         public float PositionX;
         public float PositionY;
+        public float Range;
         public float Noise;
     }
 
@@ -104,6 +105,7 @@ public class HeatMapMaskRenderer : MonoBehaviour
             {
                 PositionX = chunk.GetWorldPosition.x,
                 PositionY = chunk.GetWorldPosition.z,
+                Range = 1,
                 Noise = chunk.GetData<AU_MakeSound>()[0].Score,
             };
             bufferElements.Add(element);
