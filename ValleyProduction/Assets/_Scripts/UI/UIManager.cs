@@ -254,4 +254,21 @@ public class UIManager : VLY_Singleton<UIManager>
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
     }
     #endregion
+
+    #region Info Infrastructure
+    //Show les informations des visiteurs on click
+    public static void InteractWithInfrastructure(InfrastructureData infraData)
+    {
+        Debug.Log("allo");
+    }
+
+    public static void ShowInfoInfrastructure(CPN_Informations cpn_Inf)
+    {
+
+    }
+
+    public static void HideInfoInfrastructure()
+    {
+    }
+    #endregion
 }

@@ -33,6 +33,9 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static Action<bool> onDestroyPath;
     public static Action<bool> OnWindMill;
 
+    [Header("On Boarding Infrastructure")]
+    public static Action<bool> OnClickInfrastructure;
+
     private void Start()
     {
         if(activateOnBoarding)
