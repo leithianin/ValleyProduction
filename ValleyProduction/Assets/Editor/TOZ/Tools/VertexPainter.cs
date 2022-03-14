@@ -180,7 +180,7 @@ namespace TOZEditor {
 				if(GUILayout.Button("SAVE NEW MESH")) {
 					//Create an instance
 					Mesh data = (Mesh)Instantiate(mesh);
-					string name = AssetDatabase.GenerateUniqueAssetPath("Assets/New Mesh.mat");
+					string name = AssetDatabase.GenerateUniqueAssetPath("Assets/_Art/Meshes/Environment/Terrain/TOZMeshes/New Mesh.mat");
 					AssetDatabase.CreateAsset(data, name);
 					AssetDatabase.SaveAssets();
 					AssetDatabase.Refresh();
