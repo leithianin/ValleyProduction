@@ -7,6 +7,7 @@ public class TextsDictionary : ScriptableObject
 {
     [SerializeField] private TextBase[] pathTutorial;
     [SerializeField] private TextBase[] ecosystemTutorial;
+    [SerializeField] private TextBase[] infrastructureTutorial;
     [SerializeField] private TextBase[] quests;
     [SerializeField] private TextBase blank;
 
@@ -30,6 +31,16 @@ public class TextsDictionary : ScriptableObject
                 foreach (TextBase txt in ecosystemTutorial)
                 {
                     if (txt.Id.Equals(id))
+                    {
+                        return txt;
+                    }
+                }
+                break;
+
+            case "INF":
+                foreach(TextBase txt in infrastructureTutorial)
+                {
+                    if(txt.Id.Equals(id))
                     {
                         return txt;
                     }
