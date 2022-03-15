@@ -6,7 +6,7 @@ public class IFB_PlayShaderBoolean : MonoBehaviour, IFeedbackPlayer
 {
     [SerializeField] private bool state;
 
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private List<Renderer> renderers;
     [SerializeField] private string shader_variable_name;
 
     private MaterialPropertyBlock materialBlock;
@@ -14,11 +14,15 @@ public class IFB_PlayShaderBoolean : MonoBehaviour, IFeedbackPlayer
     public void Play()
     {
         materialBlock = new MaterialPropertyBlock();
-        renderer.GetPropertyBlock(materialBlock);
 
-        materialBlock.SetFloat(shader_variable_name, state?1f:0f);
+        foreach (Renderer renderer in renderers)
+        {
+            renderer.GetPropertyBlock(materialBlock);
 
-        renderer.SetPropertyBlock(materialBlock);
+            materialBlock.SetFloat(shader_variable_name, state ? 1f : 0f);
+
+            renderer.SetPropertyBlock(materialBlock);
+        }
     }
 
     public void SetShader(bool value)
