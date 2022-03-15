@@ -32,5 +32,6 @@ public class OB_OnReachChapel : OnBoarding
     public void OnClickButtonPTH_008()
     {
         OnClick?.Invoke();
+        OnBoardingManager.ShowChapelDirection();
     }
 }

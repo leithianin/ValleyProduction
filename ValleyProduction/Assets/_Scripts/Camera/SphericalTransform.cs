@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -34,6 +35,8 @@ public class SphericalTransform : MonoBehaviour
 
     [SerializeField, ReadOnly] private bool belowTerrain;
 
+    public static Action<float> OnMouseWheel;
+
     private Vector3 cameraTarget = default;
 
     private Vector3 touchDown = default;
@@ -64,6 +67,7 @@ public class SphericalTransform : MonoBehaviour
             Debug.LogWarning("Rotation Value is not set correctly");
 
         coordinates.y += rotationValue * speed * Time.unscaledDeltaTime;
+        OnMouseWheel?.Invoke(rotationValue);
     }
 
     public void PolarRotation(float rotationValue, float speed)
@@ -72,6 +76,7 @@ public class SphericalTransform : MonoBehaviour
             Debug.LogWarning("Rotation Value is not set correctly");
 
         coordinates.z += rotationValue * speed * Time.unscaledDeltaTime;
+        OnMouseWheel?.Invoke(rotationValue);
     }
 
     public void ChangeLength(float deltaMagnitude, float scrollingSpeed)

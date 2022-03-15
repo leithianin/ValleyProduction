@@ -74,12 +74,16 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void ShowHikerProfileIntro()
     {
         instance.visitorProfileIntroOnBoarding.Over();
-        //instance.UI_OB_VisitorsProfileInfo.SetActive(false);
-        //instance.UI_OB_HikerIntro.SetActive(true);
-        instance.UI_Arrow_Chapel.SetActive(true);
-        instance.UI_ZoneChapel.SetActive(true);
         instance.chapelOnboarding.Play();
         instance.activateOnBoarding = false;
+        //instance.UI_OB_VisitorsProfileInfo.SetActive(false);
+        //instance.UI_OB_HikerIntro.SetActive(true);
+    }
+
+    public static void ShowChapelDirection()
+    {
+        instance.UI_Arrow_Chapel.SetActive(true);
+        instance.UI_ZoneChapel.SetActive(true);
     }
 
     public static void DesactivateTool()
