@@ -45,8 +45,6 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
     {
         if (!isProcessingPath)
         {
-            Debug.Log("UpdateAll");
-
             isProcessingPath = true;
 
             instance.UpdateFirstLandmarkNode(new List<PathNode>(instance.nodesNextToLandmark));

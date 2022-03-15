@@ -72,7 +72,6 @@ public class TEMP_ObjectivesManager : VLY_Singleton<TEMP_ObjectivesManager>
     {
         if (!isPhaseOneGood)
         {
-            Debug.Log(landmarkType);
             if (landmarkType != LandmarkType.Spawn && landmarkType != LandmarkType.None)
             {
                 if (!currentValidLandmark.Contains(landmarkType) && landmarkResult)
