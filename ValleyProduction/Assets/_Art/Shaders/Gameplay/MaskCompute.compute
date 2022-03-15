@@ -36,4 +36,9 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 	}
 
 	val += _NoiseTex.SampleLevel(sampler_NoiseTex, texelUVPos * _NoiseDetail, 0).r * .05f;
+
+	float4 col = lerp(_Color2, _Color3, smoothstep(.55f, .75f, val));
+	col = lerp(_Color1, col, smoothstep(.3f, .5f, val));
+	col = lerp(_Color0, col, smoothstep(.05f, .25f, val));
+	_Mask[id.xy] = col;
 }
