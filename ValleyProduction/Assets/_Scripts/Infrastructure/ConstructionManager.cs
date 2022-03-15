@@ -7,10 +7,6 @@ using UnityEngine.Events;
 public class ConstructionManager : VLY_Singleton<ConstructionManager>
 {
     private InfrastructureType selectedStructureType = InfrastructureType.None;
-    private ToolType selectedToolType = ToolType.None;
-
-    [SerializeField] private InfrastructurePreview pathPointPreview;
-    [SerializeField] private List<InfrastructurePreview> previews;
 
     public UnityEvent OnSelectPathTool;
     public UnityEvent OnUnselectPathTool;
@@ -30,6 +26,12 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         {
             InfrastructureManager.PlaceInfrastructure(posePosition);
         }
+
+        if(InfrastructureManager.GetCurrentTool == ToolType.Move && InfrastructureManager.GetMovedObject != null)
+        {
+            InfrastructureManager.ReplaceInfrastructure(posePosition);
+        }
+
     }
 
     /// <summary>
@@ -126,7 +128,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Input de sélection de l'outil.
     /// </summary>
     /// <param name="newStructureType">L'outil sélectionné.</param>
-    public static void SelectInfrastructureType(InfrastructureType newStructureType)
+    public static void SelectInfrastructureType(InfrastructurePreview newStructureType)
     {
         instance.OnSelectInfrastructureType(newStructureType);
     }
@@ -143,23 +145,23 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
 
         InfrastructureManager.SetCurrentSelectedStructureToNull();                                                          //Reset CurrentSelectedStructure
-        instance.OnSelectInfrastructureType(InfrastructureType.None);
+        instance.OnSelectInfrastructureType(null);
     }
 
     /// <summary>
     /// Gère le changement d'outil.
     /// </summary>
     /// <param name="newStructureType">L'outil sélectionné.</param>
-    private void OnSelectInfrastructureType(InfrastructureType newStructureType)
+    private void OnSelectInfrastructureType(InfrastructurePreview newStructureType)
     {
         InfrastructureType lastStructureType = selectedStructureType;
 
         OnUnselectInfrastructureType();
-        if (lastStructureType != newStructureType && newStructureType != InfrastructureType.None)
+        if (newStructureType != null && lastStructureType != newStructureType.RealInfrastructure.StructureType)
         {
-            selectedStructureType = newStructureType;
+            selectedStructureType = newStructureType.RealInfrastructure.StructureType;
 
-            InfrastructureManager.ChooseInfrastructure(previews[(int)newStructureType - 1]);
+            InfrastructureManager.ChooseInfrastructure(newStructureType);
 
             switch (selectedStructureType)
             {
@@ -181,6 +183,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         switch(selectedStructureType)
         {
             case InfrastructureType.Path:
+                PathManager.CreatePathData();
                 PlayerInputManager.ChangeLayerMaskForNoTools();
                 OnUnselectPathTool?.Invoke();
                 break;

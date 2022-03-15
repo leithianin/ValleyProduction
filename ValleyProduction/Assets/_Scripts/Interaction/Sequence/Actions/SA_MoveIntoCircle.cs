@@ -48,8 +48,7 @@ public class SA_MoveIntoCircle : InteractionActions
                 path.Add(pathToTake.corners[i]);
             }
 
-            CPN_Movement movement = null;
-            if (caller.HasComponent<CPN_Movement>(ref movement))
+            if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
             {
                 movement.WalkOnNewPath(path, () => EndAction(caller));
             }
@@ -68,8 +67,7 @@ public class SA_MoveIntoCircle : InteractionActions
 
     protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
-        CPN_Movement movement = null;
-        if (caller.HasComponent<CPN_Movement>(ref movement))
+        if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
         {
             movement.InteruptWalk();
         }

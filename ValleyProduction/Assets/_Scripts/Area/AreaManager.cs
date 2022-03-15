@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AreaManager : VLY_Singleton<AreaManager>
 {
@@ -16,7 +17,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     [SerializeField] private LayerMask areaDisplayMask;
     private Vector2 CenterPosition => new Vector2(transform.position.x, transform.position.z);
 
-    private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
+    [SerializeField] private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
     private int updaterIndex;
     [SerializeField] private int numberDataToUpdateInFrame;
 
@@ -25,6 +26,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
     [SerializeField] private Transform animalScoreHandler;
     [SerializeField] private List<ADI_AnimalDisplayer> animalScorePrefab;
+    [SerializeField] private List<ADI_AnimalDisplayer> allAnimalDisplayers = new List<ADI_AnimalDisplayer>(); //TEMP
 
     [SerializeField] private Transform chunkHandler;
     [SerializeField] private ChunkDisplayer chunkDisplayerPrefab;
@@ -33,7 +35,9 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Liste de toutes les zones de la map
     private List<Area> areas = new List<Area>();
 
-    private static List<Area> Areas => instance.areas;
+    [SerializeField] public UnityEvent OnCreateGrid;
+
+    public static List<Area> Areas => instance.areas;
 
     /// Taille de la map (Getter)
     private static float AreaHeight => instance.areaSize;
@@ -49,6 +53,18 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 areas[i].datas[j].CalculateScore();
             }
         }
+    }
+
+    public static int GetAnimalInValley() //TEMP
+    {
+        int toReturn = 0;
+
+        for(int i = 0; i < instance.allAnimalDisplayers.Count; i++)
+        {
+            toReturn += instance.allAnimalDisplayers[i].AnimalCount;
+        }
+
+        return toReturn;
     }
 
     [ContextMenu("Set Datas")]
@@ -141,6 +157,8 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
         gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaSize), Mathf.RoundToInt(worldDimension.y / areaSize));
 
+        allAnimalDisplayers.Clear(); //TEMP
+
         for (int i = 0; i < gridDimension.x; i++)
         {
             for (int j = 0; j < gridDimension.y; j++)
@@ -148,6 +166,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 for (int l = 0; l < animalScorePrefab.Count; l++)
                 {
                     ADI_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ADI_AnimalDisplayer>();
+                    allAnimalDisplayers.Add(go); //TEMP
                     go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 }
             }
@@ -172,7 +191,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 Area newArea = new Area();
                 newArea.arrayPosition = new Vector2Int(i, j);
-                newArea.worldPosition = new Vector2(areaSize / 2f + areaSize * i, areaSize / 2f + areaSize * j) + GetWorldPositionOffset();
+                newArea.SetWorldPosition(new Vector2(areaSize / 2f + areaSize * i, areaSize / 2f + areaSize * j) + GetWorldPositionOffset());
 
                 newArea.datas.Add(new AD_Noise());
                 newArea.datas[newArea.datas.Count - 1].linkedArea = newArea;
@@ -194,6 +213,10 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 areas[i].SetAllDisplay(areaSize, areaDisplayMask);
             }
         }
+
+        //foreach(Area a in areas){ HeatMapMaskRenderer.RegisterChunks(a); }
+
+        //OnCreateGrid?.Invoke();
     }
 
     /// <summary>

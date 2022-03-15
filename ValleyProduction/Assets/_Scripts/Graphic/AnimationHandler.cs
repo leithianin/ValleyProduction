@@ -50,6 +50,7 @@ public class AnimationHandler : VLY_Component
 
     public void StopBodyAnim(BodyAnimationType animName)
     {
+        lastAnim = BodyAnimationType.None;
         switch (animName)
         {
             case BodyAnimationType.Idle:

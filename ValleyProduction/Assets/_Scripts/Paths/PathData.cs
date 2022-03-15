@@ -15,13 +15,25 @@ public class PathData
     public IST_PathPoint startPoint;                                                             //Starting point of the path
     public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
 
-    [Header("Suppr.")]
     List<PathFragmentData> listSuppr = new List<PathFragmentData>();
 
     List<PathFragmentData> listGetPathFragment = new List<PathFragmentData>();
 
+    [Serializable]
+    private class InterestPointDetected
+    {
+        public InterestPoint interestPoint = null;
+        public int detectedCount;
+    }
+
+    [SerializeField] private List<InterestPointDetected> interestPointsOnPath = new List<InterestPointDetected>();
+
     //Debug Path --> J'ai besoin de savoir à qui il appartient lors de la suppression
     public LineRenderer pathLineRenderer;
+
+    [Obsolete]
+
+    private List<InterestPointDetector> interestPointDetectors = new List<InterestPointDetector>();
 
     /// <summary>
     /// Check if the path has the point.
@@ -147,11 +159,11 @@ public class PathData
     {
         if (pathFragment[0].HasThisStartingPoint(ist_pp))
         {
-            pathFragment.RemoveAt(0);
+            RemovePathFragment(pathFragment[0]);
         }
         else
         {
-            pathFragment.RemoveAt(1);
+            RemovePathFragment(pathFragment[1]);
         }
     }
 
@@ -177,10 +189,26 @@ public class PathData
             }
         }
 
-        foreach(PathFragmentData pfd in listSuppr)
+        foreach (PathFragmentData pfd in listSuppr)
         {
-            pathFragment.Remove(pfd);
+            RemovePathFragment(pfd);
         }
+    }
+
+    public void RemovePathFragment(PathFragmentData toRemove)
+    {
+        pathFragment.Remove(toRemove);
+
+        toRemove.startPoint.Node.RemoveFragment(toRemove);
+        toRemove.endPoint.Node.RemoveFragment(toRemove);
+    }
+
+    public void AddPathFragment(PathFragmentData toAdd)
+    {
+        pathFragment.Add(toAdd);
+
+        toAdd.startPoint.Node.AddFragment(toAdd);
+        toAdd.endPoint.Node.AddFragment(toAdd);
     }
 
     public List<PathFragmentData> GetAllNextPathFragment(IST_PathPoint pathpoint)
@@ -202,6 +230,26 @@ public class PathData
         pathFragment.Remove(pfd);
     }
 
+    public List<IST_PathPoint> GetAllPoints()
+    {
+        List<IST_PathPoint> toReturn = new List<IST_PathPoint>();
+
+        for(int i = 0; i < pathFragment.Count; i++)
+        {
+            if(!toReturn.Contains(pathFragment[i].startPoint))
+            {
+                toReturn.Add(pathFragment[i].startPoint);
+            }
+
+            if (!toReturn.Contains(pathFragment[i].endPoint))
+            {
+                toReturn.Add(pathFragment[i].endPoint);
+            }
+        }
+
+        return toReturn;
+    }
+
     public IST_PathPoint GetLastPoint()
     {
         return pathFragment[pathFragment.Count - 1].endPoint;
@@ -211,7 +259,16 @@ public class PathData
     {
         if(IsPathDataEmpty() || startPoint == null)
         {
-            PathManager.DeletePath(this);     
+            PathManager.DeleteFullPath(this);     
+        }
+    }
+
+    public void DeletePathData()
+    {
+        for(int i = 0; i < interestPointDetectors.Count; i++)
+        {
+            interestPointDetectors[i].OnDiscoverInterestPoint -= AddInterestPoint;
+            interestPointDetectors[i].OnRemoveInterestPoint -= RemoveInterestPoint;
         }
     }
 
@@ -222,5 +279,74 @@ public class PathData
             return true;
         }
         return false;
+    }
+
+    [Obsolete]
+    public void AddInterestPointDetector(InterestPointDetector detector)
+    {
+        if(!interestPointDetectors.Contains(detector))
+        {
+            interestPointDetectors.Add(detector);
+            detector.OnDiscoverInterestPoint += AddInterestPoint;
+            detector.OnRemoveInterestPoint += RemoveInterestPoint;
+        }
+    }
+
+    [Obsolete]
+    public void RemoveInterestPointDetector(InterestPointDetector detector)
+    {
+        if (interestPointDetectors.Contains(detector))
+        {
+            interestPointDetectors.Remove(detector);
+            detector.OnDiscoverInterestPoint -= AddInterestPoint;
+            detector.OnRemoveInterestPoint -= RemoveInterestPoint;
+        }
+    }
+
+    private int ContrainsInterestPoint(InterestPoint toCheck)
+    {
+        int toReturn = -1;
+
+        for(int i = 0; i < interestPointsOnPath.Count; i++)
+        {
+            if(interestPointsOnPath[i].interestPoint == toCheck)
+            {
+                toReturn = i;
+                break;
+            }
+        }
+
+        return toReturn;
+    }
+
+    private void AddInterestPoint(InterestPoint newInterestPoint)
+    {
+        int containerIndex = ContrainsInterestPoint(newInterestPoint);
+        if (containerIndex >= 0)
+        {
+            interestPointsOnPath[containerIndex].detectedCount++;
+        }
+        else
+        {
+            Debug.Log("Add point");
+            interestPointsOnPath.Add(new InterestPointDetected());
+            interestPointsOnPath[interestPointsOnPath.Count - 1].detectedCount = 1;
+            interestPointsOnPath[interestPointsOnPath.Count - 1].interestPoint = newInterestPoint;
+        }
+    }
+
+    private void RemoveInterestPoint(InterestPoint newInterestPoint)
+    {
+        int containerIndex = ContrainsInterestPoint(newInterestPoint);
+        if (containerIndex >= 0)
+        {
+            interestPointsOnPath[containerIndex].detectedCount--;
+            if(interestPointsOnPath[containerIndex].detectedCount <= 0)
+            {
+                Debug.Log("Remove point");
+                interestPointsOnPath.RemoveAt(containerIndex);
+            }
+        }
+
     }
 }

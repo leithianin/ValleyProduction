@@ -21,7 +21,7 @@ public class PathManager : VLY_Singleton<PathManager>
     //Navmesh needs
     private static List<PathFragmentData> pfdNavmeshUpdate = new List<PathFragmentData>();
 
-    [SerializeField] private BoxCollider roadDetectorPrefab;
+    [SerializeField] private InterestPointDetector roadDetectorPrefab;
 
     [Header("DEBUG")]
     public bool debugMode = false;
@@ -87,6 +87,14 @@ public class PathManager : VLY_Singleton<PathManager>
         return null;
     }
 
+    private void AddPathfragmentToList(PathFragmentData toAdd)
+    {
+        pathFragmentDataList.Add(toAdd);
+
+        toAdd.startPoint.Node.AddFragment(toAdd);
+        toAdd.endPoint.Node.AddFragment(toAdd);
+    }
+
     //Create PathFragmentData
     public static void PlacePoint(IST_PathPoint pathpoint, Vector3 position)
     {
@@ -102,7 +110,9 @@ public class PathManager : VLY_Singleton<PathManager>
 
             //ChangementPathFragment
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
-            instance.pathFragmentDataList.Add(new_pfd);
+            instance.AddPathfragmentToList(new_pfd);
+
+            PathCreationManager.instance.pathRendererManager.ManagePathRenderer(previousPathpoint, pathpoint, navmeshPoints);
 
             //IF ONBOARDING SEQUENCE 
             new_pfd.CheckAvailableInterestPoint();
@@ -113,6 +123,8 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             previousPathpoint = pathpoint;
         }
+
+        pathpoint.Node.PlaceNode();
 
         DebugPoint(previousPathpoint);
     }
@@ -142,13 +154,12 @@ public class PathManager : VLY_Singleton<PathManager>
     //Lié le current Path avec un chemin Déconnecté
     public static void LinkDcPathToCurrentPath(PathData pd , bool startPoint)
     {
-        IST_PathPoint pathPointRef = instance.pathpointList[instance.pathpointList.Count-1];
         List<Vector3> navmeshPoints = new List<Vector3>(PathCreationManager.navmeshPositionsList);           //Doit prendre en compte le navmesh
 
-        if (startPoint)
+        if (startPoint) //Logique quand le chemin est dans le bon sens
         {
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pd.startPoint, navmeshPoints);
-            instance.pathFragmentDataList.Add(new_pfd);
+            instance.AddPathfragmentToList(new_pfd);
         
             for (int i = 0; i < pd.pathFragment.Count; i++)
             {
@@ -168,13 +179,13 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
 
                 //Add les pathFragment
-                instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+                instance.AddPathfragmentToList(pd.pathFragment[i]);
             }
         }
-        else
+        else //Logique quand le chemin est inversé
         {
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pd.pathFragment[pd.pathFragment.Count - 1].endPoint, navmeshPoints);
-            instance.pathFragmentDataList.Add(new_pfd);
+            instance.AddPathfragmentToList(new_pfd);
 
             //Utiliser ça l'a haut directement
             for (int i = pd.pathFragment.Count-1; i >= 0; i--)
@@ -202,7 +213,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
 
                 //Add les pathFragment
-                instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+                instance.AddPathfragmentToList(pd.pathFragment[i]);
                 instance.PathReverse = true;
             }
         }
@@ -226,7 +237,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// </summary>
     /// <param name="ist_pp"></param>
     /// <returns></returns>
-    public static bool CanDeleteGameobject(IST_PathPoint ist_pp)
+    [System.Obsolete] public static bool CanDeleteGameobject(IST_PathPoint ist_pp)
     {
         listAllPathPoints.Clear();
 
@@ -282,16 +293,17 @@ public class PathManager : VLY_Singleton<PathManager>
 
         DeletePoint(ist_pp);
 
-        if(SpawnPoints.Contains(ist_pp))
-        {
-            SpawnPoints.Remove(ist_pp);
-        }
         return true;
     }
 
     //Delete pathpoint
     public static void DeletePoint(IST_PathPoint ist_pp, PathData pd = null)
     {
+        if (SpawnPoints.Contains(ist_pp))
+        {
+            SpawnPoints.Remove(ist_pp);
+        }
+
         PathData pdToModify = new PathData();
         if (pd == null)
         {
@@ -302,86 +314,126 @@ public class PathManager : VLY_Singleton<PathManager>
             pdToModify = pd;
         }
 
-        #region 1 pathFragment
-        if (pdToModify.pathFragment.Count == 1)
+        if (pdToModify != null)
         {
-            DeletePath(pdToModify);
-            return;
-        }
-        #endregion
-
-        #region 2 pathFragment
-        if (pdToModify.pathFragment.Count == 2)
-        {
-            if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
+            if(pdToModify.pathFragment.Count == 0)
             {
                 DeletePath(pdToModify);
                 return;
             }
-            else
+
+            #region 1 pathFragment
+            if (pdToModify.pathFragment.Count == 1)
             {
-                pdToModify.checkWichFragmentToRemove(ist_pp);
-                DestroyLineRenderer(pdToModify.pathLineRenderer);
-                DebugLineR(pdToModify);
+                DeletePath(pdToModify);
+                if (pdToModify.pathFragment[0].startPoint != ist_pp)
+                {
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
+                }
+                else
+                {
+                    pdToModify.pathFragment[0].endPoint.RemoveObject();
+                }
                 return;
             }
-        }
-        #endregion 
+            #endregion
 
-        //Si ce n'est pas le dernier point
-        if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count-1].startPoint != ist_pp)
-        {
-            //Get les points après le pathpoint supprimé 
-            List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);
-
-            //Delete les PathFragment ou il y'a le pathpoint + Les pathFragment apres qu'on a save juste avant
-            pdToModify.RemoveFragmentAndNext(ist_pp);
-
-            //Créer un pathData avec le chemin fermé + Line renderer path fermé
-            CreatePathDataClose(pfdSecondPath);
-
-            //Delete line renderer 
-            DestroyLineRenderer(pdToModify.pathLineRenderer);
-
-            //Si StartPoint
-            if(pdToModify.startPoint == ist_pp)
+            #region 2 pathFragment
+            if (pdToModify.pathFragment.Count == 2)
             {
-                Destroy(pdToModify.startPoint.gameObject);
-                instance.pathDataList.Remove(pdToModify);
+                if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
+                {
+                    DeletePath(pdToModify);
+                    pdToModify.pathFragment[1].endPoint.RemoveObject();
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
+                    return;
+                }
+                else
+                {
+                    pdToModify.checkWichFragmentToRemove(ist_pp);
+                    DestroyLineRenderer(pdToModify.pathLineRenderer);
+                    DebugLineR(pdToModify);
+                    return;
+                }
+            }
+            #endregion
+
+            //Si ce n'est pas le dernier point
+            if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
+            {
+                //Get les points après le pathpoint supprimé 
+                List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);
+
+                //Delete les PathFragment ou il y'a le pathpoint + Les pathFragment apres qu'on a save juste avant
+                pdToModify.RemoveFragmentAndNext(ist_pp);
+
+                //Créer un pathData avec le chemin fermé + Line renderer path fermé
+                CreatePathDataClose(pfdSecondPath);
+
+                //Delete line renderer 
+                DestroyLineRenderer(pdToModify.pathLineRenderer);
+
+                //Si StartPoint
+                if (pdToModify.startPoint == ist_pp)
+                {
+                    instance.pathDataList.Remove(pdToModify);
+                }
+                else
+                {
+                    //Refaire LineRenderer pathData
+                    //DebugLine pour avant
+                    DebugLineR(pdToModify);
+                }
+
+                pdToModify.SafeCheck();
             }
             else
             {
-                //Refaire LineRenderer pathData
-                //DebugLine pour avant
+                Debug.Log("LastPoint");
+                pdToModify.RemoveFragmentAndNext(ist_pp);
+                DestroyLineRenderer(pdToModify.pathLineRenderer);
                 DebugLineR(pdToModify);
             }
-
-            pdToModify.SafeCheck();
         }
-        else
+
+        NodePathProcess.UpdateAllNodes();
+    }
+
+    public static void DeleteFullPath(PathData toDelete)
+    {
+        DeleteFullPathWithoutOnePoint(toDelete, null);
+    }
+
+    public static void DeleteFullPathWithoutOnePoint(PathData toDelete, IST_PathPoint toIgnore)
+    {
+        List<IST_PathPoint> pointsToDelete = new List<IST_PathPoint>();
+
+        for (int i = toDelete.pathFragment.Count - 1; i >= 0; i--)
         {
-            Debug.Log("LastPoint");
-            Destroy(pdToModify.GetLastPoint().gameObject);
-            pdToModify.RemoveFragmentAndNext(ist_pp);
-            DestroyLineRenderer(pdToModify.pathLineRenderer);
-            DebugLineR(pdToModify);
+            if (!pointsToDelete.Contains(toDelete.pathFragment[i].endPoint) && toDelete.pathFragment[i].endPoint != toIgnore)
+            {
+                pointsToDelete.Add(toDelete.pathFragment[i].endPoint);
+            }
+
+            if (!pointsToDelete.Contains(toDelete.pathFragment[i].startPoint) && toDelete.pathFragment[i].startPoint != toIgnore)
+            {
+                pointsToDelete.Add(toDelete.pathFragment[i].startPoint);
+            }
+        }
+
+        for (int j = 0; j < pointsToDelete.Count; j++)
+        {
+            pointsToDelete[j].RemoveObject();
         }
     }
 
+
     public static void DeletePath(PathData pathdata)
     {
-        foreach (PathFragmentData pfd in pathdata.pathFragment)
-        {
-            Destroy(pfd.startPoint.gameObject);
-            Destroy(pfd.endPoint.gameObject);
-        }
-
-        if(pathdata.startPoint != null)
-        {
-            Destroy(pathdata.startPoint.gameObject);
-        }
-
         DestroyLineRenderer(pathdata.pathLineRenderer);
+
+        pathdata.DeletePathData();
+
         instance.pathDataList.Remove(pathdata);
     }
 
@@ -396,11 +448,11 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 Debug.Log("String pas empty");
                 //Mise à jour du PathData existant
-                foreach (PathFragmentData pfd in instance.pathFragmentDataList)
+                foreach (PathFragmentData pfd in instance.currentPathData.pathFragment)
                 {
                     if (!instance.currentPathData.pathFragment.Contains(pfd))
                     {
-                        pfd.CheckAvailableInterestPoint();
+                        //pfd.CheckAvailableInterestPoint();
                         instance.currentPathData.pathFragment.Add(pfd);
                     }
                 }
@@ -423,10 +475,10 @@ public class PathManager : VLY_Singleton<PathManager>
 
                 //Remplissage des infos qu'on a 
                 newPathData.pathFragment = new List<PathFragmentData>(instance.pathFragmentDataList);
-                foreach(PathFragmentData pfd in newPathData.pathFragment)
+                /*foreach(PathFragmentData pfd in newPathData.pathFragment)
                 {
                     pfd.CheckAvailableInterestPoint();
-                }
+                }*/
 
                 newPathData.startPoint = instance.pathpointList[0];
                 instance.pathDataList.Add(newPathData);
@@ -435,6 +487,8 @@ public class PathManager : VLY_Singleton<PathManager>
                 {
                     DebugLineR(newPathData);
                 }
+
+                NodePathProcess.UpdateAllNodes();
             }
 
             if(instance.disconnectedPathData != null)
@@ -443,15 +497,93 @@ public class PathManager : VLY_Singleton<PathManager>
                 instance.pathDataList.Remove(instance.disconnectedPathData);
             }
 
-            //IF ONBOARDING SEQUENCE 
-            isOnFinishPath?.Invoke(true);
-
             //Reset les currents Data puisqu'on deselectionne le chemin
-            instance.pathFragmentDataList.Clear();
-            instance.pathpointList.Clear();
-            instance.currentPathData = null;
-            previousPathpoint = null;
+            instance.ResetCurrentData();
+
+            //IF ONBOARDING SEQUENCE 
+            TimerManager.CreateRealTimer(0.5f, () => isOnFinishPath?.Invoke(true));
         }
+        else if (instance.pathpointList.Count > 0)
+        {
+            instance.pathpointList[0].RemoveObject();
+            instance.pathpointList.Clear();
+        }
+    }
+
+    /// <summary>
+    /// Update Pathfragments data of a Path data
+    /// </summary>
+    public static void UpdatePathFragmentData()
+    {
+        PathCreationManager.MovingPathPoint.Node.ResetNodeData();
+
+        while (GetCurrentPathData.pathFragment.Count > 0)
+        {
+            GetCurrentPathData.RemovePathFragment(GetCurrentPathData.pathFragment[0]);
+        }
+
+        for(int i = 0; i < GetCurrentPathpointList.Count-1; i++)
+        {
+            PathFragmentData new_pfd = new PathFragmentData(GetCurrentPathpointList[i], GetCurrentPathpointList[i+1], PathCreationManager.instance.CalculatePath(GetCurrentPathpointList[i], GetCurrentPathpointList[i + 1]));
+            GetCurrentPathData.AddPathFragment(new_pfd);
+        }
+
+
+        /*List<PathNode> pointsToCheck = PathCreationManager.GetMovingBorderPoints;
+
+        for (int i = 0; i < pointsToCheck.Count; i++)
+        {
+            pointsToCheck[i].ResetNodeData();
+        }*/
+
+        NodePathProcess.UpdateAllNodes();
+
+        /*for(int i = 0; i < PathCreationManager.GetAdditionnalPoints.Count; i++)
+        {
+            List<IST_PathPoint> pathPointAdditionnals = PathCreationManager.GetAdditionnalPoints[i].pathpointList;
+
+            for(int j = 0; j < pathPointAdditionnals.Count; j++)
+            {
+                pathPointAdditionnals[j].Node.ResetNodeAndNeighbours();
+            }
+        }*/
+
+        /*List<PathNode> pointsToCheck = PathCreationManager.GetMovingBorderPoints;
+
+        instance.UpdateModifiedPathNodeDatas(pointsToCheck);*/
+
+        //PathCreationManager.MovingPathPoint.Node.UpdateNode();
+
+        //CODE REVIEW Voir pour corriger l'Update des nodes. Voir pour placer les nouveaux points
+        //GetCurrentPathData.pathFragment[0].startPoint.Node.UpdateNode();
+
+        if (instance.debugMode)
+        {
+            Debug.Log("Feedback visuel");
+            DebugLineR(instance.currentPathData);
+        }
+
+        instance.ResetCurrentData();
+    }
+
+    private void UpdateModifiedPathNodeDatas(List<PathNode> nodesToUpdates)
+    {
+        if(nodesToUpdates.Count > 0)
+        {
+            nodesToUpdates[0].UpdateNode();
+            nodesToUpdates.RemoveAt(0);
+            TimerManager.CreateRealTimer(Time.deltaTime, () => UpdateModifiedPathNodeDatas(new List<PathNode>(nodesToUpdates)));
+        }
+    }
+
+    public void ResetCurrentData()
+    {
+        instance.pathFragmentDataList.Clear();
+        instance.pathpointList.Clear();
+        instance.currentPathData = null;
+        previousPathpoint = null;
+
+        PathCreationManager.ResetData();
     }
 
     public static void CreatePathDataClose(List<PathFragmentData> listPathFragment)
@@ -492,7 +624,7 @@ public class PathManager : VLY_Singleton<PathManager>
                     //Il faut trouver les pathpoints
                     for (int i = 0; i <= pd.pathFragment.Count - 1; i++)
                     {
-                        instance.pathFragmentDataList.Add(pd.pathFragment[i]);
+                        instance.AddPathfragmentToList(pd.pathFragment[i]);
 
                         if (i == pd.pathFragment.Count - 1)
                         {
@@ -540,7 +672,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for (int i = 0; i <= pathdata.pathFragment.Count - 1; i++)
         {
-            instance.pathFragmentDataList.Add(pathdata.pathFragment[i]);
+            instance.AddPathfragmentToList(pathdata.pathFragment[i]);
 
             if (i == pathdata.pathFragment.Count - 1)
             {
@@ -650,19 +782,19 @@ public class PathManager : VLY_Singleton<PathManager>
     //Linerenderer de tous le chemin
     public static void DebugLineR(PathData pathData)
     {
-        GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
-        DEBUG.GetComponent<LineRenderer>().material.color = pathData.color;
+        LineRenderer DEBUG = Instantiate(instance.DebugLineRenderer).GetComponent<LineRenderer>();
+        DEBUG.material.color = pathData.color;
 
         int i = 0;
         //DEBUG.GetComponent<LineRenderer>().positionCount = pathData.pathFragment.Count * 2;
-        DEBUG.GetComponent<LineRenderer>().positionCount = 0;
+        DEBUG.positionCount = 0;
         if (instance.PathReverse)
         {
             //Pas réussi avec le path
             for (int j = 0; j < instance.pathpointList.Count; j++)
             {
-                DEBUG.GetComponent<LineRenderer>().positionCount++;
-                DEBUG.GetComponent<LineRenderer>().SetPosition(j, instance.pathpointList[j].transform.position);
+                DEBUG.positionCount++;
+                DEBUG.SetPosition(j, instance.pathpointList[j].transform.position);
             }
 
             instance.PathReverse = false;
@@ -673,17 +805,101 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 foreach (Vector3 vector in pfd.path)
                 {
-                    DEBUG.GetComponent<LineRenderer>().positionCount++;
-                    DEBUG.GetComponent<LineRenderer>().SetPosition(i, vector);
+                    DEBUG.positionCount++;
+                    DEBUG.SetPosition(i, vector);
                     i++;
                 }
+                List<InterestPointDetector> pathDetector = instance.GenerateDetectorsOnPath(pfd.path);
+
+                for(int j = 0; j < pathDetector.Count; j++)
+                {
+                    pathDetector[j].transform.SetParent(DEBUG.transform);
+                    pfd.AddInterestPointDetector(pathDetector[j]);
+                }
+                
+                // Ajouter les liens vers le PathFragmentData et les Update des détecteurs
             }
         }
 
         //Je garde le chemin en mémoire 
-        pathData.pathLineRenderer = DEBUG.GetComponent<LineRenderer>();
+        pathData.pathLineRenderer = DEBUG;
 
         DestroyLineList();
+    }
+
+    public float pointDistance = 2f;
+
+    public InterestPointDetector CreateDetector(Vector3 position, LineRenderer lineRenderer)
+    {
+        Vector3 target = position;
+        InterestPointDetector detector = Instantiate(roadDetectorPrefab, lineRenderer.transform);
+        detector.transform.position = target;
+
+        return detector;
+        
+    }
+
+    private List<InterestPointDetector> GenerateDetectorsOnPath(List<Vector3> path)
+    {
+        if (path.Count <= 1)
+        {
+            return new List<InterestPointDetector>();
+        }
+
+        List<Vector3> detectorPositions = new List<Vector3>();
+
+        float lineLength = 0;
+        for(int i = 0; i < path.Count-1; i++)
+        {
+            lineLength += Vector3.Distance(path[i], path[i + 1]);
+        }
+
+        detectorPositions.Add(path[0]);
+
+        float distanceBetweenPoints = 2f;
+        int numDist = (int)(lineLength / distanceBetweenPoints);
+        int pathIndex = 0;
+
+        for(int i = 0; i < numDist; i++)
+        {
+            float distanceLeft = distanceBetweenPoints;
+            while (Vector3.Distance(detectorPositions[detectorPositions.Count -1], path[pathIndex + 1]) <= distanceLeft)
+            {
+                distanceLeft -= Vector3.Distance(detectorPositions[detectorPositions.Count - 1], path[pathIndex + 1]);
+                pathIndex++;
+            }
+
+            Vector3 nextPoint = detectorPositions[detectorPositions.Count - 1] + (path[pathIndex + 1] - path[pathIndex]).normalized * distanceLeft;
+
+            detectorPositions.Add(nextPoint);
+        }
+
+        List<InterestPointDetector> toReturn = new List<InterestPointDetector>();
+
+        for (int i = 0; i < detectorPositions.Count; i++)
+        {
+            InterestPointDetector detector = Instantiate(roadDetectorPrefab);
+            detector.transform.position = detectorPositions[i];
+            toReturn.Add(detector);
+        }
+
+        return toReturn;
+    }
+
+    public bool CheckNextStepOnLine(Vector3 start, Vector3 next, ref float distance, ref float remainingDistance, out Vector3 point)
+    {
+        Vector3 direction = (next - start).normalized;
+        float contextDistance = Vector3.Distance(start, next);
+        distance += contextDistance;
+        if (distance > pointDistance)
+        {
+            point = start + (direction * (pointDistance - remainingDistance));
+            remainingDistance = distance = 0;
+            return true;
+        }
+        point = default;
+        remainingDistance = distance;
+        return false;
     }
 
     //Destroy le lineRenderer du pathData et crée les line renderer pour chaque PathFragment
@@ -727,17 +943,19 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void DebugBetween2Points(IST_PathPoint pp1, IST_PathPoint pp2)
     {
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
-        instance.currentLineDebug = DEBUG.GetComponent<LineRenderer>();
-
+        //instance.currentLineDebug = DEBUG.GetComponent<LineRenderer>();
 
         if (instance.currentPathData != null)
         {
-            instance.currentLineDebug.GetComponent<LineRenderer>().material.color = instance.currentPathData.color;
+            //instance.currentLineDebug.material.color = instance.currentPathData.color;
+            DEBUG.GetComponent<LineRenderer>().material.color = instance.currentPathData.color;
         }
 
         instance.lineRendererDebugList.Add(DEBUG);
-        instance.currentLineDebug.SetPosition(0, pp1.transform.position);
-        instance.currentLineDebug.SetPosition(1, pp2.transform.position);
+        //instance.currentLineDebug.SetPosition(0, pp1.transform.position);
+        //instance.currentLineDebug.SetPosition(1, pp2.transform.position);
+        DEBUG.GetComponent<LineRenderer>().SetPosition(0, pp1.transform.position);
+        DEBUG.GetComponent<LineRenderer>().SetPosition(1, pp2.transform.position);
     }
 
     //Destroy la list de lineRenderer (Puisque je fais un line renderer pour tout le path)
@@ -772,35 +990,54 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    //Destroy le line renderer du pathData pour mettre un line sur chaque pathpoint (Comme à la création)
     public static void UpdateLineWhenMoving(IST_PathPoint pp)
     {
+        //DestroyLine du path ou il y'a le Pathpoint
+        foreach(PathData pd in instance.pathDataList)
+        {
+            if(pd.ContainsPoint(pp))
+            {
+                DestroyLineRenderer(pd.pathLineRenderer);
+                instance.currentPathData = pd;
+            }
+
+            for(int i = 0; i < pd.pathFragment.Count; i++)
+            {
+                instance.pathpointList.Add(pd.pathFragment[i].startPoint);
+
+                if (i == pd.pathFragment.Count-1)
+                {
+                    instance.pathpointList.Add(pd.pathFragment[i].endPoint);
+                }
+                
+                DebugBetween2Points(pd.pathFragment[i].startPoint, pd.pathFragment[i].endPoint);
+
+                if (pd.pathFragment[i].startPoint == pp || pd.pathFragment[i].endPoint == pp)
+                {
+                    if (pd.pathFragment[i].endPoint == pp)
+                    {
+                        PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i],true));
+                    }
+                    else
+                    {
+                        PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i], false));
+                    }
+                }
+            }
+        }
+        PathCreationManager.refList = GetCurrentPathpointList;
+        PathCreationManager.instance.newPathFragmentData = new List<PathFragmentData>(GetCurrentPathData.pathFragment);
+        PathCreationManager.GetUpdateSeveralLine(pp);
+        PathCreationManager.isModifyPath = true;
         //Get Path Navmesh + Save Data
     }
 
     public static void UpdateAfterMoving(IST_PathPoint pp)
     {
-        //Get les pathFragmentData
-        //Pour chaque PathFragment Data faire un calcul de Navmesh --> Liste de vector3
-        //Remplacer les Paths du path fragment
-
-        foreach(PathData pd in instance.pathDataList)
-        {
-            if(pd.ContainsPoint(pp))
-            {
-                foreach(PathFragmentData pfd in pd.pathFragment)
-                {
-                    if(pfd.HasThisPathpoint(pp))
-                    {
-                        pfdNavmeshUpdate.Add(pfd);
-                    }
-                }
-            }
-        }
-
-        if(pfdNavmeshUpdate.Count != 0)
-        {
-            PathCreationManager.instance.UpdateLineRendererAfterMoving(pfdNavmeshUpdate);
-        }
+        PathCreationManager.isModifyPath = false;
+        PathCreationManager.ModifyList.Clear();
+        UpdatePathFragmentData();
     }
     #endregion
 }

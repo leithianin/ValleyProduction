@@ -5,9 +5,12 @@ using UnityEngine.Events;
 
 public abstract class Infrastructure : MonoBehaviour
 {
-    public InfrastructureType structureType;
+    [SerializeField] private InfrastructureData datas;
+
+    [SerializeField] private CPN_Purchasable purchaseBehavior;
 
     [SerializeField, Tooltip("Actions to play when the construction is placed.")] private UnityEvent PlayOnPlace;
+    [SerializeField, Tooltip("Actions to play when the construction is placed on an other construction.")] private UnityEvent PlayOnPlaceOverObject;
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
     [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnSelect;
     [SerializeField, Tooltip("Actions to play when the construction is unselected.")] private UnityEvent PlayOnUnselect;
@@ -16,6 +19,15 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
     [SerializeField, Tooltip("Actions to play when the construction is on mouse over")] private UnityEvent PlayOnMouseOver;
     [SerializeField, Tooltip("Actions to play when the construction is on mouse over")] private UnityEvent PlayOnMouseExit;
+
+    [Header("Data setup")]
+    [SerializeField] private UnityEvent<InfrastructureData> OnSetData;
+
+    public InfrastructureData Data => datas;
+
+    public InfrastructureType StructureType => datas.StructureType;
+
+    public CPN_Purchasable Purchasable => purchaseBehavior;
 
     /// <summary>
     /// Used to do specific action when a construction is placed.
@@ -62,13 +74,15 @@ public abstract class Infrastructure : MonoBehaviour
     /// <param name="position">The position where the object is placed.</param>
     public void PlaceObject(Vector3 position)
     {
+        OnSetData?.Invoke(datas);
+
         PlayOnPlace?.Invoke();
         OnPlaceObject(position);
     }
 
     public void PlaceObject()
     {
-        PlayOnPlace?.Invoke();
+        PlayOnPlaceOverObject?.Invoke();
         OnPlaceObject();
     }
 

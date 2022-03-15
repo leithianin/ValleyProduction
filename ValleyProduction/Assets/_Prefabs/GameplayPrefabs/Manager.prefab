@@ -128,7 +128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438296611544555519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 500, y: 0, z: 450}
+  m_LocalPosition: {x: 50, y: 0, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5209237266425241728}
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f48a2d0b3258fb74486e218e61a5f23a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldDimension: {x: 500, y: 350}
+  worldDimension: {x: 125, y: 125}
   areaSize: 25
   showGizmos: 1
   areaDisplayMask:
@@ -178,10 +178,13 @@ GameObject:
   - component: {fileID: 5209237266425241733}
   - component: {fileID: 5209237266425241734}
   - component: {fileID: 5209237266425241735}
+  - component: {fileID: 7872933226384271932}
   - component: {fileID: 838523332}
   - component: {fileID: 4442775087009201159}
   - component: {fileID: 857432156584763243}
   - component: {fileID: 1931327289}
+  - component: {fileID: 3101297756069672954}
+  - component: {fileID: 6452573747395027205}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -342,12 +345,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   layerMaskNoTools:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 2369
   layerMaskPathTool:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2049
 --- !u!114 &5209237266425241729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8e2395da2c354469b814e0bf6324d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathPointPreview: {fileID: 895858103023706932, guid: a5198121cf5c54e42b01a11979e9082b, type: 3}
   OnSelectPathTool:
     m_PersistentCalls:
       m_Calls: []
@@ -381,43 +395,7 @@ MonoBehaviour:
       m_Calls: []
   OnUnselectOneMore:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ChangeMenuOptionBool
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &5209237266425241731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,11 +438,13 @@ MonoBehaviour:
   pathDataList: []
   pathFragmentDataList: []
   pathpointList: []
+  roadDetectorPrefab: {fileID: 1278767380387114619, guid: 6a4e1cfd6a81634408167444e9a9a5f7, type: 3}
   debugMode: 1
   PathReverse: 0
   DebugLineRenderer: {fileID: 0}
   lineRendererDebugList: []
   currentLineDebug: {fileID: 0}
+  pointDistance: 2
 --- !u!114 &5209237266425241735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +460,23 @@ MonoBehaviour:
   debugObject: {fileID: 0}
   DebugList: []
   index: 1
+  newPathFragmentData: []
+  pathRendererManager: {fileID: 7872933226384271932}
+  testPathpoint: {fileID: 6225881508748953926, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
+--- !u!114 &7872933226384271932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209237266425241743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d3688100b3cf048a6fd851de2a645f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathRendererObject: {fileID: 4615479242333521650, guid: 32bf71fbcd404b74eb2dbbfd958bc44f, type: 3}
+  pathRendererList: []
 --- !u!114 &838523332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,13 +531,39 @@ MonoBehaviour:
   ressourceProductionSpeed: 10
   ressourceByVisitor: 0.2
   ressourceGainedBase: 1
-  currentRessources: 0
+  currentRessources: 200
   OnGainRessource:
     m_PersistentCalls:
       m_Calls: []
   OnLoseRessource:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3101297756069672954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209237266425241743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed267bc3464c854c82ebe973cc0abc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenUpdates: 5
+  attractivityScore: 2.5
+--- !u!114 &6452573747395027205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209237266425241743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0675a775d9678ce4aaf3349930d39489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5209237266696560536
 GameObject:
   m_ObjectHideFlags: 0

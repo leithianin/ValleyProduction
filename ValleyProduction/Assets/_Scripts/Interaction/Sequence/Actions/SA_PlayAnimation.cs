@@ -8,30 +8,31 @@ public class SA_PlayAnimation : InteractionActions
     {
         public CPN_InteractionHandler caller;
         public TimerManager.Timer timer;
+        public BodyAnimationType animationType;
 
-        public PlayedAnimation(CPN_InteractionHandler c, TimerManager.Timer t)
+        public PlayedAnimation(CPN_InteractionHandler c, TimerManager.Timer t, BodyAnimationType nAnimationType)
         {
             caller = c;
             timer = t;
+            animationType = nAnimationType;
         }
     }
 
-    [SerializeField] private string animationName;
+    [SerializeField] private BodyAnimationType animationToPlay;
     [SerializeField] private float timePlayed;
+    [SerializeField] private bool stopOnEnd;
 
     private List<PlayedAnimation> animationPlayed = new List<PlayedAnimation>();
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
-        AnimationHandler animHandler = null;
-
-        if(caller.HasComponent<AnimationHandler>(ref animHandler))
+        if(caller.HasComponent<AnimationHandler>(out AnimationHandler animHandler))
         {
-            // Jouer animation
+            animHandler.PlayBodyAnim(animationToPlay);
 
             TimerManager.Timer newAnimTimer = TimerManager.CreateGameTimer(timePlayed, () => EndAction(caller));
 
-            animationPlayed.Add(new PlayedAnimation(caller, newAnimTimer));
+            animationPlayed.Add(new PlayedAnimation(caller, newAnimTimer, animationToPlay));
         }
         else
         {
@@ -41,12 +42,15 @@ public class SA_PlayAnimation : InteractionActions
 
     protected override void OnEndAction(CPN_InteractionHandler caller)
     {
-        // Stoper l'animation
-
         for (int i = 0; i < animationPlayed.Count; i++)
         {
             if (animationPlayed[i].caller == caller)
             {
+                if (stopOnEnd && caller.HasComponent<AnimationHandler>(out AnimationHandler animHandler))
+                {
+                    animHandler.StopBodyAnim(animationToPlay);
+                }
+
                 animationPlayed.RemoveAt(i);
                 break;
             }
@@ -56,12 +60,15 @@ public class SA_PlayAnimation : InteractionActions
 
     protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
-        // Stoper l'animation
-
         for (int i = 0; i < animationPlayed.Count; i++)
         {
             if (animationPlayed[i].caller == caller)
             {
+                if (caller.HasComponent<AnimationHandler>(out AnimationHandler animHandler))
+                {
+                    animHandler.StopBodyAnim(animationToPlay);
+                }
+
                 animationPlayed[i].timer.Stop();
                 animationPlayed.RemoveAt(i);
                 break;

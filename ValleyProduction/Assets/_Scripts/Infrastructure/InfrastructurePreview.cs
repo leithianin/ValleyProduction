@@ -88,6 +88,11 @@ public abstract class InfrastructurePreview : MonoBehaviour
             toReturn = false;
         }
 
+        if(realInfrastructure.Purchasable == null || !realInfrastructure.Purchasable.IsPurchasable())
+        {
+            toReturn = false;
+        }
+
         return toReturn && OnCanPlaceObject(position);
     }
 

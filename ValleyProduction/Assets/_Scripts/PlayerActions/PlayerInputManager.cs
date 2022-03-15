@@ -53,7 +53,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         //Handle Mouse input outside UI
 
-        if (!UIManager.instance.OnMenuOption)
+        if (!UIManager.instance.OnMenuOption && !usedEventSystem.IsPointerOverGameObject())
         {
             if (usedEventSystem.currentSelectedGameObject == null)
             {
@@ -114,13 +114,17 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         {
             VLY_Time.PauseTime();
         }*/
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             VLY_Time.SetTimeScale(1);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             VLY_Time.SetTimeScale(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            VLY_Time.SetTimeScale(3);
         }
     }
 
@@ -235,7 +239,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, 100000.0f));//, currentLayerMask))
+        if (Physics.Raycast(ray, out hit, 100000.0f, currentLayerMask))
         {
             hitObject = hit.transform.gameObject;
             return true;
@@ -249,7 +253,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100000.0f))
+        if (Physics.Raycast(ray, out hit, 100000.0f, currentLayerMask))
         {
             return hit.point;
         }

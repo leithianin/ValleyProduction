@@ -8,27 +8,26 @@ public class CPN_InteractionHandler : VLY_Component<CPN_Data_Interaction>
 {
     [SerializeField] private VLY_ComponentHandler handler;
 
-    [SerializeField] private List<InteractionType> interactionTypes;
+    [SerializeField] private List<BuildTypes> interactionTypes;
 
     public VLY_ComponentHandler Handler => handler;
 
-    public bool HasComponent<T>(ref T wantedComponent) where T : VLY_Component
+    public bool HasComponent<T>(out T wantedComponent) where T : VLY_Component
     {
-        T inHandler = null;
-        handler.GetComponentOfType<T>(ref inHandler);
+        T inHandler = handler.GetComponentOfType<T>();
 
         wantedComponent = inHandler;
 
         return wantedComponent != null;
     }
 
-    public bool IsInterested(InteractionType wantedType)
+    public bool IsInterested(BuildTypes wantedType)
     {
         return interactionTypes.Contains(wantedType);
     }
 
     public override void SetData(CPN_Data_Interaction dataToSet)
     {
-        interactionTypes = new List<InteractionType>(dataToSet.InteractionInterest());
+        interactionTypes = new List<BuildTypes>(dataToSet.InteractionInterest());
     }
 }

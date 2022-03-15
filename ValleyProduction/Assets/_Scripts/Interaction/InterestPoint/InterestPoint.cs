@@ -5,17 +5,30 @@ using UnityEngine.Events;
 
 public class InterestPoint : MonoBehaviour
 {
-    [SerializeField] private bool isLandmark;
-
     [SerializeField] private InteractionSpot[] interactions;
 
-    public bool IsUsable => GetUsableInteractions().Count > 0;
-
-    public bool IsLandmark => isLandmark;
-
-    public InteractionSpot GetRandomSpot()
+    public bool IsUsable(CPN_InteractionHandler interactor)
     {
-        List<InteractionSpot> usableInteractions = GetUsableInteractions();
+        return GetUsableInteractions(interactor).Count > 0;
+    }
+
+    public List<BuildTypes> InteractionTypeInInterestPoint()
+    {
+        List<BuildTypes> toReturn = new List<BuildTypes>();
+
+        for (int i = 0; i < interactions.Length; i++)
+        {
+            if(!toReturn.Contains(interactions[i].interactionType))
+            {
+                toReturn.Add(interactions[i].interactionType);
+            }
+        }
+        return toReturn;
+    }
+
+    public InteractionSpot GetRandomSpot(CPN_InteractionHandler interactor)
+    {
+        List<InteractionSpot> usableInteractions = GetUsableInteractions(interactor);
 
         if (usableInteractions.Count > 0)
         {
@@ -24,18 +37,37 @@ public class InterestPoint : MonoBehaviour
         return null;
     }
 
-    private List<InteractionSpot> GetUsableInteractions()
+    private List<InteractionSpot> GetUsableInteractions(CPN_InteractionHandler interactor)
     {
         List<InteractionSpot> usableInteractions = new List<InteractionSpot>();
 
         for(int i = 0; i < interactions.Length; i++)
         {
-            if(interactions[i].IsUsable())
+            if(interactions[i].IsUsable(interactor))
             {
                 usableInteractions.Add(interactions[i]);
             }
         }
 
         return usableInteractions;
+    }
+
+    public float GetAttractivityScore(List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    {
+        float toReturn = 0;
+
+        for(int i = 0; i < interactions.Length; i++)
+        {
+            if(likedTypes.Contains(interactions[i].interactionType))
+            {
+                toReturn += interactions[i].attractivityLevel;
+            }
+            else if(hatedTypes.Contains(interactions[i].interactionType))
+            {
+                toReturn -= interactions[i].attractivityLevel;
+            }
+        }
+        
+        return toReturn;
     }
 }

@@ -27,8 +27,7 @@ public class OB_VisitorsProfilesIntro : OnBoarding
     }
 
     public void PlayEvent()
-    {
-        
+    {     
         OnShowInfo?.Invoke();
     }
 

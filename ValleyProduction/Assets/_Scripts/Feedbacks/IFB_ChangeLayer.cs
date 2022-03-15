@@ -5,11 +5,14 @@ using UnityEngine;
 public class IFB_ChangeLayer : MonoBehaviour, IFeedbackPlayer
 {
     private int layerInt;
-    public GameObject meshGameObject;
+    public List<GameObject> meshGameObject;
 
     public void Play()
     {
-        meshGameObject.layer = layerInt;
+        foreach (GameObject go in meshGameObject)
+        {
+            go.layer = layerInt;
+        }
     }
 
     public void PlayInt(int i)

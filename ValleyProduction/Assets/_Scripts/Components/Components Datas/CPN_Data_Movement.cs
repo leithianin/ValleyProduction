@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface CPN_Data_Movement
 {
-    public float Speed();
+    public Vector2 Speed();
 }

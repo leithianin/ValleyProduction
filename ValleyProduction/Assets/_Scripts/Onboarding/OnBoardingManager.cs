@@ -33,6 +33,9 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static Action<bool> onDestroyPath;
     public static Action<bool> OnWindMill;
 
+    [Header("On Boarding Infrastructure")]
+    public static Action<bool> OnClickInfrastructure;
+
     private void Start()
     {
         if(activateOnBoarding)
@@ -60,7 +63,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static void PlayEndPathOnBoarding()
     {
-        Debug.Log("ddd");
         VLY_Time.SetTimeScale(1);
         instance.endOnboarding.EndOnBoardingPath?.Invoke();
     }
@@ -75,18 +77,22 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void ShowHikerProfileIntro()
     {
         instance.visitorProfileIntroOnBoarding.Over();
-        //instance.UI_OB_VisitorsProfileInfo.SetActive(false);
-        //instance.UI_OB_HikerIntro.SetActive(true);
-        instance.UI_Arrow_Chapel.SetActive(true);
-        instance.UI_ZoneChapel.SetActive(true);
         instance.chapelOnboarding.Play();
         instance.activateOnBoarding = false;
+        //instance.UI_OB_VisitorsProfileInfo.SetActive(false);
+        //instance.UI_OB_HikerIntro.SetActive(true);
+    }
+
+    public static void ShowChapelDirection()
+    {
+        instance.UI_Arrow_Chapel.SetActive(true);
+        instance.UI_ZoneChapel.SetActive(true);
     }
 
     public static void DesactivateTool()
     {
         InfrastructureManager.instance.toolSelected = ToolType.None;
-        ConstructionManager.SelectInfrastructureType(InfrastructureType.Path);
+        ConstructionManager.SelectInfrastructureType(null);
     }
     #endregion
 

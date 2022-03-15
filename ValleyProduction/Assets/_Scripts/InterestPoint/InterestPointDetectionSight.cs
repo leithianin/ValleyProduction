@@ -12,12 +12,10 @@ public class InterestPointDetectionSight : MonoBehaviour
         {
             InterestPoint interaction = other.GetComponent<InterestPoint>();
 
-            if (interaction != null && interaction.IsUsable)
+            if (interaction != null && interaction.IsUsable(interactionSight.Interactor))
             {
-                interactionSight.StartInteraction(interaction.GetRandomSpot());
+                interactionSight.StartInteraction(interaction.GetRandomSpot(interactionSight.Interactor));
             }
         }
     }
-
-    //Faire une fonction pour vérifier si c'est un InterestPoint voulut par le visiteur
 }

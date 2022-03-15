@@ -13,13 +13,15 @@ public abstract class InteractionSight : MonoBehaviour
 
     public bool IsInteracting => isInteracting;
 
+    public CPN_InteractionHandler Interactor => interactor;
+
     private void OnTriggerEnter(Collider other)
     {
         if (!isInteracting)
         {
             InteractionSpot spot = other.GetComponent<InteractionSpot>();
 
-            if (spot != null && spot.IsUsable())
+            if (spot != null && spot.IsUsable(interactor))
             {
                 StartInteraction(spot);
             }
@@ -62,9 +64,13 @@ public abstract class InteractionSight : MonoBehaviour
     {
         if(spotInteractor == interactor)
         {
+            if(!interactor.gameObject.activeSelf)
+            {
+                interactor.gameObject.SetActive(true);
+            }
+
             currentSpot.PlayOnInteractionEnd -= EndInteraction;
             TimerManager.CreateGameTimer(timeBetweenInteractions, () => isInteracting = false);
-            isInteracting = false;
             OnEndInteraction();
         }
     }

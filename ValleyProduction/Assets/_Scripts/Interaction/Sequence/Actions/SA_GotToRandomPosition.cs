@@ -22,8 +22,7 @@ public class SA_GotToRandomPosition : InteractionActions
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
-        CPN_Movement movement = null;
-        if (caller.HasComponent<CPN_Movement>(ref movement) && possiblePoints.Count > 0)
+        if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement) && possiblePoints.Count > 0)
         {
             List<Vector3> vectorPath = new List<Vector3>();
             vectorPath.Add(caller.transform.position);
@@ -57,8 +56,7 @@ public class SA_GotToRandomPosition : InteractionActions
 
     protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
-        CPN_Movement movement = null;
-        if (caller.HasComponent<CPN_Movement>(ref movement))
+        if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
         {
             movement.InteruptWalk();
             for (int i = 0; i < pointUsed.Count; i++)

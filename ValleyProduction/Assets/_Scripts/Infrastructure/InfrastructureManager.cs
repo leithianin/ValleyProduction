@@ -16,17 +16,18 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     private static LayerMask layerIgnoreRaycast = 2;
     private static LayerMask layerInfrastructure = 0;
 
-    private GameObject toMove;
+    private GameObject movedObject = null;
     public ToolType toolSelected = ToolType.None;
 
+    public static GameObject GetMovedObject => instance.movedObject;
 
 
     private void Update()
     {
         //Move Infrastructure when MoveInfrastructure()
-        if(toMove != null)
+        if(movedObject != null)
         {
-            toMove.transform.position = PlayerInputManager.GetMousePosition;
+            movedObject.transform.position = PlayerInputManager.GetMousePosition;
         }
     }
 
@@ -36,7 +37,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             instance.previewHandler.SetInfrastructurePreview(newPreview);
         }
-    }   
+    }
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
@@ -45,7 +46,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private void PlaceInfrastructure(Infrastructure selectedStructure)
     {
-        if (ConstructionManager.GetSelectedStructureType == selectedStructure.structureType)
+        if (ConstructionManager.GetSelectedStructureType == selectedStructure.StructureType)
         {
             currentSelectedStructure = selectedStructure;
             selectedStructure.PlaceObject();
@@ -80,8 +81,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void MoveInfrastructure(Infrastructure toMove)
     {
         instance.currentSelectedStructure = toMove;
-        instance.toMove = toMove.gameObject;
-        instance.toMove.layer = layerIgnoreRaycast;
+        instance.movedObject = toMove.gameObject;
+        instance.movedObject.layer = layerIgnoreRaycast;
         instance.currentSelectedStructure.MoveObject();
     }
 
@@ -94,11 +95,17 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// <summary>
     /// Place l'infrastructure déplacé lorsqu'on lâche le maintient.
     /// </summary>
-    public static void ReplaceInfrastructure()
+    public static void ReplaceInfrastructure(Vector3 position)
     {
-        instance.toMove.layer = layerInfrastructure;
-        instance.toMove = null;
+        GameObject saveObject = instance.movedObject;
+        TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));     
+        instance.movedObject = null;
         instance.currentSelectedStructure.ReplaceObject();
+    }
+
+    public static void ReplaceInfrastructureChangeLyer(GameObject saveObject)
+    {
+        saveObject.layer = layerInfrastructure;
     }
 
     public static void InteractWithStructure(ToolType tool, Infrastructure interactedStructure)
@@ -115,6 +122,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                 //Usable by balise, je suis entrain de placer, je clique sur une infrastructure.
                 break;
             case ToolType.Move:
+                MoveInfrastructure(interactedStructure);
                 break;
             case ToolType.Delete:
                 DeleteInfrastructure(interactedStructure);

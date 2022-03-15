@@ -8,21 +8,24 @@ public class OB_ControlsIntro : OnBoarding
 {
     public float time = 0.5f;
 
+    private int actionNeeded = 3;
+    private int actionDone = 0;
+
     public UnityEvent OnMouseScroll;
     public UnityEvent OnMoving;
-
-    public bool hasDoneAction = false;
+    public UnityEvent OnRotateEvent;
 
     protected override void OnPlay()
     {
         PlayerInputManager.OnMouseScroll += OnScroll;
         PlayerInputManager.OnKeyMove += OnMove;
+        SphericalTransform.OnMouseWheel += OnRotate;
         //PlayerInputManager.OnMouseScroll.AddListener(OnScroll);
     }
 
     protected override void OnEnd()
     {      
-        hasDoneAction = false;
+        
     }
 
     public void OnScroll(float scrollValue)
@@ -41,16 +44,23 @@ public class OB_ControlsIntro : OnBoarding
             CheckAction();
         }
     }
+    
+    public void OnRotate(float value)
+    {
+        if (value != 0)
+        {
+            SphericalTransform.OnMouseWheel -= OnRotate;
+            OnRotateEvent?.Invoke();
+            CheckAction();
+        }
+    }
 
     public void CheckAction()
     {
-        if(hasDoneAction)
+        actionDone++;
+        if(actionDone == actionNeeded)
         {
             StartCoroutine(DesactivateAfterTime());
-        }
-        else
-        {
-            hasDoneAction = true;
         }
     }
 

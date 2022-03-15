@@ -19,21 +19,24 @@ public class UIManager : VLY_Singleton<UIManager>
     public TouristType touristInfo;
     public TMP_Text nbVisitors;
 
+    [Header("Infrastructure Informations")]
+    public GameObject infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
+
     [Header("Tooltips")]
     public Tooltip tooltip;
 
     [Header("Goals")]
     public TextsDictionary textsScriptable;
 
+    private static Component[] componentTab;
+    private static GameObject gameObjectShown;
     public static Tooltip GetTooltip => instance.tooltip;
-
     public static bool GetIsOnMenuOption => instance.OnMenuOption;
-
     public static UIManager UIinstance => instance;
 
-    public void SelectStructure(int structureID)
+    public void SelectStructure(InfrastructurePreview structure)
     {
-        switch((InfrastructureType)structureID)
+        switch(structure.RealInfrastructure.StructureType)
         {
             case InfrastructureType.Path:
                 if (PathManager.IsOnCreatePath)
@@ -43,12 +46,14 @@ public class UIManager : VLY_Singleton<UIManager>
                 break;
         }
 
-        ConstructionManager.SelectInfrastructureType((InfrastructureType)structureID);
+        ConstructionManager.SelectInfrastructureType(structure);
     }
 
     //Use in Path Button On Click()
     public void OnToolCreatePath(int i)
     {
+        ConstructionManager.SelectInfrastructureType(null);
+
         if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
         {
             InfrastructureManager.instance.toolSelected = (ToolType)i;
@@ -61,7 +66,6 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.Place:
-                ConstructionManager.SelectInfrastructureType(InfrastructureType.None);
                 break;
             case ToolType.Move:
                 break;
@@ -79,7 +83,7 @@ public class UIManager : VLY_Singleton<UIManager>
             PathManager.CreatePathData();
         }
 
-        ConstructionManager.SelectInfrastructureType(InfrastructureType.Path);
+        ConstructionManager.SelectInfrastructureType(null);
     }
 
     //Use in Construction Button On Click()
@@ -88,54 +92,48 @@ public class UIManager : VLY_Singleton<UIManager>
         //Create a construction
     }
 
-    //Range les PathData dans la liste de boutons 
-    public static void ArrangePathButton(IST_PathPoint pathpoint)
+    #region Menu Option
+    public static void ChangeMenuOptionBool()
     {
-        foreach(GameObject go in instance.pathButtonList)
-        {
-            go.SetActive(false);
-        }
+        instance.OnMenuOption = !instance.OnMenuOption;
+    }
+    
+    public static void HideMenuOption()
+    {
+        instance.ResumeButton.onClick?.Invoke();
+    }
+    #endregion
 
-        foreach (PathData pd in PathManager.instance.pathDataList)
+    #region Interaction/Hide
+    public static void InteractWithObject(GameObject touchedObject)
+    {
+        componentTab = touchedObject.GetComponents(typeof(Component));
+
+        HideShownGameObject();
+
+        foreach (Component component in componentTab)
         {
-            if(pd.ContainsPoint(pathpoint))
+            switch(component)
             {
-                for(int i=0; i < instance.pathButtonList.Count-1; i++)
-                {
-                    if(!instance.pathButtonList[i].activeSelf)
-                    {
-                        instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd;
-                        instance.pathButtonList[i].GetComponent<ButtonPathData>().buttonPathpoint = pathpoint;
-                        instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
-                        instance.pathButtonList[i].SetActive(true);
-                        break;
-                    }
-                }
+                case AU_Informations au_informations:
+                    InteractWithInfrastructure(au_informations);
+                    break;
+                case CPN_Informations cpn_information:
+                    InteractWithVisitor(cpn_information);
+                    break;
             }
         }
-
-        ButtonsOffset(pathpoint.gameObject);
     }
-
-    //Clique sur un des boutons
-    public static void ChooseButton(ButtonPathData buttonPath)
+    public static void HideShownGameObject()
     {
-        foreach (GameObject go in instance.pathButtonList)
+        if (gameObjectShown != null)
         {
-            go.SetActive(false);
-        }
-
-        switch(InfrastructureManager.GetCurrentTool)
-        {
-            case ToolType.None:
-                ShowRoadsInfos(buttonPath.pathData);
-                break;
-            case ToolType.Delete:
-                buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
-                break;
+            gameObjectShown.SetActive(false);
         }
     }
+    #endregion
 
+    #region Path Info
     public static void ShowRoadsInfos(PathData pathdata)
     {
         instance.RoadInfo.pathData = pathdata;
@@ -159,7 +157,7 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         OnBoardingManager.onDestroyPath?.Invoke(true);
         HideRoadsInfo();
-        PathManager.DeletePath(pathData);
+        PathManager.DeleteFullPath(pathData);
     }
 
     public static void HideRoadsInfo()
@@ -185,15 +183,52 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.pathButtonList[0].transform.parent.transform.localPosition = canvasPos;
     }
 
-    #region Menu Option
-    public static void ChangeMenuOptionBool()
+    //Range les PathData dans la liste de boutons 
+    public static void ArrangePathButton(IST_PathPoint pathpoint)
     {
-        instance.OnMenuOption = !instance.OnMenuOption;
+        foreach (GameObject go in instance.pathButtonList)
+        {
+            go.SetActive(false);
+        }
+
+        foreach (PathData pd in PathManager.instance.pathDataList)
+        {
+            if (pd.ContainsPoint(pathpoint))
+            {
+                for (int i = 0; i < instance.pathButtonList.Count - 1; i++)
+                {
+                    if (!instance.pathButtonList[i].activeSelf)
+                    {
+                        instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd;
+                        instance.pathButtonList[i].GetComponent<ButtonPathData>().buttonPathpoint = pathpoint;
+                        instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
+                        instance.pathButtonList[i].SetActive(true);
+                        break;
+                    }
+                }
+            }
+        }
+
+        ButtonsOffset(pathpoint.gameObject);
     }
-    
-    public static void HideMenuOption()
+
+    //Clique sur un des boutons
+    public static void ChooseButton(ButtonPathData buttonPath)
     {
-        instance.ResumeButton.onClick?.Invoke();
+        foreach (GameObject go in instance.pathButtonList)
+        {
+            go.SetActive(false);
+        }
+
+        switch (InfrastructureManager.GetCurrentTool)
+        {
+            case ToolType.None:
+                ShowRoadsInfos(buttonPath.pathData);
+                break;
+            case ToolType.Delete:
+                buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
+                break;
+        }
     }
     #endregion
 
@@ -203,24 +238,13 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.nbVisitors.text = nb.ToString();
     }
 
-    public static void InteractWithVisitors(GameObject touchedObject)
-    {
-        CPN_Informations visitorInfo = touchedObject.GetComponent<CPN_Informations>();
-        if (visitorInfo != null)
-        {
-            ShowInfoVisitor(visitorInfo);
-        }
-        else
-        {
-            HideInfoVisitor();
-        }
-    }
-
     //Show les informations des visiteurs on click
+    public static void InteractWithVisitor(CPN_Informations visitorInfo)
+    {    
+        ShowInfoVisitor(visitorInfo);      
+    }
     public static void ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
-       HideInfoVisitor();
-
        OnBoardingManager.OnClickVisitorEco?.Invoke(true);
        switch (cpn_Inf.visitorType)
         {
@@ -233,24 +257,33 @@ public class UIManager : VLY_Singleton<UIManager>
                 }
                 ChangeInfoVisitor(instance.hikersInfo, cpn_Inf);
                 instance.hikersInfo.gameObject.SetActive(true);
+                gameObjectShown = instance.hikersInfo.gameObject;
                 break;
             case TypeVisitor.Tourist:
                 ChangeInfoVisitor(instance.touristInfo, cpn_Inf);
                 instance.touristInfo.gameObject.SetActive(true);
+                gameObjectShown = instance.touristInfo.gameObject;
                 break;
         }
     }
-
-    public static void HideInfoVisitor()
-    {
-        OnBoardingManager.onHideVisitorInfo?.Invoke(true);
-        instance.hikersInfo.gameObject.SetActive(false);
-        instance.touristInfo.gameObject.SetActive(false);
-    }
-
     public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
     {
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
+    }
+    #endregion
+
+    #region Info Infrastructure
+    //Show les informations des visiteurs on click
+    public static void InteractWithInfrastructure(AU_Informations infoInfra)
+    {
+        ShowInfoInfrastructure(infoInfra);
+    }
+
+    public static void ShowInfoInfrastructure(AU_Informations AU_Inf)
+    {
+        instance.infrastructureInfo.SetActive(true);
+        gameObjectShown = instance.infrastructureInfo;
+        //Show UI with info
     }
     #endregion
 }

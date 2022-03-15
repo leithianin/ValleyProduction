@@ -11,20 +11,26 @@ public class TimerManager : VLY_Singleton<TimerManager>
 
         private Action callback = null;
 
+        private float startTime;
+
         public Coroutine coroutine;
 
         public Action Callback => callback;
 
         public float Duration => duration;
 
+        public float DurationLeft => duration - (Time.time - startTime);
+
         public void SetAsGame(float duration, Action nCallback)
         {
+            startTime = Time.time;
             this.duration = duration;
             callback = nCallback;
         }
 
         public void SetAsReal(float duration, Action nCallback)
         {
+            startTime = Time.realtimeSinceStartup;
             this.duration = duration;
             callback = nCallback;
         }

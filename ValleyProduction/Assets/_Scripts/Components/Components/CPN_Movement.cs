@@ -192,6 +192,6 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
 
     public override void SetData(CPN_Data_Movement dataToSet)
     {
-        SetSpeed(dataToSet.Speed());
+        SetSpeed(UnityEngine.Random.Range(dataToSet.Speed().x, dataToSet.Speed().y));
     }
 }

@@ -8,8 +8,7 @@ public class SA_GoToPosition : InteractionActions
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
-        CPN_Movement movement = null;
-        if (caller.HasComponent<CPN_Movement>(ref movement))
+        if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
         {
             List<Vector3> vectorPath = new List<Vector3>();
 
@@ -33,8 +32,7 @@ public class SA_GoToPosition : InteractionActions
 
     protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
-        CPN_Movement movement = null;
-        if (caller.HasComponent<CPN_Movement>(ref movement))
+        if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
         {
             movement.InteruptWalk();
         }

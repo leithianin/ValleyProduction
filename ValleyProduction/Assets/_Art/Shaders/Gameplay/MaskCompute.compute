@@ -1,0 +1,39 @@
+#pragma kernel CSMain
+
+int _ChunkCount;
+int _TextureSize;
+float _MapSize;
+float _Blend;
+
+float4 _Color0;
+float4 _Color1;
+float4 _Color2;
+float4 _Color3;
+
+Texture2D _NoiseTex;
+SamplerState sampler_NoiseTex;
+float _NoiseDetail;
+
+StructuredBuffer<float> _ChunkBuffer;
+
+RWTexture2D<float4> _Mask;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	float val = 0.0f;
+
+	float2 texelUVPos = id.xy / (float)_TextureSize;
+	float2 texelWorldPos = (_MapSize * texelUVPos) - (_MapSize * .5f);
+
+	for (int i = 0; i < _ChunkCount; i++)
+	{
+		float2 chunkWorldPos = float2(_ChunkBuffer[4 * i], _ChunkBuffer[4 * i + 1]);
+		float distance = length(texelWorldPos - chunkWorldPos);
+
+		float heatVal = smoothstep(_ChunkBuffer[4 * i + 2] + _Blend, _ChunkBuffer[4 * i + 2], distance);
+		val = max(val, heatVal * _ChunkBuffer[4 * i + 3]);
+	}
+
+	val += _NoiseTex.SampleLevel(sampler_NoiseTex, texelUVPos * _NoiseDetail, 0).r * .05f;
+}

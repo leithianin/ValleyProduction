@@ -46,11 +46,11 @@ public class IST_BaseStructure : Infrastructure
 
     protected override void OnSelectObject()
     {
-        
+
     }
 
     protected override void OnUnselectObject()
     {
-        
+
     }
 }
