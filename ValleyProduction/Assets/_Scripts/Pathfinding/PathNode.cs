@@ -11,6 +11,9 @@ public class PathNode : MonoBehaviour
     private bool isBeingUpdated;
     private bool isBeingDeleted;
 
+    public Action<PathNode> OnUpdateNode;
+    public Action<PathNode> OnDeleteNode;
+
     public Vector3 WorldPosition => transform.position;
 
     public bool IsBeingUpdated => isBeingUpdated;
@@ -61,6 +64,7 @@ public class PathNode : MonoBehaviour
                 {
                     if (foundInterestPoint.Type == dataByLandmark[i].landmark)
                     {
+                        foundInterestPoint.AddPointToLandmark(this);
                         dataByLandmark[i].distanceFromLandmark = 0;
                         dataByLandmark[i].linkedToLandmark = true;
                         NodePathProcess.AddNodeNextLandmark(this);
@@ -92,6 +96,8 @@ public class PathNode : MonoBehaviour
         {
             toUpdate[i].UpdateNode();
         }
+
+        OnUpdateNode?.Invoke(this);
     }
 
     public List<PathNode> UpdateSelfData()
@@ -162,6 +168,8 @@ public class PathNode : MonoBehaviour
         }
 
         CheckNeighboursOnDelete();
+
+        OnDeleteNode?.Invoke(this);
     }
 
     /// <summary>

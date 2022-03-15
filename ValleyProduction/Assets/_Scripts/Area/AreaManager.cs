@@ -26,6 +26,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
     [SerializeField] private Transform animalScoreHandler;
     [SerializeField] private List<ADI_AnimalDisplayer> animalScorePrefab;
+    [SerializeField] private List<ADI_AnimalDisplayer> allAnimalDisplayers = new List<ADI_AnimalDisplayer>(); //TEMP
 
     [SerializeField] private Transform chunkHandler;
     [SerializeField] private ChunkDisplayer chunkDisplayerPrefab;
@@ -52,6 +53,18 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 areas[i].datas[j].CalculateScore();
             }
         }
+    }
+
+    public static int GetAnimalInValley() //TEMP
+    {
+        int toReturn = 0;
+
+        for(int i = 0; i < instance.allAnimalDisplayers.Count; i++)
+        {
+            toReturn += instance.allAnimalDisplayers[i].AnimalCount;
+        }
+
+        return toReturn;
     }
 
     [ContextMenu("Set Datas")]
@@ -144,6 +157,8 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
         gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaSize), Mathf.RoundToInt(worldDimension.y / areaSize));
 
+        allAnimalDisplayers.Clear(); //TEMP
+
         for (int i = 0; i < gridDimension.x; i++)
         {
             for (int j = 0; j < gridDimension.y; j++)
@@ -151,6 +166,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 for (int l = 0; l < animalScorePrefab.Count; l++)
                 {
                     ADI_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ADI_AnimalDisplayer>();
+                    allAnimalDisplayers.Add(go); //TEMP
                     go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 }
             }

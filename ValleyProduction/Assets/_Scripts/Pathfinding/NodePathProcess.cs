@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,18 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
     public static List<PathNode> GetAllObjectiveNodes => instance.nodesNextToLandmark;
 
     private static bool isProcessingPath = false;
+
+    private Action OnUpdateNode;
+
+    public static void CallOnUpdateNode(Action callback) //TEMP
+    {
+        instance.OnUpdateNode += callback;
+    }
+
+    public static void UncallOnUpdateNode(Action callback) //TEMP
+    {
+        instance.OnUpdateNode -= callback;
+    }
 
     public static void AddNodeNextLandmark(PathNode toAdd)
     {
@@ -39,6 +52,8 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
             instance.UpdateFirstLandmarkNode(new List<PathNode>(instance.nodesNextToLandmark));
 
             isProcessingPath = false;
+
+            instance.OnUpdateNode?.Invoke();
         }
     }
 
