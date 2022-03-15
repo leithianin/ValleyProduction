@@ -11,6 +11,9 @@ public class PathNode : MonoBehaviour
     private bool isBeingUpdated;
     private bool isBeingDeleted;
 
+    public Action<PathNode> OnUpdateNode;
+    public Action<PathNode> OnDeleteNode;
+
     public Vector3 WorldPosition => transform.position;
 
     public bool IsBeingUpdated => isBeingUpdated;
@@ -19,7 +22,6 @@ public class PathNode : MonoBehaviour
 
     public void ResetUpdateState()
     {
-        Debug.Log(WorldPosition);
         isBeingUpdated = false;
     }
 
@@ -62,6 +64,7 @@ public class PathNode : MonoBehaviour
                 {
                     if (foundInterestPoint.Type == dataByLandmark[i].landmark)
                     {
+                        foundInterestPoint.AddPointToLandmark(this);
                         dataByLandmark[i].distanceFromLandmark = 0;
                         dataByLandmark[i].linkedToLandmark = true;
                         NodePathProcess.AddNodeNextLandmark(this);
@@ -93,6 +96,8 @@ public class PathNode : MonoBehaviour
         {
             toUpdate[i].UpdateNode();
         }
+
+        OnUpdateNode?.Invoke(this);
     }
 
     public List<PathNode> UpdateSelfData()
@@ -163,6 +168,8 @@ public class PathNode : MonoBehaviour
         }
 
         CheckNeighboursOnDelete();
+
+        OnDeleteNode?.Invoke(this);
     }
 
     /// <summary>
@@ -337,6 +344,11 @@ public class PathNode : MonoBehaviour
     private float CalculateScore(PathFragmentData fragmentToCalculate, LandmarkType landmarkWanted, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
     {
         NodePathData dataToCheck = null;
+
+        float distanceScore = 100f;
+
+        float attractivityScore = 0;
+
         if (fragmentToCalculate.startPoint.Node != this)
         {
             dataToCheck = fragmentToCalculate.startPoint.Node.GetDataForLandmarkType(landmarkWanted);
@@ -346,9 +358,10 @@ public class PathNode : MonoBehaviour
             dataToCheck = fragmentToCalculate.endPoint.Node.GetDataForLandmarkType(landmarkWanted);
         }
 
-        float distanceScore = 100f;// - dataToCheck.distanceFromLandmark;
-
-        float attractivityScore = 0;
+        if(dataToCheck != null)
+        {
+            distanceScore -= dataToCheck.distanceFromLandmark;
+        }
 
         for(int i = 0; i < fragmentToCalculate.InterestPointsOnFragment.Count; i++)
         {

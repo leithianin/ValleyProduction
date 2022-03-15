@@ -75,6 +75,11 @@ public class VisitorBehavior : MonoBehaviour
         }
     }
 
+    private void DeleteVisitor()
+    {
+        VisitorManager.DeleteVisitor(this);
+    }
+
     /// <summary>
     /// Désactive le visiteur.
     /// </summary>
@@ -94,18 +99,18 @@ public class VisitorBehavior : MonoBehaviour
     {
         if (currentPathFragment != null)
         {
-            currentPathFragment.endPoint.OnDestroyPathPoint -= UnsetVisitor;
+            currentPathFragment.endPoint.OnDestroyPathPoint -= DeleteVisitor;
         }
 
         currentPathFragment = SearchNextPathFragment();
 
         if (currentPathFragment == null)
         {
-            UnsetVisitor();
+            DeleteVisitor();
         }
         else
         {
-            currentPathFragment.endPoint.OnDestroyPathPoint += UnsetVisitor;
+            currentPathFragment.endPoint.OnDestroyPathPoint += DeleteVisitor;
 
             movement.WalkOnNewPath(currentPathFragment.path);
         }
