@@ -98,18 +98,6 @@ public class IST_PathPoint : Infrastructure
     {
         if (PathManager.HasManyPath(this)) {UIManager.ArrangePathButton(this)                          ;}
         else                               {UIManager.ShowRoadsInfos(PathManager.GetPathData(this))    ;}
-
-        /*
-        if (!PathManager.IsPathpointListEmpty())
-            {
-                PathManager.PlacePoint(this, transform.position);
-              
-            }
-            else
-            {
-                //Check si plusieurs PathData    
-            }
-        */
     }
 
     protected override void OnUnselectObject()

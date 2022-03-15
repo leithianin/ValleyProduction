@@ -46,11 +46,11 @@ public class IST_BaseStructure : Infrastructure
 
     protected override void OnSelectObject()
     {
-        UIManager.InteractWithInfrastructure(Data);
+
     }
 
     protected override void OnUnselectObject()
     {
-        
+
     }
 }
