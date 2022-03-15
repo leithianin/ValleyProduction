@@ -123,7 +123,7 @@ public class VisitorBehavior : MonoBehaviour
     {
         // Check si despawn ou autre
 
-        if (currentPathFragment.endPoint == spawnPoint)
+        if (currentPathFragment == null || currentPathFragment.endPoint == null || currentPathFragment.endPoint == spawnPoint)
         {
             VisitorManager.DeleteVisitor(this);
         }
