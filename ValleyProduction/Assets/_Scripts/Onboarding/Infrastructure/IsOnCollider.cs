@@ -10,7 +10,7 @@ public class IsOnCollider : MonoBehaviour
     {
         if (other == collider)
         {
-            Debug.Log("Dedans");
+            Debug.Log("Good Collider");
             OnBoardingManager.OnClickZone?.Invoke(true);
         }
     }

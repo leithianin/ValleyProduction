@@ -66,6 +66,7 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.Place:
+                OnBoardingManager.OnClickBuild?.Invoke(true);
                 break;
             case ToolType.Move:
                 OnBoardingManager.OnClickModify?.Invoke(true);
