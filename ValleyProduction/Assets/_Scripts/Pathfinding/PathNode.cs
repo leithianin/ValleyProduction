@@ -346,7 +346,7 @@ public class PathNode : MonoBehaviour
             dataToCheck = fragmentToCalculate.endPoint.Node.GetDataForLandmarkType(landmarkWanted);
         }
 
-        float distanceScore = 100f - dataToCheck.distanceFromLandmark;
+        float distanceScore = 100f;// - dataToCheck.distanceFromLandmark;
 
         float attractivityScore = 0;
 
