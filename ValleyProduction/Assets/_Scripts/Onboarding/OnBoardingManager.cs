@@ -35,6 +35,10 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     [Header("On Boarding Infrastructure")]
     public static Action<bool> OnClickInfrastructure;
+    public static Action<bool> OnDeselectInfrastructure;
+    public static Action<bool> OnClickModify;
+    public static Action<bool> OnClickFoodInfrastructure;
+    public static Action<bool> OnClickZone;
 
     private void Start()
     {
@@ -100,6 +104,13 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public void OnHeatmapNoise()
     {
         OnClickHeatmapNoise?.Invoke(true);
+    }
+    #endregion
+
+    #region Infrastructure
+    public static void OnInfraMove()
+    {
+        OnClickFoodInfrastructure?.Invoke(true);
     }
     #endregion
 }
