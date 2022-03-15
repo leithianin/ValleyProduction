@@ -97,6 +97,8 @@ public class PathNode : MonoBehaviour
             toUpdate[i].UpdateNode();
         }
 
+        isBeingUpdated = false;
+
         OnUpdateNode?.Invoke(this);
     }
 
@@ -116,7 +118,11 @@ public class PathNode : MonoBehaviour
 
                     float distanceFromNeighbour = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition);
 
-                    if (dataToCheck.distanceFromLandmark >= 0 && (dataByLandmark[j].distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark < dataByLandmark[j].distanceFromLandmark))
+                    if (dataToCheck.distanceFromLandmark < 0 && !neighbours[i].IsBeingUpdated)
+                    {
+                        toUpdate.Add(neighbours[i]);
+                    }
+                    else if (dataToCheck.distanceFromLandmark >= 0 && (dataByLandmark[j].distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark < dataByLandmark[j].distanceFromLandmark))
                     {
                         dataByLandmark[j].distanceFromLandmark = distanceFromNeighbour + dataToCheck.distanceFromLandmark;
                         dataByLandmark[j].parent = neighbours[i];
@@ -126,7 +132,7 @@ public class PathNode : MonoBehaviour
                             toUpdate.Add(neighbours[i]);
                         }
                     }
-                    else if (dataByLandmark[j].distanceFromLandmark >= 0 && (dataToCheck.distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark > dataByLandmark[j].distanceFromLandmark))
+                    /*else if (dataByLandmark[j].distanceFromLandmark >= 0 && (dataToCheck.distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark > dataByLandmark[j].distanceFromLandmark))
                     {
                         dataToCheck.distanceFromLandmark = distanceFromNeighbour + dataByLandmark[j].distanceFromLandmark;
                         dataToCheck.parent = this;
@@ -135,7 +141,7 @@ public class PathNode : MonoBehaviour
                         {
                             toUpdate.Add(neighbours[i]);
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -375,7 +381,6 @@ public class PathNode : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        /*
         if (Selection.activeGameObject != transform.gameObject)
         {
             return;
@@ -394,6 +399,6 @@ public class PathNode : MonoBehaviour
             {
                 Gizmos.DrawLine(lastParent.WorldPosition, parent.WorldPosition);
             }
-        }*/
+        }
     }
 }
