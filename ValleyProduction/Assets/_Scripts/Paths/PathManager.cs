@@ -97,7 +97,9 @@ public class PathManager : VLY_Singleton<PathManager>
 
     private void RemoveLastPathFragmentToList()
     {
-        pathFragmentDataList[pathFragmentDataList.Count - 1].DeleteFragmentData();
+        PathFragmentData toRemove = pathFragmentDataList[pathFragmentDataList.Count - 1];
+
+        toRemove.DeleteFragmentData();
 
         pathFragmentDataList.RemoveAt(pathFragmentDataList.Count - 1);
     }

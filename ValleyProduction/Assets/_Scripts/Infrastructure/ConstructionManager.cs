@@ -79,7 +79,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
     public static void DestroyStructure(GameObject touchedObject) //CODE REVIEW : Voir pour le mettre dans le PathCreationManager
     {
-        if (PathManager.previousPathpoint.gameObject == touchedObject)
+        if (PathManager.previousPathpoint != null && PathManager.previousPathpoint.gameObject == touchedObject)
         {
             InfrastructureManager.InteractWithStructure(ToolType.Delete, PathManager.previousPathpoint);
         }
