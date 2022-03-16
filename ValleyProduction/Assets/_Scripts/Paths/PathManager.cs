@@ -95,6 +95,13 @@ public class PathManager : VLY_Singleton<PathManager>
         toAdd.endPoint.Node.AddFragment(toAdd);
     }
 
+    private void RemoveLastPathFragmentToList()
+    {
+        pathFragmentDataList[pathFragmentDataList.Count - 1].DeleteFragmentData();
+
+        pathFragmentDataList.RemoveAt(pathFragmentDataList.Count - 1);
+    }
+
     //Create PathFragmentData
     public static void PlacePoint(IST_PathPoint pathpoint, Vector3 position)
     {
@@ -127,6 +134,15 @@ public class PathManager : VLY_Singleton<PathManager>
         pathpoint.Node.PlaceNode();
 
         DebugPoint(previousPathpoint);
+    }
+
+    public static void UnplacePoint(IST_PathPoint toRemove)
+    {
+        instance.pathpointList.Remove(toRemove);
+
+        previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
+
+        instance.RemoveLastPathFragmentToList();
     }
 
     public static bool IsDeconnected(IST_PathPoint pathPoint)
@@ -437,6 +453,14 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.pathDataList.Remove(pathdata);
     }
 
+
+    public void ValidatePath(GameObject hitedGameobject)
+    {
+        if(!hitedGameobject.TryGetComponent<IST_PathPoint>(out IST_PathPoint hitedPoint))
+        {
+            CreatePathData();
+        }
+    }
 
     //Create pathdata
     public static void CreatePathData()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -13,6 +14,10 @@ public class UIManager : VLY_Singleton<UIManager>
     [Header("Menu Option")]
     public bool OnMenuOption = false;
     public Button ResumeButton;
+
+    [Header("Settings Menu")]
+    [SerializeField] private UnityEvent OnOpenSettings;
+    [SerializeField] private UnityEvent OnCloseSettings;
 
     [Header("Visitors Informations")]
     public TouristType hikersInfo;
@@ -105,6 +110,16 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.ResumeButton.onClick?.Invoke();
     }
     #endregion
+
+    public void OpenSettingsMenu()
+    {
+        OnOpenSettings?.Invoke();
+    }
+
+    public void CloseSettingsMenu()
+    {
+        OnCloseSettings?.Invoke();
+    }
 
     #region Interaction/Hide
     public static void InteractWithObject(GameObject touchedObject)
