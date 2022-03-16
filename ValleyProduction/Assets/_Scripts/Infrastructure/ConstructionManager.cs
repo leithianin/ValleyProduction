@@ -77,9 +77,13 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         //InfrastructureManager.ReplaceInfrastructure();
     }
 
-    public static void DestroyStructure(GameObject touchedObject)
+    public static void DestroyStructure(GameObject touchedObject) //CODE REVIEW : Voir pour le mettre dans le PathCreationManager
     {
-        if (PathManager.GetCurrentPathData != null)
+        if (PathManager.previousPathpoint != null && PathManager.previousPathpoint.gameObject == touchedObject)
+        {
+            InfrastructureManager.InteractWithStructure(ToolType.Delete, PathManager.previousPathpoint);
+        }
+        /*if (PathManager.GetCurrentPathData != null)
         {
             Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
             if (infraComponent != null)
@@ -101,12 +105,12 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
         else
         {
-            if (PathManager.previousPathpoint != null)
+            if (PathManager.previousPathpoint == touchedObject)
             {
                 //InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, PathManager.previousPathpoint);
                 InfrastructureManager.InteractWithStructure(ToolType.Delete, PathManager.previousPathpoint);
             }
-        }
+        }*/
     }
 
     //C'était pour placer sur une infrastructure (Créer à partir d'une infrastructure)
@@ -157,7 +161,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         InfrastructureType lastStructureType = selectedStructureType;
 
         OnUnselectInfrastructureType();
-        if (newStructureType != null && lastStructureType != newStructureType.RealInfrastructure.StructureType)
+        if (newStructureType != null)
         {
             selectedStructureType = newStructureType.RealInfrastructure.StructureType;
 

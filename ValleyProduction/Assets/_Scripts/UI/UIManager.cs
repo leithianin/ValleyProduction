@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -14,10 +15,18 @@ public class UIManager : VLY_Singleton<UIManager>
     public bool OnMenuOption = false;
     public Button ResumeButton;
 
+    [Header("Settings Menu")]
+    [SerializeField] private UnityEvent OnOpenSettings;
+    [SerializeField] private UnityEvent OnCloseSettings;
+
     [Header("Visitors Informations")]
     public TouristType hikersInfo;
     public TouristType touristInfo;
     public TMP_Text nbVisitors;
+
+    [Header("Datas display")]
+    [SerializeField] private TMP_Text ressourceCounter;
+    [SerializeField] private TMP_Text attractivityCounter;
 
     [Header("Infrastructure Informations")]
     public GameObject infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
@@ -105,6 +114,16 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.ResumeButton.onClick?.Invoke();
     }
     #endregion
+
+    public void OpenSettingsMenu()
+    {
+        OnOpenSettings?.Invoke();
+    }
+
+    public void CloseSettingsMenu()
+    {
+        OnCloseSettings?.Invoke();
+    }
 
     #region Interaction/Hide
     public static void InteractWithObject(GameObject touchedObject)
@@ -288,6 +307,18 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.infrastructureInfo.SetActive(true);
         gameObjectShown = instance.infrastructureInfo;
         //Show UI with info
+    }
+    #endregion
+
+    #region Ressources
+    public void UpdateRessourceCount(int ressource)
+    {
+        ressourceCounter.text = ressource.ToString();
+    }
+
+    public void UpdateAttractivityCount(float attractivity)
+    {
+        attractivityCounter.text = attractivity.ToString("F1");
     }
     #endregion
 }

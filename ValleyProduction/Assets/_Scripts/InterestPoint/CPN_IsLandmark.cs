@@ -7,7 +7,9 @@ public enum LandmarkType
 {
     None,
     Spawn,
-    Ruin
+    Landmark1,
+    Landmark2,
+    Landmark3
 }
 
 public class CPN_IsLandmark : VLY_Component

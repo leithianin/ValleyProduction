@@ -28,6 +28,17 @@ public class PathFragmentData
         {
             RemoveInterestPointDetector(interestPointDetectors[0]);
         }
+
+
+        if (startPoint != null)
+        {
+            startPoint.Node.RemoveFragment(this);
+        }
+
+        if (endPoint != null)
+        {
+            endPoint.Node.RemoveFragment(this);
+        }
     }
 
     public bool HasThisPathpoint(IST_PathPoint pp)

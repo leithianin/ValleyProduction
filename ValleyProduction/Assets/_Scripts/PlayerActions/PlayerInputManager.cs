@@ -17,6 +17,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent<GameObject> OnClicLeftHold;
 
     [SerializeField] private UnityEvent OnClicRight;
+    [SerializeField] private UnityEvent OnClicRightWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicRightPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicRightObject;
     [SerializeField] private UnityEvent<GameObject> OnClicRightHold;
