@@ -19,6 +19,14 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 
     public static int GetRessource => Mathf.FloorToInt(instance.currentRessources);
 
+    private void Start()
+    {
+        GainRessource(0);
+
+        ressourceTimer = TimerManager.CreateGameTimer(ressourceProductionSpeed, GainRessourceOnTime);
+    }
+
+
     public static void GainRessource(float amount)
     {
         instance.currentRessources += amount;
@@ -34,11 +42,6 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
     public static bool HasEnoughRessources(int wantedAmount)
     {
         return GetRessource >= wantedAmount;
-    }
-
-    private void Start()
-    {
-        ressourceTimer = TimerManager.CreateGameTimer(ressourceProductionSpeed, GainRessourceOnTime);
     }
 
     private void GainRessourceOnTime()

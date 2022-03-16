@@ -17,7 +17,7 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
     private void Start()
     {
-        TimerManager.CreateGameTimer(timeBetweenUpdates, CalculateAttractivity);
+        CalculateAttractivity();
     }
 
     private void CalculateAttractivity()
