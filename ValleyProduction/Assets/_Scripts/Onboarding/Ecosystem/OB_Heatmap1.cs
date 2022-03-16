@@ -28,7 +28,7 @@ public class OB_Heatmap1 : OnBoarding
 
     public void OnClickHeatmap()
     {
-        if(!isClickOnHeatmap)
+        if (!isClickOnHeatmap)
         {
             isClickOnHeatmap = true;
             OnClickHeatmapEvent?.Invoke();
