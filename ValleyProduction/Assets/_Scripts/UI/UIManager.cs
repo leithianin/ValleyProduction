@@ -66,8 +66,10 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.Place:
+                OnBoardingManager.OnClickBuild?.Invoke(true);
                 break;
             case ToolType.Move:
+                OnBoardingManager.OnClickModify?.Invoke(true);
                 break;
             case ToolType.Delete:
                 break;
@@ -128,6 +130,7 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         if (gameObjectShown != null)
         {
+            OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);
             gameObjectShown.SetActive(false);
         }
     }
@@ -281,6 +284,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static void ShowInfoInfrastructure(AU_Informations AU_Inf)
     {
+        OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         instance.infrastructureInfo.SetActive(true);
         gameObjectShown = instance.infrastructureInfo;
         //Show UI with info
