@@ -56,7 +56,14 @@ public class IST_PathPoint : Infrastructure
         {
             node.DeleteNode();
 
-            PathManager.DeletePoint(this);
+            if (PathManager.GetCurrentPathData != null)
+            {
+                PathManager.DeletePoint(this);
+            }
+            else
+            {
+                PathManager.UnplacePoint(this);
+            }
 
             InfrastructureManager.DesnapInfrastructure(this);
             Debug.Log("Remove object");
