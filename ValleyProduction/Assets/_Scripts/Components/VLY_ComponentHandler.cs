@@ -17,4 +17,20 @@ public class VLY_ComponentHandler : MonoBehaviour
         }
         return null;
     }
+
+    public void AddComponent(VLY_Component toAdd)
+    {
+        if(!components.Contains(toAdd))
+        {
+            components.Add(toAdd);
+        }
+    }
+
+    public void RemoveComponent(VLY_Component toRemove)
+    {
+        if (components.Contains(toRemove))
+        {
+            components.Remove(toRemove);
+        }
+    }
 }
