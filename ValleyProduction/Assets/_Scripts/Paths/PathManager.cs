@@ -424,6 +424,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static void DeleteFullPathWithoutOnePoint(PathData toDelete, IST_PathPoint toIgnore)
     {
+        
         List<IST_PathPoint> pointsToDelete = new List<IST_PathPoint>();
 
         for (int i = toDelete.pathFragment.Count - 1; i >= 0; i--)
@@ -438,7 +439,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 pointsToDelete.Add(toDelete.pathFragment[i].startPoint);
             }
         }
-
+        
         for (int j = 0; j < pointsToDelete.Count; j++)
         {
             pointsToDelete[j].RemoveObject();

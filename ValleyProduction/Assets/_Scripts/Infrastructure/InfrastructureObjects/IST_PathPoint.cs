@@ -56,7 +56,7 @@ public class IST_PathPoint : Infrastructure
         {
             node.DeleteNode();
 
-            if (PathManager.GetCurrentPathData != null)
+            if (PathManager.GetCurrentPathData == null)
             {
                 PathManager.DeletePoint(this);
             }

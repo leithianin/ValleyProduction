@@ -149,6 +149,7 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         if (gameObjectShown != null)
         {
+            OnBoardingManager.onHideVisitorInfo?.Invoke(true);
             OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);
             gameObjectShown.SetActive(false);
         }
