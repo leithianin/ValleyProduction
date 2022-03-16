@@ -21,7 +21,7 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 
     public static void GainRessource(float amount)
     {
-        instance.currentRessources += amount * Mathf.Ceil(AttractivityManager.AttractivityScore);
+        instance.currentRessources += amount;
         instance.OnGainRessource?.Invoke(GetRessource);
     }
 
@@ -45,7 +45,7 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
     {
         ressourceTimer?.Stop();
 
-        GainRessource(ressourceGainedBase + VisitorManager.UsedVisitorNumber() * ressourceByVisitor);
+        GainRessource((ressourceGainedBase + VisitorManager.UsedVisitorNumber() * ressourceByVisitor) * Mathf.Ceil(AttractivityManager.AttractivityScore + 1));
 
         ressourceTimer = TimerManager.CreateGameTimer(ressourceProductionSpeed, GainRessourceOnTime);
     }
