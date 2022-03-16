@@ -40,8 +40,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static Action<bool> OnClickFoodInfrastructure;
     public static Action<bool> OnClickZone;
     public static Action<bool> OnClickBuild;
-    public static Action<bool> OnClickTrashCan;
-    public static Action<bool> OnClickInZone;
+    public static Action<bool> OnClickZoneTrashCan;
 
     private void Start()
     {
