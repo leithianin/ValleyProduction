@@ -30,7 +30,6 @@ Transform:
   m_Children:
   - {fileID: 9110100827286009518}
   - {fileID: 9110100827801898136}
-  - {fileID: 9110100826512993515}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59,7 +58,7 @@ LODGroup:
   - screenRelativeHeight: 0.021089049
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 7937234474848442244}
+    - renderer: {fileID: 0}
   m_Enabled: 1
 --- !u!1001 &8784039153603095411
 PrefabInstance:
@@ -115,7 +114,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a527ea58c0cebbf43ac5f3d7c686824d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c7ec70afe62257e458d58eedff2100b0, type: 2}
+      objectReference: {fileID: 2100000, guid: e18eb5a352a51354286cb63e95216421, type: 2}
+    - target: {fileID: -5754084199372789682, guid: a527ea58c0cebbf43ac5f3d7c686824d, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3801937838854123262, guid: d409cd2c9a1b8e942b06f6a248ab3a4b, type: 3}
     - target: {fileID: 919132149155446097, guid: a527ea58c0cebbf43ac5f3d7c686824d, type: 3}
       propertyPath: m_Name
       value: SM_StoneSquare_01_LOD1
@@ -186,7 +189,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 197c10ef5f29359438a239d1ff3c0fc9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 667bb5a0b5afbff41a0537ef84af784a, type: 2}
+      objectReference: {fileID: 2100000, guid: d69b125249c141a4eb2e87ad5bfc31b3, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 197c10ef5f29359438a239d1ff3c0fc9, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -4133066420030786127, guid: a26a089f9270aac48a49c2bdee926872, type: 3}
     - target: {fileID: 919132149155446097, guid: 197c10ef5f29359438a239d1ff3c0fc9, type: 3}
       propertyPath: m_Name
       value: SM_StoneSquare_01_LOD0
@@ -202,75 +209,4 @@ Transform:
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 197c10ef5f29359438a239d1ff3c0fc9, type: 3}
   m_PrefabInstance: {fileID: 8784039154093822277}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8784039154866572032
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8784039153802772543}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.000000021855694
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: db6f2593179f4064e83577d411d37673, type: 2}
-    - target: {fileID: 919132149155446097, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-      propertyPath: m_Name
-      value: SM_StoneSquare_01_LOD2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
---- !u!4 &9110100826512993515 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-  m_PrefabInstance: {fileID: 8784039154866572032}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &7937234474848442244 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 6965d8e263c94df4189ea7cce1642292, type: 3}
-  m_PrefabInstance: {fileID: 8784039154866572032}
   m_PrefabAsset: {fileID: 0}
