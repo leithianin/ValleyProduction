@@ -15,6 +15,9 @@ public class VisitorBehavior : MonoBehaviour
     public VisitorScriptable visitorType;
 
     [SerializeField] private UnityEvent<VisitorScriptable> OnSetVisitorWithType;
+    [SerializeField] private UnityEvent<VisitorScriptable> OnUnsetVisitorWithType;
+    [SerializeField] private UnityEvent<VLY_Component> OnAddComponent;
+    [SerializeField] private UnityEvent<VLY_Component> OnRemoveComponent;
 
     private AnimationHandler visitorDisplay = null;
 
@@ -64,12 +67,16 @@ public class VisitorBehavior : MonoBehaviour
 
             if(visitorDisplay != null)
             {
+                OnRemoveComponent?.Invoke(visitorDisplay);
+
                 Destroy(visitorDisplay.gameObject);
             }
 
             isUsed = true;
 
             visitorDisplay = Instantiate(visitorType.Display, transform);
+
+            OnAddComponent?.Invoke(visitorDisplay);
 
             movement.WalkOnNewPath(currentPathFragment.path);
         }

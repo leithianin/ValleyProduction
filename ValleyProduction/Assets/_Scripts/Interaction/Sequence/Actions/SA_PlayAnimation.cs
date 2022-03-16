@@ -30,9 +30,18 @@ public class SA_PlayAnimation : InteractionActions
         {
             animHandler.PlayBodyAnim(animationToPlay);
 
-            TimerManager.Timer newAnimTimer = TimerManager.CreateGameTimer(timePlayed, () => EndAction(caller));
+            Debug.Log("Anim truc");
 
-            animationPlayed.Add(new PlayedAnimation(caller, newAnimTimer, animationToPlay));
+            if (timePlayed > 0)
+            {
+                TimerManager.Timer newAnimTimer = TimerManager.CreateGameTimer(timePlayed, () => EndAction(caller));
+
+                animationPlayed.Add(new PlayedAnimation(caller, newAnimTimer, animationToPlay));
+            }
+            else
+            {
+                EndAction(caller);
+            }
         }
         else
         {
@@ -69,7 +78,10 @@ public class SA_PlayAnimation : InteractionActions
                     animHandler.StopBodyAnim(animationToPlay);
                 }
 
-                animationPlayed[i].timer.Stop();
+                if (animationPlayed[i].timer != null)
+                {
+                    animationPlayed[i].timer.Stop();
+                }
                 animationPlayed.RemoveAt(i);
                 break;
             }
