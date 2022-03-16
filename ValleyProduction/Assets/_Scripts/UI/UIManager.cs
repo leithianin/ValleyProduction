@@ -24,6 +24,10 @@ public class UIManager : VLY_Singleton<UIManager>
     public TouristType touristInfo;
     public TMP_Text nbVisitors;
 
+    [Header("Datas display")]
+    [SerializeField] private TMP_Text ressourceCounter;
+    [SerializeField] private TMP_Text attractivityCounter;
+
     [Header("Infrastructure Informations")]
     public GameObject infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
 
@@ -303,6 +307,18 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.infrastructureInfo.SetActive(true);
         gameObjectShown = instance.infrastructureInfo;
         //Show UI with info
+    }
+    #endregion
+
+    #region Ressources
+    public void UpdateRessourceCount(int ressource)
+    {
+        ressourceCounter.text = ressource.ToString();
+    }
+
+    public void UpdateAttractivityCount(float attractivity)
+    {
+        attractivityCounter.text = attractivity.ToString("F1");
     }
     #endregion
 }
