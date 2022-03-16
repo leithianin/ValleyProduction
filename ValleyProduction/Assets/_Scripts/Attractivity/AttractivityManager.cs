@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AttractivityManager : VLY_Singleton<AttractivityManager>
 {
@@ -8,11 +9,15 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
     [SerializeField] private float attractivityScore;
 
+    [SerializeField] private UnityEvent<float> OnUpdateAttractivity;
+
+    [SerializeField] private float attractivityCheat;
+
     public static float AttractivityScore => instance.attractivityScore;
 
     private void Start()
     {
-        TimerManager.CreateGameTimer(timeBetweenUpdates, CalculateAttractivity);
+        CalculateAttractivity();
     }
 
     private void CalculateAttractivity()
@@ -37,6 +42,10 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
         {
             attractivityScore /= visitorNumber;
         }
+
+        attractivityScore += attractivityCheat;
+
+        OnUpdateAttractivity?.Invoke(attractivityScore);
 
         TimerManager.CreateGameTimer(timeBetweenUpdates, CalculateAttractivity);
     }
