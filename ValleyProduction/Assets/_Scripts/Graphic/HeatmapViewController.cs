@@ -14,6 +14,19 @@ public class HeatmapViewController : MonoBehaviour
     private void Start()
     {
         EnableHeatmapView(false);
+
+        /*foreach(Material m in materials)
+        {
+            m.SetTexture("_HeatmapNoiseRenderTex", HeatMapMaskRenderer.)
+        }*/
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            HandleHeatmapNoise();
+        }
     }
 
     private void OnApplicationQuit()
