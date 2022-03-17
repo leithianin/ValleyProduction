@@ -7,7 +7,7 @@ public class OB_PlayEvent : OnBoarding
 {
     protected override void OnPlay()
     {
-        //Debug.Log("OnPlay Welcome");
+        
     }
 
     protected override void OnEnd()

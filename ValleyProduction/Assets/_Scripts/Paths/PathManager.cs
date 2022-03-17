@@ -142,9 +142,17 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         instance.pathpointList.Remove(toRemove);
 
-        previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
+        DestroyPreviousLine();
+        if (instance.pathpointList.Count > 0)
+        {
+            previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
 
-        instance.RemoveLastPathFragmentToList();
+            instance.RemoveLastPathFragmentToList();
+        }
+        else
+        {
+            instance.ResetCurrentData();
+        }
     }
 
     public static bool IsDeconnected(IST_PathPoint pathPoint)
@@ -424,6 +432,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static void DeleteFullPathWithoutOnePoint(PathData toDelete, IST_PathPoint toIgnore)
     {
+        
         List<IST_PathPoint> pointsToDelete = new List<IST_PathPoint>();
 
         for (int i = toDelete.pathFragment.Count - 1; i >= 0; i--)
@@ -438,7 +447,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 pointsToDelete.Add(toDelete.pathFragment[i].startPoint);
             }
         }
-
+        
         for (int j = 0; j < pointsToDelete.Count; j++)
         {
             pointsToDelete[j].RemoveObject();

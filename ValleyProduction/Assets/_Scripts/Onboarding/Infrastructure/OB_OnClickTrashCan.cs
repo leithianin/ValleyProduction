@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OB_OnClickTrashCan : OnBoarding
 {
+    private bool clickTrashCan;
+
     protected override void OnEnd()
     {
         
@@ -11,12 +13,15 @@ public class OB_OnClickTrashCan : OnBoarding
 
     protected override void OnPlay()
     {
-        OnBoardingManager.OnClickTrashCan += OnClickTrashCan;
+        
     }
 
     public void OnClickTrashCan(bool cond)
     {
-        OnBoardingManager.OnClickTrashCan -= OnClickTrashCan;
-        Over();
+        if(clickTrashCan)
+        {
+            clickTrashCan = false;
+            Over();
+        }
     }
 }

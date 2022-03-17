@@ -19,13 +19,14 @@ public class OB_Heatmap2 : OnBoarding
 
     public void OnClick(bool condition)
     {
+        isWaitingCloseAction = false;
         OnBoardingManager.OnClickHeatmapNoise -= OnClick;
         Over();
     }
 
     public void OnClickHeatmap()
     {
-        if(isWaitingCloseAction)
+        if (isWaitingCloseAction)
         {
             isWaitingCloseAction = false;
             OnBoardingManager.OnClickHeatmapNoise -= OnClick;

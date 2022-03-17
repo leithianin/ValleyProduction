@@ -55,14 +55,13 @@ public class IST_PathPoint : Infrastructure
         else
         {
             node.DeleteNode();
-
-            if (PathManager.GetCurrentPathData != null)
-            {
-                PathManager.DeletePoint(this);
-            }
-            else
+            if (PathManager.GetCurrentPathpointList.Count > 0)
             {
                 PathManager.UnplacePoint(this);
+            }
+            else if (PathManager.GetCurrentPathData == null)
+            {
+                PathManager.DeletePoint(this);
             }
 
             InfrastructureManager.DesnapInfrastructure(this);
