@@ -339,7 +339,7 @@ public class PathNode : MonoBehaviour
             }
         }
 
-        if (toReturn == null)
+        if (toReturn == null && usableFragments.Count > 0)
         {
             toReturn = usableFragments[UnityEngine.Random.Range(0, usableFragments.Count)];
         }
