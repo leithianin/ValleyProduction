@@ -142,6 +142,7 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         instance.pathpointList.Remove(toRemove);
 
+        DestroyPreviousLine();
         if (instance.pathpointList.Count > 0)
         {
             previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
