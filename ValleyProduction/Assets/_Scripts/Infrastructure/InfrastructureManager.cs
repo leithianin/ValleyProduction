@@ -80,10 +80,13 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// <param name="toMove"></param>
     public static void MoveInfrastructure(Infrastructure toMove)
     {
-        instance.currentSelectedStructure = toMove;
-        instance.movedObject = toMove.gameObject;
-        instance.movedObject.layer = layerIgnoreRaycast;
-        instance.currentSelectedStructure.MoveObject();
+        if (!(toMove is IST_PathPoint))
+        {
+            instance.currentSelectedStructure = toMove;
+            instance.movedObject = toMove.gameObject;
+            instance.movedObject.layer = layerIgnoreRaycast;
+            instance.currentSelectedStructure.MoveObject();
+        }
     }
 
     public static void OnHoldRightClic(InfrastructureType tool, Infrastructure toHoldRightClic)
@@ -116,7 +119,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             case ToolType.None:
                 instance.SelectInfrastructure(interactedStructure);
                 //instance.SelectInfrastructure(interactedStructure);
-                break;      
+                break;
             case ToolType.Place:
                 instance.PlaceInfrastructure(interactedStructure);
                 //Usable by balise, je suis entrain de placer, je clique sur une infrastructure.

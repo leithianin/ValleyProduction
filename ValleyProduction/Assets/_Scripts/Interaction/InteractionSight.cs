@@ -45,7 +45,7 @@ public abstract class InteractionSight : MonoBehaviour
     /// <param name="spot">The spot the interactor want to interact with.</param>
     public void StartInteraction(InteractionSpot spot)
     {
-        if (interactor.IsInterested(spot.interactionType))
+        if (spot != null && interactor.IsInterested(spot.interactionType))
         {
             currentSpot = spot;
             OnStartInteraction(spot);

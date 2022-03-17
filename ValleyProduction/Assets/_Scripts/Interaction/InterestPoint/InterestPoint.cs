@@ -32,7 +32,7 @@ public class InterestPoint : MonoBehaviour
 
         if (usableInteractions.Count > 0)
         {
-            return interactions[Random.Range(0, usableInteractions.Count)];
+            return usableInteractions[Random.Range(0, usableInteractions.Count)];
         }
         return null;
     }

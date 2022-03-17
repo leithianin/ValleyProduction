@@ -392,9 +392,6 @@ public class PathManager : VLY_Singleton<PathManager>
                 //Delete les PathFragment ou il y'a le pathpoint + Les pathFragment apres qu'on a save juste avant
                 pdToModify.RemoveFragmentAndNext(ist_pp);
 
-                //Créer un pathData avec le chemin fermé + Line renderer path fermé
-                CreatePathDataClose(pfdSecondPath);
-
                 //Delete line renderer 
                 DestroyLineRenderer(pdToModify.pathLineRenderer);
 
@@ -411,6 +408,10 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
 
                 pdToModify.SafeCheck();
+
+
+                //Créer un pathData avec le chemin fermé + Line renderer path fermé
+                CreatePathDataClose(pfdSecondPath);
             }
             else
             {
@@ -622,9 +623,32 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public static void CreatePathDataClose(List<PathFragmentData> listPathFragment)
     {
-        PathData newPathData = new PathData();
+            //Création PathData
+            PathData newPathData = new PathData();
 
-        newPathData.name = string.Empty;
+            //Random du chemin pour varier les infos
+            newPathData.name = GeneratorManager.GetRandomPathName();
+            //newPathData.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+            newPathData.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1f);
+
+            //Remplissage des infos qu'on a 
+            newPathData.pathFragment = new List<PathFragmentData>();
+            foreach(PathFragmentData pfd in listPathFragment)
+            {
+                newPathData.AddPathFragment(pfd);
+            }
+
+            newPathData.startPoint = listPathFragment[0].startPoint;
+            instance.pathDataList.Add(newPathData);
+
+            if (instance.debugMode)
+            {
+                DebugLineR(newPathData);
+            }
+
+            NodePathProcess.UpdateAllNodes();
+        
+        /*newPathData.name = string.Empty;
         newPathData.color = Color.gray; //Gris à choisir
         newPathData.pathFragment = new List<PathFragmentData>(listPathFragment);
         newPathData.startPoint = listPathFragment[0].startPoint;
@@ -634,7 +658,7 @@ public class PathManager : VLY_Singleton<PathManager>
         if (instance.debugMode)
         {
             DebugLineR(newPathData);
-        }
+        }*/
     }
 
     /// <summary>
