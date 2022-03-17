@@ -14,7 +14,12 @@ public class InterestPointDetectionSight : MonoBehaviour
 
             if (interaction != null && interaction.IsUsable(interactionSight.Interactor))
             {
-                interactionSight.StartInteraction(interaction.GetRandomSpot(interactionSight.Interactor));
+                InteractionSpot spot = interaction.GetRandomSpot(interactionSight.Interactor);
+
+                if (spot != null)
+                {
+                    interactionSight.StartInteraction(spot);
+                }
             }
         }
     }
