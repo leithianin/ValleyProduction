@@ -84,6 +84,12 @@ public class SphericalTransform : MonoBehaviour
         coordinates.x += deltaMagnitude * scrollingSpeed * Time.unscaledDeltaTime;
     }
 
+    public void SetLength(float newValue)
+    {
+        Debug.Log("Zoom : " + newValue);
+        coordinates.x = newValue;
+    }
+
     #endregion
 
     public Vector3 SphericalToCarthesian(Vector3 sphericalCoords)
