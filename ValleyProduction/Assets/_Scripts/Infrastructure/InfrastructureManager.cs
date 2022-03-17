@@ -116,7 +116,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             case ToolType.None:
                 instance.SelectInfrastructure(interactedStructure);
                 //instance.SelectInfrastructure(interactedStructure);
-                break;      
+                break;
             case ToolType.Place:
                 instance.PlaceInfrastructure(interactedStructure);
                 //Usable by balise, je suis entrain de placer, je clique sur une infrastructure.
