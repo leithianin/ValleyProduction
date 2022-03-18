@@ -47,8 +47,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662746747366280874}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.3871441, y: 2.6597981, z: 0.5633371}
-  m_Size: 15.123333
+  m_LocalReferencePoint: {x: 2.2851903, y: 2.9418807, z: 1.0692372}
+  m_Size: 16.058344
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -56,18 +56,18 @@ LODGroup:
   - screenRelativeHeight: 0.21793872
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: -7512395765575120634, guid: 2d3ddfb0293fd414fbf43623f3edc903, type: 3}
-    - renderer: {fileID: 5718510996073384009, guid: 2d3ddfb0293fd414fbf43623f3edc903, type: 3}
+    - renderer: {fileID: 48933222032423457}
+    - renderer: {fileID: 6363436915539360622}
   - screenRelativeHeight: 0.12434238
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 5625314238737721282, guid: b0f59de3796b73340bad804e376eb762, type: 3}
-    - renderer: {fileID: 7292781770001263179, guid: b0f59de3796b73340bad804e376eb762, type: 3}
+    - renderer: {fileID: 6413796733201612042}
+    - renderer: {fileID: 8225377470836961411}
   - screenRelativeHeight: 0
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 7270792996084221734, guid: 8b10c3e58c90b044db75fd634298c0ac, type: 3}
-    - renderer: {fileID: -8911856376707410453, guid: 8b10c3e58c90b044db75fd634298c0ac, type: 3}
+    - renderer: {fileID: 7629908289673998456}
+    - renderer: {fileID: 673098240519971509}
   m_Enabled: 1
 --- !u!208 &8942163829147800003
 NavMeshObstacle:
@@ -455,6 +455,16 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d96294191433f5d459f4d0549f330461, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b10c3e58c90b044db75fd634298c0ac, type: 3}
+--- !u!23 &673098240519971509 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8911856376707410453, guid: 8b10c3e58c90b044db75fd634298c0ac, type: 3}
+  m_PrefabInstance: {fileID: 938414067006846814}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7629908289673998456 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7270792996084221734, guid: 8b10c3e58c90b044db75fd634298c0ac, type: 3}
+  m_PrefabInstance: {fileID: 938414067006846814}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &760919093293437109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8b10c3e58c90b044db75fd634298c0ac, type: 3}
@@ -767,6 +777,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d3ddfb0293fd414fbf43623f3edc903, type: 3}
+--- !u!23 &6363436915539360622 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5718510996073384009, guid: 2d3ddfb0293fd414fbf43623f3edc903, type: 3}
+  m_PrefabInstance: {fileID: 1662746745824228135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &48933222032423457 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7512395765575120634, guid: 2d3ddfb0293fd414fbf43623f3edc903, type: 3}
+  m_PrefabInstance: {fileID: 1662746745824228135}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1196262219020981452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2d3ddfb0293fd414fbf43623f3edc903, type: 3}
@@ -845,6 +865,16 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2cb5869a9944f8043a6889880d75e708, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0f59de3796b73340bad804e376eb762, type: 3}
+--- !u!23 &8225377470836961411 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7292781770001263179, guid: b0f59de3796b73340bad804e376eb762, type: 3}
+  m_PrefabInstance: {fileID: 1662746747126045384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6413796733201612042 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5625314238737721282, guid: b0f59de3796b73340bad804e376eb762, type: 3}
+  m_PrefabInstance: {fileID: 1662746747126045384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1196262217752722723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b0f59de3796b73340bad804e376eb762, type: 3}
@@ -1102,6 +1132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   pathPointNextTo: []
+  OnValidatePathToSpawn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &558739049360141545
 MonoBehaviour:
   m_ObjectHideFlags: 0
