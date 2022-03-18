@@ -8,7 +8,10 @@ public class ArrowLastPathpoint : MonoBehaviour
 
     public void Update()
     {
-        UpdatePosition();
+        if (OB_ArrowLastPathpoint.activeSelf)
+        {
+            UpdatePosition();
+        }
     }
 
     public void ActivateArrowLastPathpoint()
