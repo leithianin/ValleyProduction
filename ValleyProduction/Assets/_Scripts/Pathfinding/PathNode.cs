@@ -88,6 +88,8 @@ public class PathNode : MonoBehaviour
     {
         isBeingUpdated = true;
 
+        Debug.Log(transform.position);
+
         NodePathProcess.SetNodeUpdating(this);
 
         List<PathNode> toUpdate = UpdateSelfData();
@@ -97,7 +99,7 @@ public class PathNode : MonoBehaviour
             toUpdate[i].UpdateNode();
         }
 
-        isBeingUpdated = false;
+        //isBeingUpdated = false;
 
         OnUpdateNode?.Invoke(this);
     }
@@ -391,7 +393,7 @@ public class PathNode : MonoBehaviour
 
     #endregion
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (Selection.activeGameObject != transform.gameObject)
         {
@@ -412,5 +414,5 @@ public class PathNode : MonoBehaviour
                 Gizmos.DrawLine(lastParent.WorldPosition, parent.WorldPosition);
             }
         }
-    }*/
+    }
 }

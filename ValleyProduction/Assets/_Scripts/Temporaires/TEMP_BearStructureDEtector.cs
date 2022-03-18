@@ -9,7 +9,7 @@ public class TEMP_BearStructureDEtector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<IST_BaseStructure>() != null)
+        if(other.GetComponent<TEMP_IST_BearStructure>() != null)
         {
             ToPlayOnValidate?.Invoke();
         }

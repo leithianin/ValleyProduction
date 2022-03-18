@@ -32,7 +32,7 @@ public class TEMP_ObjectivesManager : VLY_Singleton<TEMP_ObjectivesManager>
 
     private void Start()
     {
-        SetPhaseOne();
+        TimerManager.CreateGameTimer(1f, SetPhaseOne);
 
         objectiveCheckTimer = TimerManager.CreateGameTimer(1f, CheckObjectives);
     }
@@ -70,6 +70,9 @@ public class TEMP_ObjectivesManager : VLY_Singleton<TEMP_ObjectivesManager>
 
     public void CheckLandmarkObjective(bool landmarkResult, LandmarkType landmarkType)
     {
+        Debug.Log(landmarkType);
+        Debug.Log(landmarkResult);
+
         if (!isPhaseOneGood)
         {
             if (landmarkType != LandmarkType.Spawn && landmarkType != LandmarkType.None)
