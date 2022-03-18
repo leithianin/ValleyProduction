@@ -76,20 +76,6 @@ public class AreaManager : VLY_Singleton<AreaManager>
             DestroyImmediate(treeScoreHandler.GetChild(0).gameObject);
             k++;
         }
-        k = 0;
-        /*while (animalScoreHandler.childCount > 0 && k < 1000)
-        {
-            DestroyImmediate(animalScoreHandler.GetChild(0).gameObject);
-            k++;
-        }*/
-        k = 0;
-        while (chunkHandler.childCount > 0 && k < 1000)
-        {
-            DestroyImmediate(chunkHandler.GetChild(0).gameObject);
-            k++;
-        }
-
-        allChunks = new List<ChunkDisplayer>();
 
         gridDimension = new Vector2Int(Mathf.RoundToInt(worldDimension.x / areaSize), Mathf.RoundToInt(worldDimension.y / areaSize));
 
@@ -100,26 +86,8 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 ADI_VegetationDisplayer vegetation = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
                 vegetation.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 vegetation.SetTrees();
-
-                /*if (chunkDisplayerPrefab != null)
-                {
-                    ChunkDisplayer displayer = Instantiate(chunkDisplayerPrefab.gameObject, chunkHandler).GetComponent<ChunkDisplayer>();
-                    displayer.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
-                    allChunks.Add(displayer);
-                }*/
             }
         }
-
-        /*var meshesInMap = FindObjectsOfType<MeshRenderer>();
-
-        foreach(MeshRenderer m in meshesInMap)
-        {
-            int chunkIndex = GetListIndexFromPosition(new Vector2(m.transform.position.x, m.transform.position.z));
-            if (chunkIndex >= 0 && chunkIndex < allChunks.Count)
-            {
-                allChunks[chunkIndex].AddMeshes(m);
-            }
-        }*/
     }
 
     [ContextMenu("Set Trees")]
