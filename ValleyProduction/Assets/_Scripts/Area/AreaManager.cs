@@ -214,7 +214,10 @@ public class AreaManager : VLY_Singleton<AreaManager>
             }
         }
 
-        //foreach(Area a in areas){ HeatMapMaskRenderer.RegisterChunks(a); }
+        foreach(Area a in areas)
+        { 
+            HeatMapMaskRenderer.RegisterChunks(a); 
+        }
 
         //OnCreateGrid?.Invoke();
     }
