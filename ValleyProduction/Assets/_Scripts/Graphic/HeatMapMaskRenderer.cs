@@ -25,7 +25,7 @@ public class HeatMapMaskRenderer : MonoBehaviour
     public Texture2D NoiseTexture;
     [Range(0f, 5f)] public float NoiseDetail = 4f;
 
-    private RenderTexture maskTexture;
+    public RenderTexture maskTexture;
 
     //Caching shader properties
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
