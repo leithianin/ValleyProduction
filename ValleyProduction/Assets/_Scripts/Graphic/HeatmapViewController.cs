@@ -15,10 +15,10 @@ public class HeatmapViewController : MonoBehaviour
     {
         EnableHeatmapView(false);
 
-        /*foreach(Material m in materials)
+        foreach(Material m in materials)
         {
-            m.SetTexture("_HeatmapNoiseRenderTex", HeatMapMaskRenderer.)
-        }*/
+            m.SetTexture("_Mask", HeatMapMaskRenderer.maskTexture);
+        }
     }
 
     private void Update()
@@ -26,6 +26,11 @@ public class HeatmapViewController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             HandleHeatmapNoise();
+        }
+
+        foreach (Material m in materials)
+        {
+            m.SetFloat("_MapSize", HeatMapMaskRenderer.staticMapSize);
         }
     }
 
@@ -46,6 +51,7 @@ public class HeatmapViewController : MonoBehaviour
         mainLight.enabled = !enable;
         heatmapViewLight.enabled = enable;
 
+        
         foreach(Material m in materials)
         {
             if (enable) m.EnableKeyword("RENDER_HEATMAP");

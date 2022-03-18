@@ -5,7 +5,10 @@ using UnityEngine.Events;
 
 public class HeatMapMaskRenderer : MonoBehaviour
 {
-    private static List<Area> chunks;
+    public static float rangeValue;
+    public float newRangeValue;
+
+    [SerializeField] private static List<Area> chunks = new List<Area>();
 
     public static void RegisterChunks(Area chunk) { chunks.Add(chunk); }
 
@@ -14,6 +17,7 @@ public class HeatMapMaskRenderer : MonoBehaviour
 
     [Range(64, 4096)] [SerializeField] private int TextureSize = 2048;
     [SerializeField] private float MapSize = 0;
+    public static float staticMapSize;
 
     [SerializeField] private float BlendDistance = 4f;
 
@@ -25,7 +29,8 @@ public class HeatMapMaskRenderer : MonoBehaviour
     public Texture2D NoiseTexture;
     [Range(0f, 5f)] public float NoiseDetail = 4f;
 
-    public RenderTexture maskTexture;
+    public static RenderTexture maskTexture;
+    public RenderTexture masktt = maskTexture;
 
     //Caching shader properties
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
@@ -62,7 +67,7 @@ public class HeatMapMaskRenderer : MonoBehaviour
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         maskTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear)
 #else
-        maskTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGB32)
+        maskTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGBFloat)
 #endif
         {
             enableRandomWrite = true
@@ -88,6 +93,12 @@ public class HeatMapMaskRenderer : MonoBehaviour
         bufferElements = new List<ChunkBufferElement>();
     }
 
+    private void Start()
+    {
+        TimerManager.CreateRealTimer(Time.deltaTime * 2f, () => computeShader.SetInt(chunkCountId, chunks.Count));
+
+    }
+
     private void OnDestroy()
     {
         buffer?.Dispose();
@@ -97,6 +108,9 @@ public class HeatMapMaskRenderer : MonoBehaviour
 
     private void Update()
     {
+        rangeValue = newRangeValue;
+        masktt = maskTexture;
+        staticMapSize = MapSize;
         bufferElements.Clear();
 
         foreach(Area chunk in chunks)
@@ -105,19 +119,20 @@ public class HeatMapMaskRenderer : MonoBehaviour
             {
                 PositionX = chunk.GetWorldPosition.x,
                 PositionY = chunk.GetWorldPosition.z,
-                Range = 1,
-                Noise = chunk.GetData<AU_MakeSound>()[0].Score,
+                Range = rangeValue,
+                Noise = chunk.GetData<AU_MakeSound>()[0].Score    
             };
             bufferElements.Add(element);
         }
 
         buffer?.Release();
-        buffer = new ComputeBuffer(bufferElements.Count * 4, sizeof(float));
+        buffer = new ComputeBuffer(bufferElements.Count * 5, sizeof(float));
 
         buffer.SetData(bufferElements);
         computeShader.SetBuffer(0, chunkBufferId, buffer);
 
-        computeShader.SetInt(chunkCountId, bufferElements.Count);
+        computeShader.SetInt(chunkCountId, chunks.Count);
+
 
         computeShader.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
     }
