@@ -65,7 +65,7 @@ public class TimerManager : VLY_Singleton<TimerManager>
 
     private static void StopTimerRoutine(Coroutine toStop)
     {
-        if (toStop != null)
+        if (toStop != null && instance != null)
         {
             instance.StopCoroutine(toStop);
         }
@@ -81,5 +81,10 @@ public class TimerManager : VLY_Singleton<TimerManager>
     {
         yield return new WaitForSecondsRealtime(timer.Duration);
         timer.Execute();
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }
