@@ -7,6 +7,8 @@ public abstract class AreaUpdater : MonoBehaviour
     public abstract void UpdateData();
 
     public abstract void RemoveData();
+
+    public abstract float GetScore();
 }
 
 /// <summary>
@@ -63,7 +65,10 @@ public abstract class AreaUpdater<T> : AreaUpdater// where T : MonoBehaviour
         scoreProduced = nScore;
     }
 
-    public float GetScore => scoreProduced;
+    public override float GetScore()
+    {
+        return scoreProduced;
+    }
 
     public override void UpdateData()
     {

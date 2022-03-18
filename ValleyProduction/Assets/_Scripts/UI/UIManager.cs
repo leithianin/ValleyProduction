@@ -29,7 +29,7 @@ public class UIManager : VLY_Singleton<UIManager>
     [SerializeField] private TMP_Text attractivityCounter;
 
     [Header("Infrastructure Informations")]
-    public GameObject infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
+    public UI_InfrastructureInformation infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
 
     [Header("Tooltips")]
     public Tooltip tooltip;
@@ -299,15 +299,14 @@ public class UIManager : VLY_Singleton<UIManager>
     //Show les informations des visiteurs on click
     public static void InteractWithInfrastructure(AU_Informations infoInfra)
     {
-        ShowInfoInfrastructure(infoInfra);
+        instance.ShowInfoInfrastructure(infoInfra);
     }
 
-    public static void ShowInfoInfrastructure(AU_Informations AU_Inf)
+    public void ShowInfoInfrastructure(AU_Informations AU_Inf)
     {
         OnBoardingManager.OnClickInfrastructure?.Invoke(true);
-        instance.infrastructureInfo.SetActive(true);
-        gameObjectShown = instance.infrastructureInfo;
-        //Show UI with info
+        infrastructureInfo.ShowStructureInformation(AU_Inf);
+        gameObjectShown = infrastructureInfo.gameObject;
     }
     #endregion
 

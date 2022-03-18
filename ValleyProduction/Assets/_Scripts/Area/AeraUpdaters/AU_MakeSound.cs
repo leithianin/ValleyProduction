@@ -25,11 +25,11 @@ public class AU_MakeSound : AreaUpdater<AU_MakeSound>
 
     public void AddNoide(float toAdd)
     {
-        SetScore(GetScore + toAdd);
+        SetScore(GetScore() + toAdd);
     }
 
     public void RemoveNoide(float toRemove)
     {
-        SetScore(GetScore - toRemove);
+        SetScore(GetScore() - toRemove);
     }
 }
