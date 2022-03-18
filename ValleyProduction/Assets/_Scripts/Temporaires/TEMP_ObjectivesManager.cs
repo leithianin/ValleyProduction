@@ -12,6 +12,7 @@ public class TEMP_ObjectivesManager : VLY_Singleton<TEMP_ObjectivesManager>
 
     [SerializeField] private bool animalObjective = false;
     [SerializeField] private bool landmarkObjective = false;
+    [SerializeField] private bool bridgeObjective = false;
     [SerializeField] private bool bearObjective = false;
     [SerializeField] private bool isPhaseOneGood = false;
 
@@ -24,6 +25,8 @@ public class TEMP_ObjectivesManager : VLY_Singleton<TEMP_ObjectivesManager>
     [SerializeField] private UnityEvent OnFailLandmarkObjective;
 
     [SerializeField] private UnityEvent OnValidatePhaseOne;
+
+    [SerializeField] private UnityEvent OnRepairBridge;
 
     [SerializeField] private UnityEvent OnSetBearObjective;
     [SerializeField] private UnityEvent OnResolveBearObjective;
@@ -109,9 +112,16 @@ public class TEMP_ObjectivesManager : VLY_Singleton<TEMP_ObjectivesManager>
         }
     }
 
+    public void RepairBridge()
+    {
+        bridgeObjective = true;
+
+        OnRepairBridge?.Invoke();
+    }
+
     public void ValidateBearObjective()
     {
-        if (isPhaseOneGood && !bearObjective)
+        if (bridgeObjective && !bearObjective)
         {
             OnResolveBearObjective?.Invoke();
 
