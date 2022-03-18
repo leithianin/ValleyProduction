@@ -317,15 +317,15 @@ public class PathNode : MonoBehaviour
 
         PathFragmentData toReturn = null;
 
-        float score = 0f;
+        float score = -1f;
 
         for(int i = 0; i < usableFragments.Count; i++)
         {
-            float nScore = 0;
+            float nScore = -1;
 
             if (currentUsedFragment != null && currentUsedFragment.IsSameFragment(usableFragments[i]))
             {
-                nScore = 1;
+                nScore = -0.5f;
             }
             else
             {
@@ -366,12 +366,24 @@ public class PathNode : MonoBehaviour
 
         if(dataToCheck != null)
         {
-            distanceScore -= dataToCheck.distanceFromLandmark;
+            if (dataToCheck.distanceFromLandmark < 100)
+            {
+                distanceScore -= dataToCheck.distanceFromLandmark;
+            }
+            else
+            {
+                distanceScore -= 100f;
+            }
         }
 
         for(int i = 0; i < fragmentToCalculate.InterestPointsOnFragment.Count; i++)
         {
             attractivityScore += fragmentToCalculate.InterestPointsOnFragment[i].GetAttractivityScore(likedTypes, hatedTypes);
+        }
+
+        if(attractivityScore < 0)
+        {
+            attractivityScore = 0;
         }
 
         return attractivityScore + distanceScore;
