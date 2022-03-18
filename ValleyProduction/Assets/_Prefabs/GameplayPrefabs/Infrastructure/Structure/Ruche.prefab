@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 802495293906813607}
   - component: {fileID: 6968739426993331999}
   - component: {fileID: 1029415796128358645}
+  - component: {fileID: 872666727082945138}
   m_Layer: 6
   m_Name: Ruche
   m_TagString: Untagged
@@ -157,8 +158,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 1.5, z: 2.5}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!208 &6968739426993331999
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -188,6 +189,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 0
+--- !u!114 &872666727082945138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832384634802725093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a60013e764db5347b1dd303f37d77d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structureName: Ruche
+  structureDescription: "Am\xE9liore le niveau de flore au d\xE9triment du bruit."
+  AU_Sound: {fileID: 5657476355800169655}
+  AU_Plant: {fileID: 1175299371711391375}
+  AU_Polluter: {fileID: 0}
 --- !u!1001 &1567688068365963186
 PrefabInstance:
   m_ObjectHideFlags: 0

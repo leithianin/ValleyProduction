@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 283828751672304035}
   - component: {fileID: 2631895815009125234}
   - component: {fileID: 3309381638339286888}
+  - component: {fileID: 1158649934061453916}
   m_Layer: 6
   m_Name: TrashCanOB
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_LocalPosition: {x: 498.81, y: -1.3845005, z: 364.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8765877521382913614}
+  - {fileID: 8638861650947167109}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -143,8 +144,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.2, z: 1}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!208 &2631895815009125234
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.1, y: 0.5, z: 0.5}
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -174,65 +175,82 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 0
---- !u!1001 &674455711385070470
+--- !u!114 &1158649934061453916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912821135211819328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a60013e764db5347b1dd303f37d77d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structureName: Poubelle
+  structureDescription: C'est une poubelle.
+  AU_Sound: {fileID: 8936805022772312588}
+  AU_Plant: {fileID: 0}
+  AU_Polluter: {fileID: 0}
+--- !u!1001 &3867361734908868708
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 7747310837679755927}
     m_Modifications:
-    - target: {fileID: 3042834934168872255, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
-      propertyPath: m_Name
-      value: Prefab_PreventionSignShut_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
+    - target: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4776287201310616550, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
+      propertyPath: m_Name
+      value: Prefab_TrashBin_01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
---- !u!4 &8765877521382913614 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
+--- !u!4 &8638861650947167109 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8140963089568439752, guid: 8a1b7a2843abab740b722e37b229ca86, type: 3}
-  m_PrefabInstance: {fileID: 674455711385070470}
+  m_CorrespondingSourceObject: {fileID: 4776287201310616545, guid: 87f9d46abc234bd49949176405d4ffe5, type: 3}
+  m_PrefabInstance: {fileID: 3867361734908868708}
   m_PrefabAsset: {fileID: 0}

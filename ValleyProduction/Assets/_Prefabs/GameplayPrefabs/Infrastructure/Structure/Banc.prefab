@@ -32,7 +32,6 @@ Transform:
   - {fileID: 2837774564118472868}
   - {fileID: 5296928519816220813}
   - {fileID: 5859143765575773736}
-  - {fileID: 4512934760552707122}
   m_Father: {fileID: 586931958493927848}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence:
   - {fileID: 8693652024492256842}
+  - {fileID: 613966646375370288}
   - {fileID: 4148464365503318798}
   - {fileID: 1572174860745580766}
 --- !u!1 &2288556774697896843
@@ -183,7 +183,6 @@ Transform:
   - {fileID: 3763594171232679371}
   - {fileID: 5694236760081361327}
   - {fileID: 3788280831281285336}
-  - {fileID: 7976995204702719685}
   m_Father: {fileID: 4340205685403213244}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -201,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence:
   - {fileID: 2592935337549332342}
+  - {fileID: 6579908851443246027}
   - {fileID: 7448697329319813003}
   - {fileID: 1572174860745580766}
 --- !u!1 &3126817424393105264
@@ -425,50 +425,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &3221914178712679249
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4512934760552707122}
-  - component: {fileID: 1926433775550979744}
-  m_Layer: 12
-  m_Name: ???
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4512934760552707122
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3221914178712679249}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 905667344826871588}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1926433775550979744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3221914178712679249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a96e0b538071f14990c2750a9824756, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  staminaPercentageToPut: 1
 --- !u!1 &3244799596811105235
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,8 +523,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2837774564118472868}
+  - component: {fileID: 613966646375370288}
   m_Layer: 12
-  m_Name: ???
+  m_Name: Set animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -588,6 +545,21 @@ Transform:
   m_Father: {fileID: 905667344826871588}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &613966646375370288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3650294996183052180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2edf33201083043a06a0367b01f99c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationToPlay: 1
+  timePlayed: 0
+  stopOnEnd: 0
 --- !u!1 &5567826772177991717
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +573,7 @@ GameObject:
   - component: {fileID: 4671862942104361624}
   - component: {fileID: 4247980692096423381}
   - component: {fileID: -4423526170718072364}
+  - component: {fileID: 8361858754638443166}
   m_Layer: 6
   m_Name: Banc
   m_TagString: Untagged
@@ -773,6 +746,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 0
+--- !u!114 &8361858754638443166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5567826772177991717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a60013e764db5347b1dd303f37d77d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structureName: Banc
+  structureDescription: "Un endroit o\xF9 il fait bon de s'asseoir."
+  AU_Sound: {fileID: 0}
+  AU_Plant: {fileID: 0}
+  AU_Polluter: {fileID: 0}
 --- !u!1 &6097774352662208650
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,8 +861,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3763594171232679371}
+  - component: {fileID: 6579908851443246027}
   m_Layer: 12
-  m_Name: ???
+  m_Name: Set Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -892,50 +883,21 @@ Transform:
   m_Father: {fileID: 9047709859946943907}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8184816390730220328
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7976995204702719685}
-  - component: {fileID: 3197647439249361280}
-  m_Layer: 12
-  m_Name: ???
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7976995204702719685
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8184816390730220328}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 9047709859946943907}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3197647439249361280
+--- !u!114 &6579908851443246027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8184816390730220328}
+  m_GameObject: {fileID: 8080227238380491113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a96e0b538071f14990c2750a9824756, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a2edf33201083043a06a0367b01f99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminaPercentageToPut: 1
+  animationToPlay: 1
+  timePlayed: 0
+  stopOnEnd: 0
 --- !u!1 &8753738630604475463
 GameObject:
   m_ObjectHideFlags: 0
