@@ -32,7 +32,7 @@ public class AD_Pollution : AreaData<AU_Polluter>
         float toReturn = 0;
         for(int i = 0; i < trashesInZones.Count; i++)
         {
-            toReturn += trashesInZones[i].GetScore;
+            toReturn += trashesInZones[i].GetScore();
         }
 
         return Mathf.RoundToInt(toReturn);

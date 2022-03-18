@@ -36,7 +36,7 @@ public class AD_Noise : AreaData<AU_MakeSound>
         float toReturn = 0;
         for(int i = 0; i < noiseInArea.Count; i++)
         {
-            toReturn += noiseInArea[i].GetScore;
+            toReturn += noiseInArea[i].GetScore();
         }
         return Mathf.RoundToInt(toReturn);
     }

@@ -27,7 +27,7 @@ public class AD_PlantHealthyness : AreaData<AU_PlantCounter>
 
         for(int i = 0; i < treesInArea.Count; i++)
         {
-            toReturn += treesInArea[i].GetScore;
+            toReturn += treesInArea[i].GetScore();
         }
 
         return Mathf.RoundToInt(toReturn);
