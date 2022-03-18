@@ -26,7 +26,7 @@ public class ADI_VegetationDisplayer : AreaDisplay
     {
         treesInArea = new List<TreeBehavior>();
 
-        Collider[] colliderInArea = Physics.OverlapBox(transform.position, Vector3.one * 12.5f);
+        Collider[] colliderInArea = Physics.OverlapBox(transform.position, new Vector3(1,3,1) * 12.5f);
 
         for(int i = 0; i < colliderInArea.Length; i++)
         {
