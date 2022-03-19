@@ -8,6 +8,7 @@ using TMPro;
 public class UIManager : VLY_Singleton<UIManager>
 {
     public List<GameObject> pathButtonList = new List<GameObject>();
+    [SerializeField] private GameObject pathChoiceMenu;
     public ChangeRoadInfo RoadInfo;
     public Camera sceneCamera;
 
@@ -145,6 +146,7 @@ public class UIManager : VLY_Singleton<UIManager>
             }
         }
     }
+
     public static void HideShownGameObject()
     {
         if (gameObjectShown != null)
@@ -209,6 +211,8 @@ public class UIManager : VLY_Singleton<UIManager>
     //Range les PathData dans la liste de boutons 
     public static void ArrangePathButton(IST_PathPoint pathpoint)
     {
+        instance.pathChoiceMenu.SetActive(true);
+
         foreach (GameObject go in instance.pathButtonList)
         {
             go.SetActive(false);
@@ -222,7 +226,7 @@ public class UIManager : VLY_Singleton<UIManager>
                 {
                     if (!instance.pathButtonList[i].activeSelf)
                     {
-                        instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd;
+                        instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd; //CODE REVIEW : Voir pour mettre des référence au Text directement dans ButtonPathData. Eviter les GetComponent
                         instance.pathButtonList[i].GetComponent<ButtonPathData>().buttonPathpoint = pathpoint;
                         instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
                         instance.pathButtonList[i].SetActive(true);
@@ -235,9 +239,18 @@ public class UIManager : VLY_Singleton<UIManager>
         ButtonsOffset(pathpoint.gameObject);
     }
 
+    public void TEMP_HideRoadChoice()
+    {
+        instance.pathChoiceMenu.SetActive(false);
+    }
+
     //Clique sur un des boutons
     public static void ChooseButton(ButtonPathData buttonPath)
     {
+        gameObjectShown = null;
+
+        instance.pathChoiceMenu.SetActive(false);
+
         foreach (GameObject go in instance.pathButtonList)
         {
             go.SetActive(false);

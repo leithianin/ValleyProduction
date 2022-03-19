@@ -9,16 +9,23 @@ public class MenuManager : VLY_Singleton<MenuManager>
     bool isSceneLoading;
     int sceneToLoad = 0;
 
-    public void Awake()
+    public static void LoadScene(int sceneIndex)
     {
-        //DontDestroyOnLoad(this);
+        Debug.Log(instance);
+        instance.Play(sceneIndex);
     }
 
-    public void Play(int i)
+    public static void Exit()
+    {
+        instance.ExitGame();
+    }
+
+    public void Play(int i) //CODE REVIEW : Pour le menu de pause, ne pas donner de référence à cette fonction directement. Passer par un script (UI_PauseMenu)
     {
         sceneToLoad = i;
         if (!isSceneLoading)
         {
+            Debug.Log("Load scene");
             isSceneLoading = true;
             StartCoroutine(LoadYourAsyncScene());
         }
