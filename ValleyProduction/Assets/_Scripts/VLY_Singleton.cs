@@ -10,6 +10,7 @@ public class VLY_Singleton<T> : MonoBehaviour where T : VLY_Singleton<T>
     {
         if(instance != null)
         {
+            Debug.Log(gameObject);
             Destroy(this);
         }
         else
