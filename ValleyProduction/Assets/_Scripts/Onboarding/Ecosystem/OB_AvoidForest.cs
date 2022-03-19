@@ -10,6 +10,8 @@ public class OB_AvoidForest : OnBoarding
     public UnityEvent endMessage;
     public UnityEvent HideUI;
     [SerializeField] public List<Vector3> vectorList;
+
+    private bool clickEnd = false;
     protected override void OnEnd()
     {
         Debug.Log("END");
@@ -32,13 +34,24 @@ public class OB_AvoidForest : OnBoarding
 
     protected override void OnPlay()
     {
-        OnBoardingManager.OnWindMill += OnClick;
+        OnBoardingManager.OnWindMill += OnClickWindMill;
+        OnBoardingManager.OnStartPoint += OnClickStartPoint;
     }
 
-    public void OnClick(bool condition)
+    public void OnClickWindMill(bool condition)
     {
-        OnBoardingManager.OnWindMill -= OnClick;
-        Over();
+        OnBoardingManager.OnWindMill -= OnClickWindMill;
+
+        if(clickEnd) { Over(); }
+        else { clickEnd = true; }
+    }
+
+    public void OnClickStartPoint(bool condition)
+    {
+        OnBoardingManager.OnStartPoint -= OnClickStartPoint;
+
+        if (clickEnd) { Over(); }
+        else { clickEnd = true; }
     }
 
     public void PlayFakeBehavior()
