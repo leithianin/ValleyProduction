@@ -99,6 +99,8 @@ public class PathManager : VLY_Singleton<PathManager>
     {
         PathFragmentData toRemove = pathFragmentDataList[pathFragmentDataList.Count - 1];
 
+        PathRendererManager.DeletePathRenderer(toRemove);
+
         toRemove.DeleteFragmentData();
 
         pathFragmentDataList.RemoveAt(pathFragmentDataList.Count - 1);
@@ -121,7 +123,7 @@ public class PathManager : VLY_Singleton<PathManager>
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
             instance.AddPathfragmentToList(new_pfd);
 
-            PathCreationManager.instance.pathRendererManager.ManagePathRenderer(previousPathpoint, pathpoint, navmeshPoints);
+            PathCreationManager.instance.pathRendererManager.ManagePathRenderer(previousPathpoint, pathpoint, navmeshPoints, new_pfd);
 
             //IF ONBOARDING SEQUENCE 
             new_pfd.CheckAvailableInterestPoint();
