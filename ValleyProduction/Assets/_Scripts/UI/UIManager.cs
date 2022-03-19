@@ -140,8 +140,8 @@ public class UIManager : VLY_Singleton<UIManager>
                 case AU_Informations au_informations:
                     InteractWithInfrastructure(au_informations);
                     break;
-                case CPN_Informations cpn_information:
-                    InteractWithVisitor(cpn_information);
+                case VisitorBehavior visitorBehavior:
+                    InteractWithVisitor(visitorBehavior);
                     break;
             }
         }
@@ -275,13 +275,15 @@ public class UIManager : VLY_Singleton<UIManager>
     }
 
     //Show les informations des visiteurs on click
-    public static void InteractWithVisitor(CPN_Informations visitorInfo)
+    public static void InteractWithVisitor(VisitorBehavior visitorInfo)
     {    
         ShowInfoVisitor(visitorInfo);      
     }
-    public static void ShowInfoVisitor(CPN_Informations cpn_Inf)
+
+    public static void ShowInfoVisitor(VisitorBehavior visitorInfo)
     {
        OnBoardingManager.OnClickVisitorEco?.Invoke(true);
+        CPN_Informations cpn_Inf = visitorInfo.GetComponent<CPN_Informations>();
        switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
@@ -291,20 +293,33 @@ public class UIManager : VLY_Singleton<UIManager>
                     OnBoardingManager.ShowHikerProfileIntro();
                     OnBoardingManager.firstClickVisitors = false;
                 }
-                ChangeInfoVisitor(instance.hikersInfo, cpn_Inf);
+                ChangeInfoVisitor(instance.hikersInfo, visitorInfo, cpn_Inf);
                 instance.hikersInfo.gameObject.SetActive(true);
                 gameObjectShown = instance.hikersInfo.gameObject;
                 break;
             case TypeVisitor.Tourist:
-                ChangeInfoVisitor(instance.touristInfo, cpn_Inf);
+                ChangeInfoVisitor(instance.touristInfo, visitorInfo, cpn_Inf);
                 instance.touristInfo.gameObject.SetActive(true);
                 gameObjectShown = instance.touristInfo.gameObject;
                 break;
         }
     }
-    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
+    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, VisitorBehavior visitorInfo, CPN_Informations cpn_Inf)
     {
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
+        VisitorScriptable visitorScript = visitorInfo.visitorType;
+        //Pollution
+        //Noise
+        UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius/5;
+        UI_visitorsInfo.pollutionText.text = visitorScript.GetThrowRadius.ToString();
+
+        //Noise
+        UI_visitorsInfo.noise.fillAmount = visitorScript.noiseMade / 5;
+        UI_visitorsInfo.noiseText.text = visitorScript.noiseMade.ToString();
+
+        //Stamina
+        UI_visitorsInfo.stamina.fillAmount = visitorScript.GetMaxStamina / 100;
+        UI_visitorsInfo.staminaText.text = visitorScript.GetMaxStamina.ToString();
     }
     #endregion
 

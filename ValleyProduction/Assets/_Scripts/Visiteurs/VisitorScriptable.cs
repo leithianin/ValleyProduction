@@ -32,6 +32,9 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
     public AnimationHandler Display => display[Random.Range(0, display.Count)];
     public Vector2 Speed => speed;
 
+    public float GetThrowRadius => throwRadius;
+    public float GetMaxStamina => maxStamina;
+
     public List<LandmarkType> LandmarksWanted => landmarksWanted;
 
     public float MaxStamina()
