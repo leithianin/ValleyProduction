@@ -9,8 +9,6 @@ public class IFB_ChangeLayer : MonoBehaviour, IFeedbackPlayer
 
     public void Play()
     {
-        Debug.Log(meshGameObject.Count);
-
         foreach (GameObject go in meshGameObject)
         {
             go.layer = layerInt;
