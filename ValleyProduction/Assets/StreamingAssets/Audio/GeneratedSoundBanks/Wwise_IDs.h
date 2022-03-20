@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID AMBIANT_EVENT = 2243720286U;
         static const AkUniqueID AMBIENT_MEDIUM = 4240863259U;
+        static const AkUniqueID RANDOM = 3048058352U;
         static const AkUniqueID WIND_EVENT = 393723178U;
     } // namespace EVENTS
 
