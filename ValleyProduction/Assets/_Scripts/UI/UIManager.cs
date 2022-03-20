@@ -310,11 +310,11 @@ public class UIManager : VLY_Singleton<UIManager>
         VisitorScriptable visitorScript = visitorInfo.visitorType;
         //Pollution
         //Noise
-        UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius/5;
+        UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius / 10;
         UI_visitorsInfo.pollutionText.text = visitorScript.GetThrowRadius.ToString();
 
         //Noise
-        UI_visitorsInfo.noise.fillAmount = visitorScript.noiseMade / 5;
+        UI_visitorsInfo.noise.fillAmount = visitorScript.noiseMade / 10;
         UI_visitorsInfo.noiseText.text = visitorScript.noiseMade.ToString();
 
         //Stamina
