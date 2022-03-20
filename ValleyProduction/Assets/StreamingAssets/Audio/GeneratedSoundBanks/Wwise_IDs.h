@@ -14,13 +14,19 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID AMBIANT_EVENT = 2243720286U;
-        static const AkUniqueID AMBIENT_MEDIUM = 4240863259U;
-        static const AkUniqueID RANDOM = 3048058352U;
-        static const AkUniqueID WIND_EVENT = 393723178U;
+        static const AkUniqueID CLICKRETURN = 3290233177U;
+        static const AkUniqueID CLICKVALIDATE = 1887419253U;
+        static const AkUniqueID MUSIC_MAINMENU = 599938019U;
+        static const AkUniqueID PATHDO = 3580081627U;
+        static const AkUniqueID PATHMODIFY = 3282467842U;
+        static const AkUniqueID PATHUNDO = 2941458594U;
+        static const AkUniqueID RANDOMOBJECT = 1306006333U;
+        static const AkUniqueID WATERFALLTEST = 965144501U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID DISTANCE = 1240670792U;
         static const AkUniqueID PLAYBACK_RATE = 1524500807U;
         static const AkUniqueID RPM = 796049864U;
         static const AkUniqueID SS_AIR_FEAR = 1351367891U;
@@ -43,14 +49,18 @@ namespace AK
 
     namespace BUSSES
     {
+        static const AkUniqueID AMBIANT = 78669895U;
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
         static const AkUniqueID MOTION_FACTORY_BUS = 985987111U;
+        static const AkUniqueID MUSIC = 3991942870U;
+        static const AkUniqueID SOUNDEFFECT = 3368404697U;
     } // namespace BUSSES
 
     namespace AUDIO_DEVICES
     {
         static const AkUniqueID DEFAULT_MOTION_DEVICE = 4230635974U;
         static const AkUniqueID NO_OUTPUT = 2317455096U;
+        static const AkUniqueID STEREO = 3729966089U;
         static const AkUniqueID SYSTEM = 3859886410U;
     } // namespace AUDIO_DEVICES
 
