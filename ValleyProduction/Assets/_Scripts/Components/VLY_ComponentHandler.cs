@@ -41,22 +41,22 @@ public class VLY_ComponentHandler : MonoBehaviour
     public void ActiveOutline()
     {
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
-        test.GetComponent<Outline>().enabled = true;
+        test.outline.enabled = true;
     }
 
     public void DesactiveOutline()
     {
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
-        test.GetComponent<Outline>().enabled = false;
+        test.outline.enabled = false;
     }
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
         OnMouseIN?.Invoke();
 
     }
 
-    private void OnMouseEnter()
+    private void OnMouseExit()
     {
         OnMouseOUT?.Invoke();
     }
