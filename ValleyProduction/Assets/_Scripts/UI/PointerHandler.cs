@@ -29,4 +29,10 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         onExit?.Invoke(this);
         UIManager.GetTooltip.HideTooltip();
     }
+
+    private void OnDisable()
+    {
+        onExit?.Invoke(this);
+        UIManager.GetTooltip.HideTooltip();
+    }
 }
