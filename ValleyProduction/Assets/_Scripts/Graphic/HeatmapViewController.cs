@@ -8,6 +8,7 @@ public class HeatmapViewController : MonoBehaviour
     public Light heatmapViewLight;
 
     public Material[] materials;
+    public GameObject[] toDisable;
 
     private bool isEnabled;
 
@@ -48,14 +49,18 @@ public class HeatmapViewController : MonoBehaviour
     {
         isEnabled = enable;
 
-        mainLight.enabled = !enable;
-        heatmapViewLight.enabled = enable;
-
+        /*mainLight.enabled = !enable;
+        heatmapViewLight.enabled = enable;*/
         
         foreach(Material m in materials)
         {
             if (enable) m.EnableKeyword("RENDER_HEATMAP");
             else m.DisableKeyword("RENDER_HEATMAP");
+        }
+
+        foreach(GameObject go in toDisable)
+        {
+            go.SetActive(!enable);
         }
     }
 }

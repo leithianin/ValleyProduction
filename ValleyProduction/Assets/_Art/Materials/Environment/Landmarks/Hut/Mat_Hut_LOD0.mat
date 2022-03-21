@@ -8,18 +8,33 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Hut_LOD0
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: b3d0dc772c605f7419326ac226fe2772, type: 3}
   m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - BaseColor:
+        m_Texture: {fileID: 2800000, guid: e99575530eaa8fd4ebf4e3a1eaf54965, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Metallic_Map:
+        m_Texture: {fileID: 2800000, guid: 1cde49c6fe01849489b7f8f142be8afd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 2800000, guid: f750947bf3f5cc648a17c1853ccc3842, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 1cde49c6fe01849489b7f8f142be8afd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: e99575530eaa8fd4ebf4e3a1eaf54965, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -48,6 +63,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: e99575530eaa8fd4ebf4e3a1eaf54965, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 2800000, guid: 1cde49c6fe01849489b7f8f142be8afd, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -61,6 +80,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_20d00823623d4f04876aca38dcc174b9_Out_0:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -78,6 +101,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - AmbientOcclusionIntensity: 0.5
+    - RENDER_HEATMAP: 0
+    - Roughness: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
