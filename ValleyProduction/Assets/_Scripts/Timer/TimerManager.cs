@@ -47,6 +47,12 @@ public class TimerManager : VLY_Singleton<TimerManager>
         }
     }
 
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public static Timer CreateGameTimer(float time, Action callback)
     {
         Timer toReturn = new Timer();
