@@ -855,7 +855,7 @@ public class PathManager : VLY_Singleton<PathManager>
             for (int j = 0; j < instance.pathpointList.Count; j++)
             {
                 DEBUG.positionCount++;
-                DEBUG.SetPosition(j, instance.pathpointList[j].transform.position);
+                DEBUG.SetPosition(j, new Vector3(instance.pathpointList[j].transform.position.x, instance.pathpointList[j].transform.position.y + 0.25f, instance.pathpointList[j].transform.position.z));
             }
 
             instance.PathReverse = false;
@@ -867,7 +867,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 foreach (Vector3 vector in pfd.path)
                 {
                     DEBUG.positionCount++;
-                    DEBUG.SetPosition(i, vector);
+                    DEBUG.SetPosition(i, new Vector3(vector.x, vector.y + 0.25f, vector.z));
                     i++;
                 }
                 List<InterestPointDetector> pathDetector = instance.GenerateDetectorsOnPath(pfd.path);
