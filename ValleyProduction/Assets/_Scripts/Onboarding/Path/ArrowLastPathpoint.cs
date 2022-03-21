@@ -22,10 +22,14 @@ public class ArrowLastPathpoint : MonoBehaviour
 
     public void UpdatePosition()
     {
-        Vector3 positionLastPathPoint = PathManager.GetCurrentPathpointList[PathManager.GetCurrentPathpointList.Count - 1].transform.position;
+        if (PathManager.GetCurrentPathpointList.Count > 0)
+        {
+            Vector3 positionLastPathPoint = PathManager.GetCurrentPathpointList[PathManager.GetCurrentPathpointList.Count - 1].transform.position;
 
-        Vector2 canvasPos;
-        Vector2 screenPoint = Camera.main.WorldToScreenPoint(positionLastPathPoint);
-        OB_ArrowLastPathpoint.transform.position = new Vector3(screenPoint.x, screenPoint.y + 10f);
+            Vector2 canvasPos;
+            Vector2 screenPoint = Camera.main.WorldToScreenPoint(positionLastPathPoint);
+
+            OB_ArrowLastPathpoint.transform.position = new Vector3(screenPoint.x, screenPoint.y + 10f);
+        }
     }
 }

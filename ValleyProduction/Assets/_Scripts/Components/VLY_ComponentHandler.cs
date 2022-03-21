@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VLY_ComponentHandler : MonoBehaviour
 {
     [SerializeField] private List<VLY_Component> components;
+
+    public UnityEvent OnMouseIN;
+    public UnityEvent OnMouseOUT;
 
     public T GetComponentOfType<T>() where T : VLY_Component
     {
@@ -32,5 +36,28 @@ public class VLY_ComponentHandler : MonoBehaviour
         {
             components.Remove(toRemove);
         }
+    }
+
+    public void ActiveOutline()
+    {
+        AnimationHandler test = GetComponentOfType<AnimationHandler>();
+        test.GetComponent<Outline>().enabled = true;
+    }
+
+    public void DesactiveOutline()
+    {
+        AnimationHandler test = GetComponentOfType<AnimationHandler>();
+        test.GetComponent<Outline>().enabled = false;
+    }
+
+    private void OnMouseOver()
+    {
+        OnMouseIN?.Invoke();
+
+    }
+
+    private void OnMouseEnter()
+    {
+        OnMouseOUT?.Invoke();
     }
 }

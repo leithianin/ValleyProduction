@@ -99,4 +99,9 @@ public class AnimationHandler : VLY_Component
         }
     }
     #endregion
+
+    public void Testtruc()
+    {
+        Debug.Log("trou");
+    }
 }

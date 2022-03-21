@@ -128,7 +128,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnNoiseMadeTEMP:
+  OnUnsetVisitorWithType:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAddComponent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRemoveComponent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &3264530275645524567
@@ -147,6 +153,36 @@ MonoBehaviour:
   - {fileID: 7603813357234534011}
   - {fileID: 2368778678293667668}
   - {fileID: 3973618983241115100}
+  OnMouseIN:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3264530275645524567}
+        m_TargetAssemblyTypeName: VLY_ComponentHandler, Assembly-CSharp
+        m_MethodName: ActiveOutline
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMouseOUT:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3264530275645524567}
+        m_TargetAssemblyTypeName: VLY_ComponentHandler, Assembly-CSharp
+        m_MethodName: DesactiveOutline
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7603813357234534011
 MonoBehaviour:
   m_ObjectHideFlags: 0
