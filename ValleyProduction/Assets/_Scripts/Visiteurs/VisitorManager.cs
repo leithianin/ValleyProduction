@@ -28,6 +28,11 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     public static Terrain GetMainTerrain => instance.mainTerrain;
 
+    private void Start()
+    {
+        nextSpawnTime = Time.time;
+    }
+
     private void Update()
     {
         if (Time.time > nextSpawnTime && allowVisitorSpawn)
