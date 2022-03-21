@@ -360,7 +360,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         foreach (Vector3 vec in path)
         {
             lineRenderer.positionCount++;
-            lineRenderer.SetPosition(lineRenderer.positionCount - 1, vec);
+            lineRenderer.SetPosition(lineRenderer.positionCount - 1, new Vector3(vec.x, vec.y + 0.25f, vec.z));
         }
     }
 }
