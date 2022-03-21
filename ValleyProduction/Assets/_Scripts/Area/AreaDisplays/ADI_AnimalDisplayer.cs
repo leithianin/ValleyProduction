@@ -34,7 +34,7 @@ public class ADI_AnimalDisplayer : AreaDisplay
                     for (int j = 0; j < animalsByValidScore[i].toDisplay.Count; j++)
                     {
                         currentAnimalCount++;
-                        if (!animalsByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                        if (!animalsByValidScore[i].toDisplay[j].display.activeSelf)
                         {
                             animalsByValidScore[i].toDisplay[j].SetAnimal(possibleSequences[UnityEngine.Random.Range(0, possibleSequences.Count)]);
                         }
@@ -44,7 +44,7 @@ public class ADI_AnimalDisplayer : AreaDisplay
                 {
                     for (int j = 0; j < animalsByValidScore[i].toDisplay.Count; j++)
                     {
-                        if (animalsByValidScore[i].toDisplay[j].gameObject.activeSelf)
+                        if (animalsByValidScore[i].toDisplay[j].display.activeSelf)
                         {
                             animalsByValidScore[i].toDisplay[j].UnsetAnimal();
                         }

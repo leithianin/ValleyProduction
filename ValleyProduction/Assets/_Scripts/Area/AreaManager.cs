@@ -203,6 +203,17 @@ public class AreaManager : VLY_Singleton<AreaManager>
                 allUpdaters[updaterIndex].UpdateData();
             }
         }
+
+        for(int i = 0; i < areas.Count; i++)
+        {
+            for(int j = 0; j < areas[i].datas.Count; j++)
+            {
+                if(areas[i].datas[j].needUpdate)
+                {
+                    areas[i].datas[j].UpdateScoreFeedbacks();
+                }
+            }
+        }
     }
 
     /// <summary>

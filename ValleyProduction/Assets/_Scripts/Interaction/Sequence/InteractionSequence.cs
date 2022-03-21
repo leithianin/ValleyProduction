@@ -18,10 +18,24 @@ public class InteractionSequence : InteractionActions
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         SequenceHandler newHandler = new SequenceHandler();
-        newHandler.currentSequenceIndex = -1;
-        newHandler.caller = caller;
 
-        sequenceUser.Add(newHandler);
+        for (int i = 0; i < sequenceUser.Count; i++)
+        {
+            if(sequenceUser[i].caller == caller)
+            {
+                newHandler = null;
+                sequenceUser[i].currentSequenceIndex = -1;
+                sequenceUser[i].caller = caller;
+            }
+        }
+
+        if (newHandler != null)
+        {
+            newHandler.currentSequenceIndex = -1;
+            newHandler.caller = caller;
+
+            sequenceUser.Add(newHandler);
+        }
 
         PlayNextStep(caller);
     }

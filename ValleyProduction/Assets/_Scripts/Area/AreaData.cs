@@ -7,6 +7,8 @@ using UnityEngine;
 [Serializable]
 public abstract class AreaData
 {
+    public bool needUpdate = false;
+
     public Area linkedArea;
     /// Score actuel de l'Area.
     /// 
@@ -41,7 +43,14 @@ public abstract class AreaData
     {
         currentScore = nScore;
 
+        needUpdate = true;
+    }
+
+    public void UpdateScoreFeedbacks()
+    {
         OnUpdateScore?.Invoke(currentScore);
+
+        needUpdate = false;
     }
 }
 

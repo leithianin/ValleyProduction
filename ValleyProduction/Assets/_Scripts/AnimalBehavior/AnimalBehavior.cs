@@ -10,6 +10,8 @@ public class AnimalBehavior : MonoBehaviour
     [SerializeField] private InteractionSequence sequence;
     [SerializeField] private Transform spawnPosition;
 
+    [SerializeField] public GameObject display;
+
     [SerializeField] private UnityEvent OnSet;
     [SerializeField] private UnityEvent OnUnset;
 
@@ -19,14 +21,21 @@ public class AnimalBehavior : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
 
-        sequence = nSequence;
-        gameObject.SetActive(true);
+        display.SetActive(true);
         OnSet?.Invoke();
+
+        if (sequence == null)
+        {
+            sequence = nSequence;
+
+            DoBehavior();
+        }
     }
 
     public void UnsetAnimal()
     {
-        gameObject.SetActive(false);
+        //sequence.InteruptAction(interaction);
+        display.SetActive(false);
         OnUnset?.Invoke();
     }
 
@@ -39,19 +48,18 @@ public class AnimalBehavior : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            display.SetActive(false);
         }
     }
 
     private void OnDisable()
     {
-        sequence?.InteruptAction(interaction);
+        //sequence?.InteruptAction(interaction);
     }
 
     private void DoBehavior()
     {
         sequence.PlayAction(interaction, DoBehavior, null);
-        //sequence.PlayAction(interaction, () => StartCoroutine(StartBehavior()));
     }
 
     IEnumerator DelayBehavior()
