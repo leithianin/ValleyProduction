@@ -2,20 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValleyAudioManager : MonoBehaviour
+public class ValleyAudioManager : VLY_Singleton<ValleyAudioManager>
 {
-    private static ValleyAudioManager instance;
-
     [SerializeField] private AudioSound music;
     [SerializeField] private AudioPlayer musicPlayer;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         musicPlayer.Play(music);
     }
 
