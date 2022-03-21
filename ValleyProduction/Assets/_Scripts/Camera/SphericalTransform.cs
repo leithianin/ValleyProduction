@@ -6,6 +6,7 @@ using UnityEngine;
 [ExecuteAlways, DisallowMultipleComponent]
 public class SphericalTransform : MonoBehaviour
 {
+
     [SerializeField] private Transform origin = default;
     [SerializeField] private Transform originLookAtTarget = default;
 
