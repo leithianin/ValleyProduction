@@ -669,10 +669,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.9
+  m_Height: 2.3481743
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.17408717, z: 0}
 --- !u!195 &7603813357234534013
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -849,6 +849,36 @@ MonoBehaviour:
   - {fileID: 955305577724817077}
   - {fileID: 7026732280502338072}
   - {fileID: 3898088066656520254}
+  OnMouseIN:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3264530275645524567}
+        m_TargetAssemblyTypeName: VLY_ComponentHandler, Assembly-CSharp
+        m_MethodName: ActiveOutline
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMouseOUT:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3264530275645524567}
+        m_TargetAssemblyTypeName: VLY_ComponentHandler, Assembly-CSharp
+        m_MethodName: DesactiveOutline
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7603813357234534011
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class AnimationHandler : VLY_Component
 {
     public AnimateFace face;
     private Animator body;
+    public Outline outline;
 
     private BodyAnimationType lastAnim;
 
