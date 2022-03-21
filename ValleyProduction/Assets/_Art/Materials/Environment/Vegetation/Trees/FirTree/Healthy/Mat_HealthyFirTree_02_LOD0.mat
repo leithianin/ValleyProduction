@@ -130,6 +130,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 3c45e9b0da1feac4aaf4456506d1e2c4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaskMap:
         m_Texture: {fileID: 2800000, guid: 1c355c8a7d7a7c14db9eb4bef86c5781, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -197,7 +201,9 @@ Material:
     m_Ints: []
     m_Floats:
     - ISTOUCHED: 0
+    - Intensity_Ambient_Occlusion: 0.5
     - OcclusionValue: 0
+    - RENDER_HEATMAP: 0
     - ShakeDensity: 0.14
     - ShakeMaskGradient: 8
     - ShakeMaskHeight: 0
