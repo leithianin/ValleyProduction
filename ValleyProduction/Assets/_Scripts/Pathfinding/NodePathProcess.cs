@@ -101,8 +101,10 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
             security--;
         }
 
-        Debug.Log(security);
-
+        if(security <= 0)
+        {
+            Debug.LogError("Node path calcul took too long !!");
+        }
     }
 
     private void UpdateForLandmark(PathNode toUpdate, LandmarkType toCheck)

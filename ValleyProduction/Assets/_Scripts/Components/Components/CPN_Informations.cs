@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum TypeVisitor { Hiker, Tourist}
-public class CPN_Informations : MonoBehaviour
+public class CPN_Informations : VLY_Component<VisitorScriptable>
 {
+    public VisitorScriptable scriptable = null;
+
     public TypeVisitor visitorType;
     private string name = "Robert";
     private string goal = "Je veux atteindre PlaceHolder";
@@ -18,5 +20,15 @@ public class CPN_Informations : MonoBehaviour
     public void OnEnable()
     {
         name = GeneratorManager.GetRandomVisitorName();
+    }
+
+    public void DisplayInformation()
+    {
+        UIManager.InteractWithVisitor(this);
+    }
+
+    public override void SetData(VisitorScriptable dataToSet)
+    {
+        scriptable = dataToSet;
     }
 }
