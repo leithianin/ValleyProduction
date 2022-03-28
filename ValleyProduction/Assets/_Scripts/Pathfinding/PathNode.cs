@@ -81,27 +81,6 @@ public class PathNode : MonoBehaviour
         ResetNodeData();
     }
 
-    /// <summary>
-    /// Update the node for all known LandmarkType.
-    /// </summary>
-    public void UpdateNode()
-    {
-        isBeingUpdated = true;
-
-        //NodePathProcess.SetNodeUpdating(this);
-
-        //List<PathNode> toUpdate = UpdateSelfData();
-
-        /*for (int i = 0; i < toUpdate.Count; i++)
-        {
-            toUpdate[i].UpdateNode();
-        }*/
-
-        //isBeingUpdated = false;
-
-        
-    }
-
     public bool UpdateSelfData(LandmarkType wantedLandmark)
     {
         bool toReturn = false;

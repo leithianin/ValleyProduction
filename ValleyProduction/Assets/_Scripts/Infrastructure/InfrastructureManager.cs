@@ -24,7 +24,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private void Update()
     {
-        //Move Infrastructure when MoveInfrastructure()
         if(movedObject != null)
         {
             movedObject.transform.position = PlayerInputManager.GetMousePosition;
@@ -118,11 +117,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             //Just select l'infrastructure (Info)
             case ToolType.None:
                 instance.SelectInfrastructure(interactedStructure);
-                //instance.SelectInfrastructure(interactedStructure);
                 break;
             case ToolType.Place:
                 instance.PlaceInfrastructure(interactedStructure);
-                //Usable by balise, je suis entrain de placer, je clique sur une infrastructure.
                 break;
             case ToolType.Move:
                 MoveInfrastructure(interactedStructure);
@@ -139,11 +136,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// <param name="selectedStructure">L'Infrastructure à sélectionner.</param>
     private void SelectInfrastructure(Infrastructure selectedStructure)
     {
-        //if (selectedStructure != currentSelectedStructure)
-        {
-            currentSelectedStructure = selectedStructure;
-            selectedStructure.SelectObject();
-        }
+        currentSelectedStructure = selectedStructure;
+        selectedStructure.SelectObject();
     }
 
     /// <summary>
