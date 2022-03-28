@@ -31,7 +31,6 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         {
             InfrastructureManager.ReplaceInfrastructure(posePosition);
         }
-
     }
 
     /// <summary>

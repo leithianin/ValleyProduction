@@ -114,6 +114,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         ShowPathLine(navmeshPositionsList);
     }
 
+    //Calculate Path between 2 points (Use when i recreate a path and i know all the points)
     public List<Vector3> CalculatePath(IST_PathPoint ppstart, IST_PathPoint ppend)
     {
         navPath = new NavMeshPath();
@@ -138,6 +139,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         return navmeshPositionsList;
     }
 
+    //Update les line renderer lorsqu'on déplace un pathpoint
     public void UpdateSeveralLines(IST_PathPoint pp)
     {
         movingPathpoint = pp;
@@ -195,10 +197,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         return true;
     }
 
+    //Add markers beetween the moving pathpoint and other pathpoints if the distance is to high /!\ Possibilité de rassembler des choses en une fonction /!\
     public void AddMarkers(List<Vector3> vectors, int index, bool isInverse)
     {
         float distance = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
-        int result = (int)distance / 20;
+        int result = (int)distance / 20;                                                                            //Replace 20 par la valeur de distanceMax entre les balises
 
         if (result > 0)
         {
@@ -206,7 +209,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             {
                 if (additionalPathpointList[index].pathpointList.Count < result)
                 {
-                    additionalPathpointList[index].pathpointList.Add(new IST_PathPoint());
+                    additionalPathpointList[index].pathpointList.Add(new IST_PathPoint());                                         //J'ajoute un Pathpoint Null à l'index pour mieux le modifer après
                 }
 
                 float distancemax = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
@@ -214,7 +217,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                 //La distance qu'il faut parcourir à partir du point qu'on déplace
                 float distanceNeed = distancemax - (i * 20f);
 
-                if (!isInverse)
+                if (!isInverse)                                                                                                     //Si chemin est dans le bon sens
                 {
                     additionalPathpointList[index].isBefore = true;
 
@@ -228,7 +231,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                             {
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
-                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                         //Remplacer par le pathpoint Preview
                                 UpdateData(pathpoint, vectors, false);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
 
@@ -246,7 +249,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                         }
                     }
                 }
-                else
+                else                                                                                                               //Si chemin est dans le sens inverse
                 {
                     for (int y = vectors.Count - 1; y > 0; y--)
                     {
@@ -258,7 +261,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                             {
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
-                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);
+                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                        //Remplacer par le pathpoint Preview
                                 UpdateData(pathpoint, vectors, true);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
                             }
@@ -277,6 +280,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             }
         }
 
+        //Retire les points en trop si la distance à diminué
         if (result < additionalPathpointList[index].pathpointList.Count)
         {
             for (int i = additionalPathpointList[index].pathpointList.Count; additionalPathpointList[index].pathpointList.Count > result; i--)
@@ -339,6 +343,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         }
     }
 
+    //Montre le LineRenderer selon le path qu'on lui donne
     public void ShowPathLine(List<Vector3> path, LineRenderer rendererLine = null)
     {
         LineRenderer lineRenderer;
