@@ -7,6 +7,8 @@ public class CPN_ClicHandler : VLY_Component
 {
     [SerializeField] private UnityEvent OnLeftMouseDown;
     [SerializeField] private UnityEvent OnRightMouseDown;
+    [SerializeField] private UnityEvent PlayOnMouseEnter;
+    [SerializeField] private UnityEvent PlayOnMouseExit;
 
     private void OnMouseDown()
     {
@@ -22,12 +24,12 @@ public class CPN_ClicHandler : VLY_Component
 
     private void OnMouseEnter()
     {
-        
+        PlayOnMouseEnter?.Invoke();
     }
 
 
     private void OnMouseExit()
     {
-
+        PlayOnMouseExit?.Invoke();
     }
 }
