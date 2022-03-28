@@ -21,8 +21,7 @@ public class UIManager : VLY_Singleton<UIManager>
     [SerializeField] private UnityEvent OnCloseSettings;
 
     [Header("Visitors Informations")]
-    public TouristType hikersInfo;
-    public TouristType touristInfo;
+    public UI_VisitorInformation visitorInfo;
     public TMP_Text nbVisitors;
 
     [Header("Datas display")]
@@ -277,49 +276,12 @@ public class UIManager : VLY_Singleton<UIManager>
     //Show les informations des visiteurs on click
     public static void InteractWithVisitor(VisitorBehavior visitorInfo)
     {    
-        ShowInfoVisitor(visitorInfo);      
+        instance.ShowInfoVisitor(visitorInfo);      
     }
 
-    public static void ShowInfoVisitor(VisitorBehavior visitorInfo)
+    public void ShowInfoVisitor(VisitorBehavior visitorBehavior)
     {
-       OnBoardingManager.OnClickVisitorEco?.Invoke(true);
-        CPN_Informations cpn_Inf = visitorInfo.GetComponent<CPN_Informations>();
-       switch (cpn_Inf.visitorType)
-        {
-            case TypeVisitor.Hiker:
-                if (OnBoardingManager.firstClickVisitors)
-                {
-                    OnBoardingManager.OnClickVisitorPath?.Invoke(true);
-                    OnBoardingManager.ShowHikerProfileIntro();
-                    OnBoardingManager.firstClickVisitors = false;
-                }
-                ChangeInfoVisitor(instance.hikersInfo, visitorInfo, cpn_Inf);
-                instance.hikersInfo.gameObject.SetActive(true);
-                gameObjectShown = instance.hikersInfo.gameObject;
-                break;
-            case TypeVisitor.Tourist:
-                ChangeInfoVisitor(instance.touristInfo, visitorInfo, cpn_Inf);
-                instance.touristInfo.gameObject.SetActive(true);
-                gameObjectShown = instance.touristInfo.gameObject;
-                break;
-        }
-    }
-    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, VisitorBehavior visitorInfo, CPN_Informations cpn_Inf)
-    {
-        UI_visitorsInfo.name.text = cpn_Inf.GetName;
-        VisitorScriptable visitorScript = visitorInfo.visitorType;
-        //Pollution
-        //Noise
-        UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius / 10;
-        UI_visitorsInfo.pollutionText.text = visitorScript.GetThrowRadius.ToString();
-
-        //Noise
-        UI_visitorsInfo.noise.fillAmount = visitorScript.noiseMade / 10;
-        UI_visitorsInfo.noiseText.text = visitorScript.noiseMade.ToString();
-
-        //Stamina
-        UI_visitorsInfo.stamina.fillAmount = visitorScript.GetMaxStamina / 100;
-        UI_visitorsInfo.staminaText.text = visitorScript.GetMaxStamina.ToString();
+        gameObjectShown = visitorInfo.ShowInfoVisitor(visitorBehavior).gameObject;       
     }
     #endregion
 
