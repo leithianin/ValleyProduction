@@ -88,8 +88,6 @@ public class PathNode : MonoBehaviour
     {
         isBeingUpdated = true;
 
-        Debug.Log(transform.position);
-
         NodePathProcess.SetNodeUpdating(this);
 
         List<PathNode> toUpdate = UpdateSelfData();

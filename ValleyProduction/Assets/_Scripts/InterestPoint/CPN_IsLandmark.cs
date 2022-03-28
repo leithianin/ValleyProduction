@@ -60,7 +60,6 @@ public class CPN_IsLandmark : VLY_Component
             if(pathPointNextTo[i].HasValidPathForLandmark(target))
             {
                 toReturn = true;
-                Debug.Log("Invoke with " + type);
                 OnValidatePathToSpawn?.Invoke(true, type);
                 break;
             }

@@ -87,7 +87,6 @@ public class SphericalTransform : MonoBehaviour
 
     public void SetLength(float newValue)
     {
-        Debug.Log("Zoom : " + newValue);
         coordinates.x = newValue;
     }
 

@@ -31,6 +31,7 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer
 
     public void UpdateBackgroundSize()
     {
+        Debug.Log(description.preferredHeight);
         var bgSize = new Vector2(304, description.preferredHeight + 100);
         rtGoalDescription.sizeDelta = bgSize;
 
