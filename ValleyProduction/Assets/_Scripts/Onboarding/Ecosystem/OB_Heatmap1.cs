@@ -12,6 +12,7 @@ public class OB_Heatmap1 : OnBoarding
 
     protected override void OnPlay()
     {
+        Debug.Log("Play");
         OnBoardingManager.OnClickHeatmapNoise += OnClick;
     }
 
