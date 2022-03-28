@@ -12,7 +12,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public OB_Sequence sequence;
 
     [Header("On Boarding Path")]
-    public GameObject tool;
+    public GameObject tool;                                                             //CODE REVIEW
     public static Action<bool> OnWaterMill;
     public static Action<bool> OnChapel;
     public static Action<bool> OnClickVisitorPath;
