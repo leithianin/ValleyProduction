@@ -34,7 +34,6 @@ public class AnimalBehavior : MonoBehaviour
 
     public void UnsetAnimal()
     {
-        //sequence.InteruptAction(interaction);
         display.SetActive(false);
         OnUnset?.Invoke();
     }
@@ -52,19 +51,9 @@ public class AnimalBehavior : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        //sequence?.InteruptAction(interaction);
-    }
-
     private void DoBehavior()
     {
         sequence.PlayAction(interaction, DoBehavior, null);
     }
 
-    IEnumerator DelayBehavior()
-    {
-        yield return new WaitForSeconds(1f);
-        DoBehavior();
-    }
 }

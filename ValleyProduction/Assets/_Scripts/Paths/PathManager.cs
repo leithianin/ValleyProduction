@@ -604,16 +604,6 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.ResetCurrentData();
     }
 
-    private void UpdateModifiedPathNodeDatas(List<PathNode> nodesToUpdates)
-    {
-        if(nodesToUpdates.Count > 0)
-        {
-            nodesToUpdates[0].UpdateNode();
-            nodesToUpdates.RemoveAt(0);
-            TimerManager.CreateRealTimer(Time.deltaTime, () => UpdateModifiedPathNodeDatas(new List<PathNode>(nodesToUpdates)));
-        }
-    }
-
     public void ResetCurrentData()
     {
         instance.pathFragmentDataList.Clear();
