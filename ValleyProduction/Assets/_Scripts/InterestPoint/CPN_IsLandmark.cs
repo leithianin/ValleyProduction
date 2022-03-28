@@ -18,11 +18,11 @@ public class CPN_IsLandmark : VLY_Component
 
     public LandmarkType Type => type;
 
-    [SerializeField] private List<PathNode> pathPointNextTo = new List<PathNode>(); //TEMP
+    [SerializeField] private List<PathNode> pathPointNextTo = new List<PathNode>();
 
-    [SerializeField] private UnityEvent<bool, LandmarkType> OnValidatePathToSpawn; //TEMP
+    [SerializeField] private UnityEvent<bool, LandmarkType> OnValidatePathToSpawn;
 
-    public void AddPointToLandmark(PathNode toAdd)  //TEMP
+    public void AddPointToLandmark(PathNode toAdd)
     {
         if (!pathPointNextTo.Contains(toAdd))
         {
@@ -35,7 +35,7 @@ public class CPN_IsLandmark : VLY_Component
         }
     }
 
-    public void RemovePointToLandmark(PathNode toRemove) //TEMP
+    public void RemovePointToLandmark(PathNode toRemove)
     {
         toRemove.OnDeleteNode -= RemovePointToLandmark;
         NodePathProcess.UncallOnUpdateNode(OnUpdateNode);
@@ -45,13 +45,13 @@ public class CPN_IsLandmark : VLY_Component
         HasValidPathTo(LandmarkType.Spawn);
     }
 
-    private void OnUpdateNode() //TEMP
+    private void OnUpdateNode()
     {
         HasValidPathTo(LandmarkType.Spawn);
     }
 
 
-    private bool HasValidPathTo(LandmarkType target) //TEMP
+    private bool HasValidPathTo(LandmarkType target)
     {
         bool toReturn = false;
 

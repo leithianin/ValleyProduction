@@ -42,7 +42,6 @@ public class TimerManager : VLY_Singleton<TimerManager>
 
         public void Execute()
         {
-
             callback?.Invoke();
             Stop();
         }

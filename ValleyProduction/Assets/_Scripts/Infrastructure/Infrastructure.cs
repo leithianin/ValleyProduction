@@ -150,4 +150,14 @@ public abstract class Infrastructure : MonoBehaviour
         PlayOnMouseExit?.Invoke();
         InfrastructureOnMouseExit();
     }
+
+    public void AskToDelete()
+    {
+        ConstructionManager.DestroyStructure(gameObject);
+    }
+
+    public void AskToInteract()
+    {
+        ConstructionManager.InteractWithStructure(gameObject);
+    }
 }

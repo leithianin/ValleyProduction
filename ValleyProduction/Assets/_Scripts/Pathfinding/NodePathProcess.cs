@@ -9,18 +9,20 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
 
     private List<PathNode> updatedNodes = new List<PathNode>();
 
+    private List<PathNode> nodesToUpdate = new List<PathNode>();
+
     public static List<PathNode> GetAllObjectiveNodes => instance.nodesNextToLandmark;
 
     private static bool isProcessingPath = false;
 
     private Action OnUpdateNode;
 
-    public static void CallOnUpdateNode(Action callback) //TEMP
+    public static void CallOnUpdateNode(Action callback)
     {
         instance.OnUpdateNode += callback;
     }
 
-    public static void UncallOnUpdateNode(Action callback) //TEMP
+    public static void UncallOnUpdateNode(Action callback) 
     {
         instance.OnUpdateNode -= callback;
     }
@@ -64,7 +66,9 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
     {
         if(leftToUpdates.Count > 0)
         {
-            UpdateNode(leftToUpdates[0]);
+            LandmarkType landmarkToCheck = leftToUpdates[0].GetLandmarkNextTo();
+
+            UpdateNodeForLandmark(leftToUpdates[0], landmarkToCheck);
             leftToUpdates.RemoveAt(0);
 
             for (int i = 0; i < updatedNodes.Count; i++)
@@ -73,6 +77,7 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
             }
 
             updatedNodes.Clear();
+            nodesToUpdate.Clear();
 
             UpdateFirstLandmarkNode(new List<PathNode>(leftToUpdates));
 
@@ -84,9 +89,40 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
         }
     }
 
-    public static void UpdateNode(PathNode toUpdate)
+    public static void UpdateNodeForLandmark(PathNode toUpdate, LandmarkType toCheck)
     {
-        toUpdate.UpdateNode();
+        int security = 1000;
+
+        instance.nodesToUpdate.Add(toUpdate);
+
+        while (security > 0 && instance.nodesToUpdate.Count > 0)
+        {
+            instance.UpdateForLandmark(instance.nodesToUpdate[0], toCheck);
+            security--;
+        }
+
+        if(security <= 0)
+        {
+            Debug.LogError("Node path calcul took too long !!");
+        }
+    }
+
+    private void UpdateForLandmark(PathNode toUpdate, LandmarkType toCheck)
+    {
+        toUpdate.UpdateSelfData(toCheck);
+
+        updatedNodes.Add(toUpdate);
+        nodesToUpdate.Remove(toUpdate);
+
+        List<PathNode> neighbours = toUpdate.GetNeighbours();
+
+        foreach (PathNode n in neighbours)
+        {
+            if (!updatedNodes.Contains(n) && !nodesToUpdate.Contains(n))
+            {
+                nodesToUpdate.Add(n);
+            }
+        }
     }
 
     public static void SetNodeUpdating(PathNode toSet)

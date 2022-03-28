@@ -141,7 +141,7 @@ public class UIManager : VLY_Singleton<UIManager>
                     InteractWithInfrastructure(au_informations);
                     break;
                 case VisitorBehavior visitorBehavior:
-                    InteractWithVisitor(visitorBehavior);
+                    InteractWithVisitor(visitorBehavior.GetComponent<CPN_Informations>());
                     break;
             }
         }
@@ -275,15 +275,15 @@ public class UIManager : VLY_Singleton<UIManager>
     }
 
     //Show les informations des visiteurs on click
-    public static void InteractWithVisitor(VisitorBehavior visitorInfo)
+    public static void InteractWithVisitor(CPN_Informations visitorInfo)
     {    
         ShowInfoVisitor(visitorInfo);      
     }
 
-    public static void ShowInfoVisitor(VisitorBehavior visitorInfo)
+    public static void ShowInfoVisitor(CPN_Informations visitorInfo)
     {
        OnBoardingManager.OnClickVisitorEco?.Invoke(true);
-        CPN_Informations cpn_Inf = visitorInfo.GetComponent<CPN_Informations>();
+        CPN_Informations cpn_Inf = visitorInfo;
        switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
@@ -293,21 +293,21 @@ public class UIManager : VLY_Singleton<UIManager>
                     OnBoardingManager.ShowHikerProfileIntro();
                     OnBoardingManager.firstClickVisitors = false;
                 }
-                ChangeInfoVisitor(instance.hikersInfo, visitorInfo, cpn_Inf);
+                ChangeInfoVisitor(instance.hikersInfo, visitorInfo.scriptable, cpn_Inf);
                 instance.hikersInfo.gameObject.SetActive(true);
                 gameObjectShown = instance.hikersInfo.gameObject;
                 break;
             case TypeVisitor.Tourist:
-                ChangeInfoVisitor(instance.touristInfo, visitorInfo, cpn_Inf);
+                ChangeInfoVisitor(instance.touristInfo, visitorInfo.scriptable, cpn_Inf);
                 instance.touristInfo.gameObject.SetActive(true);
                 gameObjectShown = instance.touristInfo.gameObject;
                 break;
         }
     }
-    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, VisitorBehavior visitorInfo, CPN_Informations cpn_Inf)
+    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, VisitorScriptable visitorInfo, CPN_Informations cpn_Inf)
     {
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
-        VisitorScriptable visitorScript = visitorInfo.visitorType;
+        VisitorScriptable visitorScript = visitorInfo;
         //Pollution
         //Noise
         UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius / 10;

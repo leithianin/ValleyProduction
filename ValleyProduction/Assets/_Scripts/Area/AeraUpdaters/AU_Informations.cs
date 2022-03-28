@@ -41,4 +41,9 @@ public class AU_Informations : MonoBehaviour
         }
         return 0;
     }
+
+    public void DisplayInformation()
+    {
+        UIManager.InteractWithInfrastructure(this);
+    }
 }

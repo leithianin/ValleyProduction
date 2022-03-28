@@ -88,65 +88,49 @@ public class PathNode : MonoBehaviour
     {
         isBeingUpdated = true;
 
-        NodePathProcess.SetNodeUpdating(this);
+        //NodePathProcess.SetNodeUpdating(this);
 
-        List<PathNode> toUpdate = UpdateSelfData();
+        //List<PathNode> toUpdate = UpdateSelfData();
 
-        for (int i = 0; i < toUpdate.Count; i++)
+        /*for (int i = 0; i < toUpdate.Count; i++)
         {
             toUpdate[i].UpdateNode();
-        }
+        }*/
 
         //isBeingUpdated = false;
 
-        OnUpdateNode?.Invoke(this);
+        
     }
 
-    public List<PathNode> UpdateSelfData()
+    public bool UpdateSelfData(LandmarkType wantedLandmark)
     {
-        List<PathNode> neighbours = GetNeighbours();
+        bool toReturn = false;
 
-        List<PathNode> toUpdate = new List<PathNode>();
+        List<PathNode> neighbours = GetNeighbours();
 
         for (int i = 0; i < neighbours.Count; i++)
         {
             if (!neighbours[i].IsBeingDeleted)
             {
-                for (int j = 0; j < dataByLandmark.Count; j++)
+                NodePathData selfToCheck = GetDataForLandmarkType(wantedLandmark);
+                NodePathData neighbourToCheck = neighbours[i].GetDataForLandmarkType(wantedLandmark);
+
+                float distanceFromNeighbour = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition);
+
+                if (neighbourToCheck.distanceFromLandmark >= 0 && (selfToCheck.distanceFromLandmark < 0 || neighbourToCheck.distanceFromLandmark < selfToCheck.distanceFromLandmark))
                 {
-                    NodePathData dataToCheck = neighbours[i].GetDataForLandmarkType(dataByLandmark[j].landmark);
-
-                    float distanceFromNeighbour = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition);
-
-                    if (dataToCheck.distanceFromLandmark < 0 && !neighbours[i].IsBeingUpdated)
-                    {
-                        toUpdate.Add(neighbours[i]);
-                    }
-                    else if (dataToCheck.distanceFromLandmark >= 0 && (dataByLandmark[j].distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark < dataByLandmark[j].distanceFromLandmark))
-                    {
-                        dataByLandmark[j].distanceFromLandmark = distanceFromNeighbour + dataToCheck.distanceFromLandmark;
-                        dataByLandmark[j].parent = neighbours[i];
-
-                        if (!neighbours[i].IsBeingUpdated)
-                        {
-                            toUpdate.Add(neighbours[i]);
-                        }
-                    }
-                    /*else if (dataByLandmark[j].distanceFromLandmark >= 0 && (dataToCheck.distanceFromLandmark < 0 || dataToCheck.distanceFromLandmark > dataByLandmark[j].distanceFromLandmark))
-                    {
-                        dataToCheck.distanceFromLandmark = distanceFromNeighbour + dataByLandmark[j].distanceFromLandmark;
-                        dataToCheck.parent = this;
-
-                        if (!neighbours[i].IsBeingUpdated)
-                        {
-                            toUpdate.Add(neighbours[i]);
-                        }
-                    }*/
+                    selfToCheck.distanceFromLandmark = distanceFromNeighbour + neighbourToCheck.distanceFromLandmark;
+                    selfToCheck.parent = neighbours[i];
                 }
             }
         }
 
-        return toUpdate;
+        if(toReturn)
+        {
+            OnUpdateNode?.Invoke(this);
+        }
+
+        return toReturn;
     }
 
     public void UpdateFromDeletedNode(PathNode deletedNode)
@@ -210,6 +194,19 @@ public class PathNode : MonoBehaviour
     public bool HasParent(PathNode parentToCheck)
     {
         return GetDataLandmarkWithParent(parentToCheck).Count > 0;
+    }
+
+    public LandmarkType GetLandmarkNextTo()
+    {
+        for(int i = 0; i < dataByLandmark.Count; i++)
+        {
+            if(dataByLandmark[i].linkedToLandmark)
+            {
+                return dataByLandmark[i].landmark;
+            }
+        }
+
+        return LandmarkType.None;
     }
 
     private List<NodePathData> GetDataLandmarkWithParent(PathNode parentToSearch)
@@ -391,7 +388,7 @@ public class PathNode : MonoBehaviour
 
     #endregion
 
-    /*
+    
     private void OnDrawGizmos()
     {
         if (Selection.activeGameObject != transform.gameObject)
@@ -413,5 +410,5 @@ public class PathNode : MonoBehaviour
                 Gizmos.DrawLine(lastParent.WorldPosition, parent.WorldPosition);
             }
         }
-    }*/
+    }
 }
