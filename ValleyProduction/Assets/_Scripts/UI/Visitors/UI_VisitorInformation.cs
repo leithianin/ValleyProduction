@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UI_VisitorInformation : MonoBehaviour
 {
-    public TouristType hikersInfo;
-    public TouristType touristInfo;
+    [SerializeField] private TouristType hikersInfo;
+    [SerializeField] private TouristType touristInfo;
 
     public TouristType ShowInfoVisitor(CPN_Informations cpn_Inf)
     {

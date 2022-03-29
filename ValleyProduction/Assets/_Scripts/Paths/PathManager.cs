@@ -670,7 +670,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 if (pd.ContainsPoint(pathpoint))
                 {
                     instance.currentPathData = pd;
-                    UIManager.ShowRoadsInfos(pd);
+                    UIManager.InteractWithRoad(pd);
 
                     //Il faut trouver les pathpoints
                     for (int i = 0; i <= pd.pathFragment.Count - 1; i++)
@@ -719,7 +719,7 @@ public class PathManager : VLY_Singleton<PathManager>
         CreatePathData();
 
         instance.currentPathData = pathdata;
-        UIManager.ShowRoadsInfos(pathdata);
+        UIManager.InteractWithRoad(pathdata);
 
         for (int i = 0; i <= pathdata.pathFragment.Count - 1; i++)
         {
