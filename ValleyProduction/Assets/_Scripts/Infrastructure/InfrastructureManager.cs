@@ -30,6 +30,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
     }
 
+    public static void SetToolSelected(ToolType toolType) { instance.toolSelected = toolType; }
+
     public static void ChooseInfrastructure(InfrastructurePreview newPreview)
     {
         if(newPreview != GetCurrentPreview)
