@@ -274,14 +274,14 @@ public class UIManager : VLY_Singleton<UIManager>
     }
 
     //Show les informations des visiteurs on click
-    public static void InteractWithVisitor(CPN_Informations visitorInfo)
+    public static void InteractWithVisitor(CPN_Informations cpn_Inf)
     {    
-        instance.ShowInfoVisitor(visitorInfo);      
+        instance.ShowInfoVisitor(cpn_Inf);      
     }
 
-    public void ShowInfoVisitor(VisitorBehavior visitorBehavior)
+    public void ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
-        gameObjectShown = visitorInfo.ShowInfoVisitor(visitorBehavior).gameObject;       
+        gameObjectShown = visitorInfo.ShowInfoVisitor(cpn_Inf).gameObject;
     }
     #endregion
 

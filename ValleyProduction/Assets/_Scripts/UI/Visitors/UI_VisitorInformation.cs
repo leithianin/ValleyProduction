@@ -7,10 +7,9 @@ public class UI_VisitorInformation : MonoBehaviour
     public TouristType hikersInfo;
     public TouristType touristInfo;
 
-    public TouristType ShowInfoVisitor(VisitorBehavior visitorInfo)
+    public TouristType ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
         OnBoardingManager.OnClickVisitorEco?.Invoke(true);
-        CPN_Informations cpn_Inf = visitorInfo.GetComponent<CPN_Informations>();
         switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
@@ -20,21 +19,21 @@ public class UI_VisitorInformation : MonoBehaviour
                     OnBoardingManager.ShowHikerProfileIntro();
                     OnBoardingManager.firstClickVisitors = false;
                 }
-                ChangeInfoVisitor(hikersInfo, visitorInfo, cpn_Inf);
+                ChangeInfoVisitor(hikersInfo, cpn_Inf);
                 hikersInfo.gameObject.SetActive(true);
                 return hikersInfo;
             case TypeVisitor.Tourist:
-                ChangeInfoVisitor(touristInfo, visitorInfo, cpn_Inf);
+                ChangeInfoVisitor(touristInfo, cpn_Inf);
                 touristInfo.gameObject.SetActive(true);
                 return touristInfo;
         }
         return null;
     }
 
-    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, VisitorBehavior visitorInfo, CPN_Informations cpn_Inf)
+    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
     {
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
-        VisitorScriptable visitorScript = visitorInfo.visitorType;
+        VisitorScriptable visitorScript = cpn_Inf.scriptable;
         //Pollution
         //Noise
         UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius / 10;
