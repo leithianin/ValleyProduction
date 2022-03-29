@@ -9,27 +9,24 @@ public class UIManager : VLY_Singleton<UIManager>
 {
     public List<GameObject> pathButtonList = new List<GameObject>();
     [SerializeField] private GameObject pathChoiceMenu;
-    public ChangeRoadInfo RoadInfo;
     public Camera sceneCamera;
 
     [Header("Menu Option")]
-    public bool OnMenuOption = false;
-    public Button ResumeButton;
+    public UI_PauseMenu pauseMenuInfo;
 
-    [Header("Settings Menu")]
-    [SerializeField] private UnityEvent OnOpenSettings;
-    [SerializeField] private UnityEvent OnCloseSettings;
+    [Header("Road Informations")]
+    public UI_RoadInformation RoadInfo;
 
     [Header("Visitors Informations")]
     public UI_VisitorInformation visitorInfo;
     public TMP_Text nbVisitors;
 
+    [Header("Infrastructure Informations")]
+    public UI_InfrastructureInformation infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
+
     [Header("Datas display")]
     [SerializeField] private TMP_Text ressourceCounter;
     [SerializeField] private TMP_Text attractivityCounter;
-
-    [Header("Infrastructure Informations")]
-    public UI_InfrastructureInformation infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
 
     [Header("Tooltips")]
     public Tooltip tooltip;
@@ -40,7 +37,6 @@ public class UIManager : VLY_Singleton<UIManager>
     private static Component[] componentTab;
     private static GameObject gameObjectShown;
     public static Tooltip GetTooltip => instance.tooltip;
-    public static bool GetIsOnMenuOption => instance.OnMenuOption;
     public static UIManager UIinstance => instance;
 
     public void SelectStructure(InfrastructurePreview structure)
@@ -97,33 +93,17 @@ public class UIManager : VLY_Singleton<UIManager>
         ConstructionManager.SelectInfrastructureType(null);
     }
 
-    //Use in Construction Button On Click()
-    public void OnToolCreateConstruction()
+    #region Pause Menu
+    public static bool IsOnMenuBool()
     {
-        //Create a construction
+        return instance.pauseMenuInfo.OnMenuOption;
     }
 
-    #region Menu Option
-    public static void ChangeMenuOptionBool()
-    {
-        instance.OnMenuOption = !instance.OnMenuOption;
-    }
-    
     public static void HideMenuOption()
     {
-        instance.ResumeButton.onClick?.Invoke();
+        instance.pauseMenuInfo.HideMenuOption();
     }
     #endregion
-
-    public void OpenSettingsMenu()
-    {
-        OnOpenSettings?.Invoke();
-    }
-
-    public void CloseSettingsMenu()
-    {
-        OnCloseSettings?.Invoke();
-    }
 
     #region Interaction/Hide
     public static void InteractWithObject(GameObject touchedObject)
@@ -136,6 +116,10 @@ public class UIManager : VLY_Singleton<UIManager>
         {
             switch(component)
             {
+                case IST_PathPoint ist_pathpoint:
+                    if (PathManager.HasManyPath(ist_pathpoint)) { ArrangePathButton(ist_pathpoint); }
+                    else                { InteractWithRoad(PathManager.GetPathData(ist_pathpoint)); }
+                    break;
                 case AU_Informations au_informations:
                     InteractWithInfrastructure(au_informations);
                     break;
@@ -158,36 +142,15 @@ public class UIManager : VLY_Singleton<UIManager>
     #endregion
 
     #region Path Info
-    public static void ShowRoadsInfos(PathData pathdata)
+    public static void InteractWithRoad(PathData pathdata)
     {
-        instance.RoadInfo.pathData = pathdata;
-        instance.RoadInfo.UpdateTitle(pathdata.name);
-        instance.RoadInfo.UpdateColor(pathdata.color);
-        instance.RoadInfo.UpdateStamina(pathdata.difficulty);
-
-        //Il faut avoir des valeurs fixes et les get selon la difficult�
-        instance.RoadInfo.UpdateGaugeStamina(1);
-
-        OnBoardingManager.onClickPath?.Invoke(true);
-        instance.RoadInfo.gameObject.SetActive(true);
+        instance.ShowInfoRoad(pathdata);
     }
 
-    public static void ConfirmDelete(PathData pathdata)
+    public void ShowInfoRoad(PathData pathData)
     {
-        //Show UI
-    }
-
-    public static void DeletePath(PathData pathData)
-    {
-        OnBoardingManager.onDestroyPath?.Invoke(true);
-        HideRoadsInfo();
-        PathManager.DeleteFullPath(pathData);
-    }
-
-    public static void HideRoadsInfo()
-    {
-        instance.RoadInfo.gameObject.SetActive(false);
-    }
+        gameObjectShown = RoadInfo.ShowInfoRoad(pathData).gameObject;
+    } 
 
     //Buttons Offset de modifier un chemin 
     public static void ButtonsOffset(GameObject pathpoint)
@@ -258,7 +221,7 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.None:
-                ShowRoadsInfos(buttonPath.pathData);
+                InteractWithRoad(buttonPath.pathData);
                 break;
             case ToolType.Delete:
                 buttonPath.buttonPathpoint.Remove(buttonPath.pathData);

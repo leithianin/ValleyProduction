@@ -24,7 +24,7 @@ public class IST_PathPoint : Infrastructure
         if (this == PathManager.previousPathpoint)
         {
             PathManager.CreatePathData();
-            UIManager.HideRoadsInfo();
+            UIManager.HideShownGameObject();
             return;
         }
 
@@ -32,7 +32,7 @@ public class IST_PathPoint : Infrastructure
         {
             PathManager.PlacePoint(this, transform.position);
             PathManager.CreatePathData();
-            UIManager.HideRoadsInfo();
+            UIManager.HideShownGameObject();
         }
         else                                                                //Creer un nouveau chemin
         {
@@ -97,13 +97,12 @@ public class IST_PathPoint : Infrastructure
     {
         PathManager.CreatePathData();
         PathManager.PlacePoint(this, transform.position);
-        UIManager.HideRoadsInfo();
+        UIManager.HideShownGameObject();
     }
 
     protected override void OnSelectObject()
     {
-        if (PathManager.HasManyPath(this)) {UIManager.ArrangePathButton(this)                          ;}
-        else                               {UIManager.ShowRoadsInfos(PathManager.GetPathData(this))    ;}
+        UIManager.InteractWithObject(gameObject) ;
     }
 
     protected override void OnUnselectObject()

@@ -54,7 +54,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         //Handle Mouse input outside UI
 
-        if (!UIManager.instance.OnMenuOption && !usedEventSystem.IsPointerOverGameObject())
+        if (!UIManager.IsOnMenuBool() && !usedEventSystem.IsPointerOverGameObject())
         {
             if (usedEventSystem.currentSelectedGameObject == null)
             {
