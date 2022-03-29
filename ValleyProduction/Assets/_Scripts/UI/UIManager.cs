@@ -276,7 +276,7 @@ public class UIManager : VLY_Singleton<UIManager>
     //Show les informations des visiteurs on click
     public static void InteractWithVisitor(CPN_Informations cpn_Inf)
     {    
-        instance.ShowInfoVisitor(cpn_Inf);      
+        instance.ShowInfoVisitor(cpn_Inf);
     }
 
     public void ShowInfoVisitor(CPN_Informations cpn_Inf)
