@@ -30,7 +30,8 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public static bool clicHold = false;
 
-    private LayerMask currentLayerMask;
+    [SerializeField] private GameContext context;
+    //private LayerMask currentLayerMask;
     public LayerMask layerMaskNoTools;
     public LayerMask layerMaskPathTool;
 
@@ -50,7 +51,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void Start()
     {
-        currentLayerMask = layerMaskNoTools;
+        usedCamera.eventMask = context.GetContextLayers(0);
     }
 
     // Update is called once per frame
@@ -259,7 +260,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, 100000.0f, currentLayerMask))
+        if (Physics.Raycast(ray, out hit, 100000.0f, GetCamera.eventMask))
         {
             return hit;
         }
@@ -267,24 +268,25 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         return hit;
     }
 
+    [Obsolete]
     private Vector3 GetGroundHitPoint()
     {
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100000.0f))
+        if (Physics.Raycast(ray, out hit, 100000.0f, LayerMask.GetMask("Terrain")))
         {
             return hit.point;
         }
         return Vector3.zero;
     }
 
-    public static void ChangeLayerMaskForNoTools()
+    public static void ChangeContext(int ID)
     {
-        instance.currentLayerMask = instance.layerMaskNoTools;
+        GetCamera.eventMask = instance.context.GetContextLayers(ID);
     }
 
     public static void ChangeLayerMaskForPathTools()
     {
-        instance.currentLayerMask = instance.layerMaskPathTool;
+        GetCamera.eventMask = instance.context.GetContextLayers(1);
     }
 }
