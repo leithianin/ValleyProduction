@@ -10,25 +10,25 @@ public class CPN_ClicHandler : VLY_Component
     [SerializeField] private UnityEvent PlayOnMouseEnter;
     [SerializeField] private UnityEvent PlayOnMouseExit;
 
-    private void OnMouseDown()
+    public void MouseDown(int mouseID)
     {
-        if(Input.GetMouseButton(0))
+        switch(mouseID)
         {
-            OnLeftMouseDown?.Invoke();
-        }
-        else
-        {
-            OnRightMouseDown?.Invoke();
+            case 0:
+                OnLeftMouseDown?.Invoke();
+                break;
+            case 1:
+                OnRightMouseDown?.Invoke();
+                break;
         }
     }
 
-    private void OnMouseEnter()
+    public void MouseEnter()
     {
         PlayOnMouseEnter?.Invoke();
     }
 
-
-    private void OnMouseExit()
+    public void MouseExit()
     {
         PlayOnMouseExit?.Invoke();
     }

@@ -863,12 +863,6 @@ MonoBehaviour:
   - {fileID: 7026732280502338072}
   - {fileID: 3898088066656520254}
   - {fileID: 329369899851214195}
-  OnMouseIN:
-    m_PersistentCalls:
-      m_Calls: []
-  OnMouseOUT:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7603813357234534011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +1000,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnLeftMouseDown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 329369899851214195}
+        m_TargetAssemblyTypeName: CPN_Informations, Assembly-CSharp
+        m_MethodName: DisplayInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightMouseDown:
     m_PersistentCalls:
       m_Calls: []

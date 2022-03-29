@@ -7,9 +7,6 @@ public class VLY_ComponentHandler : MonoBehaviour
 {
     [SerializeField] private List<VLY_Component> components;
 
-    public UnityEvent OnMouseIN;
-    public UnityEvent OnMouseOUT;
-
     public T GetComponentOfType<T>() where T : VLY_Component
     {
         for(int i = 0; i < components.Count; i++)
@@ -48,16 +45,5 @@ public class VLY_ComponentHandler : MonoBehaviour
     {
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
         test.outline.enabled = false;
-    }
-
-    private void OnMouseEnter()
-    {
-        OnMouseIN?.Invoke();
-
-    }
-
-    private void OnMouseExit()
-    {
-        OnMouseOUT?.Invoke();
     }
 }

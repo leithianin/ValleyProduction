@@ -17,8 +17,6 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnMove;
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnReplace;
     [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
-    [SerializeField, Tooltip("Actions to play when the construction is on mouse over")] private UnityEvent PlayOnMouseOver;
-    [SerializeField, Tooltip("Actions to play when the construction is on mouse over")] private UnityEvent PlayOnMouseExit;
 
     [Header("Data setup")]
     [SerializeField] private UnityEvent<InfrastructureData> OnSetData;
@@ -137,17 +135,15 @@ public abstract class Infrastructure : MonoBehaviour
     }
 
     //L'enfant est prioritaire par rapport à son parent
-    private void OnMouseOver()
+    public void MouseOver()
     {
         InfrastructureManager.SnapInfrastructure(this);
-        PlayOnMouseOver?.Invoke();
         InfrastructureOnMouseOver();
     }
 
-    private void OnMouseExit()
+    public void MouseExit()
     {
         InfrastructureManager.DesnapInfrastructure(this);
-        PlayOnMouseExit?.Invoke();
         InfrastructureOnMouseExit();
     }
 

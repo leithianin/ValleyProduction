@@ -476,6 +476,11 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    public void ValidatePath()
+    {
+        CreatePathData();
+    }
+
     //Create pathdata
     public static void CreatePathData()
     {

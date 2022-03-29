@@ -11,6 +11,7 @@ public class OB_VisitorProfile : OnBoarding
 
     protected override void OnPlay()
     {
+
         OnBoardingManager.OnClickVisitorEco += OnClick; 
     }
 
