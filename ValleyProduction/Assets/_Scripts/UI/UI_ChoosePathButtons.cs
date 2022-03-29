@@ -73,9 +73,4 @@ public class UI_ChoosePathButtons : MonoBehaviour
             go.gameObject.SetActive(false);
         }
     }
-
-    public void TEMP_HideRoadChoice()
-    {
-        pathChoiceMenu.SetActive(false);
-    }
 }
