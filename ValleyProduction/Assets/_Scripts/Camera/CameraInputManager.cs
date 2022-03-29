@@ -31,6 +31,46 @@ public class CameraInputManager : MonoBehaviour
     [Header("Cinematic Mode")]
     [SerializeField, ReadOnly] private bool inCinematicMode = false;
 
+    //Input datas
+     private Vector2 inputDirection;
+     private Vector2 mouseDirection;
+     private bool isShifting;
+     private float polarValue;
+     private float azimuthalValue;
+    private float scrollInputValue;
+
+
+    public void SetInputDirection(Vector2 nInputDirection)
+    {
+        Debug.Log(nInputDirection);
+        inputDirection = nInputDirection;
+    }
+
+    public void SetMouseDirection(Vector2 nMouseDirection)
+    {
+        mouseDirection = nMouseDirection;
+    }
+
+    public void SetShifting(bool nShifting)
+    {
+        isShifting = nShifting;
+    }
+
+    public void SetPolarValue(float nPolarValue)
+    {
+        polarValue = nPolarValue;
+    }
+
+    public void SetAzimythalValue(float nAzimuthalValue)
+    {
+        azimuthalValue = nAzimuthalValue;
+    }
+
+    public void SetScrollInputValue(float nScroll)
+    {
+        scrollInputValue = nScroll;
+    }
+
     private void OnEnable()
     {
         if (!cameraTransform)
@@ -58,10 +98,10 @@ public class CameraInputManager : MonoBehaviour
 
     void MoveCameraOriginWithKeyboard()
     {
-        if (!cameraTransform)
+        if (!cameraTransform || inputDirection == Vector2.zero)
             return;
 
-        cameraTransform.MoveOrigin(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), Input.GetKey(KeyCode.LeftShift) ? fastMovingSpeed :  movingSpeed);
+        cameraTransform.MoveOrigin(inputDirection.x, inputDirection.y, isShifting ? fastMovingSpeed :  movingSpeed);
     }
 
     void MoveCameraOriginWithEdgeScrolling()
@@ -85,16 +125,18 @@ public class CameraInputManager : MonoBehaviour
 
     void MoveCameraOriginWithMouseDrag()
     {
-        if (!settingsDatas.cameraMouseScrollingActive)
+        if (!settingsDatas.cameraMouseScrollingActive || mouseDirection == Vector2.zero)
+        {
+            Debug.Log(mouseDirection);
             return;
+        }
 
         if (!Input.GetKey(KeyCode.Mouse1))
             return;
 
-        Vector2 mouseDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        Debug.Log("Move from drag");
         mouseDirection = -mouseDirection;
         cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, mouseDirection.magnitude * mouseScrollingMovingSpeed);
-        PlayerInputManager.OnKeyMove?.Invoke(mouseDirection);
     }
 
 
@@ -103,7 +145,7 @@ public class CameraInputManager : MonoBehaviour
         if (!cameraTransform)
             return;
 
-        cameraTransform.ChangeLength(Input.GetAxis("Mouse ScrollWheel"), -scrollingSpeed);
+        cameraTransform.ChangeLength(scrollInputValue, -scrollingSpeed);
     }
 
     void RotateCameraWithKeyboard()
@@ -111,12 +153,12 @@ public class CameraInputManager : MonoBehaviour
         if (!cameraTransform)
             return;
 
-        cameraTransform.PolarRotation(Input.GetAxis("Polar"), rotationSpeed);
+        cameraTransform.PolarRotation(polarValue, rotationSpeed);
 
         if (!allowRotation)
             return;
 
-        cameraTransform.AzimuthalRotation(Input.GetAxis("Azimuthal"), rotationSpeed);
+        cameraTransform.AzimuthalRotation(azimuthalValue, rotationSpeed);
     }
 
     void RotateCameraWithScrollWheel()
@@ -127,12 +169,12 @@ public class CameraInputManager : MonoBehaviour
         if (!Input.GetKey(KeyCode.Mouse2))
             return;
 
-        cameraTransform.PolarRotation(settingsDatas.cameraInvertVerticalWheelRotation ? -Input.GetAxis("Mouse Y") : Input.GetAxis("Mouse Y"), wheelRotationSpeed);
+        cameraTransform.PolarRotation(settingsDatas.cameraInvertVerticalWheelRotation ? -mouseDirection.y : mouseDirection.y, wheelRotationSpeed);
 
         if (!allowRotation)
             return;
 
-        cameraTransform.AzimuthalRotation(settingsDatas.cameraInvertHorizontalWheelRotation ? -Input.GetAxis("Mouse X") : Input.GetAxis("Mouse X"), wheelRotationSpeed);
+        cameraTransform.AzimuthalRotation(settingsDatas.cameraInvertHorizontalWheelRotation ? -mouseDirection.x : mouseDirection.x, wheelRotationSpeed);
     }
 
     void LaunchCinematicMode()

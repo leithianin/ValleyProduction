@@ -17,8 +17,8 @@ public class OB_ControlsIntro : OnBoarding
 
     protected override void OnPlay()
     {
-        PlayerInputManager.OnMouseScroll += OnScroll;
-        PlayerInputManager.OnKeyMove += OnMove;
+        PlayerInputManager.GetOnMouseScroll.AddListener(OnScroll);
+        PlayerInputManager.GetOnKeyMove.AddListener(OnMove);
         SphericalTransform.OnMouseWheel += OnRotate;
         //PlayerInputManager.OnMouseScroll.AddListener(OnScroll);
     }
@@ -31,7 +31,7 @@ public class OB_ControlsIntro : OnBoarding
     public void OnScroll(float scrollValue)
     {
         OnMouseScroll?.Invoke();
-        PlayerInputManager.OnMouseScroll -= OnScroll;
+        PlayerInputManager.GetOnMouseScroll.RemoveListener(OnScroll);
         CheckAction();
     }
 
@@ -40,7 +40,7 @@ public class OB_ControlsIntro : OnBoarding
         if (direction != Vector2.zero)
         {
             OnMoving?.Invoke();
-            PlayerInputManager.OnKeyMove -= OnMove;
+            PlayerInputManager.GetOnKeyMove.RemoveListener(OnMove);
             CheckAction();
         }
     }

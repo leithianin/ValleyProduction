@@ -12,21 +12,38 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private float holdDuration;
 
     [SerializeField] private UnityEvent OnClicLeft;
+    //[SerializeField] private UnityEvent OnClicLeftDown
     [SerializeField] private UnityEvent OnClicLeftWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicLeftPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicLeftHold;
 
     [SerializeField] private UnityEvent OnClicRight;
+    //[SerializeField] private UnityEvent OnClicRightDown
     [SerializeField] private UnityEvent OnClicRightWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicRightPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicRightHold;
 
+    [SerializeField] private UnityEvent OnClicScrollWheel;
+    [SerializeField] private UnityEvent<float> OnPolar;
+    [SerializeField] private UnityEvent<float> OnAzimuthal;
+
     [SerializeField] private UnityEvent OnKeyReturn;
     [SerializeField] private UnityEvent OnKeyDelete;
     [SerializeField] private UnityEvent OnKeyEscape;
+    [SerializeField] private UnityEvent<bool> OnKeyLeftShift;
 
-    public static Action<Vector2> OnKeyMove;
-    public static Action<float> OnMouseScroll;
+    [SerializeField] private UnityEvent<Vector2> OnKeyMove;
+    public static UnityEvent<Vector2> GetOnKeyMove => instance.OnKeyMove;
+    private Vector2 lastKeyDirection;
+
+
+    [SerializeField] private UnityEvent<Vector2> OnMouseMove;
+    public static UnityEvent<Vector2> GetOnMouseMove => instance.OnMouseMove;
+
+    [SerializeField] private UnityEvent<float> OnMouseScroll;
+    public static UnityEvent<float> GetOnMouseScroll => instance.OnMouseScroll;
+    private float lastScrollValue;
+
 
     public static bool clicHold = false;
 
@@ -99,14 +116,22 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
                     OnClicRightWihtoutObject?.Invoke();
                 }
             }
+
+
+            if (Input.mouseScrollDelta.y != 0 || lastScrollValue != 0)
+            {
+                OnMouseScroll?.Invoke(Input.mouseScrollDelta.y);
+                lastScrollValue = Input.mouseScrollDelta.y;
+            }
         }
 
         CheckForMovementInput();
 
-        if(Input.mouseScrollDelta.y != 0)
-        {
-            OnMouseScroll?.Invoke(Input.mouseScrollDelta.y);
-        }
+        OnMouseMove?.Invoke(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")));
+
+        OnAzimuthal?.Invoke(Input.GetAxis("Azimuthal"));
+
+        OnPolar?.Invoke(Input.GetAxis("Polar"));
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -121,6 +146,15 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             OnKeyEscape?.Invoke();
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            OnKeyLeftShift?.Invoke(true);
+        }
+        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            OnKeyLeftShift?.Invoke(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -231,28 +265,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         float xDirection = Input.GetAxis("Horizontal");
         float yDirection = Input.GetAxis("Vertical");
 
-        /*if(Input.GetKey(KeyCode.UpArrow))
-        {
-            yDirection++;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            yDirection--;
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            xDirection++;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            xDirection--;
-        }*/
-
-        if (xDirection != 0 || yDirection != 0)
+        if (xDirection != 0 || yDirection != 0 || lastKeyDirection != Vector2.zero)
         {
             OnKeyMove?.Invoke(new Vector2(xDirection, yDirection));
         }
+
+        lastKeyDirection = new Vector2(xDirection, yDirection);
     }
 
     private RaycastHit GetHitMouseGameobject()
