@@ -216,6 +216,7 @@ Transform:
   - {fileID: 1999015100698152557}
   - {fileID: 42053803}
   - {fileID: 5313475256955041565}
+  - {fileID: 1302873166448121054}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -231,45 +232,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e583b33b0276b62409f09a08949a361d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usedCamera: {fileID: 0}
+  usedCamera: {fileID: 3631207456372332364}
   usedEventSystem: {fileID: 0}
   holdDuration: 0.2
   OnClicLeft:
     m_PersistentCalls:
       m_Calls: []
+  OnClicLeftWihtoutObject:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: HideShownGameObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClicLeftPosition:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5209237266425241732}
         m_TargetAssemblyTypeName: ConstructionManager, Assembly-CSharp
         m_MethodName: PlaceInfrastructure
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnClicLeftObject:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5209237266425241732}
-        m_TargetAssemblyTypeName: ConstructionManager, Assembly-CSharp
-        m_MethodName: InteractWithStructure
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: InteractWithVisitors
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -296,19 +285,43 @@ MonoBehaviour:
         m_CallState: 2
   OnClicRight:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: TEMP_HideRoadChoice
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClicRightWihtoutObject:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5209237266425241734}
+        m_TargetAssemblyTypeName: PathManager, Assembly-CSharp
+        m_MethodName: ValidatePath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClicRightPosition:
     m_PersistentCalls:
       m_Calls: []
-  OnClicRightObject:
+  OnClicRightHold:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5209237266425241732}
         m_TargetAssemblyTypeName: ConstructionManager, Assembly-CSharp
-        m_MethodName: DestroyStructure
+        m_MethodName: OnHoldRightClic
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -318,12 +331,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnClicRightHold:
+  OnClicScrollWheel:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPolar:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5209237266425241732}
-        m_TargetAssemblyTypeName: ConstructionManager, Assembly-CSharp
-        m_MethodName: OnHoldRightClic
+      - m_Target: {fileID: 592276205304232956}
+        m_TargetAssemblyTypeName: CameraInputManager, Assembly-CSharp
+        m_MethodName: SetPolarValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAzimuthal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 592276205304232956}
+        m_TargetAssemblyTypeName: CameraInputManager, Assembly-CSharp
+        m_MethodName: SetAzimythalValue
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -354,10 +385,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+  OnKeyLeftShift:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 592276205304232956}
+        m_TargetAssemblyTypeName: CameraInputManager, Assembly-CSharp
+        m_MethodName: SetShifting
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -366,6 +400,52 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnKeyMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 592276205304232956}
+        m_TargetAssemblyTypeName: CameraInputManager, Assembly-CSharp
+        m_MethodName: SetInputDirection
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMouseMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 592276205304232956}
+        m_TargetAssemblyTypeName: CameraInputManager, Assembly-CSharp
+        m_MethodName: SetMouseDirection
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMouseScroll:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 592276205304232956}
+        m_TargetAssemblyTypeName: CameraInputManager, Assembly-CSharp
+        m_MethodName: SetScrollInputValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  context: {fileID: 11400000, guid: 7081e410ad1599343ab3b55d065dac8b, type: 2}
   layerMaskNoTools:
     serializedVersion: 2
     m_Bits: 2369
@@ -537,16 +617,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109d0bdecbd2bde4aa83d353257f1b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ressourceProductionSpeed: 10
+  ressourceProductionSpeed: 1
   ressourceByVisitor: 0.2
   ressourceGainedBase: 1
   currentRessources: 200
   OnGainRessource:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: UpdateRessourceCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLoseRessource:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: UpdateRessourceCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3101297756069672954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,10 +664,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenUpdates: 5
-  attractivityScore: 2.5
+  attractivityScore: 0
   OnUpdateAttractivity:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: UpdateAttractivityCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   attractivityCheat: 0
 --- !u!114 &6452573747395027205
 MonoBehaviour:
@@ -837,3 +953,193 @@ Transform:
   m_Father: {fileID: 5209237266425241728}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &159400343555133642
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5209237266425241728}
+    m_Modifications:
+    - target: {fileID: 1292608333, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292608333, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292608333, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99.04567
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0031052209
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.045977
+      objectReference: {fileID: 0}
+    - target: {fileID: 495711263419197918, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_Name
+      value: CameraGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950380066908, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950380066908, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0031051636
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950380066908, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950380066908, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950380066908, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950380066908, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950380066908, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024178, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024178, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.20803
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024178, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.278208
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024178, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.91892904
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024178, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.39442298
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024178, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024178, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 724654950491024182, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: scrollingSpeed
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.20803
+      objectReference: {fileID: 0}
+    - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.278208
+      objectReference: {fileID: 0}
+    - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.91892904
+      objectReference: {fileID: 0}
+    - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.394423
+      objectReference: {fileID: 0}
+    - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+--- !u!4 &1302873166448121054 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+  m_PrefabInstance: {fileID: 159400343555133642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &592276205304232956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 724654950491024182, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+  m_PrefabInstance: {fileID: 159400343555133642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d925cda3dc1c3c4e8821fa9efa32f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!20 &3631207456372332364 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3482107376943712134, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+  m_PrefabInstance: {fileID: 159400343555133642}
+  m_PrefabAsset: {fileID: 0}
