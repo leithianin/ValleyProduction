@@ -127,14 +127,12 @@ public class CameraInputManager : MonoBehaviour
     {
         if (!settingsDatas.cameraMouseScrollingActive || mouseDirection == Vector2.zero)
         {
-            Debug.Log(mouseDirection);
             return;
         }
 
         if (!Input.GetKey(KeyCode.Mouse1))
             return;
 
-        Debug.Log("Move from drag");
         mouseDirection = -mouseDirection;
         cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, mouseDirection.magnitude * mouseScrollingMovingSpeed);
     }
