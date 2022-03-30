@@ -26,6 +26,22 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
         ressourceTimer = TimerManager.CreateGameTimer(ressourceProductionSpeed, GainRessourceOnTime);
     }
 
+    public static void EnableFeature(bool isEnable)
+    {
+        if (instance.enabled != isEnable)
+        {
+            instance.enabled = isEnable;
+
+            if (!isEnable)
+            {
+                instance.ressourceTimer.Stop();
+            }
+            else
+            {
+                instance.ressourceTimer = TimerManager.CreateGameTimer(instance.ressourceProductionSpeed, instance.GainRessourceOnTime);
+            }
+        }
+    }
 
     public static void GainRessource(float amount)
     {

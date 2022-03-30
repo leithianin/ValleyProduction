@@ -13,11 +13,31 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
     [SerializeField] private float attractivityCheat;
 
+    private TimerManager.Timer currentTimer;
+
     public static float AttractivityScore => instance.attractivityScore;
 
     private void Start()
     {
         CalculateAttractivity();
+    }
+
+
+    public static void EnableFeature(bool isEnable)
+    {
+        if (instance.enabled != isEnable)
+        {
+            instance.enabled = isEnable;
+
+            if (!isEnable)
+            {
+                instance.currentTimer.Stop();
+            }
+            else
+            {
+                instance.CalculateAttractivity();
+            }
+        }
     }
 
     private void CalculateAttractivity()
@@ -47,6 +67,6 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
         OnUpdateAttractivity?.Invoke(attractivityScore);
 
-        TimerManager.CreateGameTimer(timeBetweenUpdates, CalculateAttractivity);
+        currentTimer = TimerManager.CreateGameTimer(timeBetweenUpdates, CalculateAttractivity);
     }
 }

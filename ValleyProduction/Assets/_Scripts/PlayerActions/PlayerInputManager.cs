@@ -12,13 +12,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private float holdDuration;
 
     [SerializeField] private UnityEvent OnClicLeft;
-    //[SerializeField] private UnityEvent OnClicLeftDown
     [SerializeField] private UnityEvent OnClicLeftWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicLeftPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicLeftHold;
 
     [SerializeField] private UnityEvent OnClicRight;
-    //[SerializeField] private UnityEvent OnClicRightDown
     [SerializeField] private UnityEvent OnClicRightWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicRightPosition;
     [SerializeField] private UnityEvent<GameObject> OnClicRightHold;
@@ -48,9 +46,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public static bool clicHold = false;
 
     [SerializeField] private GameContext context;
-    //private LayerMask currentLayerMask;
-    public LayerMask layerMaskNoTools;
-    public LayerMask layerMaskPathTool;
 
     private TimerManager.Timer holdRightTimer;
     private TimerManager.Timer holdLeftTimer;
@@ -296,15 +291,5 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             return hit.point;
         }
         return Vector3.zero;
-    }
-
-    public static void ChangeContext(int ID)
-    {
-        GetCamera.eventMask = instance.context.GetContextLayers(ID);
-    }
-
-    public static void ChangeLayerMaskForPathTools()
-    {
-        GetCamera.eventMask = instance.context.GetContextLayers(1);
     }
 }
