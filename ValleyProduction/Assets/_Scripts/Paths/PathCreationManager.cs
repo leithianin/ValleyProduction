@@ -16,7 +16,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
     [Header("Modify Button")]
     public static List<IST_PathPoint> refList;                                                                     //Copie de la liste de pathpoint de pathManager
-    public List<PathFragmentData> newPathFragmentData;
     private IST_PathPoint movingPathpoint;
     private List<PathNode> movingBorderPointsDatas;
     public static List<ModifyListClass> ModifyList = new List<ModifyListClass>();
@@ -55,6 +54,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         public bool isBefore = false;
     }
 
+    public class InceptionClass
+    {
+
+    }
+
     public static void GetUpdateSeveralLine(IST_PathPoint pp) => instance.UpdateSeveralLines(pp);
 
     private void Awake()
@@ -80,7 +84,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public static void ResetData()
     {
         isModifyPath = false;
-        instance.newPathFragmentData.Clear();
         instance.additionalPathpointList.Clear();
         ModifyList.Clear();
     }

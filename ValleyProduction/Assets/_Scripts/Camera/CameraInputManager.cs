@@ -42,7 +42,6 @@ public class CameraInputManager : MonoBehaviour
 
     public void SetInputDirection(Vector2 nInputDirection)
     {
-        Debug.Log(nInputDirection);
         inputDirection = nInputDirection;
     }
 

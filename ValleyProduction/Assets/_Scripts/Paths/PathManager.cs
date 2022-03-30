@@ -1059,40 +1059,42 @@ public class PathManager : VLY_Singleton<PathManager>
         //DestroyLine du path ou il y'a le Pathpoint
         foreach(PathData pd in instance.pathDataList)
         {
-            if(pd.ContainsPoint(pp))
+            instance.pathpointList.Clear();
+
+            if (pd.ContainsPoint(pp))
             {
                 DestroyLineRenderer(pd.pathLineRenderer);
                 instance.currentPathData = pd;
-            }
 
-            for(int i = 0; i < pd.pathFragment.Count; i++)
-            {
-                instance.pathpointList.Add(pd.pathFragment[i].startPoint);
-
-                if (i == pd.pathFragment.Count-1)
+                for (int i = 0; i < pd.pathFragment.Count; i++)
                 {
-                    instance.pathpointList.Add(pd.pathFragment[i].endPoint);
-                }
-                
-                DebugBetween2Points(pd.pathFragment[i].startPoint, pd.pathFragment[i].endPoint);
+                    instance.pathpointList.Add(pd.pathFragment[i].startPoint);
 
-                if (pd.pathFragment[i].startPoint == pp || pd.pathFragment[i].endPoint == pp)
-                {
-                    if (pd.pathFragment[i].endPoint == pp)
+                    if (i == pd.pathFragment.Count - 1)
                     {
-                        PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i],true));
+                        instance.pathpointList.Add(pd.pathFragment[i].endPoint);
                     }
-                    else
+
+                    DebugBetween2Points(pd.pathFragment[i].startPoint, pd.pathFragment[i].endPoint);
+
+                    if (pd.pathFragment[i].startPoint == pp || pd.pathFragment[i].endPoint == pp)
                     {
-                        PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i], false));
+                        if (pd.pathFragment[i].endPoint == pp)
+                        {
+                            PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i], true));
+                        }
+                        else
+                        {
+                            PathCreationManager.ModifyList.Add(new PathCreationManager.ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), pd.pathFragment[i], false));
+                        }
                     }
                 }
+
+                PathCreationManager.refList = GetCurrentPathpointList;
+                PathCreationManager.GetUpdateSeveralLine(pp);
+                PathCreationManager.isModifyPath = true;
             }
         }
-        PathCreationManager.refList = GetCurrentPathpointList;
-        PathCreationManager.instance.newPathFragmentData = new List<PathFragmentData>(GetCurrentPathData.pathFragment);
-        PathCreationManager.GetUpdateSeveralLine(pp);
-        PathCreationManager.isModifyPath = true;
         //Get Path Navmesh + Save Data
     }
 
