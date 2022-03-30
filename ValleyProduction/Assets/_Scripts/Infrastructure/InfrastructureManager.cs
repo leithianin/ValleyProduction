@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     private GameObject movedObject = null;
     public ToolType toolSelected = ToolType.None;
 
+    private List<ToolType> disableTools = new List<ToolType>();
+
     public static GameObject GetMovedObject => instance.movedObject;
 
 
@@ -30,7 +33,30 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
     }
 
-    public static void SetToolSelected(ToolType toolType) { instance.toolSelected = toolType; }
+    public static void EnableOrDisableTool(ToolType tooltype, bool isEnable)
+    {
+        if (isEnable && instance.disableTools.Contains(tooltype))
+        {
+            instance.disableTools.Remove(tooltype);
+        }
+        else if (!isEnable && !instance.disableTools.Contains(tooltype))
+        {
+            instance.disableTools.Add(tooltype);
+
+            if(instance.toolSelected == tooltype)
+            {
+                SetToolSelected(ToolType.None);
+            }
+        }
+    }
+
+    public static void SetToolSelected(ToolType toolType)
+    {
+        if (!instance.disableTools.Contains(toolType))
+        {
+            instance.toolSelected = toolType;
+        }
+    }
 
     public static void ChooseInfrastructure(InfrastructurePreview newPreview)
     {
