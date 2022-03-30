@@ -32,7 +32,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
     }
 
-    public static void SetDisableTool(ToolType tooltype, bool isEnable)
+    public static void EnableOrDisableTool(ToolType tooltype, bool isEnable)
     {
         if (isEnable && instance.disableTools.Contains(tooltype))
         {

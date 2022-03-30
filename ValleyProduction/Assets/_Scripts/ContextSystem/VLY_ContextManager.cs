@@ -7,8 +7,14 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
 {
     [SerializeField] private GameContext contexts;
     [SerializeField] private Camera usedCamera;
+    [SerializeField] private int startingContext = 0;
 
     private GameContext.Context currentContext;
+
+    private void Start()
+    {
+        ChangeContext(startingContext);
+    }
 
     public static void ChangeContext(int ID)
     {
@@ -44,13 +50,13 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
                     throw new NotImplementedException();
                     break;
                 case FeatureLocker.Construction:
-                    InfrastructureManager.SetDisableTool(ToolType.Place, isEnable);
+                    InfrastructureManager.EnableOrDisableTool(ToolType.Place, isEnable);
                     break;
                 case FeatureLocker.Destruction:
-                    InfrastructureManager.SetDisableTool(ToolType.Place, isEnable);
+                    InfrastructureManager.EnableOrDisableTool(ToolType.Move, isEnable);
                     break;
                 case FeatureLocker.Modification:
-                    InfrastructureManager.SetDisableTool(ToolType.Place, isEnable);
+                    InfrastructureManager.EnableOrDisableTool(ToolType.Delete, isEnable);
                     break;
                 case FeatureLocker.Ressource:
                     VLY_RessourceManager.EnableFeature(isEnable);
