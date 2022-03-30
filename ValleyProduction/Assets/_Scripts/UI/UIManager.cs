@@ -7,29 +7,26 @@ using TMPro;
 
 public class UIManager : VLY_Singleton<UIManager>
 {
-    public List<GameObject> pathButtonList = new List<GameObject>();
-    [SerializeField] private GameObject pathChoiceMenu;
-    public ChangeRoadInfo RoadInfo;
-    public Camera sceneCamera;
+    [Header("Tool Information")]
+    public UI_Tool toolInfo;
 
     [Header("Menu Option")]
-    public bool OnMenuOption = false;
-    public Button ResumeButton;
+    public UI_PauseMenu pauseMenuInfo;
 
-    [Header("Settings Menu")]
-    [SerializeField] private UnityEvent OnOpenSettings;
-    [SerializeField] private UnityEvent OnCloseSettings;
+    [Header("Road Informations")]
+    public UI_RoadInformation RoadInfo;
 
     [Header("Visitors Informations")]
     public UI_VisitorInformation visitorInfo;
-    public TMP_Text nbVisitors;
-
-    [Header("Datas display")]
-    [SerializeField] private TMP_Text ressourceCounter;
-    [SerializeField] private TMP_Text attractivityCounter;
 
     [Header("Infrastructure Informations")]
     public UI_InfrastructureInformation infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
+
+    [Header("Datas display")]
+    public UI_DataDisplay dataInfo;
+
+    [Header("Choose Path Buttons")]
+    public UI_ChoosePathButtons choosePathButtonInfo;
 
     [Header("Tooltips")]
     public Tooltip tooltip;
@@ -40,9 +37,8 @@ public class UIManager : VLY_Singleton<UIManager>
     private static Component[] componentTab;
     private static GameObject gameObjectShown;
     public static Tooltip GetTooltip => instance.tooltip;
-    public static bool GetIsOnMenuOption => instance.OnMenuOption;
-    public static UIManager UIinstance => instance;
 
+    [System.Obsolete]
     public void SelectStructure(InfrastructurePreview structure)
     {
         switch(structure.RealInfrastructure.StructureType)
@@ -58,73 +54,6 @@ public class UIManager : VLY_Singleton<UIManager>
         ConstructionManager.SelectInfrastructureType(structure);
     }
 
-    //Use in Path Button On Click()
-    public void OnToolCreatePath(int i)
-    {
-        ConstructionManager.SelectInfrastructureType(null);
-
-        if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
-        {
-            InfrastructureManager.instance.toolSelected = (ToolType)i;
-        }
-        else
-        {
-            InfrastructureManager.instance.toolSelected = ToolType.None;
-        }
-
-        switch (InfrastructureManager.GetCurrentTool)
-        {
-            case ToolType.Place:
-                OnBoardingManager.OnClickBuild?.Invoke(true);
-                break;
-            case ToolType.Move:
-                OnBoardingManager.OnClickModify?.Invoke(true);
-                break;
-            case ToolType.Delete:
-                break;
-        }
-    }
-
-    public void UnselectTool()
-    {
-        InfrastructureManager.instance.toolSelected = ToolType.None;
-
-        if (PathManager.IsOnCreatePath)
-        {
-            PathManager.CreatePathData();
-        }
-
-        ConstructionManager.SelectInfrastructureType(null);
-    }
-
-    //Use in Construction Button On Click()
-    public void OnToolCreateConstruction()
-    {
-        //Create a construction
-    }
-
-    #region Menu Option
-    public static void ChangeMenuOptionBool()
-    {
-        instance.OnMenuOption = !instance.OnMenuOption;
-    }
-    
-    public static void HideMenuOption()
-    {
-        instance.ResumeButton.onClick?.Invoke();
-    }
-    #endregion
-
-    public void OpenSettingsMenu()
-    {
-        OnOpenSettings?.Invoke();
-    }
-
-    public void CloseSettingsMenu()
-    {
-        OnCloseSettings?.Invoke();
-    }
-
     #region Interaction/Hide
     public static void InteractWithObject(GameObject touchedObject)
     {
@@ -134,8 +63,12 @@ public class UIManager : VLY_Singleton<UIManager>
 
         foreach (Component component in componentTab)
         {
-            switch(component)
+            switch (component)
             {
+                case IST_PathPoint ist_pathpoint:
+                    if (PathManager.HasManyPath(ist_pathpoint)) { ArrangePathButton(ist_pathpoint); }
+                    else { InteractWithRoad(PathManager.GetPathData(ist_pathpoint)); }
+                    break;
                 case AU_Informations au_informations:
                     InteractWithInfrastructure(au_informations);
                     break;
@@ -157,108 +90,66 @@ public class UIManager : VLY_Singleton<UIManager>
     }
     #endregion
 
+    #region Tool
+    public static void OnToolCreatePath(int i)
+    {
+        instance.ToolCreatePath(i);
+    }
+
+    public void ToolCreatePath(int i)
+    {
+        toolInfo.OnToolCreatePath(i);
+    }
+    #endregion
+
+    #region Pause Menu
+    public static bool IsOnMenuBool()
+    {
+        return instance.pauseMenuInfo.OnMenuOption;
+    }
+
+    public static void HideMenuOption()
+    {
+        instance.pauseMenuInfo.HideMenuOption();
+    }
+    #endregion
+
     #region Path Info
-    public static void ShowRoadsInfos(PathData pathdata)
+    public static void InteractWithRoad(PathData pathdata)
     {
-        instance.RoadInfo.pathData = pathdata;
-        instance.RoadInfo.UpdateTitle(pathdata.name);
-        instance.RoadInfo.UpdateColor(pathdata.color);
-        instance.RoadInfo.UpdateStamina(pathdata.difficulty);
-
-        //Il faut avoir des valeurs fixes et les get selon la difficult�
-        instance.RoadInfo.UpdateGaugeStamina(1);
-
-        OnBoardingManager.onClickPath?.Invoke(true);
-        instance.RoadInfo.gameObject.SetActive(true);
+        instance.ShowInfoRoad(pathdata);
     }
 
-    public static void ConfirmDelete(PathData pathdata)
+    public void ShowInfoRoad(PathData pathData)
     {
-        //Show UI
+        gameObjectShown = RoadInfo.ShowInfoRoad(pathData).gameObject;
     }
+    #endregion
 
-    public static void DeletePath(PathData pathData)
-    {
-        OnBoardingManager.onDestroyPath?.Invoke(true);
-        HideRoadsInfo();
-        PathManager.DeleteFullPath(pathData);
-    }
-
-    public static void HideRoadsInfo()
-    {
-        instance.RoadInfo.gameObject.SetActive(false);
-    }
-
-    //Buttons Offset de modifier un chemin 
-    public static void ButtonsOffset(GameObject pathpoint)
-    {
-        Vector3 positionButtons = pathpoint.transform.position;
-
-        float offsetPosY = positionButtons.y;
-        float offsetPosX = positionButtons.x;
-
-        Vector3 offsetPos = new Vector3(offsetPosX, offsetPosY, positionButtons.z);
-
-        Vector2 canvasPos;
-        Vector2 screenPoint = instance.sceneCamera.WorldToScreenPoint(offsetPos);
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(instance.pathButtonList[0].transform.parent.parent.GetComponent<RectTransform>(), screenPoint, null, out canvasPos);
-
-        instance.pathButtonList[0].transform.parent.transform.localPosition = canvasPos;
-    }
-
+    #region ChoosePathButton
     //Range les PathData dans la liste de boutons 
     public static void ArrangePathButton(IST_PathPoint pathpoint)
     {
-        instance.pathChoiceMenu.SetActive(true);
-
-        foreach (GameObject go in instance.pathButtonList)
-        {
-            go.SetActive(false);
-        }
-
-        foreach (PathData pd in PathManager.instance.pathDataList)
-        {
-            if (pd.ContainsPoint(pathpoint))
-            {
-                for (int i = 0; i < instance.pathButtonList.Count - 1; i++)
-                {
-                    if (!instance.pathButtonList[i].activeSelf)
-                    {
-                        instance.pathButtonList[i].GetComponent<ButtonPathData>().pathData = pd; //CODE REVIEW : Voir pour mettre des référence au Text directement dans ButtonPathData. Eviter les GetComponent
-                        instance.pathButtonList[i].GetComponent<ButtonPathData>().buttonPathpoint = pathpoint;
-                        instance.pathButtonList[i].transform.GetChild(0).GetComponent<Text>().text = pd.name;
-                        instance.pathButtonList[i].SetActive(true);
-                        break;
-                    }
-                }
-            }
-        }
-
-        ButtonsOffset(pathpoint.gameObject);
+        instance.CallArrangePathButton(pathpoint);
     }
 
-    public void TEMP_HideRoadChoice()
+    public void CallArrangePathButton(IST_PathPoint pathpoint)
     {
-        instance.pathChoiceMenu.SetActive(false);
+        choosePathButtonInfo.ArrangePathButton(pathpoint);
     }
 
-    //Clique sur un des boutons
+    //Clique sur un des boutons chemin
     public static void ChooseButton(ButtonPathData buttonPath)
     {
         gameObjectShown = null;
 
-        instance.pathChoiceMenu.SetActive(false);
+        instance.choosePathButtonInfo.HidePathButton();
 
-        foreach (GameObject go in instance.pathButtonList)
-        {
-            go.SetActive(false);
-        }
-
+        //Selon l'outil selectionné 
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.None:
-                ShowRoadsInfos(buttonPath.pathData);
+                InteractWithRoad(buttonPath.pathData);
                 break;
             case ToolType.Delete:
                 buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
@@ -268,11 +159,6 @@ public class UIManager : VLY_Singleton<UIManager>
     #endregion
 
     #region Info Visitors
-    public static void UpdateNbVisitors(int nb)
-    {
-        instance.nbVisitors.text = nb.ToString();
-    }
-
     //Show les informations des visiteurs on click
     public static void InteractWithVisitor(CPN_Informations cpn_Inf)
     {    
@@ -297,18 +183,6 @@ public class UIManager : VLY_Singleton<UIManager>
         OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         infrastructureInfo.ShowStructureInformation(AU_Inf);
         gameObjectShown = infrastructureInfo.gameObject;
-    }
-    #endregion
-
-    #region Ressources
-    public void UpdateRessourceCount(int ressource)
-    {
-        ressourceCounter.text = ressource.ToString();
-    }
-
-    public void UpdateAttractivityCount(float attractivity)
-    {
-        attractivityCounter.text = attractivity.ToString("F1");
     }
     #endregion
 }

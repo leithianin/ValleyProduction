@@ -4,40 +4,47 @@ using UnityEngine;
 
 public class PathManager : VLY_Singleton<PathManager>
 {
+    //List de data
     [SerializeField] private List<IST_PathPoint> spawnPoints;
-    public static List<IST_PathPoint> SpawnPoints => instance.spawnPoints;
+    [SerializeField] private List<PathData> pathDataList = new List<PathData>();
+    [SerializeField] private List<PathFragmentData> pathFragmentDataList = new List<PathFragmentData>();
+                      public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
 
-    //Get Data + Update Data
-    private PathData currentPathData = null;
-    private PathData disconnectedPathData = null;
-    public List<PathData> pathDataList = new List<PathData>();
-    public List<PathFragmentData> pathFragmentDataList = new List<PathFragmentData>();
-    public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
+    //Accesseur des listes
+    public static List<IST_PathPoint> SpawnPoints => instance.spawnPoints;
+    public static List<PathData> GetAllPath => instance.pathDataList;
+    public static List<IST_PathPoint> GetCurrentPathpointList => instance.pathpointList;
+
+    //Current Data
+    private PathData currentPathData              = null;
+    private PathData disconnectedPathData         = null;
     public static IST_PathPoint previousPathpoint = null;
+
+    //Accesseur current Data
+    public static PathData GetCurrentPathData => instance.currentPathData;
 
     //Uniquement pour delete un point
     private static List<IST_PathPoint> listAllPathPoints = new List<IST_PathPoint>();
 
     //Navmesh needs
+    [System.Obsolete]
     private static List<PathFragmentData> pfdNavmeshUpdate = new List<PathFragmentData>();
 
     [SerializeField] private InterestPointDetector roadDetectorPrefab;
 
     [Header("DEBUG")]
-    public bool debugMode = false;
-    public bool PathReverse = false;
-    public static bool debugCheck = false;
-    public GameObject DebugLineRenderer;
-    public List<GameObject> lineRendererDebugList = new List<GameObject>();
+    [SerializeField] private bool debugMode = false;
+    [SerializeField] private GameObject DebugLineRenderer;
+    [SerializeField] private List<GameObject> lineRendererDebugList = new List<GameObject>();
+
+    private bool PathReverse       = false;
+    //public static bool debugCheck = false;
     public LineRenderer currentLineDebug;
 
     [Header("Action")]
     public static System.Action<bool> isOnSpawn;
     public static System.Action<bool> isOnFinishPath;
 
-    public static List<PathData> GetAllPath => instance.pathDataList;
-    public static PathData GetCurrentPathData => instance.currentPathData;
-    public static List<IST_PathPoint> GetCurrentPathpointList => instance.pathpointList;
     public static PathManager GetInstance => instance;
 
     public static bool IsOnCreatePath => (GetCurrentPathpointList.Count>0)?true:false;
@@ -476,6 +483,11 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    public void ValidatePath()
+    {
+        CreatePathData();
+    }
+
     //Create pathdata
     public static void CreatePathData()
     {
@@ -670,7 +682,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 if (pd.ContainsPoint(pathpoint))
                 {
                     instance.currentPathData = pd;
-                    UIManager.ShowRoadsInfos(pd);
+                    UIManager.InteractWithRoad(pd);
 
                     //Il faut trouver les pathpoints
                     for (int i = 0; i <= pd.pathFragment.Count - 1; i++)
@@ -719,7 +731,7 @@ public class PathManager : VLY_Singleton<PathManager>
         CreatePathData();
 
         instance.currentPathData = pathdata;
-        UIManager.ShowRoadsInfos(pathdata);
+        UIManager.InteractWithRoad(pathdata);
 
         for (int i = 0; i <= pathdata.pathFragment.Count - 1; i++)
         {

@@ -46,7 +46,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
         else
         {
-            UIManager.HideRoadsInfo();
+            UIManager.HideShownGameObject();
         }
     }
 
@@ -143,7 +143,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     {
         if(!HasSelectedStructureType)
         {
-            if (UIManager.GetIsOnMenuOption) { UIManager.HideMenuOption()          ; }
+            if (UIManager.IsOnMenuBool()) { UIManager.HideMenuOption()          ; }
             else                             { instance.OnUnselectOneMore?.Invoke(); }
         }
 
@@ -187,7 +187,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         {
             case InfrastructureType.Path:
                 PathManager.CreatePathData();
-                PlayerInputManager.ChangeLayerMaskForNoTools();
+                //PlayerInputManager.ChangeContext();
                 OnUnselectPathTool?.Invoke();
                 break;
         }

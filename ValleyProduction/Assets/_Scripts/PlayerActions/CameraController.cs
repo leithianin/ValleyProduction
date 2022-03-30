@@ -56,14 +56,14 @@ public class CameraController : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInputManager.OnKeyMove += MoveCamera;
-        PlayerInputManager.OnMouseScroll += UpdateCameraZoomSpeed;
+        PlayerInputManager.GetOnKeyMove.AddListener(MoveCamera);
+        PlayerInputManager.GetOnMouseScroll.AddListener(UpdateCameraZoomSpeed);
     }
 
     private void OnDisable()
     {
-        PlayerInputManager.OnKeyMove -= MoveCamera;
-        PlayerInputManager.OnMouseScroll -= UpdateCameraZoomSpeed;
+        PlayerInputManager.GetOnKeyMove.RemoveListener(MoveCamera);
+        PlayerInputManager.GetOnMouseScroll.RemoveListener(UpdateCameraZoomSpeed);
     }
 
     private void Update()

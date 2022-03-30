@@ -12,6 +12,14 @@ public class InterestPoint : MonoBehaviour
         return GetUsableInteractions(interactor).Count > 0;
     }
 
+    public void AskToInterupt()
+    {
+        for(int i = 0; i < interactions.Length; i++)
+        {
+            interactions[i].AskToInterupt();
+        }
+    }
+
     public List<BuildTypes> InteractionTypeInInterestPoint()
     {
         List<BuildTypes> toReturn = new List<BuildTypes>();

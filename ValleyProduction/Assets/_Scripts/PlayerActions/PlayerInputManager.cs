@@ -12,33 +12,55 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private float holdDuration;
 
     [SerializeField] private UnityEvent OnClicLeft;
+    //[SerializeField] private UnityEvent OnClicLeftDown
+    [SerializeField] private UnityEvent OnClicLeftWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicLeftPosition;
-    [SerializeField] private UnityEvent<GameObject> OnClicLeftObject;
     [SerializeField] private UnityEvent<GameObject> OnClicLeftHold;
 
     [SerializeField] private UnityEvent OnClicRight;
+    //[SerializeField] private UnityEvent OnClicRightDown
     [SerializeField] private UnityEvent OnClicRightWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicRightPosition;
-    [SerializeField] private UnityEvent<GameObject> OnClicRightObject;
     [SerializeField] private UnityEvent<GameObject> OnClicRightHold;
+
+    [SerializeField] private UnityEvent OnClicScrollWheel;
+    [SerializeField] private UnityEvent<float> OnPolar;
+    [SerializeField] private UnityEvent<float> OnAzimuthal;
 
     [SerializeField] private UnityEvent OnKeyReturn;
     [SerializeField] private UnityEvent OnKeyDelete;
     [SerializeField] private UnityEvent OnKeyEscape;
+    [SerializeField] private UnityEvent<bool> OnKeyLeftShift;
 
-    public static Action<Vector2> OnKeyMove;
-    public static Action<float> OnMouseScroll;
+    [SerializeField] private UnityEvent<Vector2> OnKeyMove;
+    public static UnityEvent<Vector2> GetOnKeyMove => instance.OnKeyMove;
+    private Vector2 lastKeyDirection;
+
+
+    [SerializeField] private UnityEvent<Vector2> OnMouseMove;
+    public static UnityEvent<Vector2> GetOnMouseMove => instance.OnMouseMove;
+
+    [SerializeField] private UnityEvent<float> OnMouseScroll;
+    public static UnityEvent<float> GetOnMouseScroll => instance.OnMouseScroll;
+    private float lastScrollValue;
+
 
     public static bool clicHold = false;
 
-    private LayerMask currentLayerMask;
+    [SerializeField] private GameContext context;
+    //private LayerMask currentLayerMask;
     public LayerMask layerMaskNoTools;
     public LayerMask layerMaskPathTool;
 
     private TimerManager.Timer holdRightTimer;
     private TimerManager.Timer holdLeftTimer;
 
-    public static Vector3 GetMousePosition => instance.GetGroundHitPoint();
+    private RaycastHit raycastHit;
+
+    private CPN_ClicHandler lastClicHandler;
+    private CPN_ClicHandler clicHandlerTouched;
+
+    public static Vector3 GetMousePosition => instance.raycastHit.point;
 
     public static Vector2 GetMousePosition2D => new Vector2(GetMousePosition.x, GetMousePosition.z);
 
@@ -46,7 +68,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void Start()
     {
-        currentLayerMask = layerMaskNoTools;
+        usedCamera.eventMask = context.GetContextLayers(0);
     }
 
     // Update is called once per frame
@@ -54,46 +76,62 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         //Handle Mouse input outside UI
 
-        if (!UIManager.instance.OnMenuOption && !usedEventSystem.IsPointerOverGameObject())
+        if (!UIManager.IsOnMenuBool() && !usedEventSystem.IsPointerOverGameObject())
         {
-            if (usedEventSystem.currentSelectedGameObject == null)
-            {
-                if (Input.GetMouseButtonDown(0))                        //Clic gauche enfoncé
-                {
-                    //holdLeftTimer = TimerManager.CreateRealTimer(holdDuration, CallLeftHoldMouseInput);
-                    //StartCoroutine(TimerHoldLeft());
-                }
-                else if (Input.GetMouseButtonUp(0))                      //Clic gauche relaché
-                {
-                    //StopAllCoroutines();
-                    //holdLeftTimer?.Stop();
-                    //holdLeftTimer = null;
-                    //Debug.Log("Coroutines Stop");
-                    CallLeftMouseInputs();
-                }
+            raycastHit = GetHitMouseGameobject();
 
-                if (Input.GetMouseButtonDown(1))                        //Clic droit enfoncé           
+            if (raycastHit.transform != null)
+            {
+                clicHandlerTouched = raycastHit.transform.gameObject.GetComponent<CPN_ClicHandler>();
+            }
+            else
+            {
+                clicHandlerTouched = null;
+            }
+
+            if (Input.GetMouseButtonUp(0))                      //Clic gauche relaché
+            {
+                CallLeftMouseInputs(raycastHit);
+
+                if (clicHandlerTouched != null)
                 {
-                    holdRightTimer = TimerManager.CreateRealTimer(holdDuration, CallRightHoldMouseInput);
-                    //StartCoroutine(TimerHoldRight());
+                    clicHandlerTouched.MouseDown(0);
                 }
-                else if (Input.GetMouseButtonUp(1))
+                else
                 {
-                    CallRightMouseInputs();
-                    //StopAllCoroutines();
-                    holdRightTimer?.Stop();
-                    holdRightTimer = null;
-                    //Debug.Log("Coroutines Stop");
+                    OnClicLeftWihtoutObject?.Invoke();
                 }
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                CallRightMouseInputs(raycastHit);
+
+                if (clicHandlerTouched != null)
+                {
+                    clicHandlerTouched.MouseDown(1);
+                }
+                else
+                {
+                    OnClicRightWihtoutObject?.Invoke();
+                }
+            }
+
+
+            if (Input.mouseScrollDelta.y != 0 || lastScrollValue != 0)
+            {
+                OnMouseScroll?.Invoke(Input.mouseScrollDelta.y);
+                lastScrollValue = Input.mouseScrollDelta.y;
             }
         }
 
         CheckForMovementInput();
 
-        if(Input.mouseScrollDelta.y != 0)
-        {
-            OnMouseScroll?.Invoke(Input.mouseScrollDelta.y);
-        }
+        OnMouseMove?.Invoke(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")));
+
+        OnAzimuthal?.Invoke(Input.GetAxis("Azimuthal"));
+
+        OnPolar?.Invoke(Input.GetAxis("Polar"));
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -110,11 +148,15 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             OnKeyEscape?.Invoke();
         }
 
-
-        /*if (Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            VLY_Time.PauseTime();
-        }*/
+            OnKeyLeftShift?.Invoke(true);
+        }
+        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            OnKeyLeftShift?.Invoke(false);
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             VLY_Time.SetTimeScale(1);
@@ -127,6 +169,28 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         {
             VLY_Time.SetTimeScale(3);
         }
+
+        ResetClicHandler();
+    }
+
+    private void ResetClicHandler()
+    {
+        if (clicHandlerTouched != lastClicHandler)
+        {
+            if (lastClicHandler != null)
+            {
+                lastClicHandler.MouseExit();
+            }
+
+            lastClicHandler = clicHandlerTouched;
+            
+            if (clicHandlerTouched != null)
+            {
+                clicHandlerTouched.MouseEnter();
+            }
+        }
+
+        clicHandlerTouched = null;
     }
 
     IEnumerator TimerHoldLeft()
@@ -134,7 +198,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         //Debug.Log("Left Coroutine Start");
         yield return new WaitForSeconds(holdDuration);
         //Debug.Log("Left Coroutine End");
-        CallLeftHoldMouseInput();
+        CallLeftHoldMouseInput(raycastHit);
     }
 
     IEnumerator TimerHoldRight()
@@ -142,10 +206,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         //Debug.Log("Right Coroutine Start");
         yield return new WaitForSeconds(holdDuration);
         //Debug.Log("Right Coroutine End");
-        CallRightHoldMouseInput();
+        CallRightHoldMouseInput(raycastHit);
     }
 
-    private void CallLeftMouseInputs()
+    private void CallLeftMouseInputs(RaycastHit hit)
     {
         if (clicHold)
         {
@@ -159,25 +223,20 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             if (GetMousePosition != Vector3.zero)
             {
                 OnClicLeftPosition?.Invoke(GetMousePosition);
-
-                if (GetHitMouseGameobject(out GameObject hitObject))
-                {
-                    OnClicLeftObject?.Invoke(hitObject);
-                }
             }
         }
     }
 
-    private void CallLeftHoldMouseInput()
+    private void CallLeftHoldMouseInput(RaycastHit hit)
     {
-        if (GetHitMouseGameobject(out GameObject hitObject))
+        if (hit.transform != null)
         {
             clicHold = true;
-            OnClicLeftHold?.Invoke(hitObject);
+            OnClicLeftHold?.Invoke(hit.transform.gameObject);
         }
     }
 
-    private void CallRightMouseInputs()
+    private void CallRightMouseInputs(RaycastHit hit)
     {
         if (!clicHold)
         {
@@ -186,23 +245,18 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             if (GetMousePosition != Vector3.zero)
             {
                 OnClicRightPosition?.Invoke(GetMousePosition);
-
-                if (GetHitMouseGameobject(out GameObject hitObject))
-                {
-                    OnClicRightObject?.Invoke(hitObject);
-                }
             }
         }
 
         clicHold = false;
     }
 
-    private void CallRightHoldMouseInput()
+    private void CallRightHoldMouseInput(RaycastHit hit)
     {
-        if(GetHitMouseGameobject(out GameObject hitObject))
+        if(hit.transform != null)
         {
             clicHold = true;
-            OnClicRightHold?.Invoke(hitObject);
+            OnClicRightHold?.Invoke(hit.transform.gameObject);
         }
     }
 
@@ -211,63 +265,46 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         float xDirection = Input.GetAxis("Horizontal");
         float yDirection = Input.GetAxis("Vertical");
 
-        /*if(Input.GetKey(KeyCode.UpArrow))
-        {
-            yDirection++;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            yDirection--;
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            xDirection++;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            xDirection--;
-        }*/
-
-        if (xDirection != 0 || yDirection != 0)
+        if (xDirection != 0 || yDirection != 0 || lastKeyDirection != Vector2.zero)
         {
             OnKeyMove?.Invoke(new Vector2(xDirection, yDirection));
         }
+
+        lastKeyDirection = new Vector2(xDirection, yDirection);
     }
 
-    private bool GetHitMouseGameobject(out GameObject hitObject)
+    private RaycastHit GetHitMouseGameobject()
     {
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, 100000.0f, currentLayerMask))
+        if (Physics.Raycast(ray, out hit, 100000.0f, GetCamera.eventMask))
         {
-            hitObject = hit.transform.gameObject;
-            return true;
+            return hit;
         }
 
-        hitObject = null;
-        return false;
+        return hit;
     }
 
+    [Obsolete]
     private Vector3 GetGroundHitPoint()
     {
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100000.0f, currentLayerMask))
+        if (Physics.Raycast(ray, out hit, 100000.0f, LayerMask.GetMask("Terrain")))
         {
             return hit.point;
         }
         return Vector3.zero;
     }
 
-    public static void ChangeLayerMaskForNoTools()
+    public static void ChangeContext(int ID)
     {
-        instance.currentLayerMask = instance.layerMaskNoTools;
+        GetCamera.eventMask = instance.context.GetContextLayers(ID);
     }
 
     public static void ChangeLayerMaskForPathTools()
     {
-        instance.currentLayerMask = instance.layerMaskPathTool;
+        GetCamera.eventMask = instance.context.GetContextLayers(1);
     }
 }

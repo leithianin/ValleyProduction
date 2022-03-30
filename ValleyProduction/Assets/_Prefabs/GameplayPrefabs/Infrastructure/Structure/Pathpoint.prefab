@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 9028505647349876764}
   - component: {fileID: 1950444411236423360}
   - component: {fileID: 485267397}
+  - component: {fileID: 6241026456848825811}
   m_Layer: 2
   m_Name: Pathpoint
   m_TagString: Untagged
@@ -139,36 +140,6 @@ MonoBehaviour:
   PlayOnHoldRightClic:
     m_PersistentCalls:
       m_Calls: []
-  PlayOnMouseOver:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 485267397}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 14
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  PlayOnMouseExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 485267397}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnSetData:
     m_PersistentCalls:
       m_Calls:
@@ -276,6 +247,102 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &6241026456848825811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583442100236828276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75911c183fc5990458a04e302a3d814a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnLeftMouseDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6225881508748953926}
+        m_TargetAssemblyTypeName: Infrastructure, Assembly-CSharp
+        m_MethodName: AskToInteract
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRightMouseDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6225881508748953926}
+        m_TargetAssemblyTypeName: Infrastructure, Assembly-CSharp
+        m_MethodName: AskToDelete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  PlayOnMouseEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 485267397}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6225881508748953926}
+        m_TargetAssemblyTypeName: Infrastructure, Assembly-CSharp
+        m_MethodName: MouseOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  PlayOnMouseExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 485267397}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6225881508748953926}
+        m_TargetAssemblyTypeName: Infrastructure, Assembly-CSharp
+        m_MethodName: MouseExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7289786275010608259
 GameObject:
   m_ObjectHideFlags: 0

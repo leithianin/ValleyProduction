@@ -1,15 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UI_VisitorInformation : MonoBehaviour
 {
-    public TouristType hikersInfo;
-    public TouristType touristInfo;
+    [SerializeField] private TouristType hikersInfo;
+    [SerializeField] private TouristType touristInfo;
+
+    public Action OnShowVisitorInfo;
 
     public TouristType ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
         OnBoardingManager.OnClickVisitorEco?.Invoke(true);
+        OnShowVisitorInfo?.Invoke();
         switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
