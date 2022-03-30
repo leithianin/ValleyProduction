@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UI_Tool : MonoBehaviour
 {
+    [SerializeField] private UnityEvent OnSelectPlaceTool;
+    [SerializeField] private UnityEvent OnSelectMoveTool;
+    [SerializeField] private UnityEvent OnSelectDeleteTool;
+
     public void OnToolCreatePath(int i)
     {
         ConstructionManager.SelectInfrastructureType(null);
@@ -21,11 +26,17 @@ public class UI_Tool : MonoBehaviour
         {
             case ToolType.Place:
                 OnBoardingManager.OnClickBuild?.Invoke(true);
+                OnSelectPlaceTool?.Invoke();
                 break;
             case ToolType.Move:
                 OnBoardingManager.OnClickModify?.Invoke(true);
+                OnSelectMoveTool?.Invoke();
                 break;
             case ToolType.Delete:
+                OnSelectDeleteTool?.Invoke();
+                break;
+            case ToolType.None:
+                UnselectTool();
                 break;
         }
     }

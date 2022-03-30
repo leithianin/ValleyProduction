@@ -53,10 +53,10 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
                     InfrastructureManager.EnableOrDisableTool(ToolType.Place, isEnable);
                     break;
                 case FeatureLocker.Destruction:
-                    InfrastructureManager.EnableOrDisableTool(ToolType.Move, isEnable);
+                    InfrastructureManager.EnableOrDisableTool(ToolType.Delete, isEnable);
                     break;
                 case FeatureLocker.Modification:
-                    InfrastructureManager.EnableOrDisableTool(ToolType.Delete, isEnable);
+                    InfrastructureManager.EnableOrDisableTool(ToolType.Move, isEnable);
                     break;
                 case FeatureLocker.Ressource:
                     VLY_RessourceManager.EnableFeature(isEnable);
