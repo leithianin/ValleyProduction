@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2368778678293667668}
   - component: {fileID: 3973618983241115100}
   - component: {fileID: 329369899851214195}
+  - component: {fileID: 5594607856556388087}
   m_Layer: 2
   m_Name: VisitorPath
   m_TagString: Untagged
@@ -177,36 +178,6 @@ MonoBehaviour:
   - {fileID: 7603813357234534011}
   - {fileID: 2368778678293667668}
   - {fileID: 3973618983241115100}
-  OnMouseIN:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3264530275645524567}
-        m_TargetAssemblyTypeName: VLY_ComponentHandler, Assembly-CSharp
-        m_MethodName: ActiveOutline
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnMouseOUT:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3264530275645524567}
-        m_TargetAssemblyTypeName: VLY_ComponentHandler, Assembly-CSharp
-        m_MethodName: DesactiveOutline
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &7603813357234534011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,7 +275,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720004a39c405374fa647572a17c8288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scriptable: {fileID: 0}
   visitorType: 0
+--- !u!114 &5594607856556388087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7603813357234534010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75911c183fc5990458a04e302a3d814a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnLeftMouseDown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRightMouseDown:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayOnMouseEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayOnMouseExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7603813357492896078
 GameObject:
   m_ObjectHideFlags: 0
