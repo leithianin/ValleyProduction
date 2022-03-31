@@ -94,6 +94,7 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnReplaceObject()
     {
+        node.PlaceNode();
         PathManager.UpdateAfterMoving(this);
     }
 

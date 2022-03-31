@@ -112,7 +112,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             instance.currentSelectedStructure.StartMoveObject();
         }
-
         instance.movedObject = toMove.gameObject;
         instance.movedObject.layer = layerIgnoreRaycast;
         instance.currentSelectedStructure.MoveObject();
