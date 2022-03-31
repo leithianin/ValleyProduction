@@ -19,6 +19,12 @@ public class IST_BaseStructure : Infrastructure
         
     }
 
+    protected override void OnStartMoveObject()
+    {
+
+    }
+
+
     protected override void OnMoveObject()
     {
         

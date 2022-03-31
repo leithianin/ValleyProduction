@@ -18,6 +18,10 @@ public class TEMP_IST_BearStructure : Infrastructure
     {
 
     }
+    protected override void OnStartMoveObject()
+    {
+
+    }
 
     protected override void OnMoveObject()
     {

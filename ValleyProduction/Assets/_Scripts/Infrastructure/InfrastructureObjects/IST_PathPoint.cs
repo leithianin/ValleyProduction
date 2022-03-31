@@ -81,6 +81,12 @@ public class IST_PathPoint : Infrastructure
         InfrastructureManager.DesnapInfrastructure(this);
     }
 
+    protected override void OnStartMoveObject()
+    {
+        PathManager.StartMovingPoint(this);
+    }
+
+
     protected override void OnMoveObject()
     {
         PathManager.UpdateLineWhenMoving(this);

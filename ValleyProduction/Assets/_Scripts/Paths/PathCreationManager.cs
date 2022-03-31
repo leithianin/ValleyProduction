@@ -3,6 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
+public class ModifiedPath
+{
+    public PathData pathData;
+    public List<IST_PathPoint> pathPoints = new List<IST_PathPoint>();
+    public List<PathFragmentData> pathFragments = new List<PathFragmentData>();
+    public List<AdditionalPathpointClass> additionalPathpointList = new List<AdditionalPathpointClass>();
+    public List<ModifyListClass> modifyList = new List<ModifyListClass>();
+}
+
+
+public class AdditionalPathpointClass
+{
+    public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
+    public bool isBefore = false;
+}
+
+
+//List des pathFragment à modifier avec leur LineRenderer
+public class ModifyListClass
+{
+    public LineRenderer modifyLinesRenderer;
+    //public List<LineRenderer> 
+    public PathFragmentData modifyPathFragment;
+    public bool inverse;
+
+    public ModifyListClass(LineRenderer modifyLinesRendererV, PathFragmentData modifyPathFragmentV, bool isInverse)
+    {
+        modifyLinesRenderer = modifyLinesRendererV;
+        modifyPathFragment = modifyPathFragmentV;
+        inverse = isInverse;
+    }
+}
+
 public class PathCreationManager : VLY_Singleton<PathCreationManager>
 {
     public GameObject debugObject;
@@ -15,12 +49,9 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     private Vector3 offsetPathCalcul = new Vector3(0f, 0f, 0.5f); // -0.5f en z
 
     [Header("Modify Button")]
-    public static List<IST_PathPoint> refList;                                                                     //Copie de la liste de pathpoint de pathManager
-    public List<PathFragmentData> newPathFragmentData;
-    private IST_PathPoint movingPathpoint;
-    private List<PathNode> movingBorderPointsDatas;
-    public static List<ModifyListClass> ModifyList = new List<ModifyListClass>();
-    private List<AdditionalPathpointClass> additionalPathpointList = new List<AdditionalPathpointClass>();
+    public List<ModifiedPath> modifiedPaths = new List<ModifiedPath>();
+    public static List<ModifiedPath> ModifiedPaths => instance.modifiedPaths;
+    public static IST_PathPoint movingPathpoint;
     public static bool isModifyPath = false;
     private float distance = 0f;
 
@@ -29,33 +60,9 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
     public IST_PathPoint testPathpoint;
 
-    public static IST_PathPoint MovingPathPoint => instance.movingPathpoint;
-    public static List<AdditionalPathpointClass> GetAdditionnalPoints => instance.additionalPathpointList;
-    public static List<PathNode> GetMovingBorderPoints => instance.movingBorderPointsDatas;
+    //public static List<AdditionalPathpointClass> GetAdditionnalPoints => instance.additionalPathpointList;
 
-    //List des pathFragment à modifier avec leur LineRenderer
-    public class ModifyListClass
-    {
-        public LineRenderer modifyLinesRenderer;
-        //public List<LineRenderer> 
-        public PathFragmentData modifyPathFragment;
-        public bool inverse;
-
-        public ModifyListClass(LineRenderer modifyLinesRendererV, PathFragmentData modifyPathFragmentV, bool isInverse)
-        {
-            modifyLinesRenderer = modifyLinesRendererV;
-            modifyPathFragment = modifyPathFragmentV;
-            inverse = isInverse;
-        }
-    }
-
-    public class AdditionalPathpointClass
-    {
-        public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
-        public bool isBefore = false;
-    }
-
-    public static void GetUpdateSeveralLine(IST_PathPoint pp) => instance.UpdateSeveralLines(pp);
+    public static void GetUpdateSeveralLine(ModifiedPath pathModified) => instance.UpdateSeveralLines(pathModified);
 
     private void Awake()
     {
@@ -73,16 +80,20 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
         if (isModifyPath)
         {
-            UpdateSeveralLines(movingPathpoint);
+            foreach (ModifiedPath mp in modifiedPaths)
+            {
+                UpdateSeveralLines(mp);
+            }
         }
     }
 
     public static void ResetData()
     {
         isModifyPath = false;
-        instance.newPathFragmentData.Clear();
+        /*instance.newPathFragmentData.Clear();
         instance.additionalPathpointList.Clear();
-        ModifyList.Clear();
+        ModifyList.Clear();*/
+        instance.modifiedPaths.Clear();
     }
 
     //Calculate Path each frame you're editing a path
@@ -140,22 +151,18 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     }
 
     //Update les line renderer lorsqu'on déplace un pathpoint
-    public void UpdateSeveralLines(IST_PathPoint pp)
+    public void UpdateSeveralLines(ModifiedPath pathModified)
     {
-        movingPathpoint = pp;
-
-        movingBorderPointsDatas = movingPathpoint.Node.GetNeighbours();
-
-        while (ModifyList.Count > additionalPathpointList.Count)
+        while (pathModified.modifyList.Count > pathModified.additionalPathpointList.Count)
         {
-            additionalPathpointList.Add(new AdditionalPathpointClass());
+            pathModified.additionalPathpointList.Add(new AdditionalPathpointClass());
         }
 
-        for (int i = 0; i < ModifyList.Count; i++)
+        for (int i = 0; i < pathModified.modifyList.Count; i++)
         {
             navPath = new NavMeshPath();
 
-            NavMesh.CalculatePath(ModifyList[i].modifyPathFragment.startPoint.transform.position + offsetPathCalcul, ModifyList[i].modifyPathFragment.endPoint.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
+            NavMesh.CalculatePath(pathModified.modifyList[i].modifyPathFragment.startPoint.transform.position + offsetPathCalcul, pathModified.modifyList[i].modifyPathFragment.endPoint.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
 
             List<Vector3> points = new List<Vector3>();
 
@@ -169,15 +176,15 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
             if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
             {
-                ModifyList[i].modifyPathFragment.path = new List<Vector3>(points);
+                pathModified.modifyList[i].modifyPathFragment.path = new List<Vector3>(points);
                 navmeshPositionsList = new List<Vector3>(points);
             }
 
-            AddMarkers(navmeshPositionsList, i, ModifyList[i].inverse);
+            AddMarkers(navmeshPositionsList, i, pathModified.modifyList[i].inverse, pathModified.additionalPathpointList, pathModified.pathPoints);
 
             //DebugNavmesh();
 
-            ShowPathLine(navmeshPositionsList, ModifyList[i].modifyLinesRenderer);
+            ShowPathLine(navmeshPositionsList, pathModified.modifyList[i].modifyLinesRenderer);
         }
     }
 
@@ -198,7 +205,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     }
 
     //Add markers beetween the moving pathpoint and other pathpoints if the distance is to high /!\ Possibilité de rassembler des choses en une fonction /!\
-    public void AddMarkers(List<Vector3> vectors, int index, bool isInverse)
+    public void AddMarkers(List<Vector3> vectors, int index, bool isInverse, List<AdditionalPathpointClass> additionalPathpointList, List<IST_PathPoint> pathPointList)
     {
         float distance = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
         int result = (int)distance / 20;                                                                            //Replace 20 par la valeur de distanceMax entre les balises
@@ -232,7 +239,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
                                 IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                         //Remplacer par le pathpoint Preview
-                                UpdateData(pathpoint, vectors, false);
+                                UpdateData(pathpoint, vectors, false, pathPointList);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
 
                             }
@@ -262,7 +269,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
                                 IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                        //Remplacer par le pathpoint Preview
-                                UpdateData(pathpoint, vectors, true);
+                                UpdateData(pathpoint, vectors, true, pathPointList);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
                             }
                             else
@@ -295,21 +302,21 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
     //Update les info du pathdata de PathManager 
     //PathFragment à update ici aussi
-    public void UpdateData(IST_PathPoint pp, List<Vector3> vectors, bool isBefore)
+    public void UpdateData(IST_PathPoint pp, List<Vector3> vectors, bool isBefore, List<IST_PathPoint> pathpointsList)
     {
-        int index = refList.IndexOf(movingPathpoint);
-        refList.Add(pp);
+        int index = pathpointsList.IndexOf(movingPathpoint);
+        pathpointsList.Add(pp);
 
         //Je pars du dernier point et je reviens vers l'index de celui que je bouge
-        for (int i = refList.Count-1; i >= index; i--)
+        for (int i = pathpointsList.Count-1; i >= index; i--)
         {
-            refList[i] = refList[i - 1];
+            pathpointsList[i] = pathpointsList[i - 1];
 
             if (isBefore)
             {
                 if(i == index)
                 {
-                    refList[i] = pp;
+                    pathpointsList[i] = pp;
                     //update pathf
 
                     break;
@@ -319,7 +326,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             {
                 if(i == (index+1))
                 {
-                    refList[i] = pp;
+                    pathpointsList[i] = pp;
                     //update  athf
 
                     break;

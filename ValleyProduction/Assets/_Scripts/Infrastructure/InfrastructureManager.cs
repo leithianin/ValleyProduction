@@ -107,12 +107,16 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// <param name="toMove"></param>
     public static void MoveInfrastructure(Infrastructure toMove)
     {
-        
-            instance.currentSelectedStructure = toMove;
-            instance.movedObject = toMove.gameObject;
-            instance.movedObject.layer = layerIgnoreRaycast;
-            instance.currentSelectedStructure.MoveObject();
-        
+        instance.currentSelectedStructure = toMove;
+        if (instance.movedObject == null)
+        {
+            instance.currentSelectedStructure.StartMoveObject();
+        }
+
+        instance.movedObject = toMove.gameObject;
+        instance.movedObject.layer = layerIgnoreRaycast;
+        instance.currentSelectedStructure.MoveObject();
+
     }
 
     public static void OnHoldRightClic(InfrastructureType tool, Infrastructure toHoldRightClic)

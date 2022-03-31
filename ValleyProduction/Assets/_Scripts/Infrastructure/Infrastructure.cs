@@ -14,6 +14,7 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
     [SerializeField, Tooltip("Actions to play when the construction is selected.")] private UnityEvent PlayOnSelect;
     [SerializeField, Tooltip("Actions to play when the construction is unselected.")] private UnityEvent PlayOnUnselect;
+    [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnStartMove;
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnMove;
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnReplace;
     [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
@@ -54,6 +55,8 @@ public abstract class Infrastructure : MonoBehaviour
     /// Used to do specific action when a construction is moved.
     /// </summary>
     protected abstract void OnMoveObject();
+
+    protected abstract void OnStartMoveObject();
 
     protected abstract void OnReplaceObject();
 
@@ -96,6 +99,12 @@ public abstract class Infrastructure : MonoBehaviour
             Destroy(gameObject);
         }
         
+    }
+
+    public void StartMoveObject()
+    {
+        PlayOnStartMove?.Invoke();
+        OnStartMoveObject();
     }
 
     /// <summary>
