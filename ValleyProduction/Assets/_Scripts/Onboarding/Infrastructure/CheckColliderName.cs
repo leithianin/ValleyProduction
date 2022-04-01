@@ -8,7 +8,7 @@ public class CheckColliderName : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.name.Contains("TrashCanOB"))
+        if (other.name.Contains(name))
         {
             OnBoardingManager.OnClickZoneTrashCan?.Invoke(true);
         }

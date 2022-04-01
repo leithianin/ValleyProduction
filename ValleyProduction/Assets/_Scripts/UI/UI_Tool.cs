@@ -8,6 +8,7 @@ public class UI_Tool : MonoBehaviour
     [SerializeField] private UnityEvent OnSelectPlaceTool;
     [SerializeField] private UnityEvent OnSelectMoveTool;
     [SerializeField] private UnityEvent OnSelectDeleteTool;
+    [SerializeField] private UnityEvent OnDeselectTool;
 
     public void OnToolCreatePath(int i)
     {
@@ -36,6 +37,7 @@ public class UI_Tool : MonoBehaviour
                 OnSelectDeleteTool?.Invoke();
                 break;
             case ToolType.None:
+                OnDeselectTool?.Invoke();
                 UnselectTool();
                 break;
         }
