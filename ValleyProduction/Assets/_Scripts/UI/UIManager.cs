@@ -161,7 +161,8 @@ public class UIManager : VLY_Singleton<UIManager>
     #region Info Visitors
     //Show les informations des visiteurs on click
     public static void InteractWithVisitor(CPN_Informations cpn_Inf)
-    {    
+    {
+        HideShownGameObject();
         instance.ShowInfoVisitor(cpn_Inf);
     }
 
