@@ -173,6 +173,9 @@ MonoBehaviour:
   PlayOnUnselect:
     m_PersistentCalls:
       m_Calls: []
+  PlayOnStartMove:
+    m_PersistentCalls:
+      m_Calls: []
   PlayOnMove:
     m_PersistentCalls:
       m_Calls:
@@ -242,36 +245,6 @@ MonoBehaviour:
   PlayOnHoldRightClic:
     m_PersistentCalls:
       m_Calls: []
-  PlayOnMouseOver:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4351935048872485081}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  PlayOnMouseExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4351935048872485081}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnSetData:
     m_PersistentCalls:
       m_Calls:
@@ -360,7 +333,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnLeftMouseDown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2225947231454735361}
+        m_TargetAssemblyTypeName: AU_Informations, Assembly-CSharp
+        m_MethodName: DisplayInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightMouseDown:
     m_PersistentCalls:
       m_Calls: []

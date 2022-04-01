@@ -111,7 +111,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     #endregion
 
     #region Infrastructure
-    public static void OnInfraMove()
+    public void OnInfraMove()
     {
         OnClickFoodInfrastructure?.Invoke(true);
     }

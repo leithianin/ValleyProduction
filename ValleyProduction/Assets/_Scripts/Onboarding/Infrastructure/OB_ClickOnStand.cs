@@ -6,7 +6,6 @@ public class OB_ClickOnStand : OnBoarding
 {
     protected override void OnEnd()
     {
-        
     }
 
     protected override void OnPlay()

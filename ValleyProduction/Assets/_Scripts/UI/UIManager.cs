@@ -176,6 +176,7 @@ public class UIManager : VLY_Singleton<UIManager>
     //Show les informations des visiteurs on click
     public static void InteractWithInfrastructure(AU_Informations infoInfra)
     {
+        HideShownGameObject();
         instance.ShowInfoInfrastructure(infoInfra);
     }
 
