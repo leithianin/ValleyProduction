@@ -8,7 +8,7 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     public bool snaping = false;
     public bool isRotating = false;
 
-    public float rotateSpeed = 5f;
+    public float rotateSpeed = 50f;
 
     public InfrastructurePreview GetPreview => currentPreview;
 
@@ -61,9 +61,7 @@ public class InfrastructurePreviewHandler : MonoBehaviour
 
     public void Rotate()
     {
-        Debug.Log("Rotate");
-        Debug.Log(Input.GetAxis("Mouse X"));
-        //transform.Rotate((Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime), (Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime), 0, Space.World);
-        //transform.Rotate(PlayerInputManager.GetOnMouseMove. * rotateSpeed * Time.deltaTime), (Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime), 0, Space.World);
+        CursorControl.SetAtSaveMousePosition();                                                                                 //CODE REVIEW : Block la position à cette position (LockState.Locked met au centre et peut poser des problemes) Autre moyen d'éviter de faire ça serait d'empêcher les snap pendant la rotation )
+        transform.Rotate(0f, -(Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime), 0, Space.World);
     }
 }

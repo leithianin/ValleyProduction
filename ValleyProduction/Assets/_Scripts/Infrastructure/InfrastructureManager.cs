@@ -24,6 +24,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static GameObject GetMovedObject => instance.movedObject;
 
+    public Vector3 saveScreenPos;
 
     private void Update()
     {
@@ -68,17 +69,48 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
-        //Ask to rotate
-        instance.RotateInfrastructure(GetCurrentPreview, positionToPlace);
-        //instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
+        if(!instance.previewHandler.isRotating && ConstructionManager.GetSelectedStructureType != InfrastructureType.Path)
+        {
+            instance.RotateInfrastructure(GetCurrentPreview, positionToPlace);
+        }
+        else
+        {
+            instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
+        }
     }
 
+    /// <summary>
+    /// Rotate the infrastructure
+    /// </summary>
+    /// <param name="toPlace"></param>
+    /// <param name="positionToPlace"></param>
     public void RotateInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
     {
         if (toPlace.AskToPlace(positionToPlace) && !previewHandler.snaping)
         {
-            instance.previewHandler.isRotating = true;
+            StartRotation();
         }
+    }
+
+    /// <summary>
+    /// Set all the variable needed for start the rotation
+    /// </summary>
+    public void StartRotation()
+    {
+        CursorControl.SetSaveMousePosition();
+
+        instance.previewHandler.isRotating = true;
+        Cursor.visible = false;
+    }
+
+    /// <summary>
+    /// Set all the variable used to default at the end of the rotation
+    /// </summary>
+    public void EndRotation()
+    {
+        previewHandler.isRotating = false;
+        previewHandler.transform.rotation = Quaternion.identity;
+        Cursor.visible = true;
     }
 
     private void PlaceInfrastructure(Infrastructure selectedStructure)
@@ -94,7 +126,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         if (toPlace.AskToPlace(positionToPlace) && !previewHandler.snaping)
         {
-            Infrastructure placedInfrastructure = Instantiate(toPlace.RealInfrastructure, positionToPlace, Quaternion.identity);
+            Infrastructure placedInfrastructure = Instantiate(toPlace.RealInfrastructure, previewHandler.transform.position, previewHandler.transform.rotation);
+            EndRotation();
 
             placedInfrastructure.PlaceObject(positionToPlace);
             return true;

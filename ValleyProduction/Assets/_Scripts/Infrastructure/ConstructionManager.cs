@@ -33,6 +33,12 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
     }
 
+    public static void CancelRotation()
+    {
+        //Sert à rien de passer dedans si on est en path
+        InfrastructureManager.instance.EndRotation();
+    }
+
     /// <summary>
     /// Prend en compte l'Input quand on clic sur une Infrastructure.
     /// </summary>
