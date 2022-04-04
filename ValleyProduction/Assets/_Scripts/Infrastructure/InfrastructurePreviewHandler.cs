@@ -62,6 +62,8 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     public void Rotate()
     {
         Debug.Log("Rotate");
-        transform.Rotate((Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime), (Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime), 0, Space.World);
+        Debug.Log(Input.GetAxis("Mouse X"));
+        //transform.Rotate((Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime), (Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime), 0, Space.World);
+        //transform.Rotate(PlayerInputManager.GetOnMouseMove. * rotateSpeed * Time.deltaTime), (Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime), 0, Space.World);
     }
 }
