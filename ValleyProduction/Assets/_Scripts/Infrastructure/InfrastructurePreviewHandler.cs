@@ -6,6 +6,9 @@ public class InfrastructurePreviewHandler : MonoBehaviour
 {
     private InfrastructurePreview currentPreview;
     public bool snaping = false;
+    public bool isRotating = false;
+
+    public float rotateSpeed = 5f;
 
     public InfrastructurePreview GetPreview => currentPreview;
 
@@ -44,8 +47,23 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     {
         if (!snaping)
         {
-            transform.position = PlayerInputManager.GetMousePosition;
-            currentPreview.CheckAvailability();
+            if (!isRotating)
+            {
+                transform.position = PlayerInputManager.GetMousePosition;
+                currentPreview.CheckAvailability();
+            }
+            else
+            {
+                Rotate();
+            }
         }
+    }
+
+    public void Rotate()
+    {
+        Debug.Log("Rotate");
+        Debug.Log(Input.GetAxis("Mouse X"));
+        //transform.Rotate((Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime), (Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime), 0, Space.World);
+        //transform.Rotate(PlayerInputManager.GetOnMouseMove. * rotateSpeed * Time.deltaTime), (Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime), 0, Space.World);
     }
 }

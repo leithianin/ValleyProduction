@@ -68,7 +68,17 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
-        instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
+        //Ask to rotate
+        instance.RotateInfrastructure(GetCurrentPreview, positionToPlace);
+        //instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
+    }
+
+    public void RotateInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
+    {
+        if (toPlace.AskToPlace(positionToPlace) && !previewHandler.snaping)
+        {
+            instance.previewHandler.isRotating = true;
+        }
     }
 
     private void PlaceInfrastructure(Infrastructure selectedStructure)
