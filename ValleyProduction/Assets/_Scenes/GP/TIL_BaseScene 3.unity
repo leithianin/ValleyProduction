@@ -16284,6 +16284,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 631170278}
+  - {fileID: 1166200698}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48812,6 +48813,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 1387317220410922763, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: heatmapViewController
+      value: 
+      objectReference: {fileID: 811162095}
     - target: {fileID: 2000842694584172997, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -49058,6 +49063,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8173084910996206287, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352417495115502650, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: mainLight
+      value: 
+      objectReference: {fileID: 631170277}
+    - target: {fileID: 8352417495115502650, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: heatmapViewLight
+      value: 
+      objectReference: {fileID: 1166200699}
+    - target: {fileID: 8352417495115502650, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: toDisable.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8464914367544377331, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
@@ -55696,6 +55713,73 @@ MeshRenderer:
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7091694929462688934, guid: 9f39b40dd680a134e8ddc405aca840b4, type: 3}
   m_PrefabInstance: {fileID: 561451605}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1166200697
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 637863887}
+    m_Modifications:
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920823180409656414, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+      propertyPath: m_Name
+      value: HeatmapView Light
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+--- !u!4 &1166200698 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 920823180409656408, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+  m_PrefabInstance: {fileID: 1166200697}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &1166200699 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 920823180409656409, guid: 1236851d95e1d1f4e88c43e2840f553b, type: 3}
+  m_PrefabInstance: {fileID: 1166200697}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &1166265184 stripped
 MeshRenderer:
