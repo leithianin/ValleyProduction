@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class UI_VisitorInformation : MonoBehaviour
 {
+    private GameObject currentVisitor;
+
     [SerializeField] private TouristType hikersInfo;
     [SerializeField] private TouristType touristInfo;
 
@@ -12,6 +14,7 @@ public class UI_VisitorInformation : MonoBehaviour
 
     public TouristType ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
+        currentVisitor = cpn_Inf.gameObject;
         OnBoardingManager.OnClickVisitorEco?.Invoke(true);
         OnShowVisitorInfo?.Invoke();
         switch (cpn_Inf.visitorType)

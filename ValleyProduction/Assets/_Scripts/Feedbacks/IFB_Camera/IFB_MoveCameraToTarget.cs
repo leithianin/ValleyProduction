@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class IFB_MoveCameraToTarget : MonoBehaviour, IFeedbackPlayer
 {
-    public GameObject target;
-    public SphericalTransform camSphericalTr;
+    public float targetRadius;
+    public float targetAzimuthalAngle;
+    public float targetPolarAngle;
+    public float speed;
 
-    private int speed = 0;
+    public GameObject target;
 
     public void Play()
     {
-        StartCoroutine(camSphericalTr.MoveCameraOriginToCustomTarget(target.transform, speed));
+        CameraManager.MoveCamera(targetRadius, targetAzimuthalAngle, targetPolarAngle, speed);
     }
 
-    public void Play(int newSpeed)
+    private void Update()
     {
-        speed = newSpeed;
-        Play();
+        CameraManager.UpdatePositionOrigin(target.transform.position);
+    }
+
+    public void SetTarget(GameObject tar)
+    {
+
     }
 }
