@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1451359861243378330}
   - component: {fileID: 4771477055922966764}
+  - component: {fileID: 2050571966889326464}
   m_Layer: 0
   m_Name: VisitorsInfos
   m_TagString: Untagged
@@ -52,6 +53,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hikersInfo: {fileID: 588490389}
   touristInfo: {fileID: 5742539890451745668}
+  OnShow:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2050571966889326464}
+        m_TargetAssemblyTypeName: IFB_MoveCameraToTarget, Assembly-CSharp
+        m_MethodName: SetTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2050571966889326464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451359861243378331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRadius: 0
+  targetAzimuthalAngle: 0
+  targetPolarAngle: 0
+  speed: 150
+  target: {fileID: 0}
 --- !u!1001 &2156402094353892726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,6 +227,34 @@ PrefabInstance:
     - target: {fileID: 5078030440405594711, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2050571966889326464}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTarget, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8292372672053143663, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
       propertyPath: m_AnchorMax.y
@@ -423,6 +484,58 @@ PrefabInstance:
     - target: {fileID: 5078030440405594711, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -175
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2050571966889326464}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2050571966889326464}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetTarget
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTarget, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTarget, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633522353421822352, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8292372672053143663, guid: 43d8429e4badc3c459a3b540d06f8105, type: 3}
       propertyPath: m_AnchorMax.y

@@ -31,17 +31,17 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent<bool> OnKeyLeftShift;
 
     [SerializeField] private UnityEvent<Vector2> OnKeyMove;
+    public Action<Vector2> OnKeyMoveAction;
     public static UnityEvent<Vector2> GetOnKeyMove => instance.OnKeyMove;
     private Vector2 lastKeyDirection;
 
-
     [SerializeField] private UnityEvent<Vector2> OnMouseMove;
-    public static UnityEvent<Vector2> GetOnMouseMove => instance.OnMouseMove;
 
+    public static UnityEvent<Vector2> GetOnMouseMove => instance.OnMouseMove;
+    public Action<Vector2> OnMouseMoveAction;
     [SerializeField] private UnityEvent<float> OnMouseScroll;
     public static UnityEvent<float> GetOnMouseScroll => instance.OnMouseScroll;
     private float lastScrollValue;
-
 
     public static bool clicHold = false;
 
