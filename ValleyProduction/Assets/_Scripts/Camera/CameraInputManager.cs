@@ -23,6 +23,7 @@ public class CameraInputManager : MonoBehaviour
 
 
     [Header("Mouse Wheel Values")]
+    [SerializeField] private float wheelInputThreshold;
     [SerializeField, Tooltip("Degrees per second")] private float rotationSpeed = 90.0f;
     [SerializeField, Tooltip("When Scrolling Wheel is pressed")] private float wheelRotationSpeed = 90.0f;
 
@@ -37,12 +38,11 @@ public class CameraInputManager : MonoBehaviour
      private bool isShifting;
      private float polarValue;
      private float azimuthalValue;
-    private float scrollInputValue;
+     private float scrollInputValue;
 
 
     public void SetInputDirection(Vector2 nInputDirection)
     {
-        Debug.Log(nInputDirection);
         inputDirection = nInputDirection;
     }
 
@@ -140,17 +140,11 @@ public class CameraInputManager : MonoBehaviour
 
     void SetDistanceToOrigin()
     {
-        if (!cameraTransform)
-            return;
-
         cameraTransform.ChangeLength(scrollInputValue, -scrollingSpeed);
     }
 
     void RotateCameraWithKeyboard()
     {
-        if (!cameraTransform)
-            return;
-
         cameraTransform.PolarRotation(polarValue, rotationSpeed);
 
         if (!allowRotation)
@@ -167,12 +161,28 @@ public class CameraInputManager : MonoBehaviour
         if (!Input.GetKey(KeyCode.Mouse2))
             return;
 
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+            StartCoroutine(ResetRotationInput());
+
         cameraTransform.PolarRotation(settingsDatas.cameraInvertVerticalWheelRotation ? -mouseDirection.y : mouseDirection.y, wheelRotationSpeed);
 
         if (!allowRotation)
             return;
 
         cameraTransform.AzimuthalRotation(settingsDatas.cameraInvertHorizontalWheelRotation ? -mouseDirection.x : mouseDirection.x, wheelRotationSpeed);
+    }
+
+    IEnumerator ResetRotationInput()
+    {
+        for (float time = 0; time < wheelInputThreshold; time += Time.deltaTime)
+        {
+            if (Input.GetKeyUp(KeyCode.Mouse2))
+            {
+                cameraTransform.MoveCameraOverTime(cameraTransform.Coordinates.x, cameraTransform.ReferenceAzimuthalAngle, cameraTransform.ReferencePolarAngle, cameraTransform.ResetPositionSpeed);
+            }
+            yield return null;
+        }
+
     }
 
     void LaunchCinematicMode()
