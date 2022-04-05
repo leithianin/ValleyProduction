@@ -14,7 +14,17 @@ public class SphericalTransform : MonoBehaviour
     [Header("Object Spherical Coordinates")]
     [SerializeField, Tooltip("Object Spherical Transform coordinates, x = Radius, y = Azimuthal Angle, z = Polar Angle")] 
     private Vector3 coordinates = default;
+    public Vector3 Coordinates => coordinates;
     [Space(10)]
+
+    [Header("Reference Values")]
+    [SerializeField] private float referencePolarAngle;
+    [SerializeField] private float referenceAzimuthalAngle;
+    [SerializeField] private float resetPositionSpeed;
+    public float ReferencePolarAngle => referencePolarAngle;
+    public float ReferenceAzimuthalAngle => referenceAzimuthalAngle;
+    public float ResetPositionSpeed => resetPositionSpeed;
+
     [Header("Moving Constraints")]
     [SerializeField] private LayerMask layerMask = default;
     [SerializeField] private Collider BoundariesCollider = default;
@@ -188,8 +198,6 @@ public class SphericalTransform : MonoBehaviour
         }
     }
     #endregion
-
-
     void SetCameraTarget()
     {
         cameraTarget = transform.position;
@@ -232,16 +240,67 @@ public class SphericalTransform : MonoBehaviour
         coordinates.y = value;
     }
 
+    public void MoveCameraOverTime(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float speed)
+    {
+        StartCoroutine(ChangeRadiusOverTime(targetRadius, speed));
+        StartCoroutine(ChangeAzimuthalAngleOverTime(targetAzimuthalAngle, speed));
+        StartCoroutine(ChangePolarAngleOverTime(targetPolarAngle, speed));
+
+    }
+    public void MoveCameraOverTime(float targetRadius, float radiusSpeed, float targetAzimuthalAngle, float azimuthSpeed, float targetPolarAngle, float polarSpeed)
+    {
+        StartCoroutine(ChangeRadiusOverTime(targetRadius, radiusSpeed));
+        StartCoroutine(ChangeAzimuthalAngleOverTime(targetAzimuthalAngle, azimuthSpeed));
+        StartCoroutine(ChangePolarAngleOverTime(targetPolarAngle, polarSpeed));
+
+    }
+
     public IEnumerator ChangeRadiusOverTime(float targetRadius, float speed)
     {
         float startRadius = coordinates.x;
         float referenceTime = Mathf.Abs(startRadius - targetRadius) / speed;
 
-        for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
+        for (float time = 0.0f; time < referenceTime; time += Time.unscaledDeltaTime)
         {
-            coordinates.x = Mathf.Lerp(targetRadius, startRadius, time / referenceTime);
+            coordinates.x = Mathf.Lerp(startRadius, targetRadius, time / referenceTime);
             yield return null;
         }
+
+        coordinates.x = targetRadius;
+    }
+
+    public IEnumerator ChangeAzimuthalAngleOverTime(float targetAzimuthalAngle, float speed)
+    {
+        float startAzimuth = coordinates.y;
+        float referenceTime = Mathf.Abs(startAzimuth - targetAzimuthalAngle) / speed;
+
+        for (float time = 0.0f; time < referenceTime; time += Time.unscaledDeltaTime)
+        {
+            coordinates.y = AngleLerp(startAzimuth, targetAzimuthalAngle, time / referenceTime);
+            yield return null;
+        }
+
+        coordinates.y = targetAzimuthalAngle;
+    }
+
+    public IEnumerator ChangePolarAngleOverTime(float targetPolarAngle, float speed)
+    {
+        float startPolar = coordinates.z;
+        float referenceTime = Mathf.Abs(startPolar - targetPolarAngle) / speed;
+
+        for (float time = 0.0f; time < referenceTime; time += Time.unscaledDeltaTime)
+        {
+            coordinates.z = AngleLerp(startPolar, targetPolarAngle, time / referenceTime);
+            yield return null;
+        }
+
+        coordinates.z = targetPolarAngle;
+    }
+
+    private float AngleLerp(float a, float b, float t)
+    {
+        float dist = (((b - a) + 180) % 360f) - 180f;
+        return (a + dist * t) % 360;
     }
     #endregion
 
