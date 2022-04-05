@@ -69,7 +69,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
-        if(!instance.previewHandler.isRotating && ConstructionManager.GetSelectedStructureType != InfrastructureType.Path)
+        if(!instance.previewHandler.isRotating && instance.previewHandler.GetPreview.CanRotate)
         {
             instance.RotateInfrastructure(GetCurrentPreview, positionToPlace);
         }

@@ -96,15 +96,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         instance.modifiedPaths.Clear();
     }
 
-    //Calculate Path each frame you're editing a path
-    public void CalculateCurrentPath()
+    public List<Vector3> CalculateNavmesh(Vector3 startPoint, Vector3 endPoint)
     {
         navPath = new NavMeshPath();
 
-        if (PathManager.previousPathpoint != null && InfrastructureManager.GetCurrentPreview != null)
-        {
-            NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position + offsetPathCalcul, InfrastructureManager.GetCurrentPreview.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
-        }
+        NavMesh.CalculatePath(startPoint, endPoint, NavMesh.AllAreas, navPath);
 
         List<Vector3> points = new List<Vector3>();
 
@@ -116,7 +112,20 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             j++;
         }
 
-        if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
+        return points;
+    }
+
+    //Calculate Path each frame you're editing a path
+    public void CalculateCurrentPath()
+    {
+        List<Vector3> points = new List<Vector3>();
+
+        if (PathManager.previousPathpoint != null && InfrastructureManager.GetCurrentPreview != null)
+        {
+            points = new List<Vector3>(CalculateNavmesh(PathManager.previousPathpoint.transform.position + offsetPathCalcul, InfrastructureManager.GetCurrentPreview.transform.position + offsetPathCalcul));
+        }
+
+        if (navPath.status == NavMeshPathStatus.PathComplete)
         {
             navmeshPositionsList = new List<Vector3>(points);
         }
@@ -128,21 +137,9 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     //Calculate Path between 2 points (Use when i recreate a path and i know all the points)
     public List<Vector3> CalculatePath(IST_PathPoint ppstart, IST_PathPoint ppend)
     {
-        navPath = new NavMeshPath();
+        List<Vector3> points = new List<Vector3>(CalculateNavmesh(ppstart.transform.position + offsetPathCalcul, ppend.transform.position + offsetPathCalcul));
 
-        NavMesh.CalculatePath(ppstart.transform.position + offsetPathCalcul, ppend.transform.position + offsetPathCalcul, NavMesh.AllAreas, navPath);
-
-        List<Vector3> points = new List<Vector3>();
-
-        int j = 1;
-
-        while (j < navPath.corners.Length)
-        {
-            points = new List<Vector3>(navPath.corners);
-            j++;
-        }
-
-        if (j == navPath.corners.Length && navPath.status == NavMeshPathStatus.PathComplete)
+        if (navPath.status == NavMeshPathStatus.PathComplete)
         {
             navmeshPositionsList = new List<Vector3>(points);
         }
@@ -188,20 +185,54 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         }
     }
 
-    public static bool IsPathShortEnough(float maxDistance)
+    /// <summary>
+    /// Calcul la distance entre le PreviousPoint et la position voulut.
+    /// </summary>
+    /// <param name="checkWithMouse">Si TRUE, calcul le chemin par rapport à la souris. Si FALSE, calcul le chemin par rapport au point placé.</param>
+    /// <returns></returns>
+    public static float CalculatePathShortness(bool checkWithMouse)
+    {
+        Vector3 positionToCheck = InfrastructureManager.GetCurrentPreview.transform.position;
+
+        if(checkWithMouse)
+        {
+            positionToCheck = PlayerInputManager.GetMousePosition;
+        }
+
+        List<Vector3> points = instance.CalculateNavmesh(PathManager.previousPathpoint.transform.position, positionToCheck);
+
+        float currentDistance = 0;
+
+        for (int i = 0; i < points.Count - 1; i++)
+        {
+            currentDistance += Vector3.Distance(points[i], points[i + 1]);
+        }
+        return currentDistance;
+    }
+
+    public static Vector3 CalculatePathWithMaxLength(float maxLength)
     {
         float currentDistance = 0;
 
-        for (int i = 0; i < navmeshPositionsList.Count - 1; i++)
-        {
-            currentDistance += Vector3.Distance(navmeshPositionsList[i], navmeshPositionsList[i + 1]);
+        Vector3 toReturn = Vector3.zero;
 
-            if (currentDistance > maxDistance)
+        List<Vector3> points = instance.CalculateNavmesh(PathManager.previousPathpoint.transform.position, PlayerInputManager.GetMousePosition);
+
+        for (int i = 0; i < points.Count - 1; i++)
+        {
+            if (currentDistance + Vector3.Distance(points[i], points[i + 1]) <= maxLength)
             {
-                return false;
+                currentDistance += Vector3.Distance(points[i], points[i + 1]);
+
+                toReturn = points[i + 1];
+            }
+            else
+            {
+                toReturn = points[i] + (points[i + 1] - points[i]).normalized * (maxLength - currentDistance);
             }
         }
-        return true;
+
+        return toReturn;
     }
 
     //Add markers beetween the moving pathpoint and other pathpoints if the distance is to high /!\ Possibilité de rassembler des choses en une fonction /!\
