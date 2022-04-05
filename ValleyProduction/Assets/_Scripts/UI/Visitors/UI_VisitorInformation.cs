@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UI_VisitorInformation : MonoBehaviour
 {
@@ -11,11 +12,13 @@ public class UI_VisitorInformation : MonoBehaviour
     [SerializeField] private TouristType touristInfo;
 
     public Action OnShowVisitorInfo;
+    public UnityEvent<GameObject> OnShow;
 
     public TouristType ShowInfoVisitor(CPN_Informations cpn_Inf)
     {
         currentVisitor = cpn_Inf.gameObject;
         OnBoardingManager.OnClickVisitorEco?.Invoke(true);
+        OnShow?.Invoke(currentVisitor);
         OnShowVisitorInfo?.Invoke();
         switch (cpn_Inf.visitorType)
         {

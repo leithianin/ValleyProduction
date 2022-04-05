@@ -52,6 +52,8 @@ public class SphericalTransform : MonoBehaviour
 
     private Vector3 touchDown = default;
 
+    private Transform target;
+
     private void Update()
     {
         TestHeight();
@@ -60,6 +62,11 @@ public class SphericalTransform : MonoBehaviour
         SetCameraTarget();
         SetTargetForward();
         MoveOriginLookAtTarget();
+
+        if(target != null)
+        {
+            origin.position = target.position;
+        }
     }
 
     private void LateUpdate()
@@ -143,8 +150,13 @@ public class SphericalTransform : MonoBehaviour
     #region Origin
     public void MoveOrigin(float xInput, float yInput, float speed)
     {
-
+        Vector3 savePosition = origin.position;
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.unscaledDeltaTime;
+
+        if(origin.position != savePosition)
+        {
+            CameraManager.OnCameraMove?.Invoke();
+        }
     }
 
     public IEnumerator MoveCameraOriginToCustomTarget(Transform target, float speed)
@@ -203,7 +215,11 @@ public class SphericalTransform : MonoBehaviour
         cameraTarget = transform.position;
     }
 
-    
+    public void SetCameraTarget(Transform _target = null)
+    {
+        target = _target;
+    }
+
     void SetTargetForward()
     {
         transform.forward = origin.position - transform.position + new Vector3(0.0f, originVisualOffset, 0.0f);

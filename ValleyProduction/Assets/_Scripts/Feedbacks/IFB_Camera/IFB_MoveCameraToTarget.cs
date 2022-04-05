@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class IFB_MoveCameraToTarget : MonoBehaviour, IFeedbackPlayer
 {
-    public float targetRadius;
-    public float targetAzimuthalAngle;
-    public float targetPolarAngle;
-    public float speed;
+    [SerializeField] private float targetRadius;
+    [SerializeField] private float targetAzimuthalAngle;
+    [SerializeField] private float targetPolarAngle;
+    [SerializeField] private float speed;
 
-    public GameObject target;
+    private GameObject target;
+    private bool isRotate;
 
     public void Play()
     {
+        CameraManager.SetTarget(target.transform);
+        //Si isRotate play func with bool isRotate
         CameraManager.MoveCamera(targetRadius, targetAzimuthalAngle, targetPolarAngle, speed);
-    }
-
-    private void Update()
-    {
-        CameraManager.UpdatePositionOrigin(target.transform.position);
+        CameraManager.OnCameraMove += StopFocus;
     }
 
     public void SetTarget(GameObject tar)
     {
+        target = tar;
+    }
 
+    public void StopFocus()
+    {
+        CameraManager.OnCameraMove -= StopFocus;
+        CameraManager.SetTarget(null);
     }
 }
