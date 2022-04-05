@@ -15,6 +15,10 @@ public abstract class InfrastructurePreview : MonoBehaviour
     // The senvitivity with which the preview will check the Navmesh.
     protected float navMeshSensitivity = 2.25f;
 
+    [SerializeField] protected float rotateSpeed = 50f;
+
+    [SerializeField] protected bool canRotate;
+
     // The mesh renderer of the preview.
     [SerializeField] private MeshRenderer mesh;
 
@@ -26,6 +30,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
     protected bool availabilityState = true;
     protected bool lastFrameAvailabilityState = true;
+
+    public bool CanRotate => canRotate;
 
     /// <summary>
     /// Getter for the Infrastructure.
@@ -135,6 +141,16 @@ public abstract class InfrastructurePreview : MonoBehaviour
         }
 
         lastFrameAvailabilityState = availabilityState;
+    }
+
+    public virtual Vector3 TrySetPosition()
+    {
+        return PlayerInputManager.GetMousePosition;
+    }
+
+    public virtual float TrySetRotation()
+    {
+        return -(Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime);
     }
 
 

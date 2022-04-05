@@ -49,7 +49,7 @@ public class InfrastructurePreviewHandler : MonoBehaviour
         {
             if (!isRotating)
             {
-                transform.position = PlayerInputManager.GetMousePosition;
+                transform.position = currentPreview.TrySetPosition();
                 currentPreview.CheckAvailability();
             }
             else
@@ -62,6 +62,6 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     public void Rotate()
     {
         CursorControl.SetAtSaveMousePosition();                                                                                 //CODE REVIEW : Block la position à cette position (LockState.Locked met au centre et peut poser des problemes) Autre moyen d'éviter de faire ça serait d'empêcher les snap pendant la rotation )
-        transform.Rotate(0f, -(Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime), 0, Space.World);
+        transform.Rotate(0f, currentPreview.TrySetRotation(), 0, Space.World);
     }
 }
