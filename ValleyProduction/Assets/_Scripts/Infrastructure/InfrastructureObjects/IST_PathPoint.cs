@@ -36,12 +36,7 @@ public class IST_PathPoint : Infrastructure
         }
         else                                                                //Creer un nouveau chemin
         {
-            //Check si le path est disconnected
-            if (!PathManager.IsDeconnected(this))
-            {
-                //Need to check le sens
-                PathManager.PlacePoint(this);
-            }
+            PathManager.PlacePoint(this);
         }
     }
 

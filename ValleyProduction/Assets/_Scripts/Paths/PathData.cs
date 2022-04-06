@@ -10,7 +10,6 @@ public class PathData
     public string name = string.Empty;
     public Color color;
     public float difficulty = 5f;
-    public bool isDisconnected = false;
 
     public IST_PathPoint startPoint;                                                             //Starting point of the path
     public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
