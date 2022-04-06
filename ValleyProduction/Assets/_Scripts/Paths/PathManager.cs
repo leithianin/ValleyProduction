@@ -17,7 +17,6 @@ public class PathManager : VLY_Singleton<PathManager>
 
     //Current Data
     private PathData currentPathData              = null;
-    private List<PathData> movingPath = new List<PathData>();
     private PathData disconnectedPathData         = null;
     public static IST_PathPoint previousPathpoint = null;
 
@@ -27,10 +26,6 @@ public class PathManager : VLY_Singleton<PathManager>
     //Uniquement pour delete un point
     private static List<IST_PathPoint> listAllPathPoints = new List<IST_PathPoint>();
 
-    //Navmesh needs
-    [System.Obsolete]
-    private static List<PathFragmentData> pfdNavmeshUpdate = new List<PathFragmentData>();
-
     [SerializeField] private InterestPointDetector roadDetectorPrefab;
 
     [Header("DEBUG")]
@@ -39,7 +34,6 @@ public class PathManager : VLY_Singleton<PathManager>
     [SerializeField] private List<GameObject> lineRendererDebugList = new List<GameObject>();
 
     private bool PathReverse       = false;
-    //public static bool debugCheck = false;
     public LineRenderer currentLineDebug;
 
     [Header("Action")]
@@ -57,11 +51,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
     private void Update()
     {
-        if (debugMode && ConstructionManager.HasSelectedStructureType && currentLineDebug != null)
-        {
-            //currentLineDebug.SetPosition(1, PlayerInputManager.GetMousePosition);
-        }
-        else
+        if (!debugMode || !ConstructionManager.HasSelectedStructureType || currentLineDebug == null)
         {
             Destroy(currentLineDebug);
         }
@@ -98,7 +88,6 @@ public class PathManager : VLY_Singleton<PathManager>
     private void AddPathfragmentToList(PathFragmentData toAdd)
     {
         pathFragmentDataList.Add(toAdd);
-
         toAdd.startPoint.Node.AddFragment(toAdd);
         toAdd.endPoint.Node.AddFragment(toAdd);
     }
@@ -115,7 +104,7 @@ public class PathManager : VLY_Singleton<PathManager>
     }
 
     //Create PathFragmentData
-    public static void PlacePoint(IST_PathPoint pathpoint, Vector3 position)
+    public static void PlacePoint(IST_PathPoint pathpoint)
     {
         List<Vector3> navmeshPoints = new List<Vector3>(PathCreationManager.navmeshPositionsList);
 
@@ -123,10 +112,6 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if(previousPathpoint != null)
         {
-            List<Vector3> allPoints = new List<Vector3>();
-            allPoints.Add(previousPathpoint.transform.position);
-            allPoints.Add(pathpoint.transform.position);
-
             //ChangementPathFragment
             PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
             instance.AddPathfragmentToList(new_pfd);
@@ -134,7 +119,7 @@ public class PathManager : VLY_Singleton<PathManager>
             PathCreationManager.instance.pathRendererManager.ManagePathRenderer(previousPathpoint, pathpoint, navmeshPoints, new_pfd);
 
             //IF ONBOARDING SEQUENCE 
-            new_pfd.CheckAvailableInterestPoint();
+            //new_pfd.CheckAvailableInterestPoint();
 
             previousPathpoint = pathpoint;
         }
@@ -151,8 +136,8 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void UnplacePoint(IST_PathPoint toRemove)
     {
         instance.pathpointList.Remove(toRemove);
-
         DestroyPreviousLine();
+
         if (instance.pathpointList.Count > 0)
         {
             previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
@@ -495,23 +480,23 @@ public class PathManager : VLY_Singleton<PathManager>
         if (instance.pathpointList.Count > 1)
         {
             //Obsolete pour le moment --> Pas de modifier un chemin existant
-            if (instance.currentPathData != null && instance.currentPathData.name != string.Empty)
+            if (GetCurrentPathData != null && GetCurrentPathData.name != string.Empty)
             {
                 Debug.Log("String pas empty");
                 //Mise à jour du PathData existant
-                foreach (PathFragmentData pfd in instance.currentPathData.pathFragment)
+                foreach (PathFragmentData pfd in GetCurrentPathData.pathFragment)
                 {
-                    if (!instance.currentPathData.pathFragment.Contains(pfd))
+                    if (!GetCurrentPathData.pathFragment.Contains(pfd))
                     {
                         //pfd.CheckAvailableInterestPoint();
-                        instance.currentPathData.pathFragment.Add(pfd);
+                        GetCurrentPathData.pathFragment.Add(pfd);
                     }
                 }
 
                 if (instance.debugMode)
                 {
                     Debug.Log("Feedback visuel");
-                    DebugLineR(instance.currentPathData);
+                    DebugLineR(GetCurrentPathData);
                 }
             }
             else
@@ -687,17 +672,17 @@ public class PathManager : VLY_Singleton<PathManager>
                 previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
             }
 
-            DestroyLinePath(instance.currentPathData);
-            DebugPoint(previousPathpoint, instance.currentPathData.color);
+            DestroyLinePath(GetCurrentPathData);
+            DebugPoint(previousPathpoint, GetCurrentPathData.color);
         }
     }
 
     //Check si le pathpoint est dans le current PathData
     public static bool IsOnCurrentPathData(IST_PathPoint pathpoint)
     {
-        if (instance.currentPathData != null)
+        if (GetCurrentPathData != null)
         {
-            if (instance.currentPathData.ContainsPoint(pathpoint))
+            if (GetCurrentPathData.ContainsPoint(pathpoint))
             {
                 return true;
             }
@@ -733,8 +718,8 @@ public class PathManager : VLY_Singleton<PathManager>
             previousPathpoint = instance.pathpointList[instance.pathpointList.Count - 1];
         }
 
-        DestroyLinePath(instance.currentPathData);
-        DebugPoint(previousPathpoint, instance.currentPathData.color);
+        DestroyLinePath(GetCurrentPathData);
+        DebugPoint(previousPathpoint, GetCurrentPathData.color);
     }
 
     //Retourne si il y'a plusieurs chemin pour un pathpoint
@@ -971,9 +956,9 @@ public class PathManager : VLY_Singleton<PathManager>
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
         instance.currentLineDebug = DEBUG.GetComponent<LineRenderer>();
 
-        if(instance.currentPathData != null)
+        if(GetCurrentPathData != null)
         {
-            instance.currentLineDebug.GetComponent<LineRenderer>().material.color = instance.currentPathData.color;
+            instance.currentLineDebug.GetComponent<LineRenderer>().material.color = GetCurrentPathData.color;
         }
 
         instance.lineRendererDebugList.Add(DEBUG);
@@ -989,10 +974,10 @@ public class PathManager : VLY_Singleton<PathManager>
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
         //instance.currentLineDebug = DEBUG.GetComponent<LineRenderer>();
 
-        if (instance.currentPathData != null)
+        if (GetCurrentPathData != null)
         {
             //instance.currentLineDebug.material.color = instance.currentPathData.color;
-            DEBUG.GetComponent<LineRenderer>().material.color = instance.currentPathData.color;
+            DEBUG.GetComponent<LineRenderer>().material.color = GetCurrentPathData.color;
         }
 
         instance.lineRendererDebugList.Add(DEBUG);
