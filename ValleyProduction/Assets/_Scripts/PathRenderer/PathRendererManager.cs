@@ -8,6 +8,13 @@ public class PathRendererManager : MonoBehaviour
     public GameObject pathRendererObject;
     public List<GameObject> pathRendererList = new List<GameObject>();
 
+    /// <summary>
+    /// Create the PathRenderer beetwen points
+    /// </summary>
+    /// <param name="start">t</param>
+    /// <param name="end"></param>
+    /// <param name="vecs"></param>
+    /// <param name="pfd"></param>
     public void ManagePathRenderer(IST_PathPoint start, IST_PathPoint end, List<Vector3> vecs, PathFragmentData pfd)
     {
         for(int i = 0; i < vecs.Count-1; i++)

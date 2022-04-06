@@ -14,7 +14,7 @@ public class IST_PathPoint : Infrastructure
     //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)
     {
-        PathManager.PlacePoint(this, position);
+        PathManager.PlacePoint(this);
     }
 
     //Place on Click Infrastructure
@@ -30,18 +30,13 @@ public class IST_PathPoint : Infrastructure
 
         if (PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
         {
-            PathManager.PlacePoint(this, transform.position);
+            PathManager.PlacePoint(this);
             PathManager.CreatePathData();
             UIManager.HideShownGameObject();
         }
         else                                                                //Creer un nouveau chemin
         {
-            //Check si le path est disconnected
-            if (!PathManager.IsDeconnected(this))
-            {
-                //Need to check le sens
-                PathManager.PlacePoint(this, transform.position);
-            }
+            PathManager.PlacePoint(this);
         }
     }
 
@@ -103,7 +98,7 @@ public class IST_PathPoint : Infrastructure
     protected override void OnHoldRightClic()
     {
         PathManager.CreatePathData();
-        PathManager.PlacePoint(this, transform.position);
+        PathManager.PlacePoint(this);
         UIManager.HideShownGameObject();
     }
 

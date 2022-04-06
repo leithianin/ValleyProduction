@@ -122,7 +122,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     public static void PlaceOnStructure(GameObject touchedObject)
     {
         PathManager.CreatePathData();
-        PathManager.PlacePoint(touchedObject.GetComponent<IST_PathPoint>(), touchedObject.transform.position);
+        PathManager.PlacePoint(touchedObject.GetComponent<IST_PathPoint>());
     }
 
     /// <summary>
