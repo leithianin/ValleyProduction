@@ -9,7 +9,7 @@ public class IFB_MoveCameraToTarget : MonoBehaviour, IFeedbackPlayer
     [SerializeField] private float targetPolarAngle;
     [SerializeField] private float speed;
 
-    private GameObject target;
+    public GameObject target;
     private bool isRotate;
 
     public void Play()

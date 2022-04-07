@@ -14,12 +14,10 @@ public class OB_OnReachChapel : OnBoarding
 
     protected override void OnPlay()
     {
-        OnBoardingManager.OnChapel += OnReachChapel;
     }
 
-    public void OnReachChapel(bool condition)
+    public void OnReachChapel()
     {
-        OnBoardingManager.OnChapel -= OnReachChapel;
         PathManager.isOnFinishPath += OnFinishPath;
     }
 

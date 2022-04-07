@@ -7165,8 +7165,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRadius: 0
+  targetAzimuthalAngle: 0
+  targetPolarAngle: 0
+  speed: 0
   target: {fileID: 550294204}
-  camSphericalTr: {fileID: 1841655197}
 --- !u!1001 &213583392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27046,6 +27049,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 433677157970017533, guid: 15fc82d195036684fbcc14af70113fc5, type: 3}
   m_PrefabInstance: {fileID: 739900371}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &740207026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4556722338025453221, guid: 54f77c2b7b5d3cd488f28ad738bd1c5b, type: 3}
+  m_PrefabInstance: {fileID: 1303998794}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &740207027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740207026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082ad6d144139714fa4868dd159d10fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnCollide:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073218770}
+        m_TargetAssemblyTypeName: OB_NextMarker_And_ReachInterestPoint, Assembly-CSharp
+        m_MethodName: OnReach
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &745679213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60696,6 +60731,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4640968974504271892, guid: c9296edd1945b2847ac44857510707da, type: 3}
   m_PrefabInstance: {fileID: 1649073804}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1652581156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 207377740089121833, guid: 18a66b88c5e42784eb79087cc238498f, type: 3}
+  m_PrefabInstance: {fileID: 1935541002}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1652581162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652581156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082ad6d144139714fa4868dd159d10fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnCollide:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 213249344}
+        m_TargetAssemblyTypeName: OB_OnReachChapel, Assembly-CSharp
+        m_MethodName: OnReachChapel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1652749277
 Transform:
   m_ObjectHideFlags: 0
@@ -61297,8 +61364,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRadius: 0
+  targetAzimuthalAngle: 0
+  targetPolarAngle: 0
+  speed: 0
   target: {fileID: 550294204}
-  camSphericalTr: {fileID: 1841655197}
 --- !u!1001 &1671478458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80107,7 +80177,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2222160492214754525}
         m_TargetAssemblyTypeName: IFB_MoveCameraToTarget, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -80170,7 +80240,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2222160492214754526}
         m_TargetAssemblyTypeName: IFB_MoveCameraToTarget, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -80191,8 +80261,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRadius: 15
+  targetAzimuthalAngle: 10
+  targetPolarAngle: 10
+  speed: 100
   target: {fileID: 700819966}
-  camSphericalTr: {fileID: 1841655197}
 --- !u!114 &2222160492214754526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80205,8 +80278,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRadius: 15
+  targetAzimuthalAngle: 10
+  targetPolarAngle: 10
+  speed: 100
   target: {fileID: 1623915287}
-  camSphericalTr: {fileID: 1841655197}
 --- !u!114 &2222160492932056940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80459,18 +80535,6 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 715242298}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6

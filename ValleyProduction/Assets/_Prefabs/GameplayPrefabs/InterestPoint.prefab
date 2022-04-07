@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec9660a99bcf6247b9d028e023cabfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLandmark: 0
   interactions:
   - {fileID: 2226904861451303784}
   - {fileID: 1566035020887512620}
@@ -124,6 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionType: 0
+  attractivityLevel: 0
+  conditions: []
   maxInteractionAtSameTime: -1
   PlayOnStartInteract:
     m_PersistentCalls:
@@ -131,7 +132,11 @@ MonoBehaviour:
   PlayOnEndInteract:
     m_PersistentCalls:
       m_Calls: []
+  PlayOnInteruptInteract:
+    m_PersistentCalls:
+      m_Calls: []
   interactionAction: {fileID: 0}
+  callerInSpot: []
 --- !u!1 &3637158511912343927
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionType: 0
+  attractivityLevel: 0
+  conditions: []
   maxInteractionAtSameTime: -1
   PlayOnStartInteract:
     m_PersistentCalls:
@@ -183,4 +190,8 @@ MonoBehaviour:
   PlayOnEndInteract:
     m_PersistentCalls:
       m_Calls: []
+  PlayOnInteruptInteract:
+    m_PersistentCalls:
+      m_Calls: []
   interactionAction: {fileID: 0}
+  callerInSpot: []

@@ -34,22 +34,19 @@ public class OB_AvoidForest : OnBoarding
 
     protected override void OnPlay()
     {
-        OnBoardingManager.OnWindMill += OnClickWindMill;
-        OnBoardingManager.OnStartPoint += OnClickStartPoint;
+
     }
 
-    public void OnClickWindMill(bool condition)
+    public void OnClickMenhir()
     {
-        OnBoardingManager.OnWindMill -= OnClickWindMill;
-
+        Debug.Log("Menhir");
         if(clickEnd) { Over(); }
         else { clickEnd = true; }
     }
 
-    public void OnClickStartPoint(bool condition)
+    public void OnClickStartPoint()
     {
-        OnBoardingManager.OnStartPoint -= OnClickStartPoint;
-
+        Debug.Log("Startpoint");
         if (clickEnd) { Over(); }
         else { clickEnd = true; }
     }

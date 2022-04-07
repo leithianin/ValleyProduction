@@ -97,27 +97,6 @@ public class PathFragmentData
         return 0;
     }
 
-    [Obsolete]
-    public void CheckAvailableInterestPoint()
-    {
-        float f_increment = 1f/4f;
-        for(int i = 1; i <= 4; i++)
-        {
-            Collider[] colliderTab = Physics.OverlapBox(ValleyUtilities.GetVectorPoint3D(startPoint.transform.position, endPoint.transform.position, f_increment*i), new Vector3(1,1,1));
-
-            foreach(Collider c in colliderTab)
-            {
-                InterestPoint foundInterestPoint = c.gameObject.GetComponent<InterestPoint>();
-                if (foundInterestPoint != null)
-                {
-                    ActionInvoke(c.gameObject.name);
-
-                    AddInterestPoint(foundInterestPoint);
-                }
-            }
-        }
-    }
-
     public void AddInterestPoint(InterestPoint interest_p)
     {
         if(!interestPointList.Contains(interest_p))
@@ -132,26 +111,6 @@ public class PathFragmentData
         if (interestPointList.Contains(toRemove))
         {
             interestPointList.Remove(toRemove);
-        }
-    }
-
-    public void ActionInvoke(string name)
-    {
-        if (name.Contains("Watermill"))
-        {
-            OnBoardingManager.OnWaterMill?.Invoke(true);
-        }
-        else if (name.Contains("Chapel"))
-        {
-            OnBoardingManager.OnChapel?.Invoke(true);
-        }
-        else if (name.Contains("Windmill"))
-        {
-            OnBoardingManager.OnWindMill?.Invoke(true);
-        }
-        else
-        {
-            //Debug.Log("No Invoke on this Landmark");
         }
     }
 

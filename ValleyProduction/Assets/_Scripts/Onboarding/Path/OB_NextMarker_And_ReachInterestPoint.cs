@@ -15,13 +15,13 @@ public class OB_NextMarker_And_ReachInterestPoint : OnBoarding
 
     protected override void OnPlay()
     {
-        OnBoardingManager.OnWaterMill += OnReach;
+        
     }
 
-    public void OnReach(bool onReachbool)
+    public void OnReach()
     {
         OnInterestPointReach?.Invoke();
-        OnBoardingManager.OnWaterMill -= OnReach;
+        
     }
 
     public void OnClickButton()

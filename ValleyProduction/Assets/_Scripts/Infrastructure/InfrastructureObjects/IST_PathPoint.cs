@@ -60,7 +60,6 @@ public class IST_PathPoint : Infrastructure
             }
 
             InfrastructureManager.DesnapInfrastructure(this);
-            Debug.Log("Remove object");
             OnDestroyPathPoint?.Invoke();
             return true;
         }
