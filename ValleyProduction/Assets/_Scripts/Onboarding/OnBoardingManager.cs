@@ -12,13 +12,8 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public OB_Sequence sequence;
 
     [Header("On Boarding Path")]
-    public GameObject tool;                                                             //CODE REVIEW
-    public static Action<bool> OnWaterMill;
-    public static Action<bool> OnChapel;
     public static Action<bool> OnClickVisitorPath;
     public static bool firstClickVisitors = false;
-    public GameObject UI_OB_VisitorsProfileInfo;
-    public GameObject UI_OB_HikerIntro;
     public GameObject UI_Arrow_Chapel;
     public GameObject UI_ZoneChapel;
     public OB_VisitorsProfilesIntro visitorProfileIntroOnBoarding;
@@ -31,8 +26,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static Action<bool> onClickPath;
     public static Action<bool> onHideVisitorInfo;
     public static Action<bool> onDestroyPath;
-    public static Action<bool> OnWindMill;
-    public static Action<bool> OnStartPoint;
 
     [Header("On Boarding Infrastructure")]
     public static Action<bool> OnClickInfrastructure;
@@ -41,7 +34,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static Action<bool> OnClickFoodInfrastructure;
     public static Action<bool> OnClickZone;
     public static Action<bool> OnClickBuild;
-    public static Action<bool> OnClickZoneTrashCan;
 
     private void Start()
     {
