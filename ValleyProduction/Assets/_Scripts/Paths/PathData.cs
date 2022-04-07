@@ -11,13 +11,15 @@ public class PathData
     public Color color;
     public float difficulty = 5f;
 
+    //Data
     public IST_PathPoint startPoint;                                                             //Starting point of the path
-    public List<PathFragmentData> pathFragment = new List<PathFragmentData>();               //Data of the path portions between 2 marker
+    public List<PathFragmentData> pathFragment = new List<PathFragmentData>();                   //Data of the path portions between 2 marker
 
-    List<PathFragmentData> listSuppr = new List<PathFragmentData>();
+    //PathFragment utilities
+    List<PathFragmentData> listGetPathFragment = new List<PathFragmentData>();                   //List of Path's Pathfragment
+    public LineRenderer pathLineRenderer;
 
-    List<PathFragmentData> listGetPathFragment = new List<PathFragmentData>();
-
+    //Detector
     [Serializable]
     private class InterestPointDetected
     {
@@ -26,14 +28,9 @@ public class PathData
     }
 
     [SerializeField] private List<InterestPointDetected> interestPointsOnPath = new List<InterestPointDetected>();
-
-    //Debug Path --> J'ai besoin de savoir à qui il appartient lors de la suppression
-    public LineRenderer pathLineRenderer;
-
-    [Obsolete]
-
     private List<InterestPointDetector> interestPointDetectors = new List<InterestPointDetector>();
 
+    #region PathPoint
     /// <summary>
     /// Check if the path has the point.
     /// </summary>
@@ -57,29 +54,40 @@ public class PathData
         return false;
     }
 
-    //Différence avec celle du haut ? Ca retourne true dans tous les cas si ToCheck = startPoint
-    public bool ContainsPointWithStart(IST_PathPoint toCheck)
+    /// <summary>
+    /// Return all pathpoints of the pathData
+    /// </summary>
+    /// <returns></returns>
+    public List<IST_PathPoint> GetAllPoints()
     {
-        if (startPoint == toCheck)
-        {
-            return true;
-        }
+        List<IST_PathPoint> toReturn = new List<IST_PathPoint>();
 
         for (int i = 0; i < pathFragment.Count; i++)
         {
-            if (pathFragment[i].endPoint == toCheck || pathFragment[i].startPoint == toCheck)
+            if (!toReturn.Contains(pathFragment[i].startPoint))
             {
-                return true;
+                toReturn.Add(pathFragment[i].startPoint);
+            }
+
+            if (!toReturn.Contains(pathFragment[i].endPoint))
+            {
+                toReturn.Add(pathFragment[i].endPoint);
             }
         }
 
-        return false;
+        return toReturn;
     }
 
-    //ContainsLandmark --> A mettre ailleurs ? Prends un LandmarkType et check dans les AREA.
-
-    //GetNumberInterestPoint --> Same qu'au dessus
-
+    /// <summary>
+    /// Return the last pathpoint of the pathData
+    /// </summary>
+    /// <returns></returns>
+    public IST_PathPoint GetLastPoint()
+    {
+        return pathFragment[pathFragment.Count - 1].endPoint;
+    }
+    #endregion
+    /*
     /// <summary>
     /// Return if the path is usable.
     /// </summary>
@@ -88,8 +96,9 @@ public class PathData
     public bool IsUsable(IST_PathPoint toCheck)
     {
         return startPoint != null && ContainsPoint(toCheck);
-    }
+    }*/
 
+    /*
     /// <summary>
     /// Get a random destination.
     /// </summary>
@@ -106,8 +115,9 @@ public class PathData
         }
 
         return availablePaths[UnityEngine.Random.Range(0, availablePaths.Count)];
-    }
+    }*/
 
+    /*
     /// <summary>
     /// Return all path available between 2 points.
     /// </summary>
@@ -130,45 +140,27 @@ public class PathData
         }
 
         return toReturn;
-    }
-
-     /// <summary>
-    /// Remove FragmentData with startPoint and endPoint.
-    /// </summary>
-    /// <param name="endPoint">FragmentData's endPoint.</param>
-    /// <param name="startPoint">FragmentData's startPoint.</param>
-    /// <returns>Return PathFragment to Remove if points are valide, else return null.</returns>
-    /*
-    public PathFragmentData RemoveFragment(IST_PathPoint endPoint, IST_PathPoint startPoint)
-    {
-        PathFragmentData toReturn = null;
-        for (int i = pathFragment.Count - 1; i >= 0; i--)
-        {
-            if (pathFragment[i].startPoint == startPoint && pathFragment[i].endPoint == endPoint)
-            {
-                toReturn = pathFragment[i];
-                pathFragment.RemoveAt(i);
-                break;
-            }
-        }
-        return toReturn;
     }*/
 
+    #region PathFragment
+    #region Remove PathFragment
+    /// <summary>
+    /// Use for the Delete with 2 PathFragment (Check wich part need to be delete)
+    /// </summary>
+    /// <param name="ist_pp"></param>
     public void checkWichFragmentToRemove(IST_PathPoint ist_pp)
     {
-        if (pathFragment[0].HasThisStartingPoint(ist_pp))
-        {
-            RemovePathFragment(pathFragment[0]);
-        }
-        else
-        {
-            RemovePathFragment(pathFragment[1]);
-        }
+        if (pathFragment[0].HasThisStartingPoint(ist_pp)){ RemovePathFragment(pathFragment[0]);}
+        else                                             { RemovePathFragment(pathFragment[1]);}
     }
 
+    /// <summary>
+    /// Remove fragments deleted and the rest of the path
+    /// </summary>
+    /// <param name="pathpoint"></param>
     public void RemoveFragmentAndNext(IST_PathPoint pathpoint)
     {
-        listSuppr.Clear();
+        List<PathFragmentData> listSuppr = new List<PathFragmentData>();                   //List of PathFragmentData to delete
         bool endingPointReach = false;
 
         for (int i = 0; i < pathFragment.Count;i++)
@@ -194,6 +186,10 @@ public class PathData
         }
     }
 
+    /// <summary>
+    /// Take a pathFragment of the path and delete it
+    /// </summary>
+    /// <param name="toRemove">PathFragment to delete</param>
     public void RemovePathFragment(PathFragmentData toRemove)
     {
         pathFragment.Remove(toRemove);
@@ -201,7 +197,12 @@ public class PathData
         toRemove.startPoint.Node.RemoveFragment(toRemove);
         toRemove.endPoint.Node.RemoveFragment(toRemove);
     }
+    #endregion
 
+    /// <summary>
+    /// Add the pathfragment to the path
+    /// </summary>
+    /// <param name="toAdd"></param>
     public void AddPathFragment(PathFragmentData toAdd)
     {
         pathFragment.Add(toAdd);
@@ -210,6 +211,11 @@ public class PathData
         toAdd.endPoint.Node.AddFragment(toAdd);
     }
 
+    /// <summary>
+    /// Return pathFragments after a pathpoint 
+    /// </summary>
+    /// <param name="pathpoint"></param>
+    /// <returns></returns>
     public List<PathFragmentData> GetAllNextPathFragment(IST_PathPoint pathpoint)
     {
         listGetPathFragment.Clear();
@@ -223,37 +229,12 @@ public class PathData
 
         return listGetPathFragment;
     }
+    #endregion
 
-    public void RemoveFragment(PathFragmentData pfd)
-    {
-        pathFragment.Remove(pfd);
-    }
-
-    public List<IST_PathPoint> GetAllPoints()
-    {
-        List<IST_PathPoint> toReturn = new List<IST_PathPoint>();
-
-        for(int i = 0; i < pathFragment.Count; i++)
-        {
-            if(!toReturn.Contains(pathFragment[i].startPoint))
-            {
-                toReturn.Add(pathFragment[i].startPoint);
-            }
-
-            if (!toReturn.Contains(pathFragment[i].endPoint))
-            {
-                toReturn.Add(pathFragment[i].endPoint);
-            }
-        }
-
-        return toReturn;
-    }
-
-    public IST_PathPoint GetLastPoint()
-    {
-        return pathFragment[pathFragment.Count - 1].endPoint;
-    }
-
+    #region PathData
+    /// <summary>
+    /// Safe function that check if the PathData is Empty
+    /// </summary>
     public void SafeCheck()
     {
         if(IsPathDataEmpty() || startPoint == null)
@@ -262,6 +243,18 @@ public class PathData
         }
     }
 
+    public bool IsPathDataEmpty()
+    {
+        if (pathFragment.Count == 0 && startPoint != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Update Interest Point of pathDetector when delete PathData
+    /// </summary>
     public void DeletePathData()
     {
         for(int i = 0; i < interestPointDetectors.Count; i++)
@@ -271,15 +264,10 @@ public class PathData
         }
     }
 
-    public bool IsPathDataEmpty()
-    {
-        if(pathFragment.Count == 0 && startPoint != null)
-        {
-            return true;
-        }
-        return false;
-    }
+    #endregion
 
+    #region Detection
+    /*
     [Obsolete]
     public void AddInterestPointDetector(InterestPointDetector detector)
     {
@@ -301,6 +289,7 @@ public class PathData
             detector.OnRemoveInterestPoint -= RemoveInterestPoint;
         }
     }
+    */
 
     private int ContrainsInterestPoint(InterestPoint toCheck)
     {
@@ -348,4 +337,5 @@ public class PathData
         }
 
     }
+    #endregion
 }
