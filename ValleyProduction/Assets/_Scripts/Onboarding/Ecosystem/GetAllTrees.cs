@@ -29,7 +29,6 @@ public class GetAllTrees : MonoBehaviour
 
     public void SetAllTreesToHealthly()
     {
-        Debug.Log(treeList.Count);
         foreach (TreeBehavior treeBehaviour in treeList)
         {
             treeBehaviour.SetTree();

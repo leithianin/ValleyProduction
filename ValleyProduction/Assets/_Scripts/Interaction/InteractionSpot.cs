@@ -85,7 +85,6 @@ public class InteractionSpot : MonoBehaviour
     {
         while(callerInSpot.Count > 0)
         { 
-            Debug.Log("Ask interupt : " + callerInSpot[0].name);
             interactionAction.InteruptAction(callerInSpot[0]);
         }
     }

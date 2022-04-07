@@ -11,12 +11,12 @@ public class OB_TrashCanInZone : OnBoarding
 
     protected override void OnPlay()
     {
-        OnBoardingManager.OnClickZoneTrashCan += OnClickInZone;
+        Debug.Log("1");
     }
 
-    public void OnClickInZone(bool cond)
+    public void OnClickInZone()
     {
-        OnBoardingManager.OnClickZoneTrashCan -= OnClickInZone;
+        Debug.Log("2");
         Over();
     }
 }

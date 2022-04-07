@@ -7118,7 +7118,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 213249345}
-        m_TargetAssemblyTypeName: IFB_MoveCameraToTarget, Assembly-CSharp
+        m_TargetAssemblyTypeName: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 3
         m_Arguments:
@@ -7162,14 +7162,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 213249342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRadius: 0
-  targetAzimuthalAngle: 0
-  targetPolarAngle: 0
-  speed: 0
   target: {fileID: 550294204}
+  camSphericalTr: {fileID: 1841655197}
 --- !u!1001 &213583392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61361,14 +61358,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1671426085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRadius: 0
-  targetAzimuthalAngle: 0
-  targetPolarAngle: 0
-  speed: 0
   target: {fileID: 550294204}
+  camSphericalTr: {fileID: 1841655197}
 --- !u!1001 &1671478458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80124,8 +80118,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2222160492214754523}
   - component: {fileID: 2222160492214754524}
-  - component: {fileID: 2222160492214754525}
-  - component: {fileID: 2222160492214754526}
+  - component: {fileID: 2222160492214754528}
+  - component: {fileID: 2222160492214754527}
   m_Layer: 0
   m_Name: P_Action (4)
   m_TagString: Untagged
@@ -80174,10 +80168,10 @@ MonoBehaviour:
           m_StringArgument: PTH_001
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 2222160492214754525}
-        m_TargetAssemblyTypeName: IFB_MoveCameraToTarget, Assembly-CSharp
+      - m_Target: {fileID: 2222160492214754528}
+        m_TargetAssemblyTypeName: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -80237,10 +80231,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2222160492214754526}
-        m_TargetAssemblyTypeName: IFB_MoveCameraToTarget, Assembly-CSharp
+      - m_Target: {fileID: 2222160492214754527}
+        m_TargetAssemblyTypeName: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -80249,7 +80243,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2222160492214754525
+--- !u!114 &2222160492214754527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80258,31 +80252,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2222160492214754522}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRadius: 15
-  targetAzimuthalAngle: 10
-  targetPolarAngle: 10
-  speed: 100
-  target: {fileID: 700819966}
---- !u!114 &2222160492214754526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2222160492214754522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRadius: 15
-  targetAzimuthalAngle: 10
-  targetPolarAngle: 10
-  speed: 100
   target: {fileID: 1623915287}
+  camSphericalTr: {fileID: 1841655197}
+--- !u!114 &2222160492214754528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222160492214754522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 700819966}
+  camSphericalTr: {fileID: 1841655197}
 --- !u!114 &2222160492932056940
 MonoBehaviour:
   m_ObjectHideFlags: 0

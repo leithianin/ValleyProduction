@@ -61223,6 +61223,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166e8e9f4c4f1d64cb5bcfff3771d915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1798397852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3505576965132263304, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+  m_PrefabInstance: {fileID: 7226518544740597722}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1798397854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798397852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6700ec7851cb1ad4d905acf81213ae6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnCollide:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1807894109}
+        m_TargetAssemblyTypeName: OB_TrashCanInZone, Assembly-CSharp
+        m_MethodName: OnClickInZone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1807316784
 GameObject:
   m_ObjectHideFlags: 0
@@ -61278,6 +61310,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50ff5b2ae484a9f4d9d43683f2cd6cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1807894109 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8550284945969144822, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+  m_PrefabInstance: {fileID: 7226518544740597722}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d351a997c7a2e4594617d67e684880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1853315181
@@ -73541,10 +73584,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 654251476, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
-      propertyPath: name
-      value: TrashBin
-      objectReference: {fileID: 0}
     - target: {fileID: 703639025, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: go
       value: 
@@ -73558,6 +73597,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1452744780}
     - target: {fileID: 904766852, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 7226518544740597725}
+    - target: {fileID: 904766852, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 144339203}
@@ -73570,17 +73613,17 @@ PrefabInstance:
       value: UpdateGoal
       objectReference: {fileID: 0}
     - target: {fileID: 904766852, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 904766852, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
-    - target: {fileID: 904766853, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 2061620138}
-    - target: {fileID: 904766853, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
-      propertyPath: camSphericalTr
-      value: 
-      objectReference: {fileID: 838523332}
+    - target: {fileID: 904766852, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 908153366, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -73610,17 +73653,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1452744780}
     - target: {fileID: 1125777833, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 7226518544740597724}
+    - target: {fileID: 1125777833, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpdateGoal
       objectReference: {fileID: 0}
-    - target: {fileID: 1125777834, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 2064216266}
-    - target: {fileID: 1125777834, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
-      propertyPath: camSphericalTr
-      value: 
-      objectReference: {fileID: 838523332}
+    - target: {fileID: 1125777833, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125777833, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1132914878, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -73810,6 +73857,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1452744786}
     - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
       value: 6
       objectReference: {fileID: 0}
@@ -73817,6 +73868,10 @@ PrefabInstance:
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7226518544740597727}
     - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -73846,6 +73901,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: UnselectTool
       objectReference: {fileID: 0}
@@ -73860,6 +73919,10 @@ PrefabInstance:
     - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnEnd.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: IFB_DesactivateAfterTime, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1691552264114231903, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -73890,13 +73953,41 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1452744780}
     - target: {fileID: 1870180734984164270, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 7226518544740597729}
+    - target: {fileID: 1870180734984164270, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpdateGoal
       objectReference: {fileID: 0}
+    - target: {fileID: 1870180734984164270, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 1870180734984164270, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168886262454339309, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2064216266}
+    - target: {fileID: 2168886262454339309, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: camSphericalTr
+      value: 
+      objectReference: {fileID: 838523332}
     - target: {fileID: 2561310554335562596, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: m_Name
       value: OnBoardingSequenceInfrastructure
       objectReference: {fileID: 0}
+    - target: {fileID: 2895338055566557656, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2061620138}
+    - target: {fileID: 2895338055566557656, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: camSphericalTr
+      value: 
+      objectReference: {fileID: 838523332}
     - target: {fileID: 3512259600326863756, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -73946,14 +74037,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1452744780}
     - target: {fileID: 4785934781106939769, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 7226518544740597728}
+    - target: {fileID: 4785934781106939769, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpdateGoal
       objectReference: {fileID: 0}
-    - target: {fileID: 5500790235696966458, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+    - target: {fileID: 4785934781106939769, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785934781106939769, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: IFB_MoveCameraToTargetOnBoarding, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783623523591807111, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: camSphericalTr
+      value: 
+      objectReference: {fileID: 838523332}
+    - target: {fileID: 0}
       propertyPath: target
       value: 
       objectReference: {fileID: 325614604}
-    - target: {fileID: 5500790235696966458, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+    - target: {fileID: 0}
       propertyPath: camSphericalTr
       value: 
       objectReference: {fileID: 838523332}
@@ -73973,18 +74080,22 @@ PrefabInstance:
       propertyPath: PlayOnStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpdateGoal
       objectReference: {fileID: 0}
+    - target: {fileID: 5783623523591807111, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7065275461320717518, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2064216266}
+    - target: {fileID: 7065275461320717518, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: camSphericalTr
+      value: 
+      objectReference: {fileID: 838523332}
     - target: {fileID: 7226518544740597726, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: go
       value: 
       objectReference: {fileID: 1452744786}
-    - target: {fileID: 7226518544740597727, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 2064216266}
-    - target: {fileID: 7226518544740597727, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
-      propertyPath: camSphericalTr
-      value: 
-      objectReference: {fileID: 838523332}
     - target: {fileID: 7226518544740597728, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: interacSequence
       value: 
@@ -74057,6 +74168,14 @@ PrefabInstance:
       propertyPath: treeList.Array.data[7]
       value: 
       objectReference: {fileID: 1865705690}
+    - target: {fileID: 8720476401692415649, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 325614604}
+    - target: {fileID: 8720476401692415649, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+      propertyPath: camSphericalTr
+      value: 
+      objectReference: {fileID: 838523332}
     - target: {fileID: 8798663538551255185, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -74101,14 +74220,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9132308686793393199, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+    - target: {fileID: 0}
+      propertyPath: speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: target
       value: 
       objectReference: {fileID: 589619143}
-    - target: {fileID: 9132308686793393199, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+    - target: {fileID: 0}
+      propertyPath: targetRadius
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: camSphericalTr
       value: 
       objectReference: {fileID: 838523332}
+    - target: {fileID: 0}
+      propertyPath: targetPolarAngle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: targetAzimuthalAngle
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 49395153, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
@@ -74117,6 +74252,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8798663538551255185, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
   m_PrefabInstance: {fileID: 7226518544740597722}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7226518544740597724 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7065275461320717518, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+  m_PrefabInstance: {fileID: 7226518544740597722}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7226518544740597725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2895338055566557656, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+  m_PrefabInstance: {fileID: 7226518544740597722}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7226518544740597726 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3806685344675751540, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
@@ -74126,6 +74283,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fda43e1741672514a9f2981a617746ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7226518544740597727 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5783623523591807111, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+  m_PrefabInstance: {fileID: 7226518544740597722}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7226518544740597728 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2168886262454339309, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+  m_PrefabInstance: {fileID: 7226518544740597722}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7226518544740597729 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8720476401692415649, guid: 19d04e7612cb43046af7b5fd1f185e21, type: 3}
+  m_PrefabInstance: {fileID: 7226518544740597722}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c77a512f2c10b4439fa93c2397e169c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8464914366987041696

@@ -11,7 +11,7 @@ public class CameraManager : VLY_Singleton<CameraManager>
     public static Action OnCameraMove;
 
 
-    public static void MoveCamera(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float speed)
+    public static void MoveCamera(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float speed, bool rotate)
     {
         instance.spherical.MoveCameraOverTime(targetPolarAngle, targetAzimuthalAngle, targetPolarAngle, speed);
     }
