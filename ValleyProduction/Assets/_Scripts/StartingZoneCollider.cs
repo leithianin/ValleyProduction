@@ -9,7 +9,6 @@ public class StartingZoneCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Si je vois ce message, c'est que ce script est utilisé");
         IST_PathPoint pathpoint = other.gameObject.GetComponent<IST_PathPoint>();
 
         if (pathpoint != null)

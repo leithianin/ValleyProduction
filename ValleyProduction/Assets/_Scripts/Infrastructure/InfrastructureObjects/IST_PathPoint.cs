@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class IST_PathPoint : Infrastructure
 {
+    [SerializeField] private ManageMultiPath manageMultiPath;
     [SerializeField] private PathNode node;
 
     public Action OnDestroyPathPoint;
@@ -37,6 +38,7 @@ public class IST_PathPoint : Infrastructure
         else                                                                //Creer un nouveau chemin
         {
             PathManager.PlacePoint(this);
+            manageMultiPath.ActivateMultiPath();
         }
     }
 
