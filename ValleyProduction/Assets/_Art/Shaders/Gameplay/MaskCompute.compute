@@ -1,6 +1,6 @@
 #pragma kernel CSMain
 
-int _ChunkCount;
+int _EntityCount;
 int _TextureSize;
 float _MapSize;
 float _Blend;
@@ -9,36 +9,46 @@ float4 _Color0;
 float4 _Color1;
 float4 _Color2;
 float4 _Color3;
+float4 _Color4;
+float4 _Color5;
+float4 _Color6;
+float4 _Color7;
+float4 _Color8;
+float4 _Color9;
+float4 _Color10;
 
-Texture2D _NoiseTex;
-SamplerState sampler_NoiseTex;
-float _NoiseDetail;
-
-StructuredBuffer<float> _ChunkBuffer;
+StructuredBuffer<float> _EntityBuffer;
+RWStructuredBuffer<float> _PixelBuffer;
 
 RWTexture2D<float4> _Mask;
 
-[numthreads(8,8,1)]
-void CSMain (uint3 id : SV_DispatchThreadID)
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
 {
-	float val = 0.0f;
+    float val = 0.0f;
 
-	float2 texelUVPos = id.xy / (float)_TextureSize;
-	float2 texelWorldPos = (_MapSize * texelUVPos) - (_MapSize * .5f);
+    float2 texelUVPos = id.xy / (float)_TextureSize;
+    float2 texelWorldPos = (_MapSize * texelUVPos);
 
-	for (int i = 0; i < _ChunkCount; i++)
-	{
-		float2 chunkWorldPos = float2(_ChunkBuffer[4 * i], _ChunkBuffer[4 * i + 1]);
-		float distance = length(texelWorldPos - chunkWorldPos);
+    for (int i = 0; i < _EntityCount; i++)
+    {
+        float2 entityWorldPos = float2(_EntityBuffer[4 * i], _EntityBuffer[4 * i + 1]);
+        float distance = length(texelWorldPos - entityWorldPos);
 
-		float heatVal = smoothstep(_ChunkBuffer[4 * i + 2] + _Blend, _ChunkBuffer[4 * i + 2], distance);
-		val = max(val, heatVal * _ChunkBuffer[4 * i + 3]);
-	}
+        float noiseVal = smoothstep(_EntityBuffer[4 * i + 2] + _Blend, _EntityBuffer[4 * i + 2], distance);
+        //val = max(val, noiseVal * _EntityBuffer[4 * i + 3]);
+        val += noiseVal * _EntityBuffer[4 * i + 3];
+    }
 
-	val += _NoiseTex.SampleLevel(sampler_NoiseTex, texelUVPos * _NoiseDetail, 0).r * .05f;
-
-	float4 col = lerp(_Color2, _Color3, smoothstep(.55f, .75f, val));
-	col = lerp(_Color1, col, smoothstep(.3f, .5f, val));
-	col = lerp(_Color0, col, smoothstep(.05f, .25f, val));
-	_Mask[id.xy] = col;
+    float4 col = lerp(_Color9, _Color10, smoothstep(9, 10, val));
+    col = lerp(_Color8, col, smoothstep(8, 9, val));
+    col = lerp(_Color7, col, smoothstep(7, 8, val));
+    col = lerp(_Color6, col, smoothstep(6, 7, val));
+    col = lerp(_Color5, col, smoothstep(5, 6, val));
+    col = lerp(_Color4, col, smoothstep(4, 5, val));
+    col = lerp(_Color3, col, smoothstep(3, 4, val));
+    col = lerp(_Color2, col, smoothstep(2, 3, val));
+    col = lerp(_Color1, col, smoothstep(1, 2, val));
+    col = lerp(_Color0, col, smoothstep(0, 1, val));
+    _Mask[id.xy] = col;
 }

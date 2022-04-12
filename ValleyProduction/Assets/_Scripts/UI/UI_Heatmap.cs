@@ -9,7 +9,7 @@ public class UI_Heatmap : MonoBehaviour
     public void HeatmapNoise()
     {
         Debug.Log("Noise");
-        heatmapViewController.HandleHeatmapNoise();
+        //heatmapViewController.HandleHeatmapNoise();
     }
 
     public void HeatmapVisitors()
