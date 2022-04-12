@@ -24,10 +24,6 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         for(int i = 0; i < allQuests.Length; i++)
         {
             allQuests[i].Reset();
-            for(int j = 0; j < allQuests[i].Objectives.Count; j++)
-            {
-                allQuests[i].Objectives[j].Reset();
-            }
         }
 
         //Placeholder : Démarre la première quête
@@ -53,26 +49,58 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
     /// Vérifie l'état de la quête et met à jour le prochain objectif.
     /// </summary>
     /// <param name="updatedQuest">La quête à update.</param>
-    private void UpdateQuestObjective(VLY_Quest updatedQuest)
+    private void UpdateQuestObjective(VLY_Quest updatedQuest) //CODE REVIEW : Clean la fonction (Séparer la partie "Quest Stage" dans une autre fonction
     {
         int i = 0;
 
-        for (i = 0; i < updatedQuest.Objectives.Count; i++)
+        for (i = 0; i < updatedQuest.Stages.Count; i++)
         {
-            if(updatedQuest.Objectives[i].State == QuestObjectiveState.Completed) //On ignore objectifs déjà remplis
+            bool hasStartedObjective = false;
+            switch(updatedQuest.Stages[i].State)
             {
-                continue;
-            }
-            else if(updatedQuest.Objectives[i].State == QuestObjectiveState.Pending) //Si un objectif n'est pas commencé, on le commence.
-            {
-                SetObjectiveStatus(updatedQuest.Objectives[i], QuestObjectiveState.Started);
+                case QuestObjectiveState.Completed:
+                    continue;
+                case QuestObjectiveState.Started:
+                    bool isPhaseComplete = true;
+                    for(int j = 0; j < updatedQuest.Stages[i].Objectives.Count; j++)
+                    {
+                        if(updatedQuest.Stages[i].Objectives[j].State != QuestObjectiveState.Completed)
+                        {
+                            isPhaseComplete = false;
+                            break;
+                        }
+                    }
 
-                updatedQuest.Objectives[i].OnUpdateState += (QuestObjectiveState state) => instance.UpdateQuestObjective(updatedQuest);
-                break; //On sort de la boucle dès qu'un nouvel objectif est lancé.
+                    if(isPhaseComplete)
+                    {
+                        updatedQuest.Stages[i].State = QuestObjectiveState.Completed;
+                    }
+                    else
+                    {
+                        hasStartedObjective = true;
+                    }
+                    break;
+                case QuestObjectiveState.Pending:
+                    for (int j = 0; j < updatedQuest.Stages[i].Objectives.Count; j++)
+                    {
+                        SetObjectiveStatus(updatedQuest.Stages[i].Objectives[j], QuestObjectiveState.Started);
+
+                        updatedQuest.Stages[i].Objectives[j].OnUpdateState += (QuestObjectiveState state) => UpdateQuestObjective(updatedQuest);
+                    }
+
+                    updatedQuest.Stages[i].State = QuestObjectiveState.Started;
+
+                    hasStartedObjective = true;
+                    break;
+            }
+
+            if(hasStartedObjective)
+            {
+                break;
             }
         }
 
-        if(i >= updatedQuest.Objectives.Count)
+        if(i >= updatedQuest.Stages.Count)
         {
             updatedQuest.state = QuestObjectiveState.Completed; //CODE REVIEW : Voir pour le mettre dans une fonction (Gérer les feedbacks)
         }

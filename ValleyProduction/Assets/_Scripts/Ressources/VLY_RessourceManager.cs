@@ -17,6 +17,8 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 
     private TimerManager.Timer ressourceTimer = null;
 
+    private float ressourceToGain;
+
     public static int GetRessource => Mathf.FloorToInt(instance.currentRessources.Value);
 
     private void Start()
