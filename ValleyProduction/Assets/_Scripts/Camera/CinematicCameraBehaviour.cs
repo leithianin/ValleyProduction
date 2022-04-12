@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CinematicCameraBehaviour : MonoBehaviour
 {
     [SerializeField] private SphericalTransform cameraTransform = default;
     [SerializeField] private Collider cameraBoundaries = default;
+    [SerializeField] private CinematicShotDataBase database = default;
 
     [SerializeField] private Vector2 timeRange = default;
 
@@ -28,10 +30,48 @@ public class CinematicCameraBehaviour : MonoBehaviour
     private void Update()
     {
         if (!inCinematicMode && cinematicModeTriggered)
-            StartCoroutine(RotateAround());
+            if (Random.Range(-5, 5) > 0)
+            {
+                StartCoroutine(PlayShotWithRandomRotation());
+            }
+            else
+            {
+                StartCoroutine(PlayShotWithCustomsParameters());
+            }
     }
 
-    public IEnumerator RotateAround()
+    public IEnumerator PlayShotWithCustomsParameters()
+    {
+        inCinematicMode = true;
+        yield return new WaitForSeconds(0.5f);
+
+        CameraData shotData = SelectShotData(database.shotsDataBase);
+        float referenceTime = shotData.isTraveling ?
+            Vector3.Distance(shotData.cameraOriginPosition, shotData.travelPosition) / shotData.speed
+            : Random.Range(timeRange.x, timeRange.y);
+
+        SelectDestination(shotData.cameraOriginPosition.x, shotData.cameraOriginPosition.z);
+        SelectAngles(shotData.radius, shotData.azimuthalAngle, shotData.polarAngle);
+
+        for (float time = referenceTime; time > 0; time -= Time.deltaTime)
+        {
+            if (shotData.isTraveling)
+            {
+                cameraTransform.SetOrigin(Vector3.Lerp(shotData.travelPosition, shotData.cameraOriginPosition, time / referenceTime));
+                yield return null;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+
+        FadeReset();
+        inCinematicMode = false;
+
+    }
+
+    public IEnumerator PlayShotWithRandomRotation()
     {
         inCinematicMode = true;
         yield return new WaitForSeconds(0.5f);
@@ -52,6 +92,21 @@ public class CinematicCameraBehaviour : MonoBehaviour
         inCinematicMode = false;
     }
 
+    CameraData SelectShotData(List<CameraData> database)
+    {
+        // Check if cameraData is set for the current scene
+        List<CameraData> tempDataBase = new List<CameraData>();
+        foreach (var item in database)
+        {
+            if (item.scene == SceneManager.GetActiveScene().name)
+            {
+                tempDataBase.Add(item);
+            }
+        }
+
+        return tempDataBase[(int)Random.Range(0, tempDataBase.Count)];
+    }
+
     void SelectDestination()
     {
         if (!cameraBoundaries)
@@ -64,12 +119,24 @@ public class CinematicCameraBehaviour : MonoBehaviour
         Vector3 newPos = new Vector3(xPos, cameraTransform.GetOriginPosition().y, zPos);
         cameraTransform.SetOriginPosition(newPos);
     }
+    void SelectDestination(float x, float z)
+    {
+        Vector3 newPos = new Vector3(x, cameraTransform.GetOriginPosition().y, z);
+        cameraTransform.SetOriginPosition(newPos);
+    }
 
     void SelectAngles()
     {
         cameraTransform.SetRadius(Random.Range(radiusRange.x, radiusRange.y));
-        cameraTransform.SetPolarAngle(Random.Range(polarAngleRange.x, polarAngleRange.y));
         cameraTransform.SetAzimuthalAngle(Random.Range(0, 360));
+        cameraTransform.SetPolarAngle(Random.Range(polarAngleRange.x, polarAngleRange.y));
+    }
+
+    void SelectAngles(float radius, float azimuthalAngle, float polarAngle)
+    {
+        cameraTransform.SetRadius(radius);
+        cameraTransform.SetAzimuthalAngle(azimuthalAngle);
+        cameraTransform.SetPolarAngle(polarAngle);
     }
 
     public void FadeReset()
