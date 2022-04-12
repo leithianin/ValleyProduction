@@ -231,7 +231,7 @@ public class SphericalTransform : MonoBehaviour
         target = _target;
     }
 
-    void SetTargetForward()
+    public void SetTargetForward()
     {
         transform.forward = origin.position - transform.position + new Vector3(0.0f, originVisualOffset, 0.0f);
     }
