@@ -251,8 +251,8 @@ MonoBehaviour:
   resetPositionSpeed: 1000
   layerMask:
     serializedVersion: 2
-    m_Bits: 60659
-  BoundariesCollider: {fileID: 1292608334}
+    m_Bits: 60658
+  boundariesCollider: {fileID: 1292608334}
   verticalOffset: 5
   minPolarValue: 1
   maxPolarValue: 100
@@ -260,6 +260,8 @@ MonoBehaviour:
   maxRadiusValue: 100
   lookAtLerpValue: 0.1
   originVisualOffset: 3.87
+  drawGroundDebug: 1
+  debugMesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
   belowTerrain: 0
 --- !u!114 &724654950491024182
 MonoBehaviour:
@@ -301,6 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 724654950491024179}
   cameraBoundaries: {fileID: 1292608334}
+  database: {fileID: 11400000, guid: 61101138b6cdfb3499dc8e05f4ff22bc, type: 2}
   timeRange: {x: 3, y: 10}
   radiusRange: {x: 10, y: 50}
   polarAngleRange: {x: 10, y: 80}
@@ -414,7 +417,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294901759

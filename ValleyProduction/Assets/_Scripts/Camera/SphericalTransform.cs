@@ -7,7 +7,7 @@ using UnityEngine;
 public class SphericalTransform : MonoBehaviour
 {
 
-    [SerializeField] private Transform origin = default;
+    [SerializeField] protected Transform origin = default;
     [SerializeField] private Transform originLookAtTarget = default;
 
     [Space(10)]
@@ -27,7 +27,7 @@ public class SphericalTransform : MonoBehaviour
 
     [Header("Moving Constraints")]
     [SerializeField] private LayerMask layerMask = default;
-    [SerializeField] private Collider BoundariesCollider = default;
+    [SerializeField] protected Collider boundariesCollider = default;
 
     [Header("Polar Values")]
     [SerializeField, Tooltip("In degrees")] private float verticalOffset = 0.5f;
@@ -44,11 +44,15 @@ public class SphericalTransform : MonoBehaviour
     [Header("Offset")]
     [SerializeField, Range(0f, 5f)] private float originVisualOffset;
 
+    [Header("Debug")]
+    [SerializeField] private bool drawGroundDebug = true;
+    [SerializeField] private Mesh debugMesh = default;
+
     [SerializeField, ReadOnly] private bool belowTerrain;
 
     public static Action<float> OnMouseWheel;
 
-    private Vector3 cameraTarget = default;
+    protected Vector3 cameraTarget = default;
 
     private Vector3 touchDown = default;
 
@@ -114,19 +118,19 @@ public class SphericalTransform : MonoBehaviour
         return cartCoords;
     }
 
-    void ConvertCameraTargetTransformIntoCarthesianCoords()
+    protected void ConvertCameraTargetTransformIntoCarthesianCoords()
     {
         transform.position = SphericalToCarthesian(coordinates) + origin.position;
     }
 
-    void TestHeight()
+    protected void TestHeight()
     {
-        Debug.DrawLine(transform.position + Vector3.up * 1000f, transform.position + Vector3.down*5000.0f, Color.red);
+        //Debug.DrawLine(transform.position + Vector3.up * 1000f, transform.position + Vector3.down*5000.0f, Color.red);
 
         RaycastHit hit;
         if (Physics.Raycast(transform.position + Vector3.up * 1000f, Vector3.down, out hit, 5000.0f, layerMask))
         {
-            Debug.DrawLine(transform.position + Vector3.up * 1000f, transform.position + Vector3.up * 1000f + Vector3.down * hit.distance, Color.green);
+            //Debug.DrawLine(transform.position + Vector3.up * BoundariesCollider.bounds.extents.y, transform.position + Vector3.up * BoundariesCollider.bounds.extents.y + Vector3.down * hit.distance, Color.green);
             touchDown = hit.point;
 
             belowTerrain = transform.position.y <= hit.point.y;
@@ -141,6 +145,12 @@ public class SphericalTransform : MonoBehaviour
     }
 
     #region Origin
+
+    public void SetOrigin(Vector3 newPos)
+    {
+        origin.position = new Vector3(newPos.x, origin.position.y, newPos.z);
+    }
+
     public void MoveOrigin(float xInput, float yInput, float speed)
     {
 
@@ -175,36 +185,37 @@ public class SphericalTransform : MonoBehaviour
         return origin.position;
     }
 
-    private void MoveOriginLookAtTarget()
+    protected void MoveOriginLookAtTarget()
     {
         originLookAtTarget.position = Vector3.Lerp(originLookAtTarget.position, origin.position, lookAtLerpValue);
     }
 
 
-    void SetOriginForward()
+    protected void SetOriginForward()
     {
         origin.forward = GetOriginForwardVector();
     }
 
-    void SetOriginHeight()
+    protected void SetOriginHeight()
     {
-        Debug.DrawLine(origin.position + Vector3.up * 1000f, origin.position + Vector3.down * 5000.0f, Color.red);
+        //Debug.DrawLine(origin.position + Vector3.up * 1000f, origin.position + Vector3.down * 5000.0f, Color.red);
 
         RaycastHit hit;
         if (Physics.Raycast(origin.position + Vector3.up * 1000f, Vector3.down, out hit, 5000.0f, layerMask))
         {
-            Debug.DrawLine(origin.position + Vector3.up * 1000.0f, origin.position + Vector3.up * 1000.0f + Vector3.down * hit.distance, Color.green);
+            //Debug.DrawLine(origin.position + Vector3.up * BoundariesCollider.bounds.extents.y, origin.position + Vector3.up * BoundariesCollider.bounds.extents.y + Vector3.down * hit.distance, Color.green);
             origin.position = hit.point;
         }
     }
     #endregion
-    void SetCameraTarget()
+
+    protected void SetCameraTarget()
     {
         cameraTarget = transform.position;
     }
 
     
-    void SetTargetForward()
+    protected void SetTargetForward()
     {
         transform.forward = origin.position - transform.position + new Vector3(0.0f, originVisualOffset, 0.0f);
     }
@@ -219,7 +230,7 @@ public class SphericalTransform : MonoBehaviour
         return coordinates.x;
     }
 
-    Vector3 GetOriginForwardVector()
+    protected Vector3 GetOriginForwardVector()
     {
         return Vector3.Normalize(new Vector3(origin.position.x - transform.position.x, 0.0f, origin.position.z - transform.position.z));
     }
@@ -305,7 +316,7 @@ public class SphericalTransform : MonoBehaviour
     #endregion
 
     #region Constraints
-    void ConstraintAngles()
+    protected void ConstraintAngles()
     {
         if (coordinates.y >= 360f)
         {
@@ -320,12 +331,14 @@ public class SphericalTransform : MonoBehaviour
         coordinates.x = Mathf.Clamp(coordinates.x, minRadiusValue, maxRadiusValue);
     }
 
-    void ConstraintOriginPosition()
+    protected void ConstraintOriginPosition()
     {
-        float xOriginClamped = Mathf.Clamp(origin.position.x, BoundariesCollider.bounds.center.x - BoundariesCollider.bounds.extents.x, BoundariesCollider.bounds.center.x + BoundariesCollider.bounds.extents.x);
-        float zOriginClamped = Mathf.Clamp(origin.position.z, BoundariesCollider.bounds.center.z - BoundariesCollider.bounds.extents.z, BoundariesCollider.bounds.center.z + BoundariesCollider.bounds.extents.z);
-
-        origin.position = new Vector3(xOriginClamped, origin.position.y, zOriginClamped);
+        if (boundariesCollider != null)
+        {
+            float xOriginClamped = Mathf.Clamp(origin.position.x, boundariesCollider.bounds.center.x - boundariesCollider.bounds.extents.x, boundariesCollider.bounds.center.x + boundariesCollider.bounds.extents.x);
+            float zOriginClamped = Mathf.Clamp(origin.position.z, boundariesCollider.bounds.center.z - boundariesCollider.bounds.extents.z, boundariesCollider.bounds.center.z + boundariesCollider.bounds.extents.z);
+            origin.position = new Vector3(xOriginClamped, origin.position.y, zOriginClamped);
+        }
     }
     #endregion
 
@@ -343,16 +356,36 @@ public class SphericalTransform : MonoBehaviour
 
         if(touchDown != Vector3.zero)
         {
+            
+            if (drawGroundDebug)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireMesh(debugMesh, touchDown, Quaternion.identity, Vector3.one * 0.5f);
+            }
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(touchDown, 0.5f);
+            Gizmos.DrawSphere(touchDown, 0.3f);
         }
 
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(touchDown, cameraTarget);
+
+        
+        if (drawGroundDebug)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireMesh(debugMesh, origin.position, Quaternion.identity, Vector3.one * 0.5f);
+        }
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(origin.position, new Vector3(1, 1, 1));
+        Gizmos.DrawSphere(origin.position, 0.3f);
+        Gizmos.DrawLine(origin.position, origin.position + origin.forward * 2);
 
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(cameraTarget, 0.25f);
 
+        DrawTargetInEditor();
+
     }
+
+    protected virtual void DrawTargetInEditor() { }
     #endregion
 }
