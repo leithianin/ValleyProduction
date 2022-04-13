@@ -100,6 +100,11 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         toolInfo.OnToolCreatePath(i);
     }
+
+    public static void UnlockStructure(InfrastructurePreview toUnlock)
+    {
+        instance.toolInfo.UnlockStructure(toUnlock);
+    }
     #endregion
 
     #region Pause Menu

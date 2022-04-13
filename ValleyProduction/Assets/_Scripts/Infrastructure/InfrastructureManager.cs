@@ -26,6 +26,10 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public Vector3 saveScreenPos;
 
+    //Actions
+    public static Action<Infrastructure> OnPlaceInfrastructure;
+
+
     private void Update()
     {
         if(movedObject != null)
@@ -33,6 +37,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             movedObject.transform.position = PlayerInputManager.GetMousePosition;
         }
     }
+
+    
 
     public static void EnableOrDisableTool(ToolType tooltype, bool isEnable)
     {
@@ -130,6 +136,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             EndRotation();
 
             placedInfrastructure.PlaceObject(positionToPlace);
+
+            OnPlaceInfrastructure?.Invoke(placedInfrastructure);
             return true;
         }
         return false;
