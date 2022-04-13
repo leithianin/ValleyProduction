@@ -17,6 +17,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         //Création des différents behavior pour les Objectifs
         objectivesBehaviors.Add(new QST_OBJB_Ressource());
         objectivesBehaviors.Add(new QST_OBJB_PlaceStructure());
+        objectivesBehaviors.Add(new QST_OBJB_VisitorReachLandmark());
+        objectivesBehaviors.Add(new QST_OBJB_FlagValue());
 
         //Création des différents behavior pour les Rewards
         rewardBehaviors.Add(new QST_RWDB_Ressource());

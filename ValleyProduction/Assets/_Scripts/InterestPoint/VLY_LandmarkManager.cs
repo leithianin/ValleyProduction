@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class VLY_LandmarkManager : VLY_Singleton<VLY_LandmarkManager>
 {
-    private List<LandmarkType> validLandmarkWithPath;
+    private List<LandmarkType> validLandmarkWithPath = new List<LandmarkType>();
 
     #region Actions
     public static Action<LandmarkType> OnLandmarkHasValidPath;
-    public static Action<LandmarkType, CPN_InteractionHandler> OnVisitorInteractWithLandmark;
+    public static Action<LandmarkType, VisitorBehavior> OnVisitorInteractWithLandmark;
     #endregion
 
     public List<LandmarkType> GetValidLandmark => validLandmarkWithPath;
@@ -31,7 +31,7 @@ public class VLY_LandmarkManager : VLY_Singleton<VLY_LandmarkManager>
         }
     }
 
-    public static void OnLandmarkInteraction(LandmarkType landmark, CPN_InteractionHandler interactor)
+    public static void OnLandmarkInteraction(LandmarkType landmark, VisitorBehavior interactor)
     {
         OnVisitorInteractWithLandmark?.Invoke(landmark, interactor);
     }

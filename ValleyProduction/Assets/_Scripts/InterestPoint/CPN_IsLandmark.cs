@@ -45,9 +45,10 @@ public class CPN_IsLandmark : VLY_Component
         HasValidPathTo(LandmarkType.Spawn);
     }
 
+    [System.Obsolete]
     public void OnInteractWithLandmark(CPN_InteractionHandler interactor)
     {
-        VLY_LandmarkManager.OnLandmarkInteraction(type, interactor);
+        //VLY_LandmarkManager.OnLandmarkInteraction(type, interactor);
     }
 
     private void OnUpdateNode()

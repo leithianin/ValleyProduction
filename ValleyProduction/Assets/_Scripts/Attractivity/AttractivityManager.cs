@@ -7,7 +7,7 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 {
     [SerializeField] private float timeBetweenUpdates;
 
-    [SerializeField] private float attractivityScore;
+    [SerializeField] private VLY_GlobalData attractivityScore;
 
     [SerializeField] private UnityEvent<float> OnUpdateAttractivity;
 
@@ -15,7 +15,7 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
     private TimerManager.Timer currentTimer;
 
-    public static float AttractivityScore => instance.attractivityScore;
+    public static float AttractivityScore => instance.attractivityScore.Value;
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
     {
         List<VisitorBehavior> visitorsInValley = VisitorManager.GetUsedVisitors();
 
-        attractivityScore = 0;
+        float attractivityCalcul = 0;
         int visitorNumber = 0;
 
         for(int i = 0; i < visitorsInValley.Count; i++)
@@ -53,19 +53,21 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
             if(satisfactionHandler != null)
             {
-                attractivityScore += satisfactionHandler.CurrentSatisfaction;
+                attractivityCalcul += satisfactionHandler.CurrentSatisfaction;
                 visitorNumber++;
             }
         }
 
         if (visitorNumber > 0)
         {
-            attractivityScore /= visitorNumber;
+            attractivityCalcul /= visitorNumber;
         }
 
-        attractivityScore += attractivityCheat;
+        attractivityCalcul += attractivityCheat;
 
-        OnUpdateAttractivity?.Invoke(attractivityScore);
+        attractivityScore.SetValue(attractivityCalcul);
+
+        OnUpdateAttractivity?.Invoke(attractivityScore.Value);
 
         currentTimer = TimerManager.CreateGameTimer(timeBetweenUpdates, CalculateAttractivity);
     }

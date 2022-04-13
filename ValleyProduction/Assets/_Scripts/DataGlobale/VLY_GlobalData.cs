@@ -19,6 +19,12 @@ public class VLY_GlobalData : ScriptableObject
         OnAskChangeValue?.Invoke(toAdd);
     }
 
+    public void SetValue(float toSet)
+    {
+        value = toSet;
+        OnValueChange?.Invoke(value);
+    }
+
     public void AddValue(float toAdd)
     {
         value += toAdd;
