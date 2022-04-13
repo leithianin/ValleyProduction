@@ -45,6 +45,11 @@ public class CPN_IsLandmark : VLY_Component
         HasValidPathTo(LandmarkType.Spawn);
     }
 
+    public void OnInteractWithLandmark(CPN_InteractionHandler interactor)
+    {
+        VLY_LandmarkManager.OnLandmarkInteraction(type, interactor);
+    }
+
     private void OnUpdateNode()
     {
         HasValidPathTo(LandmarkType.Spawn);
@@ -61,6 +66,8 @@ public class CPN_IsLandmark : VLY_Component
             {
                 toReturn = true;
                 OnValidatePathToSpawn?.Invoke(true, type);
+
+                VLY_LandmarkManager.AddValidLandmark(type);
                 break;
             }
         }
@@ -68,6 +75,8 @@ public class CPN_IsLandmark : VLY_Component
         if(!toReturn)
         {
             OnValidatePathToSpawn?.Invoke(false, type);
+
+            VLY_LandmarkManager.RemoveValidLandmark(type);
         }
 
         return toReturn;

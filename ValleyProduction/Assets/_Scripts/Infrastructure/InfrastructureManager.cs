@@ -26,8 +26,13 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public Vector3 saveScreenPos;
 
-    //Actions
+    #region Actions
     public static Action<Infrastructure> OnPlaceInfrastructure;
+    public static Action<Infrastructure> OnSelectInfrastructure;
+    public static Action<Infrastructure> OnStartMoveInfrastructure;
+    public static Action<Infrastructure> OnEndMoveInfrastructure;
+    public static Action<Infrastructure> OnDestroyInfrastructure;
+    #endregion
 
 
     private void Update()
@@ -149,6 +154,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             UnselectInfrastructure();
         }
+
+        OnDestroyInfrastructure?.Invoke(toDelete);
+
         toDelete.RemoveObject();
     }
 
@@ -167,6 +175,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         instance.movedObject.layer = layerIgnoreRaycast;
         instance.currentSelectedStructure.MoveObject();
 
+        OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
     }
 
     public static void OnHoldRightClic(InfrastructureType tool, Infrastructure toHoldRightClic)
@@ -183,6 +192,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         GameObject saveObject = instance.movedObject;
         TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));     
         instance.movedObject = null;
+
+        OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
+
         instance.currentSelectedStructure.ReplaceObject();
     }
 
@@ -219,6 +231,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         currentSelectedStructure = selectedStructure;
         selectedStructure.SelectObject();
+
+        OnSelectInfrastructure?.Invoke(selectedStructure);
     }
 
     /// <summary>

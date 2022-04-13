@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class PathManager : VLY_Singleton<PathManager>
     [SerializeField] private List<IST_PathPoint> spawnPoints;
     [SerializeField] private List<PathData> pathDataList = new List<PathData>();
     [SerializeField] private List<PathFragmentData> pathFragmentDataList = new List<PathFragmentData>();
-                      public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
+                     public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
 
     //Accesseur des listes
     public static List<IST_PathPoint> SpawnPoints => instance.spawnPoints;
@@ -37,8 +38,13 @@ public class PathManager : VLY_Singleton<PathManager>
     public LineRenderer currentLineDebug;
 
     [Header("Action")]
-    public static System.Action<bool> isOnSpawn;
-    public static System.Action<bool> isOnFinishPath;
+    public static Action<bool> isOnSpawn;
+    public static Action<bool> isOnFinishPath;
+
+    #region Actions
+    public static Action<PathData> OnCreatePath;
+    public static Action<PathData> OnDestroyPath;
+    #endregion
 
     public static PathManager GetInstance => instance;
 
@@ -427,6 +433,8 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             pointsToDelete[j].RemoveObject();
         }
+
+        OnDestroyPath?.Invoke(toDelete);
     }
 
     /// <summary>
@@ -440,6 +448,8 @@ public class PathManager : VLY_Singleton<PathManager>
         pathdata.DeletePathData();
 
         instance.pathDataList.Remove(pathdata);
+
+        OnDestroyPath?.Invoke(pathdata);
     }
 
     /// <summary>
@@ -460,7 +470,7 @@ public class PathManager : VLY_Singleton<PathManager>
             PathData newPathData = new PathData();
 
             newPathData.name = GeneratorManager.GetRandomPathName();                                                //Random Name
-            newPathData.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1f);    //Random Color
+            newPathData.color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1f);    //Random Color
 
             newPathData.pathFragment = new List<PathFragmentData>(instance.pathFragmentDataList);                   //List of created pathFragment
 
@@ -476,6 +486,8 @@ public class PathManager : VLY_Singleton<PathManager>
             NodePathProcess.UpdateAllNodes();
 
             instance.ResetCurrentData();                                                                            //Data to default
+
+            OnCreatePath?.Invoke(newPathData);
 
             //IF ONBOARDING SEQUENCE 
             TimerManager.CreateRealTimer(0.5f, () => isOnFinishPath?.Invoke(true));
@@ -496,7 +508,7 @@ public class PathManager : VLY_Singleton<PathManager>
         PathData newPathData = new PathData();
 
         newPathData.name = GeneratorManager.GetRandomPathName();                                                //Random Name
-        newPathData.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1f);    //Random Color
+        newPathData.color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1f);    //Random Color
 
         //CODE REVIEW : AddPathFragment pour les nodes à revoir par rapport à la fonction du dessus qui ne l'a pas
         newPathData.pathFragment = new List<PathFragmentData>();
@@ -514,6 +526,8 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         NodePathProcess.UpdateAllNodes();
+
+        OnCreatePath?.Invoke(newPathData);
     }
     #endregion
 
