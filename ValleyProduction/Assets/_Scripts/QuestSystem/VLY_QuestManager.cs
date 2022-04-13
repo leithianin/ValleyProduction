@@ -22,6 +22,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         rewardBehaviors.Add(new QST_RWDB_Ressource());
         rewardBehaviors.Add(new QST_RWDB_UnlockStructure());
         rewardBehaviors.Add(new QST_RWDB_VisitorType());
+        rewardBehaviors.Add(new QST_RWDB_QuestStart());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();
@@ -33,10 +34,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         }
 
         //Placeholder : Démarre la première quête
-        foreach (VLY_Quest q in allQuests)
-        {
-            BeginQuest(q);
-        }
+        BeginQuest(allQuests[0]);
     }
 
     /// <summary>
