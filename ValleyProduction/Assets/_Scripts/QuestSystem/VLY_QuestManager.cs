@@ -21,6 +21,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         //Création des différents behavior pour les Rewards
         rewardBehaviors.Add(new QST_RWDB_Ressource());
         rewardBehaviors.Add(new QST_RWDB_UnlockStructure());
+        rewardBehaviors.Add(new QST_RWDB_VisitorType());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();

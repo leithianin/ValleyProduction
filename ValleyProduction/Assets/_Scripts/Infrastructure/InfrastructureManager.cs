@@ -262,4 +262,13 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         instance.previewHandler.snaping = false;
     }
+
+    private void OnDestroy()
+    {
+        OnPlaceInfrastructure = null;
+        OnSelectInfrastructure = null; 
+        OnStartMoveInfrastructure = null;
+        OnEndMoveInfrastructure = null;
+        OnDestroyInfrastructure = null;
+    }
 }

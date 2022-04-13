@@ -815,4 +815,11 @@ public class PathManager : VLY_Singleton<PathManager>
         return false;
     }
     #endregion 
+
+    private void OnDestroy()
+    {
+        OnCreatePath = null;
+        OnDestroyPath = null;
+    }
 }
+

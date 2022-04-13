@@ -13,7 +13,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     [SerializeField] private float spawnDistanceFromSpawnPoint = 0.8f;
     [SerializeField] private int maxSpawn = 100;
 
-    [SerializeField] private VisitorScriptable[] visitorTypes;
+    [SerializeField] private List<VisitorScriptable> visitorTypes;
 
     [Header("Feedbacks")]
     [SerializeField] private UnityEvent<int> OnUpdateVisitorNumber;
@@ -143,7 +143,15 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// <returns>Le type de visiteur choisit.</returns>
     private VisitorScriptable ChooseVisitorType()
     {
-        return visitorTypes[UnityEngine.Random.Range(0, visitorTypes.Length)];
+        return visitorTypes[UnityEngine.Random.Range(0, visitorTypes.Count)];
+    }
+
+    public static void AddVisitorType(VisitorScriptable nVisitorType)
+    {
+        if(!instance.visitorTypes.Contains(nVisitorType))
+        {
+            instance.visitorTypes.Add(nVisitorType);
+        }
     }
 
     private IST_PathPoint SearchSpawnPoint(VisitorScriptable visitorType)
@@ -308,4 +316,11 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             return null;
         }
     }
+
+    private void OnDestroy()
+    {
+        OnSpawnVisitor = null;
+        OnDespawnVisitor = null;
+        OnChangeVisitorCount = null;
+}
 }
