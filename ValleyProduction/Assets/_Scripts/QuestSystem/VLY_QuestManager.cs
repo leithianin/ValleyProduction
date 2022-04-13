@@ -10,12 +10,15 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
     private List<QST_ObjectiveBehavior> objectivesBehaviors = new List<QST_ObjectiveBehavior>();
 
     //Quest rewards behavior
-    
+    private List<QST_RewardBehavior> rewardBehaviors = new List<QST_RewardBehavior>();
 
     private void Start()
     {
         //Création des différents behavior pour les Objectifs
         objectivesBehaviors.Add(new QST_OBJB_Ressource());
+
+        //Création des différents behavior pour les Rewards
+        rewardBehaviors.Add(new QST_RWDB_Ressource());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();
@@ -42,6 +45,24 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         if(quest.state == QuestObjectiveState.Pending)
         {
             instance.UpdateQuestObjective(quest);
+        }
+    }
+
+    /// <summary>
+    /// Appelé quand un quête se finit. Fait gagner les récompenses au joueur.
+    /// </summary>
+    /// <param name="quest">La quête à finir.</param>
+    private void CompleteQuest(VLY_Quest quest)
+    {
+        quest.state = QuestObjectiveState.Completed;
+
+        for(int i = 0; i < quest.Rewards.Count; i++)
+        {
+            QST_RewardBehavior behavior = GetRewardBehavior(quest.Rewards[i]);
+
+            behavior.GiveReward(quest.Rewards[i]);
+
+            Debug.Log("Reward given : " + quest.Rewards[i]);
         }
     }
 
@@ -102,7 +123,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
 
         if(i >= updatedQuest.Stages.Count)
         {
-            updatedQuest.state = QuestObjectiveState.Completed; //CODE REVIEW : Voir pour le mettre dans une fonction (Gérer les feedbacks)
+            CompleteQuest(updatedQuest);
         }
         else if(i <= 0)
         {
@@ -134,6 +155,19 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
             if(objectivesBehaviors[i].GetObjectiveType() == objective.GetType())
             {
                 return objectivesBehaviors[i];
+            }
+        }
+
+        return null;
+    }
+
+    private QST_RewardBehavior GetRewardBehavior(QST_Reward reward)
+    {
+        for (int i = 0; i < rewardBehaviors.Count; i++)
+        {
+            if (rewardBehaviors[i].GetRewardType() == reward.GetType())
+            {
+                return rewardBehaviors[i];
             }
         }
 
