@@ -24,7 +24,7 @@ public class IST_PathPoint : Infrastructure
         //Si c'est le dernier PathPoint du chemin = Terminer chemin
         if (this == PathManager.previousPathpoint)
         {
-            PathManager.CreatePathData();
+            PathManager.CreatePathData();          
             UIManager.HideShownGameObject();
             return;
         }
@@ -46,7 +46,11 @@ public class IST_PathPoint : Infrastructure
     {
         if (PathManager.HasManyPath(this))
         {
-            UIManager.ArrangePathButton(this);
+            if (InfrastructureManager.GetCurrentTool == ToolType.Delete)
+            {
+                UIManager.ArrangePathButton(this);
+            }
+            Debug.Log("Le point à plusieurs chemins");
             return false;
         }
         else
@@ -56,7 +60,7 @@ public class IST_PathPoint : Infrastructure
             {
                 PathManager.UnplacePoint(this);
             }
-            else if (PathManager.GetCurrentPathData == null)
+            else if (PathManager.GetCurrentPathData == null )
             {
                 PathManager.DeletePoint(this);
             }
@@ -67,7 +71,7 @@ public class IST_PathPoint : Infrastructure
         }
     }
 
-    //Remove à partir de l'UI
+    //Remove à partir de l'UI (Choose path plusieurs bouton)
     public void Remove(PathData pd)
     {
         node.DeleteNode();

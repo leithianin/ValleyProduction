@@ -9,11 +9,12 @@ public class ManageMultiPath : MonoBehaviour
     [SerializeField] private GameObject prefabCairn;
     [SerializeField] private GameObject arrowTagRef;
 
-    public List<ArrowTagClass> arrowTagClassList = new List<ArrowTagClass>();
+    //public List<ArrowTagClass> arrowTagClassList = new List<ArrowTagClass>();
     private float offset = 0.4f;
     private GameObject currentArrow = null;
+    private int nbArrow = 0;
 
-    public class ArrowTagClass
+    /*public class ArrowTagClass
     {
         public GameObject arrowTag;
         public PathData pathData;
@@ -23,20 +24,18 @@ public class ManageMultiPath : MonoBehaviour
             arrowTag = _arrowTag;
             pathData = _pathData;
         }
-    }
+    }*/
 
     private void Update()
     {
-        if (pathPoint == PathManager.previousPathpoint)
+        if (pathPoint == PathManager.previousPathpoint && currentArrow != null)
         {
             if(PathCreationManager.navmeshPositionsList.Count > 0)
             {
                 Vector3 posTar = PathCreationManager.navmeshPositionsList[1];
                 currentArrow.transform.right = posTar - currentArrow.transform.position;
                 currentArrow.transform.eulerAngles = new Vector3(0f, currentArrow.transform.eulerAngles.y, 0f);
-
             }
-            //arrowTagRef.transform.LookAt(new Vector3(test.transform.position.x, test.transform.position.y, test.transform.position.z));
         }
     }
 
@@ -59,11 +58,13 @@ public class ManageMultiPath : MonoBehaviour
         prefabSign.SetActive(true);
     }
 
+    //Tag qui follow le chemin entrain d'être crée
     private void TagFollowCurrentPath()
     {
         currentArrow = SpawnNewTag();
-        currentArrow.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset * arrowTagClassList.Count), arrowTagRef.transform.position.z);
-        arrowTagClassList.Add(new ArrowTagClass(arrowTagRef, null));
+        currentArrow.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset * nbArrow), arrowTagRef.transform.position.z);
+        nbArrow++;
+        //arrowTagClassList.Add(new ArrowTagClass(currentArrow, null));
     }
 
     //Call for the already existed PathData
@@ -73,37 +74,23 @@ public class ManageMultiPath : MonoBehaviour
         {
             if(pd.ContainsPoint(pathPoint))
             {
-                CheckIfAlreadyRegistered(pd);
+                RegisterPathData(pd);
             }
         }
-    }
-
-    private bool CheckIfAlreadyRegistered(PathData pd)
-    {
-        foreach(ArrowTagClass atc in arrowTagClassList)
-        {
-            if(atc.pathData == pd)
-            {
-                return true;
-            }
-        }
-
-        RegisterPathData(pd);
-        return false;
     }
 
     private void RegisterPathData(PathData pd)
     {
-        arrowTagRef.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset*arrowTagClassList.Count), arrowTagRef.transform.position.z);
+        arrowTagRef.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset* nbArrow), arrowTagRef.transform.position.z);
         
         foreach(PathFragmentData pfd in pd.pathFragment)
         {
             if(pfd.HasThisStartingPoint(pathPoint))
             {
-                arrowTagClassList.Add(new ArrowTagClass(arrowTagRef, pd));
+                //arrowTagClassList.Add(new ArrowTagClass(arrowTagRef, pd));
+                nbArrow++;
                 arrowTagRef.transform.right = pfd.path[1] - arrowTagRef.transform.position;
                 arrowTagRef.transform.eulerAngles = new Vector3(0f, arrowTagRef.transform.eulerAngles.y, 0f);
-                Instantiate(arrowTagRef, pfd.path[1], Quaternion.identity);
             }
         }
     }
@@ -111,10 +98,5 @@ public class ManageMultiPath : MonoBehaviour
     public GameObject SpawnNewTag()
     {
         return Instantiate(arrowTagRef, prefabSign.transform);
-    }
-
-    private void ResetArrowTag()
-    {
-
     }
 }

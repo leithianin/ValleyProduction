@@ -19,6 +19,7 @@ public class PathManager : VLY_Singleton<PathManager>
     private PathData currentPathData              = null;
     private PathData disconnectedPathData         = null;
     public static IST_PathPoint previousPathpoint = null;
+    public static PathData pathDataToDelete = null;
 
     //Accesseur current Data
     public static PathData GetCurrentPathData => instance.currentPathData;
@@ -43,6 +44,8 @@ public class PathManager : VLY_Singleton<PathManager>
     public static PathManager GetInstance => instance;
 
     public static bool IsOnCreatePath => (GetCurrentPathpointList.Count>0)?true:false;
+
+    public static PathData GetLastPathDataCreated => instance.pathDataList[instance.pathDataList.Count - 1];
 
     private void Start()
     {
@@ -239,27 +242,37 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pd"></param>
     public static void DeletePoint(IST_PathPoint ist_pp, PathData pd = null)
     {
-        if (SpawnPoints.Contains(ist_pp)) { SpawnPoints.Remove(ist_pp);}
-
-        //Check if we know the pathData to modify
         PathData pdToModify = new PathData();
-        if (pd == null) { pdToModify = GetPathData(ist_pp);}
-        else            { pdToModify = pd                 ;}
+        if (pd != null || pathDataToDelete != null)                         //Je ne peux arriver là sans connaître le PathData à delete
+        {
+            if (pd == null) { pdToModify = pathDataToDelete; }
+            else { pdToModify = pd; }
+        }
+        else
+        {
+            return;
+        }
+
+        if (SpawnPoints.Contains(ist_pp)) { SpawnPoints.Remove(ist_pp);}
 
         if (pdToModify != null)
         {
-            switch(pdToModify.pathFragment.Count)
+            switch (pdToModify.pathFragment.Count)
             {
                 case 0:
+                    Debug.Log("DP1");
                     DeletePointWith0PathFragment(pdToModify);
                     return;
                 case 1:
+                    Debug.Log("DP2");
                     DeletePointWith1PathFragment(pdToModify, ist_pp);
                     return;
                 case 2:
+                    Debug.Log("DP3");
                     DeletePointWith2PathFragment(pdToModify, ist_pp);
                     return;
                 default :
+                    Debug.Log("DP4");
                     DeletePointWith2MorePathFragment(pdToModify, ist_pp);
                     return;
             }
@@ -293,14 +306,22 @@ public class PathManager : VLY_Singleton<PathManager>
         //If the path have 1 PathFragment
         if (pdToModify.pathFragment.Count == 1)
         {
-            DeletePath(pdToModify);
-            if (pdToModify.pathFragment[0].startPoint != ist_pp)
+            if (!HasManyPath(pdToModify.pathFragment[0].startPoint))
             {
-                pdToModify.pathFragment[0].startPoint.RemoveObject();
+                DeletePath(pdToModify);
+                pathDataToDelete = null;
+                if (pdToModify.pathFragment[0].startPoint != ist_pp)
+                {
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
+                }
+                else
+                {
+                    pdToModify.pathFragment[0].endPoint.RemoveObject();
+                }
             }
             else
             {
-                pdToModify.pathFragment[0].endPoint.RemoveObject();
+                DeletePath(pdToModify);
             }
             return;
         }
@@ -395,6 +416,7 @@ public class PathManager : VLY_Singleton<PathManager>
             DebugLineR(pdToModify);
         }
     }
+    
     #endregion
 
     #endregion
@@ -409,6 +431,7 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void DeleteFullPath(PathData toDelete, IST_PathPoint toIgnore = null)
     {
         List<IST_PathPoint> pointsToDelete = new List<IST_PathPoint>();
+        pathDataToDelete = toDelete;
 
         for (int i = toDelete.pathFragment.Count - 1; i >= 0; i--)
         {
@@ -425,7 +448,10 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for (int j = 0; j < pointsToDelete.Count; j++)
         {
-            pointsToDelete[j].RemoveObject();
+            if (IsPathDataStillExist(toDelete))
+            {
+                pointsToDelete[j].RemoveObject();
+            }
         }
     }
 
@@ -515,6 +541,19 @@ public class PathManager : VLY_Singleton<PathManager>
 
         NodePathProcess.UpdateAllNodes();
     }
+
+    public static bool IsPathDataStillExist(PathData pathdata)
+    {
+        foreach(PathData pd in GetAllPath)
+        {
+            if(pd == pathdata)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     #endregion
 
     #region DEBUG
@@ -800,5 +839,5 @@ public class PathManager : VLY_Singleton<PathManager>
         remainingDistance = distance;
         return false;
     }
-    #endregion 
+    #endregion
 }
