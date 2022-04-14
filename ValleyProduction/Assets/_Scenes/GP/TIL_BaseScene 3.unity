@@ -3662,7 +3662,7 @@ MonoBehaviour:
   OnValidatePathToSpawn:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 822295679}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TEMP_ObjectivesManager, Assembly-CSharp
         m_MethodName: CheckLandmarkObjective
         m_Mode: 0
@@ -4162,7 +4162,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3899571759300323771, guid: 7bf0df367c4ed814ca4127475ed41e40, type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 3899571759300323771, guid: 7bf0df367c4ed814ca4127475ed41e40, type: 3}
       propertyPath: m_LocalScale.x
@@ -4698,7 +4698,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8214626975697152001, guid: 92be344a41de671438ad9c7d15377be6, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8214626975697152001, guid: 92be344a41de671438ad9c7d15377be6, type: 3}
       propertyPath: m_LocalScale.x
@@ -5014,7 +5014,7 @@ MonoBehaviour:
   OnValidatePathToSpawn:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 822295679}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TEMP_ObjectivesManager, Assembly-CSharp
         m_MethodName: CheckLandmarkObjective
         m_Mode: 0
@@ -7526,17 +7526,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5784116355332998883, guid: abc325c782cd77845bd00b712d311534, type: 3}
   m_PrefabInstance: {fileID: 688616750}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &692154488 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5997279503224453599, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
-  m_PrefabInstance: {fileID: 878489162}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcca9f56c2e5e3c40989cabdae0c4283, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &692154489 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8599725932116384347, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
@@ -8465,7 +8454,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8214626975697152001, guid: 92be344a41de671438ad9c7d15377be6, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8214626975697152001, guid: 92be344a41de671438ad9c7d15377be6, type: 3}
       propertyPath: m_LocalScale.x
@@ -9065,161 +9054,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e46e4b49ad507a54cbf1befda5a138e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &822295678
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 822295680}
-  - component: {fileID: 822295679}
-  - component: {fileID: 822295681}
-  m_Layer: 0
-  m_Name: TEMP_ObjectiveManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &822295679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 822295678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 619797cd8177fda49a23fa5aff70fc79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wantedAnimalCount: 20
-  wantedLandmarkCount: 3
-  animalObjective: 0
-  landmarkObjective: 0
-  bridgeObjective: 0
-  bearObjective: 0
-  isPhaseOneGood: 0
-  OnSetAnimalObjective:
-    m_PersistentCalls:
-      m_Calls: []
-  OnResolveAnimalObjective:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFailAnimalObjective:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSetLandmarkObjective:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 692154488}
-        m_TargetAssemblyTypeName: IFB_ChangeTextGoal, Assembly-CSharp
-        m_MethodName: UpdateGoal
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: QST_001
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnResolveLandmarkObjective:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFailLandmarkObjective:
-    m_PersistentCalls:
-      m_Calls: []
-  OnValidatePhaseOne:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 692154488}
-        m_TargetAssemblyTypeName: IFB_ChangeTextGoal, Assembly-CSharp
-        m_MethodName: UpdateGoal
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: QST_002
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 822295681}
-        m_TargetAssemblyTypeName: RessourceGiver, Assembly-CSharp
-        m_MethodName: GiveRessource
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 10000
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnRepairBridge:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 692154488}
-        m_TargetAssemblyTypeName: IFB_ChangeTextGoal, Assembly-CSharp
-        m_MethodName: UpdateGoal
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: QST_003
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnSetBearObjective:
-    m_PersistentCalls:
-      m_Calls: []
-  OnResolveBearObjective:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 692154488}
-        m_TargetAssemblyTypeName: IFB_ChangeTextGoal, Assembly-CSharp
-        m_MethodName: UpdateGoal
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: QST_004
-          m_BoolArgument: 0
-        m_CallState: 2
-  currentValidLandmark: 
---- !u!4 &822295680
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 822295678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1872845415}
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &822295681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 822295678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28b686cb56255e14a95a73f8009c6e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &825194639
@@ -15981,7 +15815,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &956895339 stripped
 Transform:
@@ -16063,7 +15897,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 822295679}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TEMP_ObjectivesManager, Assembly-CSharp
         m_MethodName: RepairBridge
         m_Mode: 1
@@ -16129,7 +15963,7 @@ Transform:
   m_Children:
   - {fileID: 1111954187}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &962862055
 Rigidbody:
@@ -17811,7 +17645,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1204679640
 MonoBehaviour:
@@ -19652,7 +19486,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1331100144
 PrefabInstance:
@@ -23308,7 +23142,7 @@ MonoBehaviour:
   OnValidatePathToSpawn:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 822295679}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TEMP_ObjectivesManager, Assembly-CSharp
         m_MethodName: CheckLandmarkObjective
         m_Mode: 0
@@ -24385,95 +24219,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptable: {fileID: 0}
   visitorType: 0
---- !u!1 &1872845414
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1872845415}
-  - component: {fileID: 1872845417}
-  - component: {fileID: 1872845416}
-  - component: {fileID: 1872845418}
-  m_Layer: 2
-  m_Name: BearStructure Placement
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1872845415
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872845414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 162.7, y: 0, z: 136.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 822295680}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1872845416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872845414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 292a239140c87a04e9b20b7b2b6a40ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ToPlayOnValidate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 822295679}
-        m_TargetAssemblyTypeName: TEMP_ObjectivesManager, Assembly-CSharp
-        m_MethodName: ValidateBearObjective
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!135 &1872845417
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872845414}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1872845418
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872845414}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &1883776633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24779,7 +24524,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8214626975697152001, guid: 92be344a41de671438ad9c7d15377be6, type: 3}
       propertyPath: m_RootOrder
-      value: 23
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 8214626975697152001, guid: 92be344a41de671438ad9c7d15377be6, type: 3}
       propertyPath: m_LocalScale.x
@@ -25054,7 +24799,7 @@ MonoBehaviour:
   OnValidatePathToSpawn:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 822295679}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TEMP_ObjectivesManager, Assembly-CSharp
         m_MethodName: CheckLandmarkObjective
         m_Mode: 0

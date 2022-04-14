@@ -68,10 +68,9 @@ public abstract class QST_ObjectiveBehavior<T> : QST_ObjectiveBehavior where T :
                         OnCompleteObjective(obj);
                         break;
                 }
+
+                obj.UpdateState(state);
             }
-
-            obj.UpdateState(state); //BUG BUG BUG
         }
-
     }
 }

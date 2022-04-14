@@ -25,8 +25,8 @@ public class QST_OBJB_FlagValue : QST_ObjectiveBehavior<QST_OBJ_FlagValue>
     {
         if (VLY_FlagManager.GetFlagValue(objective.Flag) >= objective.Value)
         {
-            Debug.Log(objective);
-            AskCompleteObjective(objective);
+            Debug.Log("End begin flag : " + objective);
+            TimerManager.CreateRealTimer(Time.deltaTime, () => AskCompleteObjective(objective));
         }
         else
         {

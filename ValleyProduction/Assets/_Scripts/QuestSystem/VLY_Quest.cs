@@ -6,27 +6,38 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Quest Quest", menuName = "Quest/Create Quest")]
 public class VLY_Quest : ScriptableObject
 {
-    [Serializable]
-    public class QST_ObjectiveStage
-    {
-        public QuestObjectiveState State;
-
-        public List<QST_Objective> Objectives;
-    }
-
     public QuestObjectiveState state;
 
     private int currentStage;
+
+    public string questName;
 
     [SerializeField] private List<QST_ObjectiveStage> stages;
 
     [SerializeField] private List<QST_Reward> rewards;
 
+    public string QuestName => questName;
+
     public List<QST_ObjectiveStage> Stages => stages;
 
     public List<QST_Reward> Rewards => rewards;
 
-    public List<QST_Objective> GetCurrentStageObjectives => stages[currentStage].Objectives;
+    public List<QST_Objective> GetCurrentStageObjectives()
+    {
+        for(int i = 0; i < stages.Count; i++)
+        {
+            if(stages[i].State == QuestObjectiveState.Completed)
+            {
+                continue;
+            }
+            else
+            {
+                return stages[i].Objectives;
+            }
+        }
+
+        return new List<QST_Objective>();
+    }
 
     /// <summary>
     /// Reset les données Runtime de la quête
@@ -47,4 +58,12 @@ public class VLY_Quest : ScriptableObject
             }
         }
     }
+}
+
+[Serializable]
+public class QST_ObjectiveStage
+{
+    public QuestObjectiveState State;
+
+    public List<QST_Objective> Objectives;
 }
