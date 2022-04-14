@@ -15790,7 +15790,7 @@ Terrain:
   m_GameObject: {fileID: 955978174}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: f463d300534423f4ca4ba0a916a1aaea, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -15872,8 +15872,9 @@ GameObject:
   - component: {fileID: 962862054}
   - component: {fileID: 962862053}
   - component: {fileID: 962862052}
-  - component: {fileID: 962862051}
   - component: {fileID: 962862055}
+  - component: {fileID: 962862056}
+  - component: {fileID: 962862051}
   m_Layer: 0
   m_Name: PontObstacle
   m_TagString: Untagged
@@ -15890,14 +15891,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 962862050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 776c639a02c5c4341b861640262ab7b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 12c0c4ef4ff6fb04caab8aa976f12376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 10000
-  OnRepairBridge:
-    m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 962862050}, m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine: }
+  flagName: RebuildBridge
 --- !u!135 &962862052
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15958,6 +15955,42 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &962862056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962862050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75911c183fc5990458a04e302a3d814a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnLeftMouseDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 962862051}
+        m_TargetAssemblyTypeName: CPN_FlagHandler, Assembly-CSharp
+        m_MethodName: IncrementFlag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRightMouseDown:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayOnMouseEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayOnMouseExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &966212151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -17589,7 +17622,6 @@ GameObject:
   - component: {fileID: 1204679639}
   - component: {fileID: 1204679638}
   - component: {fileID: 1204679640}
-  - component: {fileID: 1204679641}
   m_Layer: 0
   m_Name: QuestTest
   m_TagString: Untagged
@@ -17610,7 +17642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allQuests: []
-  startQuest: {fileID: 11400000, guid: c25ba076ceaec664b84aaf9ad1056383, type: 2}
+  startQuest: {fileID: 11400000, guid: 88f63b0955549be4b90872a470bb72f9, type: 2}
 --- !u!4 &1204679639
 Transform:
   m_ObjectHideFlags: 0
@@ -17637,19 +17669,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ace5a9e07a72446a1d9f08959ffa5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1204679641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204679637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12c0c4ef4ff6fb04caab8aa976f12376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flagName: Test
 --- !u!1 &1205412582
 GameObject:
   m_ObjectHideFlags: 0
