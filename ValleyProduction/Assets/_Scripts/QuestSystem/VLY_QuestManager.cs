@@ -69,6 +69,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
 
             Debug.Log("Reward given : " + quest.Rewards[i]);
         }
+
+        UIManager.ShowQuestRewards(quest.Rewards);
     }
 
     /// <summary>

@@ -6,6 +6,9 @@ public class QST_RWDB_UnlockStructure : QST_RewardBehavior<QST_RWD_UnlockStructu
 {
     public override void GiveReward(QST_RWD_UnlockStructure reward)
     {
-        UIManager.UnlockStructure(reward.ToUnlock);
+        for (int i = 0; i < reward.ToUnlock.Count; i++)
+        {
+            UIManager.UnlockStructure(reward.ToUnlock[i].Preview);
+        }
     }
 }

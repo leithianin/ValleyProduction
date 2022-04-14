@@ -209,5 +209,10 @@ public class UIManager : VLY_Singleton<UIManager>
                 break;
         }
     }
+
+    public static void ShowQuestRewards(List<QST_Reward> rewards)
+    {
+        instance.questDisplayer.SetRewardToDisplay(rewards);
+    }
     #endregion
 }

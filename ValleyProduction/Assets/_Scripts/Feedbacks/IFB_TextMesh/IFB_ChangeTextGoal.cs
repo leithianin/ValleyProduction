@@ -12,6 +12,7 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
     public TMP_Text description;
     public TMP_Text title;
     [SerializeField] private Button validationButton;
+    [SerializeField] private GameObject handler;
     private string stringText = string.Empty;
 
     public TextsDictionary textsList;
@@ -35,6 +36,8 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
         title.text = "";
         description.text = "";
         validationButton.interactable = false;
+
+        handler.SetActive(false);
     }
 
     public void SetPendingCompletion()
@@ -46,6 +49,11 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
 
     public void SetQuestStage(VLY_Quest quest, List<QST_Objective> objectives)
     {
+        if(!handler.activeSelf)
+        {
+            handler.SetActive(true);
+        }
+
         if(quest != displayedQuest)
         {
             displayedQuest = quest;

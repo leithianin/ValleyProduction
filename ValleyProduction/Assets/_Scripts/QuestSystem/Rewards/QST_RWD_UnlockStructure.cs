@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Quest Reward", menuName = "Quest/Quest Reward/Structure")]
 public class QST_RWD_UnlockStructure : QST_Reward
 {
-    [SerializeField] private InfrastructurePreview toUnlock;
+    [SerializeField] private List<InfrastructureData> toUnlock;
 
-    public InfrastructurePreview ToUnlock => toUnlock;
+    public List<InfrastructureData> ToUnlock => toUnlock;
 }
