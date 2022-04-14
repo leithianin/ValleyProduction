@@ -18,7 +18,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
             flags.Add(i.ToString(), 0);
         }
 
-        flags.Add("Test", 0);
+        flags.Add("RebuildBridge", 0);
     }
 
     public static void IncrementFlagValue(string flagName)
