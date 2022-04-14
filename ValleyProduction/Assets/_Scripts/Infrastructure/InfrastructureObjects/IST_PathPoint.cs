@@ -29,7 +29,7 @@ public class IST_PathPoint : Infrastructure
             return;
         }
 
-        if (PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
+        if (PathManager.IsSpawnPoint(this))                                 //Si c'est le spawnPoint (boucle)
         {
             PathManager.PlacePoint(this);
             PathManager.CreatePathData();
@@ -50,7 +50,6 @@ public class IST_PathPoint : Infrastructure
             {
                 UIManager.ArrangePathButton(this);
             }
-            Debug.Log("Le point à plusieurs chemins");
             return false;
         }
         else
@@ -62,7 +61,7 @@ public class IST_PathPoint : Infrastructure
             }
             else if (PathManager.GetCurrentPathData == null )
             {
-                PathManager.DeletePoint(this);
+                PathManager.DeletePoint(this, PathManager.GetPathData(this));
             }
 
             InfrastructureManager.DesnapInfrastructure(this);

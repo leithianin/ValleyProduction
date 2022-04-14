@@ -24,6 +24,9 @@ public class PathManager : VLY_Singleton<PathManager>
     //Accesseur current Data
     public static PathData GetCurrentPathData => instance.currentPathData;
 
+    //Current Manage
+    public static ManageMultiPath manageMultiPath;
+
     //Uniquement pour delete un point
     private static List<IST_PathPoint> listAllPathPoints = new List<IST_PathPoint>();
 
@@ -260,19 +263,15 @@ public class PathManager : VLY_Singleton<PathManager>
             switch (pdToModify.pathFragment.Count)
             {
                 case 0:
-                    Debug.Log("DP1");
                     DeletePointWith0PathFragment(pdToModify);
                     return;
                 case 1:
-                    Debug.Log("DP2");
                     DeletePointWith1PathFragment(pdToModify, ist_pp);
                     return;
                 case 2:
-                    Debug.Log("DP3");
                     DeletePointWith2PathFragment(pdToModify, ist_pp);
                     return;
                 default :
-                    Debug.Log("DP4");
                     DeletePointWith2MorePathFragment(pdToModify, ist_pp);
                     return;
             }
@@ -306,7 +305,7 @@ public class PathManager : VLY_Singleton<PathManager>
         //If the path have 1 PathFragment
         if (pdToModify.pathFragment.Count == 1)
         {
-            if (!HasManyPath(pdToModify.pathFragment[0].startPoint))
+            if ((!HasManyPath(pdToModify.pathFragment[0].startPoint)) && (!HasManyPath(pdToModify.pathFragment[0].endPoint)))
             {
                 DeletePath(pdToModify);
                 pathDataToDelete = null;
@@ -501,6 +500,11 @@ public class PathManager : VLY_Singleton<PathManager>
 
             NodePathProcess.UpdateAllNodes();
 
+            if (manageMultiPath != null)                                                                            //Besoin de save le pathData pour les panneaux multiPath
+            {
+                manageMultiPath.AddPathDataToList(newPathData);
+            }
+
             instance.ResetCurrentData();                                                                            //Data to default
 
             //IF ONBOARDING SEQUENCE 
@@ -652,7 +656,10 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="lineR"></param>
     public static void DestroyLineRenderer(LineRenderer lineR)
     {
-        Destroy(lineR.gameObject);
+        if (lineR != null)
+        {
+            Destroy(lineR.gameObject);
+        }
     }
 
     /// <summary>

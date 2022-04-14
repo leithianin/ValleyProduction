@@ -9,22 +9,23 @@ public class ManageMultiPath : MonoBehaviour
     [SerializeField] private GameObject prefabCairn;
     [SerializeField] private GameObject arrowTagRef;
 
-    //public List<ArrowTagClass> arrowTagClassList = new List<ArrowTagClass>();
     private float offset = 0.4f;
     private GameObject currentArrow = null;
     private int nbArrow = 0;
 
-    /*public class ArrowTagClass
+    private List<MultiPathClass> multiPathList = new List<MultiPathClass>();
+
+    public class MultiPathClass
     {
         public GameObject arrowTag;
         public PathData pathData;
 
-        public ArrowTagClass(GameObject _arrowTag, PathData _pathData = null)
+        public MultiPathClass(GameObject _arrowTag, PathData _pathdata = null)
         {
             arrowTag = _arrowTag;
-            pathData = _pathData;
+            pathData = _pathdata;
         }
-    }*/
+    }
 
     private void Update()
     {
@@ -63,8 +64,9 @@ public class ManageMultiPath : MonoBehaviour
     {
         currentArrow = SpawnNewTag();
         currentArrow.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset * nbArrow), arrowTagRef.transform.position.z);
+        multiPathList.Add(new MultiPathClass(arrowTagRef, null));
+        PathManager.manageMultiPath = this;
         nbArrow++;
-        //arrowTagClassList.Add(new ArrowTagClass(currentArrow, null));
     }
 
     //Call for the already existed PathData
@@ -87,10 +89,10 @@ public class ManageMultiPath : MonoBehaviour
         {
             if(pfd.HasThisStartingPoint(pathPoint))
             {
-                //arrowTagClassList.Add(new ArrowTagClass(arrowTagRef, pd));
                 nbArrow++;
                 arrowTagRef.transform.right = pfd.path[1] - arrowTagRef.transform.position;
                 arrowTagRef.transform.eulerAngles = new Vector3(0f, arrowTagRef.transform.eulerAngles.y, 0f);
+                multiPathList.Add(new MultiPathClass(arrowTagRef, pd));
             }
         }
     }
@@ -98,5 +100,23 @@ public class ManageMultiPath : MonoBehaviour
     public GameObject SpawnNewTag()
     {
         return Instantiate(arrowTagRef, prefabSign.transform);
+    }
+
+    public void AddPathDataToList(PathData pd)
+    {
+        foreach(MultiPathClass mpc in multiPathList)
+        {
+            if(mpc.pathData == null)
+            {
+                mpc.pathData = pd;
+                PathManager.manageMultiPath = null;
+                return;
+            }
+        }
+    }
+
+    public void DeleteArrow()
+    {
+        Debug.Log("bite");
     }
 }
