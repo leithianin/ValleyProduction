@@ -184,7 +184,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
 
         foreach(Area a in areas)
         { 
-            HeatMapMaskRenderer.RegisterChunks(a); 
+            //HeatMapMaskRenderer.RegisterChunks(a); 
         }
 
         //OnCreateGrid?.Invoke();

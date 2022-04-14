@@ -4,34 +4,33 @@ using UnityEngine;
 
 public class HeatmapViewController : MonoBehaviour
 {
-    public Light mainLight;
-    public Light heatmapViewLight;
+    public Material[] Materials;
 
-    public Material[] materials;
-    public GameObject[] toDisable;
+    [SerializeField] private MaskRenderer msk;
 
     private bool isEnabled;
 
-    private void Start()
+    void Start()
     {
-        EnableHeatmapView(false);
-
-        foreach(Material m in materials)
+        foreach (Material m in Materials)
         {
-            m.SetTexture("_Mask", HeatMapMaskRenderer.maskTexture);
+            m.SetTexture("_Mask", msk.maskTexture);
         }
+
+        EnableHeatmapView(false);
     }
 
-    private void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            HandleHeatmapNoise();
+            Debug.Log("H");
+            HandleHeatmap();
         }
 
-        foreach (Material m in materials)
+        foreach (Material m in Materials)
         {
-            m.SetFloat("_MapSize", HeatMapMaskRenderer.staticMapSize);
+            m.SetFloat("_MapSize", msk.MapSize);
         }
     }
 
@@ -39,8 +38,7 @@ public class HeatmapViewController : MonoBehaviour
     {
         EnableHeatmapView(false);
     }
-
-    public void HandleHeatmapNoise()
+    public void HandleHeatmap()
     {
         EnableHeatmapView(!isEnabled);
     }
@@ -49,18 +47,10 @@ public class HeatmapViewController : MonoBehaviour
     {
         isEnabled = enable;
 
-        /*mainLight.enabled = !enable;
-        heatmapViewLight.enabled = enable;*/
-        
-        foreach(Material m in materials)
+        foreach (Material m in Materials)
         {
             if (enable) m.EnableKeyword("RENDER_HEATMAP");
             else m.DisableKeyword("RENDER_HEATMAP");
-        }
-
-        foreach(GameObject go in toDisable)
-        {
-            go.SetActive(!enable);
         }
     }
 }
