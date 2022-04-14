@@ -43,8 +43,6 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
     public void SetPendingCompletion()
     {
         validationButton.interactable = true;
-
-        Debug.Log(validationButton.interactable);
     }
 
     public void SetQuestStage(VLY_Quest quest, List<QST_Objective> objectives)
