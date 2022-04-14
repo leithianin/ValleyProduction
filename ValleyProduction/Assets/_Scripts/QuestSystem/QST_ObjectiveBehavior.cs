@@ -53,20 +53,23 @@ public abstract class QST_ObjectiveBehavior<T> : QST_ObjectiveBehavior where T :
     {
         T obj = objective as T;
 
-        if(obj != null && obj.State < state) // On vérifie que l'état de l'objectif est bien un état précédent l'état voulut.
+        if (obj != null)
         {
-            obj.UpdateState(state);
-
-            switch (state)
+            if (obj.State < state) // On vérifie que l'état de l'objectif est bien un état précédent l'état voulut.
             {
-                case QuestObjectiveState.Started:
-                    OnStartObjective(obj);
-                    break;
-                case QuestObjectiveState.Failed:
-                    break;
-                case QuestObjectiveState.Completed:
-                    OnCompleteObjective(obj);
-                    break;
+                switch (state)
+                {
+                    case QuestObjectiveState.Started:
+                        OnStartObjective(obj);
+                        break;
+                    case QuestObjectiveState.Failed:
+                        break;
+                    case QuestObjectiveState.Completed:
+                        OnCompleteObjective(obj);
+                        break;
+                }
+
+                obj.UpdateState(state);
             }
         }
     }

@@ -12,7 +12,20 @@ public class VLY_GlobalData : ScriptableObject
 
     public float Value => value;
 
-    public void ChangeValue(float toAdd)
+    public Action<float> OnAskChangeValue;
+
+    public void AskChangeValue(float toAdd)
+    {
+        OnAskChangeValue?.Invoke(toAdd);
+    }
+
+    public void SetValue(float toSet)
+    {
+        value = toSet;
+        OnValueChange?.Invoke(value);
+    }
+
+    public void AddValue(float toAdd)
     {
         value += toAdd;
         OnValueChange?.Invoke(value);
@@ -21,5 +34,7 @@ public class VLY_GlobalData : ScriptableObject
     public void ResetData()
     {
         value = 0;
+        OnValueChange = null;
+        OnAskChangeValue = null;
     }
 }

@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QST_Reward : MonoBehaviour
+public abstract class QST_Reward : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] protected QST_UI_Reward rewardDisplay;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public QST_UI_Reward RewardDisplay => rewardDisplay;
 }

@@ -8,13 +8,36 @@ public class VLY_Quest : ScriptableObject
 {
     public QuestObjectiveState state;
 
-    [SerializeField] private List<QST_Objective> objectives;
+    private int currentStage;
+
+    public string questName;
+
+    [SerializeField] private List<QST_ObjectiveStage> stages;
 
     [SerializeField] private List<QST_Reward> rewards;
 
-    public List<QST_Objective> Objectives => objectives;
+    public string QuestName => questName;
+
+    public List<QST_ObjectiveStage> Stages => stages;
 
     public List<QST_Reward> Rewards => rewards;
+
+    public List<QST_Objective> GetCurrentStageObjectives()
+    {
+        for(int i = 0; i < stages.Count; i++)
+        {
+            if(stages[i].State == QuestObjectiveState.Completed)
+            {
+                continue;
+            }
+            else
+            {
+                return stages[i].Objectives;
+            }
+        }
+
+        return new List<QST_Objective>();
+    }
 
     /// <summary>
     /// Reset les données Runtime de la quête
@@ -22,5 +45,25 @@ public class VLY_Quest : ScriptableObject
     public void Reset()
     {
         state = QuestObjectiveState.Pending;
+
+        currentStage = 0;
+
+        for (int j = 0; j < Stages.Count; j++)
+        {
+            Stages[j].State = QuestObjectiveState.Pending;
+
+            for (int k = 0; k < Stages[j].Objectives.Count; k++)
+            {
+                Stages[j].Objectives[k].Reset();
+            }
+        }
     }
+}
+
+[Serializable]
+public class QST_ObjectiveStage
+{
+    public QuestObjectiveState State;
+
+    public List<QST_Objective> Objectives;
 }

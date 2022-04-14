@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 3101297756069672954}
   - component: {fileID: 6452573747395027205}
   - component: {fileID: 1712268565191719400}
+  - component: {fileID: 7789482485079233858}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -494,6 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewHandler: {fileID: 5209237266696560537}
   toolSelected: 0
+  saveScreenPos: {x: 0, y: 0, z: 0}
 --- !u!114 &5209237266425241733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,7 +545,7 @@ MonoBehaviour:
   debugObject: {fileID: 0}
   DebugList: []
   index: 1
-  newPathFragmentData: []
+  modifiedPaths: []
   pathRendererManager: {fileID: 7872933226384271932}
   testPathpoint: {fileID: 6225881508748953926, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
 --- !u!114 &7872933226384271932
@@ -614,7 +616,7 @@ MonoBehaviour:
   ressourceProductionSpeed: 1
   ressourceByVisitor: 0.2
   ressourceGainedBase: 1
-  currentRessources: 200
+  currentRessources: {fileID: 11400000, guid: 81fe07c4552e8764781c71e56d5306d6, type: 2}
   OnGainRessource:
     m_PersistentCalls:
       m_Calls:
@@ -658,7 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenUpdates: 5
-  attractivityScore: 0
+  attractivityScore: {fileID: 11400000, guid: a1a7ddbe28036fd4eaa24df70c347824, type: 2}
   OnUpdateAttractivity:
     m_PersistentCalls:
       m_Calls:
@@ -701,6 +703,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contexts: {fileID: 11400000, guid: 7081e410ad1599343ab3b55d065dac8b, type: 2}
   usedCamera: {fileID: 3631207456372332364}
+  startingContext: 0
+--- !u!114 &7789482485079233858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209237266425241743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d3c670dbc8a85499042c287d8d9caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5209237266696560536
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,6 +760,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snaping: 0
+  isRotating: 0
+  rotateSpeed: 50
 --- !u!1 &5496774638416771173
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,15 +999,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 99.02427
+      value: 99.010445
       objectReference: {fileID: 0}
     - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0031051938
+      value: 0.0031051764
       objectReference: {fileID: 0}
     - target: {fileID: 1440979087, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.024433
+      value: 17.010517
       objectReference: {fileID: 0}
     - target: {fileID: 495711263419197918, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_Name

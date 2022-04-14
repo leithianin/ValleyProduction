@@ -13,9 +13,9 @@ public class InteractionSpot : MonoBehaviour
 
     [SerializeField] private int maxInteractionAtSameTime = -1;
 
-    [SerializeField] private UnityEvent PlayOnStartInteract;
-    [SerializeField] private UnityEvent PlayOnEndInteract;
-    [SerializeField] private UnityEvent PlayOnInteruptInteract;
+    [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnStartInteract;
+    [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnEndInteract;
+    [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnInteruptInteract;
 
     public Action<CPN_InteractionHandler> PlayOnInteractionEnd;
     public Action<CPN_InteractionHandler> PlayOnInteractionStart;
@@ -57,7 +57,7 @@ public class InteractionSpot : MonoBehaviour
         //Debug.Log("Interaction : " + interacter.name);
         callerInSpot.Add(interacter);
 
-        PlayOnStartInteract?.Invoke();
+        PlayOnStartInteract?.Invoke(interacter);
         PlayOnInteractionStart?.Invoke(interacter);
         if (interactionAction != null)
         {
@@ -77,7 +77,7 @@ public class InteractionSpot : MonoBehaviour
     {
         callerInSpot.Remove(interacter);
 
-        PlayOnEndInteract?.Invoke();
+        PlayOnEndInteract?.Invoke(interacter);
         PlayOnInteractionEnd?.Invoke(interacter);
     }
 

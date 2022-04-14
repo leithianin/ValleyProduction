@@ -17,15 +17,24 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 
     private TimerManager.Timer ressourceTimer = null;
 
+    private float ressourceToGain;
+
     public static int GetRessource => Mathf.FloorToInt(instance.currentRessources.Value);
 
     private void Start()
     {
         currentRessources.ResetData();
 
+        currentRessources.OnAskChangeValue += GainRessource;
+
         GainRessource(0);
 
         ressourceTimer = TimerManager.CreateGameTimer(ressourceProductionSpeed, GainRessourceOnTime);
+    }
+
+    private void OnDestroy()
+    {
+        currentRessources.OnAskChangeValue -= GainRessource;
     }
 
     public static void EnableFeature(bool isEnable)
@@ -47,13 +56,13 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 
     public static void GainRessource(float amount)
     {
-        instance.currentRessources.ChangeValue(amount);
+        instance.currentRessources.AddValue(amount);
         instance.OnGainRessource?.Invoke(GetRessource);
     }
 
     public static void LoseRessource(float amount)
     {
-        instance.currentRessources.ChangeValue(-amount);
+        instance.currentRessources.AddValue(-amount);
         instance.OnLoseRessource?.Invoke(GetRessource);
     }
 

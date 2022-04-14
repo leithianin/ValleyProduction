@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,7 +13,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     [SerializeField] private float spawnDistanceFromSpawnPoint = 0.8f;
     [SerializeField] private int maxSpawn = 100;
 
-    [SerializeField] private VisitorScriptable[] visitorTypes;
+    [SerializeField] private List<VisitorScriptable> visitorTypes;
 
     [Header("Feedbacks")]
     [SerializeField] private UnityEvent<int> OnUpdateVisitorNumber;
@@ -20,11 +22,17 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     [SerializeField] private Terrain mainTerrain;
 
-    public static System.Action<bool> isOnDespawn;
+    public static Action<bool> isOnDespawn;
 
     private float nextSpawnTime = 5f;
 
-     [SerializeField] private bool allowVisitorSpawn;
+    [SerializeField] private bool allowVisitorSpawn;
+
+    #region Actions
+    public static Action<VisitorBehavior> OnSpawnVisitor;
+    public static Action<VisitorBehavior> OnDespawnVisitor;
+    public static Action<int> OnChangeVisitorCount;
+    #endregion
 
     public static Terrain GetMainTerrain => instance.mainTerrain;
 
@@ -37,7 +45,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     {
         if (Time.time > nextSpawnTime && allowVisitorSpawn)
         {
-            int spawnNb = Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y + 1);
+            int spawnNb = UnityEngine.Random.Range(visitorToSpawnNb.x, visitorToSpawnNb.y + 1);
             for (int i = 0; i < spawnNb; i++)
             {
                 if (UsedVisitorNumber() < maxSpawn)
@@ -71,7 +79,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 if (type != null) { visitorType = type; }
                 else { visitorType = ChooseVisitorType(); }
 
-                Vector2 rng = Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
+                Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
                 IST_PathPoint wantedSpawn = SearchSpawnPoint(visitorType);
 
                 if (wantedSpawn != null)
@@ -89,6 +97,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                         SetType(newVisitor);
 
                         OnUpdateVisitorNumber?.Invoke(UsedVisitorNumber());
+
+                        OnSpawnVisitor?.Invoke(newVisitor);
+                        OnChangeVisitorCount?.Invoke(UsedVisitorNumber());
                     }
                 }
             }
@@ -121,6 +132,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         toDelete.UnsetVisitor();
 
         instance.OnUpdateVisitorNumber?.Invoke(UsedVisitorNumber());
+
+        OnDespawnVisitor?.Invoke(toDelete);
+        OnChangeVisitorCount?.Invoke(UsedVisitorNumber());
     }
 
     /// <summary>
@@ -129,7 +143,15 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     /// <returns>Le type de visiteur choisit.</returns>
     private VisitorScriptable ChooseVisitorType()
     {
-        return visitorTypes[Random.Range(0, visitorTypes.Length)];
+        return visitorTypes[UnityEngine.Random.Range(0, visitorTypes.Count)];
+    }
+
+    public static void AddVisitorType(VisitorScriptable nVisitorType)
+    {
+        if(!instance.visitorTypes.Contains(nVisitorType))
+        {
+            instance.visitorTypes.Add(nVisitorType);
+        }
     }
 
     private IST_PathPoint SearchSpawnPoint(VisitorScriptable visitorType)
@@ -166,7 +188,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         if (possiblePathpoints.Count > 0)
         {
-            return possiblePathpoints[Random.Range(0, possiblePathpoints.Count)];
+            return possiblePathpoints[UnityEngine.Random.Range(0, possiblePathpoints.Count)];
         }
         else
         {
@@ -287,11 +309,18 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         if (possiblePath.Count > 0)
         {
-            return possiblePath[Random.Range(0, possiblePath.Count)];
+            return possiblePath[UnityEngine.Random.Range(0, possiblePath.Count)];
         }
         else
         {
             return null;
         }
     }
+
+    private void OnDestroy()
+    {
+        OnSpawnVisitor = null;
+        OnDespawnVisitor = null;
+        OnChangeVisitorCount = null;
+}
 }

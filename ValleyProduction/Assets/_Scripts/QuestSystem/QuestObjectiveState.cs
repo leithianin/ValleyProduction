@@ -7,5 +7,6 @@ public enum QuestObjectiveState
     Pending,
     Started,
     Failed,
+    PendingCompletion,
     Completed
 }

@@ -9,7 +9,11 @@ public abstract class QST_Objective : ScriptableObject
 
     [SerializeField] protected QuestObjectiveState state;
 
+    [SerializeField] private string description;
+
     public QuestObjectiveState State => state;
+
+    public string Description => description;
 
     /// <summary>
     /// Met à jour l'état de l'objectif

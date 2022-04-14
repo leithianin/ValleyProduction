@@ -34,6 +34,9 @@ public class UIManager : VLY_Singleton<UIManager>
     [Header("Goals")]
     public TextsDictionary textsScriptable;
 
+    [Header("Quest")]
+    [SerializeField] private UI_QuestDisplayer questDisplayer;
+
     private static Component[] componentTab;
     private static GameObject gameObjectShown;
     public static Tooltip GetTooltip => instance.tooltip;
@@ -99,6 +102,11 @@ public class UIManager : VLY_Singleton<UIManager>
     public void ToolCreatePath(int i)
     {
         toolInfo.OnToolCreatePath(i);
+    }
+
+    public static void UnlockStructure(InfrastructurePreview toUnlock)
+    {
+        instance.toolInfo.UnlockStructure(toUnlock);
     }
     #endregion
 
@@ -185,6 +193,26 @@ public class UIManager : VLY_Singleton<UIManager>
         OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         infrastructureInfo.ShowStructureInformation(AU_Inf);
         gameObjectShown = infrastructureInfo.gameObject;
+    }
+    #endregion
+
+    #region Quests
+    public static void UpdateQuestStatus(VLY_Quest updatedQuest)
+    {
+        switch(updatedQuest.state)
+        {
+            case QuestObjectiveState.PendingCompletion:
+                instance.questDisplayer.SetPendingCompletion(updatedQuest);
+                break;
+            case QuestObjectiveState.Started:
+                instance.questDisplayer.SetQuestObjective(updatedQuest, updatedQuest.GetCurrentStageObjectives());
+                break;
+        }
+    }
+
+    public static void ShowQuestRewards(List<QST_Reward> rewards)
+    {
+        instance.questDisplayer.SetRewardToDisplay(rewards);
     }
     #endregion
 }

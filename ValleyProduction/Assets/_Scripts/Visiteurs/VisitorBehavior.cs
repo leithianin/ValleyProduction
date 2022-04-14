@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class VisitorBehavior : MonoBehaviour
+public class VisitorBehavior : VLY_Component
 {
     [SerializeField] private CPN_Movement movement;
+    [SerializeField] private VLY_ComponentHandler handler;
+
+    public VLY_ComponentHandler Handler => handler;
 
     private IST_PathPoint spawnPoint;
     //private PathData currentPath;
@@ -185,6 +188,7 @@ public class VisitorBehavior : MonoBehaviour
 
         if (nodeData != null && nodeData.linkedToLandmark)
         {
+            VLY_LandmarkManager.OnLandmarkInteraction(currentObjective, this); // CODE REVIEW : Voir si on peut pas le mettre autre par (Dans les Landmark, mettre une fonction qui détecte l'entré dun visiteur ?)
             currentObjective = LandmarkType.Spawn;
         }
 

@@ -10,12 +10,23 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
     private List<QST_ObjectiveBehavior> objectivesBehaviors = new List<QST_ObjectiveBehavior>();
 
     //Quest rewards behavior
-    
+    private List<QST_RewardBehavior> rewardBehaviors = new List<QST_RewardBehavior>();
+
+    [SerializeField] private VLY_Quest startQuest;
 
     private void Start()
     {
         //Création des différents behavior pour les Objectifs
         objectivesBehaviors.Add(new QST_OBJB_Ressource());
+        objectivesBehaviors.Add(new QST_OBJB_PlaceStructure());
+        objectivesBehaviors.Add(new QST_OBJB_VisitorReachLandmark());
+        objectivesBehaviors.Add(new QST_OBJB_FlagValue());
+
+        //Création des différents behavior pour les Rewards
+        rewardBehaviors.Add(new QST_RWDB_Ressource());
+        rewardBehaviors.Add(new QST_RWDB_UnlockStructure());
+        rewardBehaviors.Add(new QST_RWDB_VisitorType());
+        rewardBehaviors.Add(new QST_RWDB_QuestStart());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();
@@ -24,17 +35,10 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         for(int i = 0; i < allQuests.Length; i++)
         {
             allQuests[i].Reset();
-            for(int j = 0; j < allQuests[i].Objectives.Count; j++)
-            {
-                allQuests[i].Objectives[j].Reset();
-            }
         }
 
         //Placeholder : Démarre la première quête
-        foreach (VLY_Quest q in allQuests)
-        {
-            BeginQuest(q);
-        }
+        BeginQuest(startQuest);
     }
 
     /// <summary>
@@ -50,36 +54,94 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
     }
 
     /// <summary>
+    /// Appelé quand un quête se finit. Fait gagner les récompenses au joueur.
+    /// </summary>
+    /// <param name="quest">La quête à finir.</param>
+    public static void CompleteQuest(VLY_Quest quest)
+    {
+        quest.state = QuestObjectiveState.Completed;
+
+        for(int i = 0; i < quest.Rewards.Count; i++)
+        {
+            QST_RewardBehavior behavior = instance.GetRewardBehavior(quest.Rewards[i]);
+
+            behavior.GiveReward(quest.Rewards[i]);
+
+            Debug.Log("Reward given : " + quest.Rewards[i]);
+        }
+
+        UIManager.ShowQuestRewards(quest.Rewards);
+    }
+
+    /// <summary>
     /// Vérifie l'état de la quête et met à jour le prochain objectif.
     /// </summary>
     /// <param name="updatedQuest">La quête à update.</param>
-    private void UpdateQuestObjective(VLY_Quest updatedQuest)
+    private void UpdateQuestObjective(VLY_Quest updatedQuest) //CODE REVIEW : Clean la fonction (Séparer la partie "Quest Stage" dans une autre fonction
     {
         int i = 0;
 
-        for (i = 0; i < updatedQuest.Objectives.Count; i++)
+        for (i = 0; i < updatedQuest.Stages.Count; i++)
         {
-            if(updatedQuest.Objectives[i].State == QuestObjectiveState.Completed) //On ignore objectifs déjà remplis
+            bool hasStartedObjective = false;
+            switch(updatedQuest.Stages[i].State)
             {
-                continue;
+                case QuestObjectiveState.Completed:
+                    continue;
+                case QuestObjectiveState.Started:
+                    bool isPhaseComplete = true;
+                    for(int j = 0; j < updatedQuest.Stages[i].Objectives.Count; j++)
+                    {
+                        if(updatedQuest.Stages[i].Objectives[j].State != QuestObjectiveState.Completed)
+                        {
+                            isPhaseComplete = false;
+                            break;
+                        }
+                    }
+
+                    if(isPhaseComplete)
+                    {
+                        SetStageStatus(updatedQuest.Stages[i], QuestObjectiveState.Completed);
+                    }
+                    else
+                    {
+                        hasStartedObjective = true;
+                    }
+                    break;
+                case QuestObjectiveState.Pending:
+                    for (int j = 0; j < updatedQuest.Stages[i].Objectives.Count; j++)
+                    {
+                        SetObjectiveStatus(updatedQuest.Stages[i].Objectives[j], QuestObjectiveState.Started);
+
+                        updatedQuest.Stages[i].Objectives[j].OnUpdateState += (QuestObjectiveState state) => UpdateQuestObjective(updatedQuest);
+                    }
+
+                    SetStageStatus(updatedQuest.Stages[i], QuestObjectiveState.Started);
+
+                    if (i == 0)
+                    {
+                        updatedQuest.state = QuestObjectiveState.Started; //CODE REVIEW : Voir pour le mettre dans une fonction (Gérer les feedbacks)
+                    }
+
+                    hasStartedObjective = true;
+                    break;
             }
-            else if(updatedQuest.Objectives[i].State == QuestObjectiveState.Pending) //Si un objectif n'est pas commencé, on le commence.
+
+            if(hasStartedObjective)
             {
-                SetObjectiveStatus(updatedQuest.Objectives[i], QuestObjectiveState.Started);
-
-                updatedQuest.Objectives[i].OnUpdateState += (QuestObjectiveState state) => instance.UpdateQuestObjective(updatedQuest);
-                break; //On sort de la boucle dès qu'un nouvel objectif est lancé.
+                break;
             }
         }
 
-        if(i >= updatedQuest.Objectives.Count)
+        if (i >= updatedQuest.Stages.Count)
         {
-            updatedQuest.state = QuestObjectiveState.Completed; //CODE REVIEW : Voir pour le mettre dans une fonction (Gérer les feedbacks)
+            Debug.Log("Complete : " + updatedQuest);
+            //TO DO : Mettre à jour l'UI pour afficher le bouton de completion d'une quête
+            updatedQuest.state = QuestObjectiveState.PendingCompletion;
+            //CompleteQuest(updatedQuest);
         }
-        else if(i <= 0)
-        {
-            updatedQuest.state = QuestObjectiveState.Started; //CODE REVIEW : Voir pour le mettre dans une fonction (Gérer les feedbacks)
-        }
+
+        UIManager.UpdateQuestStatus(updatedQuest);
     }
 
     /// <summary>
@@ -94,6 +156,16 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         usedBehavior.SetObjectiveStatus(objective, state);
     }
 
+    private static void SetStageStatus(QST_ObjectiveStage stage, QuestObjectiveState state)
+    {
+        if(state > stage.State)
+        {
+            stage.State = state;
+
+
+        }
+    }
+
     /// <summary>
     /// Cherche après le behavior correspondant à l'objectif voulut.
     /// </summary>
@@ -106,6 +178,19 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
             if(objectivesBehaviors[i].GetObjectiveType() == objective.GetType())
             {
                 return objectivesBehaviors[i];
+            }
+        }
+
+        return null;
+    }
+
+    private QST_RewardBehavior GetRewardBehavior(QST_Reward reward)
+    {
+        for (int i = 0; i < rewardBehaviors.Count; i++)
+        {
+            if (rewardBehaviors[i].GetRewardType() == reward.GetType())
+            {
+                return rewardBehaviors[i];
             }
         }
 

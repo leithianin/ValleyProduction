@@ -10,6 +10,19 @@ public class UI_Tool : MonoBehaviour
     [SerializeField] private UnityEvent OnSelectDeleteTool;
     [SerializeField] private UnityEvent OnDeselectTool;
 
+    [SerializeField] private List<UI_InfrastructureButton> structureButtons;
+
+    public void UnlockStructure(InfrastructurePreview toUnlock) //CODE REVIEW : Voir pour utiliser des Scriptable plutot que le Preview directement
+    {
+        for(int i = 0; i < structureButtons.Count; i++)
+        {
+            if(structureButtons[i].Structure == toUnlock)
+            {
+                structureButtons[i].Enable();
+            }
+        }
+    }
+
     public void OnToolCreatePath(int i)
     {
         ConstructionManager.SelectInfrastructureType(null);
@@ -54,22 +67,4 @@ public class UI_Tool : MonoBehaviour
 
         ConstructionManager.SelectInfrastructureType(null);
     }
-
-
-    #region Build
-    public void SelectStructure(InfrastructurePreview structure)
-    {
-        switch (structure.RealInfrastructure.StructureType)
-        {
-            case InfrastructureType.Path:
-                if (PathManager.IsOnCreatePath)
-                {
-                    PathManager.CreatePathData();
-                }
-                break;
-        }
-
-        ConstructionManager.SelectInfrastructureType(structure);
-    }
-    #endregion
 }
