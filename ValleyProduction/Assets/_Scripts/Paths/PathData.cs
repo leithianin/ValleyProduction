@@ -86,61 +86,27 @@ public class PathData
     {
         return pathFragment[pathFragment.Count - 1].endPoint;
     }
+
+    public List<IST_PathPoint> GetPointNextTo(IST_PathPoint pp)
+    {
+        List<IST_PathPoint> pathPointNext = new List<IST_PathPoint>();
+        List<PathFragmentData> pathFragmentToCheck = new List<PathFragmentData>(GetPathFragments(pp));
+
+        foreach(PathFragmentData pfd in pathFragmentToCheck)
+        {
+            if(pfd.startPoint == pp)
+            {
+                pathPointNext.Add(pfd.endPoint);
+            }
+            else
+            {
+                pathPointNext.Add(pfd.startPoint);
+            }
+        }
+
+        return pathPointNext;
+    }
     #endregion
-    /*
-    /// <summary>
-    /// Return if the path is usable.
-    /// </summary>
-    /// <param name="toCheck">Point to check.</param>
-    /// <returns>Return TRUE if the path has a startPoint and contain the point toCheck.</returns>
-    public bool IsUsable(IST_PathPoint toCheck)
-    {
-        return startPoint != null && ContainsPoint(toCheck);
-    }*/
-
-    /*
-    /// <summary>
-    /// Get a random destination.
-    /// </summary>
-    /// <param name="currentPoint">Visitor's currentPoint.</param>
-    /// <param name="lastPoint">Visitor's lastPoint he want to reach.</param>
-    /// <returns>The new path.</returns>
-    public PathFragmentData GetRandomDestination(IST_PathPoint currentPoint, IST_PathPoint lastPoint)
-    {
-        List<PathFragmentData> availablePaths = new List<PathFragmentData>(GetAvailablesPath(currentPoint, lastPoint));
-
-        if (availablePaths.Count == 0)
-        {
-            availablePaths = new List<PathFragmentData>(GetAvailablesPath(currentPoint, null));
-        }
-
-        return availablePaths[UnityEngine.Random.Range(0, availablePaths.Count)];
-    }*/
-
-    /*
-    /// <summary>
-    /// Return all path available between 2 points.
-    /// </summary>
-    /// <param name="currentPoint">Visitor's currentPoint.</param>
-    /// <param name="lastPoint">Visitor's lastPoint he want to reach.</param>
-    /// <returns>A list of paths.</returns>
-    private List<PathFragmentData> GetAvailablesPath(IST_PathPoint currentPoint, IST_PathPoint lastPoint)
-    {
-        List<PathFragmentData> toReturn = new List<PathFragmentData>();
-        for (int i = 0; i < pathFragment.Count; i++)
-        {
-            if (pathFragment[i].startPoint == currentPoint && (pathFragment[i].endPoint != lastPoint || pathFragment.Count == 1))
-            {
-                toReturn.Add(new PathFragmentData(pathFragment[i].startPoint, pathFragment[i].endPoint, pathFragment[i].path));
-            }
-            else if ((pathFragment[i].startPoint != lastPoint || pathFragment.Count == 1) && pathFragment[i].endPoint == currentPoint)
-            {
-                toReturn.Add(new PathFragmentData(pathFragment[i].endPoint, pathFragment[i].startPoint, pathFragment[i].GetReversePath()));
-            }
-        }
-
-        return toReturn;
-    }*/
 
     #region PathFragment
     #region Remove PathFragment
@@ -229,6 +195,21 @@ public class PathData
 
         return listGetPathFragment;
     }
+
+    public List<PathFragmentData> GetPathFragments(IST_PathPoint pp)
+    {
+        List<PathFragmentData> pathfragmentList = new List<PathFragmentData>();
+        
+        foreach(PathFragmentData pfd in pathFragment)
+        {
+            if(pfd.startPoint == pp || pfd.endPoint == pp)
+            {
+                pathfragmentList.Add(pfd);
+            }
+        }
+
+        return pathfragmentList;
+    }
     #endregion
 
     #region PathData
@@ -267,30 +248,6 @@ public class PathData
     #endregion
 
     #region Detection
-    /*
-    [Obsolete]
-    public void AddInterestPointDetector(InterestPointDetector detector)
-    {
-        if(!interestPointDetectors.Contains(detector))
-        {
-            interestPointDetectors.Add(detector);
-            detector.OnDiscoverInterestPoint += AddInterestPoint;
-            detector.OnRemoveInterestPoint += RemoveInterestPoint;
-        }
-    }
-
-    [Obsolete]
-    public void RemoveInterestPointDetector(InterestPointDetector detector)
-    {
-        if (interestPointDetectors.Contains(detector))
-        {
-            interestPointDetectors.Remove(detector);
-            detector.OnDiscoverInterestPoint -= AddInterestPoint;
-            detector.OnRemoveInterestPoint -= RemoveInterestPoint;
-        }
-    }
-    */
-
     private int ContrainsInterestPoint(InterestPoint toCheck)
     {
         int toReturn = -1;
@@ -338,4 +295,21 @@ public class PathData
 
     }
     #endregion
+
+    #region MultiPath
+    public void RemoveMultiPath()
+    {
+        foreach(IST_PathPoint pp in GetAllPoints())
+        {
+            pp.GetManageMultiPath.CheckIfMultiPath(this);
+        }
+    }
+
+    public void RemoveMultiPath(IST_PathPoint pp)
+    {
+        pp.GetManageMultiPath.CheckIfMultiPath(this);
+    }
+    
+    #endregion
+
 }

@@ -11,6 +11,7 @@ public class IST_PathPoint : Infrastructure
     public Action OnDestroyPathPoint;
 
     public PathNode Node => node;
+    public ManageMultiPath GetManageMultiPath => manageMultiPath;
 
     //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)

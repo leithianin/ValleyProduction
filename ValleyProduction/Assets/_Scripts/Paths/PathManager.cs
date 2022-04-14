@@ -320,6 +320,7 @@ public class PathManager : VLY_Singleton<PathManager>
             }
             else
             {
+                pdToModify.RemoveMultiPath();
                 DeletePath(pdToModify);
             }
             return;
@@ -339,10 +340,31 @@ public class PathManager : VLY_Singleton<PathManager>
             //If is the middle point, delete the pathData
             if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
             {
-                DeletePath(pdToModify);
-                pdToModify.pathFragment[1].endPoint.RemoveObject();
-                pdToModify.pathFragment[0].startPoint.RemoveObject();
-                return;
+                Debug.Log("Millieu");
+                //Need to check si un autre point hasManyPath
+                if (HasManyPath(pdToModify.pathFragment[0].startPoint) || HasManyPath(pdToModify.pathFragment[1].endPoint))
+                {
+                    //Sans ça il reste un point seul, à Voir si ça casse pas des trucs 
+                    if(HasManyPath(pdToModify.pathFragment[0].startPoint))
+                    {
+                        pdToModify.pathFragment[1].endPoint.RemoveObject();
+                    }
+                    else
+                    {
+                        pdToModify.pathFragment[0].startPoint.RemoveObject();
+                    }
+
+                    pdToModify.RemoveMultiPath();
+                    DeletePath(pdToModify);
+                    return;
+                }
+                else
+                {
+                    DeletePath(pdToModify);
+                    pdToModify.pathFragment[1].endPoint.RemoveObject();
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
+                    return;
+                }
             }
             else
             {
@@ -353,6 +375,62 @@ public class PathManager : VLY_Singleton<PathManager>
             }
         }
     }
+
+    #region >2 pathFragment
+    /// <summary>
+    /// If the path have more than 2 pathFragment
+    /// </summary>
+    /// <param name="pdToModify"></param>
+    public static void DeletePointWith2MorePathFragment(PathData pdToModify, IST_PathPoint ist_pp)
+    {
+        //Si ce n'est pas le dernier point
+        if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
+        {
+            List<IST_PathPoint> pointsToCheck = new List<IST_PathPoint>(pdToModify.GetPointNextTo(ist_pp));
+            
+            foreach(IST_PathPoint pp in pointsToCheck)
+            {
+                if(HasManyPath(pp))
+                {
+                    pdToModify.RemoveMultiPath(pp);
+                }
+            }
+            //Check si ces deux points ont HasManyPath
+            //Si non, comme d'hab
+            //Si oui --> pdToModify.RemoveMultiPath();
+
+
+            //pdToModify.RemoveMultiPath();
+            List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);               //List of PathFragment after the deleted pathpoint
+
+            pdToModify.RemoveFragmentAndNext(ist_pp);                                                       //Remove PathFragment where the pathpoint is + the next PathFragment 
+
+            DestroyLineRenderer(pdToModify.pathLineRenderer);                                               //Destroy LineRenderer
+
+            //Si StartPoint
+            if (pdToModify.startPoint == ist_pp)
+            {
+                instance.pathDataList.Remove(pdToModify);
+            }
+            else
+            {
+                DebugLineR(pdToModify);
+            }
+
+            pdToModify.SafeCheck();                                                                         //Check if the path is Empty and delete it
+
+            CreateCutPathData(pfdSecondPath);                                                             //Create a pathData with the second path
+        }
+        else
+        {
+            //pdToModify.RemoveMultiPath();
+            pdToModify.RemoveFragmentAndNext(ist_pp);
+            DestroyLineRenderer(pdToModify.pathLineRenderer);
+            DebugLineR(pdToModify);
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// Return if the point is a SpawnPoint
@@ -376,46 +454,6 @@ public class PathManager : VLY_Singleton<PathManager>
 
         return false;
     }
-    #endregion
-
-    #region >2 pathFragment
-    /// <summary>
-    /// If the path have more than 2 pathFragment
-    /// </summary>
-    /// <param name="pdToModify"></param>
-    public static void DeletePointWith2MorePathFragment(PathData pdToModify, IST_PathPoint ist_pp)
-    {
-        //Si ce n'est pas le dernier point
-        if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
-        {
-            List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);               //List of PathFragment after the deleted pathpoint
-
-            pdToModify.RemoveFragmentAndNext(ist_pp);                                                       //Remove PathFragment where the pathpoint is + the next PathFragment 
-
-            DestroyLineRenderer(pdToModify.pathLineRenderer);                                               //Destroy LineRenderer
-
-            //Si StartPoint
-            if (pdToModify.startPoint == ist_pp)
-            {
-                instance.pathDataList.Remove(pdToModify);
-            }
-            else
-            {
-                DebugLineR(pdToModify);
-            }
-
-            pdToModify.SafeCheck();                                                                         //Check if the path is Empty and delete it
-
-            CreateCutPathData(pfdSecondPath);                                                             //Create a pathData with the second path
-        }
-        else
-        {
-            pdToModify.RemoveFragmentAndNext(ist_pp);
-            DestroyLineRenderer(pdToModify.pathLineRenderer);
-            DebugLineR(pdToModify);
-        }
-    }
-    
     #endregion
 
     #endregion

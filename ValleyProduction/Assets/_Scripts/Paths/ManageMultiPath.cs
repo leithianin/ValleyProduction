@@ -55,16 +55,18 @@ public class ManageMultiPath : MonoBehaviour
 
     public void DesactivateMultiPath()
     {
-        prefabCairn.SetActive(false);
-        prefabSign.SetActive(true);
+        prefabCairn.SetActive(true);
+        prefabSign.SetActive(false);
+        nbArrow = 0;
     }
 
     //Tag qui follow le chemin entrain d'être crée
     private void TagFollowCurrentPath()
     {
         currentArrow = SpawnNewTag();
+        currentArrow.SetActive(true);
         currentArrow.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset * nbArrow), arrowTagRef.transform.position.z);
-        multiPathList.Add(new MultiPathClass(arrowTagRef, null));
+        multiPathList.Add(new MultiPathClass(currentArrow, null));
         PathManager.manageMultiPath = this;
         nbArrow++;
     }
@@ -89,10 +91,12 @@ public class ManageMultiPath : MonoBehaviour
         {
             if(pfd.HasThisStartingPoint(pathPoint))
             {
+                GameObject newArrow = Instantiate(arrowTagRef, prefabSign.transform);
+                newArrow.SetActive(true);
                 nbArrow++;
-                arrowTagRef.transform.right = pfd.path[1] - arrowTagRef.transform.position;
-                arrowTagRef.transform.eulerAngles = new Vector3(0f, arrowTagRef.transform.eulerAngles.y, 0f);
-                multiPathList.Add(new MultiPathClass(arrowTagRef, pd));
+                newArrow.transform.right = pfd.path[1] - newArrow.transform.position;
+                newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
+                multiPathList.Add(new MultiPathClass(newArrow, pd));
             }
         }
     }
@@ -115,8 +119,36 @@ public class ManageMultiPath : MonoBehaviour
         }
     }
 
-    public void DeleteArrow()
+    public void CheckIfMultiPath(PathData pd)
     {
-        Debug.Log("bite");
+        if(multiPathList.Count > 0)
+        {
+            DeleteArrow(pd);
+        }
+    }
+
+    public void DeleteArrow(PathData pd)
+    {
+        List<MultiPathClass> toDeleteList = new List<MultiPathClass>();
+        foreach(MultiPathClass mpc in multiPathList)
+        {
+            if(mpc.pathData == pd)
+            {
+                Destroy(mpc.arrowTag.gameObject);
+                toDeleteList.Add(mpc);
+            }
+        }
+
+        foreach(MultiPathClass mpc in toDeleteList)
+        {
+            multiPathList.Remove(mpc);
+        }
+
+        if (multiPathList.Count < 2)
+        {
+            DesactivateMultiPath();
+            Destroy(multiPathList[0].arrowTag.gameObject);
+            multiPathList.Clear();
+        }
     }
 }
