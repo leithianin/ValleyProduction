@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &618741451104544360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6144299698726690946}
+  - component: {fileID: 7526084383418270614}
+  - component: {fileID: 7524624694888601595}
+  m_Layer: 0
+  m_Name: HeatmapManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6144299698726690946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618741451104544360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7526084383418270614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618741451104544360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d5a3ebaa59e1d4fae06c5ca887d241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compute: {fileID: 7200000, guid: 079555009d8c691499847169950547cb, type: 3}
+  mapSize: 1000
+  BlendDistance: 50
+  MaskColor0: {r: 1, g: 1, b: 1, a: 1}
+  MaskColor1: {r: 1, g: 0.9490197, b: 0.9490197, a: 1}
+  MaskColor2: {r: 1, g: 0.93725497, b: 0.93725497, a: 1}
+  MaskColor3: {r: 1, g: 0.8352942, b: 0.8352942, a: 1}
+  MaskColor4: {r: 1, g: 0.7019608, b: 0.7019608, a: 1}
+  MaskColor5: {r: 1, g: 0.5529412, b: 0.5529412, a: 1}
+  MaskColor6: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
+  MaskColor7: {r: 0.9333334, g: 0.20000002, b: 0.20000002, a: 1}
+  MaskColor8: {r: 0.75294125, g: 0, b: 0, a: 1}
+  MaskColor9: {r: 0.5647059, g: 0, b: 0, a: 1}
+  MaskColor10: {r: 0.35686275, g: 0, b: 0, a: 1}
+  maskTexture: {fileID: 0}
+--- !u!114 &7524624694888601595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618741451104544360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30cde3480beb79e4fbcd5224ccaa7948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Materials:
+  - {fileID: 2100000, guid: e27b99db570131f42a810270710b0e8e, type: 2}
+  msk: {fileID: 7526084383418270614}
