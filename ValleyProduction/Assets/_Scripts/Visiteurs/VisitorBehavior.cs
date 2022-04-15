@@ -85,7 +85,7 @@ public class VisitorBehavior : VLY_Component
         }
     }
 
-    private void DeleteVisitor()
+    private void DeleteVisitor(IST_PathPoint pathpoint)
     {
         VisitorManager.DeleteVisitor(this);
     }
@@ -116,7 +116,7 @@ public class VisitorBehavior : VLY_Component
 
         if (currentPathFragment == null)
         {
-            DeleteVisitor();
+            DeleteVisitor(null);
         }
         else
         {

@@ -8,7 +8,7 @@ public class IST_PathPoint : Infrastructure
     [SerializeField] private ManageMultiPath manageMultiPath;
     [SerializeField] private PathNode node;
 
-    public Action OnDestroyPathPoint;
+    public Action<IST_PathPoint> OnDestroyPathPoint;
 
     public PathNode Node => node;
     public ManageMultiPath GetManageMultiPath => manageMultiPath;
@@ -66,7 +66,7 @@ public class IST_PathPoint : Infrastructure
             }
 
             InfrastructureManager.DesnapInfrastructure(this);
-            OnDestroyPathPoint?.Invoke();
+            OnDestroyPathPoint?.Invoke(this);
             return true;
         }
     }
@@ -76,8 +76,8 @@ public class IST_PathPoint : Infrastructure
     {
         node.DeleteNode();
 
-        OnDestroyPathPoint?.Invoke();
         PathManager.DeletePoint(this, pd);
+        OnDestroyPathPoint?.Invoke(this);
         InfrastructureManager.DesnapInfrastructure(this);
     }
 

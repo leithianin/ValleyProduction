@@ -54,7 +54,7 @@ public class ManageMultiPath : MonoBehaviour
         foreach (PathData pd in PathManager.GetAllPath)                                                                     //Pour chaque PathData
         {
             List<PathFragmentData> pathFragmentList = new List<PathFragmentData>(pd.GetPathFragments(thisPathPoint));       //Je Get les fragment ou il y'a le pathpoint (La liste est vide si il n'y a pas le point)
-            if(pathFragmentList.Count > 0)
+            if (pathFragmentList.Count > 0)
             {
                 RegisterPathFragment(pathFragmentList);
             }
@@ -72,11 +72,11 @@ public class ManageMultiPath : MonoBehaviour
     /// <param name="pfdList"></param>
     private void RegisterPathFragment(List<PathFragmentData> pfdList)
     {
-        foreach(MultiPathClass mpc in multiPathList)
+        foreach (MultiPathClass mpc in multiPathList)
         {
-            foreach(PathFragmentData pfd in pfdList)
+            foreach (PathFragmentData pfd in pfdList)
             {
-                if(mpc.pathFragmentData == pfd)
+                if (mpc.pathFragmentData == pfd)
                 {
                     pfdList.Remove(pfd);
                 }
@@ -98,6 +98,7 @@ public class ManageMultiPath : MonoBehaviour
             }
             else
             {
+                pfd.startPoint.OnDestroyPathPoint += DeleteArrow;
                 newArrow.transform.forward = pfd.path[0] - newArrow.transform.position;
                 newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
             }
@@ -107,8 +108,27 @@ public class ManageMultiPath : MonoBehaviour
     }
 
 
-    public void DeleteArrow()
+    public void DeleteArrow(IST_PathPoint pathpoint)
     {
-        
+        List<MultiPathClass> mpcToDelete = new List<MultiPathClass>();
+        foreach (MultiPathClass mpc in multiPathList)
+        {
+            if (mpc.pathFragmentData.startPoint == pathpoint || mpc.pathFragmentData.endPoint == pathpoint)
+            {
+                mpcToDelete.Add(mpc);
+            }
+        }
+
+        foreach(MultiPathClass toDelete in mpcToDelete)
+        {
+            Destroy(toDelete.arrowTag);
+            multiPathList.Remove(toDelete);
+            nbArrow--;
+        }
+
+        if(multiPathList.Count < 2)
+        {
+            DesactivateMultiPath();
+        }
     }
 }

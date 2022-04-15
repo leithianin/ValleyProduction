@@ -323,7 +323,6 @@ public class PathManager : VLY_Singleton<PathManager>
             }
             else
             {
-                pdToModify.RemoveMultiPath();
                 DeletePath(pdToModify);
             }
             return;
@@ -356,7 +355,6 @@ public class PathManager : VLY_Singleton<PathManager>
                         pdToModify.pathFragment[0].startPoint.RemoveObject();
                     }
 
-                    pdToModify.RemoveMultiPath();
                     DeletePath(pdToModify);
                     return;
                 }
@@ -434,7 +432,6 @@ public class PathManager : VLY_Singleton<PathManager>
             if (HasManyPath(pp))
             {
                 Debug.Log("tc");
-                pdToModify.RemoveMultiPath(pp);
             }
         }
     }
