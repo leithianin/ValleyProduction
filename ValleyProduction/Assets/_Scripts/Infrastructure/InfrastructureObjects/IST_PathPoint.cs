@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class IST_PathPoint : Infrastructure
 {
+    [SerializeField] private ManageMultiPath manageMultiPath;
     [SerializeField] private PathNode node;
 
     public Action OnDestroyPathPoint;
 
     public PathNode Node => node;
+    public ManageMultiPath GetManageMultiPath => manageMultiPath;
 
     //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)
@@ -23,12 +25,12 @@ public class IST_PathPoint : Infrastructure
         //Si c'est le dernier PathPoint du chemin = Terminer chemin
         if (this == PathManager.previousPathpoint)
         {
-            PathManager.CreatePathData();
+            PathManager.CreatePathData();          
             UIManager.HideShownGameObject();
             return;
         }
 
-        if (PathManager.IsSpawnPoint(this))                             //Si c'est le spawnPoint (boucle)
+        if (PathManager.IsSpawnPoint(this))                                 //Si c'est le spawnPoint (boucle)
         {
             PathManager.PlacePoint(this);
             PathManager.CreatePathData();
@@ -37,6 +39,7 @@ public class IST_PathPoint : Infrastructure
         else                                                                //Creer un nouveau chemin
         {
             PathManager.PlacePoint(this);
+            manageMultiPath.ActivateMultiPath();
         }
     }
 
@@ -44,7 +47,10 @@ public class IST_PathPoint : Infrastructure
     {
         if (PathManager.HasManyPath(this))
         {
-            UIManager.ArrangePathButton(this);
+            if (InfrastructureManager.GetCurrentTool == ToolType.Delete)
+            {
+                UIManager.ArrangePathButton(this);
+            }
             return false;
         }
         else
@@ -54,9 +60,9 @@ public class IST_PathPoint : Infrastructure
             {
                 PathManager.UnplacePoint(this);
             }
-            else if (PathManager.GetCurrentPathData == null)
+            else if (PathManager.GetCurrentPathData == null )
             {
-                PathManager.DeletePoint(this);
+                PathManager.DeletePoint(this, PathManager.GetPathData(this));
             }
 
             InfrastructureManager.DesnapInfrastructure(this);
@@ -65,7 +71,7 @@ public class IST_PathPoint : Infrastructure
         }
     }
 
-    //Remove à partir de l'UI
+    //Remove à partir de l'UI (Choose path plusieurs bouton)
     public void Remove(PathData pd)
     {
         node.DeleteNode();

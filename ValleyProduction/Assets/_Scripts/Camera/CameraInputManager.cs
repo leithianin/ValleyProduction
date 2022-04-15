@@ -120,7 +120,7 @@ public class CameraInputManager : MonoBehaviour
 
         Vector2 mouseDirection = new Vector2(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2)); //Convert Mouse position into direction vector for moving origin
         mouseDirection.Normalize();
-        cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, edgeScrollingMovingSpeed);
+        //cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, edgeScrollingMovingSpeed);
     }
 
     void MoveCameraOriginWithMouseDrag()

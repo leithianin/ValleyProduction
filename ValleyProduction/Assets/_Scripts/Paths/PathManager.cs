@@ -20,6 +20,7 @@ public class PathManager : VLY_Singleton<PathManager>
     private PathData currentPathData              = null;
     private PathData disconnectedPathData         = null;
     public static IST_PathPoint previousPathpoint = null;
+    public static PathData pathDataToDelete = null;
 
     //Accesseur current Data
     public static PathData GetCurrentPathData => instance.currentPathData;
@@ -49,6 +50,8 @@ public class PathManager : VLY_Singleton<PathManager>
     public static PathManager GetInstance => instance;
 
     public static bool IsOnCreatePath => (GetCurrentPathpointList.Count>0)?true:false;
+
+    public static PathData GetLastPathDataCreated => instance.pathDataList[instance.pathDataList.Count - 1];
 
     private void Start()
     {
@@ -245,16 +248,22 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pd"></param>
     public static void DeletePoint(IST_PathPoint ist_pp, PathData pd = null)
     {
-        if (SpawnPoints.Contains(ist_pp)) { SpawnPoints.Remove(ist_pp);}
-
-        //Check if we know the pathData to modify
         PathData pdToModify = new PathData();
-        if (pd == null) { pdToModify = GetPathData(ist_pp);}
-        else            { pdToModify = pd                 ;}
+        if (pd != null || pathDataToDelete != null)                         //Je ne peux arriver lï¿½ sans connaï¿½tre le PathData ï¿½ delete
+        {
+            if (pd == null) { pdToModify = pathDataToDelete; }
+            else { pdToModify = pd; }
+        }
+        else
+        {
+            return;
+        }
+
+        if (SpawnPoints.Contains(ist_pp)) { SpawnPoints.Remove(ist_pp);}
 
         if (pdToModify != null)
         {
-            switch(pdToModify.pathFragment.Count)
+            switch (pdToModify.pathFragment.Count)
             {
                 case 0:
                     DeletePointWith0PathFragment(pdToModify);
@@ -299,14 +308,23 @@ public class PathManager : VLY_Singleton<PathManager>
         //If the path have 1 PathFragment
         if (pdToModify.pathFragment.Count == 1)
         {
-            DeletePath(pdToModify);
-            if (pdToModify.pathFragment[0].startPoint != ist_pp)
+            if ((!HasManyPath(pdToModify.pathFragment[0].startPoint)) && (!HasManyPath(pdToModify.pathFragment[0].endPoint)))
             {
-                pdToModify.pathFragment[0].startPoint.RemoveObject();
+                DeletePath(pdToModify);
+                pathDataToDelete = null;
+                if (pdToModify.pathFragment[0].startPoint != ist_pp)
+                {
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
+                }
+                else
+                {
+                    pdToModify.pathFragment[0].endPoint.RemoveObject();
+                }
             }
             else
             {
-                pdToModify.pathFragment[0].endPoint.RemoveObject();
+                pdToModify.RemoveMultiPath();
+                DeletePath(pdToModify);
             }
             return;
         }
@@ -325,10 +343,30 @@ public class PathManager : VLY_Singleton<PathManager>
             //If is the middle point, delete the pathData
             if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
             {
-                DeletePath(pdToModify);
-                pdToModify.pathFragment[1].endPoint.RemoveObject();
-                pdToModify.pathFragment[0].startPoint.RemoveObject();
-                return;
+                //Need to check si un autre point hasManyPath
+                if (HasManyPath(pdToModify.pathFragment[0].startPoint) || HasManyPath(pdToModify.pathFragment[1].endPoint))
+                {
+                    //Sans ï¿½a il reste un point seul, ï¿½ Voir si ï¿½a casse pas des trucs 
+                    if(HasManyPath(pdToModify.pathFragment[0].startPoint))
+                    {
+                        pdToModify.pathFragment[1].endPoint.RemoveObject();
+                    }
+                    else
+                    {
+                        pdToModify.pathFragment[0].startPoint.RemoveObject();
+                    }
+
+                    pdToModify.RemoveMultiPath();
+                    DeletePath(pdToModify);
+                    return;
+                }
+                else
+                {
+                    DeletePath(pdToModify);
+                    pdToModify.pathFragment[1].endPoint.RemoveObject();
+                    pdToModify.pathFragment[0].startPoint.RemoveObject();
+                    return;
+                }
             }
             else
             {
@@ -339,6 +377,69 @@ public class PathManager : VLY_Singleton<PathManager>
             }
         }
     }
+
+    #region >2 pathFragment
+    /// <summary>
+    /// If the path have more than 2 pathFragment
+    /// </summary>
+    /// <param name="pdToModify"></param>
+    public static void DeletePointWith2MorePathFragment(PathData pdToModify, IST_PathPoint ist_pp)
+    {
+        //Si ce n'est pas le dernier point
+        if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
+        {
+            RemoveMultiPath(pdToModify, ist_pp);
+            //Check si ces deux points ont HasManyPath
+            //Si non, comme d'hab
+            //Si oui --> pdToModify.RemoveMultiPath();
+
+
+            //pdToModify.RemoveMultiPath();
+            List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);               //List of PathFragment after the deleted pathpoint
+
+            pdToModify.RemoveFragmentAndNext(ist_pp);                                                       //Remove PathFragment where the pathpoint is + the next PathFragment 
+
+            DestroyLineRenderer(pdToModify.pathLineRenderer);                                               //Destroy LineRenderer
+
+            //Si StartPoint
+            if (pdToModify.startPoint == ist_pp)
+            {
+                instance.pathDataList.Remove(pdToModify);
+            }
+            else
+            {
+                DebugLineR(pdToModify);
+            }
+
+            pdToModify.SafeCheck();                                                                         //Check if the path is Empty and delete it
+
+            CreateCutPathData(pfdSecondPath);                                                             //Create a pathData with the second path
+        }
+        else
+        {
+            RemoveMultiPath(pdToModify, ist_pp);
+            //pdToModify.RemoveMultiPath();
+            pdToModify.RemoveFragmentAndNext(ist_pp);
+            DestroyLineRenderer(pdToModify.pathLineRenderer);
+            DebugLineR(pdToModify);
+        }
+    }
+
+    public static void RemoveMultiPath(PathData pdToModify, IST_PathPoint ist_pp)
+    {
+        List<IST_PathPoint> pointsToCheck = new List<IST_PathPoint>(pdToModify.GetPointNextTo(ist_pp));
+
+        foreach (IST_PathPoint pp in pointsToCheck)
+        {
+            if (HasManyPath(pp))
+            {
+                Debug.Log("tc");
+                pdToModify.RemoveMultiPath(pp);
+            }
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// Return if the point is a SpawnPoint
@@ -364,45 +465,6 @@ public class PathManager : VLY_Singleton<PathManager>
     }
     #endregion
 
-    #region >2 pathFragment
-    /// <summary>
-    /// If the path have more than 2 pathFragment
-    /// </summary>
-    /// <param name="pdToModify"></param>
-    public static void DeletePointWith2MorePathFragment(PathData pdToModify, IST_PathPoint ist_pp)
-    {
-        //Si ce n'est pas le dernier point
-        if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
-        {
-            List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);               //List of PathFragment after the deleted pathpoint
-
-            pdToModify.RemoveFragmentAndNext(ist_pp);                                                       //Remove PathFragment where the pathpoint is + the next PathFragment 
-
-            DestroyLineRenderer(pdToModify.pathLineRenderer);                                               //Destroy LineRenderer
-
-            //Si StartPoint
-            if (pdToModify.startPoint == ist_pp)
-            {
-                instance.pathDataList.Remove(pdToModify);
-            }
-            else
-            {
-                DebugLineR(pdToModify);
-            }
-
-            pdToModify.SafeCheck();                                                                         //Check if the path is Empty and delete it
-
-            CreateCutPathData(pfdSecondPath);                                                             //Create a pathData with the second path
-        }
-        else
-        {
-            pdToModify.RemoveFragmentAndNext(ist_pp);
-            DestroyLineRenderer(pdToModify.pathLineRenderer);
-            DebugLineR(pdToModify);
-        }
-    }
-    #endregion
-
     #endregion
 
     #region PathData
@@ -415,6 +477,7 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void DeleteFullPath(PathData toDelete, IST_PathPoint toIgnore = null)
     {
         List<IST_PathPoint> pointsToDelete = new List<IST_PathPoint>();
+        pathDataToDelete = toDelete;
 
         for (int i = toDelete.pathFragment.Count - 1; i >= 0; i--)
         {
@@ -431,7 +494,10 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for (int j = 0; j < pointsToDelete.Count; j++)
         {
-            pointsToDelete[j].RemoveObject();
+            if (IsPathDataStillExist(toDelete))
+            {
+                pointsToDelete[j].RemoveObject();
+            }
         }
 
         OnDestroyPath?.Invoke(toDelete);
@@ -477,13 +543,14 @@ public class PathManager : VLY_Singleton<PathManager>
             newPathData.startPoint = instance.pathpointList[0];                                                     //Define the starting point of the path
             instance.pathDataList.Add(newPathData);
 
-            //CODE REVIEW : Retirer les appellations debug vu que ce sera utilisé pour autre chose
+            //CODE REVIEW : Retirer les appellations debug vu que ce sera utilisï¿½ pour autre chose
             if (instance.debugMode)                                                                                 //LineRenderer
             {
                 DebugLineR(newPathData);
             }
 
             NodePathProcess.UpdateAllNodes();
+            newPathData.CheckMultiPath();
 
             instance.ResetCurrentData();                                                                            //Data to default
 
@@ -510,7 +577,7 @@ public class PathManager : VLY_Singleton<PathManager>
         newPathData.name = GeneratorManager.GetRandomPathName();                                                //Random Name
         newPathData.color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1f);    //Random Color
 
-        //CODE REVIEW : AddPathFragment pour les nodes à revoir par rapport à la fonction du dessus qui ne l'a pas
+        //CODE REVIEW : AddPathFragment pour les nodes ï¿½ revoir par rapport ï¿½ la fonction du dessus qui ne l'a pas
         newPathData.pathFragment = new List<PathFragmentData>();
         foreach (PathFragmentData pfd in listPathFragment)
         {
@@ -529,6 +596,19 @@ public class PathManager : VLY_Singleton<PathManager>
 
         OnCreatePath?.Invoke(newPathData);
     }
+
+    public static bool IsPathDataStillExist(PathData pathdata)
+    {
+        foreach(PathData pd in GetAllPath)
+        {
+            if(pd == pathdata)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     #endregion
 
     #region DEBUG
@@ -627,7 +707,10 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="lineR"></param>
     public static void DestroyLineRenderer(LineRenderer lineR)
     {
-        Destroy(lineR.gameObject);
+        if (lineR != null)
+        {
+            Destroy(lineR.gameObject);
+        }
     }
 
     /// <summary>
