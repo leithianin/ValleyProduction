@@ -92,6 +92,7 @@ public class ManageMultiPath : MonoBehaviour
 
             if (pfd.startPoint == thisPathPoint)
             {
+                pfd.endPoint.OnDestroyPathPoint += DeleteArrow;
                 newArrow.transform.forward = pfd.path[1] - newArrow.transform.position;
                 newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
             }
@@ -105,41 +106,9 @@ public class ManageMultiPath : MonoBehaviour
         }
     }
 
-    public GameObject SpawnNewTag()
+
+    public void DeleteArrow()
     {
-        return Instantiate(arrowTagRef, prefabSign.transform);
-    }
-
-    public void CheckIfMultiPath(PathData pd)
-    {
-        if(multiPathList.Count > 0)
-        {
-            DeleteArrow(pd);
-        }
-    }
-
-    public void DeleteArrow(PathData pd)
-    {
-        /*List<MultiPathClass> toDeleteList = new List<MultiPathClass>();
-        foreach(MultiPathClass mpc in multiPathList)
-        {
-            if(mpc.pathData == pd)
-            {
-                Destroy(mpc.arrowTag.gameObject);
-                toDeleteList.Add(mpc);
-            }
-        }
-
-        foreach(MultiPathClass mpc in toDeleteList)
-        {
-            multiPathList.Remove(mpc);
-        }
-
-        if (multiPathList.Count < 2)
-        {
-            DesactivateMultiPath();
-            Destroy(multiPathList[0].arrowTag.gameObject);
-            multiPathList.Clear();
-        }*/
+        
     }
 }
