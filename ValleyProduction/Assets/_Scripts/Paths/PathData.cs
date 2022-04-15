@@ -315,13 +315,13 @@ public class PathData
     {
         foreach(IST_PathPoint pp in GetAllPoints())
         {
-            pp.GetManageMultiPath.CheckIfMultiPath(this);
+            //pp.GetManageMultiPath.CheckIfMultiPath(this);
         }
     }
 
     public void RemoveMultiPath(IST_PathPoint pp)
     {
-        pp.GetManageMultiPath.CheckIfMultiPath(this);
+        //pp.GetManageMultiPath.CheckIfMultiPath(this);
     }
     
     #endregion
