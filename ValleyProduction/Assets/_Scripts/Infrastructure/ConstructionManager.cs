@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class ConstructionManager : VLY_Singleton<ConstructionManager>
 {
     private InfrastructureType selectedStructureType = InfrastructureType.None;
+    private InfrastructureData selectedStructureData = null;
 
     public UnityEvent OnSelectPathTool;
     public UnityEvent OnUnselectPathTool;
@@ -137,7 +138,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Input de sélection de l'outil.
     /// </summary>
     /// <param name="newStructureType">L'outil sélectionné.</param>
-    public static void SelectInfrastructureType(InfrastructurePreview newStructureType)
+    public static void SelectInfrastructureType(InfrastructureData newStructureType)
     {
         instance.OnSelectInfrastructureType(newStructureType);
     }
@@ -161,16 +162,17 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Gère le changement d'outil.
     /// </summary>
     /// <param name="newStructureType">L'outil sélectionné.</param>
-    private void OnSelectInfrastructureType(InfrastructurePreview newStructureType)
+    private void OnSelectInfrastructureType(InfrastructureData newStructureType)
     {
-        InfrastructureType lastStructureType = selectedStructureType;
+        InfrastructureData lastStructureData = selectedStructureData;
 
         OnUnselectInfrastructureType();
-        if (newStructureType != null && lastStructureType != newStructureType.RealInfrastructure.StructureType)
+        if (newStructureType != null && lastStructureData != newStructureType)
         {
-            selectedStructureType = newStructureType.RealInfrastructure.StructureType;
+            selectedStructureType = newStructureType.Structure.StructureType;
+            selectedStructureData = newStructureType;
 
-            InfrastructureManager.ChooseInfrastructure(newStructureType);
+            InfrastructureManager.ChooseInfrastructure(newStructureType.Preview);
 
             switch (selectedStructureType)
             {
@@ -199,5 +201,6 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
 
         selectedStructureType = InfrastructureType.None;
+        selectedStructureData = null;
     }
 }

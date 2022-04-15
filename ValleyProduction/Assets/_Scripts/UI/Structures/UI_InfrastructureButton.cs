@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class UI_InfrastructureButton : MonoBehaviour
 {
-    [SerializeField] private InfrastructurePreview structure;
+    [SerializeField] private InfrastructureData structure;
     [SerializeField] private Button button;
 
-    public InfrastructurePreview Structure => structure;
+    public InfrastructureData Structure => structure;
     
     public void Enable()
     {
@@ -17,7 +17,7 @@ public class UI_InfrastructureButton : MonoBehaviour
 
     public void SelectStructure()
     {
-        switch (structure.RealInfrastructure.StructureType)
+        switch (structure.Structure.StructureType)
         {
             case InfrastructureType.Path:
                 if (PathManager.IsOnCreatePath)

@@ -41,22 +41,6 @@ public class UIManager : VLY_Singleton<UIManager>
     private static GameObject gameObjectShown;
     public static Tooltip GetTooltip => instance.tooltip;
 
-    [System.Obsolete]
-    public void SelectStructure(InfrastructurePreview structure)
-    {
-        switch(structure.RealInfrastructure.StructureType)
-        {
-            case InfrastructureType.Path:
-                if (PathManager.IsOnCreatePath)
-                {
-                    PathManager.CreatePathData();
-                }
-                break;
-        }
-
-        ConstructionManager.SelectInfrastructureType(structure);
-    }
-
     #region Interaction/Hide
     public static void InteractWithObject(GameObject touchedObject)
     {

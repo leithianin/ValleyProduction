@@ -14,7 +14,7 @@ public class UI_DataDisplay : MonoBehaviour
         ressourceCounter.text = nb.ToString();
     }
 
-    public void UpdateNbAttractivity(int nb)
+    public void UpdateNbAttractivity(float nb)
     {
         attractivityCounter.text = nb.ToString();
     }
