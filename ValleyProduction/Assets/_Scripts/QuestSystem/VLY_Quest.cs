@@ -6,15 +6,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Quest Quest", menuName = "Quest/Create Quest")]
 public class VLY_Quest : ScriptableObject
 {
-    public QuestObjectiveState state;
-
     private int currentStage;
 
     public string questName;
 
+    public string questDescription;
+
     [SerializeField] private List<QST_ObjectiveStage> stages;
 
     [SerializeField] private List<QST_Reward> rewards;
+
+    [Header("Dev")]
+    public QuestObjectiveState state;
 
     public string QuestName => questName;
 

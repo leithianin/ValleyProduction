@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_SquashStretch_Cairn
-  m_Shader: {fileID: -6465566751694194690, guid: 76f76c353492d4c4094321575739fc53, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -23,11 +23,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: 8dfdb17317c833843b823ee0be4e4730, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - MainTex:
+        m_Texture: {fileID: 2800000, guid: 8dfdb17317c833843b823ee0be4e4730, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - NormalMap:
         m_Texture: {fileID: 2800000, guid: 705ca6ffaf1efbc428cd3fb2b48f490a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 52098b3e5df6ebd488d7f2956bea7ee7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RMA:
         m_Texture: {fileID: 2800000, guid: 52098b3e5df6ebd488d7f2956bea7ee7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -89,13 +101,28 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - AmbientOcclusionIntensity: -2.12
+    - DitherOffset: 0
+    - DitherRange: 100
+    - EmissiveIntensity: 0
+    - NIGHT_MODE: 0
+    - RENDER_HEATMAP: 0
     - Radius: 0.5
+    - SQUASH_ANIM: 0
+    - SetRadius: 1
+    - SetSquashCurve: 0
+    - SetSquashEffect: 0
+    - SetStretchCurve: 0
+    - SetStretchEffect: 0
     - Smoothness: 0
     - Squash: 0
+    - SquashAnim: 0
     - SquashCurve: 0.6
     - SquashEffect: 2
     - StretchCurve: 1.1
     - StretchEffect: 2
+    - WindDensity: 5
+    - WindStrength: 2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -120,9 +147,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _WIND: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - WindDirection: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
