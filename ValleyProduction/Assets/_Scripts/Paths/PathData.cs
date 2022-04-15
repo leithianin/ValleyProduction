@@ -297,6 +297,20 @@ public class PathData
     #endregion
 
     #region MultiPath
+    public void CheckMultiPath()
+    {
+        foreach (IST_PathPoint pp in GetAllPoints())
+        {
+            if(PathManager.HasManyPath(pp))
+            {
+                List<PathFragmentData> pathFragmentList = GetPathFragments(pp);
+                pp.GetManageMultiPath.SetRegisterPathFragment(pathFragmentList);
+            }
+        }
+
+        
+    }
+
     public void RemoveMultiPath()
     {
         foreach(IST_PathPoint pp in GetAllPoints())

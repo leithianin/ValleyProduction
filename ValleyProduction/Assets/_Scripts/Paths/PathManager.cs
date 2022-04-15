@@ -24,9 +24,6 @@ public class PathManager : VLY_Singleton<PathManager>
     //Accesseur current Data
     public static PathData GetCurrentPathData => instance.currentPathData;
 
-    //Current Manage
-    public static ManageMultiPath manageMultiPath;
-
     //Uniquement pour delete un point
     private static List<IST_PathPoint> listAllPathPoints = new List<IST_PathPoint>();
 
@@ -340,7 +337,6 @@ public class PathManager : VLY_Singleton<PathManager>
             //If is the middle point, delete the pathData
             if (pdToModify.pathFragment[1].HasThisStartingPoint(ist_pp) && pdToModify.pathFragment[0].HasThisEndingPoint(ist_pp))
             {
-                Debug.Log("Millieu");
                 //Need to check si un autre point hasManyPath
                 if (HasManyPath(pdToModify.pathFragment[0].startPoint) || HasManyPath(pdToModify.pathFragment[1].endPoint))
                 {
@@ -386,15 +382,7 @@ public class PathManager : VLY_Singleton<PathManager>
         //Si ce n'est pas le dernier point
         if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
         {
-            List<IST_PathPoint> pointsToCheck = new List<IST_PathPoint>(pdToModify.GetPointNextTo(ist_pp));
-            
-            foreach(IST_PathPoint pp in pointsToCheck)
-            {
-                if(HasManyPath(pp))
-                {
-                    pdToModify.RemoveMultiPath(pp);
-                }
-            }
+            RemoveMultiPath(pdToModify, ist_pp);
             //Check si ces deux points ont HasManyPath
             //Si non, comme d'hab
             //Si oui --> pdToModify.RemoveMultiPath();
@@ -423,10 +411,25 @@ public class PathManager : VLY_Singleton<PathManager>
         }
         else
         {
+            RemoveMultiPath(pdToModify, ist_pp);
             //pdToModify.RemoveMultiPath();
             pdToModify.RemoveFragmentAndNext(ist_pp);
             DestroyLineRenderer(pdToModify.pathLineRenderer);
             DebugLineR(pdToModify);
+        }
+    }
+
+    public static void RemoveMultiPath(PathData pdToModify, IST_PathPoint ist_pp)
+    {
+        List<IST_PathPoint> pointsToCheck = new List<IST_PathPoint>(pdToModify.GetPointNextTo(ist_pp));
+
+        foreach (IST_PathPoint pp in pointsToCheck)
+        {
+            if (HasManyPath(pp))
+            {
+                Debug.Log("tc");
+                pdToModify.RemoveMultiPath(pp);
+            }
         }
     }
 
@@ -537,11 +540,7 @@ public class PathManager : VLY_Singleton<PathManager>
             }
 
             NodePathProcess.UpdateAllNodes();
-
-            if (manageMultiPath != null)                                                                            //Besoin de save le pathData pour les panneaux multiPath
-            {
-                manageMultiPath.AddPathDataToList(newPathData);
-            }
+            newPathData.CheckMultiPath();
 
             instance.ResetCurrentData();                                                                            //Data to default
 

@@ -4,39 +4,28 @@ using UnityEngine;
 
 public class ManageMultiPath : MonoBehaviour
 {
-    [SerializeField] private IST_PathPoint pathPoint;
+    [SerializeField] private IST_PathPoint thisPathPoint;
     [SerializeField] private GameObject prefabSign;
     [SerializeField] private GameObject prefabCairn;
     [SerializeField] private GameObject arrowTagRef;
+    [SerializeField] private GameObject pivot;
 
-    private float offset = 0.4f;
+    private float offset = 0.2f;
     private GameObject currentArrow = null;
     private int nbArrow = 0;
 
+    //List des chemins ou y'a un panneau
     private List<MultiPathClass> multiPathList = new List<MultiPathClass>();
 
     public class MultiPathClass
     {
         public GameObject arrowTag;
-        public PathData pathData;
+        public PathFragmentData pathFragmentData;
 
-        public MultiPathClass(GameObject _arrowTag, PathData _pathdata = null)
+        public MultiPathClass(GameObject _arrowTag, PathFragmentData _pathFragmentData = null)
         {
             arrowTag = _arrowTag;
-            pathData = _pathdata;
-        }
-    }
-
-    private void Update()
-    {
-        if (pathPoint == PathManager.previousPathpoint && currentArrow != null)
-        {
-            if(PathCreationManager.navmeshPositionsList.Count > 0)
-            {
-                Vector3 posTar = PathCreationManager.navmeshPositionsList[1];
-                currentArrow.transform.right = posTar - currentArrow.transform.position;
-                currentArrow.transform.eulerAngles = new Vector3(0f, currentArrow.transform.eulerAngles.y, 0f);
-            }
+            pathFragmentData = _pathFragmentData;
         }
     }
 
@@ -47,10 +36,8 @@ public class ManageMultiPath : MonoBehaviour
         {
             prefabCairn.SetActive(false);
             prefabSign.SetActive(true);
-            OrientateTag();
+            OrientateFirstTag();
         }
-
-        TagFollowCurrentPath();
     }
 
     public void DesactivateMultiPath()
@@ -60,63 +47,67 @@ public class ManageMultiPath : MonoBehaviour
         nbArrow = 0;
     }
 
-    //Tag qui follow le chemin entrain d'être crée
-    private void TagFollowCurrentPath()
-    {
-        currentArrow = SpawnNewTag();
-        currentArrow.SetActive(true);
-        currentArrow.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset * nbArrow), arrowTagRef.transform.position.z);
-        multiPathList.Add(new MultiPathClass(currentArrow, null));
-        PathManager.manageMultiPath = this;
-        nbArrow++;
-    }
-
     //Call for the already existed PathData
-    private void OrientateTag()
+    private void OrientateFirstTag()
     {
-        foreach(PathData pd in PathManager.GetAllPath)
+        //Orienter les 2 premiers panneaux 
+        foreach (PathData pd in PathManager.GetAllPath)                                                                     //Pour chaque PathData
         {
-            if(pd.ContainsPoint(pathPoint))
+            List<PathFragmentData> pathFragmentList = new List<PathFragmentData>(pd.GetPathFragments(thisPathPoint));       //Je Get les fragment ou il y'a le pathpoint (La liste est vide si il n'y a pas le point)
+            if(pathFragmentList.Count > 0)
             {
-                RegisterPathData(pd);
+                RegisterPathFragment(pathFragmentList);
             }
         }
     }
 
-    private void RegisterPathData(PathData pd)
+    public void SetRegisterPathFragment(List<PathFragmentData> pfdList)
     {
-        arrowTagRef.transform.position = new Vector3(arrowTagRef.transform.position.x, arrowTagRef.transform.position.y - (offset* nbArrow), arrowTagRef.transform.position.z);
-        
-        foreach(PathFragmentData pfd in pd.pathFragment)
+        RegisterPathFragment(pfdList);
+    }
+
+    /// <summary>
+    /// Spawn ArrowTag and register pathFragment 
+    /// </summary>
+    /// <param name="pfdList"></param>
+    private void RegisterPathFragment(List<PathFragmentData> pfdList)
+    {
+        foreach(MultiPathClass mpc in multiPathList)
         {
-            if(pfd.HasThisStartingPoint(pathPoint))
+            foreach(PathFragmentData pfd in pfdList)
             {
-                GameObject newArrow = Instantiate(arrowTagRef, prefabSign.transform);
-                newArrow.SetActive(true);
-                nbArrow++;
-                newArrow.transform.right = pfd.path[1] - newArrow.transform.position;
-                newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
-                multiPathList.Add(new MultiPathClass(newArrow, pd));
+                if(mpc.pathFragmentData == pfd)
+                {
+                    pfdList.Remove(pfd);
+                }
             }
+        }
+
+        foreach (PathFragmentData pfd in pfdList)
+        {
+            GameObject newArrow = Instantiate(arrowTagRef, prefabSign.transform);
+            newArrow.SetActive(true);
+            newArrow.transform.position = new Vector3(pivot.transform.position.x, pivot.transform.position.y - (offset * nbArrow), pivot.transform.position.z);
+            nbArrow++;
+
+            if (pfd.startPoint == thisPathPoint)
+            {
+                newArrow.transform.forward = pfd.path[1] - newArrow.transform.position;
+                newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
+            }
+            else
+            {
+                newArrow.transform.forward = pfd.path[0] - newArrow.transform.position;
+                newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
+            }
+
+            multiPathList.Add(new MultiPathClass(newArrow, pfd));
         }
     }
 
     public GameObject SpawnNewTag()
     {
         return Instantiate(arrowTagRef, prefabSign.transform);
-    }
-
-    public void AddPathDataToList(PathData pd)
-    {
-        foreach(MultiPathClass mpc in multiPathList)
-        {
-            if(mpc.pathData == null)
-            {
-                mpc.pathData = pd;
-                PathManager.manageMultiPath = null;
-                return;
-            }
-        }
     }
 
     public void CheckIfMultiPath(PathData pd)
@@ -129,7 +120,7 @@ public class ManageMultiPath : MonoBehaviour
 
     public void DeleteArrow(PathData pd)
     {
-        List<MultiPathClass> toDeleteList = new List<MultiPathClass>();
+        /*List<MultiPathClass> toDeleteList = new List<MultiPathClass>();
         foreach(MultiPathClass mpc in multiPathList)
         {
             if(mpc.pathData == pd)
@@ -149,6 +140,6 @@ public class ManageMultiPath : MonoBehaviour
             DesactivateMultiPath();
             Destroy(multiPathList[0].arrowTag.gameObject);
             multiPathList.Clear();
-        }
+        }*/
     }
 }
