@@ -988,6 +988,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2676348955042943258}
+  - component: {fileID: 1734652127545176590}
+  - component: {fileID: 1732878147797509731}
   m_Layer: 0
   m_Name: HeatmapManager
   m_TagString: Untagged
@@ -1009,6 +1011,48 @@ Transform:
   m_Father: {fileID: 5209237266425241728}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1734652127545176590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8716307124693702640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d5a3ebaa59e1d4fae06c5ca887d241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compute: {fileID: 7200000, guid: 079555009d8c691499847169950547cb, type: 3}
+  mapSize: 1000
+  BlendDistance: 50
+  MaskColor0: {r: 1, g: 1, b: 1, a: 1}
+  MaskColor1: {r: 1, g: 0.9490197, b: 0.9490197, a: 1}
+  MaskColor2: {r: 1, g: 0.93725497, b: 0.93725497, a: 1}
+  MaskColor3: {r: 1, g: 0.8352942, b: 0.8352942, a: 1}
+  MaskColor4: {r: 1, g: 0.7019608, b: 0.7019608, a: 1}
+  MaskColor5: {r: 1, g: 0.5529412, b: 0.5529412, a: 1}
+  MaskColor6: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
+  MaskColor7: {r: 0.9333334, g: 0.20000002, b: 0.20000002, a: 1}
+  MaskColor8: {r: 0.75294125, g: 0, b: 0, a: 1}
+  MaskColor9: {r: 0.5647059, g: 0, b: 0, a: 1}
+  MaskColor10: {r: 0.35686275, g: 0, b: 0, a: 1}
+  maskTexture: {fileID: 0}
+--- !u!114 &1732878147797509731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8716307124693702640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30cde3480beb79e4fbcd5224ccaa7948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Materials:
+  - {fileID: 2100000, guid: e27b99db570131f42a810270710b0e8e, type: 2}
+  msk: {fileID: 1734652127545176590}
 --- !u!1001 &159400343555133642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1178,6 +1222,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+--- !u!4 &1302873166448121054 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+  m_PrefabInstance: {fileID: 159400343555133642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &3631207456372332364 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3482107376943712134, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+  m_PrefabInstance: {fileID: 159400343555133642}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &592276205304232956 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 724654950491024182, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
@@ -1189,13 +1243,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d925cda3dc1c3c4e8821fa9efa32f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!20 &3631207456372332364 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 3482107376943712134, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
-  m_PrefabInstance: {fileID: 159400343555133642}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1302873166448121054 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
-  m_PrefabInstance: {fileID: 159400343555133642}
-  m_PrefabAsset: {fileID: 0}
