@@ -40,6 +40,7 @@ public class CameraBehaviourSpherical : MonoBehaviour
 
     void SetCameraForward()
     {
-        transform.forward = new Vector3(originLookAtTarget.position.x - transform.position.x, originLookAtTarget.position.y - transform.position.y, originLookAtTarget.position.z - transform.position.z);
+        //transform.forward = new Vector3(originLookAtTarget.position.x - transform.position.x, originLookAtTarget.position.y - transform.position.y, originLookAtTarget.position.z - transform.position.z);
+        transform.LookAt(originLookAtTarget.position);
     }
 }

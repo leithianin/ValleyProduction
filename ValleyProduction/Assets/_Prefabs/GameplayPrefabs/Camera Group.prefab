@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 724654950491024179}
   - component: {fileID: 724654950491024182}
   - component: {fileID: 518034171}
+  - component: {fileID: 2545606291852015140}
   - component: {fileID: 724654950491024176}
   m_Layer: 0
   m_Name: Target
@@ -359,6 +360,33 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fadeDuration: 3
+--- !u!114 &2545606291852015140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724654950491024183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dfb2dd9ea0c3e34ba65d8dc4666997e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 3482107376943712134}
+  playerCameraTransform: {fileID: 0}
+  sphericalTransform: {fileID: 724654950491024179}
+  postProcessManager: {fileID: 5207877439716673410}
+  ui: {fileID: 0}
+  active: 0
+  focalLength: 20
+  verticalOffset: 0
+  roll: 0
+  profile: 0
+  depthOfField: 0
+  focusDistance: 0
+  exposure: 0
+  constrasts: 0
+  colorGradingIntensity: 0
 --- !u!33 &724654950491024176
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -536,6 +564,8 @@ MonoBehaviour:
   activationDOFDistance: 7
   standartDOF: 3000
   closeViewDOF: 30
+  photoProfiles:
+  - {fileID: 11400000, guid: 9eb939062816c9242a02afb3b69124b3, type: 2}
 --- !u!114 &6462868851297623713
 MonoBehaviour:
   m_ObjectHideFlags: 0

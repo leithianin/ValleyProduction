@@ -17,7 +17,8 @@ public class CameraBehaviourInEditor : MonoBehaviour
     void UpdateCameraPositionInEditor()
     {
         transform.position = cameraTarget.position;
-        transform.forward = cameraTarget.forward;
+        transform.forward = new Vector3(cameraTarget.position.x - transform.position.x, cameraTarget.position.y - transform.position.y, cameraTarget.position.z - transform.position.z);
+        //transform.LookAt(cameraTarget.position);
     }
 
 }

@@ -19,6 +19,9 @@ public class PostProcessManager : MonoBehaviour
     [SerializeField] private float closeViewDOF;
     private DepthOfField dof = default;
 
+    [Header("Profiles")]
+    [SerializeField] private VolumeProfile[] photoProfiles = default;
+
     private void Awake()
     {
         GetPostProcessDOF();
@@ -29,6 +32,21 @@ public class PostProcessManager : MonoBehaviour
     void Update()
     {
         ChangeDOF();
+    }
+
+    public VolumeProfile GetPhotoProfile(int index)
+    {
+        return photoProfiles[index];
+    }
+
+    public bool CheckIfProfileIsSet()
+    {
+        return volume;
+    }
+
+    public void SetProfile(VolumeProfile profile)
+    {
+        volume.profile = profile;
     }
 
     void GetPostProcessDOF()
