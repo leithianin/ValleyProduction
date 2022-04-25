@@ -10,7 +10,8 @@ public enum FeatureLocker
     Modification,
     Destruction,
     Ressource,
-    Satisfaction
+    Satisfaction,
+    BlockAllKeyboardInput
 }
 
 [CreateAssetMenu(fileName ="Game Context", menuName = "Create Game Context")]

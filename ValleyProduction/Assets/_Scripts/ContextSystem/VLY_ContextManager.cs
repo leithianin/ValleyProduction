@@ -64,6 +64,9 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
                 case FeatureLocker.Satisfaction:
                     AttractivityManager.EnableFeature(isEnable);
                     break;
+                case FeatureLocker.BlockAllKeyboardInput:
+                    PlayerInputManager.EnableOrDisableKeyboard(isEnable);
+                    break;
             }
         }
     }

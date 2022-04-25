@@ -14,6 +14,7 @@ public class UI_RoadInformation : MonoBehaviour
     [SerializeField] private Image gaugeStamina;
 
     [SerializeField] private TMP_InputField inputField;
+    public static bool isEditName = false;
 
     public UI_RoadInformation ShowInfoRoad(PathData pd)
     {
@@ -44,10 +45,18 @@ public class UI_RoadInformation : MonoBehaviour
     #region InputField
     public void InputFieldOnEnd(string str)
     {
-        pathData.name = str;
-        UpdateInfoRoad();
+        if (!(str == string.Empty))
+        {
+            pathData.name = str;
+            UpdateInfoRoad();
+        }
+
         title.gameObject.SetActive(true);
         inputField.gameObject.SetActive(false);
+        inputField.text = string.Empty;
+        VLY_ContextManager.ChangeContext(0);
+
+        TimerManager.CreateRealTimer(0.1f, () => isEditName = false);
     }
 
     /// <summary>
@@ -55,11 +64,13 @@ public class UI_RoadInformation : MonoBehaviour
     /// </summary>
     public void InputFieldOnStart()
     {
+        //Désactiver Input Keyboard
         title.gameObject.SetActive(false);
         inputField.gameObject.SetActive(true);
         inputField.ActivateInputField();
+        VLY_ContextManager.ChangeContext(2);
+        isEditName = true;
     }
-
 
     #endregion
 }

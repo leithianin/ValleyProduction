@@ -144,7 +144,6 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             if (pd.ContainsSeveralPoints(pathPoint))
             {
-                Debug.Log("true");
                 return true;
             }
         }
