@@ -19,6 +19,8 @@ public abstract class InteractionActions : MonoBehaviour
         }
     }
 
+    private bool isSecondaryAction = false;
+
     protected List<SequenceCallback> askedCallbacks = new List<SequenceCallback>();
 
     protected abstract void OnPlayAction(CPN_InteractionHandler caller);
@@ -27,11 +29,16 @@ public abstract class InteractionActions : MonoBehaviour
 
     protected abstract void OnInteruptAction(CPN_InteractionHandler caller);
 
-    public void PlayAction(CPN_InteractionHandler caller, Action endCallback, Action interuptCallback)
+    public void PlayAction(CPN_InteractionHandler caller, Action endCallback, Action interuptCallback, bool secondaryAction)
     {
         if (caller != null)
         {
-            askedCallbacks.Add(new SequenceCallback(endCallback, interuptCallback, caller));
+            isSecondaryAction = secondaryAction;
+
+            if (!secondaryAction)
+            {
+                askedCallbacks.Add(new SequenceCallback(endCallback, interuptCallback, caller));
+            }
 
             OnPlayAction(caller);
         }
@@ -43,22 +50,25 @@ public abstract class InteractionActions : MonoBehaviour
         {
             OnEndAction(caller);
 
-            List<SequenceCallback> callbacksToTry = new List<SequenceCallback>(askedCallbacks);
+            if(!isSecondaryAction)
+            { 
+                List<SequenceCallback> callbacksToTry = new List<SequenceCallback>(askedCallbacks);
 
-            for (int i = 0; i < callbacksToTry.Count; i++)
-            {
-                if (callbacksToTry[i].caller == caller)
+                for (int i = 0; i < callbacksToTry.Count; i++)
                 {
-                    callbacksToTry[i].endCallback?.Invoke();
-                    callbacksToTry[i].endCallback = null;
-
-                    if (askedCallbacks.Count > i)
+                    if (callbacksToTry[i].caller == caller)
                     {
-                        askedCallbacks.RemoveAt(i);
-                    }
+                        callbacksToTry[i].endCallback?.Invoke();
+                        callbacksToTry[i].endCallback = null;
 
-                    callbacksToTry.RemoveAt(i);
-                    i--;
+                        if (askedCallbacks.Count > i)
+                        {
+                            askedCallbacks.RemoveAt(i);
+                        }
+
+                        callbacksToTry.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
         }
@@ -68,17 +78,20 @@ public abstract class InteractionActions : MonoBehaviour
     {
         OnInteruptAction(caller);
 
-        for (int i = 0; i < askedCallbacks.Count; i++)
+        if (!isSecondaryAction)
         {
-            if (askedCallbacks[i].caller == caller)
+            for (int i = 0; i < askedCallbacks.Count; i++)
             {
-                askedCallbacks[i].interuptCallback?.Invoke();
-                askedCallbacks[i].interuptCallback = null;
+                if (askedCallbacks[i].caller == caller)
+                {
+                    askedCallbacks[i].interuptCallback?.Invoke();
+                    askedCallbacks[i].interuptCallback = null;
 
-                askedCallbacks[i].endCallback = null;
+                    askedCallbacks[i].endCallback = null;
 
-                askedCallbacks.RemoveAt(i);
-                i--;
+                    askedCallbacks.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }
