@@ -79,6 +79,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
     /// <returns>Return true if the player can place the construction.</returns>
     public bool CanPlaceObject(Vector3 position)
     {
+        Debug.Log("bite");
         bool toReturn = true;
 
         //position = new Vector3(position.x, 0, position.z);
