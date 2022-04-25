@@ -319,7 +319,7 @@ public class PathData
     {
         foreach (IST_PathPoint pp in GetAllPoints())
         {
-            if(PathManager.HasManyPath(pp))
+            if(PathManager.HasManyDirection(pp))
             {
                 List<PathFragmentData> pathFragmentList = GetPathFragments(pp);
                 pp.GetManageMultiPath.SetRegisterPathFragment(pathFragmentList);
