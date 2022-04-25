@@ -533,7 +533,7 @@ public class PathManager : VLY_Singleton<PathManager>
             PathData newPathData = new PathData();
 
             newPathData.name = GeneratorManager.GetRandomPathName();                                                //Random Name
-            newPathData.color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1f);    //Random Color
+            newPathData.color = Color.grey;// new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1f);    //Random Color
 
             newPathData.pathFragment = new List<PathFragmentData>(instance.pathFragmentDataList);                   //List of created pathFragment
 
@@ -572,7 +572,7 @@ public class PathManager : VLY_Singleton<PathManager>
         PathData newPathData = new PathData();
 
         newPathData.name = GeneratorManager.GetRandomPathName();                                                //Random Name
-        newPathData.color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1f);    //Random Color
+        newPathData.color = Color.grey; //new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1f);    //Random Color
 
         //CODE REVIEW : AddPathFragment pour les nodes � revoir par rapport � la fonction du dessus qui ne l'a pas
         newPathData.pathFragment = new List<PathFragmentData>();

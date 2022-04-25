@@ -115,26 +115,29 @@ public class MaskRenderer : MonoBehaviour
     {
         bufferElements.Clear();
 
-        foreach (Entity entity in entities)
+        if (entities.Count > 0)
         {
-            EntityBufferElement element = new EntityBufferElement
+            foreach (Entity entity in entities)
             {
-                PositionX = entity.transform.position.x,
-                PositionY = entity.transform.position.z,
-                Range = entity.Range,
-                Noise = entity.Noise
-            };
-            bufferElements.Add(element);
+                EntityBufferElement element = new EntityBufferElement
+                {
+                    PositionX = entity.transform.position.x,
+                    PositionY = entity.transform.position.z,
+                    Range = entity.Range,
+                    Noise = entity.Noise
+                };
+                bufferElements.Add(element);
+            }
+
+            entityBuffer?.Release();
+            entityBuffer = new ComputeBuffer(bufferElements.Count * 4, sizeof(float));
+
+            entityBuffer.SetData(bufferElements);
+            compute.SetBuffer(0, entityBufferId, entityBuffer);
+
+            compute.SetInt(entityCountId, bufferElements.Count);
+
+            compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
         }
-
-        entityBuffer?.Release();
-        entityBuffer = new ComputeBuffer(bufferElements.Count * 4, sizeof(float));
-
-        entityBuffer.SetData(bufferElements);
-        compute.SetBuffer(0, entityBufferId, entityBuffer);
-
-        compute.SetInt(entityCountId, bufferElements.Count);
-
-        compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
     }
 }
