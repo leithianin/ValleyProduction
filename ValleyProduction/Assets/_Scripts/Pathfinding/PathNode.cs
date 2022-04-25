@@ -11,6 +11,8 @@ public class PathNode : MonoBehaviour
     private bool isBeingUpdated;
     private bool isBeingDeleted;
 
+    [SerializeField] private bool isOpen = true;
+
     public Action<PathNode> OnUpdateNode;
     public Action<PathNode> OnDeleteNode;
 
@@ -19,6 +21,8 @@ public class PathNode : MonoBehaviour
     public bool IsBeingUpdated => isBeingUpdated;
 
     public bool IsBeingDeleted => isBeingDeleted;
+
+    public bool IsOpen => isOpen;
 
     public void ResetUpdateState()
     {
@@ -277,6 +281,15 @@ public class PathNode : MonoBehaviour
         return null;
     }
 
+    public void ClosePath()
+    {
+        isOpen = false;
+    }
+
+    public void OpenPath()
+    {
+        isOpen = true;
+    }
 
     #endregion
 
@@ -331,13 +344,17 @@ public class PathNode : MonoBehaviour
 
         float attractivityScore = 0;
 
+        bool fragmentOpen = true;
+
         if (fragmentToCalculate.startPoint.Node != this)
         {
             dataToCheck = fragmentToCalculate.startPoint.Node.GetDataForLandmarkType(landmarkWanted);
+            fragmentOpen = fragmentToCalculate.startPoint.Node.IsOpen;
         }
         else
         {
             dataToCheck = fragmentToCalculate.endPoint.Node.GetDataForLandmarkType(landmarkWanted);
+            fragmentOpen = fragmentToCalculate.endPoint.Node.IsOpen;
         }
 
         if(dataToCheck != null)
@@ -362,7 +379,14 @@ public class PathNode : MonoBehaviour
             attractivityScore = 0;
         }
 
-        return attractivityScore + distanceScore;
+        if (fragmentOpen)
+        {
+            return attractivityScore + distanceScore;
+        }
+        else
+        {
+            return -5f;
+        }
     }
 
     #endregion
