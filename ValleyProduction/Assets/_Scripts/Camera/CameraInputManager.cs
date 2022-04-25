@@ -81,19 +81,23 @@ public class CameraInputManager : MonoBehaviour
     {
         //Move Camera functions
         MoveCameraOriginWithEdgeScrolling();
-        MoveCameraOriginWithKeyboard();
         MoveCameraOriginWithMouseDrag();
 
         //Zoom in-out function
         SetDistanceToOrigin();
 
         //Rotate Camera functions
-        RotateCameraWithKeyboard();
         RotateCameraWithScrollWheel();
 
         //Handle Cinematic Mode
         StopCinematicMode();
-        LaunchCinematicMode();
+
+        if (PlayerInputManager.isKeyboardEnable)
+        {
+            MoveCameraOriginWithKeyboard();
+            RotateCameraWithKeyboard();
+            LaunchCinematicMode();
+        }
     }
 
     void MoveCameraOriginWithKeyboard()

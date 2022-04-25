@@ -13,6 +13,9 @@ public class UI_RoadInformation : MonoBehaviour
     [SerializeField] private Image colorRoad;
     [SerializeField] private Image gaugeStamina;
 
+    [SerializeField] private TMP_InputField inputField;
+    public static bool isEditName = false;
+
     public UI_RoadInformation ShowInfoRoad(PathData pd)
     {
         pathData = pd;
@@ -25,10 +28,10 @@ public class UI_RoadInformation : MonoBehaviour
 
     public void UpdateInfoRoad()
     {
-        title.text      = pathData.name ;
+        title.text = pathData.name;
         colorRoad.color = pathData.color;
 
-        stamina.text    = (1).ToString();                                       //A FAIRE : Valeur de stamina du chemin
+        stamina.text = (1).ToString();                                       //A FAIRE : Valeur de stamina du chemin
         gaugeStamina.fillAmount = 1f;                                           //A FAIRE : Valeur de stamina du chemin
     }
 
@@ -38,4 +41,36 @@ public class UI_RoadInformation : MonoBehaviour
         PathManager.DeleteFullPath(pathData);
         UIManager.HideShownGameObject();
     }
+
+    #region InputField
+    public void InputFieldOnEnd(string str)
+    {
+        if (!(str == string.Empty))
+        {
+            pathData.name = str;
+            UpdateInfoRoad();
+        }
+
+        title.gameObject.SetActive(true);
+        inputField.gameObject.SetActive(false);
+        inputField.text = string.Empty;
+        VLY_ContextManager.ChangeContext(0);
+
+        TimerManager.CreateRealTimer(0.1f, () => isEditName = false);
+    }
+
+    /// <summary>
+    /// Click on Edit Path Name
+    /// </summary>
+    public void InputFieldOnStart()
+    {
+        //Désactiver Input Keyboard
+        title.gameObject.SetActive(false);
+        inputField.gameObject.SetActive(true);
+        inputField.ActivateInputField();
+        VLY_ContextManager.ChangeContext(2);
+        isEditName = true;
+    }
+
+    #endregion
 }

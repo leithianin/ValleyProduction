@@ -34,6 +34,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public Action<Vector2> OnKeyMoveAction;
     public static UnityEvent<Vector2> GetOnKeyMove => instance.OnKeyMove;
     private Vector2 lastKeyDirection;
+    public static bool isKeyboardEnable = true;
 
     [SerializeField] private UnityEvent<Vector2> OnMouseMove;
 
@@ -128,41 +129,46 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
         OnPolar?.Invoke(Input.GetAxis("Polar"));
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        //CODE REVIEW : Plusieurs bool ou un seul pour disable le Context ?
+        if (isKeyboardEnable)
         {
-            OnKeyReturn?.Invoke();
-        }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                OnKeyReturn?.Invoke();
+            }
 
-        if(Input.GetKeyDown(KeyCode.Delete))
-        {
-            OnKeyDelete?.Invoke();
-        }
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                OnKeyDelete?.Invoke();
+            }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            OnKeyEscape?.Invoke();
-        }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnKeyEscape?.Invoke();
+            }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            OnKeyLeftShift?.Invoke(true);
-        }
-        else if(Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            OnKeyLeftShift?.Invoke(false);
-        }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                OnKeyLeftShift?.Invoke(true);
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                OnKeyLeftShift?.Invoke(false);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            VLY_Time.SetTimeScale(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            VLY_Time.SetTimeScale(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            VLY_Time.SetTimeScale(3);
+            //CODE REVIEW : Faire des events
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                VLY_Time.SetTimeScale(1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                VLY_Time.SetTimeScale(2);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                VLY_Time.SetTimeScale(3);
+            }
         }
 
         ResetClicHandler();
@@ -279,6 +285,18 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         }
 
         return hit;
+    }
+
+    public static void EnableOrDisableKeyboard(bool isEnable)
+    {
+        if(isEnable)
+        {
+            isKeyboardEnable = true;
+        }
+        else
+        {
+            isKeyboardEnable = false;
+        }
     }
 
     [Obsolete]
