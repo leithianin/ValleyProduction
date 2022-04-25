@@ -11,7 +11,14 @@ public class InteractionSequence : InteractionActions
         public CPN_InteractionHandler caller;
     }
 
-    [SerializeField] private List<InteractionActions> sequence;
+    [Serializable]
+    private class CompleteSequenceAction
+    {
+        public InteractionActions mainAction;
+        public List<InteractionActions> secondaryActions;
+    }
+
+    [SerializeField] private List<CompleteSequenceAction> sequence;
 
     private List<SequenceHandler> sequenceUser = new List<SequenceHandler>();
 
@@ -65,7 +72,12 @@ public class InteractionSequence : InteractionActions
                 }
                 else
                 {
-                    sequence[sequenceUser[i].currentSequenceIndex].PlayAction(caller, () => PlayNextStep(caller), null);
+                    sequence[sequenceUser[i].currentSequenceIndex].mainAction.PlayAction(caller, () => PlayNextStep(caller), null, false);
+
+                    for(int j = 0; j < sequence[sequenceUser[i].currentSequenceIndex].secondaryActions.Count; j++)
+                    {
+                        sequence[sequenceUser[i].currentSequenceIndex].secondaryActions[j].PlayAction(caller, () => PlayNextStep(caller), null, true);
+                    }
                 }
                 break;
             }
@@ -80,7 +92,13 @@ public class InteractionSequence : InteractionActions
             {
                 if (sequenceUser[l].currentSequenceIndex >= 0)
                 {
-                    sequence[sequenceUser[l].currentSequenceIndex].InteruptAction(caller);
+                    sequence[sequenceUser[l].currentSequenceIndex].mainAction.InteruptAction(caller);
+
+                    for (int j = 0; j < sequence[sequenceUser[l].currentSequenceIndex].secondaryActions.Count; j++)
+                    {
+                        sequence[sequenceUser[l].currentSequenceIndex].secondaryActions[j].InteruptAction(caller);
+                    }
+
                     sequenceUser.RemoveAt(l);
                     l--;
                 }

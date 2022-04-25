@@ -61,7 +61,7 @@ public class InteractionSpot : MonoBehaviour
         PlayOnInteractionStart?.Invoke(interacter);
         if (interactionAction != null)
         {
-            interactionAction.PlayAction(interacter, () => EndInteraction(interacter), () => EndInteraction(interacter));
+            interactionAction.PlayAction(interacter, () => EndInteraction(interacter), () => EndInteraction(interacter), false);
         }
         else
         {
