@@ -11,4 +11,14 @@ public class NodePathData
     public PathNode parent;
 
     public bool linkedToLandmark;
+
+    public NodePathData()
+    {
+
+    }
+
+    public NodePathData(LandmarkType nLandmark)
+    {
+        landmark = nLandmark;
+    }
 }

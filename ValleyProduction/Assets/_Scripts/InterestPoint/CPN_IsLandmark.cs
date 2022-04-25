@@ -9,6 +9,8 @@ public enum LandmarkType
     Spawn,
     Landmark1,
     Landmark2,
+    Landmark4,
+    Landmark5,
     Landmark3
 }
 

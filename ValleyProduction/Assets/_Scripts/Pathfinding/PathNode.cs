@@ -59,6 +59,17 @@ public class PathNode : MonoBehaviour
     {
         Collider[] colliderTab = Physics.OverlapSphere(transform.position, 0.5f);
 
+        dataByLandmark = new List<NodePathData>();
+        foreach (LandmarkType landmark in (LandmarkType[])Enum.GetValues(typeof(LandmarkType)))
+        {
+            if (landmark == LandmarkType.None)
+            {
+                continue;
+            }
+
+            dataByLandmark.Add(new NodePathData(landmark));
+        }
+
         foreach (Collider c in colliderTab)
         {
             CPN_IsLandmark foundInterestPoint = c.gameObject.GetComponent<CPN_IsLandmark>();

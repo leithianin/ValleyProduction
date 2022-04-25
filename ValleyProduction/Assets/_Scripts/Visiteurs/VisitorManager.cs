@@ -80,7 +80,21 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 else { visitorType = ChooseVisitorType(); }
 
                 Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
-                IST_PathPoint wantedSpawn = SearchSpawnPoint(visitorType);
+                IST_PathPoint wantedSpawn = null;
+
+                for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
+                {
+                    wantedSpawn = SearchSpawnPoint(visitorType.LandmarksWanted[i]);
+
+                    if(wantedSpawn != null)
+                    {
+                        break;
+                    }
+                    else if(i == visitorType.LandmarksWanted.Count - 1)
+                    {
+                        wantedSpawn = SearchSpawnPointWithoutLandmark();
+                    }
+                }
 
                 if (wantedSpawn != null)
                 {
@@ -154,35 +168,39 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
 
-    private IST_PathPoint SearchSpawnPoint(VisitorScriptable visitorType)
+    private IST_PathPoint SearchSpawnPoint(LandmarkType landmarkType)
     {
         List<IST_PathPoint> possiblePathpoints = new List<IST_PathPoint>();
         List<IST_PathPoint> allSpawns = new List<IST_PathPoint>(PathManager.SpawnPoints);
 
-        for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
+        for (int j = 0; j < allSpawns.Count; j++)
         {
-            for (int j = 0; j < allSpawns.Count; j++)
+            if (allSpawns[j].Node.HasValidPathForLandmark(landmarkType))
             {
-                if (allSpawns[j].Node.HasValidPathForLandmark(visitorType.LandmarksWanted[i]))
-                {
-                    possiblePathpoints.Add(allSpawns[j]);
-                }
-            }
-
-            if(possiblePathpoints.Count > 0)
-            {
-                break;
+                possiblePathpoints.Add(allSpawns[j]);
             }
         }
 
-        if(possiblePathpoints.Count <= 0)
+        if (possiblePathpoints.Count > 0)
         {
-            for (int j = 0; j < allSpawns.Count; j++)
+            return possiblePathpoints[UnityEngine.Random.Range(0, possiblePathpoints.Count)];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private IST_PathPoint SearchSpawnPointWithoutLandmark()
+    {
+        List<IST_PathPoint> possiblePathpoints = new List<IST_PathPoint>();
+        List<IST_PathPoint> allSpawns = new List<IST_PathPoint>(PathManager.SpawnPoints);
+
+        for (int j = 0; j < allSpawns.Count; j++)
+        {
+            if (allSpawns[j].Node.GetDataForLandmarkType(LandmarkType.Spawn).linkedToLandmark == true && allSpawns[j].Node.HasNeighboursLinkedToSpawn())
             {
-                if (allSpawns[j].Node.GetDataForLandmarkType(LandmarkType.Spawn).linkedToLandmark == true && allSpawns[j].Node.HasNeighboursLinkedToSpawn())
-                {
-                    possiblePathpoints.Add(allSpawns[j]);
-                }
+                possiblePathpoints.Add(allSpawns[j]);
             }
         }
 
