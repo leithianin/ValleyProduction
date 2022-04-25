@@ -240,13 +240,16 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     possibleObjectives.Add(landmarks[k]);
                 }
             }
-
-            if(possibleObjectives.Count > 0)
-            {
-                return possibleObjectives[UnityEngine.Random.Range(0, possibleObjectives.Count)];
-            }
         }
-        return null;
+
+        if (possibleObjectives.Count > 0)
+        {
+            return possibleObjectives[UnityEngine.Random.Range(0, possibleObjectives.Count)];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private void SetType(VisitorBehavior visitorBehav)
