@@ -99,7 +99,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 if (wantedSpawn != null)
                 {
 
-                    LandmarkType visitorObjective = SearchObjective(visitorType, wantedSpawn.Node);
+                    CPN_IsLandmark visitorObjective = SearchObjective(visitorType, wantedSpawn.Node);
 
                     Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);
 
@@ -175,9 +175,14 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         for (int j = 0; j < allSpawns.Count; j++)
         {
-            if (allSpawns[j].Node.HasValidPathForLandmark(landmarkType))
+            List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(landmarkType);
+
+            for (int k = 0; k < landmarks.Count; k++)
             {
-                possiblePathpoints.Add(allSpawns[j]);
+                if (allSpawns[j].Node.HasValidPathForLandmark(landmarks[k]))
+                {
+                    possiblePathpoints.Add(allSpawns[j]);
+                }
             }
         }
 
@@ -198,9 +203,14 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
         for (int j = 0; j < allSpawns.Count; j++)
         {
-            if (allSpawns[j].Node.GetDataForLandmarkType(LandmarkType.Spawn).linkedToLandmark == true && allSpawns[j].Node.HasNeighboursLinkedToSpawn())
+            List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(LandmarkType.Spawn);
+
+            for (int k = 0; k < landmarks.Count; k++)
             {
-                possiblePathpoints.Add(allSpawns[j]);
+                if (allSpawns[j].Node.GetDataForLandmarkType(landmarks[k]).linkedToLandmark == true && allSpawns[j].Node.HasNeighboursLinkedToSpawn())
+                {
+                    possiblePathpoints.Add(allSpawns[j]);
+                }
             }
         }
 
@@ -214,16 +224,29 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
 
-    private LandmarkType SearchObjective(VisitorScriptable visitorType, PathNode spawnPoint)
+    private CPN_IsLandmark SearchObjective(VisitorScriptable visitorType, PathNode spawnPoint)
     {
+        List<CPN_IsLandmark> possibleObjectives = new List<CPN_IsLandmark>();
+
         for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
         {
-            if(spawnPoint.HasValidPathForLandmark(visitorType.LandmarksWanted[i]))
+            //Faire le tour de tous les IsLandmark de chaque type voulut par le visiteur
+            List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(visitorType.LandmarksWanted[i]);
+
+            for (int k = 0; k < landmarks.Count; k++)
             {
-                return visitorType.LandmarksWanted[i];
+                if (spawnPoint.HasValidPathForLandmark(landmarks[k]))
+                {
+                    possibleObjectives.Add(landmarks[k]);
+                }
+            }
+
+            if(possibleObjectives.Count > 0)
+            {
+                return possibleObjectives[UnityEngine.Random.Range(0, possibleObjectives.Count)];
             }
         }
-        return LandmarkType.None;
+        return null;
     }
 
     private void SetType(VisitorBehavior visitorBehav)

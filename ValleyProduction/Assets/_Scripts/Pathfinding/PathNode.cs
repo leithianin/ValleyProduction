@@ -60,13 +60,8 @@ public class PathNode : MonoBehaviour
         Collider[] colliderTab = Physics.OverlapSphere(transform.position, 0.5f);
 
         dataByLandmark = new List<NodePathData>();
-        foreach (LandmarkType landmark in (LandmarkType[])Enum.GetValues(typeof(LandmarkType)))
+        foreach (CPN_IsLandmark landmark in VLY_LandmarkManager.AllLandmarks)
         {
-            if (landmark == LandmarkType.None)
-            {
-                continue;
-            }
-
             dataByLandmark.Add(new NodePathData(landmark));
         }
 
@@ -77,7 +72,7 @@ public class PathNode : MonoBehaviour
             {
                 for (int i = 0; i < dataByLandmark.Count; i++)
                 {
-                    if (foundInterestPoint.Type == dataByLandmark[i].landmark)
+                    if (foundInterestPoint == dataByLandmark[i].landmark)
                     {
                         foundInterestPoint.AddPointToLandmark(this);
                         dataByLandmark[i].distanceFromLandmark = 0;
@@ -96,7 +91,7 @@ public class PathNode : MonoBehaviour
         ResetNodeData();
     }
 
-    public bool UpdateSelfData(LandmarkType wantedLandmark)
+    public bool UpdateSelfData(CPN_IsLandmark wantedLandmark)
     {
         bool toReturn = false;
 
@@ -190,7 +185,7 @@ public class PathNode : MonoBehaviour
         return GetDataLandmarkWithParent(parentToCheck).Count > 0;
     }
 
-    public LandmarkType GetLandmarkNextTo()
+    public CPN_IsLandmark GetLandmarkNextTo()
     {
         for(int i = 0; i < dataByLandmark.Count; i++)
         {
@@ -200,7 +195,7 @@ public class PathNode : MonoBehaviour
             }
         }
 
-        return LandmarkType.None;
+        return null;
     }
 
     private List<NodePathData> GetDataLandmarkWithParent(PathNode parentToSearch)
@@ -255,7 +250,7 @@ public class PathNode : MonoBehaviour
         return false;
     }
 
-    public bool IsNextToLandmark(LandmarkType landmarkToSearch)
+    public bool IsNextToLandmark(CPN_IsLandmark landmarkToSearch)
     {
         NodePathData dataToCheck = GetDataForLandmarkType(landmarkToSearch);
         if (dataToCheck.linkedToLandmark)
@@ -265,7 +260,7 @@ public class PathNode : MonoBehaviour
         return false;
     }
 
-    public bool HasValidPathForLandmark(LandmarkType landmarkToSearch)
+    public bool HasValidPathForLandmark(CPN_IsLandmark landmarkToSearch)
     {
         NodePathData dataToCheck = GetDataForLandmarkType(landmarkToSearch);
         if (dataToCheck.parent != null || dataToCheck.linkedToLandmark)
@@ -280,7 +275,7 @@ public class PathNode : MonoBehaviour
     /// </summary>
     /// <param name="landmarkTarget">The LandmarkType to search for.</param>
     /// <returns>Return the NodePathData that contains the LandmarkType. Return null if the LandmarkType is unknown.</returns>
-    public NodePathData GetDataForLandmarkType(LandmarkType landmarkTarget)
+    public NodePathData GetDataForLandmarkType(CPN_IsLandmark landmarkTarget)
     {
         for (int i = 0; i < dataByLandmark.Count; i++)
         {
@@ -311,7 +306,7 @@ public class PathNode : MonoBehaviour
     /// </summary>
     /// <param name="target">The Landmark to search for.</param>
     /// <returns>The PathFragmentData for the visitor to follow.</returns>
-    public PathFragmentData GetMostInterestingPath(LandmarkType target, PathFragmentData currentUsedFragment, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
     {
         List<PathNode> neighbours = GetNeighbours();
 
@@ -347,7 +342,7 @@ public class PathNode : MonoBehaviour
         return toReturn;
     }
 
-    private float CalculateScore(PathFragmentData fragmentToCalculate, LandmarkType landmarkWanted, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    private float CalculateScore(PathFragmentData fragmentToCalculate, CPN_IsLandmark landmarkWanted, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
     {
         NodePathData dataToCheck = null;
 

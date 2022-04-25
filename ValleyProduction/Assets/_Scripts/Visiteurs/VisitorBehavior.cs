@@ -11,8 +11,6 @@ public class VisitorBehavior : VLY_Component
 
     public VLY_ComponentHandler Handler => handler;
 
-    private IST_PathPoint spawnPoint;
-    //private PathData currentPath;
     private PathFragmentData currentPathFragment = null;
 
     public VisitorScriptable visitorType;
@@ -28,7 +26,7 @@ public class VisitorBehavior : VLY_Component
 
     private bool isUsed = false;
 
-    private LandmarkType currentObjective;
+    private CPN_IsLandmark currentObjective;
 
     public bool IsUsed => isUsed;
 
@@ -46,13 +44,9 @@ public class VisitorBehavior : VLY_Component
     /// <param name="spawnPosition">La position de spawn du visiteur.</param>
     /// <param name="nVisitorType">Le type de visiteur voulut.</param>
     /// <param name="nPath">Le chemin choisit par le visiteur.</param>
-    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, LandmarkType obective)
+    public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, CPN_IsLandmark objective)
     {
-        currentObjective = obective;
-
-        //currentPath = nPath;
-
-        spawnPoint = nSpawnPoint;
+        currentObjective = objective;
 
         visitorType = nVisitorType;
 
@@ -133,7 +127,7 @@ public class VisitorBehavior : VLY_Component
     {
         // Check si despawn ou autre
 
-        if (currentPathFragment == null || currentPathFragment.endPoint == null || currentPathFragment.endPoint == spawnPoint)
+        if (currentPathFragment == null || currentPathFragment.endPoint == null)
         {
             VisitorManager.DeleteVisitor(this);
         }
@@ -188,8 +182,22 @@ public class VisitorBehavior : VLY_Component
 
         if (nodeData != null && nodeData.linkedToLandmark)
         {
-            VLY_LandmarkManager.OnLandmarkInteraction(currentObjective, this); // CODE REVIEW : Voir si on peut pas le mettre autre par (Dans les Landmark, mettre une fonction qui détecte l'entré dun visiteur ?)
-            currentObjective = LandmarkType.Spawn;
+            VLY_LandmarkManager.OnLandmarkInteraction(currentObjective.Type, this); // CODE REVIEW : Voir si on peut pas le mettre autre par (Dans les Landmark, mettre une fonction qui détecte l'entré dun visiteur ?)
+
+            if (currentObjective.Type == LandmarkType.Spawn)
+            {
+                return null;
+            }
+            else
+            {
+                List<CPN_IsLandmark> spawns = VLY_LandmarkManager.GetLandmarkOfType(LandmarkType.Spawn);
+                currentObjective = spawns[UnityEngine.Random.Range(0, spawns.Count)];
+            }
+        }
+        else if(currentObjective == null)
+        {
+            List<CPN_IsLandmark> spawns = VLY_LandmarkManager.GetLandmarkOfType(LandmarkType.Spawn);
+            currentObjective = spawns[UnityEngine.Random.Range(0, spawns.Count)];
         }
 
         PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective, currentPathFragment, visitorType.LikedInteractions(), visitorType.HatedInteractions());

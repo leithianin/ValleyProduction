@@ -11,7 +11,7 @@ public class QST_OBJB_VisitorReachLandmark : QST_ObjectiveBehavior<QST_OBJ_Visit
         pendingObjectives.Remove(objective);
         if (pendingObjectives.Count <= 0)
         {
-            VLY_LandmarkManager.OnVisitorInteractWithLandmark += CheckLandmarkInteraction;
+            VLY_LandmarkManager.OnVisitorInteractWithLandmark -= CheckLandmarkInteraction;
         }
     }
 

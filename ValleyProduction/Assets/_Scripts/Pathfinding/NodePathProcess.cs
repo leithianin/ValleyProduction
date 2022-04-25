@@ -66,7 +66,7 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
     {
         if(leftToUpdates.Count > 0)
         {
-            LandmarkType landmarkToCheck = leftToUpdates[0].GetLandmarkNextTo();
+            CPN_IsLandmark landmarkToCheck = leftToUpdates[0].GetLandmarkNextTo();
 
             UpdateNodeForLandmark(leftToUpdates[0], landmarkToCheck);
             leftToUpdates.RemoveAt(0);
@@ -89,7 +89,7 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
         }
     }
 
-    public static void UpdateNodeForLandmark(PathNode toUpdate, LandmarkType toCheck)
+    public static void UpdateNodeForLandmark(PathNode toUpdate, CPN_IsLandmark toCheck)
     {
         int security = 1000;
 
@@ -107,7 +107,7 @@ public class NodePathProcess : VLY_Singleton<NodePathProcess>
         }
     }
 
-    private void UpdateForLandmark(PathNode toUpdate, LandmarkType toCheck)
+    private void UpdateForLandmark(PathNode toUpdate, CPN_IsLandmark toCheck)
     {
         toUpdate.UpdateSelfData(toCheck);
 

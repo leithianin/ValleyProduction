@@ -65,12 +65,22 @@ public class CPN_IsLandmark : VLY_Component
 
         for(int i = 0; i < pathPointNextTo.Count; i++)
         {
-            if(pathPointNextTo[i].HasValidPathForLandmark(target))
-            {
-                toReturn = true;
-                OnValidatePathToSpawn?.Invoke(true, type);
+            List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(target);
 
-                VLY_LandmarkManager.AddValidLandmark(type);
+            for (int j = 0; j < landmarks.Count; j++)
+            {
+                if (pathPointNextTo[i].HasValidPathForLandmark(landmarks[j]))
+                {
+                    toReturn = true;
+                    OnValidatePathToSpawn?.Invoke(true, type);
+
+                    VLY_LandmarkManager.AddValidLandmark(type);
+                    break;
+                }
+            }
+
+            if(toReturn == true)
+            {
                 break;
             }
         }
