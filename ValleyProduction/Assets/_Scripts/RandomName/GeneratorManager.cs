@@ -11,9 +11,6 @@ public class GeneratorManager : VLY_Singleton<GeneratorManager>
                                                         "Les Champs aux Aigles Australs", "Le Territoire aux Ours Gris","Les Territoires aux Scarabées Pacifiques","Le Pâturage Fleuri","Le  Lagon Pétillant",
                                                         "Lac des Carcavers","Lac Vitreux","Creekplains Home","Test de nom super long pour voir jusqu'ou peut aller le nom","&é((àç@|(","The Sweet Spot"};
 
-    public static NameScriptable GetNameScript => instance.nameScript;
-    public static NameScriptable GetPathNameScript => instance.pathNameScript;
-
     public static string GetRandomPathName()
     {
         return instance.pathNameScript.nameList[Random.Range(0, instance.pathNameScript.nameList.Count)];
@@ -21,11 +18,6 @@ public class GeneratorManager : VLY_Singleton<GeneratorManager>
 
     public static string GetRandomVisitorName()
     {
-        /*foreach(string str in instance.nameScript.nameList)
-        {
-            Debug.Log(str);
-        }*/
-
         return instance.nameScript.nameList[Random.Range(0, instance.nameScript.nameList.Count)];
     }
 }
