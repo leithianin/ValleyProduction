@@ -124,9 +124,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         Cursor.visible = true;
     }
 
-    private void PlaceInfrastructure(Infrastructure selectedStructure)
+    private void PlaceInfrastructure(InfrastructurePreview toPlace, Infrastructure selectedStructure)
     {
-        if (ConstructionManager.GetSelectedStructureType == selectedStructure.StructureType)
+        if (ConstructionManager.GetSelectedStructureType == selectedStructure.StructureType && toPlace.AskToPlace(selectedStructure.transform.position))
         {
             currentSelectedStructure = selectedStructure;
             selectedStructure.PlaceObject();
@@ -212,7 +212,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                 instance.SelectInfrastructure(interactedStructure);
                 break;
             case ToolType.Place:
-                instance.PlaceInfrastructure(interactedStructure);
+                instance.PlaceInfrastructure(GetCurrentPreview, interactedStructure);
                 break;
             case ToolType.Move:
                 MoveInfrastructure(interactedStructure);
