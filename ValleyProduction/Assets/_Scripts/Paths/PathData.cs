@@ -54,6 +54,24 @@ public class PathData
         return false;
     }
 
+    public bool ContainsSeveralPoints(IST_PathPoint toCheck)
+    {
+        int nb = 0;
+        foreach(PathFragmentData pfd in pathFragment)
+        {
+            if(pfd.HasThisPathpoint(toCheck))
+            {
+                nb++;
+
+                if(nb >=3)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Return all pathpoints of the pathData
     /// </summary>

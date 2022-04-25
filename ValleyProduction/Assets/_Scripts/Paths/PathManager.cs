@@ -129,6 +129,16 @@ public class PathManager : VLY_Singleton<PathManager>
                 }
             }
         }
+
+        foreach (PathData pd in instance.pathDataList)
+        {
+            if(pd.ContainsSeveralPoints(pathpoint))
+            {
+                Debug.Log("true");
+                return true;
+            }
+        }
+
         return false;
     }
 
