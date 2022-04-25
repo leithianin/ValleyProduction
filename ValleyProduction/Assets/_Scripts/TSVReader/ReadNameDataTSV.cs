@@ -16,6 +16,12 @@ public class ReadNameDataTSV : MonoBehaviour
 
     public void ReadTSVFile()
     {
+        SetVisitorsName();
+        SetPathName();
+    }
+
+    public void SetVisitorsName()
+    {
         //Load Text asset
         TextAsset TSVText = Resources.Load<TextAsset>("TextAssets/NameData");
 
@@ -27,11 +33,32 @@ public class ReadNameDataTSV : MonoBehaviour
         //For each line...
         for (int i = 1; i < lines.Length; i++)
         {
-            Debug.Log("Read Lines");
-            //... add each column of the line in a list 'blocks'
-            //lines[i] = lines[i].Replace(",", " ");
+            Debug.Log("Read Lines => Visitor Name");
 
-            GeneratorManager.GetNameScript.nameList.Add(lines[i]);     
+            GeneratorManager.GetNameScript.nameList.Add(lines[i]);
         }
+
+        Debug.Log("Add " + lines.Length + " Visitor Name");
+    }
+
+    public void SetPathName()
+    {
+        //Load Text asset
+        TextAsset TSVText = Resources.Load<TextAsset>("TextAssets/PathNameData");
+
+        //Add each line of the tab in a list 'lines'
+        lines = TSVText.text.Split(new char[] { '\n' });
+
+        GeneratorManager.GetPathNameScript.nameList.Clear();
+
+        //For each line...
+        for (int i = 1; i < lines.Length; i++)
+        {
+            Debug.Log("Read Lines => Path Name");
+
+            GeneratorManager.GetPathNameScript.nameList.Add(lines[i]);
+        }
+
+        Debug.Log("Add " + lines.Length + " Path Name");
     }
 }
