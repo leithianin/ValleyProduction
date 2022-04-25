@@ -130,9 +130,19 @@ public class PathManager : VLY_Singleton<PathManager>
             }
         }
 
+        return false;
+    }
+
+    public static bool HasManyDirection(IST_PathPoint pathPoint)
+    {
+        if(HasManyPath(pathPoint))
+        {
+            return true;
+        }
+
         foreach (PathData pd in instance.pathDataList)
         {
-            if(pd.ContainsSeveralPoints(pathpoint))
+            if (pd.ContainsSeveralPoints(pathPoint))
             {
                 Debug.Log("true");
                 return true;
