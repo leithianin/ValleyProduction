@@ -68,7 +68,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public static void HideShownGameObject()
     {
-        if (gameObjectShown != null)
+        if (gameObjectShown != null && !UI_RoadInformation.isEditName)
         {
             OnBoardingManager.onHideVisitorInfo?.Invoke(true);
             OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);

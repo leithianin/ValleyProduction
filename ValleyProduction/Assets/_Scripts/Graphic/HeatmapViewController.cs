@@ -24,7 +24,6 @@ public class HeatmapViewController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            Debug.Log("H");
             HandleHeatmap();
         }
 
