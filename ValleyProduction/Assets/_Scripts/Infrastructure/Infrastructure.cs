@@ -118,8 +118,14 @@ public abstract class Infrastructure : MonoBehaviour
     /// </summary>
     public void MoveObject()
     {
+        CloseStructure();
         PlayOnMove?.Invoke();
         OnMoveObject();
+    }
+
+    public void CancelMoveObject()
+    {
+        OpenStructure();
     }
 
     public void ReplaceObject()
@@ -173,13 +179,13 @@ public abstract class Infrastructure : MonoBehaviour
     }
 
     [ContextMenu("Close")]
-    public void ClosePath()
+    public void CloseStructure()
     {
         isOpen = false;
         OnCloseStructure?.Invoke();
     }
     [ContextMenu("Open")]
-    public void OpenPath()
+    public void OpenStructure()
     {
         isOpen = true;
         OnOpenStructure?.Invoke();
