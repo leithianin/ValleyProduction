@@ -9,6 +9,8 @@ public abstract class Infrastructure : MonoBehaviour
 
     [SerializeField] private CPN_Purchasable purchaseBehavior;
 
+    [SerializeField] private bool isOpen = true;
+
     [SerializeField, Tooltip("Actions to play when the construction is placed.")] private UnityEvent PlayOnPlace;
     [SerializeField, Tooltip("Actions to play when the construction is placed on an other construction.")] private UnityEvent PlayOnPlaceOverObject;
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
@@ -18,6 +20,8 @@ public abstract class Infrastructure : MonoBehaviour
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnMove;
     [SerializeField, Tooltip("Actions to play when the construction is moved.")] private UnityEvent PlayOnReplace;
     [SerializeField, Tooltip("Actions to play when the construction is holded right clic")] private UnityEvent PlayOnHoldRightClic;
+    [SerializeField, Tooltip("Actions to play when the structure is opened/closed")] private UnityEvent OnOpenStructure;
+    [SerializeField, Tooltip("Actions to play when the structure is opened/closed")] private UnityEvent OnCloseStructure;
 
     [Header("Data setup")]
     [SerializeField] private UnityEvent<InfrastructureData> OnSetData;
@@ -25,6 +29,8 @@ public abstract class Infrastructure : MonoBehaviour
     public InfrastructureData Data => datas;
 
     public InfrastructureType StructureType => datas.StructureType;
+
+    public bool IsOpen => isOpen;
 
     public CPN_Purchasable Purchasable => purchaseBehavior;
 
@@ -164,5 +170,18 @@ public abstract class Infrastructure : MonoBehaviour
     public void AskToInteract()
     {
         ConstructionManager.InteractWithStructure(gameObject);
+    }
+
+    [ContextMenu("Close")]
+    public void ClosePath()
+    {
+        isOpen = false;
+        OnCloseStructure?.Invoke();
+    }
+    [ContextMenu("Open")]
+    public void OpenPath()
+    {
+        isOpen = true;
+        OnOpenStructure?.Invoke();
     }
 }
