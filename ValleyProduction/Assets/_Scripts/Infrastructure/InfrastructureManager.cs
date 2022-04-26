@@ -186,13 +186,14 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         instance.movedObject = toMove.gameObject;
         instance.movedObject.layer = layerIgnoreRaycast;
 
+        instance.currentSelectedStructure.MoveObject();
+
         if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
         {
             instance.previewHandler.SetInfrastructurePreview(toMove.Data.Preview);
         }
         else
         {
-            instance.currentSelectedStructure.MoveObject();
             OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
         }
     }
