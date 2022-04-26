@@ -108,8 +108,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// <param name="toPlace"></param>
     /// <param name="positionToPlace"></param>
     public void RotateInfrastructure(Vector3 positionToPlace)
-    {      
-        if (GetCurrentPreview.AskToPlace(positionToPlace) && !previewHandler.snaping)
+    {
+        if (GetCurrentPreview != null && GetCurrentPreview.AskToPlace(positionToPlace) && !previewHandler.snaping)
         {
             StartRotation();
         }
@@ -222,32 +222,23 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void ReplaceInfrastructure(Vector3 position)
     {
-        GameObject saveObject = instance.movedObject;
-
-        if (GetCurrentSelectedStructure != null && GetCurrentSelectedStructure.StructureType != InfrastructureType.Path)
+        if (GetCurrentPreview.CanPlaceObject(position))
         {
-            instance.movedObject.transform.position = GetCurrentPreview.transform.position;
+            Destroy(instance.movedObject);
+
+            PlaceInfrastructure(position);
+
+            instance.previewHandler.SetInfrastructurePreview(null);
+
+            OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
+
+            instance.currentSelectedStructure.ReplaceObject();
+        }
+        else
+        {
+            CancelMoveStructure();
         }
 
-        TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));     
-        instance.movedObject = null;
-
-        instance.previewHandler.SetInfrastructurePreview(null);
-
-        OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
-
-        instance.currentSelectedStructure.ReplaceObject();
-
-        /*
-        Destroy(instance.movedObject);
-        
-        PlaceInfrastructure(position);
-
-        instance.previewHandler.SetInfrastructurePreview(null);
-
-        OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
-
-        instance.currentSelectedStructure.ReplaceObject();*/
     }
 
     public static void ReplaceInfrastructureChangeLyer(GameObject saveObject)
