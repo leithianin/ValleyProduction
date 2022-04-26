@@ -43,8 +43,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
     }
 
-    
-
     public static void EnableOrDisableTool(ToolType tooltype, bool isEnable)
     {
         if (isEnable && instance.disableTools.Contains(tooltype))
@@ -94,14 +92,14 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
-        if(!instance.previewHandler.isRotating && instance.previewHandler.GetPreview.CanRotate)
+        /*if(!instance.previewHandler.isRotating && instance.previewHandler.GetPreview.CanRotate)
         {
             instance.RotateInfrastructure(GetCurrentPreview, positionToPlace);
         }
         else
-        {
+        {*/
             instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
-        }
+        //}
     }
 
     /// <summary>
@@ -109,9 +107,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     /// <param name="toPlace"></param>
     /// <param name="positionToPlace"></param>
-    public void RotateInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
-    {
-        if (toPlace.AskToPlace(positionToPlace) && !previewHandler.snaping)
+    public void RotateInfrastructure(Vector3 positionToPlace)
+    {      
+        if (GetCurrentPreview.AskToPlace(positionToPlace) && !previewHandler.snaping)
         {
             StartRotation();
         }
@@ -308,8 +306,11 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void SnapInfrastructure(Infrastructure infrastructure)
     {
-        instance.previewHandler.snaping = true;
-        instance.previewHandler.transform.position = infrastructure.transform.position;
+        if (!instance.previewHandler.isRotating)
+        {
+            instance.previewHandler.snaping = true;
+            instance.previewHandler.transform.position = infrastructure.transform.position;
+        }
     }
 
     public static void DesnapInfrastructure(Infrastructure infrastructure)

@@ -14,7 +14,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent OnClicLeft;
     [SerializeField] private UnityEvent OnClicLeftWihtoutObject;
     [SerializeField] private UnityEvent<Vector3> OnClicLeftPosition;
-    [SerializeField] private UnityEvent<GameObject> OnClicLeftHold;
+    [SerializeField] private UnityEvent<Vector3> OnClicLeftHold;
 
     [SerializeField] private UnityEvent OnClicRight;
     [SerializeField] private UnityEvent OnClicRightWihtoutObject;
@@ -85,8 +85,14 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
                 clicHandlerTouched = null;
             }
 
+            if(Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine(TimerHoldLeft());
+            }
+
             if (Input.GetMouseButtonUp(0))                      //Clic gauche relaché
             {
+                StopCoroutine(StartCoroutine(TimerHoldLeft()));
                 CallLeftMouseInputs(raycastHit);
 
                 if (clicHandlerTouched != null)
@@ -212,19 +218,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CallLeftMouseInputs(RaycastHit hit)
     {
-        if (clicHold)
-        {
-            clicHold = false;
-            ConstructionManager.ReplaceStructure();
-        }
-        else
-        {
-            OnClicLeft?.Invoke();
+        OnClicLeft?.Invoke();
 
-            if (GetMousePosition != Vector3.zero)
-            {
-                OnClicLeftPosition?.Invoke(GetMousePosition);
-            }
+        if (GetMousePosition != Vector3.zero)
+        {
+            OnClicLeftPosition?.Invoke(GetMousePosition);
         }
     }
 
@@ -232,8 +230,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         if (hit.transform != null)
         {
-            clicHold = true;
-            OnClicLeftHold?.Invoke(hit.transform.gameObject);
+            OnClicLeftHold?.Invoke(GetMousePosition);
         }
     }
 

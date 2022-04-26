@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -70,8 +67,9 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Prend en compte l'input quand on maintient le clic
     /// </summary>
     /// <param name="touchedObject"></param>
-    public static void MoveStructure(GameObject touchedObject)
+    public static void RotateStructure(Vector3 position)
     {
+        InfrastructureManager.instance.RotateInfrastructure(position);
         //InfrastructureManager.MoveInfrastructure(touchedObject.GetComponent<Infrastructure>());
     }
 

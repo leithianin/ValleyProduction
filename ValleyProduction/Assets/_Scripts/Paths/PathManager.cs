@@ -405,7 +405,7 @@ public class PathManager : VLY_Singleton<PathManager>
         //Si ce n'est pas le dernier point
         if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
         {
-            RemoveMultiPath(pdToModify, ist_pp);
+            //RemoveMultiPath(pdToModify, ist_pp);
             //Check si ces deux points ont HasManyPath
             //Si non, comme d'hab
             //Si oui --> pdToModify.RemoveMultiPath();
@@ -434,7 +434,7 @@ public class PathManager : VLY_Singleton<PathManager>
         }
         else
         {
-            RemoveMultiPath(pdToModify, ist_pp);
+            //RemoveMultiPath(pdToModify, ist_pp);
             //pdToModify.RemoveMultiPath();
             pdToModify.RemoveFragmentAndNext(ist_pp);
             DestroyLineRenderer(pdToModify.pathLineRenderer);
@@ -450,7 +450,7 @@ public class PathManager : VLY_Singleton<PathManager>
         {
             if (HasManyPath(pp))
             {
-                Debug.Log("tc");
+                //Debug.Log("tc");
             }
         }
     }
