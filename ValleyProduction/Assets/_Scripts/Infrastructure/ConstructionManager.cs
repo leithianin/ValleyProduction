@@ -89,34 +89,6 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         {
             InfrastructureManager.InteractWithStructure(ToolType.Delete, PathManager.previousPathpoint);
         }
-        /*if (PathManager.GetCurrentPathData != null)
-        {
-            Infrastructure infraComponent = touchedObject.GetComponent<Infrastructure>();
-            if (infraComponent != null)
-            {
-                //InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, infraComponent);
-                InfrastructureManager.InteractWithStructure(ToolType.Delete, infraComponent);
-            }
-            else
-            {
-                if (instance.selectedStructureType == InfrastructureType.Path)
-                {
-                    if (PathManager.previousPathpoint != null)
-                    {
-                        //InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, PathManager.previousPathpoint);
-                        InfrastructureManager.InteractWithStructure(ToolType.Delete, PathManager.previousPathpoint);
-                    }
-                }
-            }
-        }
-        else
-        {
-            if (PathManager.previousPathpoint == touchedObject)
-            {
-                //InfrastructureManager.InteractWithStructure(InfrastructureType.DeleteStructure, PathManager.previousPathpoint);
-                InfrastructureManager.InteractWithStructure(ToolType.Delete, PathManager.previousPathpoint);
-            }
-        }*/
     }
 
     //C'était pour placer sur une infrastructure (Créer à partir d'une infrastructure)

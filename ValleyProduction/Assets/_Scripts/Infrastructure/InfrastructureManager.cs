@@ -37,7 +37,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private void Update()
     {
-        if(movedObject != null)
+        if(movedObject != null && currentSelectedStructure != null && currentSelectedStructure.StructureType == InfrastructureType.Path)
         {
             movedObject.transform.position = PlayerInputManager.GetMousePosition;
         }
@@ -64,6 +64,20 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void SetToolSelected(ToolType toolType)
     {
+        switch(instance.toolSelected)
+        {
+            case ToolType.Place:
+                break;
+            case ToolType.Move:
+                if (instance.movedObject != null)
+                {
+                    CancelMoveStructure();
+                }
+                break;
+            case ToolType.Delete:
+                break;
+        }
+
         if (!instance.disableTools.Contains(toolType))
         {
             instance.toolSelected = toolType;
@@ -173,9 +187,30 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
         instance.movedObject = toMove.gameObject;
         instance.movedObject.layer = layerIgnoreRaycast;
-        instance.currentSelectedStructure.MoveObject();
 
-        OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
+        if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
+        {
+            instance.previewHandler.SetInfrastructurePreview(toMove.Data.Preview);
+        }
+        else
+        {
+            instance.currentSelectedStructure.MoveObject();
+            OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
+        }
+    }
+
+    public static void CancelMoveStructure()
+    {
+        GameObject saveObject = instance.movedObject;
+
+        TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));
+        instance.movedObject = null;
+
+        instance.previewHandler.SetInfrastructurePreview(null);
+
+        OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
+
+        instance.currentSelectedStructure.ReplaceObject();
     }
 
     public static void OnHoldRightClic(InfrastructureType tool, Infrastructure toHoldRightClic)
@@ -190,12 +225,31 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void ReplaceInfrastructure(Vector3 position)
     {
         GameObject saveObject = instance.movedObject;
+
+        if (GetCurrentSelectedStructure != null && GetCurrentSelectedStructure.StructureType != InfrastructureType.Path)
+        {
+            instance.movedObject.transform.position = GetCurrentPreview.transform.position;
+        }
+
         TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));     
         instance.movedObject = null;
+
+        instance.previewHandler.SetInfrastructurePreview(null);
 
         OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
 
         instance.currentSelectedStructure.ReplaceObject();
+
+        /*
+        Destroy(instance.movedObject);
+        
+        PlaceInfrastructure(position);
+
+        instance.previewHandler.SetInfrastructurePreview(null);
+
+        OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
+
+        instance.currentSelectedStructure.ReplaceObject();*/
     }
 
     public static void ReplaceInfrastructureChangeLyer(GameObject saveObject)
