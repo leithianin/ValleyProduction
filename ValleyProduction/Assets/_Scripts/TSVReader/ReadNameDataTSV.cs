@@ -49,10 +49,9 @@ public class ReadNameDataTSV : MonoBehaviour
         nameScript.nameList.Clear();
 
         //For each line...
+        Debug.Log("Read Lines => Visitor Name");
         for (int i = 1; i < lines.Length; i++)
         {
-            Debug.Log("Read Lines => Visitor Name");
-
             nameScript.nameList.Add(lines[i]);
         }
 
@@ -70,10 +69,9 @@ public class ReadNameDataTSV : MonoBehaviour
         pathNameScript.nameList.Clear();
 
         //For each line...
+        Debug.Log("Read Lines => Path Name");
         for (int i = 1; i < lines.Length; i++)
         {
-            Debug.Log("Read Lines => Path Name");
-
             pathNameScript.nameList.Add(lines[i]);
         }
 

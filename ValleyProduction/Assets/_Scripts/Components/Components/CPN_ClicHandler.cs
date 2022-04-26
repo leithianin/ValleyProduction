@@ -12,7 +12,7 @@ public class CPN_ClicHandler : VLY_Component
 
     public void MouseDown(int mouseID)
     {
-        switch(mouseID)
+        switch (mouseID)
         {
             case 0:
                 OnLeftMouseDown?.Invoke();
