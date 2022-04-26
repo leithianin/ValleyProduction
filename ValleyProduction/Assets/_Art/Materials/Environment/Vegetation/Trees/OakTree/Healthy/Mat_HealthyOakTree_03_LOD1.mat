@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_HealthyOakTree_03_LOD1
-  m_Shader: {fileID: -6465566751694194690, guid: b3d0dc772c605f7419326ac226fe2772, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
   m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -41,11 +41,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: 1c902c34819bd1747a933a671b0f840d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - MainTex:
+        m_Texture: {fileID: 2800000, guid: 1c902c34819bd1747a933a671b0f840d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - NormalMap:
         m_Texture: {fileID: 2800000, guid: d90502479a94f284e8e4e10fb7fbe201, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: a5c39053a378445448032c1d3b771316, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RMA:
         m_Texture: {fileID: 2800000, guid: a5c39053a378445448032c1d3b771316, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -188,7 +200,20 @@ Material:
     m_Ints: []
     m_Floats:
     - AmbientOcclusionIntensity: 0.1
+    - DitherOffset: 5
+    - DitherRange: 0.2
+    - EmissiveIntensity: 0
+    - NIGHT_MODE: 0
     - RENDER_HEATMAP: 0
+    - SQUASH_ANIM: 0
+    - SetRadius: 1
+    - SetSquashCurve: 0
+    - SetSquashEffect: 0
+    - SetStretchCurve: 0
+    - SetStretchEffect: 0
+    - SquashAnim: 0
+    - WindDensity: 5
+    - WindStrength: 2
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -312,12 +337,14 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
+    - _WIND: 0
     - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
+    - WindDirection: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

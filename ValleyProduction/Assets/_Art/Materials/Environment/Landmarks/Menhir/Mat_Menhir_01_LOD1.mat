@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Menhir_01_LOD1
-  m_Shader: {fileID: -6465566751694194690, guid: b3d0dc772c605f7419326ac226fe2772, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
   m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -36,11 +36,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: 817b6ccfbe256d4469098b2288bc5da8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - MainTex:
+        m_Texture: {fileID: 2800000, guid: 817b6ccfbe256d4469098b2288bc5da8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - NormalMap:
         m_Texture: {fileID: 2800000, guid: 805eceba185b53c43b181d73af712b66, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 2e8ded577d7c5be45abb336e78a4ca35, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RMA:
         m_Texture: {fileID: 2800000, guid: 2e8ded577d7c5be45abb336e78a4ca35, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -107,7 +119,20 @@ Material:
     m_Ints: []
     m_Floats:
     - AmbientOcclusionIntensity: 0.1
+    - DitherOffset: 5
+    - DitherRange: 0.2
+    - EmissiveIntensity: 0
+    - NIGHT_MODE: 0
     - RENDER_HEATMAP: 0
+    - SQUASH_ANIM: 0
+    - SetRadius: 1
+    - SetSquashCurve: 0
+    - SetSquashEffect: 0
+    - SetStretchCurve: 0
+    - SetStretchEffect: 0
+    - SquashAnim: 0
+    - WindDensity: 5
+    - WindStrength: 2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -132,9 +157,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _WIND: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - WindDirection: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
