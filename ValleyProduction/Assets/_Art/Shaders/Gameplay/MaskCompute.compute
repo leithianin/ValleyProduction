@@ -36,6 +36,12 @@ void CSMain(uint3 id : SV_DispatchThreadID)
         float distance = length(texelWorldPos - entityWorldPos);
 
         float noiseVal = smoothstep(_EntityBuffer[4 * i + 2] + _Blend, _EntityBuffer[4 * i + 2], distance);
+
+        if (distance > 100)
+        {
+            noiseVal = 0;
+        }
+
         //val = max(val, noiseVal * _EntityBuffer[4 * i + 3]);
         val += noiseVal * _EntityBuffer[4 * i + 3];
     }
@@ -51,4 +57,6 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     col = lerp(_Color1, col, smoothstep(1, 2, val));
     col = lerp(_Color0, col, smoothstep(0, 1, val));
     _Mask[id.xy] = col;
+
+    _PixelBuffer[id.x * _TextureSize + id.y] = (int)val;
 }

@@ -66,6 +66,15 @@ public class MaskRenderer : MonoBehaviour
     private List<EntityBufferElement> bufferElements;
     private ComputeBuffer entityBuffer = null;
 
+    private struct PixelDataBufferElement
+    {
+        public float PositionX;
+        public float PositionY;
+        public float Value;
+    }
+    private int[] pixels;
+    private ComputeBuffer pixelsBuffer = null;
+
     private void Awake()
     {
         entities = new List<Entity>();
@@ -101,11 +110,13 @@ public class MaskRenderer : MonoBehaviour
         Shader.SetGlobalFloat(mapSizeId, mapSize);
 
         bufferElements = new List<EntityBufferElement>();
+        pixels = new int[0];
     }
 
     private void OnDestroy()
     {
         entityBuffer?.Dispose();
+        pixelsBuffer?.Dispose();
 
         if (maskTexture != null)
             DestroyImmediate(maskTexture);
@@ -130,14 +141,33 @@ public class MaskRenderer : MonoBehaviour
             }
 
             entityBuffer?.Release();
+            pixelsBuffer?.Release();
             entityBuffer = new ComputeBuffer(bufferElements.Count * 4, sizeof(float));
+            pixelsBuffer = new ComputeBuffer((TextureSize * TextureSize), sizeof(int));
+
+            compute.SetBuffer(0, entityBufferId, entityBuffer);
+            compute.SetBuffer(0, pixelBufferId, pixelsBuffer);
 
             entityBuffer.SetData(bufferElements);
-            compute.SetBuffer(0, entityBufferId, entityBuffer);
+
+            pixels = new int[pixelsBuffer.count];
 
             compute.SetInt(entityCountId, bufferElements.Count);
 
             compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
+
+            pixelsBuffer.GetData(pixels);
         }
+    }
+
+    public Vector2Int positions;
+
+    [ContextMenu("Debug")]
+    public void DebugTest()
+    {
+        Debug.Log("Nxt : ");
+        Debug.Log((int)(positions.x * TextureSize / MapSize));
+        Debug.Log((int)(positions.y * TextureSize / MapSize));
+        Debug.Log(pixels[(int)(positions.x * TextureSize / MapSize) * TextureSize + (int)(positions.y * TextureSize / MapSize)]);
     }
 }
