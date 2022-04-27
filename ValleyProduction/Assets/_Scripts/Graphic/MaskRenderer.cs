@@ -11,11 +11,13 @@ public class MaskRenderer : MonoBehaviour
     //Properties
     [SerializeField] private ComputeShader compute = null;
 
-    [Range(64, 1024)] [SerializeField] public static int TextureSize = 64;
+    [Range(64, 1024)] [SerializeField] public static int TextureSize = 256;
     [SerializeField] private float mapSize = 0;
     public float MapSize => mapSize;
 
     [SerializeField] private float BlendDistance = 4.0f;
+
+    public Gradient NoiseGradient;
 
     public Color MaskColor0;
     public Color MaskColor1;
@@ -29,7 +31,10 @@ public class MaskRenderer : MonoBehaviour
     public Color MaskColor9;
     public Color MaskColor10;
 
-    public RenderTexture maskTexture;
+    public RenderTexture noiseTexture;
+    public RenderTexture pollutionTexture;
+    public RenderTexture faunaTexture;
+    public RenderTexture floraTexture;
 
     //Shader properties cache
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
@@ -49,7 +54,10 @@ public class MaskRenderer : MonoBehaviour
     private static readonly int color9Id = Shader.PropertyToID("_Color9");
     private static readonly int color10Id = Shader.PropertyToID("_Color10");
 
-    private static readonly int maskTextureId = Shader.PropertyToID("_Mask");
+    private static readonly int noiseTextureId = Shader.PropertyToID("_NoiseTex");
+    private static readonly int pollutionTextureId = Shader.PropertyToID("_PollutionTex");
+    private static readonly int faunaTextureId = Shader.PropertyToID("_FaunaTex");
+    private static readonly int floraTextureId = Shader.PropertyToID("_FloraTex");
 
     private static readonly int entityBufferId = Shader.PropertyToID("_EntityBuffer");
     private static readonly int pixelBufferId = Shader.PropertyToID("_PixelBuffer");
@@ -82,15 +90,15 @@ public class MaskRenderer : MonoBehaviour
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         maskTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear)
 #else
-        maskTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGBFloat)
+        noiseTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGBFloat)
 #endif
         {
             enableRandomWrite = true
         };
-        maskTexture.Create();
+        noiseTexture.Create();
 
         compute.SetInt(textureSizeId, TextureSize);
-        compute.SetTexture(0, maskTextureId, maskTexture);
+        compute.SetTexture(0, noiseTextureId, noiseTexture);
 
         compute.SetFloat(blendId, BlendDistance);
 
@@ -106,7 +114,7 @@ public class MaskRenderer : MonoBehaviour
         compute.SetVector(color9Id, MaskColor9);
         compute.SetVector(color10Id, MaskColor10);
 
-        Shader.SetGlobalTexture(maskTextureId, maskTexture);
+        Shader.SetGlobalTexture(noiseTextureId, noiseTexture);
         Shader.SetGlobalFloat(mapSizeId, mapSize);
 
         bufferElements = new List<EntityBufferElement>();
@@ -118,8 +126,8 @@ public class MaskRenderer : MonoBehaviour
         entityBuffer?.Dispose();
         pixelsBuffer?.Dispose();
 
-        if (maskTexture != null)
-            DestroyImmediate(maskTexture);
+        if (noiseTexture != null)
+            DestroyImmediate(noiseTexture);
     }
 
     private void Update()

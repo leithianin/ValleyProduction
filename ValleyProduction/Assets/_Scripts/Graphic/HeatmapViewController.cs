@@ -14,17 +14,20 @@ public class HeatmapViewController : MonoBehaviour
     {
         foreach (Material m in Materials)
         {
-            m.SetTexture("_Mask", msk.maskTexture);
+            m.SetTexture("_NoiseTex", msk.noiseTexture);
+            m.SetTexture("_PollutionTex", msk.pollutionTexture);
+            m.SetTexture("_FaunaTex", msk.faunaTexture);
+            m.SetTexture("_FloraTex", msk.floraTexture);
         }
 
-        EnableHeatmapView(false);
+        EnableHeatmapView(false, 0);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            HandleHeatmap();
+            HandleHeatmap(1);
         }
 
         foreach (Material m in Materials)
@@ -35,14 +38,14 @@ public class HeatmapViewController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        EnableHeatmapView(false);
+        EnableHeatmapView(false, 0);
     }
-    public void HandleHeatmap()
+    public void HandleHeatmap(int index)
     {
-        EnableHeatmapView(!isEnabled);
+        EnableHeatmapView(!isEnabled, index);
     }
 
-    private void EnableHeatmapView(bool enable)
+    private void EnableHeatmapView(bool enable, int index)
     {
         isEnabled = enable;
 
@@ -50,6 +53,8 @@ public class HeatmapViewController : MonoBehaviour
         {
             if (enable) m.EnableKeyword("RENDER_HEATMAP");
             else m.DisableKeyword("RENDER_HEATMAP");
+
+            m.SetFloat("HEATMAP_INDEX", index);
         }
     }
 }

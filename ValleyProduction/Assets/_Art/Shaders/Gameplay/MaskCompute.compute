@@ -18,9 +18,12 @@ float4 _Color9;
 float4 _Color10;
 
 StructuredBuffer<float> _EntityBuffer;
-RWStructuredBuffer<float> _PixelBuffer;
+RWStructuredBuffer<int> _PixelBuffer;
 
-RWTexture2D<float4> _Mask;
+RWTexture2D<float4> _NoiseTex;
+RWTexture2D<float4> _PollutionTex;
+RWTexture2D<float4> _FaunaTex;
+RWTexture2D<float4> _FloraTex;
 
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
@@ -56,7 +59,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     col = lerp(_Color2, col, smoothstep(2, 3, val));
     col = lerp(_Color1, col, smoothstep(1, 2, val));
     col = lerp(_Color0, col, smoothstep(0, 1, val));
-    _Mask[id.xy] = col;
+    _NoiseTex[id.xy] = col;
 
     _PixelBuffer[id.x * _TextureSize + id.y] = (int)val;
 }
