@@ -138,10 +138,34 @@ MonoBehaviour:
       m_Calls: []
   PlayOnMove:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6760235113309419221}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_material
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2100000, guid: 7d84712bd7fa1d6428d4a162e2f09f87, type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   PlayOnReplace:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6760235113309419221}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_material
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2100000, guid: f3f055bd4cdd7604ab81a6b451b8926c, type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   PlayOnHoldRightClic:
     m_PersistentCalls:
       m_Calls: []
@@ -219,22 +243,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usableFragments: []
   dataByLandmark:
-  - landmark: 1
+  - landmark: {fileID: 0}
     distanceFromLandmark: -1
     parent: {fileID: 0}
     linkedToLandmark: 0
-  - landmark: 2
+  - landmark: {fileID: 0}
     distanceFromLandmark: -1
     parent: {fileID: 0}
     linkedToLandmark: 0
-  - landmark: 3
+  - landmark: {fileID: 0}
     distanceFromLandmark: -1
     parent: {fileID: 0}
     linkedToLandmark: 0
-  - landmark: 4
+  - landmark: {fileID: 0}
     distanceFromLandmark: -1
     parent: {fileID: 0}
     linkedToLandmark: 0
+  isOpen: 1
 --- !u!114 &485267397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +540,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5729360411977943481}
     m_Modifications:
+    - target: {fileID: 1632752082624521973, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f3f055bd4cdd7604ab81a6b451b8926c, type: 2}
     - target: {fileID: 7391390632780759602, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
       propertyPath: m_Name
       value: Prefab_Cairn
@@ -577,6 +606,11 @@ GameObject:
 --- !u!4 &3308707309273682451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7391390632780759603, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
+  m_PrefabInstance: {fileID: 5438551039159767072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6760235113309419221 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1632752082624521973, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
   m_PrefabInstance: {fileID: 5438551039159767072}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5481060996648718998

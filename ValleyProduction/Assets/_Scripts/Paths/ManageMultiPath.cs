@@ -131,4 +131,9 @@ public class ManageMultiPath : MonoBehaviour
             DesactivateMultiPath();
         }
     }
+
+    public void DesactivateCairnMesh()
+    {
+        prefabCairn.SetActive(false);
+    }
 }

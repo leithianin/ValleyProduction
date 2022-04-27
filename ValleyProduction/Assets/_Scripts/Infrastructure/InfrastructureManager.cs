@@ -89,17 +89,10 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             instance.previewHandler.SetInfrastructurePreview(newPreview);
         }
     }
-    
+
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
-        /*if(!instance.previewHandler.isRotating && instance.previewHandler.GetPreview.CanRotate)
-        {
-            instance.RotateInfrastructure(GetCurrentPreview, positionToPlace);
-        }
-        else
-        {*/
-            instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
-        //}
+        instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
     }
 
     /// <summary>
@@ -193,6 +186,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
         else
         {
+            //Pathpoint
             instance.currentSelectedStructure.MoveObject();
             OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
         }
@@ -223,11 +217,26 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void ReplaceInfrastructure(Vector3 position)
     {
+        //Pathpoint
+        if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
+        {
+            instance.previewHandler.SetInfrastructurePreview(GetCurrentSelectedStructure.Data.Preview);
+        }
+
         if (GetCurrentPreview.CanPlaceObject(position))
         {
-            Destroy(instance.movedObject);
-
-            PlaceInfrastructure(position);
+            if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
+            {
+                Destroy(instance.movedObject);
+                PlaceInfrastructure(position);
+            }
+            else
+            {
+                //Pathpoint
+                instance.movedObject.layer = default;
+                instance.movedObject = null;
+                OnPlaceInfrastructure?.Invoke(GetCurrentSelectedStructure);
+            }
 
             instance.previewHandler.SetInfrastructurePreview(null);
 

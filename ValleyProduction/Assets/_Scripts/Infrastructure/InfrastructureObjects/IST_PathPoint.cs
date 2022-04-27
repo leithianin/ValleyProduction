@@ -86,7 +86,6 @@ public class IST_PathPoint : Infrastructure
         PathManager.StartMovingPoint(this);
     }
 
-
     protected override void OnMoveObject()
     {
         PathManager.UpdateLineWhenMoving(this);

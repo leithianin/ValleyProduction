@@ -195,6 +195,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 toModify.pathPoints.RemoveAt(i);
                 i--;
             }
+            toModify.pathPoints[i].SetNormalMat();
         }
 
         for (int i = 0; i < toModify.pathPoints.Count - 1; i++)
@@ -754,13 +755,14 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pp"></param>
     public static void StartMovingPoint(IST_PathPoint pp)
     {
+        //ACTION A FAIRE ICI
         foreach (PathData pd in instance.pathDataList)
         {
             if (pd.ContainsPoint(pp))
             {
                 PathCreationManager.movingPathpoint = pp;
 
-                Debug.Log(PathCreationManager.movingPathpoint);
+                //Debug.Log(PathCreationManager.movingPathpoint);
 
                 ModifiedPath nModifedPath= new ModifiedPath();
 
