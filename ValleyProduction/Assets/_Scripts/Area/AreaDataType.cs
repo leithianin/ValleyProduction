@@ -1,4 +1,4 @@
-public enum AreaDataType
+public enum AreaDataType //HEATMAPSYST
 {
     Noise,
     Flora,

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ADI_AnimalDisplayer : AreaDisplay
+public class ADI_AnimalDisplayer : EcosystemDisplay
 {
     public int score = 0;
 

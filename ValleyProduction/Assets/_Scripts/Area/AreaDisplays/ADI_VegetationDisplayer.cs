@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ADI_VegetationDisplayer : AreaDisplay
+public class ADI_VegetationDisplayer : EcosystemDisplay
 {
     [Serializable]
     private class VegetationDisplayData

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AU_MakeSound : AreaUpdater<AU_MakeSound>
+public class AU_MakeSound : EcosystemAgent<AU_MakeSound>
 {
     /// <summary>
     /// Ajoute NewData à la data actuelle.

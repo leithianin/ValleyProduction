@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Obsolete]
 public class AreaManager : VLY_Singleton<AreaManager>
 {
     /// Dimensions de la map
@@ -17,7 +18,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     [SerializeField] private LayerMask areaDisplayMask;
     private Vector2 CenterPosition => new Vector2(transform.position.x, transform.position.z);
 
-    [SerializeField] private List<AreaUpdater> allUpdaters = new List<AreaUpdater>();
+    [SerializeField] private List<EcosystemAgent> allUpdaters = new List<EcosystemAgent>();
     private int updaterIndex;
     [SerializeField] private int numberDataToUpdateInFrame;
 
@@ -200,7 +201,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             for (int i = 0; i < numberDataToUpdateInFrame; i++)
             {
                 updaterIndex = (updaterIndex + 1) % allUpdaters.Count;
-                allUpdaters[updaterIndex].UpdateData();
+                //allUpdaters[updaterIndex].UpdateData();
             }
         }
 
@@ -220,7 +221,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Ajoute un AreaUpdater dans la liste.
     /// </summary>
     /// <param name="toAdd">L'AreaUpdater à ajouter.</param>
-    public static void AddAreaUpdater(AreaUpdater toAdd)
+    public static void AddAreaUpdater(EcosystemAgent toAdd)
     {
         if(!instance.allUpdaters.Contains(toAdd))
         {
@@ -232,11 +233,11 @@ public class AreaManager : VLY_Singleton<AreaManager>
     /// Retire un AreaUpdater de la liste.
     /// </summary>
     /// <param name="toAdd">L'AreaUpdater à retirer.</param>
-    public static void RemoveAreaUpdater(AreaUpdater toRemove)
+    public static void RemoveAreaUpdater(EcosystemAgent toRemove)
     {
         if (instance.allUpdaters.Contains(toRemove))
         {
-            toRemove.RemoveData();
+            //toRemove.RemoveData();
 
             instance.allUpdaters.Remove(toRemove);
 

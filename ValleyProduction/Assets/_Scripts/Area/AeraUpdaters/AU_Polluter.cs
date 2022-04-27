@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AU_Polluter : AreaUpdater<AU_Polluter>
+public class AU_Polluter : EcosystemAgent<AU_Polluter>
 {
     public override void SetData(AU_Polluter newData)
     {

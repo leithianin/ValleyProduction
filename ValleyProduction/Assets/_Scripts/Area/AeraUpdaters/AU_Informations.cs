@@ -7,9 +7,9 @@ public class AU_Informations : MonoBehaviour
     [SerializeField] private string structureName;
     [SerializeField] private string structureDescription;
 
-    public AreaUpdater AU_Sound;
-    public AreaUpdater AU_Plant;
-    public AreaUpdater AU_Polluter;
+    public EcosystemAgent AU_Sound;
+    public EcosystemAgent AU_Plant;
+    public EcosystemAgent AU_Polluter;
 
     public string GetName => structureName;
     public string GetDescription => structureDescription;

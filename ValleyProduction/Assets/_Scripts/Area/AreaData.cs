@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
-[Serializable]
+[Serializable, System.Obsolete]
 public abstract class AreaData
 {
     public bool needUpdate = false;

@@ -1,14 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public struct EcosystemGrid
+{
+    public AreaDataType scoreType;
+    public int[] scoreGridArray;
+}
+
+
 public class MaskRenderer : MonoBehaviour
 {
+    [Obsolete]
     private static List<Entity> entities;
-
+    [Obsolete]
     public static void RegisterEntity(Entity entity) { entities.Add(entity); }
 
-    //Properties
+    private List<EcosystemAgent> ecosystemAgents = new List<EcosystemAgent>();
+
+    #region Properties
     [SerializeField] private ComputeShader compute = null;
 
     [Range(64, 1024)] [SerializeField] public static int TextureSize = 64;
@@ -30,8 +42,9 @@ public class MaskRenderer : MonoBehaviour
     public Color MaskColor10;
 
     public RenderTexture maskTexture;
+    #endregion
 
-    //Shader properties cache
+    #region Shader properties cache
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
     private static readonly int entityCountId = Shader.PropertyToID("_EntityCount");
     private static readonly int mapSizeId = Shader.PropertyToID("_MapSize");
@@ -53,8 +66,9 @@ public class MaskRenderer : MonoBehaviour
 
     private static readonly int entityBufferId = Shader.PropertyToID("_EntityBuffer");
     private static readonly int pixelBufferId = Shader.PropertyToID("_PixelBuffer");
+    #endregion
 
-    //Entity data buffer
+    #region Entity data buffer
     private struct EntityBufferElement
     {
         public float PositionX;
@@ -66,14 +80,15 @@ public class MaskRenderer : MonoBehaviour
     private List<EntityBufferElement> bufferElements;
     private ComputeBuffer entityBuffer = null;
 
-    private struct PixelDataBufferElement
-    {
-        public float PositionX;
-        public float PositionY;
-        public float Value;
-    }
-    private int[] pixels;
+
+    [SerializeField] private List<EcosystemGrid> ecosystemGrids = new List<EcosystemGrid>();
+
     private ComputeBuffer pixelsBuffer = null;
+    #endregion
+
+    public List<EcosystemGrid> Grids => ecosystemGrids;
+
+    public List<EcosystemAgent> Agents => ecosystemAgents;
 
     private void Awake()
     {
@@ -110,7 +125,24 @@ public class MaskRenderer : MonoBehaviour
         Shader.SetGlobalFloat(mapSizeId, mapSize);
 
         bufferElements = new List<EntityBufferElement>();
-        pixels = new int[0];
+    }
+
+    private void Start()
+    {
+        Dictionary<Vector2Int, int> globalGrid = new Dictionary<Vector2Int, int>();
+
+        for(int x = 0; x < TextureSize ; x++)
+        {
+            for (int y = 0; y < TextureSize; y++)
+            {
+                globalGrid.Add(new Vector2Int(x, y), 0);
+            }
+        }
+
+        for (int i = 0; i < Enum.GetNames(typeof(AreaDataType)).Length; i ++)
+        {
+            ecosystemGrids.Add(new EcosystemGrid { scoreType = (AreaDataType)i , scoreGridArray = new int[(TextureSize * TextureSize)] }) ;
+        }
     }
 
     private void OnDestroy()
@@ -126,16 +158,16 @@ public class MaskRenderer : MonoBehaviour
     {
         bufferElements.Clear();
 
-        if (entities.Count > 0)
+        if (ecosystemAgents.Count > 0)
         {
-            foreach (Entity entity in entities)
+            foreach (EcosystemAgent agent in ecosystemAgents)
             {
                 EntityBufferElement element = new EntityBufferElement
                 {
-                    PositionX = entity.transform.position.x,
-                    PositionY = entity.transform.position.z,
-                    Range = entity.Range,
-                    Noise = entity.Noise
+                    PositionX = agent.transform.position.x,
+                    PositionY = agent.transform.position.z,
+                    Range = agent.Range,
+                    Noise = agent.GetScore()
                 };
                 bufferElements.Add(element);
             }
@@ -150,13 +182,38 @@ public class MaskRenderer : MonoBehaviour
 
             entityBuffer.SetData(bufferElements);
 
-            pixels = new int[pixelsBuffer.count];
+
+            int[] pixels = new int[pixelsBuffer.count];
 
             compute.SetInt(entityCountId, bufferElements.Count);
 
             compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
 
             pixelsBuffer.GetData(pixels);
+
+            pixels.CopyTo(ecosystemGrids[0].scoreGridArray, 0);
+        }
+    }
+
+    public int GetScoreAtPosition(Vector2 position, AreaDataType scoreType)
+    {
+        //HEATMAPSYST : Prendre en compte le ScoreType
+        return ecosystemGrids[0].scoreGridArray[(int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)];
+    }
+
+    public void AddAgent(EcosystemAgent toAdd)
+    {
+        if(!ecosystemAgents.Contains(toAdd))
+        {
+            ecosystemAgents.Add(toAdd);
+        }
+    }
+
+    public void RemoveAgent(EcosystemAgent toRemove)
+    {
+        if (ecosystemAgents.Contains(toRemove))
+        {
+            ecosystemAgents.Remove(toRemove);
         }
     }
 
@@ -168,6 +225,6 @@ public class MaskRenderer : MonoBehaviour
         Debug.Log("Nxt : ");
         Debug.Log((int)(positions.x * TextureSize / MapSize));
         Debug.Log((int)(positions.y * TextureSize / MapSize));
-        Debug.Log(pixels[(int)(positions.x * TextureSize / MapSize) * TextureSize + (int)(positions.y * TextureSize / MapSize)]);
+        Debug.Log(ecosystemGrids[0].scoreGridArray[(int)(positions.x * TextureSize / MapSize) * TextureSize + (int)(positions.y * TextureSize / MapSize)]);
     }
 }
