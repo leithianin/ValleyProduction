@@ -196,7 +196,7 @@ public class MaskRenderer : MonoBehaviour
 
             pixelsBuffer.GetData(ecosystemGrids[0].scoreGridArray);
 
-            Debug.Log(ecosystemAgents.Count);
+            //Debug.Log(ecosystemAgents.Count);
         }
     }
 
