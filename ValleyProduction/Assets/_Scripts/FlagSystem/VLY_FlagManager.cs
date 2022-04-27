@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 {
+    [SerializeField] private VLY_FlagList flagList;
+
     private static Dictionary<string, int> flags = new Dictionary<string, int>();
 
     public static Action<string, int> OnUpdateFlag;
@@ -13,12 +15,10 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
     {
         //Ajoute tous les flags existant
 
-        for(int i = 0; i < 1000; i++)
+        foreach(string flagName in flagList.Flags)
         {
-            flags.Add(i.ToString(), 0);
+            flags.Add(flagName, 0);
         }
-
-        flags.Add("RebuildBridge", 0);
     }
 
     public static void IncrementFlagValue(string flagName)
