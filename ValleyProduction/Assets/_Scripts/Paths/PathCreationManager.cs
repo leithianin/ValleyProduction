@@ -270,6 +270,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
                                 IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                         //Remplacer par le pathpoint Preview
+                                pathpoint.SetPreviewMat();
                                 UpdateData(pathpoint, vectors, false, pathPointList);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
 
@@ -301,6 +302,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
                                 IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                        //Remplacer par le pathpoint Preview
                                 UpdateData(pathpoint, vectors, true, pathPointList);
+                                pathpoint.SetPreviewMat();
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
                             }
                             else

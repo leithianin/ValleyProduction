@@ -113,6 +113,17 @@ public abstract class Infrastructure : MonoBehaviour
         OnStartMoveObject();
     }
 
+    public void SetPreviewMat()
+    {
+        //CODE Review : Faire un autre event pour le changement visuel ?
+        PlayOnMove?.Invoke();
+    }
+
+    public void SetNormalMat()
+    {
+        PlayOnReplace?.Invoke();
+    }
+
     /// <summary>
     /// Play the feedbacks and special actions when the object is moved.
     /// </summary>

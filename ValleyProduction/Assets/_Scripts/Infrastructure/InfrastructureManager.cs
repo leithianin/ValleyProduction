@@ -89,17 +89,10 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             instance.previewHandler.SetInfrastructurePreview(newPreview);
         }
     }
-    
+
     public static void PlaceInfrastructure(Vector3 positionToPlace)
     {
-        /*if(!instance.previewHandler.isRotating && instance.previewHandler.GetPreview.CanRotate)
-        {
-            instance.RotateInfrastructure(GetCurrentPreview, positionToPlace);
-        }
-        else
-        {*/
-            instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
-        //}
+        instance.PlaceInfrastructure(GetCurrentPreview, positionToPlace);
     }
 
     /// <summary>
@@ -173,7 +166,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     }
 
     /// <summary>
-    /// Déplace l'infrastructure lors du maintient du clic.
+    /// Dï¿½place l'infrastructure lors du maintient du clic.
     /// </summary>
     /// <param name="toMove"></param>
     public static void MoveInfrastructure(Infrastructure toMove)
@@ -191,9 +184,12 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
         {
             instance.previewHandler.SetInfrastructurePreview(toMove.Data.Preview);
+            instance.previewHandler.transform.rotation = toMove.transform.rotation;
         }
         else
         {
+            //Pathpoint
+            instance.currentSelectedStructure.MoveObject();
             OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
         }
     }
@@ -219,15 +215,30 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     }
 
     /// <summary>
-    /// Place l'infrastructure déplacé lorsqu'on lâche le maintient.
+    /// Place l'infrastructure dï¿½placï¿½ lorsqu'on lï¿½che le maintient.
     /// </summary>
     public static void ReplaceInfrastructure(Vector3 position)
     {
+        //Pathpoint
+        if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
+        {
+            instance.previewHandler.SetInfrastructurePreview(GetCurrentSelectedStructure.Data.Preview);
+        }
+
         if (GetCurrentPreview.CanPlaceObject(position))
         {
-            Destroy(instance.movedObject);
-
-            PlaceInfrastructure(position);
+            if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
+            {
+                Destroy(instance.movedObject);
+                PlaceInfrastructure(position);
+            }
+            else
+            {
+                //Pathpoint
+                instance.movedObject.layer = default;
+                instance.movedObject = null;
+                OnPlaceInfrastructure?.Invoke(GetCurrentSelectedStructure);
+            }
 
             instance.previewHandler.SetInfrastructurePreview(null);
 
@@ -268,9 +279,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     }
 
     /// <summary>
-    /// Sélectionne l'Infrastructure.
+    /// Sï¿½lectionne l'Infrastructure.
     /// </summary>
-    /// <param name="selectedStructure">L'Infrastructure à sélectionner.</param>
+    /// <param name="selectedStructure">L'Infrastructure ï¿½ sï¿½lectionner.</param>
     private void SelectInfrastructure(Infrastructure selectedStructure)
     {
         currentSelectedStructure = selectedStructure;
@@ -280,7 +291,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     }
 
     /// <summary>
-    /// Désélectionne l'Infrastructure.
+    /// Dï¿½sï¿½lectionne l'Infrastructure.
     /// </summary>
     public static void UnselectInfrastructure()
     {

@@ -22,6 +22,9 @@ public class PathManager : VLY_Singleton<PathManager>
     public static IST_PathPoint previousPathpoint = null;
     public static PathData pathDataToDelete = null;
 
+    //MOVE
+    private IST_PathPoint ppSaveMove;
+
     //Accesseur current Data
     public static PathData GetCurrentPathData => instance.currentPathData;
 
@@ -101,6 +104,11 @@ public class PathManager : VLY_Singleton<PathManager>
 
     public void ResetCurrentData()
     {
+        if(instance.ppSaveMove != null)
+        {
+            Destroy(instance.ppSaveMove.gameObject);
+        }
+
         instance.pathFragmentDataList.Clear();
         instance.pathpointList.Clear();
         instance.currentPathData = null;
@@ -195,6 +203,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 toModify.pathPoints.RemoveAt(i);
                 i--;
             }
+            toModify.pathPoints[i].SetNormalMat();
         }
 
         for (int i = 0; i < toModify.pathPoints.Count - 1; i++)
@@ -691,6 +700,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pp2"></param>
     public static void DebugBetween2Points(IST_PathPoint pp1, IST_PathPoint pp2)
     {
+        //CODE REVIEW : Need calculatePath pour le navmesh
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
 
         if (GetCurrentPathData != null)
@@ -760,8 +770,6 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 PathCreationManager.movingPathpoint = pp;
 
-                Debug.Log(PathCreationManager.movingPathpoint);
-
                 ModifiedPath nModifedPath= new ModifiedPath();
 
                 nModifedPath.pathData = pd;
@@ -776,8 +784,18 @@ public class PathManager : VLY_Singleton<PathManager>
                 //Get Path Navmesh + Save Data
 
                 PathCreationManager.ModifiedPaths.Add(nModifedPath);
+
+                //Copy le point en cours et mettre des linerenderers entre ce point et ses voisins
+                List<IST_PathPoint> ppList = pd.GetPointNextTo(pp);
+
+                foreach(IST_PathPoint ppConnected in ppList)
+                {
+                    DebugBetween2Points(pp, ppConnected);
+                }
             }
         }
+
+        instance.ppSaveMove = Instantiate(pp, pp.transform.position, Quaternion.identity);
     }
 
     /// <summary>
@@ -826,6 +844,14 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         NodePathProcess.UpdateAllNodes();
+
+        foreach(PathData pd in instance.pathDataList)
+        {
+            if(pd.ContainsPoint(pp))
+            {
+                pd.CheckMultiPath();
+            }
+        }
 
         instance.ResetCurrentData();
     }
