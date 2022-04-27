@@ -56,7 +56,7 @@ public class UIManager : VLY_Singleton<UIManager>
                     if (PathManager.HasManyPath(ist_pathpoint)) { ArrangePathButton(ist_pathpoint); }
                     else { InteractWithRoad(PathManager.GetPathData(ist_pathpoint)); }
                     break;
-                case AU_Informations au_informations:
+                case ECO_AGT_Informations au_informations:
                     InteractWithInfrastructure(au_informations);
                     break;
                 case VisitorBehavior visitorBehavior:
@@ -166,13 +166,13 @@ public class UIManager : VLY_Singleton<UIManager>
 
     #region Info Infrastructure
     //Show les informations des visiteurs on click
-    public static void InteractWithInfrastructure(AU_Informations infoInfra)
+    public static void InteractWithInfrastructure(ECO_AGT_Informations infoInfra)
     {
         HideShownGameObject();
         instance.ShowInfoInfrastructure(infoInfra);
     }
 
-    public void ShowInfoInfrastructure(AU_Informations AU_Inf)
+    public void ShowInfoInfrastructure(ECO_AGT_Informations AU_Inf)
     {
         OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         infrastructureInfo.ShowStructureInformation(AU_Inf);

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AD_Noise : AreaData<AU_MakeSound>
+[System.Obsolete]
+public class AD_Noise : AreaData<ECO_AGT_MakeSound>
 {
     /// <summary>
     /// NOTES :
@@ -14,19 +15,19 @@ public class AD_Noise : AreaData<AU_MakeSound>
     ///     On récupère alors toute ces données et on en calcul le score ICI.
     /// </summary>
     
-    private List<AU_MakeSound> noiseInArea = new List<AU_MakeSound>();
+    private List<ECO_AGT_MakeSound> noiseInArea = new List<ECO_AGT_MakeSound>();
 
-    public override AreaDataType GetDataType()
+    public override EcosystemDataType GetDataType()
     {
-        return AreaDataType.Noise;
+        return EcosystemDataType.Noise;
     }
 
-    protected override void OnAddData(AU_MakeSound data)
+    protected override void OnAddData(ECO_AGT_MakeSound data)
     {
         noiseInArea.Add(data);
     }
 
-    protected override void OnRemoveData(AU_MakeSound data)
+    protected override void OnRemoveData(ECO_AGT_MakeSound data)
     {
         noiseInArea.Remove(data);
     }

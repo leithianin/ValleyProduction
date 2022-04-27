@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete]
 public class ChunkDisplayer : MonoBehaviour
 {
     [SerializeField] private List<MeshRenderer> meshes = new List<MeshRenderer>();

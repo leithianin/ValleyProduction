@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
-[Serializable]
+[Serializable, System.Obsolete]
 public abstract class AreaData
 {
     public bool needUpdate = false;
@@ -26,7 +26,7 @@ public abstract class AreaData
     /// Renvoit le type de data pris en compte par le script.
     /// </summary>
     /// <returns>Type de data géré par le script.</returns>
-    public abstract AreaDataType GetDataType();
+    public abstract EcosystemDataType GetDataType();
 
     /// <summary>
     /// Calcule le score.
@@ -58,7 +58,7 @@ public abstract class AreaData
 /// Gère le calcul du score à partir des objets de type T contenant la data (Exemple : voir le AD_Noise (système de bruit))
 /// </summary>
 /// <typeparam name="T">Type d'objet à prendre en compte.</typeparam>
-[Serializable]
+[Serializable,Obsolete]
 public abstract class AreaData<T> : AreaData
 {
     /// <summary>
