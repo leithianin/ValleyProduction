@@ -189,6 +189,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
         {
             instance.previewHandler.SetInfrastructurePreview(toMove.Data.Preview);
+            instance.previewHandler.transform.rotation = toMove.transform.rotation;
         }
         else
         {
