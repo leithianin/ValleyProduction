@@ -6,7 +6,7 @@ public class VLY_EcosystemManager : VLY_Singleton<VLY_EcosystemManager>
 {
     [SerializeField] private MaskRenderer heatmapHandler;
 
-    public static int GetScoreAtPosition(Vector2 position, AreaDataType scoreType)
+    public static int GetScoreAtPosition(Vector2 position, EcosystemDataType scoreType)
     {
         return instance.heatmapHandler.GetScoreAtPosition(position, scoreType);
     }
@@ -26,6 +26,6 @@ public class VLY_EcosystemManager : VLY_Singleton<VLY_EcosystemManager>
     [ContextMenu("Test get Noise score of transform")]
     public void Test()
     {
-        Debug.Log(GetScoreAtPosition(new Vector2(transformTest.position.x, transformTest.position.z), AreaDataType.Noise));
+        Debug.Log(GetScoreAtPosition(new Vector2(transformTest.position.x, transformTest.position.z), EcosystemDataType.Noise));
     }
 }

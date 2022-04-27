@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public struct EcosystemGrid
 {
-    public AreaDataType scoreType;
+    public EcosystemDataType scoreType;
     public int[] scoreGridArray;
 }
 
@@ -23,7 +23,7 @@ public class MaskRenderer : MonoBehaviour
     #region Properties
     [SerializeField] private ComputeShader compute = null;
 
-    [Range(64, 1024)] [SerializeField] public static int TextureSize = 64;
+    [Range(64, 1024)] [SerializeField] public static int TextureSize = 128;
     [SerializeField] private float mapSize = 0;
     public float MapSize => mapSize;
 
@@ -139,10 +139,14 @@ public class MaskRenderer : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < Enum.GetNames(typeof(AreaDataType)).Length; i ++)
+        for (int i = 0; i < Enum.GetNames(typeof(EcosystemDataType)).Length; i ++)
         {
-            ecosystemGrids.Add(new EcosystemGrid { scoreType = (AreaDataType)i , scoreGridArray = new int[(TextureSize * TextureSize)] }) ;
+            ecosystemGrids.Add(new EcosystemGrid { scoreType = (EcosystemDataType)i , scoreGridArray = new int[(TextureSize * TextureSize)] }) ;
         }
+
+        pixelsBuffer = new ComputeBuffer((TextureSize * TextureSize), sizeof(int));
+
+        compute.SetBuffer(0, pixelBufferId, pixelsBuffer);
     }
 
     private void OnDestroy()
@@ -172,30 +176,25 @@ public class MaskRenderer : MonoBehaviour
                 bufferElements.Add(element);
             }
 
-            entityBuffer?.Release();
-            pixelsBuffer?.Release();
             entityBuffer = new ComputeBuffer(bufferElements.Count * 4, sizeof(float));
-            pixelsBuffer = new ComputeBuffer((TextureSize * TextureSize), sizeof(int));
 
             compute.SetBuffer(0, entityBufferId, entityBuffer);
-            compute.SetBuffer(0, pixelBufferId, pixelsBuffer);
 
             entityBuffer.SetData(bufferElements);
-
-
-            int[] pixels = new int[pixelsBuffer.count];
 
             compute.SetInt(entityCountId, bufferElements.Count);
 
             compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
 
-            pixelsBuffer.GetData(pixels);
+            pixelsBuffer.GetData(ecosystemGrids[0].scoreGridArray);
 
-            pixels.CopyTo(ecosystemGrids[0].scoreGridArray, 0);
+            Debug.Log(ecosystemAgents.Count);
         }
     }
 
-    public int GetScoreAtPosition(Vector2 position, AreaDataType scoreType)
+
+
+    public int GetScoreAtPosition(Vector2 position, EcosystemDataType scoreType)
     {
         //HEATMAPSYST : Prendre en compte le ScoreType
         return ecosystemGrids[0].scoreGridArray[(int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)];

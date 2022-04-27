@@ -23,11 +23,11 @@ public class AreaManager : VLY_Singleton<AreaManager>
     [SerializeField] private int numberDataToUpdateInFrame;
 
     [SerializeField] private Transform treeScoreHandler;
-    [SerializeField] private ADI_VegetationDisplayer treeScorePrefab;
+    [SerializeField] private ECO_DIS_VegetationDisplayer treeScorePrefab;
 
     [SerializeField] private Transform animalScoreHandler;
-    [SerializeField] private List<ADI_AnimalDisplayer> animalScorePrefab;
-    [SerializeField] private List<ADI_AnimalDisplayer> allAnimalDisplayers = new List<ADI_AnimalDisplayer>(); //TEMP
+    [SerializeField] private List<ECO_DIS_AnimalDisplayer> animalScorePrefab;
+    [SerializeField] private List<ECO_DIS_AnimalDisplayer> allAnimalDisplayers = new List<ECO_DIS_AnimalDisplayer>(); //TEMP
 
     [SerializeField] private Transform chunkHandler;
     [SerializeField] private ChunkDisplayer chunkDisplayerPrefab;
@@ -84,7 +84,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
         {
             for (int j = 0; j < gridDimension.y; j++)
             {
-                ADI_VegetationDisplayer vegetation = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
+                ECO_DIS_VegetationDisplayer vegetation = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ECO_DIS_VegetationDisplayer>();
                 vegetation.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 vegetation.SetTrees();
             }
@@ -107,7 +107,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
         {
             for (int j = 0; j < gridDimension.y; j++)
             {
-                ADI_VegetationDisplayer go = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ADI_VegetationDisplayer>();
+                ECO_DIS_VegetationDisplayer go = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ECO_DIS_VegetationDisplayer>();
                 go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 go.SetTrees();
             }
@@ -134,7 +134,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 for (int l = 0; l < animalScorePrefab.Count; l++)
                 {
-                    ADI_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ADI_AnimalDisplayer>();
+                    ECO_DIS_AnimalDisplayer go = Instantiate(animalScorePrefab[l].gameObject, animalScoreHandler).GetComponent<ECO_DIS_AnimalDisplayer>();
                     allAnimalDisplayers.Add(go); //TEMP
                     go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
                 }

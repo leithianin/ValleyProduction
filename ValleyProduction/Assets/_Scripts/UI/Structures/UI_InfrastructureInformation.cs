@@ -12,7 +12,7 @@ public class UI_InfrastructureInformation : MonoBehaviour
     [SerializeField] private TMP_Text noiseScoreDisplay;
     [SerializeField] private TMP_Text floraScoreDisplay;
 
-    public void ShowStructureInformation(AU_Informations informationToShow)
+    public void ShowStructureInformation(ECO_AGT_Informations informationToShow)
     {
         nameDisplay.text = informationToShow.GetName;
         descriptionDisplay.text = informationToShow.GetDescription;
