@@ -30,18 +30,9 @@ public class MaskRenderer : MonoBehaviour
     [SerializeField] private float BlendDistance = 4.0f;
 
     public Gradient NoiseGradient;
-
-    public Color MaskColor0;
-    public Color MaskColor1;
-    public Color MaskColor2;
-    public Color MaskColor3;
-    public Color MaskColor4;
-    public Color MaskColor5;
-    public Color MaskColor6;
-    public Color MaskColor7;
-    public Color MaskColor8;
-    public Color MaskColor9;
-    public Color MaskColor10;
+    public Gradient PollutionGradient;
+    public Gradient FaunaGradient;
+    public Gradient FloraGradient;
 
     public RenderTexture noiseTexture;
     public RenderTexture pollutionTexture;
@@ -55,17 +46,17 @@ public class MaskRenderer : MonoBehaviour
     private static readonly int mapSizeId = Shader.PropertyToID("_MapSize");
     private static readonly int blendId = Shader.PropertyToID("_Blend");
 
-    private static readonly int color0Id = Shader.PropertyToID("_Color0");
-    private static readonly int color1Id = Shader.PropertyToID("_Color1");
-    private static readonly int color2Id = Shader.PropertyToID("_Color2");
-    private static readonly int color3Id = Shader.PropertyToID("_Color3");
-    private static readonly int color4Id = Shader.PropertyToID("_Color4");
-    private static readonly int color5Id = Shader.PropertyToID("_Color5");
-    private static readonly int color6Id = Shader.PropertyToID("_Color6");
-    private static readonly int color7Id = Shader.PropertyToID("_Color7");
-    private static readonly int color8Id = Shader.PropertyToID("_Color8");
-    private static readonly int color9Id = Shader.PropertyToID("_Color9");
-    private static readonly int color10Id = Shader.PropertyToID("_Color10");
+    private static readonly int noiseColor0Id = Shader.PropertyToID("_NoiseColor0");
+    private static readonly int noiseColor1Id = Shader.PropertyToID("_NoiseColor1");
+    private static readonly int noiseColor2Id = Shader.PropertyToID("_NoiseColor2");
+    private static readonly int noiseColor3Id = Shader.PropertyToID("_NoiseColor3");
+    private static readonly int noiseColor4Id = Shader.PropertyToID("_NoiseColor4");
+    private static readonly int noiseColor5Id = Shader.PropertyToID("_NoiseColor5");
+    private static readonly int noiseColor6Id = Shader.PropertyToID("_NoiseColor6");
+    private static readonly int noiseColor7Id = Shader.PropertyToID("_NoiseColor7");
+    private static readonly int noiseColor8Id = Shader.PropertyToID("_NoiseColor8");
+    private static readonly int noiseColor9Id = Shader.PropertyToID("_NoiseColor9");
+    private static readonly int noiseColor10Id = Shader.PropertyToID("_NoiseColor10");
 
     private static readonly int noiseTextureId = Shader.PropertyToID("_NoiseTex");
     private static readonly int pollutionTextureId = Shader.PropertyToID("_PollutionTex");
@@ -117,17 +108,17 @@ public class MaskRenderer : MonoBehaviour
 
         compute.SetFloat(blendId, BlendDistance);
 
-        compute.SetVector(color0Id, MaskColor0);
-        compute.SetVector(color1Id, MaskColor1);
-        compute.SetVector(color2Id, MaskColor2);
-        compute.SetVector(color3Id, MaskColor3);
-        compute.SetVector(color4Id, MaskColor4);
-        compute.SetVector(color5Id, MaskColor5);
-        compute.SetVector(color6Id, MaskColor6);
-        compute.SetVector(color7Id, MaskColor7);
-        compute.SetVector(color8Id, MaskColor8);
-        compute.SetVector(color9Id, MaskColor9);
-        compute.SetVector(color10Id, MaskColor10);
+        compute.SetVector(noiseColor0Id, NoiseGradient.Evaluate(0));
+        compute.SetVector(noiseColor1Id, NoiseGradient.Evaluate(0.1f));
+        compute.SetVector(noiseColor2Id, NoiseGradient.Evaluate(0.2f));
+        compute.SetVector(noiseColor3Id, NoiseGradient.Evaluate(0.3f));
+        compute.SetVector(noiseColor4Id, NoiseGradient.Evaluate(0.4f));
+        compute.SetVector(noiseColor5Id, NoiseGradient.Evaluate(0.5f));
+        compute.SetVector(noiseColor6Id, NoiseGradient.Evaluate(0.6f));
+        compute.SetVector(noiseColor7Id, NoiseGradient.Evaluate(0.7f));
+        compute.SetVector(noiseColor8Id, NoiseGradient.Evaluate(0.8f));
+        compute.SetVector(noiseColor9Id, NoiseGradient.Evaluate(0.9f));
+        compute.SetVector(noiseColor10Id, NoiseGradient.Evaluate(1));
 
         Shader.SetGlobalTexture(noiseTextureId, noiseTexture);
         Shader.SetGlobalFloat(mapSizeId, mapSize);
@@ -195,8 +186,6 @@ public class MaskRenderer : MonoBehaviour
             compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
 
             pixelsBuffer.GetData(ecosystemGrids[0].scoreGridArray);
-
-            Debug.Log(ecosystemAgents.Count);
         }
     }
 
