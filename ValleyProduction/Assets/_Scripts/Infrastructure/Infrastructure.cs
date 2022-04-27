@@ -115,7 +115,6 @@ public abstract class Infrastructure : MonoBehaviour
 
     public void SetNormalMat()
     {
-        Debug.Log("bb");
         PlayOnReplace?.Invoke();
     }
 

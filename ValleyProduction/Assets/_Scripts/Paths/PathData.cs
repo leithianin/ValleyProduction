@@ -325,8 +325,6 @@ public class PathData
                 pp.GetManageMultiPath.SetRegisterPathFragment(pathFragmentList);
             }
         }
-
-        
     }
     #endregion
 

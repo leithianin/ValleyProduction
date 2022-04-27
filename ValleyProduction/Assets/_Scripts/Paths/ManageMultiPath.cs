@@ -136,4 +136,18 @@ public class ManageMultiPath : MonoBehaviour
     {
         prefabCairn.SetActive(false);
     }
+
+    public void CheckIfMultiPath()
+    {
+        if(multiPathList.Count>0)
+        {
+            foreach(MultiPathClass mpc in multiPathList)
+            {
+                Destroy(mpc.arrowTag);
+            }
+
+            multiPathList.Clear();
+            nbArrow = 0;
+        }
+    }
 }

@@ -83,6 +83,7 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnStartMoveObject()
     {
+        manageMultiPath.CheckIfMultiPath();
         PathManager.StartMovingPoint(this);
     }
 
@@ -93,6 +94,7 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnReplaceObject()
     {
+        //Update Panneau direction
         node.PlaceNode();
         PathManager.UpdateAfterMoving(this);
     }
