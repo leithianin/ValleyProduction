@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+[Serializable, System.Obsolete]
 public class Area
 {
     /// Liste des différents types de datas prit en compte dans l'Area.
@@ -52,14 +52,14 @@ public class Area
         {
             GameObject obj = hitColliders[i].gameObject;
 
-            AreaDisplay[] displays = obj.GetComponents<AreaDisplay>();
+            EcosystemDisplay[] displays = obj.GetComponents<EcosystemDisplay>();
 
             for (int j = 0; j < displays.Length; j++)
             {
                 //Debug.Log(AreaManager.GetAreaAtPosition(displays[j].transform.position).worldPosition.ToString("F4"));
                 if (AreaManager.GetAreaAtPosition(displays[j].Position) == this)
                 {
-                    displays[j].AffectToArea(datas);
+                    //displays[j].AffectToArea(datas);
                     //hitColliders[i].enabled = false;
                 }
             }

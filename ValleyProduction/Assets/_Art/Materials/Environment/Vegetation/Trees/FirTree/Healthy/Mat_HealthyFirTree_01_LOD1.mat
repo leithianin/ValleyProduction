@@ -34,7 +34,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_HealthyFirTree_01_LOD1
-  m_Shader: {fileID: -6465566751694194690, guid: 2e1c2e788f598c145bcd84f22f95d15a, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
   m_ShaderKeywords: _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -54,12 +54,40 @@ Material:
         m_Texture: {fileID: 2800000, guid: 1538f557b76849b4590bbd3b60df7594, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - FaunaMapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - FloraMapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - MainTex:
+        m_Texture: {fileID: 2800000, guid: 1538f557b76849b4590bbd3b60df7594, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NoiseMapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - NormalMap:
         m_Texture: {fileID: 2800000, guid: 4db6e6f80ff412e4daf7d03a38b3563c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - OcclusionMap:
         m_Texture: {fileID: 2800000, guid: cd87d1a569ec4c74cbcda68b2c617468, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - PollutionMapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RMA:
+        m_Texture: {fileID: 2800000, guid: 95037dc205769e54f96665866c961b06, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
@@ -114,6 +142,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaunaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FloraTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _HeightMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -142,6 +178,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 53ffabac976fae74c942b3c38eff8a55, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 2800000, guid: 38a0e914edd72dc4ea7fdd85ce859e16, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -155,6 +195,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PollutionTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -200,15 +244,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - AmbientOcclusionIntensity: 0.1
+    - DitherOffset: 5
+    - DitherRange: 0.2
+    - EmissiveIntensity: 0
+    - HEATMAP_INDEX: 0
+    - HeatmapIndex: 0
     - ISTOUCHED: 0
     - Intensity_Ambient_Occlusion: 0.1
+    - Modifier: 0
+    - NIGHT_MODE: 0
     - RENDER_HEATMAP: 0
+    - SQUASH_ANIM: 0
+    - SetRadius: 1
+    - SetSquashCurve: 0
+    - SetSquashEffect: 0
+    - SetStretchCurve: 0
+    - SetStretchEffect: 0
     - ShakeDensity: 0.14
     - ShakeMaskGradient: 8
     - ShakeMaskHeight: 0
     - ShakeSpeed: 25
     - ShakeStrength: 1
     - Smoothness: 0
+    - SquashAnim: 0
     - WindDensity: 0.31
     - WindMaskGradient: 2.5
     - WindMaskHeight: -0.4
@@ -337,6 +396,7 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
+    - _WIND: 0
     - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 4
