@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,13 @@ using UnityEngine.Events;
 public class InterestPoint : MonoBehaviour
 {
     [SerializeField] private InteractionSpot[] interactions;
+
+    public Action<InterestPoint> OnDisableInterestPoint;
+
+    public void DisableInterestPoint()
+    {
+        OnDisableInterestPoint?.Invoke(this);
+    }
 
     public bool IsUsable(CPN_InteractionHandler interactor)
     {
@@ -40,7 +48,7 @@ public class InterestPoint : MonoBehaviour
 
         if (usableInteractions.Count > 0)
         {
-            return usableInteractions[Random.Range(0, usableInteractions.Count)];
+            return usableInteractions[UnityEngine.Random.Range(0, usableInteractions.Count)];
         }
         return null;
     }

@@ -380,13 +380,23 @@ public class PathNode : MonoBehaviour
             attractivityScore += fragmentToCalculate.InterestPointsOnFragment[i].GetAttractivityScore(likedTypes, hatedTypes);
         }
 
-        if(attractivityScore < 0)
+        if(distanceScore >= 100)
+        {
+            attractivityScore = 150;
+        }
+        else if (attractivityScore > 100)
+        {
+            attractivityScore = 100;
+        }
+        else if (attractivityScore < 0)
         {
             attractivityScore = 0;
         }
 
         if (fragmentOpen)
         {
+            Debug.Log(attractivityScore + " + " + distanceScore);
+
             return attractivityScore + distanceScore;
         }
         else
@@ -394,30 +404,5 @@ public class PathNode : MonoBehaviour
             return -5f;
         }
     }
-
     #endregion
-
-    /*
-    private void OnDrawGizmos()
-    {
-        if (Selection.activeGameObject != transform.gameObject)
-        {
-            return;
-        }
-
-        int i = 0;
-
-        PathNode parent = this;
-
-        while (i < 100 && parent != null)
-        {
-            i++;
-            PathNode lastParent = parent;
-            parent = parent.dataByLandmark[1].parent;
-            if (parent != null)
-            {
-                Gizmos.DrawLine(lastParent.WorldPosition, parent.WorldPosition);
-            }
-        }
-    }*/
 }
