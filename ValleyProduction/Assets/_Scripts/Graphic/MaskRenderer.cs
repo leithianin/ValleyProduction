@@ -3,13 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public struct EcosystemGrid
-{
-    public EcosystemDataType scoreType;
-    public int[] scoreGridArray;
-}
-
 
 public class MaskRenderer : MonoBehaviour
 {
@@ -121,12 +114,10 @@ public class MaskRenderer : MonoBehaviour
     private ComputeBuffer entityBuffer = null;
 
 
-    [SerializeField] private List<EcosystemGrid> ecosystemGrids = new List<EcosystemGrid>();
+    [SerializeField] private int[] ecosystemGrids;
 
     private ComputeBuffer pixelsBuffer = null;
     #endregion
-
-    public List<EcosystemGrid> Grids => ecosystemGrids;
 
     public List<EcosystemAgent> Agents => ecosystemAgents;
 
@@ -245,6 +236,7 @@ public class MaskRenderer : MonoBehaviour
         Shader.SetGlobalFloat(mapSizeId, mapSize);
 
         bufferElements = new List<EntityBufferElement>();
+        ecosystemGrids = new int[(TextureSize * TextureSize) * 4];
     }
 
     private void Start()
@@ -257,11 +249,6 @@ public class MaskRenderer : MonoBehaviour
             {
                 globalGrid.Add(new Vector2Int(x, y), 0);
             }
-        }
-
-        for (int i = 0; i < Enum.GetNames(typeof(EcosystemDataType)).Length; i ++)
-        {
-            ecosystemGrids.Add(new EcosystemGrid { scoreType = (EcosystemDataType)i , scoreGridArray = new int[(TextureSize * TextureSize)] }) ;
         }
 
         pixelsBuffer = new ComputeBuffer((TextureSize * TextureSize) * 4, sizeof(int));
@@ -309,25 +296,13 @@ public class MaskRenderer : MonoBehaviour
 
             compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
 
-            int[] rawData = new int[(TextureSize * TextureSize) * 4];
-
-            pixelsBuffer.GetData(rawData);
-
-            for (int i = 0; i < rawData.Length; i += 4)
-            {
-                ecosystemGrids[0].scoreGridArray[Mathf.FloorToInt(i / 4)] = rawData[i]; //Noise
-                ecosystemGrids[1].scoreGridArray[Mathf.FloorToInt(i / 4)] = rawData[i + 1];//Pollution
-                ecosystemGrids[2].scoreGridArray[Mathf.FloorToInt(i / 4)] = rawData[i + 2];
-                ecosystemGrids[3].scoreGridArray[Mathf.FloorToInt(i / 4)] = rawData[i + 3];
-            }
-
-            //pixelsBuffer.GetData(ecosystemGrids[0].scoreGridArray);
+            pixelsBuffer.GetData(ecosystemGrids);
         }
     }
+
     public int GetScoreAtPosition(Vector2 position, EcosystemDataType scoreType)
     {
-        //HEATMAPSYST : Prendre en compte le ScoreType
-        return ecosystemGrids[(int)scoreType].scoreGridArray[(int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)];
+        return ecosystemGrids[((int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)) * 4 + (int)scoreType];
     }
 
     public void AddAgent(EcosystemAgent toAdd)
@@ -354,6 +329,6 @@ public class MaskRenderer : MonoBehaviour
         Debug.Log("Nxt : ");
         Debug.Log((int)(positions.x * TextureSize / MapSize));
         Debug.Log((int)(positions.y * TextureSize / MapSize));
-        Debug.Log(ecosystemGrids[0].scoreGridArray[(int)(positions.x * TextureSize / MapSize) * TextureSize + (int)(positions.y * TextureSize / MapSize)]);
+        //Debug.Log(ecosystemGrids[0].scoreGridArray[(int)(positions.x * TextureSize / MapSize) * TextureSize + (int)(positions.y * TextureSize / MapSize)]);
     }
 }

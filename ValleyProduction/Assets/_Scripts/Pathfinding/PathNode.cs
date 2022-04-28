@@ -395,8 +395,6 @@ public class PathNode : MonoBehaviour
 
         if (fragmentOpen)
         {
-            Debug.Log(attractivityScore + " + " + distanceScore);
-
             return attractivityScore + distanceScore;
         }
         else
