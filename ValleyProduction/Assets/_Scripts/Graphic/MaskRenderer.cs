@@ -194,7 +194,7 @@ public class MaskRenderer : MonoBehaviour
     public int GetScoreAtPosition(Vector2 position, EcosystemDataType scoreType)
     {
         //HEATMAPSYST : Prendre en compte le ScoreType
-        return ecosystemGrids[0].scoreGridArray[(int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)];
+        return ecosystemGrids[(int)scoreType].scoreGridArray[(int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)];
     }
 
     public void AddAgent(EcosystemAgent toAdd)

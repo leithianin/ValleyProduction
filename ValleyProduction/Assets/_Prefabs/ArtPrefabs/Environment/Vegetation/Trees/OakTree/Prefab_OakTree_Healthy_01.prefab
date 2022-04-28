@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 3707500937226023476}
   - component: {fileID: 1384855667979930405}
   - component: {fileID: 5737507716250037085}
+  - component: {fileID: 7365099682999163448}
   m_Layer: 0
   m_Name: Prefab_OakTree_Healthy_01
   m_TagString: Untagged
@@ -181,11 +182,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376275344081132500}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 0
   scoreProduced: 0
 --- !u!114 &5737507716250037085
 MonoBehaviour:
@@ -224,6 +226,26 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   isSet: 1
+--- !u!114 &7365099682999163448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376275344081132500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db629cc581bf694a8864418bfacaafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreData:
+  - dataTypeToCheck: 0
+    wantedScore: 5
+    needHigher: 0
+    score: 0
+  collider: {fileID: 0}
+  trees:
+  - {fileID: 5737507716250037085}
 --- !u!1001 &1001612078845791688
 PrefabInstance:
   m_ObjectHideFlags: 0
