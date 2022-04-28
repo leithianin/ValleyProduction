@@ -9,6 +9,8 @@ public abstract class EcosystemAgent : MonoBehaviour
     public float Range => range;
 
     public abstract float GetScore();
+
+    public abstract EcosystemDataType UsedDataType();
 }
 
 /// <summary>
