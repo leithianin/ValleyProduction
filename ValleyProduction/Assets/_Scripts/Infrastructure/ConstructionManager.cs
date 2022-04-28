@@ -124,6 +124,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
             else                             { instance.OnUnselectOneMore?.Invoke(); }
         }
 
+        instance.IsMovingPathpoint();
         InfrastructureManager.SetCurrentSelectedStructureToNull();                                                          //Reset CurrentSelectedStructure
         instance.OnSelectInfrastructureType(null);
     }
@@ -161,7 +162,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     {
         InfrastructureManager.ChooseInfrastructure(null);
 
-        switch(selectedStructureType)
+        switch (selectedStructureType)
         {
             case InfrastructureType.Path:
                 PathManager.CreatePathData();
@@ -172,5 +173,17 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
         selectedStructureType = InfrastructureType.None;
         selectedStructureData = null;
+    }
+
+    /// <summary>
+    /// Check avant d'Unselect le tool si j'étais entrain de bouger un pathpoint, si Oui le mettre à sa position d'avant
+    /// </summary>
+    private void IsMovingPathpoint()
+    {
+        if (PathManager.GetppSaveMove != null)
+        {
+            PathCreationManager.CancelMovingAction();
+            InfrastructureManager.ReplaceInfrastructure(PathManager.GetppSaveMove.transform.position);
+        }
     }
 }

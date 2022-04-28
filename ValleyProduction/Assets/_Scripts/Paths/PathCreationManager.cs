@@ -51,6 +51,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     [Header("Modify Button")]
     public List<ModifiedPath> modifiedPaths = new List<ModifiedPath>();
     public static List<ModifiedPath> ModifiedPaths => instance.modifiedPaths;
+    public static List<ModifiedPath> baseModifiedPath = new List<ModifiedPath>();
     public static IST_PathPoint movingPathpoint;
     public static bool isModifyPath = false;
     private float distance = 0f;
@@ -59,6 +60,8 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public PathRendererManager pathRendererManager;
 
     public IST_PathPoint testPathpoint;
+
+    public bool isCancel = false;
 
     //public static List<AdditionalPathpointClass> GetAdditionnalPoints => instance.additionalPathpointList;
 
@@ -94,6 +97,13 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         instance.additionalPathpointList.Clear();
         ModifyList.Clear();*/
         instance.modifiedPaths.Clear();
+    }
+
+    public static void CancelMovingAction()
+    {
+        //Remove directly in instance.modifiedPaths.Additional ... 
+        instance.isCancel = true;
+        instance.modifiedPaths.RemoveRange(1, instance.modifiedPaths.Count-1);
     }
 
     public List<Vector3> CalculateNavmesh(Vector3 startPoint, Vector3 endPoint)
@@ -180,7 +190,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             AddMarkers(navmeshPositionsList, i, pathModified.modifyList[i].inverse, pathModified.additionalPathpointList, pathModified.pathPoints);
 
             //DebugNavmesh();
-
             ShowPathLine(navmeshPositionsList, pathModified.modifyList[i].modifyLinesRenderer);
         }
     }
@@ -389,6 +398,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         LineRenderer lineRenderer;
         if (rendererLine != null) 
         {
+            Debug.Log("Line pas null");
             lineRenderer = rendererLine;
         }
         else
@@ -406,6 +416,22 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         {
             lineRenderer.positionCount++;
             lineRenderer.SetPosition(lineRenderer.positionCount - 1, new Vector3(vec.x, vec.y + 0.25f, vec.z));
+        }
+    }
+
+    public static void CompareModifiedList()
+    {
+        foreach(ModifiedPath mp in ModifiedPaths)
+        {
+            foreach(AdditionalPathpointClass apc in mp.additionalPathpointList)
+            {
+                foreach(IST_PathPoint pp in apc.pathpointList)
+                {
+                    PathManager.instance.pathpointList.Remove(pp);
+                    Destroy(pp.gameObject);
+                    //apc.pathpointList.Remove(pp);
+                }
+            }
         }
     }
 }

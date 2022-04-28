@@ -196,6 +196,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void CancelMoveStructure()
     {
+        //CODE REVIEW : PLUS UTILISE ?
         GameObject saveObject = instance.movedObject;
 
         TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));
@@ -236,6 +237,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             {
                 //Pathpoint
                 instance.movedObject.layer = default;
+                instance.movedObject.transform.position = position;
                 instance.movedObject = null;
                 OnPlaceInfrastructure?.Invoke(GetCurrentSelectedStructure);
             }
