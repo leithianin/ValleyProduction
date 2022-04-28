@@ -17,6 +17,42 @@ float4 _NoiseColor8;
 float4 _NoiseColor9;
 float4 _NoiseColor10;
 
+float4 _PollutionColor0;
+float4 _PollutionColor1;
+float4 _PollutionColor2;
+float4 _PollutionColor3;
+float4 _PollutionColor4;
+float4 _PollutionColor5;
+float4 _PollutionColor6;
+float4 _PollutionColor7;
+float4 _PollutionColor8;
+float4 _PollutionColor9;
+float4 _PollutionColor10;
+
+float4 _FaunaColor0;
+float4 _FaunaColor1;
+float4 _FaunaColor2;
+float4 _FaunaColor3;
+float4 _FaunaColor4;
+float4 _FaunaColor5;
+float4 _FaunaColor6;
+float4 _FaunaColor7;
+float4 _FaunaColor8;
+float4 _FaunaColor9;
+float4 _FaunaColor10;
+
+float4 _FloraColor0;
+float4 _FloraColor1;
+float4 _FloraColor2;
+float4 _FloraColor3;
+float4 _FloraColor4;
+float4 _FloraColor5;
+float4 _FloraColor6;
+float4 _FloraColor7;
+float4 _FloraColor8;
+float4 _FloraColor9;
+float4 _FloraColor10;
+
 StructuredBuffer<float> _EntityBuffer;
 RWStructuredBuffer<int> _PixelBuffer;
 
@@ -28,38 +64,86 @@ RWTexture2D<float4> _FloraTex;
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-    float val = 0.0f;
+    float noiseVal = 0.0f;
+    float pollutionVal = 0.0f;
+    float faunaVal = 0.0f;
+    float floraVal = 0.0f;
+    int entityBufferSize = 7;
 
     float2 texelUVPos = id.xy / (float)_TextureSize;
     float2 texelWorldPos = (_MapSize * texelUVPos);
 
     for (int i = 0; i < _EntityCount; i++)
     {
-        float2 entityWorldPos = float2(_EntityBuffer[4 * i], _EntityBuffer[4 * i + 1]);
+        float2 entityWorldPos = float2(_EntityBuffer[entityBufferSize * i + 0], _EntityBuffer[entityBufferSize * i + 1]);
         float distance = length(texelWorldPos - entityWorldPos);
 
-        float noiseVal = smoothstep(_EntityBuffer[4 * i + 2] + _Blend, _EntityBuffer[4 * i + 2], distance);
+        float gradientVal = smoothstep(_EntityBuffer[entityBufferSize * i + 2] + _Blend, _EntityBuffer[entityBufferSize * i + 2], distance);
+        //float plainVal = smoothstep(_EntityBuffer[entityBufferSize * i + 2] + 0, _EntityBuffer[entityBufferSize * i + 2], distance);
 
         if (distance > 100)
         {
-            noiseVal = 0;
+            gradientVal = 0;
+            //plainVal = 0;
         }
 
-        //val = max(val, noiseVal * _EntityBuffer[4 * i + 3]);
-        val += noiseVal * _EntityBuffer[4 * i + 3];
+        noiseVal += gradientVal * _EntityBuffer[entityBufferSize * i + 3];
+        pollutionVal += gradientVal * _EntityBuffer[entityBufferSize * i + 4];
+        faunaVal += gradientVal * _EntityBuffer[entityBufferSize * i + 5];
+        floraVal += gradientVal * _EntityBuffer[entityBufferSize * i + 6];
+
     }
 
-    float4 col = lerp(_NoiseColor9, _NoiseColor10, smoothstep(9, 10, val));
-    col = lerp(_NoiseColor8, col, smoothstep(8, 9, val));
-    col = lerp(_NoiseColor7, col, smoothstep(7, 8, val));
-    col = lerp(_NoiseColor6, col, smoothstep(6, 7, val));
-    col = lerp(_NoiseColor5, col, smoothstep(5, 6, val));
-    col = lerp(_NoiseColor4, col, smoothstep(4, 5, val));
-    col = lerp(_NoiseColor3, col, smoothstep(3, 4, val));
-    col = lerp(_NoiseColor2, col, smoothstep(2, 3, val));
-    col = lerp(_NoiseColor1, col, smoothstep(1, 2, val));
-    col = lerp(_NoiseColor0, col, smoothstep(0, 1, val));
-    _NoiseTex[id.xy] = col;
+    float4 noiseCol = lerp(_NoiseColor9, _NoiseColor10, smoothstep(9, 10, noiseVal));
+    noiseCol = lerp(_NoiseColor8, noiseCol, smoothstep(8, 9, noiseVal));
+    noiseCol = lerp(_NoiseColor7, noiseCol, smoothstep(7, 8, noiseVal));
+    noiseCol = lerp(_NoiseColor6, noiseCol, smoothstep(6, 7, noiseVal));
+    noiseCol = lerp(_NoiseColor5, noiseCol, smoothstep(5, 6, noiseVal));
+    noiseCol = lerp(_NoiseColor4, noiseCol, smoothstep(4, 5, noiseVal));
+    noiseCol = lerp(_NoiseColor3, noiseCol, smoothstep(3, 4, noiseVal));
+    noiseCol = lerp(_NoiseColor2, noiseCol, smoothstep(2, 3, noiseVal));
+    noiseCol = lerp(_NoiseColor1, noiseCol, smoothstep(1, 2, noiseVal));
+    noiseCol = lerp(_NoiseColor0, noiseCol, smoothstep(0, 1, noiseVal));
+    _NoiseTex[id.xy] = noiseCol;
 
-    _PixelBuffer[id.x * _TextureSize + id.y] = (int)val;
+    float4 pollutionCol = lerp(_PollutionColor9, _PollutionColor10, smoothstep(9, 10, pollutionVal));
+    pollutionCol = lerp(_PollutionColor8, pollutionCol, smoothstep(8, 9, pollutionVal));
+    pollutionCol = lerp(_PollutionColor7, pollutionCol, smoothstep(7, 8, pollutionVal));
+    pollutionCol = lerp(_PollutionColor6, pollutionCol, smoothstep(6, 7, pollutionVal));
+    pollutionCol = lerp(_PollutionColor5, pollutionCol, smoothstep(5, 6, pollutionVal));
+    pollutionCol = lerp(_PollutionColor4, pollutionCol, smoothstep(4, 5, pollutionVal));
+    pollutionCol = lerp(_PollutionColor3, pollutionCol, smoothstep(3, 4, pollutionVal));
+    pollutionCol = lerp(_PollutionColor2, pollutionCol, smoothstep(2, 3, pollutionVal));
+    pollutionCol = lerp(_PollutionColor1, pollutionCol, smoothstep(1, 2, pollutionVal));
+    pollutionCol = lerp(_PollutionColor0, pollutionCol, smoothstep(0, 1, pollutionVal));
+    _PollutionTex[id.xy] = pollutionCol;
+
+    float4 faunaCol = lerp(_FaunaColor9, _FaunaColor10, smoothstep(9, 10, faunaVal));
+    faunaCol = lerp(_FaunaColor8, faunaCol, smoothstep(8, 9, faunaVal));
+    faunaCol = lerp(_FaunaColor7, faunaCol, smoothstep(7, 8, faunaVal));
+    faunaCol = lerp(_FaunaColor6, faunaCol, smoothstep(6, 7, faunaVal));
+    faunaCol = lerp(_FaunaColor5, faunaCol, smoothstep(5, 6, faunaVal));
+    faunaCol = lerp(_FaunaColor4, faunaCol, smoothstep(4, 5, faunaVal));
+    faunaCol = lerp(_FaunaColor3, faunaCol, smoothstep(3, 4, faunaVal));
+    faunaCol = lerp(_FaunaColor2, faunaCol, smoothstep(2, 3, faunaVal));
+    faunaCol = lerp(_FaunaColor1, faunaCol, smoothstep(1, 2, faunaVal));
+    faunaCol = lerp(_FaunaColor0, faunaCol, smoothstep(0, 1, faunaVal));
+    _FaunaTex[id.xy] = faunaCol;
+
+    float4 floraCol = lerp(_FloraColor9, _FloraColor10, smoothstep(9, 10, floraVal));
+    floraCol = lerp(_FloraColor8, floraCol, smoothstep(8, 9, floraVal));
+    floraCol = lerp(_FloraColor7, floraCol, smoothstep(7, 8, floraVal));
+    floraCol = lerp(_FloraColor6, floraCol, smoothstep(6, 7, floraVal));
+    floraCol = lerp(_FloraColor5, floraCol, smoothstep(5, 6, floraVal));
+    floraCol = lerp(_FloraColor4, floraCol, smoothstep(4, 5, floraVal));
+    floraCol = lerp(_FloraColor3, floraCol, smoothstep(3, 4, floraVal));
+    floraCol = lerp(_FloraColor2, floraCol, smoothstep(2, 3, floraVal));
+    floraCol = lerp(_FloraColor1, floraCol, smoothstep(1, 2, floraVal));
+    floraCol = lerp(_FloraColor0, floraCol, smoothstep(0, 1, floraVal));
+    _FloraTex[id.xy] = floraCol;
+
+    _PixelBuffer[(id.x * _TextureSize + id.y) * 4 + 0] = (int)noiseVal;
+    _PixelBuffer[(id.x * _TextureSize + id.y) * 4 + 1] = (int)pollutionVal;
+    _PixelBuffer[(id.x * _TextureSize + id.y) * 4 + 2] = (int)floraVal;
+    _PixelBuffer[(id.x * _TextureSize + id.y) * 4 + 3] = (int)faunaVal;
 }

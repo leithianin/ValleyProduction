@@ -13,4 +13,9 @@ public class ECO_AGT_PlantCounter : EcosystemAgent<ECO_AGT_PlantCounter>
     {
         data = this;
     }
+
+    public override EcosystemDataType UsedDataType()
+    {
+        return EcosystemDataType.Flora;
+    }
 }

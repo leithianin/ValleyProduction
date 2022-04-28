@@ -200,7 +200,16 @@ public class VisitorBehavior : VLY_Component
             currentObjective = spawns[UnityEngine.Random.Range(0, spawns.Count)];
         }
 
-        PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective, currentPathFragment, visitorType.LikedInteractions(), visitorType.HatedInteractions());
+        List<BuildTypes> likedType = new List<BuildTypes>();
+        List<BuildTypes> hatedType = new List<BuildTypes>();
+
+        if(currentObjective.Type != LandmarkType.Spawn)
+        {
+            likedType = visitorType.LikedInteractions();
+            hatedType = visitorType.HatedInteractions();
+        }
+
+        PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective, currentPathFragment, likedType, hatedType);
 
         if(pathToTake != null && pathToTake.endPoint == currentPathFragment.endPoint)
         {

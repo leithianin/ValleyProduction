@@ -86,7 +86,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 ECO_DIS_VegetationDisplayer vegetation = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ECO_DIS_VegetationDisplayer>();
                 vegetation.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
-                vegetation.SetTrees();
+                //vegetation.SetTrees();
             }
         }
     }
@@ -109,7 +109,7 @@ public class AreaManager : VLY_Singleton<AreaManager>
             {
                 ECO_DIS_VegetationDisplayer go = Instantiate(treeScorePrefab.gameObject, treeScoreHandler).GetComponent<ECO_DIS_VegetationDisplayer>();
                 go.transform.position = new Vector3(areaSize / 2f + areaSize * i, 0, areaSize / 2f + areaSize * j) + new Vector3(GetWorldPositionOffset().x, 0, GetWorldPositionOffset().y);
-                go.SetTrees();
+                //go.SetTrees();
             }
         }
     }

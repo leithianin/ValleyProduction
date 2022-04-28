@@ -24,6 +24,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
     //MOVE
     private IST_PathPoint ppSaveMove;
+    public static IST_PathPoint GetppSaveMove => instance.ppSaveMove;
 
     //Accesseur current Data
     public static PathData GetCurrentPathData => instance.currentPathData;
@@ -219,6 +220,29 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    public static void DontUpdatePathFragment(ModifiedPath toModify)
+    {
+        PathCreationManager.movingPathpoint.Node.ResetNodeData();
+
+        PathData pd = toModify.pathData;
+
+        for (int i = 0; i < toModify.pathPoints.Count - 1; i++)
+        {
+            if (toModify.pathPoints[i] == null)
+            {
+                toModify.pathPoints.RemoveAt(i);
+                i--;
+            }
+            toModify.pathPoints[i].SetNormalMat();
+        }
+
+        if (instance.debugMode)
+        {
+            Debug.Log("Feedback visuel");
+            DebugLineR(pd);
+        }
+    }
+
     #endregion
 
     #region Pathpoint
@@ -249,6 +273,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         pathpoint.Node.PlaceNode();
 
+        pathpoint.pathpointActivate.ChangeLayerToDefault();
         DebugPoint(previousPathpoint);
     }
 
@@ -784,6 +809,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 //Get Path Navmesh + Save Data
 
                 PathCreationManager.ModifiedPaths.Add(nModifedPath);
+                PathCreationManager.baseModifiedPath.Add(nModifedPath);
 
                 //Copy le point en cours et mettre des linerenderers entre ce point et ses voisins
                 List<IST_PathPoint> ppList = pd.GetPointNextTo(pp);
@@ -796,6 +822,7 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         instance.ppSaveMove = Instantiate(pp, pp.transform.position, Quaternion.identity);
+        instance.ppSaveMove.gameObject.layer = 2;
     }
 
     /// <summary>
@@ -838,16 +865,29 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void UpdateAfterMoving(IST_PathPoint pp)
     {
         PathCreationManager.isModifyPath = false;
-        foreach (ModifiedPath mp in PathCreationManager.ModifiedPaths)
+
+        if (!PathCreationManager.instance.isCancel)
         {
-            UpdatePathFragmentData(mp);
+            foreach (ModifiedPath mp in PathCreationManager.ModifiedPaths)
+            {
+                UpdatePathFragmentData(mp);
+            }
+        }
+        else
+        {
+            foreach (ModifiedPath mp in PathCreationManager.baseModifiedPath)
+            {
+                PathCreationManager.instance.UpdateSeveralLines(mp);
+                DontUpdatePathFragment(mp);
+            }
+            PathCreationManager.baseModifiedPath.Clear();
         }
 
         NodePathProcess.UpdateAllNodes();
 
-        foreach(PathData pd in instance.pathDataList)
+        foreach (PathData pd in instance.pathDataList)
         {
-            if(pd.ContainsPoint(pp))
+            if (pd.ContainsPoint(pp))
             {
                 pd.CheckMultiPath();
             }
