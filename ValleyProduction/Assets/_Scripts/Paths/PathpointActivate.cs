@@ -6,7 +6,7 @@ public class PathpointActivate : MonoBehaviour
 {
     public float timer;
 
-    private void OnEnable()
+    public void ChangeLayerToDefault()
     {
         TimerManager.CreateRealTimer(timer, Activate);
     }
