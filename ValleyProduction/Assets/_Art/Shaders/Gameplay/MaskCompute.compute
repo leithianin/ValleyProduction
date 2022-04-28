@@ -84,7 +84,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
         if (distance > 100)
         {
             gradientVal = 0;
-            plainVal = 0;
+            //plainVal = 0;
         }
 
         noiseVal += gradientVal * _EntityBuffer[entityBufferSize * i + 3];
