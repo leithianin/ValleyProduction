@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AD_Pollution : AreaData<AU_Polluter>
+[System.Obsolete]
+public class AD_Pollution : AreaData<ECO_AGT_Polluter>
 {
-    private List<AU_Polluter> trashesInZones = new List<AU_Polluter>();
+    private List<ECO_AGT_Polluter> trashesInZones = new List<ECO_AGT_Polluter>();
 
-    public override AreaDataType GetDataType()
+    public override EcosystemDataType GetDataType()
     {
-        return AreaDataType.Pollution;
+        return EcosystemDataType.Pollution;
     }
 
-    protected override void OnAddData(AU_Polluter data)
+    protected override void OnAddData(ECO_AGT_Polluter data)
     {
         if (!trashesInZones.Contains(data))
         {
@@ -19,7 +20,7 @@ public class AD_Pollution : AreaData<AU_Polluter>
         }
     }
 
-    protected override void OnRemoveData(AU_Polluter data)
+    protected override void OnRemoveData(ECO_AGT_Polluter data)
     {
         if (trashesInZones.Contains(data))
         {

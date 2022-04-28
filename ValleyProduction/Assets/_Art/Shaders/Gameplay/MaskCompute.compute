@@ -5,22 +5,25 @@ int _TextureSize;
 float _MapSize;
 float _Blend;
 
-float4 _Color0;
-float4 _Color1;
-float4 _Color2;
-float4 _Color3;
-float4 _Color4;
-float4 _Color5;
-float4 _Color6;
-float4 _Color7;
-float4 _Color8;
-float4 _Color9;
-float4 _Color10;
+float4 _NoiseColor0;
+float4 _NoiseColor1;
+float4 _NoiseColor2;
+float4 _NoiseColor3;
+float4 _NoiseColor4;
+float4 _NoiseColor5;
+float4 _NoiseColor6;
+float4 _NoiseColor7;
+float4 _NoiseColor8;
+float4 _NoiseColor9;
+float4 _NoiseColor10;
 
 StructuredBuffer<float> _EntityBuffer;
-RWStructuredBuffer<float> _PixelBuffer;
+RWStructuredBuffer<int> _PixelBuffer;
 
-RWTexture2D<float4> _Mask;
+RWTexture2D<float4> _NoiseTex;
+RWTexture2D<float4> _PollutionTex;
+RWTexture2D<float4> _FaunaTex;
+RWTexture2D<float4> _FloraTex;
 
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
@@ -46,17 +49,17 @@ void CSMain(uint3 id : SV_DispatchThreadID)
         val += noiseVal * _EntityBuffer[4 * i + 3];
     }
 
-    float4 col = lerp(_Color9, _Color10, smoothstep(9, 10, val));
-    col = lerp(_Color8, col, smoothstep(8, 9, val));
-    col = lerp(_Color7, col, smoothstep(7, 8, val));
-    col = lerp(_Color6, col, smoothstep(6, 7, val));
-    col = lerp(_Color5, col, smoothstep(5, 6, val));
-    col = lerp(_Color4, col, smoothstep(4, 5, val));
-    col = lerp(_Color3, col, smoothstep(3, 4, val));
-    col = lerp(_Color2, col, smoothstep(2, 3, val));
-    col = lerp(_Color1, col, smoothstep(1, 2, val));
-    col = lerp(_Color0, col, smoothstep(0, 1, val));
-    _Mask[id.xy] = col;
+    float4 col = lerp(_NoiseColor9, _NoiseColor10, smoothstep(9, 10, val));
+    col = lerp(_NoiseColor8, col, smoothstep(8, 9, val));
+    col = lerp(_NoiseColor7, col, smoothstep(7, 8, val));
+    col = lerp(_NoiseColor6, col, smoothstep(6, 7, val));
+    col = lerp(_NoiseColor5, col, smoothstep(5, 6, val));
+    col = lerp(_NoiseColor4, col, smoothstep(4, 5, val));
+    col = lerp(_NoiseColor3, col, smoothstep(3, 4, val));
+    col = lerp(_NoiseColor2, col, smoothstep(2, 3, val));
+    col = lerp(_NoiseColor1, col, smoothstep(1, 2, val));
+    col = lerp(_NoiseColor0, col, smoothstep(0, 1, val));
+    _NoiseTex[id.xy] = col;
 
     _PixelBuffer[id.x * _TextureSize + id.y] = (int)val;
 }
