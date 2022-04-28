@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 public enum VolumeProfilesEnum
@@ -65,7 +66,126 @@ public class PhotoModeScript : MonoBehaviour
 
     private void SetProfile()
     {       
-        postProcessManager.SetProfile(postProcessManager.GetPhotoProfile((int)profile));
+        //postProcessManager.SetProfile(postProcessManager.GetPhotoProfile((int)profile));
     
     }
+
+    #region Bloom
+    private void EnableBloom(bool enable)
+    {
+        postProcessManager.Bloom.active = enable;
+    }
+    #endregion
+
+    #region ChannelMixer
+    private void EnableChannelMixer(bool enable)
+    {
+        postProcessManager.ChannelMixer.active = enable;
+    }
+    #endregion
+
+    #region ChromaticAbberation
+    private void EnableChromaticAbberation(bool enable)
+    {
+        postProcessManager.ChromaticAbberration.active = enable;
+    }
+    #endregion
+
+    #region ColorAdjustments
+    private void EnableColorAdjustments(bool enable)
+    {
+        postProcessManager.ColorAdjustments.active = enable;
+    }
+    #endregion
+
+    #region ColorCurves
+    private void EnableColorCurves(bool enable)
+    {
+        postProcessManager.ColorCurves.active = enable;
+    }
+    #endregion
+
+    #region ColorLookup
+    private void EnableColorLookup(bool enable)
+    {
+        postProcessManager.ColorLookup.active = enable;
+    }
+    #endregion
+
+    #region DepthOfField
+    private void EnableDepthOfField(bool enable)
+    {
+        postProcessManager.DepthOfField.active = enable;
+    }
+    #endregion
+
+    #region FilmGrain
+    private void EnableFilmGrain(bool enable)
+    {
+        postProcessManager.FilmGrain.active = enable;
+    }
+    #endregion
+
+    #region LensDistortion
+    private void EnableLensDistortion(bool enable)
+    {
+        postProcessManager.LensDistortion.active = enable;
+    }
+    #endregion
+
+    #region LiftGammaGain
+    private void EnableLiftGammaGain(bool enable)
+    {
+        postProcessManager.LiftGammaGain.active = enable;
+    }
+    #endregion
+
+    #region MotionBlur
+    private void EnableMotionBlur(bool enable)
+    {
+        postProcessManager.MotionBlur.active = enable;
+    }
+    #endregion
+
+    #region PaniniProjection
+    private void EnablePaniniProjection(bool enable)
+    {
+        postProcessManager.PaniniProjection.active = enable;
+    }
+    #endregion
+
+    #region ShadowsMidtonesHighlights
+    private void EnableShadowsMidtonesHighlights(bool enable)
+    {
+        postProcessManager.ShadowsMidtonesHighlights.active = enable;
+    }
+    #endregion
+
+    #region SplitToning
+    private void EnableSplitToning(bool enable)
+    {
+        postProcessManager.SplitToning.active = enable;
+    }
+    #endregion
+
+    #region Tonemapping
+    private void EnableTonemapping(bool enable)
+    {
+        postProcessManager.Tonemapping.active = enable;
+    }
+    #endregion
+
+    #region Vignette
+    private void EnableVignette(bool enable)
+    {
+        postProcessManager.Vignette.active = enable;
+    }
+    #endregion
+
+    #region WhiteBalance
+    private void EnableWhiteBalance(bool enable)
+    {
+        postProcessManager.WhiteBalance.active = enable;
+    }
+    #endregion
 }

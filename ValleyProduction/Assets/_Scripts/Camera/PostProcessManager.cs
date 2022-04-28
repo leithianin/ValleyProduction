@@ -17,10 +17,60 @@ public class PostProcessManager : MonoBehaviour
     [SerializeField] private float activationDOFDistance;
     [SerializeField] private float standartDOF;
     [SerializeField] private float closeViewDOF;
-    private DepthOfField dof = default;
 
-    [Header("Profiles")]
-    [SerializeField] private VolumeProfile[] photoProfiles = default;
+    Bloom bloom;
+    public Bloom Bloom { get; private set; }
+
+    ChannelMixer channelMixer;
+    public ChannelMixer ChannelMixer { get; private set; }
+
+    ChromaticAberration chromaticAbberration;
+    public ChromaticAberration ChromaticAbberration { get; private set; }
+    
+    ColorAdjustments colorAdjustments;
+    public ColorAdjustments ColorAdjustments { get; private set; }
+
+    ColorCurves colorCurves;
+    public ColorCurves ColorCurves { get; private set; }
+
+    ColorLookup colorLookup;
+    public ColorLookup ColorLookup { get; private set; }
+
+    DepthOfField depthOfField;
+    public DepthOfField DepthOfField { get; private set; }
+
+    FilmGrain filmGrain;
+    public FilmGrain FilmGrain { get; private set; }
+
+    LensDistortion lensDistortion;
+    public LensDistortion LensDistortion { get; private set; }
+
+    LiftGammaGain liftGammaGain;
+    public LiftGammaGain LiftGammaGain { get; private set; }
+
+    MotionBlur motionBlur;
+    public MotionBlur MotionBlur { get; private set; }
+
+    PaniniProjection paniniProjection;
+    public PaniniProjection PaniniProjection { get; private set; }
+
+    ShadowsMidtonesHighlights shadowsMidtonesHighlights;
+    public ShadowsMidtonesHighlights ShadowsMidtonesHighlights { get; private set; }
+
+    SplitToning splitToning;
+    public SplitToning SplitToning { get; private set; }
+
+    Tonemapping tonemapping;
+    public Tonemapping Tonemapping { get; private set; }
+
+    Vignette vignette;
+    public Vignette Vignette { get; private set; }
+
+    WhiteBalance whiteBalance;
+    public WhiteBalance WhiteBalance { get; private set; }
+
+    private bool activeDepthOfField;
+
 
     private void Awake()
     {
@@ -34,10 +84,6 @@ public class PostProcessManager : MonoBehaviour
         ChangeDOF();
     }
 
-    public VolumeProfile GetPhotoProfile(int index)
-    {
-        return photoProfiles[index];
-    }
 
     public bool CheckIfProfileIsSet()
     {
@@ -47,6 +93,28 @@ public class PostProcessManager : MonoBehaviour
     public void SetProfile(VolumeProfile profile)
     {
         volume.profile = profile;
+    }
+
+    public void GetProfileOverrides()
+    {
+        volume.profile.TryGet<Bloom>(out bloom);
+        volume.profile.TryGet<ChannelMixer>(out channelMixer);
+        volume.profile.TryGet<ChromaticAberration>(out chromaticAbberration);
+        volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
+        volume.profile.TryGet<ColorCurves>(out colorCurves);
+        volume.profile.TryGet<ColorLookup>(out colorLookup);
+        volume.profile.TryGet<DepthOfField>(out depthOfField);
+        volume.profile.TryGet<FilmGrain>(out filmGrain);
+        volume.profile.TryGet<LensDistortion>(out lensDistortion);
+        volume.profile.TryGet<LiftGammaGain>(out liftGammaGain);
+        volume.profile.TryGet<MotionBlur>(out motionBlur);
+        volume.profile.TryGet<PaniniProjection>(out paniniProjection);
+        volume.profile.TryGet<ShadowsMidtonesHighlights>(out shadowsMidtonesHighlights);
+        volume.profile.TryGet<SplitToning>(out splitToning);
+        volume.profile.TryGet<Tonemapping>(out tonemapping);
+        volume.profile.TryGet<Vignette>(out vignette);
+        volume.profile.TryGet<WhiteBalance>(out whiteBalance);
+
     }
 
     void GetPostProcessDOF()
@@ -63,28 +131,28 @@ public class PostProcessManager : MonoBehaviour
             return;
         }
 
-        volume.profile.TryGet<DepthOfField>(out dof);
-        standartDOF = dof.gaussianEnd.value;
+        volume.profile.TryGet<DepthOfField>(out depthOfField);
+        standartDOF = depthOfField.gaussianEnd.value;
         
     }
 
     void SetDOFState()
     {
-        dof.active = _useDepthOfField;
+        depthOfField.active = _useDepthOfField;
     }
 
     void ChangeDOF()
     {
-        if (!dof.active)
+        if (!depthOfField.active)
             return;
 
         if (cameraSphericalTransform.GetTargetDistanceToOrigin() < activationDOFDistance)
         {
-            dof.gaussianEnd.value = closeViewDOF;
+            depthOfField.gaussianEnd.value = closeViewDOF;
         }
         else
         {
-            dof.gaussianEnd.value = standartDOF;
+            depthOfField.gaussianEnd.value = standartDOF;
         }
     }
 }
