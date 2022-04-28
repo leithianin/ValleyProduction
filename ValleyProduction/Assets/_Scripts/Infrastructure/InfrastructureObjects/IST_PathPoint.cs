@@ -7,6 +7,8 @@ public class IST_PathPoint : Infrastructure
 {
     [SerializeField] private ManageMultiPath manageMultiPath;
     [SerializeField] private PathNode node;
+    public PathpointActivate pathpointActivate;
+
 
     public Action<IST_PathPoint> OnDestroyPathPoint;
 

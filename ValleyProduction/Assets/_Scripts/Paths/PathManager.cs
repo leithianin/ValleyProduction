@@ -273,6 +273,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         pathpoint.Node.PlaceNode();
 
+        pathpoint.pathpointActivate.ChangeLayerToDefault();
         DebugPoint(previousPathpoint);
     }
 
@@ -821,6 +822,7 @@ public class PathManager : VLY_Singleton<PathManager>
         }
 
         instance.ppSaveMove = Instantiate(pp, pp.transform.position, Quaternion.identity);
+        instance.ppSaveMove.gameObject.layer = 2;
     }
 
     /// <summary>

@@ -398,7 +398,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         LineRenderer lineRenderer;
         if (rendererLine != null) 
         {
-            Debug.Log("Line pas null");
             lineRenderer = rendererLine;
         }
         else
