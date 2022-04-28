@@ -32,4 +32,9 @@ public class ECO_AGT_MakeSound : EcosystemAgent<ECO_AGT_MakeSound>
     {
         SetScore(GetScore() - toRemove);
     }
+
+    public override EcosystemDataType UsedDataType()
+    {
+        return EcosystemDataType.Noise;
+    }
 }
