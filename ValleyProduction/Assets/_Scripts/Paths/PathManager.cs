@@ -821,6 +821,7 @@ public class PathManager : VLY_Singleton<PathManager>
             }
         }
 
+        
         instance.ppSaveMove = Instantiate(pp, pp.transform.position, Quaternion.identity);
         instance.ppSaveMove.gameObject.layer = 2;
     }

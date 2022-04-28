@@ -91,6 +91,7 @@ public class IST_PathPoint : Infrastructure
 
     protected override void OnMoveObject()
     {
+        gameObject.name = "truite";
         PathManager.UpdateLineWhenMoving(this);
     }
 

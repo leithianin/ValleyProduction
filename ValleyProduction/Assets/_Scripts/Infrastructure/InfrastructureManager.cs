@@ -180,7 +180,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         instance.movedObject.layer = layerIgnoreRaycast;
 
         instance.currentSelectedStructure.MoveObject();
-
         if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
         {
             instance.previewHandler.SetInfrastructurePreview(toMove.Data.Preview);
@@ -189,7 +188,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         else
         {
             //Pathpoint
-            instance.currentSelectedStructure.MoveObject();
             OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
         }
     }
