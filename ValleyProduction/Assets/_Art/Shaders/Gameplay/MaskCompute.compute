@@ -78,17 +78,19 @@ void CSMain(uint3 id : SV_DispatchThreadID)
         float2 entityWorldPos = float2(_EntityBuffer[entityBufferSize * i + 0], _EntityBuffer[entityBufferSize * i + 1]);
         float distance = length(texelWorldPos - entityWorldPos);
 
-        float val = smoothstep(_EntityBuffer[entityBufferSize * i + 2] + _Blend, _EntityBuffer[entityBufferSize * i + 2], distance);
+        float gradientVal = smoothstep(_EntityBuffer[entityBufferSize * i + 2] + _Blend, _EntityBuffer[entityBufferSize * i + 2], distance);
+        //float plainVal = smoothstep(_EntityBuffer[entityBufferSize * i + 2] + 0, _EntityBuffer[entityBufferSize * i + 2], distance);
 
         if (distance > 100)
         {
-            val = 0;
+            gradientVal = 0;
+            plainVal = 0;
         }
 
-        noiseVal += val * _EntityBuffer[entityBufferSize * i + 3];
-        pollutionVal += val * _EntityBuffer[entityBufferSize * i + 4];
-        faunaVal += val * _EntityBuffer[entityBufferSize * i + 5];
-        floraVal += val * _EntityBuffer[entityBufferSize * i + 6];
+        noiseVal += gradientVal * _EntityBuffer[entityBufferSize * i + 3];
+        pollutionVal += gradientVal * _EntityBuffer[entityBufferSize * i + 4];
+        faunaVal += gradientVal * _EntityBuffer[entityBufferSize * i + 5];
+        floraVal += gradientVal * _EntityBuffer[entityBufferSize * i + 6];
 
     }
 
