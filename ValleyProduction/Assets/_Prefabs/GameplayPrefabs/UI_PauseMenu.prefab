@@ -3741,6 +3741,7 @@ GameObject:
   - component: {fileID: 6086258635357203176}
   - component: {fileID: 6326735493998637986}
   - component: {fileID: 538290684969483865}
+  - component: {fileID: 8305367204702420199}
   m_Layer: 0
   m_Name: UI_PauseMenu
   m_TagString: Untagged
@@ -3883,8 +3884,98 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnOpenMenu:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8976644304417496540}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8305367204702420199}
+        m_TargetAssemblyTypeName: ChangeContext, Assembly-CSharp
+        m_MethodName: SetContext
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCloseMenu:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6326735493998637986}
+        m_TargetAssemblyTypeName: IFB_DesactivateAfterTime, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.68
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8305367204702420199}
+        m_TargetAssemblyTypeName: ChangeContext, Assembly-CSharp
+        m_MethodName: SetContext
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.68
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.68
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnMenuOption: 0
   resumeButton: {fileID: 8976644305214895611}
+--- !u!114 &8305367204702420199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8976644304417496540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eb7bb18380b1eb49a5fc3df2a84f706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8976644304497238884
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,6 +4142,8 @@ MonoBehaviour:
   rtGoalBar: {fileID: 0}
   description: {fileID: 0}
   title: {fileID: 0}
+  validationButton: {fileID: 0}
+  handler: {fileID: 0}
   textsList: {fileID: 0}
 --- !u!114 &7221435968707824805
 MonoBehaviour:
@@ -4534,6 +4627,8 @@ MonoBehaviour:
   rtGoalBar: {fileID: 0}
   description: {fileID: 0}
   title: {fileID: 0}
+  validationButton: {fileID: 0}
+  handler: {fileID: 0}
   textsList: {fileID: 0}
 --- !u!114 &1890738243057284633
 MonoBehaviour:
@@ -4836,6 +4931,8 @@ MonoBehaviour:
   rtGoalBar: {fileID: 0}
   description: {fileID: 0}
   title: {fileID: 0}
+  validationButton: {fileID: 0}
+  handler: {fileID: 0}
   textsList: {fileID: 0}
 --- !u!114 &438709517027873302
 MonoBehaviour:
@@ -5453,6 +5550,8 @@ MonoBehaviour:
   rtGoalBar: {fileID: 0}
   description: {fileID: 0}
   title: {fileID: 0}
+  validationButton: {fileID: 0}
+  handler: {fileID: 0}
   textsList: {fileID: 0}
 --- !u!114 &7162866523869466570
 MonoBehaviour:

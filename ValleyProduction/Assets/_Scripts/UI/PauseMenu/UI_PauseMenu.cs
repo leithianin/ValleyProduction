@@ -11,7 +11,12 @@ public class UI_PauseMenu : MonoBehaviour
     [SerializeField] private UnityEvent OnOpenSettings;
     [SerializeField] private UnityEvent OnCloseSettings;
 
+    [Header("Menu")]
+    [SerializeField] private UnityEvent OnOpenMenu;
+    [SerializeField] private UnityEvent OnCloseMenu;
+
     [HideInInspector] public bool OnMenuOption = false;
+
     [SerializeField] private Button resumeButton;
 
 
@@ -28,6 +33,15 @@ public class UI_PauseMenu : MonoBehaviour
     public void ChangeMenuOptionBool()
     {
         OnMenuOption = !OnMenuOption;
+
+        if(OnMenuOption)
+        {
+            OnOpenMenu?.Invoke();
+        }
+        else
+        {
+            OnCloseMenu?.Invoke();
+        }
     }
     public void HideMenuOption()
     {
