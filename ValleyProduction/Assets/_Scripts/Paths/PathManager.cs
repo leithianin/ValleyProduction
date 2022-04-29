@@ -776,7 +776,6 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.lineRendererDebugList.Remove(instance.currentLineDebug.gameObject);
         Destroy(instance.currentLineDebug.gameObject);
 
-        Debug.Log(instance.pathpointList.Count);
         if(instance.pathpointList.Count != 0)
         {
             instance.currentLineDebug = instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>();
