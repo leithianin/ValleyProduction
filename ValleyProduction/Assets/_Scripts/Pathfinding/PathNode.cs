@@ -306,10 +306,8 @@ public class PathNode : MonoBehaviour
     /// </summary>
     /// <param name="target">The Landmark to search for.</param>
     /// <returns>The PathFragmentData for the visitor to follow.</returns>
-    public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes, List<PathFragmentData> toIgnore)
     {
-        List<PathNode> neighbours = GetNeighbours();
-
         PathFragmentData toReturn = null;
 
         float score = -1f;
@@ -324,7 +322,14 @@ public class PathNode : MonoBehaviour
             }
             else
             {
-                nScore = CalculateScore(usableFragments[i], target, likedTypes, hatedTypes);
+                if (toIgnore.Contains(usableFragments[i]))
+                {
+                    nScore = CalculateScore(usableFragments[i], target, new List<BuildTypes>(), new List<BuildTypes>());
+                }
+                else
+                {
+                    nScore = CalculateScore(usableFragments[i], target, likedTypes, hatedTypes);
+                }
             }
 
             if(nScore > score)
