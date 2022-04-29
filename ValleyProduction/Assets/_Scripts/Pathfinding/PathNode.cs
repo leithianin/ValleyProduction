@@ -102,14 +102,20 @@ public class PathNode : MonoBehaviour
             if (!neighbours[i].IsBeingDeleted)
             {
                 NodePathData selfToCheck = GetDataForLandmarkType(wantedLandmark);
-                NodePathData neighbourToCheck = neighbours[i].GetDataForLandmarkType(wantedLandmark);
-
-                float distanceFromNeighbour = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition);
-
-                if (neighbourToCheck.distanceFromLandmark >= 0 && (selfToCheck.distanceFromLandmark < 0 || neighbourToCheck.distanceFromLandmark < selfToCheck.distanceFromLandmark))
+                if (selfToCheck != null)
                 {
-                    selfToCheck.distanceFromLandmark = distanceFromNeighbour + neighbourToCheck.distanceFromLandmark;
-                    selfToCheck.parent = neighbours[i];
+                    NodePathData neighbourToCheck = neighbours[i].GetDataForLandmarkType(wantedLandmark);
+
+                    if (neighbourToCheck != null)
+                    {
+                        float distanceFromNeighbour = Vector3.Distance(WorldPosition, neighbours[i].WorldPosition);
+
+                        if (neighbourToCheck.distanceFromLandmark >= 0 && (selfToCheck.distanceFromLandmark < 0 || neighbourToCheck.distanceFromLandmark < selfToCheck.distanceFromLandmark))
+                        {
+                            selfToCheck.distanceFromLandmark = distanceFromNeighbour + neighbourToCheck.distanceFromLandmark;
+                            selfToCheck.parent = neighbours[i];
+                        }
+                    }
                 }
             }
         }

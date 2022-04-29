@@ -177,9 +177,10 @@ public class PathData
     public void RemovePathFragment(PathFragmentData toRemove)
     {
         pathFragment.Remove(toRemove);
+        toRemove.DeleteFragmentData();
 
-        toRemove.startPoint.Node.RemoveFragment(toRemove);
-        toRemove.endPoint.Node.RemoveFragment(toRemove);
+        /*toRemove.startPoint.Node.RemoveFragment(toRemove);
+        toRemove.endPoint.Node.RemoveFragment(toRemove);*/
     }
     #endregion
 

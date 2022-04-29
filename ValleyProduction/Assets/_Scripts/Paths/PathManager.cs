@@ -558,6 +558,11 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pathdata"></param>
     public static void DeletePath(PathData pathdata)
     {
+        foreach(PathFragmentData pf in pathdata.pathFragment)
+        {
+            pf.DeleteFragmentData();
+        }
+
         DestroyLineRenderer(pathdata.pathLineRenderer);
 
         pathdata.DeletePathData();
