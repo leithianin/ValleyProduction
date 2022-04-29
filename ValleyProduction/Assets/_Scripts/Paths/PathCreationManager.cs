@@ -22,6 +22,7 @@ public class AdditionalPathpointClass
 
 
 //List des pathFragment à modifier avec leur LineRenderer
+[System.Serializable]
 public class ModifyListClass
 {
     public LineRenderer modifyLinesRenderer;
@@ -51,7 +52,8 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     [Header("Modify Button")]
     public List<ModifiedPath> modifiedPaths = new List<ModifiedPath>();
     public static List<ModifiedPath> ModifiedPaths => instance.modifiedPaths;
-    public static List<ModifiedPath> baseModifiedPath = new List<ModifiedPath>();
+    public static List<ModifiedPath> baseModifiedPath => instance.baseModifiedPathShow;
+    public List<ModifiedPath> baseModifiedPathShow = new List<ModifiedPath>();
     public static IST_PathPoint movingPathpoint;
     public static bool isModifyPath = false;
     private float distance = 0f;
@@ -83,6 +85,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
         if (isModifyPath)
         {
+            Debug.Log("Update");
             foreach (ModifiedPath mp in modifiedPaths)
             {
                 UpdateSeveralLines(mp);
@@ -93,9 +96,8 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public static void ResetData()
     {
         isModifyPath = false;
-        /*instance.newPathFragmentData.Clear();
-        instance.additionalPathpointList.Clear();
-        ModifyList.Clear();*/
+        instance.isCancel = false;
+        baseModifiedPath.Clear();
         instance.modifiedPaths.Clear();
     }
 
@@ -103,7 +105,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     {
         //Remove directly in instance.modifiedPaths.Additional ... 
         instance.isCancel = true;
-        instance.modifiedPaths.RemoveRange(1, instance.modifiedPaths.Count-1);
+        //instance.modifiedPaths.RemoveRange(1, instance.modifiedPaths.Count-1);
     }
 
     public List<Vector3> CalculateNavmesh(Vector3 startPoint, Vector3 endPoint)
@@ -165,6 +167,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             pathModified.additionalPathpointList.Add(new AdditionalPathpointClass());
         }
 
+        Debug.Log(pathModified.modifyList.Count);
         for (int i = 0; i < pathModified.modifyList.Count; i++)
         {
             navPath = new NavMeshPath();
@@ -247,6 +250,8 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     //Add markers beetween the moving pathpoint and other pathpoints if the distance is to high /!\ Possibilité de rassembler des choses en une fonction /!\
     public void AddMarkers(List<Vector3> vectors, int index, bool isInverse, List<AdditionalPathpointClass> additionalPathpointList, List<IST_PathPoint> pathPointList)
     {
+        Debug.Log("Add markers");
+
         float distance = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
         int result = (int)distance / 20;                                                                            //Replace 20 par la valeur de distanceMax entre les balises
 
@@ -398,7 +403,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     public void ShowPathLine(List<Vector3> path, LineRenderer rendererLine = null)
     {
         LineRenderer lineRenderer;
-        if (rendererLine != null) 
+        if (rendererLine != null)
         {
             lineRenderer = rendererLine;
         }
@@ -407,8 +412,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             lineRenderer = PathManager.GetInstance.currentLineDebug;
         }
 
-        Debug.Log("Toujours un bug ici");
-        if(!lineRenderer.enabled)
+        if (!lineRenderer.enabled)
         {
             lineRenderer.enabled = true;
         }

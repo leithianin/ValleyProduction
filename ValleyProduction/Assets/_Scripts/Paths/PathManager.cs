@@ -215,7 +215,6 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if (instance.debugMode)
         {
-            Debug.Log("Feedback visuel");
             DebugLineR(pd);
         }
     }
@@ -772,6 +771,7 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.lineRendererDebugList.Remove(instance.currentLineDebug.gameObject);
         Destroy(instance.currentLineDebug.gameObject);
 
+        Debug.Log(instance.pathpointList.Count);
         if(instance.pathpointList.Count != 0)
         {
             instance.currentLineDebug = instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>();
@@ -847,6 +847,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
                 if (mp.pathData.pathFragment[i].startPoint == pp || mp.pathData.pathFragment[i].endPoint == pp)
                 {
+                    Debug.Log("Assign LineRenderer : " + instance.lineRendererDebugList);
                     mp.modifyList.Add(new ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), mp.pathData.pathFragment[i], mp.pathData.pathFragment[i].endPoint == pp));
                 }
             }
@@ -865,23 +866,24 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pp"></param>
     public static void UpdateAfterMoving(IST_PathPoint pp)
     {
+        Debug.Log("Cancel");
         PathCreationManager.isModifyPath = false;
 
-        if (!PathCreationManager.instance.isCancel)
-        {
-            foreach (ModifiedPath mp in PathCreationManager.ModifiedPaths)
-            {
-                UpdatePathFragmentData(mp);
-            }
-        }
-        else
+        Debug.Log("IsCancel : " + PathCreationManager.instance.isCancel);
+        if (PathCreationManager.instance.isCancel)
         {
             foreach (ModifiedPath mp in PathCreationManager.baseModifiedPath)
             {
                 PathCreationManager.instance.UpdateSeveralLines(mp);
                 DontUpdatePathFragment(mp);
             }
-            PathCreationManager.baseModifiedPath.Clear();
+        }
+        else
+        {
+            foreach (ModifiedPath mp in PathCreationManager.ModifiedPaths)
+            {
+                UpdatePathFragmentData(mp);
+            }
         }
 
         NodePathProcess.UpdateAllNodes();
