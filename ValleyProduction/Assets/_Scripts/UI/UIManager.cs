@@ -97,7 +97,12 @@ public class UIManager : VLY_Singleton<UIManager>
     #region Pause Menu
     public static bool IsOnMenuBool()
     {
-        return instance.pauseMenuInfo.OnMenuOption;
+        if (instance.pauseMenuInfo != null)
+        {
+            return instance.pauseMenuInfo.OnMenuOption;
+        }
+
+        return false;   
     }
 
     public static void HideMenuOption()
