@@ -306,10 +306,8 @@ public class PathNode : MonoBehaviour
     /// </summary>
     /// <param name="target">The Landmark to search for.</param>
     /// <returns>The PathFragmentData for the visitor to follow.</returns>
-    public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes, List<PathFragmentData> toIgnore)
     {
-        List<PathNode> neighbours = GetNeighbours();
-
         PathFragmentData toReturn = null;
 
         float score = -1f;
@@ -324,7 +322,14 @@ public class PathNode : MonoBehaviour
             }
             else
             {
-                nScore = CalculateScore(usableFragments[i], target, likedTypes, hatedTypes);
+                if (toIgnore.Contains(usableFragments[i]))
+                {
+                    nScore = CalculateScore(usableFragments[i], target, new List<BuildTypes>(), new List<BuildTypes>());
+                }
+                else
+                {
+                    nScore = CalculateScore(usableFragments[i], target, likedTypes, hatedTypes);
+                }
             }
 
             if(nScore > score)
@@ -380,7 +385,15 @@ public class PathNode : MonoBehaviour
             attractivityScore += fragmentToCalculate.InterestPointsOnFragment[i].GetAttractivityScore(likedTypes, hatedTypes);
         }
 
-        if(attractivityScore < 0)
+        if(distanceScore >= 100)
+        {
+            attractivityScore = 150;
+        }
+        else if (attractivityScore > 100)
+        {
+            attractivityScore = 100;
+        }
+        else if (attractivityScore < 0)
         {
             attractivityScore = 0;
         }
@@ -394,30 +407,5 @@ public class PathNode : MonoBehaviour
             return -5f;
         }
     }
-
     #endregion
-
-    /*
-    private void OnDrawGizmos()
-    {
-        if (Selection.activeGameObject != transform.gameObject)
-        {
-            return;
-        }
-
-        int i = 0;
-
-        PathNode parent = this;
-
-        while (i < 100 && parent != null)
-        {
-            i++;
-            PathNode lastParent = parent;
-            parent = parent.dataByLandmark[1].parent;
-            if (parent != null)
-            {
-                Gizmos.DrawLine(lastParent.WorldPosition, parent.WorldPosition);
-            }
-        }
-    }*/
 }

@@ -14,15 +14,13 @@ public class InterestPointDetector : MonoBehaviour
         if(interestPoint != null)
         {
             OnDiscoverInterestPoint?.Invoke(interestPoint);
+            interestPoint.OnDisableInterestPoint += RemoveInterestPoint;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void RemoveInterestPoint(InterestPoint toRemove)
     {
-        InterestPoint interestPoint = other.GetComponent<InterestPoint>();
-        if (interestPoint != null)
-        {
-            OnRemoveInterestPoint?.Invoke(interestPoint);
-        }
+        OnRemoveInterestPoint?.Invoke(toRemove);
+        toRemove.OnDisableInterestPoint -= RemoveInterestPoint;
     }
 }

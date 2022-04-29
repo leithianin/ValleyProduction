@@ -30,6 +30,21 @@ public class HeatmapViewController : MonoBehaviour
             HandleHeatmap(1);
         }
 
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            HandleHeatmap(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            HandleHeatmap(3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            HandleHeatmap(4);
+        }
+
         foreach (Material m in Materials)
         {
             m.SetFloat("_MapSize", msk.MapSize);

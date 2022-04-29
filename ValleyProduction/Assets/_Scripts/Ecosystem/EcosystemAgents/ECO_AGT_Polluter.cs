@@ -13,4 +13,8 @@ public class ECO_AGT_Polluter : EcosystemAgent<ECO_AGT_Polluter>
     {
         data = this;
     }
+    public override EcosystemDataType UsedDataType()
+    {
+        return EcosystemDataType.Pollution;
+    }
 }

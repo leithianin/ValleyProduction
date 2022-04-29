@@ -26,6 +26,8 @@ public class VisitorBehavior : VLY_Component
 
     private bool isUsed = false;
 
+    private List<PathFragmentData> walkedPathFragment = new List<PathFragmentData>();
+
     private CPN_IsLandmark currentObjective;
 
     public bool IsUsed => isUsed;
@@ -46,6 +48,8 @@ public class VisitorBehavior : VLY_Component
     /// <param name="nPath">Le chemin choisit par le visiteur.</param>
     public void SetVisitor(IST_PathPoint nSpawnPoint, Vector3 spawnPosition, VisitorScriptable nVisitorType, CPN_IsLandmark objective)
     {
+        walkedPathFragment = new List<PathFragmentData>();
+
         currentObjective = objective;
 
         visitorType = nVisitorType;
@@ -55,6 +59,8 @@ public class VisitorBehavior : VLY_Component
         if(currentPathFragment != null)
         {
             OnSetVisitorWithType?.Invoke(visitorType);
+
+            walkedPathFragment.Add(currentPathFragment);
 
             movement.SetSpeed(UnityEngine.Random.Range(visitorType.Speed.x, visitorType.Speed.y));
 
@@ -114,6 +120,8 @@ public class VisitorBehavior : VLY_Component
         }
         else
         {
+            walkedPathFragment.Add(currentPathFragment);
+
             currentPathFragment.endPoint.OnDestroyPathPoint += DeleteVisitor;
 
             movement.WalkOnNewPath(currentPathFragment.path);
@@ -162,7 +170,7 @@ public class VisitorBehavior : VLY_Component
     /// <returns>Le PathFragment à parcourir.</returns>
     private PathFragmentData SearchFirstPathFragment(IST_PathPoint startPoint)
     {
-        PathFragmentData pathToTake = startPoint.Node.GetMostInterestingPath(currentObjective, null, visitorType.LikedInteractions(), visitorType.HatedInteractions());
+        PathFragmentData pathToTake = startPoint.Node.GetMostInterestingPath(currentObjective, null, visitorType.LikedInteractions(), visitorType.HatedInteractions(), walkedPathFragment);
 
         if (pathToTake != null && pathToTake.endPoint == startPoint)
         {
@@ -200,7 +208,16 @@ public class VisitorBehavior : VLY_Component
             currentObjective = spawns[UnityEngine.Random.Range(0, spawns.Count)];
         }
 
-        PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective, currentPathFragment, visitorType.LikedInteractions(), visitorType.HatedInteractions());
+        List<BuildTypes> likedType = new List<BuildTypes>();
+        List<BuildTypes> hatedType = new List<BuildTypes>();
+
+        if(currentObjective.Type != LandmarkType.Spawn)
+        {
+            likedType = visitorType.LikedInteractions();
+            hatedType = visitorType.HatedInteractions();
+        }
+
+        PathFragmentData pathToTake = currentPathFragment.endPoint.Node.GetMostInterestingPath(currentObjective, currentPathFragment, likedType, hatedType, walkedPathFragment);
 
         if(pathToTake != null && pathToTake.endPoint == currentPathFragment.endPoint)
         {

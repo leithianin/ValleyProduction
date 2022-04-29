@@ -24,6 +24,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
     //MOVE
     private IST_PathPoint ppSaveMove;
+    public static IST_PathPoint GetppSaveMove => instance.ppSaveMove;
 
     //Accesseur current Data
     public static PathData GetCurrentPathData => instance.currentPathData;
@@ -214,6 +215,28 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if (instance.debugMode)
         {
+            DebugLineR(pd);
+        }
+    }
+
+    public static void DontUpdatePathFragment(ModifiedPath toModify)
+    {
+        PathCreationManager.movingPathpoint.Node.ResetNodeData();
+
+        PathData pd = toModify.pathData;
+
+        for (int i = 0; i < toModify.pathPoints.Count - 1; i++)
+        {
+            if (toModify.pathPoints[i] == null)
+            {
+                toModify.pathPoints.RemoveAt(i);
+                i--;
+            }
+            toModify.pathPoints[i].SetNormalMat();
+        }
+
+        if (instance.debugMode)
+        {
             Debug.Log("Feedback visuel");
             DebugLineR(pd);
         }
@@ -249,6 +272,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         pathpoint.Node.PlaceNode();
 
+        pathpoint.pathpointActivate.ChangeLayerToDefault();
         DebugPoint(previousPathpoint);
     }
 
@@ -747,6 +771,7 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.lineRendererDebugList.Remove(instance.currentLineDebug.gameObject);
         Destroy(instance.currentLineDebug.gameObject);
 
+        Debug.Log(instance.pathpointList.Count);
         if(instance.pathpointList.Count != 0)
         {
             instance.currentLineDebug = instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>();
@@ -784,6 +809,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 //Get Path Navmesh + Save Data
 
                 PathCreationManager.ModifiedPaths.Add(nModifedPath);
+                PathCreationManager.baseModifiedPath.Add(nModifedPath);
 
                 //Copy le point en cours et mettre des linerenderers entre ce point et ses voisins
                 List<IST_PathPoint> ppList = pd.GetPointNextTo(pp);
@@ -795,7 +821,9 @@ public class PathManager : VLY_Singleton<PathManager>
             }
         }
 
+        
         instance.ppSaveMove = Instantiate(pp, pp.transform.position, Quaternion.identity);
+        instance.ppSaveMove.gameObject.layer = 2;
     }
 
     /// <summary>
@@ -819,6 +847,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
                 if (mp.pathData.pathFragment[i].startPoint == pp || mp.pathData.pathFragment[i].endPoint == pp)
                 {
+                    Debug.Log("Assign LineRenderer : " + instance.lineRendererDebugList);
                     mp.modifyList.Add(new ModifyListClass(instance.lineRendererDebugList[instance.lineRendererDebugList.Count - 1].GetComponent<LineRenderer>(), mp.pathData.pathFragment[i], mp.pathData.pathFragment[i].endPoint == pp));
                 }
             }
@@ -837,17 +866,31 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pp"></param>
     public static void UpdateAfterMoving(IST_PathPoint pp)
     {
+        Debug.Log("Cancel");
         PathCreationManager.isModifyPath = false;
-        foreach (ModifiedPath mp in PathCreationManager.ModifiedPaths)
+
+        Debug.Log("IsCancel : " + PathCreationManager.instance.isCancel);
+        if (PathCreationManager.instance.isCancel)
         {
-            UpdatePathFragmentData(mp);
+            foreach (ModifiedPath mp in PathCreationManager.baseModifiedPath)
+            {
+                PathCreationManager.instance.UpdateSeveralLines(mp);
+                DontUpdatePathFragment(mp);
+            }
+        }
+        else
+        {
+            foreach (ModifiedPath mp in PathCreationManager.ModifiedPaths)
+            {
+                UpdatePathFragmentData(mp);
+            }
         }
 
         NodePathProcess.UpdateAllNodes();
 
-        foreach(PathData pd in instance.pathDataList)
+        foreach (PathData pd in instance.pathDataList)
         {
-            if(pd.ContainsPoint(pp))
+            if (pd.ContainsPoint(pp))
             {
                 pd.CheckMultiPath();
             }
