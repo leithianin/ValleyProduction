@@ -8,6 +8,7 @@ public class CameraBehaviourSpherical : MonoBehaviour
     [SerializeField] private Transform cameraTarget = default;
     [SerializeField] private Transform cameraTargetOrigin = default;
     [SerializeField] private Transform originLookAtTarget = default;
+    [SerializeField] private SphericalTransform sphericalTransform = default;
     [SerializeField] private CinematicCameraBehaviour cinematicCameraBehaviour = default;
     [SerializeField] private float lerpValue;
 
@@ -41,6 +42,6 @@ public class CameraBehaviourSpherical : MonoBehaviour
     void SetCameraForward()
     {
         //transform.forward = new Vector3(originLookAtTarget.position.x - transform.position.x, originLookAtTarget.position.y - transform.position.y, originLookAtTarget.position.z - transform.position.z);
-        transform.LookAt(originLookAtTarget.position);
+        transform.LookAt(originLookAtTarget.position + new Vector3(0.0f, sphericalTransform.OriginVisualOffset, 0.0f));
     }
 }
