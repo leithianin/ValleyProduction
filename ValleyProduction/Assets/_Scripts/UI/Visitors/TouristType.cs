@@ -9,14 +9,14 @@ public class TouristType : MonoBehaviour
     public TextMeshProUGUI name;                        //Visitor's name
 
     [Header("Noise")]
-    public Image noiseBackground;                       //Noise Background image
-    public Image noiseLogo;                             //Noise Logo image
-    public TextMeshProUGUI noiseText;
+    public List<TextMeshProUGUI> noiseText;
+    public List<Image> noiseListBackground;
+    public List<Image> noiseListImage;
 
     [Header("Pollution")]
-    public Image pollutionBackground;                   //Pollution Background image
-    public Image pollutionLogo;                         //Pollution Logo image
-    public TextMeshProUGUI pollutionText;
+    public List<TextMeshProUGUI> pollutionText;
+    public List<Image> pollutionListBackground;
+    public List<Image> pollutionListImage;
 
     [Header("Stamina")]
     public Image stamina;
@@ -29,7 +29,10 @@ public class TouristType : MonoBehaviour
 
     public void ChangeCurrentTab(GameObject go)
     {
-        currentTab.SetActive(false);
+        if (currentTab != null)
+        {
+            currentTab.SetActive(false);
+        }
         go.SetActive(true);
         currentTab = go;
     }
