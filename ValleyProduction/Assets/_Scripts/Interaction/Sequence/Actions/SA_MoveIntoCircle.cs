@@ -7,13 +7,15 @@ public class SA_MoveIntoCircle : InteractionActions
 {
     [SerializeField] private Transform circleCenter;
     [SerializeField] private float circleRadius;
-    [SerializeField] private float maxDistanceByMovement;
+    [SerializeField, Tooltip("Détermine la distance minimale et maximal d'un déplacement.")] private Vector2 rangeDistanceByMovement;
 
     NavMeshPath pathToTake;
 
     private void Start()
     {
-        circleCenter.position = new Vector3(circleCenter.position.x, VisitorManager.GetMainTerrain.SampleHeight(circleCenter.position) + 5f, circleCenter.position.z);
+        NavMeshHit hit;
+        NavMesh.SamplePosition(circleCenter.position, out hit, 10000f, NavMesh.AllAreas);
+        circleCenter.position = hit.position;
     }
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
@@ -21,15 +23,15 @@ public class SA_MoveIntoCircle : InteractionActions
         Vector3 randomDirection = Random.insideUnitCircle * circleRadius;
         Vector3 randomPosition = circleCenter.position + new Vector3(randomDirection.x, 0, randomDirection.y);
 
-        if (Vector3.Distance(caller.transform.position, randomPosition) > maxDistanceByMovement)
+        if (Vector3.Distance(caller.transform.position, randomPosition) > rangeDistanceByMovement.y)
         {
             randomDirection = (randomPosition - caller.transform.position).normalized;
-            randomPosition = circleCenter.position + randomDirection * maxDistanceByMovement;
+            randomPosition = circleCenter.position + randomDirection * rangeDistanceByMovement.y;
         }
-        else if(Vector3.Distance(caller.transform.position, randomPosition) <= 0.5f)
+        else if(Vector3.Distance(caller.transform.position, randomPosition) < rangeDistanceByMovement.x)
         {
             randomDirection = (randomPosition - caller.transform.position).normalized;
-            randomPosition = circleCenter.position + randomDirection * 1f;
+            randomPosition = circleCenter.position + randomDirection * rangeDistanceByMovement.x;
         }
 
         NavMeshHit hit;
@@ -40,7 +42,6 @@ public class SA_MoveIntoCircle : InteractionActions
 
         if (NavMesh.CalculatePath(caller.transform.position, randomPosition, NavMesh.AllAreas, pathToTake))
         {
-
             List<Vector3> path = new List<Vector3>();
 
             for (int i = 0; i < pathToTake.corners.Length; i++)
@@ -55,7 +56,7 @@ public class SA_MoveIntoCircle : InteractionActions
         }
         else
         {
-            //Debug.Log("No path");
+            Debug.Log("No path");
             TimerManager.CreateGameTimer(Time.deltaTime * 2f, () => EndAction(caller));
         }
     }

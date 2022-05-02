@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class ECO_DIS_AnimalDisplayer : EcosystemDisplay
 {
-    public int score = 0;
-
     [SerializeField] private int currentAnimalCount;
 
     [Serializable]
@@ -24,7 +22,6 @@ public class ECO_DIS_AnimalDisplayer : EcosystemDisplay
     {
         currentAnimalCount = 0;
 
-        score = newScore;
         for(int i = 0; i < animalsByValidScore.Count; i++)
         {
             if (animalsByValidScore[i].toDisplay[0] != null)
