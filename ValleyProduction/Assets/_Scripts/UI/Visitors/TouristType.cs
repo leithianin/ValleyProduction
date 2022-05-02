@@ -6,14 +6,18 @@ using UnityEngine.UI;
 
 public class TouristType : MonoBehaviour
 {
-    public TextMeshProUGUI name;
+    public TextMeshProUGUI name;                        //Visitor's name
+
+    [Header("Noise")]
+    public Image noiseBackground;                       //Noise Background image
+    public Image noiseLogo;                             //Noise Logo image
+    public TextMeshProUGUI noiseText;
 
     [Header("Pollution")]
-    public Image pollution;
+    public Image pollutionBackground;                   //Pollution Background image
+    public Image pollutionLogo;                         //Pollution Logo image
     public TextMeshProUGUI pollutionText;
-    [Header("Noise")]
-    public Image noise;
-    public TextMeshProUGUI noiseText;
+
     [Header("Stamina")]
     public Image stamina;
     public TextMeshProUGUI staminaText;

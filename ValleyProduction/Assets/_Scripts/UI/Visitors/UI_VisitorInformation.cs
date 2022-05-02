@@ -11,6 +11,10 @@ public class UI_VisitorInformation : MonoBehaviour
     [SerializeField] private TouristType hikersInfo;
     [SerializeField] private TouristType touristInfo;
 
+    [Header("Color Gradient")]
+    public Gradient colorBackground;
+    public Gradient colorLogo;
+
     public Action OnShowVisitorInfo;
     public UnityEvent<GameObject> OnShow;
 
@@ -46,11 +50,11 @@ public class UI_VisitorInformation : MonoBehaviour
         VisitorScriptable visitorScript = cpn_Inf.scriptable;
         //Pollution
         //Noise
-        UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius / 10;
+        //UI_visitorsInfo.pollution.fillAmount = visitorScript.GetThrowRadius / 10;
         UI_visitorsInfo.pollutionText.text = visitorScript.GetThrowRadius.ToString();
 
         //Noise
-        UI_visitorsInfo.noise.fillAmount = visitorScript.noiseMade / 10;
+        //UI_visitorsInfo.noise.fillAmount = visitorScript.noiseMade / 10;
         UI_visitorsInfo.noiseText.text = visitorScript.noiseMade.ToString();
 
         //Stamina
