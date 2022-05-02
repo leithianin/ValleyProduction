@@ -103,6 +103,21 @@ public class PathManager : VLY_Singleton<PathManager>
         return null;
     }
 
+    public static List<PathData> GetAllPathDatas(IST_PathPoint pathpoint)
+    {
+        List<PathData> toReturn = new List<PathData>();
+
+        foreach (PathData pd in GetAllPath)
+        {
+            if (pd.ContainsPoint(pathpoint) && !toReturn.Contains(pd))
+            {
+                toReturn.Add(pd);
+            }
+        }
+
+        return toReturn;
+    }
+
     public void ResetCurrentData()
     {
         if(instance.ppSaveMove != null)
@@ -290,6 +305,14 @@ public class PathManager : VLY_Singleton<PathManager>
         else
         {
             instance.ResetCurrentData();
+        }
+    }
+
+    public static void DeletePoint(IST_PathPoint ist_pp, List<PathData> pds)
+    {
+        foreach(PathData pd in pds)
+        {
+            DeletePoint(ist_pp, pd);
         }
     }
 

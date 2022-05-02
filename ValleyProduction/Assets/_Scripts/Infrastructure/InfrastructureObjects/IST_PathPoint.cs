@@ -47,7 +47,7 @@ public class IST_PathPoint : Infrastructure
 
     protected override bool OnRemoveObject()
     {
-        if (PathManager.HasManyPath(this))
+        /*if (PathManager.HasManyPath(this))
         {
             if (InfrastructureManager.GetCurrentTool == ToolType.Delete)
             {
@@ -55,7 +55,7 @@ public class IST_PathPoint : Infrastructure
             }
             return false;
         }
-        else
+        else*/
         {
             node.DeleteNode();
             if (PathManager.GetCurrentPathpointList.Count > 0)
@@ -64,7 +64,7 @@ public class IST_PathPoint : Infrastructure
             }
             else if (PathManager.GetCurrentPathData == null )
             {
-                PathManager.DeletePoint(this, PathManager.GetPathData(this));
+                PathManager.DeletePoint(this, PathManager.GetAllPathDatas(this));
             }
 
             InfrastructureManager.DesnapInfrastructure(this);
