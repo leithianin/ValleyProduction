@@ -19,18 +19,11 @@ public abstract class EcosystemDisplay : MonoBehaviour
     /// Liste des type de data utilisé par l'AreaDisplay et leur degré d'importance.
     [SerializeField] private List<EcosystemDisplayDataHandler> scoreData;
 
-    [SerializeField] private Collider collider;
-
     public Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
 
     private void Start()
     {
-        if (collider != null)
-        {
-            TimerManager.CreateRealTimer(Time.deltaTime, () => collider.enabled = false);
-        }
-
         OnStart();
     }
 

@@ -188,7 +188,7 @@ public class VisitorBehavior : VLY_Component
     {
         NodePathData nodeData = currentPathFragment.endPoint.Node.GetDataForLandmarkType(currentObjective);
 
-        if (nodeData != null && nodeData.linkedToLandmark)
+        if (nodeData != null && (nodeData.linkedToLandmark || nodeData.distanceFromLandmark < 0))
         {
             VLY_LandmarkManager.OnLandmarkInteraction(currentObjective.Type, this); // CODE REVIEW : Voir si on peut pas le mettre autre par (Dans les Landmark, mettre une fonction qui détecte l'entré dun visiteur ?)
 
@@ -208,8 +208,8 @@ public class VisitorBehavior : VLY_Component
             currentObjective = spawns[UnityEngine.Random.Range(0, spawns.Count)];
         }
 
-        List<BuildTypes> likedType = new List<BuildTypes>();
-        List<BuildTypes> hatedType = new List<BuildTypes>();
+        List<SatisfactorType> likedType = new List<SatisfactorType>();
+        List<SatisfactorType> hatedType = new List<SatisfactorType>();
 
         if(currentObjective.Type != LandmarkType.Spawn)
         {

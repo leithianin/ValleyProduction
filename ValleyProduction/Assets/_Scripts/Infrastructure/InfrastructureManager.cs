@@ -129,6 +129,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         Cursor.visible = true;
     }
 
+    int objectIndex = 0;
+
     private void PlaceInfrastructure(InfrastructurePreview toPlace, Infrastructure selectedStructure)
     {
         if (ConstructionManager.GetSelectedStructureType == selectedStructure.StructureType && toPlace.AskToPlace(selectedStructure.transform.position))
@@ -146,6 +148,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             EndRotation();
 
             placedInfrastructure.PlaceObject(positionToPlace);
+            objectIndex++;
+            placedInfrastructure.gameObject.name += " : " + objectIndex;
 
             OnPlaceInfrastructure?.Invoke(placedInfrastructure);
             return true;

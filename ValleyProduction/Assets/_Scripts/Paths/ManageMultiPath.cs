@@ -15,7 +15,7 @@ public class ManageMultiPath : MonoBehaviour
     private int nbArrow = 0;
 
     //List des chemins ou y'a un panneau
-    private List<MultiPathClass> multiPathList = new List<MultiPathClass>();
+    [SerializeField] private List<MultiPathClass> multiPathList = new List<MultiPathClass>();
 
     public class MultiPathClass
     {
@@ -42,6 +42,9 @@ public class ManageMultiPath : MonoBehaviour
 
     public void DesactivateMultiPath()
     {
+        Debug.Log(gameObject.name);
+        Debug.Log(prefabCairn);
+        Debug.Log(prefabCairn.activeSelf);
         prefabCairn.SetActive(true);
         prefabSign.SetActive(false);
         nbArrow = 0;
@@ -126,6 +129,8 @@ public class ManageMultiPath : MonoBehaviour
             nbArrow--;
         }
 
+        Debug.Log(gameObject.name + " List : " + multiPathList.Count);
+
         if(multiPathList.Count < 2)
         {
             DesactivateMultiPath();
@@ -148,6 +153,15 @@ public class ManageMultiPath : MonoBehaviour
 
             multiPathList.Clear();
             nbArrow = 0;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (MultiPathClass mpc in multiPathList)
+        {
+            mpc.pathFragmentData.startPoint.OnDestroyPathPoint -= DeleteArrow;
+            mpc.pathFragmentData.endPoint.OnDestroyPathPoint -= DeleteArrow;
         }
     }
 }

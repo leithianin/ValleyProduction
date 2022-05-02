@@ -28,9 +28,9 @@ public class InterestPoint : MonoBehaviour
         }
     }
 
-    public List<BuildTypes> InteractionTypeInInterestPoint()
+    public List<SatisfactorType> InteractionTypeInInterestPoint()
     {
-        List<BuildTypes> toReturn = new List<BuildTypes>();
+        List<SatisfactorType> toReturn = new List<SatisfactorType>();
 
         for (int i = 0; i < interactions.Length; i++)
         {
@@ -68,13 +68,13 @@ public class InterestPoint : MonoBehaviour
         return usableInteractions;
     }
 
-    public float GetAttractivityScore(List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    public float GetAttractivityScore(List<SatisfactorType> likedTypes, List<SatisfactorType> hatedTypes)
     {
         float toReturn = 0;
 
         for(int i = 0; i < interactions.Length; i++)
         {
-            if(likedTypes.Contains(interactions[i].interactionType))
+            if(interactions[i].interactionType == SatisfactorType.All || likedTypes.Contains(interactions[i].interactionType))
             {
                 toReturn += interactions[i].attractivityLevel;
             }

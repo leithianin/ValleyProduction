@@ -312,7 +312,7 @@ public class PathNode : MonoBehaviour
     /// </summary>
     /// <param name="target">The Landmark to search for.</param>
     /// <returns>The PathFragmentData for the visitor to follow.</returns>
-    public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes, List<PathFragmentData> toIgnore)
+    public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<SatisfactorType> likedTypes, List<SatisfactorType> hatedTypes, List<PathFragmentData> toIgnore)
     {
         PathFragmentData toReturn = null;
 
@@ -330,7 +330,7 @@ public class PathNode : MonoBehaviour
             {
                 if (toIgnore.Contains(usableFragments[i]))
                 {
-                    nScore = CalculateScore(usableFragments[i], target, new List<BuildTypes>(), new List<BuildTypes>());
+                    nScore = CalculateScore(usableFragments[i], target, new List<SatisfactorType>(), new List<SatisfactorType>());
                 }
                 else
                 {
@@ -353,7 +353,7 @@ public class PathNode : MonoBehaviour
         return toReturn;
     }
 
-    private float CalculateScore(PathFragmentData fragmentToCalculate, CPN_IsLandmark landmarkWanted, List<BuildTypes> likedTypes, List<BuildTypes> hatedTypes)
+    private float CalculateScore(PathFragmentData fragmentToCalculate, CPN_IsLandmark landmarkWanted, List<SatisfactorType> likedTypes, List<SatisfactorType> hatedTypes)
     {
         NodePathData dataToCheck = null;
 

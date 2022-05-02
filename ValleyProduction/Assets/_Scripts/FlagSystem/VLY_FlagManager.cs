@@ -21,11 +21,11 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
         }
     }
 
-    public static void IncrementFlagValue(string flagName)
+    public static void IncrementFlagValue(string flagName, int incrementValue)
     {
         if(flags.ContainsKey(flagName))
         {
-            flags[flagName]++;
+            flags[flagName] += incrementValue;
 
             OnUpdateFlag?.Invoke(flagName, flags[flagName]);
         }

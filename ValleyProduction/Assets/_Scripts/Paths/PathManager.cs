@@ -103,6 +103,21 @@ public class PathManager : VLY_Singleton<PathManager>
         return null;
     }
 
+    public static List<PathData> GetAllPathDatas(IST_PathPoint pathpoint)
+    {
+        List<PathData> toReturn = new List<PathData>();
+
+        foreach (PathData pd in GetAllPath)
+        {
+            if (pd.ContainsPoint(pathpoint) && !toReturn.Contains(pd))
+            {
+                toReturn.Add(pd);
+            }
+        }
+
+        return toReturn;
+    }
+
     public void ResetCurrentData()
     {
         if(instance.ppSaveMove != null)
@@ -293,6 +308,14 @@ public class PathManager : VLY_Singleton<PathManager>
         }
     }
 
+    public static void DeletePoint(IST_PathPoint ist_pp, List<PathData> pds)
+    {
+        foreach(PathData pd in pds)
+        {
+            DeletePoint(ist_pp, pd);
+        }
+    }
+
     /// <summary>
     /// Delete the given pathpoint
     /// </summary>
@@ -319,16 +342,16 @@ public class PathManager : VLY_Singleton<PathManager>
             {
                 case 0:
                     DeletePointWith0PathFragment(pdToModify);
-                    return;
+                    break;
                 case 1:
                     DeletePointWith1PathFragment(pdToModify, ist_pp);
-                    return;
+                    break;
                 case 2:
                     DeletePointWith2PathFragment(pdToModify, ist_pp);
-                    return;
-                default :
+                    break;
+                default:
                     DeletePointWith2MorePathFragment(pdToModify, ist_pp);
-                    return;
+                    break;
             }
         }
 
@@ -436,15 +459,8 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void DeletePointWith2MorePathFragment(PathData pdToModify, IST_PathPoint ist_pp)
     {
         //Si ce n'est pas le dernier point
-        if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
+        //if (pdToModify.GetLastPoint() != ist_pp && pdToModify.pathFragment[pdToModify.pathFragment.Count - 1].startPoint != ist_pp)
         {
-            //RemoveMultiPath(pdToModify, ist_pp);
-            //Check si ces deux points ont HasManyPath
-            //Si non, comme d'hab
-            //Si oui --> pdToModify.RemoveMultiPath();
-
-
-            //pdToModify.RemoveMultiPath();
             List<PathFragmentData> pfdSecondPath = pdToModify.GetAllNextPathFragment(ist_pp);               //List of PathFragment after the deleted pathpoint
 
             pdToModify.RemoveFragmentAndNext(ist_pp);                                                       //Remove PathFragment where the pathpoint is + the next PathFragment 
@@ -463,16 +479,19 @@ public class PathManager : VLY_Singleton<PathManager>
 
             pdToModify.SafeCheck();                                                                         //Check if the path is Empty and delete it
 
-            CreateCutPathData(pfdSecondPath);                                                             //Create a pathData with the second path
+            if (pfdSecondPath.Count > 0)
+            {
+                CreateCutPathData(ist_pp, pfdSecondPath);                                                             //Create a pathData with the second path
+            }
         }
-        else
+        /*else
         {
             //RemoveMultiPath(pdToModify, ist_pp);
             //pdToModify.RemoveMultiPath();
             pdToModify.RemoveFragmentAndNext(ist_pp);
             DestroyLineRenderer(pdToModify.pathLineRenderer);
             DebugLineR(pdToModify);
-        }
+        }*/
     }
 
     public static void RemoveMultiPath(PathData pdToModify, IST_PathPoint ist_pp)
@@ -624,7 +643,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// Create a PathData for the path that is cut by the deleting tool
     /// </summary>
     /// <param name="listPathFragment"></param>
-    public static void CreateCutPathData(List<PathFragmentData> listPathFragment)
+    public static void CreateCutPathData(IST_PathPoint deletedPoint, List<PathFragmentData> listPathFragment)
     {
         PathData newPathData = new PathData();
 
@@ -649,6 +668,11 @@ public class PathManager : VLY_Singleton<PathManager>
         NodePathProcess.UpdateAllNodes();
 
         OnCreatePath?.Invoke(newPathData);
+
+        if(newPathData.ContainsPoint(deletedPoint))
+        {
+            DeletePoint(deletedPoint, newPathData);
+        }
     }
 
     public static bool IsPathDataStillExist(PathData pathdata)
