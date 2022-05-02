@@ -87,8 +87,11 @@ public abstract class Infrastructure : MonoBehaviour
         OnPlaceObject(position);
     }
 
+    int objectIndex = 0;
+
     public void PlaceObject()
     {
+        objectIndex++;
         PlayOnPlaceOverObject?.Invoke();
         OnPlaceObject();
     }
