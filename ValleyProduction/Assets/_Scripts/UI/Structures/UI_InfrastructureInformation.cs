@@ -12,15 +12,16 @@ public class UI_InfrastructureInformation : MonoBehaviour
     [SerializeField] private TMP_Text noiseScoreDisplay;
     [SerializeField] private TMP_Text floraScoreDisplay;
 
-    public void ShowStructureInformation(ECO_AGT_Informations informationToShow)
+    public void ShowStructureInformation(ECO_AGT_Informations infoInfra, IST_BaseStructure baseStruct)
     {
+        /*
         nameDisplay.text = informationToShow.GetName;
         descriptionDisplay.text = informationToShow.GetDescription;
 
         pollutionScoreDisplay.text = informationToShow.GetPolluterScore().ToString();
         noiseScoreDisplay.text = informationToShow.GetNoiseScore().ToString();
-        floraScoreDisplay.text = informationToShow.GetPlantScore().ToString();
-
+        floraScoreDisplay.text = informationToShow.GetPlantScore().ToString();*/
+        
         gameObject.SetActive(true);
     }
 }
