@@ -208,8 +208,8 @@ public class VisitorBehavior : VLY_Component
             currentObjective = spawns[UnityEngine.Random.Range(0, spawns.Count)];
         }
 
-        List<BuildTypes> likedType = new List<BuildTypes>();
-        List<BuildTypes> hatedType = new List<BuildTypes>();
+        List<SatisfactorType> likedType = new List<SatisfactorType>();
+        List<SatisfactorType> hatedType = new List<SatisfactorType>();
 
         if(currentObjective.Type != LandmarkType.Spawn)
         {

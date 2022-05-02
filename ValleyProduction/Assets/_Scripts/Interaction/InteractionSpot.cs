@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class InteractionSpot : MonoBehaviour
 {
-    public BuildTypes interactionType;
+    public SatisfactorType interactionType;
     public float attractivityLevel;
 
     [SerializeField] private List<InteractionCondition> conditions;

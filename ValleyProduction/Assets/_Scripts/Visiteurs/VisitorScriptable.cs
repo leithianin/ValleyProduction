@@ -15,9 +15,9 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
 
     [Header("Interest")]
     [SerializeField, Tooltip("List of all the Landmark by interest.")] private List<LandmarkType> landmarksWanted;
-    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildTypes> interactionTypes;
-    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildTypes> likedInterestType;
-    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<BuildTypes> hatedInterestType;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<SatisfactorType> interactionTypes;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<SatisfactorType> likedInterestType;
+    [SerializeField, Tooltip("The list of types of Interaction the visitor is interested in.")] private List<SatisfactorType> hatedInterestType;
 
     [Header("Stamina")]
     [SerializeField, Tooltip("Limite de stamina.")] private float maxStamina;
@@ -68,7 +68,7 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
         return speed;
     }
 
-    public List<BuildTypes> InteractionInterest()
+    public List<SatisfactorType> InteractionInterest()
     {
         return interactionTypes;
     }
@@ -98,12 +98,12 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
         return pickupRadius;
     }
 
-    public List<BuildTypes> LikedInteractions()
+    public List<SatisfactorType> LikedInteractions()
     {
         return likedInterestType;
     }
 
-    public List<BuildTypes> HatedInteractions()
+    public List<SatisfactorType> HatedInteractions()
     {
         return hatedInterestType;
     }
