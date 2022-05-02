@@ -16,11 +16,12 @@ public class InfrastructureData : ScriptableObject, CPN_Data_Purchasable
     [SerializeField] private Infrastructure structure;
     [SerializeField] private InfrastructurePreview preview;
 
-    [SerializeField] private GameObject logo;
+    [SerializeField] private Sprite logo;
     
 
     public string Name => structureName;
 
+    public string Description => structureDescription;
     public Sprite Icon => icon;
 
     public InfrastructureType StructureType => structureType;
@@ -29,7 +30,7 @@ public class InfrastructureData : ScriptableObject, CPN_Data_Purchasable
 
     public InfrastructurePreview Preview => preview;
 
-    public GameObject Logo => logo;
+    public Sprite Logo => logo;
 
     public float Cost()
     {

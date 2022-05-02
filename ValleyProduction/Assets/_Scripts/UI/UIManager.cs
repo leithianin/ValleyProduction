@@ -56,9 +56,6 @@ public class UIManager : VLY_Singleton<UIManager>
                     if (PathManager.HasManyPath(ist_pathpoint)) { ArrangePathButton(ist_pathpoint); }
                     else { InteractWithRoad(PathManager.GetPathData(ist_pathpoint)); }
                     break;
-                /*case IST_BaseStructure au_informations:
-                    InteractWithInfrastructure(au_informations);
-                    break;*/
                 case VisitorBehavior visitorBehavior:
                     InteractWithVisitor(visitorBehavior.GetComponent<CPN_Informations>());
                     break;
