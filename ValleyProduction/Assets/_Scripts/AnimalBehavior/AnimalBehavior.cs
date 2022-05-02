@@ -53,7 +53,7 @@ public class AnimalBehavior : MonoBehaviour
 
     private void DoBehavior()
     {
-        //sequence.PlayAction(interaction, DoBehavior, null, false);
+        sequence.PlayAction(interaction, DoBehavior, null, false);
     }
 
 }
