@@ -23,4 +23,14 @@ public class TouristType : MonoBehaviour
     public TextMeshProUGUI staminaText;
     public TextMeshProUGUI goal;
     public TextMeshProUGUI note;
+
+    [Header("Tab")]
+    private GameObject currentTab;
+
+    public void ChangeCurrentTab(GameObject go)
+    {
+        currentTab.SetActive(false);
+        go.SetActive(true);
+        currentTab = go;
+    }
 }
