@@ -1,7 +1,7 @@
 public enum EcosystemDataType
 {
     Noise,
+    Pollution,
     Flora,
-    Fauna,
-    Pollution
+    Fauna
 }

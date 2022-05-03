@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 0
-  scoreProduced: 0
+  scoreProduced: 1
 --- !u!114 &4187509978853716049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,14 +343,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 5
-    needHigher: 0
-    score: 0
+  - displayDatas:
+    - dataTypeToCheck: 1
+      wantedScore: 5
+      needHigher: 0
+      score: 0
   trees:
   - {fileID: 7939899343630416055}
   - {fileID: 1883912974944305903}
   - {fileID: 6471912347455464980}
+  score: 0
 --- !u!1 &8145985906335239733
 GameObject:
   m_ObjectHideFlags: 0
