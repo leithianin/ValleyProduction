@@ -34,6 +34,19 @@ public abstract class Infrastructure : MonoBehaviour
 
     public CPN_Purchasable Purchasable => purchaseBehavior;
 
+    [Header("Structure Information")]
+    public InterestPoint interestPoint;
+
+    public InfrastructureDataRunTime infraDataRunTime = new InfrastructureDataRunTime();
+
+    public class InfrastructureDataRunTime
+    {
+        public string name = string.Empty;
+        public int currentCapacity = 0;
+        public int visitorsTotal = 0;
+        public int moneyTotal = 0;
+    }
+
     /// <summary>
     /// Used to do specific action when a construction is placed.
     /// </summary>

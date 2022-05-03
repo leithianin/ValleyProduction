@@ -11,7 +11,7 @@ public class InteractionSpot : MonoBehaviour
 
     [SerializeField] private List<InteractionCondition> conditions;
 
-    [SerializeField] private int maxInteractionAtSameTime = -1;
+    [SerializeField] public int maxInteractionAtSameTime = -1;
 
     [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnStartInteract;
     [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnEndInteract;
