@@ -261,8 +261,8 @@ GameObject:
   - component: {fileID: 6373274642763142655}
   - component: {fileID: 5252404336967509779}
   - component: {fileID: 1766797229471813176}
-  - component: {fileID: 5793997350195673622}
   - component: {fileID: 4187509978853716049}
+  - component: {fileID: 7610204098680400950}
   m_Layer: 0
   m_Name: Prefab_GroupedTrees
   m_TagString: Untagged
@@ -316,20 +316,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5793997350195673622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5955129779019573354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 0
-  scoreProduced: 1
 --- !u!114 &4187509978853716049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +339,20 @@ MonoBehaviour:
   - {fileID: 1883912974944305903}
   - {fileID: 6471912347455464980}
   score: 0
+--- !u!114 &7610204098680400950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955129779019573354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 0
+  scoreProduced: 1
 --- !u!1 &8145985906335239733
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,10 +461,34 @@ MonoBehaviour:
   OnUnsetMesh: {fileID: 8257721897853707055}
   OnSet:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7610204098680400950}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnUnset:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7610204098680400950}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnChangeScore:
     m_PersistentCalls:
       m_Calls: []
