@@ -168,13 +168,13 @@ public class UIManager : VLY_Singleton<UIManager>
 
     #region Info Infrastructure
     //Show les informations des visiteurs on click
-    public static void InteractWithInfrastructure(ECO_AGT_Informations infoInfra, IST_BaseStructure baseStruct)
+    public static void InteractWithInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
         HideShownGameObject();
         instance.ShowInfoInfrastructure(infoInfra, baseStruct);
     }
 
-    public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, IST_BaseStructure baseStruct)
+    public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
         OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         infrastructureInfo.ShowStructureInformation(infoInfra, baseStruct);

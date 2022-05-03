@@ -42,7 +42,7 @@ public class ECO_AGT_Informations : MonoBehaviour
         return 0;
     }
 
-    public void DisplayInformation(IST_BaseStructure baseStruct)
+    public void DisplayInformation(Infrastructure baseStruct)
     {
         UIManager.InteractWithInfrastructure(this, baseStruct);
     }
