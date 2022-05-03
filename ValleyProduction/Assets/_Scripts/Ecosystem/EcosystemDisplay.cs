@@ -4,12 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+public class EcosystemScoreHandler
+{
+    public List<EcosystemDisplayDataHandler> displayDatas;
+
+    public bool IsValid()
+    {
+        bool toReturn = true;
+
+        for(int i = 0; i < displayDatas.Count; i++)
+        {
+            if(!displayDatas[i].IsValid)
+            {
+                toReturn = false;
+                break;
+            }
+        }
+
+        return toReturn;
+    }
+}
+
+[Serializable]
 public class EcosystemDisplayDataHandler
 {
     public EcosystemDataType dataTypeToCheck;
     [SerializeField] private int wantedScore;
     [SerializeField] private bool needHigher = true;
-    [HideInInspector] public int score;
+     public int score;
 
     public bool IsValid => (score >= wantedScore && needHigher) || (score <= wantedScore && !needHigher);
 }
@@ -17,7 +39,7 @@ public class EcosystemDisplayDataHandler
 public abstract class EcosystemDisplay : MonoBehaviour
 {
     /// Liste des type de data utilisé par l'AreaDisplay et leur degré d'importance.
-    [SerializeField] private List<EcosystemDisplayDataHandler> scoreData;
+    [SerializeField] private List<EcosystemScoreHandler> scoreData;
 
     public Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
@@ -36,7 +58,10 @@ public abstract class EcosystemDisplay : MonoBehaviour
     {
         for (int i = 0; i < scoreData.Count; i++)
         {
-            UpdateData(VLY_EcosystemManager.GetScoreAtPosition(Position, scoreData[i].dataTypeToCheck), scoreData[i].dataTypeToCheck);
+            for (int j = 0; j < scoreData[i].displayDatas.Count; j++)
+            {
+                UpdateData(VLY_EcosystemManager.GetScoreAtPosition(Position, scoreData[i].displayDatas[j].dataTypeToCheck), scoreData[i].displayDatas[j].dataTypeToCheck);
+            }
         }
     }
 
@@ -56,12 +81,15 @@ public abstract class EcosystemDisplay : MonoBehaviour
         int reachedDataLevels = 0;
         for(int i = 0; i < scoreData.Count; i++)
         {
-            if(scoreData[i].dataTypeToCheck == data)
+            for (int j = 0; j < scoreData[i].displayDatas.Count; j++)
             {
-                scoreData[i].score = score;
+                if (scoreData[i].displayDatas[j].dataTypeToCheck == data)
+                {
+                    scoreData[i].displayDatas[j].score = score;
+                }
             }
 
-            if(scoreData[i].IsValid)
+            if (scoreData[i].IsValid())
             {
                 reachedDataLevels++;
             }
@@ -81,9 +109,12 @@ public abstract class EcosystemDisplay : MonoBehaviour
 
         for (int i = 0; i < scoreData.Count; i++)
         {
-            if(scoreData[i].dataTypeToCheck == dataType)
+            for (int j = 0; j < scoreData[i].displayDatas.Count; j++)
             {
-                toReturn = true;
+                if (scoreData[i].displayDatas[j].dataTypeToCheck == dataType)
+                {
+                    toReturn = true;
+                }
             }
         }
 

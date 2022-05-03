@@ -34,6 +34,18 @@ public abstract class Infrastructure : MonoBehaviour
 
     public CPN_Purchasable Purchasable => purchaseBehavior;
 
+    [Header("Structure Information")]
+    public InterestPoint interestPoint;
+
+    public InfrastructureDataRunTime infraDataRunTime = new InfrastructureDataRunTime();
+
+    public class InfrastructureDataRunTime
+    {
+        public string name = string.Empty;
+        public int visitorsTotal = 0;
+        public int moneyTotal = 0;
+    }
+
     /// <summary>
     /// Used to do specific action when a construction is placed.
     /// </summary>
@@ -200,5 +212,23 @@ public abstract class Infrastructure : MonoBehaviour
     {
         isOpen = true;
         OnOpenStructure?.Invoke();
+    }
+
+    /// <summary>
+    /// Add 1 visitors to the Infrastructure and Update the UI if it's shown
+    /// </summary>
+    public void AddTotalVisitors()
+    {
+        infraDataRunTime.visitorsTotal += 1;
+        UIManager.UpdateTotalNbVisitors();
+        UIManager.UpdateCurrentNbVisitors();            //Add 1 
+    }
+
+    public void RemoveVisitors()
+    {
+        if (UIManager.GetInfrastructureInfo.savedInfrastructure == this)
+        {
+            UIManager.GetInfrastructureInfo.UpdateCurrentNbInfo(this);              //Remove 1
+        }
     }
 }

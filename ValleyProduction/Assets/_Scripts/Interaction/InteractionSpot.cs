@@ -11,11 +11,13 @@ public class InteractionSpot : MonoBehaviour
 
     [SerializeField] private List<InteractionCondition> conditions;
 
-    [SerializeField] private int maxInteractionAtSameTime = -1;
+    [SerializeField] public int maxInteractionAtSameTime = -1;
 
     [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnStartInteract;
     [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnEndInteract;
     [SerializeField] private UnityEvent<CPN_InteractionHandler> PlayOnInteruptInteract;
+    [SerializeField] private UnityEvent PlayOnAddVisitors;
+    [SerializeField] private UnityEvent PlayOnRemoveVisitors;
 
     public Action<CPN_InteractionHandler> PlayOnInteractionEnd;
     public Action<CPN_InteractionHandler> PlayOnInteractionStart;
@@ -24,6 +26,8 @@ public class InteractionSpot : MonoBehaviour
     public InteractionActions interactionAction;
 
     [SerializeField] private List<CPN_InteractionHandler> callerInSpot = new List<CPN_InteractionHandler>();
+
+    public int currentNbVisitors = 0;
 
     /// <summary>
     /// Vérifie si l'interaction peut être faite.
@@ -61,6 +65,7 @@ public class InteractionSpot : MonoBehaviour
         PlayOnInteractionStart?.Invoke(interacter);
         if (interactionAction != null)
         {
+            AddVisitors();
             interactionAction.PlayAction(interacter, () => EndInteraction(interacter), () => EndInteraction(interacter), false);
         }
         else
@@ -75,8 +80,9 @@ public class InteractionSpot : MonoBehaviour
     /// <param name="interacter">L'InteractionHandler qui finit son interaction.</param>
     public void EndInteraction(CPN_InteractionHandler interacter)
     {
+        currentNbVisitors--;
+        RemoveVisitors();
         callerInSpot.Remove(interacter);
-
         PlayOnEndInteract?.Invoke(interacter);
         PlayOnInteractionEnd?.Invoke(interacter);
     }
@@ -87,5 +93,22 @@ public class InteractionSpot : MonoBehaviour
         { 
             interactionAction.InteruptAction(callerInSpot[0]);
         }
+    }
+
+    /// <summary>
+    /// Add 1 visitors to data. Event go to Infrastructure -> AddTotalVisitors()
+    /// </summary>
+    public void AddVisitors()
+    {
+        currentNbVisitors++;
+        PlayOnAddVisitors?.Invoke();
+    }
+
+    /// <summary>
+    /// Update current Nb because we remove 1
+    /// </summary>
+    public void RemoveVisitors()
+    {
+        UIManager.UpdateCurrentNbVisitors();
     }
 }

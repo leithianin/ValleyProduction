@@ -21,6 +21,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     [Header("Infrastructure Informations")]
     public UI_InfrastructureInformation infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
+    public static UI_InfrastructureInformation GetInfrastructureInfo => instance.infrastructureInfo;
 
     [Header("Datas display")]
     public UI_DataDisplay dataInfo;
@@ -67,6 +68,7 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         if (gameObjectShown != null && !UI_RoadInformation.isEditName)
         {
+            GetInfrastructureInfo.ResetSavedInfrastructe();
             OnBoardingManager.onHideVisitorInfo?.Invoke(true);
             OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);
             gameObjectShown.SetActive(false);
@@ -164,17 +166,39 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         gameObjectShown = visitorInfo.ShowInfoVisitor(cpn_Inf).gameObject;
     }
+
+    /// <summary>
+    /// Update current NB Visitors each time we add or remove 1 visitors
+    /// </summary>
+    public static void UpdateCurrentNbVisitors()
+    {
+        if (GetInfrastructureInfo.savedInfrastructure != null)
+        {
+            GetInfrastructureInfo.UpdateCurrentNbInfo(GetInfrastructureInfo.savedInfrastructure);
+        }
+    }
+
+    /// <summary>
+    /// Update le nombre total de visiteurs sur l'UI actuellement affiché
+    /// </summary>
+    public static void UpdateTotalNbVisitors()
+    {
+        if (GetInfrastructureInfo.savedInfrastructure != null)
+        {
+            GetInfrastructureInfo.UpdateTotalNbInfo(GetInfrastructureInfo.savedInfrastructure);
+        }
+    }
     #endregion
 
     #region Info Infrastructure
     //Show les informations des visiteurs on click
-    public static void InteractWithInfrastructure(ECO_AGT_Informations infoInfra, IST_BaseStructure baseStruct)
+    public static void InteractWithInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
         HideShownGameObject();
         instance.ShowInfoInfrastructure(infoInfra, baseStruct);
     }
 
-    public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, IST_BaseStructure baseStruct)
+    public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
         OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         infrastructureInfo.ShowStructureInformation(infoInfra, baseStruct);
@@ -201,4 +225,5 @@ public class UIManager : VLY_Singleton<UIManager>
         instance.questDisplayer.SetRewardToDisplay(rewards);
     }
     #endregion
+
 }

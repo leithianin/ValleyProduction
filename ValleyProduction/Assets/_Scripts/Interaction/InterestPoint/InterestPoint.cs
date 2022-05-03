@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class InterestPoint : MonoBehaviour
 {
-    [SerializeField] private InteractionSpot[] interactions;
+    [SerializeField] public InteractionSpot[] interactions;
 
     public Action<InterestPoint> OnDisableInterestPoint;
 
@@ -85,5 +85,29 @@ public class InterestPoint : MonoBehaviour
         }
         
         return toReturn;
+    }
+
+    public int GetInteractionMaxVisitors()
+    {
+        int nb = 0;
+
+        foreach(InteractionSpot interacSpot in interactions)
+        {
+            nb += interacSpot.maxInteractionAtSameTime;
+        }
+
+        return nb;
+    }
+
+    public int GetCurrentNbVisitors()
+    {
+        int nb = 0;
+
+        foreach (InteractionSpot interacSpot in interactions)
+        {
+            nb += interacSpot.currentNbVisitors;
+        }
+
+        return nb;
     }
 }

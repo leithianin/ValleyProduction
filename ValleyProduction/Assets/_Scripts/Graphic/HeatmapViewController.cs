@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class HeatmapViewController : MonoBehaviour
 {
-    public Material[] Materials;
-
     [SerializeField] private MaskRenderer msk;
+
+    public Material[] Materials;
+    public GameObject baseLights;
+    public GameObject heatmapLight;
+    public GameObject foliage;
 
     private bool isEnabled;
 
@@ -63,6 +66,10 @@ public class HeatmapViewController : MonoBehaviour
     private void EnableHeatmapView(bool enable, int index)
     {
         isEnabled = enable;
+
+        baseLights.SetActive(!enable);
+        heatmapLight.SetActive(enable);
+        foliage.SetActive(!enable);
 
         foreach (Material m in Materials)
         {
