@@ -105,7 +105,7 @@ public class MaskRenderer : MonoBehaviour
         public float PositionY;
         public float Range;
         public float Noise;
-        public float Polution;
+        public float Pollution;
         public float Fauna;
         public float Flora;
     }
@@ -279,7 +279,7 @@ public class MaskRenderer : MonoBehaviour
                     PositionY = agent.transform.position.z,
                     Range = agent.Range,
                     Noise = agent.UsedDataType() == EcosystemDataType.Noise ? agent.GetScore() : 0,
-                    Polution = agent.UsedDataType() == EcosystemDataType.Pollution ? agent.GetScore() : 0,
+                    Pollution = agent.UsedDataType() == EcosystemDataType.Pollution ? agent.GetScore() : 0,
                     Flora = agent.UsedDataType() == EcosystemDataType.Flora ? agent.GetScore() : 0,
                     Fauna = agent.UsedDataType() == EcosystemDataType.Fauna ? agent.GetScore() : 0
                 };

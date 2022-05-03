@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UI_InfrastructureInformation : MonoBehaviour
 {
@@ -20,9 +21,13 @@ public class UI_InfrastructureInformation : MonoBehaviour
     [SerializeField] private GameObject moneyTotal;
     [SerializeField] private TMP_Text moneyTotalText;
 
+    public Infrastructure savedInfrastructure;
+
 
     public void ShowStructureInformation(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
+        savedInfrastructure = baseStruct;
+
         if (baseStruct.infraDataRunTime.name != string.Empty)
         {
             nameDisplay.text = baseStruct.infraDataRunTime.name;
@@ -41,14 +46,7 @@ public class UI_InfrastructureInformation : MonoBehaviour
         //Show Capacity si interactionScript
         if(baseStruct.interestPoint != null) 
         {
-            int nbTotal = 0;
-
-            foreach(InteractionSpot interacSpot in baseStruct.interestPoint.interactions)
-            {
-                nbTotal += interacSpot.maxInteractionAtSameTime;
-            }
-
-            capacityText.text = "Capacity : <size=17>" + baseStruct.infraDataRunTime.currentCapacity + "/" + nbTotal;
+            capacityText.text = "Capacity : <size=17>" + baseStruct.interestPoint.GetCurrentNbVisitors().ToString() + "/" + baseStruct.interestPoint.GetInteractionMaxVisitors().ToString();
             capacity.SetActive(true);
         }
 
@@ -64,5 +62,25 @@ public class UI_InfrastructureInformation : MonoBehaviour
         noiseScoreDisplay.text = "Noise : <size=17>" + infoInfra.GetNoiseScore().ToString() + "</size>";
 
         gameObject.SetActive(true);
+    }
+
+    public void UpdateCurrentNbInfo(Infrastructure baseStruct)
+    {
+        capacityText.text = "Capacity : <size=17>" + baseStruct.interestPoint.GetCurrentNbVisitors().ToString() + "/" + baseStruct.interestPoint.GetInteractionMaxVisitors().ToString();
+    }
+
+    public void UpdateTotalNbInfo(Infrastructure baseStruct)
+    {
+        visitorsTotalText.text = baseStruct.infraDataRunTime.visitorsTotal.ToString();
+    }
+
+    public void UpdateTotalMoney(Infrastructure baseStruct)
+    {
+        moneyTotalText.text = baseStruct.infraDataRunTime.moneyTotal.ToString();
+    }
+
+    public void ResetSavedInfrastructe()
+    {
+        savedInfrastructure = null;
     }
 }
