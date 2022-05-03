@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class InterestPoint : MonoBehaviour
 {
-    [SerializeField] private InteractionSpot[] interactions;
+    [SerializeField] public InteractionSpot[] interactions;
 
     public Action<InterestPoint> OnDisableInterestPoint;
 
