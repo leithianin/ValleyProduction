@@ -9,6 +9,7 @@ public class HeatmapViewController : MonoBehaviour
     public Material[] Materials;
     public GameObject baseLights;
     public GameObject heatmapLight;
+    public GameObject foliage;
 
     private bool isEnabled;
 
@@ -68,6 +69,7 @@ public class HeatmapViewController : MonoBehaviour
 
         baseLights.SetActive(!enable);
         heatmapLight.SetActive(enable);
+        foliage.SetActive(!enable);
 
         foreach (Material m in Materials)
         {
