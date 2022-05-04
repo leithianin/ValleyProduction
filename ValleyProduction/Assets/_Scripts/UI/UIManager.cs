@@ -172,9 +172,9 @@ public class UIManager : VLY_Singleton<UIManager>
     /// </summary>
     public static void UpdateCurrentNbVisitors()
     {
-        if (GetInfrastructureInfo.savedInfrastructure != null)
+        if (GetInfrastructureInfo.openedInfrastructure != null)
         {
-            GetInfrastructureInfo.UpdateCurrentNbInfo(GetInfrastructureInfo.savedInfrastructure);
+            GetInfrastructureInfo.UpdateCurrentNbInfo(GetInfrastructureInfo.openedInfrastructure);
         }
     }
 
@@ -183,9 +183,17 @@ public class UIManager : VLY_Singleton<UIManager>
     /// </summary>
     public static void UpdateTotalNbVisitors()
     {
-        if (GetInfrastructureInfo.savedInfrastructure != null)
+        if (GetInfrastructureInfo.openedInfrastructure != null)
         {
-            GetInfrastructureInfo.UpdateTotalNbInfo(GetInfrastructureInfo.savedInfrastructure);
+            GetInfrastructureInfo.UpdateTotalNbInfo(GetInfrastructureInfo.openedInfrastructure);
+        }
+    }
+
+    public static void UpdateTotalMoney()
+    {
+        if (GetInfrastructureInfo.openedInfrastructure != null)
+        {
+            GetInfrastructureInfo.UpdateTotalMoney(GetInfrastructureInfo.openedInfrastructure);
         }
     }
     #endregion
