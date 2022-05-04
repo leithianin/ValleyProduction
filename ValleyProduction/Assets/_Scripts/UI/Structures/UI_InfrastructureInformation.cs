@@ -21,12 +21,12 @@ public class UI_InfrastructureInformation : MonoBehaviour
     [SerializeField] private GameObject moneyTotal;
     [SerializeField] private TMP_Text moneyTotalText;
 
-    public Infrastructure savedInfrastructure;
+    public Infrastructure openedInfrastructure;                                         //Infrastrucure dont l'UI est actuellement ouverte
 
 
     public void ShowStructureInformation(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
-        savedInfrastructure = baseStruct;
+        openedInfrastructure = baseStruct;
 
         if (baseStruct.infraDataRunTime.name != string.Empty)
         {
@@ -76,11 +76,11 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
     public void UpdateTotalMoney(Infrastructure baseStruct)
     {
-        moneyTotalText.text = baseStruct.infraDataRunTime.moneyTotal.ToString();
+        moneyTotalText.text = baseStruct.infraDataRunTime.moneyTotal.ToString() + "€";
     }
 
     public void ResetSavedInfrastructe()
     {
-        savedInfrastructure = null;
+        openedInfrastructure = null;
     }
 }

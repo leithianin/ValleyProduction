@@ -214,6 +214,8 @@ public abstract class Infrastructure : MonoBehaviour
         OnOpenStructure?.Invoke();
     }
 
+
+    #region Update l'UI de l'infrastructure si elle est actuellement montré
     /// <summary>
     /// Add 1 visitors to the Infrastructure and Update the UI if it's shown
     /// </summary>
@@ -226,9 +228,16 @@ public abstract class Infrastructure : MonoBehaviour
 
     public void RemoveVisitors()
     {
-        if (UIManager.GetInfrastructureInfo.savedInfrastructure == this)
+        if (UIManager.GetInfrastructureInfo.openedInfrastructure == this)
         {
             UIManager.GetInfrastructureInfo.UpdateCurrentNbInfo(this);              //Remove 1
         }
     }
+
+    public void AddToTotalMoney(int money)
+    {
+        infraDataRunTime.moneyTotal += money;
+        UIManager.UpdateTotalMoney();
+    }
+    #endregion
 }
