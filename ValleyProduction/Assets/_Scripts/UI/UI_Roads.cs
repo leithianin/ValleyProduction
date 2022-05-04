@@ -5,8 +5,8 @@ using TMPro;
 
 public class UI_Roads : MonoBehaviour
 {
-    public PathData pathData;
-    public TextMeshProUGUI nameText;
+    private PathData pathData;
+    [SerializeField] private TextMeshProUGUI nameText;
 
     [Header("InputField")]
     [SerializeField] private TMP_InputField inputField;
@@ -41,6 +41,7 @@ public class UI_Roads : MonoBehaviour
         }
 
         inputField.gameObject.SetActive(false);
+        nameText.gameObject.SetActive(true);
         inputField.text = string.Empty;
         VLY_ContextManager.ChangeContext(0);
 
@@ -53,7 +54,7 @@ public class UI_Roads : MonoBehaviour
     public void InputFieldOnStart()
     {
         //Désactiver Input Keyboard
-        //title.gameObject.SetActive(false);
+        nameText.gameObject.SetActive(false);
         inputField.gameObject.SetActive(true);
         inputField.ActivateInputField();
         VLY_ContextManager.ChangeContext(2);
