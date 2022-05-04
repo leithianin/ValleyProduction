@@ -11,7 +11,7 @@ public class MaskRenderer : MonoBehaviour
     [Obsolete]
     public static void RegisterEntity(Entity entity) { entities.Add(entity); }
 
-    private List<EcosystemAgent> ecosystemAgents = new List<EcosystemAgent>();
+    [SerializeField] private List<EcosystemAgent> ecosystemAgents = new List<EcosystemAgent>();
 
     #region Properties
     [SerializeField] private ComputeShader compute = null;

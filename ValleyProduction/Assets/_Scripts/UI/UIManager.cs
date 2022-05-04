@@ -15,6 +15,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     [Header("Road Informations")]
     public UI_RoadInformation RoadInfo;
+    public static UI_RoadInformation GetRoadInfo => instance.RoadInfo;
 
     [Header("Visitors Informations")]
     public UI_VisitorInformation visitorInfo;
