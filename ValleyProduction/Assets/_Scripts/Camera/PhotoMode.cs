@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
@@ -19,8 +20,13 @@ public class PhotoMode : MonoBehaviour
     [SerializeField] private SphericalTransform sphericalTransform = default;
     [SerializeField] private PostProcessManager postProcessManager = default;
     [SerializeField] private GameObject ui = default;
+    private ScreenshotsManager screenshotsManager;
 
     [SerializeField, ReadOnly] private bool active = false;
+
+    [Header("Resolution")]
+    [SerializeField] private int pictureWidth = 1920;
+    [SerializeField] private int pictureHeight = 1080;
 
     [Header("Parameters")]
     [SerializeField, Range(10, 300)] private float focalLength;
@@ -51,6 +57,11 @@ public class PhotoMode : MonoBehaviour
     [SerializeField] private UnityEvent enablePhotoMode;
     [SerializeField] private UnityEvent disablePhotoMode;
 
+    private void Awake()
+    {
+        screenshotsManager = GameObject.Find("ScreenshotManager").GetComponent<ScreenshotsManager>();
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -75,6 +86,10 @@ public class PhotoMode : MonoBehaviour
         SetFocalLength();
         SetVerticalOffset(verticalOffset);
         SetRolling(roll);
+    }
+
+    private void LateUpdate()
+    {
     }
 
     [Button]
@@ -103,16 +118,91 @@ public class PhotoMode : MonoBehaviour
 
     }
 
+    [Button]
+    public void Shoot()
+    {
+        RenderTexture rt = new RenderTexture(pictureWidth, pictureHeight, 24);
+        playerCamera.targetTexture = rt;
+        playerCamera.Render();
+        RenderTexture.active = rt;
+        playerCamera.targetTexture = null;
+        RenderTexture.active = null;
+        //Debug.Log(ScreenshotsManager.instance.name);
+        ScreenshotsManager.instance.screenshotList.Add(rt);
+        //screenshotsManager.screenshotList.Add(rt);
+    }
+    #region Convert Gallery to PNG
+    [Button]
+    public void ConvertGalleryToPNG()
+    {
+        if (!screenshotsManager)
+        {
+            Debug.LogError("Cannot find ScreenshotManager");
+            return;
+        }
+        List<RenderTexture> screenshotList = ScreenshotsManager.instance.screenshotList;
+
+        if (!System.IO.Directory.Exists(string.Format("{0}/Screenshots", Application.persistentDataPath)))
+            System.IO.Directory.CreateDirectory(string.Format("{0}/Screenshots", Application.persistentDataPath));
+
+        foreach (RenderTexture rTex in screenshotList)
+        {
+            Texture2D tempTex = ToTexture2D(rTex);
+            ToPNG(tempTex, ScreenshotName(screenshotList.IndexOf(rTex)));
+        }
+
+        ShowExplorer(string.Format("{0}/Screenshots", Application.persistentDataPath));
+    }
+
+    private Texture2D ToTexture2D(RenderTexture rTex)
+    {
+        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false);
+        RenderTexture.active = rTex;
+        tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
+        tex.Apply();
+        return tex;
+    }
+
+    private void ToPNG(Texture2D tex, string pathDest)
+    {
+        byte[] bytes = tex.EncodeToPNG();
+        File.WriteAllBytes(pathDest, bytes);
+    }
+
+    private string ScreenshotName(int texIndex)
+    {
+        return string.Format("{0}/Screenshots/screen_{1}.png",
+            Application.persistentDataPath,
+            texIndex.ToString());
+    }
+    private void ShowExplorer(string path)
+    {
+        path = path.Replace(@"/", @"\");
+        System.Diagnostics.Process.Start("explorer.exe", "/select," + path);
+    }
+    [Button]
+    private void ShowExplorer()
+    {
+        string path = string.Format("{0}/Screenshots/", Application.persistentDataPath);
+        path = path.Replace(@"/", @"\");
+        System.Diagnostics.Process.Start("explorer.exe", "/select," + path);
+    }
+    #endregion
+
+    #region FocalLength
     private void SetFocalLength()
     {
         playerCamera.focalLength = Mathf.Lerp(playerCamera.focalLength, focalLength, 0.9f);
     }
+    #endregion
 
+    #region Rolling
     private void SetRolling(float value)
     {
         //transform.rotation = Quaternion.FromToRotation()
         playerCameraTransform.eulerAngles = new Vector3(playerCameraTransform.eulerAngles.x, playerCameraTransform.eulerAngles.y, value);
     }
+    #endregion
 
     #region VerticalOffset
     public void SetVerticalOffset(float value)
