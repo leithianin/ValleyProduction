@@ -42,7 +42,8 @@ public class SphericalTransform : MonoBehaviour
     [SerializeField, Range(0,1)] private float lookAtLerpValue = 0.1f;
 
     [Header("Offset")]
-    [SerializeField, Range(0f, 5f)] private float originVisualOffset;
+    [SerializeField, Range(0f, 10f)] private float originVisualOffset;
+    public float OriginVisualOffset { get => originVisualOffset; set => originVisualOffset = value; }
 
     [Header("Debug")]
     [SerializeField] private bool drawGroundDebug = true;
@@ -64,7 +65,7 @@ public class SphericalTransform : MonoBehaviour
         SetOriginHeight();
         SetOriginForward();
         SetCameraTarget();
-        SetTargetForward();
+        //SetTargetForward();
         MoveOriginLookAtTarget();
 
         if(target != null)
