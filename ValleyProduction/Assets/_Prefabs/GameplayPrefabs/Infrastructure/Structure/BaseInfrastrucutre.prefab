@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas: {fileID: 11400000, guid: 81f62449de31158498b8d980916b8634, type: 2}
   purchaseBehavior: {fileID: 1688512389191840399}
+  isOpen: 1
   PlayOnPlace:
     m_PersistentCalls:
       m_Calls:
@@ -89,11 +90,26 @@ MonoBehaviour:
   PlayOnUnselect:
     m_PersistentCalls:
       m_Calls: []
+  PlayOnStartMove:
+    m_PersistentCalls:
+      m_Calls: []
   PlayOnMove:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3915016858210089840}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6943963318853157212}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
@@ -119,7 +135,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 6943963318853157212}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   PlayOnHoldRightClic:
+    m_PersistentCalls:
+      m_Calls: []
+  OnOpenStructure:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCloseStructure:
     m_PersistentCalls:
       m_Calls: []
   OnSetData:
@@ -137,6 +171,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  interestPoint: {fileID: 0}
 --- !u!65 &6943963318853157212
 BoxCollider:
   m_ObjectHideFlags: 0
