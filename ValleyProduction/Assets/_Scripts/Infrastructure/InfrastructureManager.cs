@@ -301,6 +301,11 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void InteractWithStructure(ToolType tool, Infrastructure interactedStructure)
     {
+        if(instance.currentSelectedStructure != interactedStructure)
+        {
+            UnselectInfrastructure();
+        }
+
         switch (tool)
         {
             //Just select l'infrastructure (Info)
@@ -340,11 +345,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             instance.currentSelectedStructure.UnselectObject();
         }
-        instance.currentSelectedStructure = null;
-    }
-
-    public static void SetCurrentSelectedStructureToNull()
-    {
         instance.currentSelectedStructure = null;
     }
 
