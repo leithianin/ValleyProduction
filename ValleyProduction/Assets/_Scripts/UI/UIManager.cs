@@ -54,8 +54,7 @@ public class UIManager : VLY_Singleton<UIManager>
             switch (component)
             {
                 case IST_PathPoint ist_pathpoint:
-                    if (PathManager.HasManyPath(ist_pathpoint)) { ArrangePathButton(ist_pathpoint); }
-                    else { InteractWithRoad(PathManager.GetPathData(ist_pathpoint)); }
+                    InteractWithRoad(ist_pathpoint);
                     break;
                 case VisitorBehavior visitorBehavior:
                     InteractWithVisitor(visitorBehavior.GetComponent<CPN_Informations>());
@@ -111,14 +110,14 @@ public class UIManager : VLY_Singleton<UIManager>
     #endregion
 
     #region Path Info
-    public static void InteractWithRoad(PathData pathdata)
+    public static void InteractWithRoad(IST_PathPoint pathPoint)
     {
-        instance.ShowInfoRoad(pathdata);
+        instance.ShowInfoRoad(pathPoint);
     }
 
-    public void ShowInfoRoad(PathData pathData)
+    public void ShowInfoRoad(IST_PathPoint pathPoint)
     {
-        gameObjectShown = RoadInfo.ShowInfoRoad(pathData).gameObject;
+        gameObjectShown = RoadInfo.ShowInfoRoad(pathPoint).gameObject;
     }
     #endregion
 
@@ -145,7 +144,7 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.None:
-                InteractWithRoad(buttonPath.pathData);
+                //InteractWithRoad(buttonPath.pathData);
                 break;
             case ToolType.Delete:
                 buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
