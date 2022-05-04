@@ -148,6 +148,9 @@ public abstract class Infrastructure : MonoBehaviour
 
     public void CancelMoveObject()
     {
+        Debug.Log("Cancel Move");
+        PlayOnReplace?.Invoke();
+        OnReplaceObject();
         OpenStructure();
     }
 

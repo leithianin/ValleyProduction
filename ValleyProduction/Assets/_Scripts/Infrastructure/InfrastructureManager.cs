@@ -60,6 +60,11 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
     }
 
+    public void UnselectTool()
+    {
+        SetToolSelected(ToolType.None);
+    }
+
     public static void SetToolSelected(ToolType toolType)
     {
         switch(instance.toolSelected)
@@ -208,7 +213,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
         OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
 
-        instance.currentSelectedStructure.ReplaceObject();
+        instance.currentSelectedStructure.CancelMoveObject();
     }
 
     public static void OnHoldRightClic(InfrastructureType tool, Infrastructure toHoldRightClic)
