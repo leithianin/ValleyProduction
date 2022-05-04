@@ -9,8 +9,6 @@ public class UI_RoadInformation : MonoBehaviour
     private PathData pathData;
 
     [SerializeField] private List<UI_Roads> roadsList = new List<UI_Roads>();
-    
-    [SerializeField] private TMP_InputField inputField;
     public static bool isEditName = false;
 
     public UI_RoadInformation ShowInfoRoad(IST_PathPoint pathPoint)
@@ -21,7 +19,7 @@ public class UI_RoadInformation : MonoBehaviour
         for(int i = 0; i < pathDataList.Count; i++)
         {
             roadsList[i].gameObject.SetActive(true);
-            roadsList[i].UpdateName(pathDataList[i].name);
+            roadsList[i].UpdateData(pathDataList[i]);
         }
         
         OnBoardingManager.onClickPath?.Invoke(true);
@@ -36,6 +34,11 @@ public class UI_RoadInformation : MonoBehaviour
         {
             road.gameObject.SetActive(false);
         }
+    }
+
+    public void SetIsEditName(bool boolean)
+    {
+        isEditName = boolean;
     }
 
     public void UpdateInfoRoad()
@@ -54,37 +57,5 @@ public class UI_RoadInformation : MonoBehaviour
         OnBoardingManager.onDestroyPath?.Invoke(true);
         PathManager.DeleteFullPath(pathData);
         UIManager.HideShownGameObject();
-    }
-
-    #region InputField
-    public void InputFieldOnEnd(string str)
-    {
-        if (!(str == string.Empty))
-        {
-            pathData.name = str;
-            UpdateInfoRoad();
-        }
-
-        //title.gameObject.SetActive(true);
-        inputField.gameObject.SetActive(false);
-        inputField.text = string.Empty;
-        VLY_ContextManager.ChangeContext(0);
-
-        TimerManager.CreateRealTimer(0.1f, () => isEditName = false);
-    }
-
-    /// <summary>
-    /// Click on Edit Path Name
-    /// </summary>
-    public void InputFieldOnStart()
-    {
-        //Désactiver Input Keyboard
-        //title.gameObject.SetActive(false);
-        inputField.gameObject.SetActive(true);
-        inputField.ActivateInputField();
-        VLY_ContextManager.ChangeContext(2);
-        isEditName = true;
-    }
-
-    #endregion
+    } 
 }
