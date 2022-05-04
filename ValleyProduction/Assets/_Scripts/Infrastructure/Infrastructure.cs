@@ -171,12 +171,14 @@ public abstract class Infrastructure : MonoBehaviour
     /// </summary>
     public void SelectObject()
     {
+        Debug.Log("Select : " + gameObject.name);
         PlayOnSelect?.Invoke();
         OnSelectObject();
     }
 
     public void UnselectObject()
     {
+        Debug.Log("Unselect : " + gameObject.name);
         PlayOnUnselect?.Invoke();
         OnUnselectObject();
     }

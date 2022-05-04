@@ -20,4 +20,10 @@ public class IFB_ChangeLayer : MonoBehaviour, IFeedbackPlayer
         layerInt = i;
         Play();
     }
+
+    public void PlayString(string layerName)
+    {
+        layerInt = LayerMask.NameToLayer(layerName);
+        Play();
+    }
 }

@@ -70,15 +70,6 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     public static void RotateStructure(Vector3 position)
     {
         InfrastructureManager.instance.RotateInfrastructure(position);
-        //InfrastructureManager.MoveInfrastructure(touchedObject.GetComponent<Infrastructure>());
-    }
-
-    /// <summary>
-    /// Prend en compte l'input quand on lâche le maintien du clic
-    /// </summary>
-    public static void ReplaceStructure()
-    {
-        //InfrastructureManager.ReplaceInfrastructure();
     }
 
     public static void DestroyStructure(GameObject touchedObject) //CODE REVIEW : Voir pour le mettre dans le PathCreationManager
@@ -125,7 +116,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         }
 
         instance.IsMovingPathpoint();
-        InfrastructureManager.SetCurrentSelectedStructureToNull();                                                          //Reset CurrentSelectedStructure
+        InfrastructureManager.UnselectInfrastructure();                                                          //Reset CurrentSelectedStructure
         instance.OnSelectInfrastructureType(null);
     }
 
