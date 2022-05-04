@@ -128,17 +128,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143415129395}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1773428 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143415129395}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7117421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5422096011340071820, guid: 418420436f8a9d843b498e45570ed8f6, type: 3}
@@ -226,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 24168876}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1 &26209630
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,40 +289,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 26209632}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 309244726}
-  - {fileID: 1547680757}
-  - {fileID: 956895340}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 26209633}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1 &32554247
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,8 +471,15 @@ MonoBehaviour:
   PlayOnInteruptInteract:
     m_PersistentCalls:
       m_Calls: []
+  PlayOnAddVisitors:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayOnRemoveVisitors:
+    m_PersistentCalls:
+      m_Calls: []
   interactionAction: {fileID: 0}
   callerInSpot: []
+  currentNbVisitors: 0
 --- !u!114 &36859094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,7 +708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 83492922}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!4 &90931161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -1260,46 +1227,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 144597288}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1276296882}
-  - {fileID: 780043694}
-  - {fileID: 1967713998}
-  - {fileID: 1571826304}
-  - {fileID: 2139579526}
-  - {fileID: 851210500}
-  - {fileID: 298637364}
-  - {fileID: 1704323907}
-  - {fileID: 1636147276}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 144597289}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1001 &147867315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1775,16 +1707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 10
-    needHigher: 0
-    score: 0
-  collider: {fileID: 170167153}
-  score: 0
+  - displayDatas: []
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -2282,17 +2206,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141662386370}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &206205114 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141662386370}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &208676045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2670,17 +2583,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142982683563}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &238923203 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142982683563}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &246165551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -3284,59 +3186,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 290780258}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1773428}
-  - {fileID: 1635128982}
-  - {fileID: 680399583}
-  - {fileID: 908992171}
-  - {fileID: 524870001}
-  - {fileID: 1378528084}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 290780259}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!4 &298637363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142820843303}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &298637364 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142820843303}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &304195547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3461,17 +3320,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141401377267}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &309244726 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141401377267}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &313251524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3585,17 +3433,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141918299408}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &315774467 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141918299408}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &320223454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -3671,17 +3508,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142165487501}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &378721573 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142165487501}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &385369926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3784,23 +3610,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 387160894}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!4 &390189253 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141478999621}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &390189254 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141478999621}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &395787969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3970,12 +3785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 7
-    needHigher: 0
-    score: 0
-  collider: {fileID: 397478763}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -4116,16 +3926,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 7
-    needHigher: 0
-    score: 0
-  collider: {fileID: 411763529}
-  score: 0
+  - displayDatas: []
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -4209,17 +4011,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142584202782}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &413029321 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142584202782}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &413636847 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3173012436049948309, guid: e6c18a098ad453e4598f93fe5443823a, type: 3}
@@ -4670,7 +4461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 446800399}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1001 &448062431
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5311,7 +5102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 511916471}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1 &514833659
 GameObject:
   m_ObjectHideFlags: 0
@@ -5373,16 +5164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 7
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 10
-    needHigher: 0
-    score: 0
-  collider: {fileID: 514833661}
-  score: 0
+  - displayDatas: []
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -5475,33 +5258,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141929528424}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &521001319 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141929528424}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &524870000 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142146570992}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &524870001 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142146570992}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &525805101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6423,39 +6184,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 541075560}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1336640723}
-  - {fileID: 390189254}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 541075561}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!4 &542399875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -6466,17 +6199,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142053967435}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &548555828 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142053967435}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &555368769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6744,17 +6466,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142968160800}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &569481947 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142968160800}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &585777753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -6981,17 +6692,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143212308422}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &591169858 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143212308422}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &599552348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -7420,17 +7120,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143102995277}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &680399583 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143102995277}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &681620565 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -7595,17 +7284,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141422795896}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &698704878 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141422795896}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &700103907
 GameObject:
   m_ObjectHideFlags: 0
@@ -7667,16 +7345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 7
-    needHigher: 0
-    score: 0
-  collider: {fileID: 700103909}
-  score: 0
+  - displayDatas: []
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -8054,12 +7724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  collider: {fileID: 767096699}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -8179,17 +7844,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142708670621}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &780043694 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142708670621}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &786699190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -9233,6 +8887,22 @@ PrefabInstance:
     - target: {fileID: 592276205304232956, guid: 75ecde0be07fabc40947d560958abeaf, type: 3}
       propertyPath: edgeScrollingMovingSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 605634416591334684, guid: 75ecde0be07fabc40947d560958abeaf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9189291
+      objectReference: {fileID: 0}
+    - target: {fileID: 605634416591334684, guid: 75ecde0be07fabc40947d560958abeaf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3944228
+      objectReference: {fileID: 0}
+    - target: {fileID: 605634416591334684, guid: 75ecde0be07fabc40947d560958abeaf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0000011962109
+      objectReference: {fileID: 0}
+    - target: {fileID: 605634416591334684, guid: 75ecde0be07fabc40947d560958abeaf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0000005134377
       objectReference: {fileID: 0}
     - target: {fileID: 1149806568539433874, guid: 75ecde0be07fabc40947d560958abeaf, type: 3}
       propertyPath: m_RootOrder
@@ -13517,17 +13187,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143158317072}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &840832255 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143158317072}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326251336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &845198527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5784116355332998883, guid: abc325c782cd77845bd00b712d311534, type: 3}
@@ -13554,17 +13213,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141317344196}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &851210500 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141317344196}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &851638343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13729,7 +13377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 858964349}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1001 &860371196
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13832,7 +13480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 862122684}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1 &863501277
 GameObject:
   m_ObjectHideFlags: 0
@@ -13906,43 +13554,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 863501279}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1652790521}
-  - {fileID: 569481947}
-  - {fileID: 1337792074}
-  - {fileID: 315774467}
-  - {fileID: 238923203}
-  - {fileID: 1492267518}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 863501280}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!4 &864950464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -15607,6 +15223,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4594960375819084627, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594960375819084627, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594960375819084627, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594960375819084627, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4595976173692769673, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -15725,6 +15357,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5154808510349094731, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181571333510402508, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181571333510402508, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181571333510402508, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181571333510402508, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5226826610258462259, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
@@ -16399,6 +16047,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7025535310548900608, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025535310548900608, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025535310548900608, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025535310548900608, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7039867935304763180, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -16508,6 +16172,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7186143587202549644, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189171283826173329, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189171283826173329, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189171283826173329, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189171283826173329, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -17475,6 +17155,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 61.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9008205607542427207, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 50
@@ -17707,12 +17407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  collider: {fileID: 883011107}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -17801,7 +17496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 902939718}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1 &903107723
 GameObject:
   m_ObjectHideFlags: 0
@@ -18148,17 +17843,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141913189583}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &908992171 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141913189583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &912652732 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -18490,40 +18174,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 952210369}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 521001319}
-  - {fileID: 1670085411}
-  - {fileID: 1032723985}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 952210370}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1 &955978174
 GameObject:
   m_ObjectHideFlags: 0
@@ -18606,17 +18261,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141589183278}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &956895340 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141589183278}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &958179691 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3173012436049948309, guid: e6c18a098ad453e4598f93fe5443823a, type: 3}
@@ -18667,6 +18311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagName: RebuildBridge
+  incrementValue: 1
 --- !u!135 &962862052
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -18829,16 +18474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 7
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 10
-    needHigher: 0
-    score: 0
-  collider: {fileID: 968660103}
-  score: 0
+  - displayDatas: []
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -18902,7 +18539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 973314965}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1001 &986225901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19048,7 +18685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 1027851880}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!114 &1029328992 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8464914367142180102, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
@@ -19065,17 +18702,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143080516382}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1032723985 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143080516382}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1034073660
 GameObject:
   m_ObjectHideFlags: 0
@@ -19168,12 +18794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  collider: {fileID: 1034884936}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -19262,17 +18883,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143166924971}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1081247101 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143166924971}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1083872948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20325,12 +19935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 99
-    needHigher: 0
-    score: 0
-  collider: {fileID: 1188922742}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -20676,44 +20281,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 1205412584}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 378721573}
-  - {fileID: 1273928413}
-  - {fileID: 1232098293}
-  - {fileID: 1081247101}
-  - {fileID: 206205114}
-  - {fileID: 1378155865}
-  - {fileID: 840832255}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1205412585}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1 &1210268332
 GameObject:
   m_ObjectHideFlags: 0
@@ -20787,39 +20359,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 1210268334}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 2010037738}
-  - {fileID: 1627309352}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1210268335}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1 &1222387168
 GameObject:
   m_ObjectHideFlags: 0
@@ -20865,7 +20409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 1222387169}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!114 &1224108732 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5209237266425241734, guid: 75ecde0be07fabc40947d560958abeaf, type: 3}
@@ -20934,33 +20478,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142059282381}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1232065715 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142059282381}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1232098292 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142268355636}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1232098293 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142268355636}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1236941956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21225,17 +20747,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142428765411}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1256915974 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142428765411}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1258159164
 GameObject:
   m_ObjectHideFlags: 0
@@ -21359,12 +20870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  collider: {fileID: 1264211393}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -21376,33 +20882,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142801381656}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1273928413 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142801381656}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1276296881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142029268945}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1276296882 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142029268945}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1280149279
 GameObject:
   m_ObjectHideFlags: 0
@@ -21448,7 +20932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 1280149280}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1001 &1280772959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21998,7 +21482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 1303700595}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1 &1305184193
 GameObject:
   m_ObjectHideFlags: 0
@@ -22632,49 +22116,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141673360498}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1336640723 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141673360498}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1337792073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141811930290}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1337792074 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141811930290}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1349743324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143351885211}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1349743325 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143351885211}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1352274361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23107,33 +22558,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141397811792}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1378155865 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141397811792}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1378528083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143395086668}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1378528084 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143395086668}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1380285013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23399,17 +22828,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142412129800}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1401516860 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142412129800}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1412406279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5422096011340071820, guid: 418420436f8a9d843b498e45570ed8f6, type: 3}
@@ -23563,7 +22981,7 @@ RectTransform:
   m_Children:
   - {fileID: 903358961}
   m_Father: {fileID: 13045278}
-  m_RootOrder: 16
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -23609,7 +23027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 1444321897}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!4 &1444321897
 Transform:
   m_ObjectHideFlags: 0
@@ -23984,17 +23402,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142234114837}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1492267518 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142234114837}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1497431066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -24045,7 +23452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 1497607005}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!1 &1517783511
 GameObject:
   m_ObjectHideFlags: 0
@@ -24180,17 +23587,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142649689891}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1547680757 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142649689891}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1548553349 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -24332,17 +23728,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141600537888}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1571826304 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141600537888}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1575663849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24405,17 +23790,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142514037625}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1580128685 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142514037625}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1584825907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24585,12 +23959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  collider: {fileID: 1591575422}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -24838,17 +24207,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142045316181}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1627309352 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142045316181}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1630895177
 GameObject:
   m_ObjectHideFlags: 0
@@ -24922,41 +24280,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 1630895179}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1256915974}
-  - {fileID: 413029321}
-  - {fileID: 1821509982}
-  - {fileID: 1821202991}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1630895180}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1 &1634420878
 GameObject:
   m_ObjectHideFlags: 0
@@ -25092,33 +24420,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142552756624}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1635128982 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142552756624}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1636147275 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141995411480}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1636147276 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141995411480}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1641547426
 GameObject:
   m_ObjectHideFlags: 0
@@ -25192,41 +24498,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 1641547428}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1401516860}
-  - {fileID: 1580128685}
-  - {fileID: 1926973285}
-  - {fileID: 1720246648}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1641547429}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!4 &1649930216 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -25237,17 +24513,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141833669700}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1652790521 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141833669700}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1657381508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25366,17 +24631,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142380742602}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1670085411 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142380742602}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1677856664
 GameObject:
   m_ObjectHideFlags: 0
@@ -25450,39 +24704,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 1677856666}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1232065715}
-  - {fileID: 2090118556}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1677856667}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1001 &1685326319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25548,7 +24774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7562803011031650968, guid: dc8202d7302e5d947a485b7076833d3f, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7562803011031650968, guid: dc8202d7302e5d947a485b7076833d3f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -25658,17 +24884,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142284478562}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1704323907 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142284478562}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1706398530
 GameObject:
   m_ObjectHideFlags: 0
@@ -25857,17 +25072,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141905909069}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1720246648 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141905909069}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1725814704
 GameObject:
   m_ObjectHideFlags: 0
@@ -26002,17 +25206,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141384914736}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1735161053 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141384914736}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1738980199
 GameObject:
   m_ObjectHideFlags: 0
@@ -26247,40 +25440,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 1767670478}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 1735161053}
-  - {fileID: 1349743325}
-  - {fileID: 548555828}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1767670479}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!4 &1772122120 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5109661580078520657, guid: dfdf10945daef924f99f9f18739fda68, type: 3}
@@ -26657,33 +25821,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141555367992}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1821202991 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141555367992}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1821509981 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143338347375}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1821509982 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143338347375}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1843936775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26968,12 +26110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  collider: {fileID: 1850702968}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -27471,17 +26608,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142682548406}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1926973285 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142682548406}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1931610642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -27596,17 +26722,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142442812780}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1967713998 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142442812780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1972442186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28221,17 +27336,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195143393262640}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2010037738 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195143393262640}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2010943833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28401,12 +27505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 10
-    needHigher: 0
-    score: 0
-  collider: {fileID: 2027467558}
-  score: 0
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -28565,39 +27664,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 2030906881}
-  scoreByTree: 1
-  treesInArea:
-  - {fileID: 698704878}
-  - {fileID: 591169858}
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2030906882}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
+  trees: []
+  score: 0
 --- !u!1001 &2031055941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29021,16 +28092,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 10
-    needHigher: 0
-    score: 0
-  collider: {fileID: 2078171324}
-  score: 0
+  - displayDatas: []
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -29044,17 +28107,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195141721543699}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2090118556 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195141721543699}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2107181914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -29166,17 +28218,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6373274642763142655, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
   m_PrefabInstance: {fileID: 972195142071446503}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2139579526 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2009781173825468461, guid: 4292f8a647fed9245a6b4c310eff7349, type: 3}
-  m_PrefabInstance: {fileID: 972195142071446503}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2140694509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
@@ -37842,20 +36883,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 0
-    wantedScore: 4
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 7
-    needHigher: 0
-    score: 0
-  - dataTypeToCheck: 0
-    wantedScore: 10
-    needHigher: 0
-    score: 0
-  collider: {fileID: 5195752826260130190}
-  score: 0
+  - displayDatas: []
+  - displayDatas: []
+  - displayDatas: []
   currentAnimalCount: 0
   animalsByValidScore:
   - toDisplay:
@@ -38029,7 +37059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 4018647753977064524}
   circleRadius: 12
-  maxDistanceByMovement: 10
+  rangeDistanceByMovement: {x: 0, y: 0}
 --- !u!208 &8978233342578396794
 NavMeshObstacle:
   m_ObjectHideFlags: 0
