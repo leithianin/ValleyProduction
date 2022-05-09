@@ -112,19 +112,22 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     {
         navPath = new NavMeshPath();
 
-        NavMesh.CalculatePath(startPoint, endPoint, NavMesh.AllAreas, navPath);
-
-        List<Vector3> points = new List<Vector3>();
-
-        int j = 1;
-
-        while (j < navPath.corners.Length)
+        if (NavMesh.CalculatePath(startPoint, endPoint, NavMesh.AllAreas, navPath))
         {
-            points = new List<Vector3>(navPath.corners);
-            j++;
+            List<Vector3> points = new List<Vector3>();
+
+            int j = 1;
+
+            while (j < navPath.corners.Length)
+            {
+                points = new List<Vector3>(navPath.corners);
+                j++;
+            }
+
+            return points;
         }
 
-        return points;
+        return new List<Vector3>();
     }
 
     //Calculate Path each frame you're editing a path
@@ -211,15 +214,22 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             positionToCheck = PlayerInputManager.GetMousePosition;
         }
 
-        List<Vector3> points = instance.CalculateNavmesh(PathManager.previousPathpoint.transform.position, positionToCheck);
-
-        float currentDistance = 0;
-
-        for (int i = 0; i < points.Count - 1; i++)
+        if (PathManager.previousPathpoint != null)
         {
-            currentDistance += Vector3.Distance(points[i], points[i + 1]);
+            List<Vector3> points = instance.CalculateNavmesh(PathManager.previousPathpoint.transform.position, positionToCheck);
+
+            float currentDistance = 0;
+
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                currentDistance += Vector3.Distance(points[i], points[i + 1]);
+            }
+            return currentDistance;
         }
-        return currentDistance;
+        else
+        {
+            return 0f;
+        }
     }
 
     public static Vector3 CalculatePathWithMaxLength(float maxLength)
