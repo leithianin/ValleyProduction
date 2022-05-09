@@ -6,6 +6,7 @@ public enum TypeVisitor { Hiker, Tourist}
 public class CPN_Informations : VLY_Component<VisitorScriptable>
 {
     public VisitorScriptable scriptable = null;
+    public VLY_ComponentHandler components;
 
     public TypeVisitor visitorType;
     private string name = "Robert";
