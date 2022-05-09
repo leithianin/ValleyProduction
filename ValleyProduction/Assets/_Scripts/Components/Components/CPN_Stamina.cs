@@ -80,6 +80,8 @@ public class CPN_Stamina : VLY_Component<CPN_Data_Stamina>
         slopeCoef = dataToSet.SlopeCoef();
 
         staminaRegenCoef = dataToSet.RegenCoef();
+
+        SetStaminaPercentage(1);
     }
 
     public float GetStamina => currentStamina;

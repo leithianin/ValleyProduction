@@ -6,7 +6,13 @@ public class HeatmapViewController : MonoBehaviour
 {
     [SerializeField] private MaskRenderer msk;
 
+    public Material terrainMat;
+    public MeshRenderer terrainRenderer;
+
     public Material[] Materials;
+
+    public Texture defaultHeatmapTex;
+
     public GameObject baseLights;
     public GameObject heatmapLight;
     public GameObject foliage;
@@ -17,10 +23,13 @@ public class HeatmapViewController : MonoBehaviour
     {
         foreach (Material m in Materials)
         {
+            m.SetTexture("_DefaultTex", defaultHeatmapTex);
             m.SetTexture("_NoiseTex", msk.noiseTexture);
             m.SetTexture("_PollutionTex", msk.pollutionTexture);
             m.SetTexture("_FaunaTex", msk.faunaTexture);
             m.SetTexture("_FloraTex", msk.floraTexture);
+
+            m.SetFloat("_MapSize", msk.MapSize);
         }
 
         EnableHeatmapView(false, 0);
@@ -28,6 +37,11 @@ public class HeatmapViewController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            HandleHeatmap(0);
+        }
+
         if (Input.GetKeyDown(KeyCode.H))
         {
             HandleHeatmap(1);
@@ -46,11 +60,6 @@ public class HeatmapViewController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             HandleHeatmap(4);
-        }
-
-        foreach (Material m in Materials)
-        {
-            m.SetFloat("_MapSize", msk.MapSize);
         }
     }
 

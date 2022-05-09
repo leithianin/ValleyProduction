@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class CameraManager : VLY_Singleton<CameraManager>
 {
+    [SerializeField] private Camera currentCamera;
     public SphericalTransform spherical;
     public GameObject origin;
 
     public static Action OnCameraMove;
 
+    [SerializeField] private LayerMask cameraLayerMaskBase;
+
+    [SerializeField] private string interactionZoneDisplayMask;
+
+    private void Start()
+    {
+        cameraLayerMaskBase = currentCamera.cullingMask;
+    }
 
     public static void MoveCamera(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float speed, bool rotate)
     {
@@ -19,5 +28,29 @@ public class CameraManager : VLY_Singleton<CameraManager>
     public static void SetTarget(Transform tr)
     {
         instance.spherical.SetCameraTarget(tr);
+    }
+
+    public void ChangeInteractionZoneLayerMask(bool showLayer)
+    {
+        if(showLayer)
+        {
+            AddCullingLayer(instance.interactionZoneDisplayMask);
+        }
+        else
+        {
+            RemoveCullingLayer(instance.interactionZoneDisplayMask);
+        }
+    }
+
+    public static void AddCullingLayer(string mask)
+    {
+        instance.cameraLayerMaskBase |= (1 << LayerMask.NameToLayer(mask));
+        instance.currentCamera.cullingMask |= (1 << LayerMask.NameToLayer(mask));
+    }
+
+    public static void RemoveCullingLayer(string mask)
+    {
+        instance.cameraLayerMaskBase &= ~(1 << LayerMask.NameToLayer(mask));
+        instance.currentCamera.cullingMask &= ~(1 << LayerMask.NameToLayer(mask));
     }
 }

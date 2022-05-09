@@ -15,6 +15,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     [Header("Road Informations")]
     public UI_RoadInformation RoadInfo;
+    public static UI_RoadInformation GetRoadInfo => instance.RoadInfo;
 
     [Header("Visitors Informations")]
     public UI_VisitorInformation visitorInfo;
@@ -54,8 +55,7 @@ public class UIManager : VLY_Singleton<UIManager>
             switch (component)
             {
                 case IST_PathPoint ist_pathpoint:
-                    if (PathManager.HasManyPath(ist_pathpoint)) { ArrangePathButton(ist_pathpoint); }
-                    else { InteractWithRoad(PathManager.GetPathData(ist_pathpoint)); }
+                    InteractWithRoad(ist_pathpoint);
                     break;
                 case VisitorBehavior visitorBehavior:
                     InteractWithVisitor(visitorBehavior.GetComponent<CPN_Informations>());
@@ -111,14 +111,14 @@ public class UIManager : VLY_Singleton<UIManager>
     #endregion
 
     #region Path Info
-    public static void InteractWithRoad(PathData pathdata)
+    public static void InteractWithRoad(IST_PathPoint pathPoint)
     {
-        instance.ShowInfoRoad(pathdata);
+        instance.ShowInfoRoad(pathPoint);
     }
 
-    public void ShowInfoRoad(PathData pathData)
+    public void ShowInfoRoad(IST_PathPoint pathPoint)
     {
-        gameObjectShown = RoadInfo.ShowInfoRoad(pathData).gameObject;
+        gameObjectShown = RoadInfo.ShowInfoRoad(pathPoint).gameObject;
     }
     #endregion
 
@@ -145,7 +145,7 @@ public class UIManager : VLY_Singleton<UIManager>
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.None:
-                InteractWithRoad(buttonPath.pathData);
+                //InteractWithRoad(buttonPath.pathData);
                 break;
             case ToolType.Delete:
                 buttonPath.buttonPathpoint.Remove(buttonPath.pathData);
@@ -172,9 +172,9 @@ public class UIManager : VLY_Singleton<UIManager>
     /// </summary>
     public static void UpdateCurrentNbVisitors()
     {
-        if (GetInfrastructureInfo.savedInfrastructure != null)
+        if (GetInfrastructureInfo.openedInfrastructure != null)
         {
-            GetInfrastructureInfo.UpdateCurrentNbInfo(GetInfrastructureInfo.savedInfrastructure);
+            GetInfrastructureInfo.UpdateCurrentNbInfo(GetInfrastructureInfo.openedInfrastructure);
         }
     }
 
@@ -183,9 +183,17 @@ public class UIManager : VLY_Singleton<UIManager>
     /// </summary>
     public static void UpdateTotalNbVisitors()
     {
-        if (GetInfrastructureInfo.savedInfrastructure != null)
+        if (GetInfrastructureInfo.openedInfrastructure != null)
         {
-            GetInfrastructureInfo.UpdateTotalNbInfo(GetInfrastructureInfo.savedInfrastructure);
+            GetInfrastructureInfo.UpdateTotalNbInfo(GetInfrastructureInfo.openedInfrastructure);
+        }
+    }
+
+    public static void UpdateTotalMoney()
+    {
+        if (GetInfrastructureInfo.openedInfrastructure != null)
+        {
+            GetInfrastructureInfo.UpdateTotalMoney(GetInfrastructureInfo.openedInfrastructure);
         }
     }
     #endregion

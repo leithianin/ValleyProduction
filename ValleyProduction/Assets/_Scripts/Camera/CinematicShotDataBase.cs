@@ -9,6 +9,7 @@ public class CinematicShotDataBase : ScriptableObject
 
     public static void AddShot(string dataPath)
     {
+
     }
 
 }

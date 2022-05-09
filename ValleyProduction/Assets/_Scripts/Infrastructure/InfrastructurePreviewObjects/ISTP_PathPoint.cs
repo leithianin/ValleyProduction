@@ -10,6 +10,7 @@ public class ISTP_PathPoint : InfrastructurePreview
     protected override void OnAskToPlace(Vector3 position)
     {
         //Debug.Log("Ask Pathpoint preview");
+        PathCreationManager.CalculatePathShortness(true);
     }
 
     protected override bool OnCanPlaceObject(Vector3 position)

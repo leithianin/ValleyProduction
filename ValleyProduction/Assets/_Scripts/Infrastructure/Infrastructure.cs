@@ -148,6 +148,9 @@ public abstract class Infrastructure : MonoBehaviour
 
     public void CancelMoveObject()
     {
+        Debug.Log("Cancel Move");
+        PlayOnReplace?.Invoke();
+        OnReplaceObject();
         OpenStructure();
     }
 
@@ -168,12 +171,14 @@ public abstract class Infrastructure : MonoBehaviour
     /// </summary>
     public void SelectObject()
     {
+        Debug.Log("Select : " + gameObject.name);
         PlayOnSelect?.Invoke();
         OnSelectObject();
     }
 
     public void UnselectObject()
     {
+        Debug.Log("Unselect : " + gameObject.name);
         PlayOnUnselect?.Invoke();
         OnUnselectObject();
     }
@@ -214,6 +219,8 @@ public abstract class Infrastructure : MonoBehaviour
         OnOpenStructure?.Invoke();
     }
 
+
+    #region Update l'UI de l'infrastructure si elle est actuellement montré
     /// <summary>
     /// Add 1 visitors to the Infrastructure and Update the UI if it's shown
     /// </summary>
@@ -226,9 +233,16 @@ public abstract class Infrastructure : MonoBehaviour
 
     public void RemoveVisitors()
     {
-        if (UIManager.GetInfrastructureInfo.savedInfrastructure == this)
+        if (UIManager.GetInfrastructureInfo.openedInfrastructure == this)
         {
             UIManager.GetInfrastructureInfo.UpdateCurrentNbInfo(this);              //Remove 1
         }
     }
+
+    public void AddToTotalMoney(int money)
+    {
+        infraDataRunTime.moneyTotal += money;
+        UIManager.UpdateTotalMoney();
+    }
+    #endregion
 }

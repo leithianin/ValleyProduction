@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 {
@@ -18,12 +19,22 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     private static LayerMask layerInfrastructure = 0;
 
     private GameObject movedObject = null;
+
+    [Header("Tool management")]
     public ToolType toolSelected = ToolType.None;
 
     private List<ToolType> disableTools = new List<ToolType>();
 
+    [SerializeField] private UnityEvent OnSelectConstructionTool;
+    [SerializeField] private UnityEvent OnUnselectConstructionTool;
+    [SerializeField] private UnityEvent OnSelectModifyTool;
+    [SerializeField] private UnityEvent OnUnselectModifyTool;
+    [SerializeField] private UnityEvent OnSelectDeleteTool;
+    [SerializeField] private UnityEvent OnUnselectDeleteTool;
+
     public static GameObject GetMovedObject => instance.movedObject;
 
+    [Header("Others")]
     public Vector3 saveScreenPos;
 
     #region Actions
@@ -60,25 +71,51 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         }
     }
 
+    public void UnselectTool()
+    {
+        SetToolSelected(ToolType.None);
+    }
+
     public static void SetToolSelected(ToolType toolType)
     {
-        switch(instance.toolSelected)
+        //Gestion de désélection de l'outil précédent
+        if (toolType != instance.toolSelected)
         {
-            case ToolType.Place:
-                break;
-            case ToolType.Move:
-                if (instance.movedObject != null)
-                {
-                    CancelMoveStructure();
-                }
-                break;
-            case ToolType.Delete:
-                break;
-        }
+            switch (instance.toolSelected)
+            {
+                case ToolType.Place:
+                    instance.OnUnselectConstructionTool?.Invoke();
+                    break;
+                case ToolType.Move:
+                    if (instance.movedObject != null)
+                    {
+                        CancelMoveStructure();
+                    }
+                    instance.OnUnselectModifyTool?.Invoke();
+                    break;
+                case ToolType.Delete:
+                    instance.OnUnselectDeleteTool?.Invoke();
+                    break;
+            }
 
-        if (!instance.disableTools.Contains(toolType))
-        {
-            instance.toolSelected = toolType;
+
+            if (!instance.disableTools.Contains(toolType))
+            {
+                instance.toolSelected = toolType;
+
+                switch (instance.toolSelected)
+                {
+                    case ToolType.Place:
+                        instance.OnSelectConstructionTool?.Invoke();
+                        break;
+                    case ToolType.Move:
+                        instance.OnSelectModifyTool?.Invoke();
+                        break;
+                    case ToolType.Delete:
+                        instance.OnSelectDeleteTool?.Invoke();
+                        break;
+                }
+            }
         }
     }
 
@@ -208,7 +245,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
         OnEndMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
 
-        instance.currentSelectedStructure.ReplaceObject();
+        instance.currentSelectedStructure.CancelMoveObject();
     }
 
     public static void OnHoldRightClic(InfrastructureType tool, Infrastructure toHoldRightClic)
@@ -264,6 +301,11 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void InteractWithStructure(ToolType tool, Infrastructure interactedStructure)
     {
+        if(instance.currentSelectedStructure != interactedStructure)
+        {
+            UnselectInfrastructure();
+        }
+
         switch (tool)
         {
             //Just select l'infrastructure (Info)
@@ -303,11 +345,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             instance.currentSelectedStructure.UnselectObject();
         }
-        instance.currentSelectedStructure = null;
-    }
-
-    public static void SetCurrentSelectedStructureToNull()
-    {
         instance.currentSelectedStructure = null;
     }
 
