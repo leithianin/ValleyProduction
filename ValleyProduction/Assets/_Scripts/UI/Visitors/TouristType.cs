@@ -19,8 +19,7 @@ public class TouristType : MonoBehaviour
     public List<Image> pollutionListImage;
 
     [Header("Stamina")]
-    public Image stamina;
-    public TextMeshProUGUI staminaText;
+    public List<Image> staminaLevel = new List<Image>();
     public TextMeshProUGUI goal;
     public TextMeshProUGUI note;
 

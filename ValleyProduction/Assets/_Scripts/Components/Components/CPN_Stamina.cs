@@ -30,6 +30,7 @@ public class CPN_Stamina : VLY_Component<CPN_Data_Stamina>
         if(Vector3.Distance(lastPosition, transform.position) > 0)
         {
             currentStamina -= Vector3.Distance(lastPosition, transform.position) * CalculateSlope();
+            UIManager.UpdateCurrentStamina();
 
             if(currentStamina <= 0)
             {
