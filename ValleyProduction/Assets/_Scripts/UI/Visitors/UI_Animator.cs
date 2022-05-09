@@ -6,14 +6,8 @@ using UnityEngine.Events;
 public class UI_Animator : MonoBehaviour
 {
     public Animator animator;
-    bool isSelected;
 
     public UnityEvent OnDisableEvent;
-
-    private void Start()
-    {
-        isSelected = animator.GetBool("Selected");
-    }
 
     private void OnDisable()
     {
