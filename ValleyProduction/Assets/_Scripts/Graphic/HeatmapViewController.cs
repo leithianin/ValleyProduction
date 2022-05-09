@@ -6,6 +6,12 @@ public class HeatmapViewController : MonoBehaviour
 {
     [SerializeField] private MaskRenderer msk;
 
+    public Material terrainMat;
+    public MeshRenderer terrainRenderer;
+    private List<Material> usedMat = new List<Material>();
+
+    public Texture puf;
+
     public Material[] Materials;
     public GameObject baseLights;
     public GameObject heatmapLight;
@@ -15,7 +21,18 @@ public class HeatmapViewController : MonoBehaviour
 
     void Start()
     {
+        terrainMat = Instantiate(terrainMat);
+
+        terrainRenderer.material = terrainMat;
+
+        usedMat.Add(terrainMat);
+
         foreach (Material m in Materials)
+        {
+            usedMat.Add(m);
+        }
+
+        foreach (Material m in usedMat)
         {
             m.SetTexture("_NoiseTex", msk.noiseTexture);
             m.SetTexture("_PollutionTex", msk.pollutionTexture);
@@ -23,7 +40,7 @@ public class HeatmapViewController : MonoBehaviour
             m.SetTexture("_FloraTex", msk.floraTexture);
         }
 
-        EnableHeatmapView(false, 0);
+        //EnableHeatmapView(false, 0);
     }
 
     void Update()
@@ -48,7 +65,7 @@ public class HeatmapViewController : MonoBehaviour
             HandleHeatmap(4);
         }
 
-        foreach (Material m in Materials)
+        foreach (Material m in usedMat)
         {
             m.SetFloat("_MapSize", msk.MapSize);
         }
@@ -71,11 +88,12 @@ public class HeatmapViewController : MonoBehaviour
         heatmapLight.SetActive(enable);
         foliage.SetActive(!enable);
 
-        foreach (Material m in Materials)
+        foreach (Material m in usedMat)
         {
             if (enable) m.EnableKeyword("RENDER_HEATMAP");
             else m.DisableKeyword("RENDER_HEATMAP");
 
+            //m.SetTexture("MainTex", msk.floraTexture);
             m.SetFloat("HEATMAP_INDEX", index);
         }
     }
