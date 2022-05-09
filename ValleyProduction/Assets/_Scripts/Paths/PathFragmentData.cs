@@ -20,7 +20,8 @@ public class PathFragmentData
         endPoint   = nEndPoint  ;
         startPoint = nStartPoint;
 
-        path = new List<Vector3>(nPath);  
+        path = new List<Vector3>(nPath);
+        PathRenderer.RegisterPathFragment(this);
     }
 
     public void DeleteFragmentData()
@@ -41,6 +42,8 @@ public class PathFragmentData
         {
             endPoint.Node.RemoveFragment(this);
         }
+
+        PathRenderer.RemoveFragment(this);
     }
 
     public bool HasThisPathpoint(IST_PathPoint pp)

@@ -6,14 +6,16 @@ using UnityEngine;
 
 public class MaskRenderer : MonoBehaviour
 {
+    #region Entities properties
     [Obsolete]
     private static List<Entity> entities;
     [Obsolete]
     public static void RegisterEntity(Entity entity) { entities.Add(entity); }
 
     [SerializeField] private List<EcosystemAgent> ecosystemAgents = new List<EcosystemAgent>();
+    #endregion
 
-    #region Properties
+    #region Renderer properties
     [SerializeField] private ComputeShader compute = null;
 
     [Range(64, 1024)] [SerializeField] public static int TextureSize = 256;
@@ -125,7 +127,7 @@ public class MaskRenderer : MonoBehaviour
     {
         entities = new List<Entity>();
 
-        #region Create Textures
+        #region Create textures
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         noiseTexture = new RenderTexture(TextureSize, TextureSize, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear)
 #else
@@ -179,7 +181,7 @@ public class MaskRenderer : MonoBehaviour
 
         compute.SetFloat(blendId, BlendDistance);
 
-        #region Evaluate Gradients
+        #region Evaluate gradients
         compute.SetVector(noiseColor0Id, NoiseGradient.Evaluate(0));
         compute.SetVector(noiseColor1Id, NoiseGradient.Evaluate(0.1f));
         compute.SetVector(noiseColor2Id, NoiseGradient.Evaluate(0.2f));
