@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InteractionSequence : InteractionActions
 {
+    [Serializable]
     private class SequenceHandler
     {
         public int currentSequenceIndex;
@@ -15,12 +16,12 @@ public class InteractionSequence : InteractionActions
     private class CompleteSequenceAction
     {
         public InteractionActions mainAction;
-        public List<InteractionActions> secondaryActions;
+        public List<InteractionActions> secondaryActions = new List<InteractionActions>();
     }
 
     [SerializeField] private List<CompleteSequenceAction> sequence;
 
-    private List<SequenceHandler> sequenceUser = new List<SequenceHandler>();
+    [SerializeField] private List<SequenceHandler> sequenceUser = new List<SequenceHandler>();
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
@@ -65,19 +66,21 @@ public class InteractionSequence : InteractionActions
         {
             if (sequenceUser[i].caller == caller)
             {
-                sequenceUser[i].currentSequenceIndex++;
-                if (sequenceUser[i].currentSequenceIndex >= sequence.Count)
+                SequenceHandler handler = sequenceUser[i];
+
+                handler.currentSequenceIndex++;
+                if (handler.currentSequenceIndex >= sequence.Count)
                 {
                     EndAction(caller);
                 }
                 else
                 {
-                    sequence[sequenceUser[i].currentSequenceIndex].mainAction.PlayAction(caller, () => PlayNextStep(caller), null, false);
-
-                    for(int j = 0; j < sequence[sequenceUser[i].currentSequenceIndex].secondaryActions.Count; j++)
+                    for (int j = 0; j < sequence[handler.currentSequenceIndex].secondaryActions.Count; j++)
                     {
-                        sequence[sequenceUser[i].currentSequenceIndex].secondaryActions[j].PlayAction(caller, () => PlayNextStep(caller), null, true);
+                        sequence[handler.currentSequenceIndex].secondaryActions[j].PlayAction(caller, () => PlayNextStep(caller), null, true);
                     }
+
+                    sequence[handler.currentSequenceIndex].mainAction.PlayAction(caller, () => PlayNextStep(caller), null, false);
                 }
                 break;
             }

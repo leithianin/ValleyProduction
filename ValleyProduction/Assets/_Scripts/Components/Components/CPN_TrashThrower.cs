@@ -8,7 +8,7 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 
     private Vector2 throwTimeRange;
 
-    TimerManager.Timer newThrowTimer = null;
+    TimerManager.Timer throwTimer = null;
 
     public override void SetData(CPN_Data_TrashThrower dataToSet)
     {
@@ -26,9 +26,9 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 
     public float TimeBeforeThrow()
     {
-        if(newThrowTimer != null)
+        if(throwTimer != null)
         {
-            return newThrowTimer.DurationLeft;
+            return throwTimer.DurationLeft;
         }
         return -1;
     }
@@ -45,22 +45,44 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 
     private void StartTimer()
     {
-        newThrowTimer = TimerManager.CreateGameTimer(Random.Range(throwTimeRange.x, throwTimeRange.y), ThrowPosition);
+        StartTimer(Random.Range(throwTimeRange.x, throwTimeRange.y));
+    }
+
+    private void StartTimer(float duration)
+    {
+        Debug.Log("START ThrowTrash");
+        throwTimer = TimerManager.CreateGameTimer(duration, ThrowPosition);
     }
 
     private void StopTimer()
     {
-        newThrowTimer?.Stop();
-        newThrowTimer = null;
+        throwTimer?.Stop();
+        throwTimer = null;
     }
 
-    public void ThrowPosition()
+    private void ThrowPosition()
     {
         Vector3 randomPosition = Random.insideUnitCircle * throwRadius;
 
         PollutionManager.ThrowTrash(transform.position + new Vector3(randomPosition.x, 0, randomPosition.y));
 
+        Debug.Log("ThrowTrash");
+
         StopTimer();
         StartTimer();
+    }
+
+    public void DelayThrow(float delayTime)
+    {
+        if (throwTimeRange.y > 0)
+        {
+            if (throwTimer != null)
+            {
+                delayTime += throwTimer.DurationLeft;
+            }
+
+            StopTimer();
+            StartTimer(delayTime);
+        }
     }
 }
