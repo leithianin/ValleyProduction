@@ -6,6 +6,9 @@ public class HeatmapViewController : MonoBehaviour
 {
     [SerializeField] private MaskRenderer msk;
 
+    public Material terrainMat;
+    public MeshRenderer terrainRenderer;
+
     public Material[] Materials;
     public GameObject baseLights;
     public GameObject heatmapLight;
@@ -21,6 +24,8 @@ public class HeatmapViewController : MonoBehaviour
             m.SetTexture("_PollutionTex", msk.pollutionTexture);
             m.SetTexture("_FaunaTex", msk.faunaTexture);
             m.SetTexture("_FloraTex", msk.floraTexture);
+
+            m.SetFloat("_MapSize", msk.MapSize);
         }
 
         EnableHeatmapView(false, 0);
@@ -48,10 +53,10 @@ public class HeatmapViewController : MonoBehaviour
             HandleHeatmap(4);
         }
 
-        foreach (Material m in Materials)
+        /*foreach (Material m in usedMat)
         {
             m.SetFloat("_MapSize", msk.MapSize);
-        }
+        }*/
     }
 
     private void OnApplicationQuit()
