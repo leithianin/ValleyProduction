@@ -15,7 +15,7 @@ public class PathRendererManager : MonoBehaviour
     /// <param name="end"></param>
     /// <param name="vecs"></param>
     /// <param name="pfd"></param>
-    public void ManagePathRenderer(IST_PathPoint start, IST_PathPoint end, List<Vector3> vecs, PathFragmentData pfd)
+    public void ManagePathRenderer(List<Vector3> vecs, PathFragmentData pfd)
     {
         for(int i = 0; i < vecs.Count-1; i++)
         {

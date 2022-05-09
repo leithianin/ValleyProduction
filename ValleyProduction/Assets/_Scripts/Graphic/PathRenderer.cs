@@ -83,7 +83,6 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
         if(pathFragments != null)
         {
-            Debug.Log(pathFragments.Count);
             if (pathFragments.Count > 0)
             {
                 foreach (PathFragmentData frag in pathFragments)
