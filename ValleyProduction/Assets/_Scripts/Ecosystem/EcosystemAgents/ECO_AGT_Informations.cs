@@ -44,6 +44,6 @@ public class ECO_AGT_Informations : MonoBehaviour
 
     public void DisplayInformation(Infrastructure baseStruct)
     {
-        //UIManager.InteractWithInfrastructure(this, baseStruct);
+        UIManager.InteractWithInfrastructure(this, baseStruct);
     }
 }

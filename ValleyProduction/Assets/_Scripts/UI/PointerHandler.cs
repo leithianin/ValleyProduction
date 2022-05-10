@@ -19,8 +19,8 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         onEnter?.Invoke(this);
         var message = "";
-        if (ValleyText.Title != "") { message = $"<b>{ValleyText.Title}</b>\n{ValleyText.Description}"; }
-        else                                  { message = $"{ValleyText.Description}"; }
+        if (ValleyText.Title != "") { message = $"<b>{ValleyText.Title}</b>\n{ValleyText.Texts}"; }
+        else                                  { message = $"{ValleyText.Texts}"; }
         UIManager.GetTooltip.ShowTooltip(message, tooltipPos, index);
     }
 

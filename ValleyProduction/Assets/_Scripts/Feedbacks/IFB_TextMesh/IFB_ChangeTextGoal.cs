@@ -25,7 +25,7 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
     public void Play()
     {
         if (txt.Title != string.Empty) { title.text = $"{txt.Title}"; }
-        description.text = $"{txt.Description}";
+        description.text = $"{txt.Texts}";
 
         UpdateBackgroundSize();
     }
@@ -71,7 +71,7 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
 
     public void UpdateGoal(string id)
     {
-        txt = textsList.GetTextAsset(id);
+        txt = TextsDictionary.instance.GetTextAsset(id);
         Play();
     }
 
