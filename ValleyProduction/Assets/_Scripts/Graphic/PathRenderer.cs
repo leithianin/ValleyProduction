@@ -5,10 +5,15 @@ using UnityEngine;
 public class PathRenderer : VLY_Singleton<PathRenderer>
 {
     #region Paths properties
-    private static List<PathFragmentData> pathFragments = new List<PathFragmentData>();
+
+
+    [SerializeField] private List<PathFragmentData> testPathFragmentList = new List<PathFragmentData>();
+
+    private static List<PathFragmentData> pathFragments => instance.testPathFragmentList;
+
     public static void RegisterPathFragment(PathFragmentData frag) 
     { 
-        pathFragments.Add(frag); 
+        instance.testPathFragmentList.Add(frag); 
     }
     #endregion
 
@@ -45,7 +50,9 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     private ComputeBuffer pathpointBuffer = null;
     #endregion
 
-    private void Awake()
+    public Material pathMat;
+
+    protected override void OnAwake()
     {
         #region Create texture
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
@@ -66,7 +73,15 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
         Shader.SetGlobalTexture(pathTextureId, pathTexture);
         Shader.SetGlobalFloat(mapSizeId, mapSize);
 
+        pathMat.SetTexture("PATHS", pathTexture);
+        pathMat.SetFloat("_MapSize", mapSize);
+
         bufferElements = new List<PathpointBufferElement>();
+    }
+
+    private void Start()
+    {
+        TimerManager.CreateRealTimer(1f, TestUpdate);
     }
 
     private void OnDestroy()
@@ -77,9 +92,11 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
             DestroyImmediate(pathTexture);
     }
 
-    private void Update()
+    private void TestUpdate()
     {
         bufferElements.Clear();
+
+        Debug.Log(instance);
 
         if(pathFragments != null)
         {
@@ -114,7 +131,7 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
             //compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
         }
-        
+        TimerManager.CreateRealTimer(1f, TestUpdate);
     }
 
     public static void RemoveFragment(PathFragmentData toRemove)

@@ -6,9 +6,6 @@ public class HeatmapViewController : MonoBehaviour
 {
     [SerializeField] private MaskRenderer msk;
 
-    public Material terrainMat;
-    public MeshRenderer terrainRenderer;
-
     public Material[] Materials;
 
     public Texture defaultHeatmapTex;
