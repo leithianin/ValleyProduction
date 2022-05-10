@@ -193,6 +193,14 @@ public class UIManager : VLY_Singleton<UIManager>
         }
     }
 
+    public static void OnUnsetVisitor(VisitorScriptable visitor)
+    {
+        if( visitor == GetVisitorInformation.currentInfo.scriptable)
+        {
+            HideShownGameObject();
+        }
+    }
+
     #endregion
 
     #region Info Infrastructure
