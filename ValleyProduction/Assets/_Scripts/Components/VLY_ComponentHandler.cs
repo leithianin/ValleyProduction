@@ -37,12 +37,14 @@ public class VLY_ComponentHandler : MonoBehaviour
 
     public void ActiveOutline()
     {
+        CursorTextureManager.SetInteractionCursor();
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
         test.outline.enabled = true;
     }
 
     public void DesactiveOutline()
     {
+        CursorTextureManager.SetNormalCursor();
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
         test.outline.enabled = false;
     }
