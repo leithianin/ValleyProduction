@@ -133,6 +133,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathToTake:
   - {fileID: 1960492722019266179}
+--- !u!1 &2065833871982981684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8121449832756171638}
+  - component: {fileID: 3493810013366503387}
+  - component: {fileID: 7960568873486412908}
+  m_Layer: 19
+  m_Name: SatisfactionGiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8121449832756171638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065833871982981684}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5039205191555423853}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3493810013366503387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065833871982981684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3dae1a8036bf3648a4238f0bdac86fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  satisfactionGiven: 5
+  satisfactionType: 0
+--- !u!135 &7960568873486412908
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065833871982981684}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2206393132282548433
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,34 +334,10 @@ MonoBehaviour:
   maxInteractionAtSameTime: 1
   PlayOnStartInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AU_MakeSound, Assembly-CSharp
-        m_MethodName: AddNoide
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   PlayOnEndInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AU_MakeSound, Assembly-CSharp
-        m_MethodName: RemoveNoide
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   PlayOnInteruptInteract:
     m_PersistentCalls:
       m_Calls: []
@@ -356,7 +391,7 @@ Transform:
   m_GameObject: {fileID: 3499040738079078112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 7599080301461967444}
   m_RootOrder: 2
@@ -467,6 +502,7 @@ MonoBehaviour:
     secondaryActions: []
   - mainAction: {fileID: 7685344804370543505}
     secondaryActions: []
+  sequenceUser: []
 --- !u!1 &4450382761920780487
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,34 +601,10 @@ MonoBehaviour:
   maxInteractionAtSameTime: 1
   PlayOnStartInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AU_MakeSound, Assembly-CSharp
-        m_MethodName: AddNoide
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   PlayOnEndInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AU_MakeSound, Assembly-CSharp
-        m_MethodName: RemoveNoide
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   PlayOnInteruptInteract:
     m_PersistentCalls:
       m_Calls: []
@@ -675,6 +687,7 @@ MonoBehaviour:
     secondaryActions: []
   - mainAction: {fileID: 504122432467870662}
     secondaryActions: []
+  sequenceUser: []
 --- !u!1 &7097603848840411615
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +750,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4995646433247650441
 Rigidbody:

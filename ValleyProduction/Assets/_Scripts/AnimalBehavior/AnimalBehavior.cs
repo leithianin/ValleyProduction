@@ -15,6 +15,8 @@ public class AnimalBehavior : MonoBehaviour
     [SerializeField] private UnityEvent OnSet;
     [SerializeField] private UnityEvent OnUnset;
 
+    public CPN_InteractionHandler Interactor => interaction;
+
     public void SetAnimal(InteractionSequence nSequence)
     {
         float yPosition = VisitorManager.GetMainTerrain.SampleHeight(transform.position) + VisitorManager.GetMainTerrain.transform.position.y;
