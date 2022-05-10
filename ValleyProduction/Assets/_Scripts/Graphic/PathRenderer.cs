@@ -20,7 +20,7 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     #region Properties
     [SerializeField] private ComputeShader compute;
 
-    [Range(64, 1024)] [SerializeField] public static int TextureSize = 256;
+    [Range(64, 1024)] [SerializeField] public static int TextureSize = 1024;
     [SerializeField] private float mapSize = 0;
     public float MapSize => mapSize;
 
