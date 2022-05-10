@@ -32,4 +32,9 @@ public class CPN_Informations : VLY_Component<VisitorScriptable>
     {
         scriptable = dataToSet;
     }
+
+    public void OnUnset()
+    {
+        UIManager.OnUnsetVisitor(scriptable);
+    }
 }

@@ -96,7 +96,7 @@ public class VisitorBehavior : VLY_Component
     public void UnsetVisitor()
     {
         isUsed = false;
-
+        OnUnsetVisitorWithType?.Invoke(visitorType);
         currentPathFragment = null;
 
         gameObject.SetActive(false);
