@@ -46,6 +46,8 @@ public class UI_InfrastructureInformation : MonoBehaviour
         //Show Capacity si interactionScript
         if(baseStruct.interestPoint != null) 
         {
+            Debug.Log(baseStruct.interestPoint);
+            Debug.Log(capacity);
             capacityText.text = "Capacity : <size=17>" + baseStruct.interestPoint.GetCurrentNbVisitors().ToString() + "/" + baseStruct.interestPoint.GetInteractionMaxVisitors().ToString();
             capacity.SetActive(true);
         }
@@ -60,6 +62,8 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
         pollutionScoreDisplay.text = "Pollution : <size=17>" + infoInfra.GetPolluterScore().ToString() + "</size>";
         noiseScoreDisplay.text = "Noise : <size=17>" + infoInfra.GetNoiseScore().ToString() + "</size>";
+
+        Debug.Log("Test");
 
         gameObject.SetActive(true);
     }
