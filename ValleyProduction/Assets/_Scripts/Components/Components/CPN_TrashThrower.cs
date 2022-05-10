@@ -50,7 +50,6 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 
     private void StartTimer(float duration)
     {
-        Debug.Log("START ThrowTrash");
         throwTimer = TimerManager.CreateGameTimer(duration, ThrowPosition);
     }
 
@@ -65,8 +64,6 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
         Vector3 randomPosition = Random.insideUnitCircle * throwRadius;
 
         PollutionManager.ThrowTrash(transform.position + new Vector3(randomPosition.x, 0, randomPosition.y));
-
-        Debug.Log("ThrowTrash");
 
         StopTimer();
         StartTimer();
