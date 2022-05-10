@@ -87,11 +87,13 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
             if(Input.GetMouseButtonDown(0))
             {
+                CursorTextureManager.SetPressedCursor();
                 StartCoroutine(TimerHoldLeft());
             }
 
             if (Input.GetMouseButtonUp(0))                      //Clic gauche relaché
             {
+                CursorTextureManager.SetReleaseCursor();
                 StopCoroutine(StartCoroutine(TimerHoldLeft()));
                 CallLeftMouseInputs(raycastHit);
 

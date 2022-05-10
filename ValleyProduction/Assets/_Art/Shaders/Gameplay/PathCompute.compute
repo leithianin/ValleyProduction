@@ -16,6 +16,13 @@ float Line(float2 p, float2 a, float2 b)
 	return dot(d, d);
 }
 
+float LineTest(float2 p, float2 a, float2 b)
+{
+	float2 pa = p - a, ba = b - a;
+	float x = dot(pa, ba) / length(b - a);
+	return abs(x);
+}
+
 [numthreads(8,8,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
@@ -25,12 +32,34 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 	float2 texelWorldPos = (_MapSize * texelUVPos);
 
 	float p = 0;
-	float thickness = .1f;
+	float thickness = 1.0f;
 
 	for (int i = 0; i < _PathPointCount; i++)
 	{
 		p = Line(texelWorldPos, float2((_PathPointBuffer[pathFragBufferSize * i + 0]), (_PathPointBuffer[pathFragBufferSize * i + 1])), float2((_PathPointBuffer[pathFragBufferSize * i + 2]), (_PathPointBuffer[pathFragBufferSize * i + 3])));
 	}
 	_PathTex[id.xy] = lerp(float4(1, 1, 1, 1), float4(0, 0, 0, 1), smoothstep(0.0, thickness, p));*/
-	_PathTex[id.xy] += float4(1.f, 1.f, 1.f, 1.f);
+	//_PathTex[id.xy] += float4(1.f, 1.f, 1.f, 1.f);
+
+	int pathFragBufferSize = 4;
+
+	float2 texelUVPos = id.xy / (float)_TextureSize;
+	float2 texelWorldPos = (_MapSize * texelUVPos);
+
+	float p = 0;
+	float thickness = 1.0f;
+	float thicknessCoef = 1.0f;
+
+	for (int i = 0; i < _PathPointCount; i++)
+	{
+		//p = Line(texelWorldPos, float2((_PathPointBuffer[pathFragBufferSize * i + 0]), (_PathPointBuffer[pathFragBufferSize * i + 1])), float2((_PathPointBuffer[pathFragBufferSize * i + 2]), (_PathPointBuffer[pathFragBufferSize * i + 3])));
+		p = Line(texelWorldPos, float2((_PathPointBuffer[pathFragBufferSize * i + 0]), (_PathPointBuffer[pathFragBufferSize * i + 1])), float2((_PathPointBuffer[pathFragBufferSize * i + 2]), (_PathPointBuffer[pathFragBufferSize * i + 3])));
+
+		if (p < 10)
+		{
+			thicknessCoef -= p / 10.0f;
+		}
+	}
+	_PathTex[id.xy] = lerp(float4(1, 1, 1, 1), float4(0, 0, 0, 1), smoothstep(0.0, thickness, thicknessCoef));
+	//_PathTex[id.xy] += float4(1.f, 1.f, 1.f, 1.f);
 }
