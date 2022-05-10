@@ -40,6 +40,7 @@ public class UI_InfrastructureInformation : MonoBehaviour
         if (baseStruct.Data.Description != null) { descriptionDisplay.text = baseStruct.Data.Description; }
         else { Debug.LogError("Data Description de la structure non rempli"); }
 
+        
         if (baseStruct.Data.Logo != null)        { imageComponent.sprite = baseStruct.Data.Logo; }
         else { Debug.LogError("Data Sprite de la structure non rempli"); }
 
@@ -47,9 +48,15 @@ public class UI_InfrastructureInformation : MonoBehaviour
         if(baseStruct.interestPoint != null) 
         {
             Debug.Log(baseStruct.interestPoint);
-            Debug.Log(capacity);
-            capacityText.text = "Capacity : <size=17>" + baseStruct.interestPoint.GetCurrentNbVisitors().ToString() + "/" + baseStruct.interestPoint.GetInteractionMaxVisitors().ToString();
-            capacity.SetActive(true);
+            if (capacityText != null)
+            {
+                capacityText.text = "Capacity : <size=17>" + baseStruct.interestPoint.GetCurrentNbVisitors().ToString() + "/" + baseStruct.interestPoint.GetInteractionMaxVisitors().ToString();
+            }
+
+            if (capacity != null)
+            {
+                capacity.SetActive(true);
+            }
         }
 
         //Show visitorsTotaux
