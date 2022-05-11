@@ -50,10 +50,10 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 		{
 			thicknessCoef = p / _PathThickness;
 			minDist = p;
+
+			thicknessCoef *= _NoiseTex.SampleLevel(sampler_NoiseTex, texelUVPos * _NoiseDetail, 0).r * _NoisePower;
 		}
 	}
-
-	thicknessCoef += _NoiseTex.SampleLevel(sampler_NoiseTex, texelUVPos * _NoiseDetail, 0).r * _NoisePower;
 
 	_PathTex[id.xy] = lerp(float4(1, 1, 1, 1), float4(0, 0, 0, 1), smoothstep(0.0f, _PathThickness, thicknessCoef));
 	//_PathTex[id.xy] += float4(1.f, 1.f, 1.f, 1.f);
