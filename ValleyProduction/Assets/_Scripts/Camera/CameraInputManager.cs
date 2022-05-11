@@ -102,6 +102,8 @@ public class CameraInputManager : MonoBehaviour
 
     void MoveCameraOriginWithKeyboard()
     {
+        Debug.Log("!cameraTransform = " + !cameraTransform + " // inputDirection == 0 : " + (inputDirection == Vector2.zero));
+
         if (!cameraTransform || inputDirection == Vector2.zero)
             return;
 

@@ -59,7 +59,7 @@ public class PhotoMode : MonoBehaviour
 
     private void Awake()
     {
-        screenshotsManager = GameObject.Find("ScreenshotManager").GetComponent<ScreenshotsManager>();
+        //screenshotsManager = GameObject.Find("ScreenshotManager").GetComponent<ScreenshotsManager>();
     }
 
 
