@@ -220,12 +220,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CallLeftMouseInputs(RaycastHit hit)
     {
-        OnClicLeft?.Invoke();
-
         if (GetMousePosition != Vector3.zero)
         {
             OnClicLeftPosition?.Invoke(GetMousePosition);
         }
+
+        OnClicLeft?.Invoke();
     }
 
     private void CallLeftHoldMouseInput(RaycastHit hit)
