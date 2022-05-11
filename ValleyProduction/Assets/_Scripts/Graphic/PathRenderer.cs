@@ -5,32 +5,45 @@ using UnityEngine;
 public class PathRenderer : VLY_Singleton<PathRenderer>
 {
     #region Paths properties
+    [Header("Path Data"), SerializeField] private List<PathFragmentData> pathFragments = new List<PathFragmentData>();
 
-
-    [SerializeField] private List<PathFragmentData> testPathFragmentList = new List<PathFragmentData>();
-
-    private static List<PathFragmentData> pathFragments => instance.testPathFragmentList;
+    private static List<PathFragmentData> PathFragments => instance.pathFragments;
 
     public static void RegisterPathFragment(PathFragmentData frag) 
     { 
-        instance.testPathFragmentList.Add(frag); 
+        instance.pathFragments.Add(frag); 
     }
     #endregion
 
-    #region Properties
-    [SerializeField] private ComputeShader compute;
+    #region Compute properties
+    [Header("Compute Properties"), SerializeField] private ComputeShader compute;
 
-    [Range(64, 1024)] [SerializeField] public static int TextureSize = 256;
+    [Range(64, 1024)] [SerializeField] public static int TextureSize = 1024;
     [SerializeField] private float mapSize = 0;
     public float MapSize => mapSize;
 
     public RenderTexture pathTexture;
+
+    [Space] public float pathThickness;
+    #endregion
+
+    #region Shader properties
+    [Header("Shader Properties")] public Material terrainMat;
+    [Space] public Texture noiseTex;
+    public float noiseDetail;
+    public float noisePower;
     #endregion
 
     #region Shader properties cache
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
     private static readonly int pathpointCountId = Shader.PropertyToID("_PathPointCount");
     private static readonly int mapSizeId = Shader.PropertyToID("_MapSize");
+
+    private static readonly int pathThicknessId = Shader.PropertyToID("_PathThickness");
+
+    private static readonly int noiseTexId = Shader.PropertyToID("_NoiseTex");
+    private static readonly int noiseDetailId = Shader.PropertyToID("_NoiseDetail");
+    private static readonly int noisePowerId = Shader.PropertyToID("_NoisePower");
 
     private static readonly int pathTextureId = Shader.PropertyToID("_PathTex");
 
@@ -49,8 +62,6 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     private List<PathpointBufferElement> bufferElements;
     private ComputeBuffer pathpointBuffer = null;
     #endregion
-
-    public Material pathMat;
 
     protected override void OnAwake()
     {
@@ -73,15 +84,15 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
         Shader.SetGlobalTexture(pathTextureId, pathTexture);
         Shader.SetGlobalFloat(mapSizeId, mapSize);
 
-        pathMat.SetTexture("PATHS", pathTexture);
-        pathMat.SetFloat("_MapSize", mapSize);
+        terrainMat.SetTexture("PATHS", pathTexture);
+        terrainMat.SetFloat("_MapSize", mapSize);
 
         bufferElements = new List<PathpointBufferElement>();
     }
 
     private void Start()
     {
-        TimerManager.CreateRealTimer(1f, TestUpdate);
+        TimerManager.CreateRealTimer(1f, OnUpdate);
     }
 
     private void OnDestroy()
@@ -92,17 +103,15 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
             DestroyImmediate(pathTexture);
     }
 
-    private void TestUpdate()
+    private void OnUpdate()
     {
         bufferElements.Clear();
 
-        Debug.Log(instance);
-
-        if(pathFragments != null)
+        if(PathFragments != null)
         {
-            if (pathFragments.Count > 0)
+            if (PathFragments.Count > 0)
             {
-                foreach (PathFragmentData frag in pathFragments)
+                foreach (PathFragmentData frag in PathFragments)
                 {
                     for (int i = 0; i < frag.path.Count - 1; i++)
                     {
@@ -123,19 +132,23 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
                 pathpointBuffer.SetData(bufferElements);
 
-                compute.SetInt(pathpointCountId, bufferElements.Count);
 
-                Debug.Log(compute);
+
+                compute.SetTexture(0, noiseTexId, noiseTex);
+
+                compute.SetInt(pathpointCountId, bufferElements.Count);
+                compute.SetFloat(pathThicknessId, pathThickness);
+                compute.SetFloat(noiseDetailId, noiseDetail);
+                compute.SetFloat(noisePowerId, noisePower);
+
                 compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
             }
-
-            //compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
         }
-        TimerManager.CreateRealTimer(1f, TestUpdate);
+        TimerManager.CreateRealTimer(.5f, OnUpdate);
     }
 
     public static void RemoveFragment(PathFragmentData toRemove)
     {
-
+        instance.pathFragments.Remove(toRemove);
     }
 }

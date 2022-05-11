@@ -213,6 +213,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void MoveInfrastructure(Infrastructure toMove)
     {
         instance.currentSelectedStructure = toMove;
+
         if (instance.movedObject == null)
         {
             instance.currentSelectedStructure.StartMoveObject();
@@ -341,7 +342,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void UnselectInfrastructure()
     {
-        if(instance.currentSelectedStructure != null)
+        if (instance.currentSelectedStructure != null)
         {
             instance.currentSelectedStructure.UnselectObject();
         }

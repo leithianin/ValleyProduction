@@ -99,4 +99,19 @@ public class UI_InfrastructureInformation : MonoBehaviour
     {
         UIManager.HideShownGameObject();
     }
+
+    public void SetStructureOpen(bool isOpen)
+    {
+        if(InfrastructureManager.GetCurrentSelectedStructure != null)
+        {
+            if(isOpen)
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.OpenStructure();
+            }
+            else
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.CloseStructure();
+            }
+        }
+    }
 }
