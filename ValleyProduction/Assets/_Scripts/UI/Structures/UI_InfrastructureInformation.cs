@@ -94,4 +94,9 @@ public class UI_InfrastructureInformation : MonoBehaviour
     {
         openedInfrastructure = null;
     }
+
+    public void HideInfrastructureInfo()
+    {
+        UIManager.HideShownGameObject();
+    }
 }
