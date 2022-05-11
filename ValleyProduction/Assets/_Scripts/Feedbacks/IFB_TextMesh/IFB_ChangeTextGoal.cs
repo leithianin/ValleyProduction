@@ -67,6 +67,7 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
         }
 
         description.text = objectiveText;
+        UpdateBackgroundSize();
     }
 
     public void UpdateGoal(string id)
