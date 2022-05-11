@@ -27,6 +27,13 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     [Space] public float pathThickness;
     #endregion
 
+    #region Shader properties
+    [Header("Shader Properties")] public Material terrainMat;
+    [Space] public Texture noiseTex;
+    public float noiseDetail;
+    public float noisePower;
+    #endregion
+
     #region Shader properties cache
     private static readonly int textureSizeId = Shader.PropertyToID("_TextureSize");
     private static readonly int pathpointCountId = Shader.PropertyToID("_PathPointCount");
@@ -35,7 +42,8 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     private static readonly int pathThicknessId = Shader.PropertyToID("_PathThickness");
 
     private static readonly int noiseTexId = Shader.PropertyToID("_NoiseTex");
-    private static readonly int noiseDeitailId = Shader.PropertyToID("_NoiseDetail");
+    private static readonly int noiseDetailId = Shader.PropertyToID("_NoiseDetail");
+    private static readonly int noisePowerId = Shader.PropertyToID("_NoisePower");
 
     private static readonly int pathTextureId = Shader.PropertyToID("_PathTex");
 
@@ -53,12 +61,6 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
     private List<PathpointBufferElement> bufferElements;
     private ComputeBuffer pathpointBuffer = null;
-    #endregion
-
-    #region Shader properties
-    [Header("Shader Properties")] public Material terrainMat;
-    [Space] public Texture noiseTex;
-    public float noiseDetail;
     #endregion
 
     protected override void OnAwake()
@@ -130,8 +132,14 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
                 pathpointBuffer.SetData(bufferElements);
 
+
+
+                compute.SetTexture(0, noiseTexId, noiseTex);
+
                 compute.SetInt(pathpointCountId, bufferElements.Count);
                 compute.SetFloat(pathThicknessId, pathThickness);
+                compute.SetFloat(noiseDetailId, noiseDetail);
+                compute.SetFloat(noisePowerId, noisePower);
 
                 compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
             }
