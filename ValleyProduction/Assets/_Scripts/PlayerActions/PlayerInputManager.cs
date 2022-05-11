@@ -47,6 +47,9 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent<float> OnMouseWheelDown;
     public static UnityEvent<float> GetOnMouseWheelDown => instance.OnMouseWheelDown;
 
+    [SerializeField] private UnityEvent OnCameraMouseMove;
+    public static UnityEvent GetOnCameraMouseMove => instance.OnCameraMouseMove;
+
     public static bool clicHold = false;
 
     [SerializeField] private GameContext context;
