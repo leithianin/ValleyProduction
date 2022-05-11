@@ -17392,11 +17392,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -17408,7 +17408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8996847798135422555, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 9008205607542427207, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
       propertyPath: m_SizeDelta.y
@@ -18726,11 +18726,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf49c00daa0cca745ad3c490cab20303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPathFragmentList: []
+  pathFragments: []
   compute: {fileID: 7200000, guid: 54cee74f45b8c7a4198ffc361e726546, type: 3}
   mapSize: 100
   pathTexture: {fileID: 0}
-  pathMat: {fileID: 0}
+  pathThickness: 0
+  terrainMat: {fileID: 0}
+  noiseTex: {fileID: 0}
+  noiseDetail: 0
+  noisePower: 0
 --- !u!4 &1104712096
 Transform:
   m_ObjectHideFlags: 0
@@ -23084,7 +23088,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634420878}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

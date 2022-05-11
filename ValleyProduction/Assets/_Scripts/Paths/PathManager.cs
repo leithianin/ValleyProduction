@@ -732,6 +732,11 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void DebugPoint(IST_PathPoint pathpoint, Color color = default(Color))
     {
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
+
+        if (instance.currentLineDebug != null)
+        {
+            instance.currentLineDebug.enabled = false;
+        }
         instance.currentLineDebug = DEBUG.GetComponent<LineRenderer>();
 
         if(GetCurrentPathData != null)
