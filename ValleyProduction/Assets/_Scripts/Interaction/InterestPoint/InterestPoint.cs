@@ -10,9 +10,18 @@ public class InterestPoint : MonoBehaviour
 
     public Action<InterestPoint> OnDisableInterestPoint;
 
+    public void EnableInterestPoint()
+    {
+        gameObject.SetActive(true);
+    }
+
     public void DisableInterestPoint()
     {
         OnDisableInterestPoint?.Invoke(this);
+
+        AskToInterupt();
+
+        gameObject.SetActive(false);
     }
 
     public bool IsUsable(CPN_InteractionHandler interactor)
