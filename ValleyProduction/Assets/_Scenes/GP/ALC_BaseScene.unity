@@ -5587,6 +5587,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2694140437612176416, guid: 9e9d25ca3e49b1443845d1097ca31aac, type: 3}
   m_PrefabInstance: {fileID: 972195142429726234}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &728251134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728251135}
+  - component: {fileID: 728251137}
+  m_Layer: 0
+  m_Name: DialogueObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &728251135
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728251134}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 729665079}
+  m_Father: {fileID: 878489165}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 390}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &728251137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728251134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9eb10ccc16b1c848941f35b0218136d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements:
+    dialoguePanel: {fileID: 729665078}
+    dialogueText: {fileID: 1479674683}
+    nameText: {fileID: 1849914132}
+  dialogueWaitingTime: 2
 --- !u!1 &729665078
 GameObject:
   m_ObjectHideFlags: 0
@@ -5598,8 +5652,6 @@ GameObject:
   - component: {fileID: 729665079}
   - component: {fileID: 729665081}
   - component: {fileID: 729665080}
-  - component: {fileID: 729665082}
-  - component: {fileID: 729665083}
   m_Layer: 0
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -5614,18 +5666,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729665078}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1849914131}
   - {fileID: 1479674682}
-  m_Father: {fileID: 878489165}
-  m_RootOrder: 12
+  m_Father: {fileID: 728251135}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 800, y: 200}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &729665080
@@ -5666,39 +5718,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729665078}
   m_CullTransparentMesh: 1
---- !u!114 &729665082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729665078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9eb10ccc16b1c848941f35b0218136d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elements:
-    dialoguePanel: {fileID: 729665078}
-    dialogueText: {fileID: 1479674683}
-    nameText: {fileID: 1849914132}
-  dialogueWaitingTime: 0
---- !u!114 &729665083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729665078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5cfbb6ab69f5a34ba5c319200a4e4ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  s:
-  - Hey yo
-  - dqdqdqsdqsdqd
-  - 'dd dd dd '
 --- !u!95 &736994813 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9209479737461970964, guid: 49004242164cd9b438e263e0e36abeb0, type: 3}
@@ -18689,9 +18708,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf49c00daa0cca745ad3c490cab20303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testPathFragmentList: []
   compute: {fileID: 7200000, guid: 54cee74f45b8c7a4198ffc361e726546, type: 3}
   mapSize: 100
   pathTexture: {fileID: 0}
+  pathMat: {fileID: 0}
 --- !u!4 &1104712096
 Transform:
   m_ObjectHideFlags: 0

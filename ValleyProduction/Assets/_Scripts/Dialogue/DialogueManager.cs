@@ -11,7 +11,9 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     public static bool isWaitingForUserInput = false;
 
     public float dialogueWaitingTime = 1f;
-    private int index = 0;
+    public float textSpeed = 0.02f;
+    public float closeSpeed = 2f;
+    private int index;
     private string currentId;
 
     [System.Serializable]
@@ -35,13 +37,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     {
         if (!isSpeaking || isWaitingForUserInput)
         {
+            index = 0;
             currentId = id;
-
-            if (index >= TextsDictionary.instance.GetTextAsset(id).Texts.Length)
-            {
-                dialoguePanel.SetActive(false);
-                return;
-            }
 
             string text = TextsDictionary.instance.GetTextAsset(id).Texts[index];
             string speaker = TextsDictionary.instance.GetTextAsset(id).Title;
@@ -53,7 +50,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     private void NextDialogue()
     {
-        if (index <= TextsDictionary.instance.GetTextAsset(currentId).Texts.Length)
+        if (index < TextsDictionary.instance.GetTextAsset(currentId).Texts.Length)
         {
             string text = TextsDictionary.instance.GetTextAsset(currentId).Texts[index];
             string speaker = TextsDictionary.instance.GetTextAsset(currentId).Title;
@@ -64,6 +61,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         else
         {
             StopSpeaking();
+            StartCoroutine(CloseDialogue());
         }
     }
 
@@ -91,11 +89,18 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         while(dialogueText.text != dialogue)
         {
             dialogueText.text += dialogue[dialogueText.text.Length];
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(textSpeed);
+            //yield return new WaitForEndOfFrame();
         }
 
-        Debug.Log("Over");
-        yield return new WaitForSeconds(1f);
+        //Dialogue Over
+        yield return new WaitForSeconds(dialogueWaitingTime);
         NextDialogue();
+    }
+
+    IEnumerator CloseDialogue()
+    {
+        yield return new WaitForSeconds(closeSpeed);
+        dialoguePanel.SetActive(false);
     }
 }
