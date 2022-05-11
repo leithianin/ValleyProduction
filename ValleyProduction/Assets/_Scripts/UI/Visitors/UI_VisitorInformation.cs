@@ -60,6 +60,11 @@ public class UI_VisitorInformation : MonoBehaviour
         return null;
     }
 
+    public void HideVisitorInformation()
+    {
+        UIManager.HideShownGameObject();
+    }
+
     public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
     {
         
