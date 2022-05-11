@@ -62,5 +62,20 @@ public class UI_RoadInformation : MonoBehaviour
         OnBoardingManager.onDestroyPath?.Invoke(true);
         PathManager.DeleteFullPath(pathData);
         UIManager.HideShownGameObject();
-    } 
+    }
+
+    public void SetStructureOpen(bool isOpen)
+    {
+        if (InfrastructureManager.GetCurrentSelectedStructure != null)
+        {
+            if (isOpen)
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.OpenStructure();
+            }
+            else
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.CloseStructure();
+            }
+        }
+    }
 }
