@@ -81,8 +81,6 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
         compute.SetInt(textureSizeId, TextureSize);
         compute.SetTexture(0, pathTextureId, pathTexture);
 
-        compute.SetTexture(0, noiseTexId, noiseTex);
-
         Shader.SetGlobalTexture(pathTextureId, pathTexture);
         Shader.SetGlobalFloat(mapSizeId, mapSize);
 
@@ -133,6 +131,10 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
                 compute.SetBuffer(0, pathpointBufferId, pathpointBuffer);
 
                 pathpointBuffer.SetData(bufferElements);
+
+
+
+                compute.SetTexture(0, noiseTexId, noiseTex);
 
                 compute.SetInt(pathpointCountId, bufferElements.Count);
                 compute.SetFloat(pathThicknessId, pathThickness);
