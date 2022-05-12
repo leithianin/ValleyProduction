@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class InteractionSpot : MonoBehaviour
 {
+    public InteractionActions interactionAction;
     public SatisfactorType interactionType;
     public float attractivityLevel;
 
@@ -23,7 +24,6 @@ public class InteractionSpot : MonoBehaviour
     public Action<CPN_InteractionHandler> PlayOnInteractionStart;
     public Action<CPN_InteractionHandler> PlayOnInteractionInterupt;
 
-    public InteractionActions interactionAction;
 
     [SerializeField] private List<CPN_InteractionHandler> callerInSpot = new List<CPN_InteractionHandler>();
 
