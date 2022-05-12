@@ -29,8 +29,6 @@ public class PathFragmentData
 
     public void DeleteFragmentData()
     {
-        Debug.Log("Delete path Frag");
-
         while(interestPointDetectors.Count > 0)
         {
             RemoveInterestPointDetector(interestPointDetectors[0]);

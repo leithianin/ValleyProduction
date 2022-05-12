@@ -11,6 +11,10 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
     public static void RegisterPathFragment(PathFragmentData frag) 
     { 
+        if(!instance.enabled)
+        {
+            instance.enabled = true;
+        }
         instance.pathFragments.Add(frag); 
     }
     #endregion
@@ -92,7 +96,7 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
     private void Start()
     {
-        TimerManager.CreateRealTimer(1f, OnUpdate);
+        enabled = false;
     }
 
     private void OnDestroy()
@@ -103,7 +107,7 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
             DestroyImmediate(pathTexture);
     }
 
-    private void OnUpdate()
+    private void LateUpdate()
     {
         bufferElements.Clear();
 
@@ -144,11 +148,16 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
                 compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
             }
         }
-        TimerManager.CreateRealTimer(.5f, OnUpdate);
+
+        enabled = false;
     }
 
     public static void RemoveFragment(PathFragmentData toRemove)
     {
+        if (!instance.enabled)
+        {
+            instance.enabled = true;
+        }
         instance.pathFragments.Remove(toRemove);
     }
 }
