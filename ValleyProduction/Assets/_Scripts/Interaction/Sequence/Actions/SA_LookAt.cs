@@ -8,6 +8,11 @@ public class SA_LookAt : InteractionActions
 
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
+        if(caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
+        {
+            movement.StopWalkImmediate();
+        }
+
         caller.transform.forward = lookTarget.position - caller.transform.position;
 
         caller.transform.eulerAngles = new Vector3(0, caller.transform.eulerAngles.y, 0);
