@@ -70,8 +70,6 @@ public class UI_InfrastructureInformation : MonoBehaviour
         pollutionScoreDisplay.text = "Pollution : <size=17>" + infoInfra.GetPolluterScore().ToString() + "</size>";
         noiseScoreDisplay.text = "Noise : <size=17>" + infoInfra.GetNoiseScore().ToString() + "</size>";
 
-        Debug.Log("Test");
-
         gameObject.SetActive(true);
     }
 

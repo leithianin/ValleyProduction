@@ -196,10 +196,13 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void DeleteInfrastructure(Infrastructure toDelete)
     {
+        Debug.Log(toDelete.gameObject);
         if (toDelete == instance.currentSelectedStructure)
         {
             UnselectInfrastructure();
         }
+
+        DesnapInfrastructure(toDelete);
 
         OnDestroyInfrastructure?.Invoke(toDelete);
 
@@ -344,6 +347,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         if (instance.currentSelectedStructure != null)
         {
+            Debug.Log(instance.currentSelectedStructure.gameObject);
             instance.currentSelectedStructure.UnselectObject();
         }
         instance.currentSelectedStructure = null;
