@@ -39,7 +39,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         }
 
         //Placeholder : Démarre la première quête
-        BeginQuest(startQuest);
+        TimerManager.CreateRealTimer(2f, () => BeginQuest(startQuest));        
+        //BeginQuest(startQuest);
     }
 
     /// <summary>
