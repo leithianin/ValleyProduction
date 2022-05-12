@@ -44,6 +44,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public static UnityEvent<float> GetOnMouseScroll => instance.OnMouseScroll;
     private float lastScrollValue;
 
+    [SerializeField] private UnityEvent<float> OnMouseWheelDown;
+    public static UnityEvent<float> GetOnMouseWheelDown => instance.OnMouseWheelDown;
+
+    [SerializeField] private UnityEvent OnCameraMouseMove;
+    public static UnityEvent GetOnCameraMouseMove => instance.OnCameraMouseMove;
+
     public static bool clicHold = false;
 
     [SerializeField] private GameContext context;

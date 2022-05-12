@@ -138,6 +138,7 @@ public class CameraInputManager : MonoBehaviour
             return;
 
         mouseDirection = -mouseDirection;
+        PlayerInputManager.GetOnCameraMouseMove?.Invoke();
         cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, mouseDirection.magnitude * mouseScrollingMovingSpeed);
     }
 
