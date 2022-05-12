@@ -22,8 +22,8 @@ public class UI_VisitorInformation : MonoBehaviour
     public Gradient colorLogo;
     public static Gradient GetColorLogo;
 
-    public Action OnShowVisitorInfo;
     public UnityEvent<GameObject> OnShow;
+    public UnityEvent<GameObject> OnHide;
 
     private void Start()
     {
@@ -37,7 +37,6 @@ public class UI_VisitorInformation : MonoBehaviour
         currentInfo = cpn_Inf;
         OnBoardingManager.OnClickVisitorEco?.Invoke(true);
         OnShow?.Invoke(currentVisitor);
-        OnShowVisitorInfo?.Invoke();
         switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
@@ -62,6 +61,7 @@ public class UI_VisitorInformation : MonoBehaviour
 
     public void HideVisitorInformation()
     {
+        OnHide?.Invoke(currentVisitor);
         UIManager.HideShownGameObject();
     }
 

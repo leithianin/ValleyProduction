@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.Events;
 
 public class UI_InfrastructureInformation : MonoBehaviour
 {
@@ -23,10 +24,14 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
     public Infrastructure openedInfrastructure;                                         //Infrastrucure dont l'UI est actuellement ouverte
 
+    public UnityEvent OnShow;
+    public UnityEvent OnHide;
+
 
     public void ShowStructureInformation(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
         openedInfrastructure = baseStruct;
+        OnShow?.Invoke();
 
         if (baseStruct.infraDataRunTime.name != string.Empty)
         {
@@ -95,6 +100,7 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
     public void HideInfrastructureInfo()
     {
+        OnHide?.Invoke();
         UIManager.HideShownGameObject();
     }
 
