@@ -970,7 +970,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         detectorPositions.Add(path[0]);
 
-        float distanceBetweenPoints = 2f;
+        float distanceBetweenPoints = roadDetectorPrefab.Radius * 2;
         int numDist = (int)(lineLength / distanceBetweenPoints);
         int pathIndex = 0;
 
