@@ -170,7 +170,7 @@ public class SphericalTransform : MonoBehaviour
     public void MoveOrigin(float xInput, float yInput, float speed)
     {
         Vector3 savePosition = origin.position;
-        Debug.Log("Move cam");
+
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.unscaledDeltaTime;
 
         if(origin.position != savePosition)

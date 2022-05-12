@@ -15,7 +15,6 @@ public class VLY_Singleton<T> : MonoBehaviour where T : VLY_Singleton<T>
         else
         {
             instance = this as T;
-            Debug.Log(instance);
         }
 
         OnAwake();
