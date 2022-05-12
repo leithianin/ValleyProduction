@@ -18,6 +18,7 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
 
     public static void ChangeContext(int ID)
     {
+        Debug.Log("Change context");
         instance.ChangeCurrentContext(ID);
     }
 

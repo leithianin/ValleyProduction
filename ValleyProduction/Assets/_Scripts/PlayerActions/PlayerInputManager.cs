@@ -137,11 +137,16 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
         CheckForMovementInput();
 
-        OnMouseMove?.Invoke(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")));
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Ket Downed");
+        }
 
-        OnAzimuthal?.Invoke(Input.GetAxis("Azimuthal"));
+        OnMouseMove?.Invoke(new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")));
 
-        OnPolar?.Invoke(Input.GetAxis("Polar"));
+        OnAzimuthal?.Invoke(Input.GetAxisRaw("Azimuthal"));
+
+        OnPolar?.Invoke(Input.GetAxisRaw("Polar"));
 
         //CODE REVIEW : Plusieurs bool ou un seul pour disable le Context ?
         if (isKeyboardEnable)
@@ -270,6 +275,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         float xDirection = Input.GetAxis("Horizontal");
         float yDirection = Input.GetAxis("Vertical");
+
 
         if (xDirection != 0 || yDirection != 0 || lastKeyDirection != Vector2.zero)
         {
