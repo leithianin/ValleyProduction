@@ -17,7 +17,10 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
 
     [Header("Feedbacks")]
     [SerializeField] private UnityEvent<int> OnUpdateVisitorNumber;
+    [SerializeField] private UnityEvent<int> OnEnterVisitor;
+    [SerializeField] private UnityEvent<int> OnExitVisitor;
 
+    [Header("For Dev")]
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
     [SerializeField] private Terrain mainTerrain;
