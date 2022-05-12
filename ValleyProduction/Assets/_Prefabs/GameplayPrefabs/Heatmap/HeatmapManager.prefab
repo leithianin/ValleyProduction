@@ -46,14 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ecosystemAgents: []
   compute: {fileID: 7200000, guid: 079555009d8c691499847169950547cb, type: 3}
-  mapSize: 1000
-  BlendDistance: 50
+  mapSize: 250
+  BlendDistance: 2.5
   NoiseGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 1, g: 0, b: 0, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 1}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -67,20 +67,20 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
+    atime1: 14071
+    atime2: 25443
+    atime3: 65535
     atime4: 0
     atime5: 0
     atime6: 0
     atime7: 0
     m_Mode: 0
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
+    m_NumAlphaKeys: 4
   PollutionGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 0.79039, g: 0, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -109,7 +109,7 @@ MonoBehaviour:
   FaunaGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 0, g: 0.5286541, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   FloraGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 0, g: 1, b: 0.37680292, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -183,10 +183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   msk: {fileID: 7526084383418270614}
-  terrainMat: {fileID: 2100000, guid: cd42b186a2f40c64da3ec5611edda30b, type: 2}
-  terrainRenderer: {fileID: 0}
   Materials:
-  - {fileID: 2100000, guid: 8f28a5881e01bae4f9baf1d478cfbd74, type: 2}
+  - {fileID: 2100000, guid: f3078789d30a64c4cb8506b13b30e30c, type: 2}
   - {fileID: 2100000, guid: f3078789d30a64c4cb8506b13b30e30c, type: 2}
   - {fileID: 2100000, guid: e45147c9ae562934bb19b247c37e102c, type: 2}
   - {fileID: 2100000, guid: 7b81cc0be9c533d47996ebbf0539c80b, type: 2}
@@ -355,6 +353,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cd42b186a2f40c64da3ec5611edda30b, type: 2}
   - {fileID: 2100000, guid: 7f1968d6e44f5b34197b4dbb549ea149, type: 2}
   - {fileID: 2100000, guid: 8699c52301da3b04ea1d37668f1a9691, type: 2}
+  - {fileID: 2100000, guid: 4e8a9644abf2d894388f0ae02fcc8657, type: 2}
   defaultHeatmapTex: {fileID: 2800000, guid: 4ffcc92eb2b050f4e815ea2c0bc920ac, type: 3}
   baseLights: {fileID: 0}
   heatmapLight: {fileID: 0}
