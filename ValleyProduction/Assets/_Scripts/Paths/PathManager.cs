@@ -338,7 +338,8 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if (pdToModify != null)
         {
-            switch (pdToModify.pathFragment.Count)
+            DeletePointWith2MorePathFragment(pdToModify, ist_pp);
+            /*switch (pdToModify.pathFragment.Count)
             {
                 case 0:
                     DeletePointWith0PathFragment(pdToModify);
@@ -352,7 +353,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 default:
                     DeletePointWith2MorePathFragment(pdToModify, ist_pp);
                     break;
-            }
+            }*/
         }
 
         NodePathProcess.UpdateAllNodes();

@@ -109,44 +109,45 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
     private void LateUpdate()
     {
-        bufferElements.Clear();
+        bufferElements = new List<PathpointBufferElement>();
 
-        if(PathFragments != null)
+        if (PathFragments != null)
         {
-            if (PathFragments.Count > 0)
-            {
-                foreach (PathFragmentData frag in PathFragments)
-                {
-                    for (int i = 0; i < frag.path.Count - 1; i++)
-                    {
-                        PathpointBufferElement element = new PathpointBufferElement
-                        {
-                            StartPositionX = frag.path[i].x,
-                            StartPositionY = frag.path[i].z,
-                            EndPositionX = frag.path[i + 1].x,
-                            EndPositionY = frag.path[i + 1].z
-                        };
-                        bufferElements.Add(element);
-                    }
-                }
 
+            foreach (PathFragmentData frag in PathFragments)
+            {
+                for (int i = 0; i < frag.path.Count - 1; i++)
+                {
+                    PathpointBufferElement element = new PathpointBufferElement
+                    {
+                        StartPositionX = frag.path[i].x,
+                        StartPositionY = frag.path[i].z,
+                        EndPositionX = frag.path[i + 1].x,
+                        EndPositionY = frag.path[i + 1].z
+                    };
+                    bufferElements.Add(element);
+                }
+            }
+
+            if (bufferElements.Count > 0)
+            {
                 pathpointBuffer = new ComputeBuffer(bufferElements.Count * 4, sizeof(float));
 
                 compute.SetBuffer(0, pathpointBufferId, pathpointBuffer);
 
                 pathpointBuffer.SetData(bufferElements);
-
-
-
-                compute.SetTexture(0, noiseTexId, noiseTex);
-
-                compute.SetInt(pathpointCountId, bufferElements.Count);
-                compute.SetFloat(pathThicknessId, pathThickness);
-                compute.SetFloat(noiseDetailId, noiseDetail);
-                compute.SetFloat(noisePowerId, noisePower);
-
-                compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
             }
+
+
+            compute.SetTexture(0, noiseTexId, noiseTex);
+
+            compute.SetInt(pathpointCountId, bufferElements.Count);
+            compute.SetFloat(pathThicknessId, pathThickness);
+            compute.SetFloat(noiseDetailId, noiseDetail);
+            compute.SetFloat(noisePowerId, noisePower);
+
+            compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
+
         }
 
         enabled = false;
