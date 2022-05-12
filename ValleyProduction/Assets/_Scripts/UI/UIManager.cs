@@ -69,8 +69,14 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         if (gameObjectShown != null && !UI_RoadInformation.isEditName)
         {
-            GetInfrastructureInfo.ResetSavedInfrastructe();
-            GetVisitorInformation.ResetSavedVisitors();
+            if (GetInfrastructureInfo != null)
+            {
+                GetInfrastructureInfo.ResetSavedInfrastructe();
+            }
+            if (GetVisitorInformation != null)
+            {
+                GetVisitorInformation.ResetSavedVisitors();
+            }
             OnBoardingManager.onHideVisitorInfo?.Invoke(true);
             OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);
             gameObjectShown.SetActive(false);

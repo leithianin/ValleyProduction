@@ -224,7 +224,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for (int i = 0; i < toModify.pathPoints.Count - 1; i++)
         {
-            PathFragmentData new_pfd = new PathFragmentData(toModify.pathPoints[i], toModify.pathPoints[i + 1], PathCreationManager.instance.CalculatePath(toModify.pathPoints[i], toModify.pathPoints[i + 1]));
+            PathFragmentData new_pfd = new PathFragmentData(toModify.pathPoints[i], toModify.pathPoints[i + 1], PathCreationManager.instance.CalculatePath(toModify.pathPoints[i], toModify.pathPoints[i + 1]), true);
             pd.AddPathFragment(new_pfd);
         }
 
@@ -270,7 +270,7 @@ public class PathManager : VLY_Singleton<PathManager>
         if(previousPathpoint != null)
         {
             //ChangementPathFragment
-            PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
+            PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints, true);
             instance.AddPathfragmentToList(new_pfd);
 
             PathCreationManager.instance.pathRendererManager.ManagePathRenderer(navmeshPoints, new_pfd);
@@ -654,7 +654,7 @@ public class PathManager : VLY_Singleton<PathManager>
         newPathData.pathFragment = new List<PathFragmentData>();
         foreach (PathFragmentData pfd in listPathFragment)
         {
-            newPathData.AddPathFragment(pfd);
+            newPathData.AddPathFragment(new PathFragmentData(pfd.startPoint, pfd.endPoint, pfd.path, true));
         }
 
         newPathData.startPoint = listPathFragment[0].startPoint;
