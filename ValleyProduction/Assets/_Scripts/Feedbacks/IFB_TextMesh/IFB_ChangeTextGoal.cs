@@ -22,6 +22,8 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
 
     public VLY_Quest DisplayedQuest => displayedQuest;
 
+    private FontStyles newFont;
+
     public void Play()
     {
         if (txt.Title != string.Empty) { title.text = $"{txt.Title}"; }
@@ -42,7 +44,13 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
 
     public void SetPendingCompletion()
     {
+        description.text = "<s>" + description.text;
         validationButton.interactable = true;
+    }
+
+    public void ObjectiveValidated()
+    {
+
     }
 
     public void SetQuestStage(VLY_Quest quest, List<QST_Objective> objectives)
@@ -63,7 +71,14 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
 
         for(int i = 0; i < objectives.Count; i++)
         {
-            objectiveText += objectives[i].Description + " \n";
+            if (objectives[i].State != QuestObjectiveState.Completed)
+            {
+                objectiveText += objectives[i].Description + " \n";
+            }
+            else
+            {
+                objectiveText += "<s>" + objectives[i].Description + " </s> \n";
+            }
         }
 
         description.text = objectiveText;
