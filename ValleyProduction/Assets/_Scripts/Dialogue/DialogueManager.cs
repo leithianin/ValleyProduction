@@ -28,6 +28,11 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     public static TextMeshProUGUI dialogueText => instance.elements.dialogueText;
     public static TextMeshProUGUI nameText => instance.elements.nameText;
 
+    private void Start()
+    {
+        PlayDialogue("PTD_000");
+    }
+
     public void PlayDialogue(string id)
     {
         if (!isSpeaking || isWaitingForUserInput)

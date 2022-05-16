@@ -26,6 +26,8 @@ public class TimeController : MonoBehaviour
     private TimeSpan sunriseTime;
     private TimeSpan sunsetTime;
 
+    private int dayNb = 1;
+
     private void Start()
     {
         currentTime = DateTime.Now.Date + TimeSpan.FromHours(startHour);
@@ -47,13 +49,13 @@ public class TimeController : MonoBehaviour
 
         if(timeText != null)
         {
-            timeText.text = currentTime.ToString("HH:mm");
+            timeText.text = $"{currentTime.ToString("HH:mm")}, day {dayNb}";
         }
     }
     private void RotateOrbits()
     {
-        float sunLigtRotation;
-        float moonLigtRotation;
+        float sunLigthRotation;
+        float moonLigthRotation;
 
         if (currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime)
         {
@@ -63,9 +65,9 @@ public class TimeController : MonoBehaviour
 
             double percentage = timeSinceSunrise.TotalMinutes / sunriseToSunsetDuration.TotalMinutes;
 
-            sunLigtRotation = Mathf.Lerp(0, 180, (float)percentage);
+            sunLigthRotation = Mathf.Lerp(0, 180, (float)percentage);
 
-            moonLigtRotation = Mathf.Lerp(-180, 0, (float)percentage);
+            moonLigthRotation = Mathf.Lerp(-180, 0, (float)percentage);
         }
         else
         {
@@ -75,13 +77,13 @@ public class TimeController : MonoBehaviour
 
             double percentage = timeSinceSunset.TotalMinutes / sunsetToSunriseDuration.TotalMinutes;
 
-            sunLigtRotation = Mathf.Lerp(180, 360, (float)percentage);
+            sunLigthRotation = Mathf.Lerp(180, 360, (float)percentage);
 
-            moonLigtRotation = Mathf.Lerp(-360, -180, (float)percentage);
+            moonLigthRotation = Mathf.Lerp(-360, -180, (float)percentage);
         }
 
-        sunLight.transform.rotation = Quaternion.AngleAxis(sunLigtRotation, Vector3.right);
-        moonLight.transform.rotation = Quaternion.AngleAxis(moonLigtRotation, Vector3.right);
+        sunLight.transform.rotation = Quaternion.AngleAxis(sunLigthRotation, Vector3.right);
+        moonLight.transform.rotation = Quaternion.AngleAxis(moonLigthRotation, Vector3.right);
     }
 
     private void UpdateLightSettings()
