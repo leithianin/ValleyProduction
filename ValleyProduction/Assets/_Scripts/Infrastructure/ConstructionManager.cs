@@ -8,6 +8,8 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
     public UnityEvent OnSelectPathTool;
     public UnityEvent OnUnselectPathTool;
+    public UnityEvent OnUnselectMoveTool; 
+    public UnityEvent OnUnselectDeleteTool;
     public UnityEvent OnUnselectOneMore;
 
     public static bool HasSelectedStructureType => instance.selectedStructureType != InfrastructureType.None;// && instance.selectedStructureType != InfrastructureType.DeleteStructure;
@@ -111,8 +113,27 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     {
         if(!HasSelectedStructureType)
         {
-            if (UIManager.IsOnMenuBool()) { UIManager.HideMenuOption()          ; }
-            else                             { instance.OnUnselectOneMore?.Invoke(); }
+            if(InfrastructureManager.GetCurrentTool != ToolType.None)
+            {
+                switch(InfrastructureManager.GetCurrentTool)
+                {
+                    case ToolType.Place:
+                        instance.OnUnselectPathTool?.Invoke();
+                        break;
+                    case ToolType.Move:
+                        instance.OnUnselectMoveTool?.Invoke();
+                        break;
+                    case ToolType.Delete:
+                        instance.OnUnselectDeleteTool?.Invoke();
+                        break;
+                }
+
+                InfrastructureManager.SetToolSelected(InfrastructureManager.GetCurrentTool);
+            }
+            else
+            {
+                instance.OnUnselectOneMore?.Invoke();
+            }
         }
 
         instance.IsMovingPathpoint();
