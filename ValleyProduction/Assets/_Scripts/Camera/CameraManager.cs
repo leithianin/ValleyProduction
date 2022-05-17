@@ -20,6 +20,11 @@ public class CameraManager : VLY_Singleton<CameraManager>
         cameraLayerMaskBase = currentCamera.cullingMask;
     }
 
+    public static void SetCameraPosition(Vector3 position)
+    {
+        instance.spherical.SetOrigin(position);
+    }
+
     public static void MoveCamera(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float speed, bool rotate)
     {
         instance.spherical.MoveCameraOverTime(targetPolarAngle, targetAzimuthalAngle, targetPolarAngle, speed);
