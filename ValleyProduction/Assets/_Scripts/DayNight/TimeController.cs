@@ -14,13 +14,12 @@ public class TimeController : MonoBehaviour
     [SerializeField] private float sunriseHour;
     [SerializeField] private float sunsetHour;
 
-    [SerializeField] private Color dayAmbientLight;
-    [SerializeField] private Color nightAmbientLight;
+    //[SerializeField] private Color dayAmbientLight;
+    //[SerializeField] private Color nightAmbientLight;
     [SerializeField] private Gradient hourGrandient;
     [SerializeField] private AnimationCurve lightChangeCurve;
+    [SerializeField] private AnimationCurve sunRotationY;
     [SerializeField] private float maxSunLightIntensity;
-    [SerializeField] private Light moonLight;
-    [SerializeField] private float maxMoonLightIntensity;
 
 
     private DateTime currentTime;
@@ -55,8 +54,8 @@ public class TimeController : MonoBehaviour
     }
     private void RotateOrbits()
     {
-        float sunLigthRotation;
-        float moonLigthRotation;
+        float sunLigthRotationX;
+        float sunLightRotationY;
 
         if (currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime)
         {
@@ -66,9 +65,8 @@ public class TimeController : MonoBehaviour
 
             double percentage = timeSinceSunrise.TotalMinutes / sunriseToSunsetDuration.TotalMinutes;
 
-            sunLigthRotation = Mathf.Lerp(0, 180, (float)percentage);
-
-            moonLigthRotation = Mathf.Lerp(-180, 0, (float)percentage);
+            sunLigthRotationX = Mathf.Lerp(0, 180, (float)percentage);
+            sunLightRotationY = Mathf.Lerp(0, 180, (float)percentage);
         }
         else
         {
@@ -78,22 +76,23 @@ public class TimeController : MonoBehaviour
 
             double percentage = timeSinceSunset.TotalMinutes / sunsetToSunriseDuration.TotalMinutes;
 
-            sunLigthRotation = Mathf.Lerp(180, 360, (float)percentage);
-
-            moonLigthRotation = Mathf.Lerp(-360, -180, (float)percentage);
+            sunLigthRotationX = Mathf.Lerp(-360, -180, (float)percentage);
+            sunLightRotationY = Mathf.Lerp(0, 180, (float)percentage);
         }
 
-        sunLight.transform.rotation = Quaternion.AngleAxis(sunLigthRotation, Vector3.right);
-        moonLight.transform.rotation = Quaternion.AngleAxis(moonLigthRotation, Vector3.right);
+        sunLight.transform.rotation = Quaternion.Euler(sunLigthRotationX, sunLightRotationY, 0);
+        //sunLight.transform.rotation = Quaternion.AngleAxis(sunLigthRotation, Vector3.right);
+
     }
 
     private void UpdateLightSettings()
     {
         float dotProduct = Vector3.Dot(sunLight.transform.forward, Vector3.down);
-        sunLight.intensity = Mathf.Lerp(0, maxSunLightIntensity, lightChangeCurve.Evaluate(dotProduct));
-        moonLight.intensity = Mathf.Lerp(maxMoonLightIntensity, 0, lightChangeCurve.Evaluate(dotProduct));
-        RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, lightChangeCurve.Evaluate(dotProduct));
-        //RenderSettings.ambientLight = hourGrandient.Evaluate(currentTime.Hour / 24f);
+        //sunLight.intensity = Mathf.Lerp(0, maxSunLightIntensity, lightChangeCurve.Evaluate(dotProduct));
+        //moonLight.intensity = Mathf.Lerp(maxMoonLightIntensity, 0, lightChangeCurve.Evaluate(dotProduct));
+        sunLight.color = hourGrandient.Evaluate(((float)currentTime.Hour + (float)currentTime.Minute * 1f/60f) / 24f);
+        Debug.Log(sunLight.color);
+        Debug.Log(((float)currentTime.Hour + (float)currentTime.Minute * 1f/60f) / 24f);
     }
 
     private TimeSpan CalculateTimeDifference(TimeSpan fromTime, TimeSpan toTime)
