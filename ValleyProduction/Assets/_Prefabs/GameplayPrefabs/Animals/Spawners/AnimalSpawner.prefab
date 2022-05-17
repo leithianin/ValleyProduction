@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCenter: {fileID: 6433706385885786575}
   circleRadius: 10
-  rangeDistanceByMovement: {x: 4, y: 8}
+  rangeDistanceByMovement: {x: 2, y: 5}
 --- !u!1 &5040923776162801571
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6752405694714964549}
   - component: {fileID: 9147510021413500836}
+  - component: {fileID: 5612460665451568386}
   m_Layer: 0
   m_Name: AnimalSpawner
   m_TagString: Untagged
@@ -139,6 +140,23 @@ MonoBehaviour:
   animalsByValidScore: []
   possibleSequences:
   - {fileID: 5381261141102244570}
+--- !u!114 &5612460665451568386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040923776162801571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affd1890c36a92449af8fc8a392b94f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 0
+  scoreProduced: 0
+  OnChangeScore:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7676057738815473551
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,3 +207,4 @@ MonoBehaviour:
     secondaryActions: []
   - mainAction: {fileID: 544828844627231057}
     secondaryActions: []
+  sequenceUser: []

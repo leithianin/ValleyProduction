@@ -139,7 +139,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Ket Downed");
+            OnKeyEscape?.Invoke();
         }
 
         OnMouseMove?.Invoke(new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")));
@@ -159,11 +159,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             if (Input.GetKeyDown(KeyCode.Delete))
             {
                 OnKeyDelete?.Invoke();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                OnKeyEscape?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift))

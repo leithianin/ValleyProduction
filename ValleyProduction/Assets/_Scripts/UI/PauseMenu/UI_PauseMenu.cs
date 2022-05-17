@@ -19,6 +19,17 @@ public class UI_PauseMenu : MonoBehaviour
 
     [SerializeField] private Button resumeButton;
 
+    public void OpenCloseMenu()
+    {
+        if(gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+    }
 
     public void LoadScene(int index)
     {
