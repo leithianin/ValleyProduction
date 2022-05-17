@@ -16,6 +16,7 @@ public class TimeController : MonoBehaviour
 
     [SerializeField] private Color dayAmbientLight;
     [SerializeField] private Color nightAmbientLight;
+    [SerializeField] private Gradient hourGrandient;
     [SerializeField] private AnimationCurve lightChangeCurve;
     [SerializeField] private float maxSunLightIntensity;
     [SerializeField] private Light moonLight;
@@ -92,6 +93,7 @@ public class TimeController : MonoBehaviour
         sunLight.intensity = Mathf.Lerp(0, maxSunLightIntensity, lightChangeCurve.Evaluate(dotProduct));
         moonLight.intensity = Mathf.Lerp(maxMoonLightIntensity, 0, lightChangeCurve.Evaluate(dotProduct));
         RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, lightChangeCurve.Evaluate(dotProduct));
+        //RenderSettings.ambientLight = hourGrandient.Evaluate(currentTime.Hour / 24f);
     }
 
     private TimeSpan CalculateTimeDifference(TimeSpan fromTime, TimeSpan toTime)
