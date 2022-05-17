@@ -50,7 +50,6 @@ public class UI_Tool : MonoBehaviour
                 OnSelectDeleteTool?.Invoke();
                 break;
             case ToolType.None:
-                OnDeselectTool?.Invoke();
                 UnselectTool();
                 break;
         }
@@ -58,13 +57,11 @@ public class UI_Tool : MonoBehaviour
 
     public void UnselectTool()
     {
-        InfrastructureManager.SetToolSelected(ToolType.None);
+        OnDeselectTool?.Invoke();
 
         if (PathManager.IsOnCreatePath)
         {
             PathManager.CreatePathData();
         }
-
-        ConstructionManager.SelectInfrastructureType(null);
     }
 }
