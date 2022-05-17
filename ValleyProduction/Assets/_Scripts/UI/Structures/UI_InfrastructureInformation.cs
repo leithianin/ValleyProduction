@@ -24,14 +24,14 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
     public Infrastructure openedInfrastructure;                                         //Infrastrucure dont l'UI est actuellement ouverte
 
-    public UnityEvent OnShow;
-    public UnityEvent OnHide;
+    public UnityEvent<GameObject> OnShow;
+    public UnityEvent<GameObject> OnHide;
 
 
     public void ShowStructureInformation(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
         openedInfrastructure = baseStruct;
-        OnShow?.Invoke();
+        OnShow?.Invoke(infoInfra.gameObject);
 
         if (baseStruct.infraDataRunTime.name != string.Empty)
         {
@@ -100,7 +100,7 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
     public void HideInfrastructureInfo()
     {
-        OnHide?.Invoke();
+        OnHide?.Invoke(openedInfrastructure.gameObject);
         UIManager.HideShownGameObject();
     }
 
