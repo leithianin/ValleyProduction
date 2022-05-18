@@ -17,11 +17,21 @@ public class TreeBehavior : MonoBehaviour
 
     [SerializeField] private bool isSet = true;
 
+    private int currentPhase;
+
     public bool IsSet => isSet;
+
+    public int CurrentPhase => currentPhase;
 
     private void Start()
     {
         OnChangeScore?.Invoke(healthyScore);
+    }
+
+    public void SetTreePhase(int phase)
+    {
+        currentPhase = phase;
+        Debug.Log("TreePhase : " + phase);
     }
 
     public void SetTree()

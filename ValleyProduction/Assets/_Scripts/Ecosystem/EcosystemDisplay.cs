@@ -33,7 +33,7 @@ public class EcosystemDisplayDataHandler
     [SerializeField] private int wantedDownScore;
     [SerializeField] private bool needHigher = true;
     private int score;
-    private bool isUpPhase = false; //TRUE si il est valide
+    private bool isUpPhase = false;
 
     public void SetScore(int nScore)
     {
@@ -55,7 +55,7 @@ public class EcosystemDisplayDataHandler
 public abstract class EcosystemDisplay : MonoBehaviour
 {
     /// Liste des type de data utilisé par l'AreaDisplay et leur degré d'importance.
-    [SerializeField] private List<EcosystemScoreHandler> scoreData;
+    [SerializeField] protected List<EcosystemScoreHandler> scoreData;
 
     public Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
