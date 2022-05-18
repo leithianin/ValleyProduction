@@ -14,7 +14,7 @@ public enum FeatureLocker
     BlockAllKeyboardInput
 }
 
-[CreateAssetMenu(fileName ="Game Context", menuName = "Create Game Context")]
+[CreateAssetMenu(fileName ="Game Context", menuName = "Valley/Create Game Context")]
 public class GameContext : ScriptableObject
 {
     [System.Serializable]

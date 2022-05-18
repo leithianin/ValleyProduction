@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CameraDataBase", menuName = "CameraDataBase", order = 1)]
+[CreateAssetMenu(fileName = "CameraDataBase", menuName = "Valley/CameraDataBase", order = 1)]
 public class CinematicShotDataBase : ScriptableObject
 {
     public  List<CameraData> shotsDataBase = new List<CameraData>();
