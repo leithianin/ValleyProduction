@@ -30,7 +30,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     private void Start()
     {
-        PlayDialogue("PTD_000");
+        //PlayDialogue("PTD_000");
     }
 
     public void PlayDialogue(string id)
