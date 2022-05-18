@@ -165,7 +165,18 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         {
             stage.State = state;
 
+            if(stage.State == QuestObjectiveState.Completed)
+            {
+                foreach(string str in stage.triggerFlagList)
+                {
+                    VLY_FlagManager.TriggerFlag(str);
+                }
 
+                foreach (string str in stage.incrementFlagList)
+                {
+                    VLY_FlagManager.IncrementFlagValue(str,1);
+                }
+            }
         }
     }
 
