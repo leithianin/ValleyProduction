@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_HealthyOakTree_01_LOD0
   m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+  m_ShaderKeywords: TRANSITION _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
@@ -252,7 +252,7 @@ Material:
     - DitherOffset: 5
     - DitherRange: 0.2
     - EmissiveIntensity: 0
-    - FadeDistance: 3
+    - FadeDistance: 0.1
     - HEATMAP_INDEX: 0
     - HeatmapIndex: 0
     - MODIF_MODE: 0
@@ -268,6 +268,8 @@ Material:
     - SetStretchCurve: 0
     - SetStretchEffect: 0
     - SquashAnim: 0
+    - TRANSITION: 1
+    - TRANSITION_STATE: 3
     - TransitionEdgeThickness: 0
     - TransitionHueState: 0
     - TransitionState: 0
@@ -289,6 +291,7 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
+    - _BLOSSOM: 0
     - _Blend: 0
     - _BlendMode: 0
     - _BumpScale: 1
