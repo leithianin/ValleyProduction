@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CPN_FlagHandler : MonoBehaviour
+public class CPN_IncrementFlagCaller : MonoBehaviour
 {
     [SerializeField] private string flagName;
     [SerializeField] private int incrementValue = 1;

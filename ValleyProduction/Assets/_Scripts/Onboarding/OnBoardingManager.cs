@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
+    //unity event OnCameraMove
+
     #region To Remove 
     public static void SetCanSpawnVisitors(bool cond)
     {

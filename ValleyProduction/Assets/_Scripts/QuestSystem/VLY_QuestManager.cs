@@ -29,6 +29,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         rewardBehaviors.Add(new QST_RWDB_UnlockStructure());
         rewardBehaviors.Add(new QST_RWDB_VisitorType());
         rewardBehaviors.Add(new QST_RWDB_QuestStart());
+        rewardBehaviors.Add(new QST_RWDB_IncrementFlag());
+        rewardBehaviors.Add(new QST_RWDB_TriggerFlag());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();
@@ -165,7 +167,23 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         {
             stage.State = state;
 
+            if(stage.State == QuestObjectiveState.Started)
+            {
+                DialogueManager.instance.PlayDialogue(stage.dialogueID);
+            }
 
+            if(stage.State == QuestObjectiveState.Completed)
+            {
+                foreach(string str in stage.triggerFlagList)
+                {
+                    VLY_FlagManager.TriggerFlag(str);
+                }
+
+                foreach (string str in stage.incrementFlagList)
+                {
+                    VLY_FlagManager.IncrementFlagValue(str,1);
+                }
+            }
         }
     }
 

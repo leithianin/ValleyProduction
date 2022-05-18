@@ -69,4 +69,9 @@ public class QST_ObjectiveStage
     public QuestObjectiveState State;
 
     public List<QST_Objective> Objectives;
+
+    public List<string> triggerFlagList;
+    public List<string> incrementFlagList;
+
+    public string dialogueID;
 }

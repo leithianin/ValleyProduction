@@ -1,18 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QST_OBJB_FlagValue : QST_ObjectiveBehavior<QST_OBJ_FlagValue>
 {
-    private List<QST_OBJ_FlagValue> pendingObjectives = new List<QST_OBJ_FlagValue>();
+    private Dictionary<QST_OBJ_FlagValue, Action<int>> pendingObjectiveWithHandler = new Dictionary<QST_OBJ_FlagValue, Action<int>>();
 
     protected override void OnCompleteObjective(QST_OBJ_FlagValue objective)
     {
-        pendingObjectives.Remove(objective);
-        if (pendingObjectives.Count <= 0)
-        {
-            VLY_FlagManager.OnUpdateFlag -= CheckFlag;
-        }
+        VLY_FlagManager.RemoveIncrementFlagListener(objective.Flag, pendingObjectiveWithHandler[objective]);
+
+        pendingObjectiveWithHandler.Remove(objective);
+
         Debug.Log(objective + " ended.");
     }
 
@@ -30,22 +30,20 @@ public class QST_OBJB_FlagValue : QST_ObjectiveBehavior<QST_OBJ_FlagValue>
         }
         else
         {
-            pendingObjectives.Add(objective);
-            if (pendingObjectives.Count < 2)
-            {
-                VLY_FlagManager.OnUpdateFlag += CheckFlag;
-            }
+            Action<int> actionHandler = (value) => CheckFlag(objective, value);
+
+            pendingObjectiveWithHandler.Add(objective, actionHandler);
+
+            VLY_FlagManager.AddIncrementFlagListener(objective.Flag, actionHandler);
+
         }
     }
 
-    private void CheckFlag(string flagName, int flagValue)
+    private void CheckFlag(QST_OBJ_FlagValue objective, int flagValue)
     {
-        for(int i = 0; i < pendingObjectives.Count; i++)
+        if (flagValue >= objective.Value)
         {
-            if (flagName == pendingObjectives[i].Flag && flagValue >= pendingObjectives[i].Value)
-            {
-                AskCompleteObjective(pendingObjectives[i]);
-            }
+            AskCompleteObjective(objective);
         }
     }
 }

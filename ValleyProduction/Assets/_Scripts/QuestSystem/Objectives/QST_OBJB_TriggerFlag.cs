@@ -1,18 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QST_OBJB_TriggerFlag : QST_ObjectiveBehavior<QST_OBJ_TriggerFlag>
 {
-    private List<QST_OBJ_TriggerFlag> pendingObjectives = new List<QST_OBJ_TriggerFlag>();
+    private Dictionary<QST_OBJ_TriggerFlag, Action> pendingObjectiveWithHandler = new Dictionary<QST_OBJ_TriggerFlag, Action>();
 
     protected override void OnCompleteObjective(QST_OBJ_TriggerFlag objective)
     {
-        pendingObjectives.Remove(objective);
-        if (pendingObjectives.Count <= 0)
-        {
-            VLY_FlagManager.OnTriggerFlag -= CheckFlag;
-        }
+        VLY_FlagManager.RemoveTriggerFlagListener(objective.TriggeredFlag, pendingObjectiveWithHandler[objective]);
+
+        pendingObjectiveWithHandler.Remove(objective);
+
         Debug.Log(objective + " ended.");
     }
 
@@ -23,21 +23,15 @@ public class QST_OBJB_TriggerFlag : QST_ObjectiveBehavior<QST_OBJ_TriggerFlag>
 
     protected override void OnStartObjective(QST_OBJ_TriggerFlag objective)
     {
-        pendingObjectives.Add(objective);
-        if (pendingObjectives.Count < 2)
-        {
-            VLY_FlagManager.OnTriggerFlag += CheckFlag;
-        }
+        Action actionHandler = () => CheckFlag(objective);
+
+        pendingObjectiveWithHandler.Add(objective, actionHandler);
+
+        VLY_FlagManager.AddTriggerFlagListener(objective.TriggeredFlag, actionHandler);
     }
 
-    private void CheckFlag(string flagName)
+    private void CheckFlag(QST_OBJ_TriggerFlag objective)
     {
-        for (int i = 0; i < pendingObjectives.Count; i++)
-        {
-            if (flagName == pendingObjectives[i].TriggeredFlag)
-            {
-                AskCompleteObjective(pendingObjectives[i]);
-            }
-        }
+        AskCompleteObjective(objective);
     }
 }

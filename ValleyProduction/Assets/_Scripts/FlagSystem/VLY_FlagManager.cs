@@ -9,19 +9,60 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     private static Dictionary<string, int> flags = new Dictionary<string, int>();
 
-    public static Action<string, int> OnUpdateFlag;
+    private static Dictionary<string, List<Action<int>>> incrementalFlagListeners = new Dictionary<string, List<Action<int>>>();
+    private static Dictionary<string, List<Action>> triggerFlagListeners = new Dictionary<string, List<Action>>();
 
-    public static Action<string> OnTriggerFlag;
+    /*public static Action<string, int> OnUpdateFlag;
 
-    private void Start()
+    public static Action<string> OnTriggerFlag;*/
+
+    protected override void OnAwake()
     {
         //Ajoute tous les flags existant
 
-        foreach(string flagName in flagList.Flags)
+        foreach(string flagName in flagList.IncrementalsFlags)
         {
             flags.Add(flagName, 0);
+
+            incrementalFlagListeners.Add(flagName, new List<Action<int>>());
+        }
+
+        foreach(string flagName in flagList.TriggerFlags)
+        {
+            triggerFlagListeners.Add(flagName, new List<Action>());
         }
     }
+
+    public static void AddIncrementFlagListener(string flagName, Action<int> callback)
+    {
+        if(!incrementalFlagListeners[flagName].Contains(callback))
+        {
+            incrementalFlagListeners[flagName].Add(callback);
+        }
+    }
+    public static void RemoveIncrementFlagListener(string flagName, Action<int> callback)
+    {
+        if (incrementalFlagListeners[flagName].Contains(callback))
+        {
+            incrementalFlagListeners[flagName].Remove(callback);
+        }
+    }
+
+    public static void AddTriggerFlagListener(string flagName, Action callback)
+    {
+        if (!triggerFlagListeners[flagName].Contains(callback))
+        {
+            triggerFlagListeners[flagName].Add(callback);
+        }
+    }
+    public static void RemoveTriggerFlagListener(string flagName, Action callback)
+    {
+        if (triggerFlagListeners[flagName].Contains(callback))
+        {
+            triggerFlagListeners[flagName].Remove(callback);
+        }
+    }
+
 
     public static void IncrementFlagValue(string flagName, int incrementValue)
     {
@@ -29,7 +70,10 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
         {
             flags[flagName] += incrementValue;
 
-            OnUpdateFlag?.Invoke(flagName, flags[flagName]);
+            foreach(Action<int> act in incrementalFlagListeners[flagName])
+            {
+                act?.Invoke(flags[flagName]);
+            }
         }
     }
 
@@ -44,6 +88,9 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static void TriggerFlag(string triggerName)
     {
-        OnTriggerFlag?.Invoke(triggerName);
+        foreach(Action act in triggerFlagListeners[triggerName])
+        {
+            act?.Invoke();
+        }
     }
 }

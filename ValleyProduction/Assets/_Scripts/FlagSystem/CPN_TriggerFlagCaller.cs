@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class CPN_FlagActionIDHandler : MonoBehaviour
+public class CPN_TriggerFlagCaller : MonoBehaviour
 {
     [SerializeField] private string flagToTrigger;
 
