@@ -10,19 +10,16 @@ public class CPN_TriggerFlagListener : MonoBehaviour
 
     private void OnEnable()
     {
-        VLY_FlagManager.OnTriggerFlag += OnTriggerFlag;
+        VLY_FlagManager.AddTriggerFlagListener(flagToTrigger, OnTriggerFlag);
     }
 
     private void OnDisable()
     {
-        VLY_FlagManager.OnTriggerFlag -= OnTriggerFlag;
+        VLY_FlagManager.RemoveTriggerFlagListener(flagToTrigger, OnTriggerFlag);
     }
 
-    public void OnTriggerFlag(string flag)
+    public void OnTriggerFlag()
     {
-        if (flag == flagToTrigger)
-        {
-            OnTriggerFlagEvent?.Invoke();
-        }
+        OnTriggerFlagEvent?.Invoke();
     }
 }
