@@ -72,4 +72,6 @@ public class QST_ObjectiveStage
 
     public List<string> triggerFlagList;
     public List<string> incrementFlagList;
+
+    public string dialogueID;
 }

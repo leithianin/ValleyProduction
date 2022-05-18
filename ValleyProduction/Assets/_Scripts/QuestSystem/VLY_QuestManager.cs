@@ -165,6 +165,11 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         {
             stage.State = state;
 
+            if(stage.State == QuestObjectiveState.Started)
+            {
+                DialogueManager.instance.PlayDialogue(stage.dialogueID);
+            }
+
             if(stage.State == QuestObjectiveState.Completed)
             {
                 foreach(string str in stage.triggerFlagList)
