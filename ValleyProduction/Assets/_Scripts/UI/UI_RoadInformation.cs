@@ -21,8 +21,6 @@ public class UI_RoadInformation : MonoBehaviour
             roadsList[i].gameObject.SetActive(true);
             roadsList[i].UpdateData(pathDataList[i]);
         }
-        
-        OnBoardingManager.onClickPath?.Invoke(true);
 
         gameObject.SetActive(true);
         return this;
@@ -59,7 +57,6 @@ public class UI_RoadInformation : MonoBehaviour
 
     public void DeletePath()
     {
-        OnBoardingManager.onDestroyPath?.Invoke(true);
         PathManager.DeleteFullPath(pathData);
         UIManager.HideShownGameObject();
     }

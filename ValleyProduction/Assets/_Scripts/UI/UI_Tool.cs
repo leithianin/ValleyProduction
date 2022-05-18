@@ -39,11 +39,9 @@ public class UI_Tool : MonoBehaviour
         switch (InfrastructureManager.GetCurrentTool)
         {
             case ToolType.Place:
-                OnBoardingManager.OnClickBuild?.Invoke(true);
                 OnSelectPlaceTool?.Invoke();
                 break;
             case ToolType.Move:
-                OnBoardingManager.OnClickModify?.Invoke(true);
                 OnSelectMoveTool?.Invoke();
                 break;
             case ToolType.Delete:
