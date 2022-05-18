@@ -77,8 +77,6 @@ public class UIManager : VLY_Singleton<UIManager>
             {
                 GetVisitorInformation.ResetSavedVisitors();
             }
-            OnBoardingManager.onHideVisitorInfo?.Invoke(true);
-            OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);
             gameObjectShown.SetActive(false);
         }
     }
@@ -219,7 +217,6 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
-        OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         infrastructureInfo.ShowStructureInformation(infoInfra, baseStruct);
         gameObjectShown = infrastructureInfo.gameObject;
     }

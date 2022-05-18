@@ -35,17 +35,10 @@ public class UI_VisitorInformation : MonoBehaviour
     {
         currentVisitor = cpn_Inf.gameObject;
         currentInfo = cpn_Inf;
-        OnBoardingManager.OnClickVisitorEco?.Invoke(true);
         OnShow?.Invoke(currentVisitor);
         switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
-                if (OnBoardingManager.firstClickVisitors)
-                {
-                    OnBoardingManager.OnClickVisitorPath?.Invoke(true);
-                    OnBoardingManager.ShowHikerProfileIntro();
-                    OnBoardingManager.firstClickVisitors = false;
-                }
                 ChangeInfoVisitor(hikersInfo, cpn_Inf);
                 currentTourist = hikersInfo;
                 hikersInfo.gameObject.SetActive(true);
