@@ -29,11 +29,27 @@ public class EcosystemScoreHandler
 public class EcosystemDisplayDataHandler
 {
     public EcosystemDataType dataTypeToCheck;
-    [SerializeField] private int wantedScore;
+    [SerializeField] private int wantedUpScore;
+    [SerializeField] private int wantedDownScore;
     [SerializeField] private bool needHigher = true;
-     public int score;
+    private int score;
+    private bool isUpPhase = false; //TRUE si il est valide
 
-    public bool IsValid => (score >= wantedScore && needHigher) || (score <= wantedScore && !needHigher);
+    public void SetScore(int nScore)
+    {
+        score = nScore;
+
+        if(!isUpPhase && score >= wantedUpScore)
+        {
+            isUpPhase = true;
+        }
+        else if(isUpPhase && score <= wantedDownScore)
+        {
+            isUpPhase = false;
+        }
+    }
+
+    public bool IsValid => isUpPhase == needHigher;
 }
 
 public abstract class EcosystemDisplay : MonoBehaviour
@@ -85,7 +101,7 @@ public abstract class EcosystemDisplay : MonoBehaviour
             {
                 if (scoreData[i].displayDatas[j].dataTypeToCheck == data)
                 {
-                    scoreData[i].displayDatas[j].score = score;
+                    scoreData[i].displayDatas[j].SetScore(score);
                 }
             }
 
