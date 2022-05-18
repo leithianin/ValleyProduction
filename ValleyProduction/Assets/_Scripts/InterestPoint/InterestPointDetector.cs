@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class InterestPointDetector : MonoBehaviour
 {
+    [SerializeField] private float radius;
+    public float Radius => radius;
+
     public Action<InterestPoint> OnDiscoverInterestPoint;
     public Action<InterestPoint> OnRemoveInterestPoint;
 

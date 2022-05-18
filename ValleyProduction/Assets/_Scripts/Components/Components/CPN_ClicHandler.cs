@@ -25,11 +25,13 @@ public class CPN_ClicHandler : VLY_Component
 
     public void MouseEnter()
     {
+        CursorTextureManager.SetInteractionCursor();
         PlayOnMouseEnter?.Invoke();
     }
 
     public void MouseExit()
     {
+        CursorTextureManager.SetNormalCursor();
         PlayOnMouseExit?.Invoke();
     }
 }

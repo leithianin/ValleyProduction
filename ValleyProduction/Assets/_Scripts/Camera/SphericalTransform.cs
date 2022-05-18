@@ -90,7 +90,11 @@ public class SphericalTransform : MonoBehaviour
             Debug.LogWarning("Rotation Value is not set correctly");
 
         coordinates.y += rotationValue * speed * Time.unscaledDeltaTime;
-        OnMouseWheel?.Invoke(rotationValue);
+
+        if (rotationValue != 0)
+        {
+            PlayerInputManager.GetOnMouseWheelDown?.Invoke(rotationValue);
+        }
     }
 
     public void PolarRotation(float rotationValue, float speed)
@@ -99,7 +103,11 @@ public class SphericalTransform : MonoBehaviour
             Debug.LogWarning("Rotation Value is not set correctly");
 
         coordinates.z += rotationValue * speed * Time.unscaledDeltaTime;
-        OnMouseWheel?.Invoke(rotationValue);
+
+        if (rotationValue != 0)
+        {
+            PlayerInputManager.GetOnMouseWheelDown?.Invoke(rotationValue);
+        }
     }
 
     public void ChangeLength(float deltaMagnitude, float scrollingSpeed)
@@ -162,6 +170,7 @@ public class SphericalTransform : MonoBehaviour
     public void MoveOrigin(float xInput, float yInput, float speed)
     {
         Vector3 savePosition = origin.position;
+
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.unscaledDeltaTime;
 
         if(origin.position != savePosition)

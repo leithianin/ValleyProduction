@@ -96,7 +96,7 @@ public class VisitorBehavior : VLY_Component
     public void UnsetVisitor()
     {
         isUsed = false;
-
+        OnUnsetVisitorWithType?.Invoke(visitorType);
         currentPathFragment = null;
 
         gameObject.SetActive(false);
@@ -174,7 +174,7 @@ public class VisitorBehavior : VLY_Component
 
         if (pathToTake != null && pathToTake.endPoint == startPoint)
         {
-            pathToTake = new PathFragmentData(pathToTake.endPoint, pathToTake.startPoint, pathToTake.GetReversePath());
+            pathToTake = new PathFragmentData(pathToTake.endPoint, pathToTake.startPoint, pathToTake.GetReversePath(), false);
         }
 
         return pathToTake;
@@ -221,7 +221,7 @@ public class VisitorBehavior : VLY_Component
 
         if(pathToTake != null && pathToTake.endPoint == currentPathFragment.endPoint)
         {
-            pathToTake = new PathFragmentData(pathToTake.endPoint, pathToTake.startPoint, pathToTake.GetReversePath());
+            pathToTake = new PathFragmentData(pathToTake.endPoint, pathToTake.startPoint, pathToTake.GetReversePath(), false);
         }
 
         return pathToTake;

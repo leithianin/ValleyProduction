@@ -21,6 +21,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         objectivesBehaviors.Add(new QST_OBJB_PlaceStructure());
         objectivesBehaviors.Add(new QST_OBJB_VisitorReachLandmark());
         objectivesBehaviors.Add(new QST_OBJB_FlagValue());
+        objectivesBehaviors.Add(new QST_OBJB_TriggerFlag());
+        objectivesBehaviors.Add(new QST_OBJB_ValidPathToLandmark());
 
         //Création des différents behavior pour les Rewards
         rewardBehaviors.Add(new QST_RWDB_Ressource());
@@ -38,7 +40,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         }
 
         //Placeholder : Démarre la première quête
-        BeginQuest(startQuest);
+        TimerManager.CreateRealTimer(2f, () => BeginQuest(startQuest));        
+        //BeginQuest(startQuest);
     }
 
     /// <summary>

@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 6452573747395027205}
   - component: {fileID: 1712268565191719400}
   - component: {fileID: 7789482485079233858}
+  - component: {fileID: 1490254098018175378}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -371,6 +372,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewHandler: {fileID: 5209237266696560537}
   toolSelected: 0
+  OnSelectConstructionTool:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnselectConstructionTool:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSelectModifyTool:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnselectModifyTool:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSelectDeleteTool:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnselectDeleteTool:
+    m_PersistentCalls:
+      m_Calls: []
   saveScreenPos: {x: 0, y: 0, z: 0}
 --- !u!114 &5209237266425241733
 MonoBehaviour:
@@ -422,8 +441,10 @@ MonoBehaviour:
   DebugList: []
   index: 1
   modifiedPaths: []
+  baseModifiedPathShow: []
   pathRendererManager: {fileID: 7872933226384271932}
   testPathpoint: {fileID: 6225881508748953926, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
+  isCancel: 0
 --- !u!114 &7872933226384271932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,6 +614,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d3c670dbc8a85499042c287d8d9caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1490254098018175378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209237266425241743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026b205a66a7e1f4888c98530bae1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  T_normal: {fileID: 2800000, guid: bf2f7c855ae5e7241bcb191f21ee0181, type: 3}
+  normalCursorMode: 0
+  normalHotSpot: {x: 30, y: 30}
+  T_interaction: {fileID: 2800000, guid: 64cc37ef58fdcc64e880efe942e5ae27, type: 3}
+  T_interactionPressed: {fileID: 2800000, guid: 1d24ed5389de82045bee157a54db63c8, type: 3}
+  interactionCursorMode: 0
+  interactionHotSpot: {x: 30, y: 30}
 --- !u!1 &5209237266696560536
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,19 +974,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.91892904
+      value: 0.9189291
       objectReference: {fileID: 0}
     - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.394423
+      value: 0.3944228
       objectReference: {fileID: 0}
     - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.0000011962109
       objectReference: {fileID: 0}
     - target: {fileID: 743631117021658582, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.0000005134377
       objectReference: {fileID: 0}
     - target: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
       propertyPath: m_RootOrder

@@ -19,6 +19,7 @@ public class UIManager : VLY_Singleton<UIManager>
 
     [Header("Visitors Informations")]
     public UI_VisitorInformation visitorInfo;
+    public static UI_VisitorInformation GetVisitorInformation => instance.visitorInfo;
 
     [Header("Infrastructure Informations")]
     public UI_InfrastructureInformation infrastructureInfo;                                             //Pour le moment pas de fenêtre différente selon les infra
@@ -68,7 +69,14 @@ public class UIManager : VLY_Singleton<UIManager>
     {
         if (gameObjectShown != null && !UI_RoadInformation.isEditName)
         {
-            GetInfrastructureInfo.ResetSavedInfrastructe();
+            if (GetInfrastructureInfo != null)
+            {
+                GetInfrastructureInfo.ResetSavedInfrastructe();
+            }
+            if (GetVisitorInformation != null)
+            {
+                GetVisitorInformation.ResetSavedVisitors();
+            }
             OnBoardingManager.onHideVisitorInfo?.Invoke(true);
             OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);
             gameObjectShown.SetActive(false);
@@ -167,6 +175,55 @@ public class UIManager : VLY_Singleton<UIManager>
         gameObjectShown = visitorInfo.ShowInfoVisitor(cpn_Inf).gameObject;
     }
 
+    public static void UpdateCurrentNoise()
+    {
+        if(GetVisitorInformation.currentTourist != null)
+        {
+            GetVisitorInformation.UpdateNoise();
+        }
+    }
+
+    public static void UpdateCurrentPollution()
+    {
+        if (GetVisitorInformation.currentTourist != null)
+        {
+            GetVisitorInformation.UpdatePollution();
+        }
+    }
+
+    public static void UpdateCurrentStamina()
+    {
+        if (GetVisitorInformation.currentTourist != null)
+        {
+            GetVisitorInformation.UpdateStamina();
+        }
+    }
+
+    public static void OnUnsetVisitor(VisitorScriptable visitor)
+    {
+        if(GetVisitorInformation != null && GetVisitorInformation.currentInfo != null && visitor == GetVisitorInformation.currentInfo.scriptable)
+        {
+            HideShownGameObject();
+        }
+    }
+
+    #endregion
+
+    #region Info Infrastructure
+    //Show les informations des visiteurs on click
+    public static void InteractWithInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
+    {
+        HideShownGameObject();
+        instance.ShowInfoInfrastructure(infoInfra, baseStruct);
+    }
+
+    public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
+    {
+        OnBoardingManager.OnClickInfrastructure?.Invoke(true);
+        infrastructureInfo.ShowStructureInformation(infoInfra, baseStruct);
+        gameObjectShown = infrastructureInfo.gameObject;
+    }
+
     /// <summary>
     /// Update current NB Visitors each time we add or remove 1 visitors
     /// </summary>
@@ -195,22 +252,6 @@ public class UIManager : VLY_Singleton<UIManager>
         {
             GetInfrastructureInfo.UpdateTotalMoney(GetInfrastructureInfo.openedInfrastructure);
         }
-    }
-    #endregion
-
-    #region Info Infrastructure
-    //Show les informations des visiteurs on click
-    public static void InteractWithInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
-    {
-        HideShownGameObject();
-        instance.ShowInfoInfrastructure(infoInfra, baseStruct);
-    }
-
-    public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
-    {
-        OnBoardingManager.OnClickInfrastructure?.Invoke(true);
-        infrastructureInfo.ShowStructureInformation(infoInfra, baseStruct);
-        gameObjectShown = infrastructureInfo.gameObject;
     }
     #endregion
 

@@ -16,5 +16,12 @@ public class VLY_Singleton<T> : MonoBehaviour where T : VLY_Singleton<T>
         {
             instance = this as T;
         }
+
+        OnAwake();
+    }
+
+    protected virtual void OnAwake()
+    {
+
     }
 }

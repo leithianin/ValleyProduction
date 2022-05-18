@@ -224,7 +224,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for (int i = 0; i < toModify.pathPoints.Count - 1; i++)
         {
-            PathFragmentData new_pfd = new PathFragmentData(toModify.pathPoints[i], toModify.pathPoints[i + 1], PathCreationManager.instance.CalculatePath(toModify.pathPoints[i], toModify.pathPoints[i + 1]));
+            PathFragmentData new_pfd = new PathFragmentData(toModify.pathPoints[i], toModify.pathPoints[i + 1], PathCreationManager.instance.CalculatePath(toModify.pathPoints[i], toModify.pathPoints[i + 1]), true);
             pd.AddPathFragment(new_pfd);
         }
 
@@ -270,7 +270,7 @@ public class PathManager : VLY_Singleton<PathManager>
         if(previousPathpoint != null)
         {
             //ChangementPathFragment
-            PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints);
+            PathFragmentData new_pfd = new PathFragmentData(previousPathpoint, pathpoint, navmeshPoints, true);
             instance.AddPathfragmentToList(new_pfd);
 
             PathCreationManager.instance.pathRendererManager.ManagePathRenderer(navmeshPoints, new_pfd);
@@ -338,7 +338,8 @@ public class PathManager : VLY_Singleton<PathManager>
 
         if (pdToModify != null)
         {
-            switch (pdToModify.pathFragment.Count)
+            DeletePointWith2MorePathFragment(pdToModify, ist_pp);
+            /*switch (pdToModify.pathFragment.Count)
             {
                 case 0:
                     DeletePointWith0PathFragment(pdToModify);
@@ -352,7 +353,7 @@ public class PathManager : VLY_Singleton<PathManager>
                 default:
                     DeletePointWith2MorePathFragment(pdToModify, ist_pp);
                     break;
-            }
+            }*/
         }
 
         NodePathProcess.UpdateAllNodes();
@@ -654,7 +655,7 @@ public class PathManager : VLY_Singleton<PathManager>
         newPathData.pathFragment = new List<PathFragmentData>();
         foreach (PathFragmentData pfd in listPathFragment)
         {
-            newPathData.AddPathFragment(pfd);
+            newPathData.AddPathFragment(new PathFragmentData(pfd.startPoint, pfd.endPoint, pfd.path, true));
         }
 
         newPathData.startPoint = listPathFragment[0].startPoint;
@@ -732,6 +733,11 @@ public class PathManager : VLY_Singleton<PathManager>
     public static void DebugPoint(IST_PathPoint pathpoint, Color color = default(Color))
     {
         GameObject DEBUG = Instantiate(instance.DebugLineRenderer);
+
+        if (instance.currentLineDebug != null)
+        {
+            instance.currentLineDebug.enabled = false;
+        }
         instance.currentLineDebug = DEBUG.GetComponent<LineRenderer>();
 
         if(GetCurrentPathData != null)
@@ -964,7 +970,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         detectorPositions.Add(path[0]);
 
-        float distanceBetweenPoints = 2f;
+        float distanceBetweenPoints = roadDetectorPrefab.Radius * 2;
         int numDist = (int)(lineLength / distanceBetweenPoints);
         int pathIndex = 0;
 

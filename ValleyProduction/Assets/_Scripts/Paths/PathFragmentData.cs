@@ -15,19 +15,20 @@ public class PathFragmentData
 
     public List<InterestPoint> InterestPointsOnFragment => interestPointList;
 
-    public PathFragmentData(IST_PathPoint nStartPoint, IST_PathPoint nEndPoint, List<Vector3> nPath)
+    public PathFragmentData(IST_PathPoint nStartPoint, IST_PathPoint nEndPoint, List<Vector3> nPath, bool displayedPath)
     {
         endPoint   = nEndPoint  ;
         startPoint = nStartPoint;
 
         path = new List<Vector3>(nPath);
-        PathRenderer.RegisterPathFragment(this);
+        if (displayedPath)
+        {
+            PathRenderer.RegisterPathFragment(this);
+        }
     }
 
     public void DeleteFragmentData()
     {
-        Debug.Log("Delete path Frag");
-
         while(interestPointDetectors.Count > 0)
         {
             RemoveInterestPointDetector(interestPointDetectors[0]);

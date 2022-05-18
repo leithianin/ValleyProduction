@@ -10,9 +10,18 @@ public class InterestPoint : MonoBehaviour
 
     public Action<InterestPoint> OnDisableInterestPoint;
 
+    public void EnableInterestPoint()
+    {
+        gameObject.SetActive(true);
+    }
+
     public void DisableInterestPoint()
     {
         OnDisableInterestPoint?.Invoke(this);
+
+        AskToInterupt();
+
+        gameObject.SetActive(false);
     }
 
     public bool IsUsable(CPN_InteractionHandler interactor)
@@ -74,7 +83,7 @@ public class InterestPoint : MonoBehaviour
 
         for(int i = 0; i < interactions.Length; i++)
         {
-            if(interactions[i].interactionType == SatisfactorType.All || likedTypes.Contains(interactions[i].interactionType))
+            if((likedTypes.Count > 0 && interactions[i].interactionType == SatisfactorType.All) || likedTypes.Contains(interactions[i].interactionType))
             {
                 toReturn += interactions[i].attractivityLevel;
             }

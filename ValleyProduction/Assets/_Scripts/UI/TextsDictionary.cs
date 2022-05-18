@@ -5,11 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Texts", menuName = "Valley/Texts/TextsDictionary")]
 public class TextsDictionary : ScriptableObject
 {
+    public static TextsDictionary instance;
+
     [SerializeField] private TextBase[] pathTutorial;
+    [SerializeField] private TextBase[] pathDialogue;
     [SerializeField] private TextBase[] ecosystemTutorial;
     [SerializeField] private TextBase[] infrastructureTutorial;
     [SerializeField] private TextBase[] quests;
     [SerializeField] private TextBase blank;
+
+    public TextsDictionary()
+    {
+        instance = this;
+    }
 
     public TextBase GetTextAsset(string id)
     {
@@ -19,6 +27,16 @@ public class TextsDictionary : ScriptableObject
         {
             case "PTH":
                 foreach (TextBase txt in pathTutorial)
+                {
+                    if (txt.Id.Equals(id))
+                    {
+                        return txt;
+                    }
+                }
+                break;
+
+            case "PTD":
+                foreach (TextBase txt in pathDialogue)
                 {
                     if (txt.Id.Equals(id))
                     {

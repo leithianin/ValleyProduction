@@ -6,6 +6,7 @@ public enum TypeVisitor { Hiker, Tourist}
 public class CPN_Informations : VLY_Component<VisitorScriptable>
 {
     public VisitorScriptable scriptable = null;
+    public VLY_ComponentHandler components;
 
     public TypeVisitor visitorType;
     private string name = "Robert";
@@ -30,5 +31,10 @@ public class CPN_Informations : VLY_Component<VisitorScriptable>
     public override void SetData(VisitorScriptable dataToSet)
     {
         scriptable = dataToSet;
+    }
+
+    public void OnUnset()
+    {
+        UIManager.OnUnsetVisitor(scriptable);
     }
 }

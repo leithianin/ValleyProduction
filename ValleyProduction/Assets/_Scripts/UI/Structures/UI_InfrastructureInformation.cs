@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.Events;
 
 public class UI_InfrastructureInformation : MonoBehaviour
 {
@@ -23,10 +24,14 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
     public Infrastructure openedInfrastructure;                                         //Infrastrucure dont l'UI est actuellement ouverte
 
+    public UnityEvent<GameObject> OnShow;
+    public UnityEvent<GameObject> OnHide;
+
 
     public void ShowStructureInformation(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
         openedInfrastructure = baseStruct;
+        OnShow?.Invoke(infoInfra.gameObject);
 
         if (baseStruct.infraDataRunTime.name != string.Empty)
         {
@@ -40,14 +45,23 @@ public class UI_InfrastructureInformation : MonoBehaviour
         if (baseStruct.Data.Description != null) { descriptionDisplay.text = baseStruct.Data.Description; }
         else { Debug.LogError("Data Description de la structure non rempli"); }
 
+        
         if (baseStruct.Data.Logo != null)        { imageComponent.sprite = baseStruct.Data.Logo; }
         else { Debug.LogError("Data Sprite de la structure non rempli"); }
 
         //Show Capacity si interactionScript
         if(baseStruct.interestPoint != null) 
         {
-            capacityText.text = "Capacity : <size=17>" + baseStruct.interestPoint.GetCurrentNbVisitors().ToString() + "/" + baseStruct.interestPoint.GetInteractionMaxVisitors().ToString();
-            capacity.SetActive(true);
+            Debug.Log(baseStruct.interestPoint);
+            if (capacityText != null)
+            {
+                capacityText.text = "Capacity : <size=17>" + baseStruct.interestPoint.GetCurrentNbVisitors().ToString() + "/" + baseStruct.interestPoint.GetInteractionMaxVisitors().ToString();
+            }
+
+            if (capacity != null)
+            {
+                capacity.SetActive(true);
+            }
         }
 
         //Show visitorsTotaux
@@ -82,5 +96,26 @@ public class UI_InfrastructureInformation : MonoBehaviour
     public void ResetSavedInfrastructe()
     {
         openedInfrastructure = null;
+    }
+
+    public void HideInfrastructureInfo()
+    {
+        OnHide?.Invoke(openedInfrastructure.gameObject);
+        UIManager.HideShownGameObject();
+    }
+
+    public void SetStructureOpen(bool isOpen)
+    {
+        if(InfrastructureManager.GetCurrentSelectedStructure != null)
+        {
+            if(isOpen)
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.OpenStructure();
+            }
+            else
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.CloseStructure();
+            }
+        }
     }
 }

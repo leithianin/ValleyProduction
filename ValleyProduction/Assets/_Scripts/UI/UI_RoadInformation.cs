@@ -13,7 +13,7 @@ public class UI_RoadInformation : MonoBehaviour
 
     public UI_RoadInformation ShowInfoRoad(IST_PathPoint pathPoint)
     {
-        HideRoadInfo();
+        ResetRoadInfo();
         List<PathData> pathDataList = PathManager.GetAllPathDatas(pathPoint);
 
         for(int i = 0; i < pathDataList.Count; i++)
@@ -29,6 +29,11 @@ public class UI_RoadInformation : MonoBehaviour
     }
 
     public void HideRoadInfo()
+    {
+        UIManager.HideShownGameObject();
+    }
+
+    public void ResetRoadInfo()
     {
         foreach(UI_Roads road in roadsList)
         {
@@ -57,5 +62,20 @@ public class UI_RoadInformation : MonoBehaviour
         OnBoardingManager.onDestroyPath?.Invoke(true);
         PathManager.DeleteFullPath(pathData);
         UIManager.HideShownGameObject();
-    } 
+    }
+
+    public void SetStructureOpen(bool isOpen)
+    {
+        if (InfrastructureManager.GetCurrentSelectedStructure != null)
+        {
+            if (isOpen)
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.OpenStructure();
+            }
+            else
+            {
+                InfrastructureManager.GetCurrentSelectedStructure.CloseStructure();
+            }
+        }
+    }
 }

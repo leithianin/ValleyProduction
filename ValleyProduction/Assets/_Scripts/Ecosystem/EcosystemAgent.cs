@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class EcosystemAgent : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public abstract class EcosystemAgent<T> : EcosystemAgent// where T : MonoBehavio
     bool asSpawnOnce = false;
 
     bool isApplicationQuitting = false;
+
+    [SerializeField] private UnityEvent<float> OnChangeScore;
 
     private void Start()
     {
@@ -61,6 +64,7 @@ public abstract class EcosystemAgent<T> : EcosystemAgent// where T : MonoBehavio
     public void SetScore(float nScore)
     {
         scoreProduced = nScore;
+        OnChangeScore?.Invoke(scoreProduced);
     }
 
     public override float GetScore()

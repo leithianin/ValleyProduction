@@ -44,6 +44,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public static UnityEvent<float> GetOnMouseScroll => instance.OnMouseScroll;
     private float lastScrollValue;
 
+    [SerializeField] private UnityEvent<float> OnMouseWheelDown;
+    public static UnityEvent<float> GetOnMouseWheelDown => instance.OnMouseWheelDown;
+
+    [SerializeField] private UnityEvent OnCameraMouseMove;
+    public static UnityEvent GetOnCameraMouseMove => instance.OnCameraMouseMove;
+
     public static bool clicHold = false;
 
     [SerializeField] private GameContext context;
@@ -87,11 +93,13 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
             if(Input.GetMouseButtonDown(0))
             {
+                CursorTextureManager.SetPressedCursor();
                 StartCoroutine(TimerHoldLeft());
             }
 
             if (Input.GetMouseButtonUp(0))                      //Clic gauche relaché
             {
+                CursorTextureManager.SetReleaseCursor();
                 StopCoroutine(StartCoroutine(TimerHoldLeft()));
                 CallLeftMouseInputs(raycastHit);
 
@@ -129,11 +137,16 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
         CheckForMovementInput();
 
-        OnMouseMove?.Invoke(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")));
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnKeyEscape?.Invoke();
+        }
 
-        OnAzimuthal?.Invoke(Input.GetAxis("Azimuthal"));
+        OnMouseMove?.Invoke(new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")));
 
-        OnPolar?.Invoke(Input.GetAxis("Polar"));
+        OnAzimuthal?.Invoke(Input.GetAxisRaw("Azimuthal"));
+
+        OnPolar?.Invoke(Input.GetAxisRaw("Polar"));
 
         //CODE REVIEW : Plusieurs bool ou un seul pour disable le Context ?
         if (isKeyboardEnable)
@@ -146,11 +159,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             if (Input.GetKeyDown(KeyCode.Delete))
             {
                 OnKeyDelete?.Invoke();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                OnKeyEscape?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -218,12 +226,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CallLeftMouseInputs(RaycastHit hit)
     {
-        OnClicLeft?.Invoke();
-
         if (GetMousePosition != Vector3.zero)
         {
             OnClicLeftPosition?.Invoke(GetMousePosition);
         }
+
+        OnClicLeft?.Invoke();
     }
 
     private void CallLeftHoldMouseInput(RaycastHit hit)
@@ -262,6 +270,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         float xDirection = Input.GetAxis("Horizontal");
         float yDirection = Input.GetAxis("Vertical");
+
 
         if (xDirection != 0 || yDirection != 0 || lastKeyDirection != Vector2.zero)
         {

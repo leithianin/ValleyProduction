@@ -30,8 +30,6 @@ public class SA_PlayAnimation : InteractionActions
         {
             animHandler.PlayBodyAnim(animationToPlay);
 
-            Debug.Log("Anim truc");
-
             if (timePlayed > 0)
             {
                 TimerManager.Timer newAnimTimer = TimerManager.CreateGameTimer(timePlayed, () => EndAction(caller));

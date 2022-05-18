@@ -54,8 +54,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5403194, y: 3.4373794, z: 1.1227181}
-  m_Center: {x: 0.08095956, y: 1.2186897, z: 0.026271105}
+  m_Size: {x: 1.2, y: 1.5, z: 1.2}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!114 &6225881508748953926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,10 +220,34 @@ MonoBehaviour:
       m_Calls: []
   OnOpenStructure:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1950444411236423360}
+        m_TargetAssemblyTypeName: PathNode, Assembly-CSharp
+        m_MethodName: OpenPath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnCloseStructure:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1950444411236423360}
+        m_TargetAssemblyTypeName: PathNode, Assembly-CSharp
+        m_MethodName: ClosePath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnSetData:
     m_PersistentCalls:
       m_Calls:
@@ -239,6 +263,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  interestPoint: {fileID: 0}
   manageMultiPath: {fileID: 8209058514829651880}
   node: {fileID: 1950444411236423360}
   pathpointActivate: {fileID: 4604670140881424748}
@@ -285,6 +310,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 0
+  OnBuy:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSell:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1950444411236423360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,17 +611,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5729360411977943481}
     m_Modifications:
-    - target: {fileID: 1632752082624521973, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7d84712bd7fa1d6428d4a162e2f09f87, type: 2}
     - target: {fileID: 7391390632780759602, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
       propertyPath: m_Name
       value: Prefab_Cairn
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391390632780759602, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7391390632780759603, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
       propertyPath: m_RootOrder

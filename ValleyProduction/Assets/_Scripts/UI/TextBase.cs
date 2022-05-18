@@ -11,8 +11,8 @@ public abstract class TextBase : SerializedScriptableObject
     public string Title => title;
     [Space, SerializeField] private string title;
 
-    public string Description => description;
-    [SerializeField, TextArea(5, 50)] private string description;
+    public string[] Texts => texts;
+    [SerializeField, TextArea(5, 50)] private string[] texts;
 
     public string Id => id;
     [Space, SerializeField] private string id;

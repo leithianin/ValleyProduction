@@ -11,6 +11,8 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static Action<string, int> OnUpdateFlag;
 
+    public static Action<string> OnTriggerFlag;
+
     private void Start()
     {
         //Ajoute tous les flags existant
@@ -38,5 +40,10 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
             return flags[flagName];
         }
         return -1;
+    }
+
+    public static void TriggerFlag(string triggerName)
+    {
+        OnTriggerFlag?.Invoke(triggerName);
     }
 }

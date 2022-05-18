@@ -8,6 +8,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
     public UnityEvent OnSelectPathTool;
     public UnityEvent OnUnselectPathTool;
+
     public UnityEvent OnUnselectOneMore;
 
     public static bool HasSelectedStructureType => instance.selectedStructureType != InfrastructureType.None;// && instance.selectedStructureType != InfrastructureType.DeleteStructure;
@@ -20,7 +21,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// <param name="posePosition">La position du clic.</param>
     public static void PlaceInfrastructure(Vector3 posePosition)
     {
-        if (InfrastructureManager.GetCurrentTool == ToolType.Place && HasSelectedStructureType)
+        if (InfrastructureManager.GetCurrentTool == ToolType.Place && HasSelectedStructureType && InfrastructureManager.GetCurrentPreview != null)
         {
             InfrastructureManager.PlaceInfrastructure(posePosition);
         }
@@ -109,15 +110,28 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// </summary>
     public static void UnselectInfrastructureType()
     {
-        if(!HasSelectedStructureType)
+        if (InfrastructureManager.GetCurrentPreview != null)
         {
-            if (UIManager.IsOnMenuBool()) { UIManager.HideMenuOption()          ; }
-            else                             { instance.OnUnselectOneMore?.Invoke(); }
+            switch(InfrastructureManager.GetCurrentTool)
+            {
+                case ToolType.Place:
+                    instance.IsMovingPathpoint();
+                    InfrastructureManager.UnselectInfrastructure();                                                          //Reset CurrentSelectedStructure
+                    instance.OnSelectInfrastructureType(null);
+                    break;
+                case ToolType.Move:
+                    InfrastructureManager.CancelMoveStructure();
+                    break;
+            }
         }
-
-        instance.IsMovingPathpoint();
-        InfrastructureManager.UnselectInfrastructure();                                                          //Reset CurrentSelectedStructure
-        instance.OnSelectInfrastructureType(null);
+        else if (InfrastructureManager.GetCurrentTool != ToolType.None)
+        {
+            InfrastructureManager.SetToolSelected(ToolType.None);
+        }
+        else
+        {
+            instance.OnUnselectOneMore?.Invoke();
+        }
     }
 
     /// <summary>
@@ -156,13 +170,14 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         switch (selectedStructureType)
         {
             case InfrastructureType.Path:
+                Debug.Log("Test");
+
                 PathManager.CreatePathData();
                 VLY_ContextManager.ChangeContext(0);
                 OnUnselectPathTool?.Invoke();
                 break;
         }
 
-        selectedStructureType = InfrastructureType.None;
         selectedStructureData = null;
     }
 
