@@ -153,14 +153,10 @@ public class PathData
             {
                 listSuppr.Add(pathFragment[i]);
             }
-            else if(pathFragment[i].HasThisEndingPoint(pathpoint)) 
+            else if(pathFragment[i].HasThisEndingPoint(pathpoint) || pathFragment[i].HasThisStartingPoint(pathpoint)) 
             {
                 listSuppr.Add(pathFragment[i]);
                 endingPointReach = true;
-            }
-            else if (pathFragment[i].HasThisStartingPoint(pathpoint))
-            {
-                listSuppr.Add(pathFragment[i]);
             }
         }
 
@@ -178,9 +174,6 @@ public class PathData
     {
         pathFragment.Remove(toRemove);
         toRemove.DeleteFragmentData();
-
-        /*toRemove.startPoint.Node.RemoveFragment(toRemove);
-        toRemove.endPoint.Node.RemoveFragment(toRemove);*/
     }
     #endregion
 

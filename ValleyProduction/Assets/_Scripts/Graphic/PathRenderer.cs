@@ -116,6 +116,15 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
             foreach (PathFragmentData frag in PathFragments)
             {
+                if(frag.startPoint == null)
+                {
+                    Debug.LogError("NO START POINT");
+                }
+                else if(frag.endPoint == null)
+                {
+                    Debug.LogError("NO END POINT");
+                }
+
                 for (int i = 0; i < frag.path.Count - 1; i++)
                 {
                     PathpointBufferElement element = new PathpointBufferElement

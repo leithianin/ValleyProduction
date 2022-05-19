@@ -170,8 +170,6 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         switch (selectedStructureType)
         {
             case InfrastructureType.Path:
-                Debug.Log("Test");
-
                 PathManager.CreatePathData();
                 VLY_ContextManager.ChangeContext(0);
                 OnUnselectPathTool?.Invoke();

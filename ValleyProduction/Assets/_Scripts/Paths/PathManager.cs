@@ -323,7 +323,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pd"></param>
     public static void DeletePoint(IST_PathPoint ist_pp, PathData pd = null)
     {
-        PathData pdToModify = new PathData();
+        /*PathData pdToModify = new PathData();
         if (pd != null || pathDataToDelete != null)                         //Je ne peux arriver l� sans conna�tre le PathData � delete
         {
             if (pd == null) { pdToModify = pathDataToDelete; }
@@ -332,28 +332,20 @@ public class PathManager : VLY_Singleton<PathManager>
         else
         {
             return;
-        }
+        }*/
 
         if (SpawnPoints.Contains(ist_pp)) { SpawnPoints.Remove(ist_pp);}
 
-        if (pdToModify != null)
+        List<PathData> pathToModify = new List<PathData>();
+
+        pathToModify = GetAllPathDatas(ist_pp);
+
+        foreach (PathData pdToModify in pathToModify)
         {
-            DeletePointWith2MorePathFragment(pdToModify, ist_pp);
-            /*switch (pdToModify.pathFragment.Count)
+            if (pdToModify != null)
             {
-                case 0:
-                    DeletePointWith0PathFragment(pdToModify);
-                    break;
-                case 1:
-                    DeletePointWith1PathFragment(pdToModify, ist_pp);
-                    break;
-                case 2:
-                    DeletePointWith2PathFragment(pdToModify, ist_pp);
-                    break;
-                default:
-                    DeletePointWith2MorePathFragment(pdToModify, ist_pp);
-                    break;
-            }*/
+                DeletePointWith2MorePathFragment(pdToModify, ist_pp);
+            }
         }
 
         NodePathProcess.UpdateAllNodes();
@@ -478,21 +470,13 @@ public class PathManager : VLY_Singleton<PathManager>
                 DebugLineR(pdToModify);
             }
 
-            pdToModify.SafeCheck();                                                                         //Check if the path is Empty and delete it
+            //pdToModify.SafeCheck();                                                                         //Check if the path is Empty and delete it
 
             if (pfdSecondPath.Count > 0)
             {
                 CreateCutPathData(ist_pp, pfdSecondPath);                                                             //Create a pathData with the second path
             }
         }
-        /*else
-        {
-            //RemoveMultiPath(pdToModify, ist_pp);
-            //pdToModify.RemoveMultiPath();
-            pdToModify.RemoveFragmentAndNext(ist_pp);
-            DestroyLineRenderer(pdToModify.pathLineRenderer);
-            DebugLineR(pdToModify);
-        }*/
     }
 
     public static void RemoveMultiPath(PathData pdToModify, IST_PathPoint ist_pp)
