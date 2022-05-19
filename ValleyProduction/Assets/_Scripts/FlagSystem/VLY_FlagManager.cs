@@ -12,6 +12,9 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
     private static Dictionary<string, List<Action<int>>> incrementalFlagListeners = new Dictionary<string, List<Action<int>>>();
     private static Dictionary<string, List<Action>> triggerFlagListeners = new Dictionary<string, List<Action>>();
 
+    private Dictionary<string, List<Action>> triggerToRemove = new Dictionary<string, List<Action>>();
+    private Dictionary<string, List<Action<int>>> incrementalToRemove = new Dictionary<string, List<Action<int>>>();
+
     /*public static Action<string, int> OnUpdateFlag;
 
     public static Action<string> OnTriggerFlag;*/
@@ -24,17 +27,48 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
         {
             flags.Add(flagName, 0);
 
+            //Debug.Log(flagName);
             incrementalFlagListeners.Add(flagName, new List<Action<int>>());
+            
         }
 
         foreach(string flagName in flagList.TriggerFlags)
         {
             triggerFlagListeners.Add(flagName, new List<Action>());
         }
+
+        /*
+        foreach (KeyValuePair<string, List<Action>> tfl in triggerFlagListeners)
+        {
+            Debug.Log(tfl.Key);
+        }*/
+    }
+
+    private void LateUpdate()
+    {
+        foreach (KeyValuePair<string, List<Action>> tfl in triggerToRemove)
+        {
+            foreach (Action act in tfl.Value)
+            {
+                triggerFlagListeners[tfl.Key].Remove(act);
+            }
+        }
+
+        foreach (KeyValuePair<string,List<Action<int>>> tfl in incrementalToRemove)
+        {
+            foreach(Action<int> act in tfl.Value)
+            {
+                incrementalFlagListeners[tfl.Key].Remove(act);
+            }
+        }
+
+        triggerToRemove = new Dictionary<string, List<Action>>();
+        incrementalToRemove = new Dictionary<string, List<Action<int>>>();
     }
 
     public static void AddIncrementFlagListener(string flagName, Action<int> callback)
     {
+        Debug.Log(flagName);
         if(!incrementalFlagListeners[flagName].Contains(callback))
         {
             incrementalFlagListeners[flagName].Add(callback);
@@ -44,7 +78,16 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
     {
         if (incrementalFlagListeners[flagName].Contains(callback))
         {
-            incrementalFlagListeners[flagName].Remove(callback);
+            if(instance.incrementalToRemove.ContainsKey(flagName))
+            {
+                instance.incrementalToRemove[flagName].Add(callback);
+            }
+            else
+            {
+                instance.incrementalToRemove.Add(flagName, new List<Action<int>>());
+                instance.incrementalToRemove[flagName].Add(callback);
+            }
+            //incrementalFlagListeners[flagName].Remove(callback);
         }
     }
 
@@ -59,7 +102,16 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
     {
         if (triggerFlagListeners[flagName].Contains(callback))
         {
-            triggerFlagListeners[flagName].Remove(callback);
+            if (instance.triggerToRemove.ContainsKey(flagName))
+            {
+                instance.triggerToRemove[flagName].Add(callback);
+            }
+            else
+            {
+                instance.triggerToRemove.Add(flagName, new List<Action>());
+                instance.triggerToRemove[flagName].Add(callback);
+            }
+            //triggerFlagListeners[flagName].Remove(callback);
         }
     }
 
@@ -90,6 +142,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
     {
         foreach(Action act in triggerFlagListeners[triggerName])
         {
+            //Debug.Log(triggerName + " " + act.Target);
             act?.Invoke();
         }
     }

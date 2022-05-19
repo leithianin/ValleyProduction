@@ -20,6 +20,7 @@ public class CPN_TriggerFlagListener : MonoBehaviour
 
     public void OnTriggerFlag()
     {
+        //Debug.Log("OnTriggerFlag");
         OnTriggerFlagEvent?.Invoke();
     }
 }

@@ -34,6 +34,7 @@ public class IFB_FindHikerAndFollowHim : MonoBehaviour, IFeedbackPlayer
 
     public void Play()
     {
+        Debug.Log("Find Hiker");
         hiker = VisitorManager.FindActiveHiker();
 
         if (hiker != null)
