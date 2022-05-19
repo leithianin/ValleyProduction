@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class DialogueManager : VLY_Singleton<DialogueManager>
 {
     public ELEMENTS elements;
     private Coroutine speaking = null;
     public static bool isSpeaking => instance.speaking != null;
-    public static bool isWaitingForUserInput = false;
 
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
     public float closeSpeed = 2f;
     private int index;
     private string currentId;
+
+    public QST_OBJ_TriggerFlag objectiveEndDialogue;
+
+    public UnityEvent OnEndDialogue;
 
     [System.Serializable]
     public class ELEMENTS
@@ -35,7 +39,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void PlayDialogue(string id)
     {
-        if (!isSpeaking || isWaitingForUserInput)
+        StopCoroutine(CloseDialogue());
+        if (!isSpeaking)
         {
             index = 0;
             currentId = id;
@@ -46,6 +51,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             Say(text, speaker);
             index++;
         }
+        
     }
 
     private void NextDialogue()
@@ -60,8 +66,11 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         }
         else
         {
+            Debug.Log("EndDialogue");
             StopSpeaking();
             StartCoroutine(CloseDialogue());
+            OnEndDialogue?.Invoke();
+            objectiveEndDialogue.Reset();
         }
     }
 

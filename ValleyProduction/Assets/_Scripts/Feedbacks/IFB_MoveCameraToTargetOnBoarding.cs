@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class IFB_MoveCameraToTargetOnBoarding : MonoBehaviour, IFeedbackPlayer
 {
-    public GameObject target;
-    public SphericalTransform camSphericalTr;
+    public Transform target;
     private int speed = 0;
 
     public void Play()
     {
-        StartCoroutine(camSphericalTr.MoveCameraOriginToCustomTarget(target.transform, speed));
+        CameraManager.SetTargetWithSpeed(target, speed);
     }
 
     public void Play(int newSpeed)

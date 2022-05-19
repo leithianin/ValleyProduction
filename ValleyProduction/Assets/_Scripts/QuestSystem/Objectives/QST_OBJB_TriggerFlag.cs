@@ -14,6 +14,12 @@ public class QST_OBJB_TriggerFlag : QST_ObjectiveBehavior<QST_OBJ_TriggerFlag>
         pendingObjectiveWithHandler.Remove(objective);
 
         Debug.Log(objective + " ended.");
+        pendingObjectives.Remove(objective);
+        if (pendingObjectives.Count <= 0)
+        {
+            VLY_FlagManager.OnTriggerFlag -= CheckFlag;
+        }
+        //Debug.Log(objective + " ended.");
     }
 
     protected override void OnRefreshObjective(QST_OBJ_TriggerFlag objective)
