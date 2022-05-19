@@ -23,6 +23,8 @@ public class AnimalBehavior : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
 
+        Debug.Log("Set animal : " + gameObject);
+
         display.SetActive(true);
         OnSet?.Invoke();
 
@@ -36,6 +38,8 @@ public class AnimalBehavior : MonoBehaviour
 
     public void UnsetAnimal()
     {
+        Debug.Log("Unset animal : " + gameObject);
+
         display.SetActive(false);
         OnUnset?.Invoke();
     }

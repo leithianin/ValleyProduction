@@ -39,11 +39,11 @@ public class EcosystemDisplayDataHandler
     {
         score = nScore;
 
-        if(!isUpPhase && score >= wantedUpScore)
+        if(!isUpPhase && score > wantedUpScore)
         {
             isUpPhase = true;
         }
-        else if(isUpPhase && score <= wantedDownScore)
+        else if(isUpPhase && score < wantedDownScore)
         {
             isUpPhase = false;
         }
