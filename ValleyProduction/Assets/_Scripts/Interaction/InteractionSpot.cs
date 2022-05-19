@@ -95,6 +95,11 @@ public class InteractionSpot : MonoBehaviour
         }
     }
 
+    public void AskToInterupt(CPN_InteractionHandler interactorToCancel)
+    {
+        interactionAction.InteruptAction(interactorToCancel);
+    }
+
     /// <summary>
     /// Add 1 visitors to data. Event go to Infrastructure -> AddTotalVisitors()
     /// </summary>

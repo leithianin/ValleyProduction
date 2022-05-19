@@ -102,6 +102,8 @@ public class VisitorBehavior : VLY_Component
         OnUnsetVisitorWithType?.Invoke(visitorType);
         currentPathFragment = null;
 
+        movement.InteruptWalk();
+
         gameObject.SetActive(false);
     }
 
