@@ -8,10 +8,13 @@ public class QST_OBJB_ValidPathToLandmark : QST_ObjectiveBehavior<QST_OBJ_ValidP
 
     protected override void OnCompleteObjective(QST_OBJ_ValidPathToLandmark objective)
     {
-        pendingObjectives.Remove(objective);
-        if (pendingObjectives.Count <= 0)
+        if (pendingObjectives.Contains(objective))
         {
-            VLY_LandmarkManager.OnLandmarkHasValidPath -= OnLandmarkWithValidPath;
+            pendingObjectives.Remove(objective);
+            if (pendingObjectives.Count <= 0)
+            {
+                VLY_LandmarkManager.OnLandmarkHasValidPath -= OnLandmarkWithValidPath;
+            }
         }
     }
 
@@ -22,10 +25,18 @@ public class QST_OBJB_ValidPathToLandmark : QST_ObjectiveBehavior<QST_OBJ_ValidP
 
     protected override void OnStartObjective(QST_OBJ_ValidPathToLandmark objective)
     {
-        pendingObjectives.Add(objective);
-        if (pendingObjectives.Count < 2)
+        if (VLY_LandmarkManager.GetValidLandmark.Contains(objective.Landmark))
         {
-            VLY_LandmarkManager.OnLandmarkHasValidPath += OnLandmarkWithValidPath;
+            TimerManager.CreateRealTimer(Time.deltaTime, () => AskCompleteObjective(objective));
+        }
+        else
+        {
+            pendingObjectives.Add(objective);
+
+            if (pendingObjectives.Count < 2)
+            {
+                VLY_LandmarkManager.OnLandmarkHasValidPath += OnLandmarkWithValidPath;
+            }
         }
     }
 

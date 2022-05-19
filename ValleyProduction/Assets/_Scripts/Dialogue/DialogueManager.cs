@@ -16,8 +16,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     private int index;
     private string currentId;
 
-    public QST_OBJ_TriggerFlag objectiveEndDialogue;
-
     public UnityEvent OnEndDialogue;
 
     [System.Serializable]
@@ -39,7 +37,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void PlayDialogue(string id)
     {
-        StopCoroutine(CloseDialogue());
+        //StopCoroutine(CloseDialogue());
+        StopAllCoroutines();
         if (!isSpeaking)
         {
             index = 0;
@@ -67,10 +66,9 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         else
         {
             Debug.Log("EndDialogue");
-            StopSpeaking();
             StartCoroutine(CloseDialogue());
+            StopSpeaking();
             OnEndDialogue?.Invoke();
-            objectiveEndDialogue.Reset();
         }
     }
 

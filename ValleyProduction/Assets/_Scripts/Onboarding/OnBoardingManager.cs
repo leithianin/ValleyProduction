@@ -7,7 +7,18 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
+    public GameObject Welcome;
+    public GameObject End;
+
+    public UnityEvent OnProfileHiker;
+
+    public UnityEvent OnEnd;
+
     //unity event OnCameraMove
+    public static void ClickOnHiker()
+    {
+        instance.OnProfileHiker?.Invoke();
+    }
 
     #region To Remove 
     public static void SetCanSpawnVisitors(bool cond)
