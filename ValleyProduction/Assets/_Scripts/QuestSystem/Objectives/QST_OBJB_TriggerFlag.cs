@@ -13,7 +13,7 @@ public class QST_OBJB_TriggerFlag : QST_ObjectiveBehavior<QST_OBJ_TriggerFlag>
         {
             VLY_FlagManager.OnTriggerFlag -= CheckFlag;
         }
-        Debug.Log(objective + " ended.");
+        //Debug.Log(objective + " ended.");
     }
 
     protected override void OnRefreshObjective(QST_OBJ_TriggerFlag objective)

@@ -25,6 +25,7 @@ public class CameraManager : VLY_Singleton<CameraManager>
         instance.spherical.SetOrigin(position);
     }
 
+    //Rotation chiant
     public static void MoveCamera(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float speed, bool rotate)
     {
         instance.spherical.MoveCameraOverTime(targetPolarAngle, targetAzimuthalAngle, targetPolarAngle, speed);
@@ -33,6 +34,11 @@ public class CameraManager : VLY_Singleton<CameraManager>
     public static void SetTarget(Transform tr)
     {
         instance.spherical.SetCameraTarget(tr);
+    }
+
+    public static void SetTargetWithSpeed(Transform tr, float speed)
+    {
+        instance.spherical.StartCoroutine(instance.spherical.MoveCameraOriginToCustomTarget(tr, speed));
     }
 
     public void ChangeInteractionZoneLayerMask(bool showLayer)
