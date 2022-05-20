@@ -39,6 +39,7 @@ public class UI_VisitorInformation : MonoBehaviour
         switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
+                OnBoardingManager.ClickOnHiker();
                 ChangeInfoVisitor(hikersInfo, cpn_Inf);
                 currentTourist = hikersInfo;
                 hikersInfo.gameObject.SetActive(true);

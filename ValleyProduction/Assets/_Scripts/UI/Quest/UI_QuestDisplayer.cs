@@ -16,11 +16,21 @@ public class UI_QuestDisplayer : MonoBehaviour
     {
         for(int i = 0; i < questObjectives.Count; i++)
         {
-            if(questObjectives[i].DisplayedQuest == null || questObjectives[i].DisplayedQuest == quest)
+            if(questObjectives[i].DisplayedQuest == quest)
             {
                 questObjectives[i].SetQuestStage(quest, objectives);
 
-                break;
+                return;
+            }
+        }
+
+        for (int i = 0; i < questObjectives.Count; i++)
+        {
+            if (questObjectives[i].DisplayedQuest == null)
+            {
+                questObjectives[i].SetQuestStage(quest, objectives);
+
+                return;
             }
         }
     }

@@ -73,8 +73,6 @@ public class UI_Tool : MonoBehaviour
         {
             if (structure != null)
             {
-                Debug.Log("Select structure");
-
                 OnSelectStructure?.Invoke();
 
                 currentStructure = structure;
@@ -92,8 +90,6 @@ public class UI_Tool : MonoBehaviour
 
     public void UnselectStructure()
     {
-        Debug.Log("Unselect structure");
-
         OnUnselectStructure?.Invoke();
 
         currentStructure = null;
