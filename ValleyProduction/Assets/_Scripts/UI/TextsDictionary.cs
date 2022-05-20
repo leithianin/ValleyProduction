@@ -7,10 +7,8 @@ public class TextsDictionary : ScriptableObject
 {
     public static TextsDictionary instance;
 
-    [SerializeField] private TextBase[] pathTutorial;
-    [SerializeField] private TextBase[] pathDialogue;
-    [SerializeField] private TextBase[] ecosystemTutorial;
-    [SerializeField] private TextBase[] infrastructureTutorial;
+    [SerializeField] private TextBase[] baseDialogue;
+    [SerializeField] private TextBase[] advanceDialogue;
     [SerializeField] private TextBase[] quests;
     [SerializeField] private TextBase blank;
 
@@ -25,18 +23,8 @@ public class TextsDictionary : ScriptableObject
 
         switch (fragId)
         {
-            case "PTH":
-                foreach (TextBase txt in pathTutorial)
-                {
-                    if (txt.Id.Equals(id))
-                    {
-                        return txt;
-                    }
-                }
-                break;
-
             case "PTD":
-                foreach (TextBase txt in pathDialogue)
+                foreach (TextBase txt in baseDialogue)
                 {
                     if (txt.Id.Equals(id))
                     {
@@ -45,18 +33,8 @@ public class TextsDictionary : ScriptableObject
                 }
                 break;
 
-            case "STM":
-                foreach (TextBase txt in ecosystemTutorial)
-                {
-                    if (txt.Id.Equals(id))
-                    {
-                        return txt;
-                    }
-                }
-                break;
-
-            case "INF":
-                foreach(TextBase txt in infrastructureTutorial)
+            case "ADD":
+                foreach(TextBase txt in advanceDialogue)
                 {
                     if(txt.Id.Equals(id))
                     {
