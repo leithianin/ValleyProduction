@@ -12,6 +12,8 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public UnityEvent OnProfileHiker;
 
+    public UnityEvent OnProfileInfrastructure;
+
     public UnityEvent OnEnd;
 
     //unity event OnCameraMove
