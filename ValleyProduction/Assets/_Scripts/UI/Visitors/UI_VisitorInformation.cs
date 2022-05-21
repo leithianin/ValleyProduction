@@ -45,6 +45,7 @@ public class UI_VisitorInformation : MonoBehaviour
                 hikersInfo.gameObject.SetActive(true);
                 return hikersInfo;
             case TypeVisitor.Tourist:
+                OnBoardingManager.ClickOnTourist();
                 ChangeInfoVisitor(touristInfo, cpn_Inf);
                 currentTourist = touristInfo;
                 touristInfo.gameObject.SetActive(true);
@@ -55,8 +56,16 @@ public class UI_VisitorInformation : MonoBehaviour
 
     public void HideVisitorInformation()
     {
-        OnHide?.Invoke(currentVisitor);
         UIManager.HideShownGameObject();
+    }
+
+    public void OnHideFunction()
+    {
+        if (currentVisitor != null)
+        {
+            OnHide?.Invoke(currentVisitor);
+            ResetSavedVisitors();
+        }
     }
 
     public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)

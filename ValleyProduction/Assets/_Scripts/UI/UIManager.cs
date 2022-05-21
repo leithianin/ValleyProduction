@@ -71,11 +71,11 @@ public class UIManager : VLY_Singleton<UIManager>
         {
             if (GetInfrastructureInfo != null)
             {
-                GetInfrastructureInfo.ResetSavedInfrastructe();
+                GetInfrastructureInfo.OnHideFunction();
             }
             if (GetVisitorInformation != null)
             {
-                GetVisitorInformation.ResetSavedVisitors();
+                GetVisitorInformation.OnHideFunction();
             }
             gameObjectShown.SetActive(false);
         }

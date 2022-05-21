@@ -75,7 +75,10 @@ public class HeatmapViewController : MonoBehaviour
 
         baseLights.SetActive(!enable);
         heatmapLight.SetActive(enable);
-        foliage.SetActive(!enable);
+        if (foliage != null)
+        {
+            foliage.SetActive(!enable);
+        }
 
         foreach (Material m in Materials)
         {
