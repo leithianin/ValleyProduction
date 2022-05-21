@@ -140,6 +140,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static void TriggerFlag(string triggerName)
     {
+        Debug.Log(triggerName);
         foreach(Action act in triggerFlagListeners[triggerName])
         {
             //Debug.Log(triggerName + " " + act.Target);
