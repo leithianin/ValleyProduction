@@ -35,6 +35,6 @@ public class CPN_Informations : VLY_Component<VisitorScriptable>
 
     public void OnUnset()
     {
-        UIManager.OnUnsetVisitor(scriptable);
+        UIManager.OnUnsetVisitor(gameObject);
     }
 }

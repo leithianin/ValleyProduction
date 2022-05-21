@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UI_VisitorInformation : MonoBehaviour
 {
-    private GameObject currentVisitor;
+    [HideInInspector] public GameObject currentVisitor;
 
     [SerializeField] private TouristType touristInfo;
     [SerializeField] private TouristType hikersInfo;

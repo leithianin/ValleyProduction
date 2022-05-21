@@ -20,12 +20,18 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     //unity event OnCameraMove
     public static void ClickOnHiker()
     {
-        instance.OnProfileHiker?.Invoke();
+        if(instance != null)
+        {
+            instance.OnProfileHiker?.Invoke();
+        }
     }
 
     public static void ClickOnTourist()
     {
-        instance.OnProfileTourist?.Invoke();
+        if (instance != null)
+        {
+            instance.OnProfileTourist?.Invoke();
+        }
     }
 
     public static void OnEndTutorial()

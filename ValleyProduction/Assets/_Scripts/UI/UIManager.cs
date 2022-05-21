@@ -197,9 +197,9 @@ public class UIManager : VLY_Singleton<UIManager>
         }
     }
 
-    public static void OnUnsetVisitor(VisitorScriptable visitor)
+    public static void OnUnsetVisitor(GameObject gameObject)
     {
-        if(GetVisitorInformation != null && GetVisitorInformation.currentInfo != null && visitor == GetVisitorInformation.currentInfo.scriptable)
+        if(GetVisitorInformation != null && GetVisitorInformation.currentInfo != null && gameObject == GetVisitorInformation.currentVisitor)
         {
             HideShownGameObject();
         }
