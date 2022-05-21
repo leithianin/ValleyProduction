@@ -11,6 +11,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public GameObject End;
 
     public UnityEvent OnProfileHiker;
+    public UnityEvent OnProfileTourist;
 
     public UnityEvent OnProfileInfrastructure;
 
@@ -22,16 +23,25 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         instance.OnProfileHiker?.Invoke();
     }
 
+    public static void ClickOnTourist()
+    {
+        instance.OnProfileTourist?.Invoke();
+    }
+
+    public static void OnEndTutorial()
+    {
+        instance.OnEnd?.Invoke();
+    }
+
     #region To Remove 
     public static void SetCanSpawnVisitors(bool cond)
     {
         VisitorManager.SetVisitorSpawn(cond);
     }
 
-    public static void PlayEndPathOnBoarding()
+    public static void SetTimeToNormal()
     {
         VLY_Time.SetTimeScale(1);
-        //instance.endOnboarding.EndOnBoardingPath?.Invoke();
     }
 
     public static void ShowChapelDirection()

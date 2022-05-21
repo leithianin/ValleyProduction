@@ -5,17 +5,20 @@ using UnityEngine;
 public class IFB_ActivateAfterTime : MonoBehaviour, IFeedbackPlayer
 {
     private float timer = 0;
-    public GameObject go = null;
+    public List<GameObject> goList = new List<GameObject>();
 
     public void Play()
     {
-        if (go != null)
+        foreach (GameObject go in goList)
         {
-            go.SetActive(true);
-        }
-        else
-        {
-            gameObject.SetActive(true);
+            if (go != null)
+            {
+                go.SetActive(true);
+            }
+            else
+            {
+                gameObject.SetActive(true);
+            }
         }
     }
 
