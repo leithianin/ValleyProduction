@@ -21,14 +21,15 @@ public class ECO_DIS_VegetationDisplayer : EcosystemDisplay
                 trees[i].SetTreePhase(newScore);
             }
 
-            if(newScore > 0 && trees[i].IsSet)
+            trees[i].SetTreePhase(newScore);
+            /*if(newScore > 0 && trees[i].IsSet)
             {
                 trees[i].UnsetTree();
             }
             else if (newScore <= 0 && !trees[i].IsSet)
             {
                 trees[i].SetTree();
-            }
+            }*/
         }
     }
 }

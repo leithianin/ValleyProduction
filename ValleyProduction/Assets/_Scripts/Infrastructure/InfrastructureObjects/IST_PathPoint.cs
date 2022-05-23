@@ -18,6 +18,7 @@ public class IST_PathPoint : Infrastructure
     //Place on Terrain
     protected override void OnPlaceObject(Vector3 position)
     {
+        node.PlaceNode();
         PathManager.PlacePoint(this);
     }
 

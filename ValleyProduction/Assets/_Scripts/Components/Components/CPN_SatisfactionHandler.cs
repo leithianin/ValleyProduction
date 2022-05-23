@@ -29,6 +29,8 @@ public class CPN_SatisfactionHandler : VLY_Component<CPN_Data_SatisfactionHandle
     {
         likedInteractions = new List<SatisfactorType>(dataToSet.LikedInteractions());
         hatedInteractions = new List<SatisfactorType>(dataToSet.HatedInteractions());
+
+        currentSatisfaction = 0;
     }
 
     public int GetAppreciationLevel(SatisfactorType satisfactionPointType)

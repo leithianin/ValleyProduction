@@ -51,6 +51,7 @@ public class CinematicShotEditor : Editor
     SerializedProperty cameraData;
 
     SerializedProperty isTraveling;
+    SerializedProperty cinematic;
     SerializedProperty speed;
 
 
@@ -91,6 +92,7 @@ public class CinematicShotEditor : Editor
         cameraData = serializedObject.FindProperty("cameraData");
 
         isTraveling = serializedObject.FindProperty("isTraveling");
+        cinematic = serializedObject.FindProperty("cinematic");
         speed = serializedObject.FindProperty("speed");
 
         ui = GameObject.Find("-UI-");
@@ -172,6 +174,8 @@ public class CinematicShotEditor : Editor
         EditorGUILayout.PropertyField(speed);
         GUILayout.EndHorizontal();
 
+        EditorGUILayout.PropertyField(cinematic, new GUIContent("Cinematic"));
+
         EditorGUILayout.Space();
         EditorGUILayout.PropertyField(boundariesCollider);
 
@@ -219,6 +223,8 @@ public class CinematicShotEditor : Editor
         EditorGUILayout.PropertyField(originVisualOffset);
 
         EditorGUILayout.PropertyField(maxRadiusValue);
+
+        EditorGUILayout.PropertyField(cinematic);
 
         EditorGUILayout.PropertyField(drawGroundDebug);
         EditorGUILayout.PropertyField(debugMesh);

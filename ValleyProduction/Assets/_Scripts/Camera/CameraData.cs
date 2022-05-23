@@ -10,7 +10,10 @@ public class CameraData : ScriptableObject
     public float azimuthalAngle;
     public float polarAngle;
 
+    public float verticalOffset;
+
     public bool isTraveling;
+    public bool cinematic;
 
     public Vector3 cameraOriginPosition;
     public Vector3 travelPosition;

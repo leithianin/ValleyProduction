@@ -7,6 +7,7 @@ public class CameraManager : VLY_Singleton<CameraManager>
 {
     [SerializeField] private Camera currentCamera;
     public SphericalTransform spherical;
+    public CinematicCameraBehaviour cineCamBehav;
     public GameObject origin;
 
     public static Action OnCameraMove;
@@ -63,5 +64,10 @@ public class CameraManager : VLY_Singleton<CameraManager>
     {
         instance.cameraLayerMaskBase &= ~(1 << LayerMask.NameToLayer(mask));
         instance.currentCamera.cullingMask &= ~(1 << LayerMask.NameToLayer(mask));
+    }
+
+    public static void SetCinematicMode()
+    {
+        instance.cineCamBehav.inCinematicMode = true;
     }
 }
