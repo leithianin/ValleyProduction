@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete]
 public class GetAllTrees : MonoBehaviour
 {
     [SerializeField]private List<TreeBehavior> treeList = new List<TreeBehavior>();
@@ -21,7 +22,7 @@ public class GetAllTrees : MonoBehaviour
 
         foreach(TreeBehavior treeBehaviour in treeList)
         {
-            treeBehaviour.UnsetTree();
+           //treeBehaviour.UnsetTree();
         }
 
         Debug.Log(treeList.Count);
@@ -31,7 +32,7 @@ public class GetAllTrees : MonoBehaviour
     {
         foreach (TreeBehavior treeBehaviour in treeList)
         {
-            treeBehaviour.SetTree();
+            //treeBehaviour.SetTree();
         }
     }
 }
