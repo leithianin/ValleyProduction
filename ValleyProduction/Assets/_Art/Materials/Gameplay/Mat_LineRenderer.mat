@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_LineRenderer
   m_Shader: {fileID: -6465566751694194690, guid: e27442c5f59256048ade698d9cc4bc53, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: CAN_CONSTRUCT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -85,7 +85,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - CAN_CONSTRUCT: 1
     - Float_1: 0
+    - TextureOffset: -0.5
+    - TextureTiling: 2
+    - Tiling: 2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -103,6 +107,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _Offset: -0.5
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -115,6 +120,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_1: {r: 0, g: 0.21061271, b: 1, a: 1}
+    - HaloColorBad: {r: 1, g: 0.3915094, b: 0.5179801, a: 1}
+    - HaloColorGood: {r: 0.5613208, g: 1, b: 0.7367925, a: 1}
+    - LineColorBad: {r: 1, g: 0, b: 0.20779705, a: 1}
+    - LineColorGood: {r: 0, g: 1, b: 0.4008734, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
