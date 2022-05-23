@@ -42,9 +42,6 @@ public class ManageMultiPath : MonoBehaviour
 
     public void DesactivateMultiPath()
     {
-        Debug.Log(gameObject.name);
-        Debug.Log(prefabCairn);
-        Debug.Log(prefabCairn.activeSelf);
         prefabCairn.SetActive(true);
         prefabSign.SetActive(false);
         nbArrow = 0;
@@ -128,8 +125,6 @@ public class ManageMultiPath : MonoBehaviour
             multiPathList.Remove(toDelete);
             nbArrow--;
         }
-
-        Debug.Log(gameObject.name + " List : " + multiPathList.Count);
 
         if(multiPathList.Count < 2)
         {

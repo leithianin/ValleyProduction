@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UI_VisitorInformation : MonoBehaviour
 {
-    private GameObject currentVisitor;
+    [HideInInspector] public GameObject currentVisitor;
 
     [SerializeField] private TouristType touristInfo;
     [SerializeField] private TouristType hikersInfo;
@@ -39,11 +39,13 @@ public class UI_VisitorInformation : MonoBehaviour
         switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
+                OnBoardingManager.ClickOnHiker();
                 ChangeInfoVisitor(hikersInfo, cpn_Inf);
                 currentTourist = hikersInfo;
                 hikersInfo.gameObject.SetActive(true);
                 return hikersInfo;
             case TypeVisitor.Tourist:
+                OnBoardingManager.ClickOnTourist();
                 ChangeInfoVisitor(touristInfo, cpn_Inf);
                 currentTourist = touristInfo;
                 touristInfo.gameObject.SetActive(true);
@@ -54,8 +56,16 @@ public class UI_VisitorInformation : MonoBehaviour
 
     public void HideVisitorInformation()
     {
-        OnHide?.Invoke(currentVisitor);
         UIManager.HideShownGameObject();
+    }
+
+    public void OnHideFunction()
+    {
+        if (currentVisitor != null)
+        {
+            OnHide?.Invoke(currentVisitor);
+            ResetSavedVisitors();
+        }
     }
 
     public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)

@@ -9,11 +9,14 @@ public class QST_OBJB_FlagValue : QST_ObjectiveBehavior<QST_OBJ_FlagValue>
 
     protected override void OnCompleteObjective(QST_OBJ_FlagValue objective)
     {
-        VLY_FlagManager.RemoveIncrementFlagListener(objective.Flag, pendingObjectiveWithHandler[objective]);
+        if (pendingObjectiveWithHandler.ContainsKey(objective))
+        {
+            VLY_FlagManager.RemoveIncrementFlagListener(objective.Flag, pendingObjectiveWithHandler[objective]);
+        }
 
         pendingObjectiveWithHandler.Remove(objective);
 
-        Debug.Log(objective + " ended.");
+        //Debug.Log(objective + " ended.");
     }
 
     protected override void OnRefreshObjective(QST_OBJ_FlagValue objective)
@@ -25,7 +28,7 @@ public class QST_OBJB_FlagValue : QST_ObjectiveBehavior<QST_OBJ_FlagValue>
     {
         if (VLY_FlagManager.GetFlagValue(objective.Flag) >= objective.Value)
         {
-            Debug.Log("End begin flag : " + objective);
+            //Debug.Log("End begin flag : " + objective);
             TimerManager.CreateRealTimer(Time.deltaTime, () => AskCompleteObjective(objective));
         }
         else
@@ -33,7 +36,7 @@ public class QST_OBJB_FlagValue : QST_ObjectiveBehavior<QST_OBJ_FlagValue>
             Action<int> actionHandler = (value) => CheckFlag(objective, value);
 
             pendingObjectiveWithHandler.Add(objective, actionHandler);
-
+            Debug.Log(objective.Flag);
             VLY_FlagManager.AddIncrementFlagListener(objective.Flag, actionHandler);
 
         }

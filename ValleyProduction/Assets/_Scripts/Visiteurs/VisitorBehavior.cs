@@ -29,6 +29,7 @@ public class VisitorBehavior : VLY_Component
     private List<PathFragmentData> walkedPathFragment = new List<PathFragmentData>();
 
     private CPN_IsLandmark currentObjective;
+    private bool isGoingHome;
 
     public bool IsUsed => isUsed;
 
@@ -53,6 +54,8 @@ public class VisitorBehavior : VLY_Component
         currentObjective = objective;
 
         visitorType = nVisitorType;
+
+        isGoingHome = false;
 
         currentPathFragment = SearchFirstPathFragment(nSpawnPoint);
 
@@ -98,6 +101,8 @@ public class VisitorBehavior : VLY_Component
         isUsed = false;
         OnUnsetVisitorWithType?.Invoke(visitorType);
         currentPathFragment = null;
+
+        movement.InteruptWalk();
 
         gameObject.SetActive(false);
     }
@@ -200,6 +205,7 @@ public class VisitorBehavior : VLY_Component
             {
                 List<CPN_IsLandmark> spawns = VLY_LandmarkManager.GetLandmarkOfType(LandmarkType.Spawn);
                 currentObjective = spawns[UnityEngine.Random.Range(0, spawns.Count)];
+                isGoingHome = true;
             }
         }
         else if(currentObjective == null)
@@ -211,7 +217,7 @@ public class VisitorBehavior : VLY_Component
         List<SatisfactorType> likedType = new List<SatisfactorType>();
         List<SatisfactorType> hatedType = new List<SatisfactorType>();
 
-        if(currentObjective.Type != LandmarkType.Spawn)
+        if(!isGoingHome)
         {
             likedType = visitorType.LikedInteractions();
             hatedType = visitorType.HatedInteractions();

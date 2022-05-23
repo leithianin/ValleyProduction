@@ -72,6 +72,18 @@ public abstract class InteractionSight : MonoBehaviour
             currentSpot.PlayOnInteractionEnd -= EndInteraction;
             TimerManager.CreateGameTimer(timeBetweenInteractions, () => isInteracting = false);
             OnEndInteraction();
+
+            currentSpot = null;
+        }
+    }
+
+    public void CancelInteraction()
+    {
+        if (currentSpot != null)
+        {
+            currentSpot.AskToInterupt(interactor);
+
+            currentSpot = null;
         }
     }
 }

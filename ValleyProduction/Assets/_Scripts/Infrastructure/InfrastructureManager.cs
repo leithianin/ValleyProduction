@@ -196,7 +196,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     public static void DeleteInfrastructure(Infrastructure toDelete)
     {
-        Debug.Log(toDelete.gameObject);
         if (toDelete == instance.currentSelectedStructure)
         {
             UnselectInfrastructure();

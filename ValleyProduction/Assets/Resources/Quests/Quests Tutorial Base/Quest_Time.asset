@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba81bcd538d3414995fd2b2e707f39b, type: 3}
+  m_Name: Quest_Time
+  m_EditorClassIdentifier: 
+  questName: Time
+  questDescription: Ceci est une description qui ne s'affichera pas.
+  stages:
+  - State: 4
+    Objectives:
+    - {fileID: 11400000, guid: 4539a4555b7a03846ad23afafb16a928, type: 2}
+    triggerFlagList:
+    - ShowTimeUI
+    incrementFlagList: []
+    dialogueID: PTD_007
+  - State: 1
+    Objectives:
+    - {fileID: 11400000, guid: 80656331a6a074644932ae7805d06ffb, type: 2}
+    triggerFlagList: []
+    incrementFlagList: []
+    dialogueID: 
+  rewards:
+  - {fileID: 11400000, guid: 5a105ec5b0591dc49b57312c3b1631c7, type: 2}
+  state: 1

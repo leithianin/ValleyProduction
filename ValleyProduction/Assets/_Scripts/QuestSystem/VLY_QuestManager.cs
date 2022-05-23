@@ -140,7 +140,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
 
         if (i >= updatedQuest.Stages.Count)
         {
-            Debug.Log("Complete : " + updatedQuest);
+            //Debug.Log("Complete : " + updatedQuest);
             //TO DO : Mettre à jour l'UI pour afficher le bouton de completion d'une quête
             updatedQuest.state = QuestObjectiveState.PendingCompletion;
             //CompleteQuest(updatedQuest);
@@ -169,7 +169,10 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
 
             if(stage.State == QuestObjectiveState.Started)
             {
-                DialogueManager.instance.PlayDialogue(stage.dialogueID);
+                if (stage.dialogueID != string.Empty)
+                {
+                    DialogueManager.instance.PlayDialogue(stage.dialogueID);
+                }
             }
 
             if(stage.State == QuestObjectiveState.Completed)

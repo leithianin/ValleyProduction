@@ -10,6 +10,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     public UnityEvent OnUnselectPathTool;
 
     public UnityEvent OnUnselectOneMore;
+    [SerializeField] private UnityEvent<InfrastructureData> OnSelectStructure;
 
     public static bool HasSelectedStructureType => instance.selectedStructureType != InfrastructureType.None;// && instance.selectedStructureType != InfrastructureType.DeleteStructure;
 
@@ -100,9 +101,9 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Input de sélection de l'outil.
     /// </summary>
     /// <param name="newStructureType">L'outil sélectionné.</param>
-    public static void SelectInfrastructureType(InfrastructureData newStructureType)
+    public static bool SelectInfrastructureType(InfrastructureData newStructureType)
     {
-        instance.OnSelectInfrastructureType(newStructureType);
+        return instance.OnSelectInfrastructureType(newStructureType);
     }
 
     /// <summary>
@@ -138,26 +139,37 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// Gère le changement d'outil.
     /// </summary>
     /// <param name="newStructureType">L'outil sélectionné.</param>
-    private void OnSelectInfrastructureType(InfrastructureData newStructureType)
+    private bool OnSelectInfrastructureType(InfrastructureData newStructureType)
     {
+        bool toReturn = false;
+
         InfrastructureData lastStructureData = selectedStructureData;
 
         OnUnselectInfrastructureType();
-        if (newStructureType != null && lastStructureData != newStructureType)
+        if (newStructureType != lastStructureData)
         {
-            selectedStructureType = newStructureType.Structure.StructureType;
-            selectedStructureData = newStructureType;
-
-            InfrastructureManager.ChooseInfrastructure(newStructureType.Preview);
-
-            switch (selectedStructureType)
+            if (newStructureType != null)
             {
-                case InfrastructureType.Path:
-                    VLY_ContextManager.ChangeContext(1);
-                    OnSelectPathTool?.Invoke();
-                    break;
+                selectedStructureType = newStructureType.Structure.StructureType;
+                selectedStructureData = newStructureType;
+
+                InfrastructureManager.ChooseInfrastructure(newStructureType.Preview);
+
+                switch (selectedStructureType)
+                {
+                    case InfrastructureType.Path:
+                        VLY_ContextManager.ChangeContext(1);
+                        OnSelectPathTool?.Invoke();
+                        break;
+                }
+
+                toReturn = true;
             }
+
+            OnSelectStructure?.Invoke(selectedStructureData);
         }
+
+        return toReturn;
     }
 
     /// <summary>
@@ -170,8 +182,6 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         switch (selectedStructureType)
         {
             case InfrastructureType.Path:
-                Debug.Log("Test");
-
                 PathManager.CreatePathData();
                 VLY_ContextManager.ChangeContext(0);
                 OnUnselectPathTool?.Invoke();
