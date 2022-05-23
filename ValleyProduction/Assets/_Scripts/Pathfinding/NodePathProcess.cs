@@ -5,17 +5,22 @@ using UnityEngine;
 
 public class NodePathProcess : VLY_Singleton<NodePathProcess>
 {
-    private List<PathNode> nodesNextToLandmark = new List<PathNode>();
+    [SerializeField]private List<PathNode> nodesNextToLandmark = new List<PathNode>();
 
-    private List<PathNode> updatedNodes = new List<PathNode>();
+    [SerializeField] private List<PathNode> updatedNodes = new List<PathNode>();
 
-    private List<PathNode> nodesToUpdate = new List<PathNode>();
+    [SerializeField] private List<PathNode> nodesToUpdate = new List<PathNode>();
 
     public static List<PathNode> GetAllObjectiveNodes => instance.nodesNextToLandmark;
 
     private static bool isProcessingPath = false;
 
     private Action OnUpdateNode;
+
+    private void Start()
+    {
+        TimerManager.CreateRealTimer(5f, UpdateAllNodes);
+    }
 
     public static void CallOnUpdateNode(Action callback)
     {

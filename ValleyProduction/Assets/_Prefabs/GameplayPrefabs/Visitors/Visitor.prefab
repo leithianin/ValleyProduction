@@ -41,6 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3417065030396455275}
+  - component: {fileID: 9101748185371465294}
   - component: {fileID: 3898088066656520254}
   - component: {fileID: 7933645770622368188}
   - component: {fileID: 4228856039466728645}
@@ -65,7 +66,7 @@ Transform:
   m_Father: {fileID: 7603813357234534001}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3898088066656520254
+--- !u!114 &9101748185371465294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,6 +74,56 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2976325078726078194}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383bbb0ae5141a9418bf80c116bdf204, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnGainSatisfaction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 858973227575124983}
+        m_TargetAssemblyTypeName: IFB_PlayAnimation, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: BumpExclamationPoint_Good
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLoseSatisfaction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 858973227575124983}
+        m_TargetAssemblyTypeName: IFB_PlayAnimation, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: BumpExclamationPoint_Bad
+          m_BoolArgument: 0
+        m_CallState: 2
+  likedInteractions: 
+  hatedInteractions: 
+  currentSatisfaction: 5
+  maxSatisfaction: 5
+  maxTiredSatisfaction: 5
+  updateTime: 5
+  floraLevelWanted: 5
+  toLoseOnBadFlora: 1
+--- !u!114 &3898088066656520254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976325078726078194}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 726f33538056af3488f4a3a9ca0e9d04, type: 3}
   m_Name: 
@@ -109,7 +160,7 @@ MonoBehaviour:
         m_CallState: 2
   likedInteractions: 
   hatedInteractions: 
-  currentSatisfaction: 0
+  currentSatisfaction: 5
   maxSatisfaction: 5
   maxTiredSatisfaction: 5
 --- !u!114 &7933645770622368188
@@ -787,7 +838,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3898088066656520254}
+      - m_Target: {fileID: 9101748185371465294}
         m_TargetAssemblyTypeName: CPN_SatisfactionHandler, Assembly-CSharp
         m_MethodName: SetData
         m_Mode: 0
@@ -887,7 +938,7 @@ MonoBehaviour:
   - {fileID: 7061865997634269124}
   - {fileID: 955305577724817077}
   - {fileID: 7026732280502338072}
-  - {fileID: 3898088066656520254}
+  - {fileID: 9101748185371465294}
   - {fileID: 329369899851214195}
   - {fileID: 7603813357234534012}
 --- !u!114 &7603813357234534011
@@ -955,7 +1006,7 @@ MonoBehaviour:
   OnIsExhausted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3898088066656520254}
+      - m_Target: {fileID: 9101748185371465294}
         m_TargetAssemblyTypeName: CPN_SatisfactionHandler, Assembly-CSharp
         m_MethodName: SetMaxOrTired
         m_Mode: 6
@@ -970,7 +1021,7 @@ MonoBehaviour:
   OnIsNotExhausted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3898088066656520254}
+      - m_Target: {fileID: 9101748185371465294}
         m_TargetAssemblyTypeName: CPN_SatisfactionHandler, Assembly-CSharp
         m_MethodName: SetMaxOrTired
         m_Mode: 6
