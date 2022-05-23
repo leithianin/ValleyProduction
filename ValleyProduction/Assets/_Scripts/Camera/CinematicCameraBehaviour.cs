@@ -68,8 +68,40 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
         FadeReset();
         inCinematicMode = false;
-
     }
+
+    public IEnumerator PlayShotWithCustomsParameters(CameraData cameraData)
+    {
+        float refVerticalOffest = cameraTransform.OriginVisualOffset;
+        inCinematicMode = true;
+        yield return new WaitForSeconds(0.5f);
+
+        float referenceTime = cameraData.isTraveling ?
+            Vector3.Distance(cameraData.cameraOriginPosition, cameraData.travelPosition) / cameraData.speed
+            : Random.Range(timeRange.x, timeRange.y);
+
+        cameraTransform.OriginVisualOffset = cameraData.verticalOffset;
+        SelectDestination(cameraData.cameraOriginPosition.x, cameraData.cameraOriginPosition.z);
+        SelectAngles(cameraData.radius, cameraData.azimuthalAngle, cameraData.polarAngle);
+
+        for (float time = referenceTime; time > 0; time -= Time.deltaTime)
+        {
+            if (cameraData.isTraveling)
+            {
+                cameraTransform.SetOrigin(Vector3.Lerp(cameraData.travelPosition, cameraData.cameraOriginPosition, time / referenceTime));
+                yield return null;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+
+        FadeReset();
+        cameraTransform.OriginVisualOffset = refVerticalOffest;
+        inCinematicMode = false;
+    }
+
 
     public IEnumerator PlayShotWithRandomRotation()
     {
@@ -100,7 +132,8 @@ public class CinematicCameraBehaviour : MonoBehaviour
         {
             if (item.scene == SceneManager.GetActiveScene().name)
             {
-                tempDataBase.Add(item);
+                if (!item.cinematic)
+                    tempDataBase.Add(item);
             }
         }
 
