@@ -11,6 +11,7 @@ public class CinematicShot : SphericalTransform
     public GameObject ui;
     public bool soloCamera = false;
     public bool isTraveling = false;
+    public bool cinematic = false;
     public float speed = 1.0f;
     [SerializeField] private Transform originTarget = default;
     [SerializeField] private GameObject parentGameObject = default;
@@ -56,8 +57,10 @@ public class CinematicShot : SphericalTransform
             cameraData.radius = Coordinates.x;
             cameraData.azimuthalAngle = Coordinates.y;
             cameraData.polarAngle = Coordinates.z;
+            cameraData.verticalOffset = OriginVisualOffset;
             cameraData.cameraOriginPosition = origin.position;
             cameraData.isTraveling = isTraveling;
+            cameraData.cinematic = cinematic;
 
             if (isTraveling)
             {
