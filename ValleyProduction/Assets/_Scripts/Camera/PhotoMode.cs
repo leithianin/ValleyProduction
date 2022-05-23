@@ -32,30 +32,30 @@ public class PhotoMode : MonoBehaviour
     [SerializeField, Range(10, 300)] private float focalLength;
     private float baseFocalLength = 21f;
 
-    [SerializeField, Range(0, 10)] private float verticalOffset;
+    [SerializeField, Range(0, 10)] private float verticalOffset = default;
     float baseVerticalOffset;
-    [SerializeField, Range(-90, 90)] private float roll;
+    [SerializeField, Range(-90, 90)] private float roll = default;
 
     [Header("Depth of Field"), Space(10)]
-    [SerializeField] private bool useDepthOfField;
-    [SerializeField, Range(0,100)] private float focusDistance;
+    [SerializeField] private bool useDepthOfField = default;
+    [SerializeField, Range(0,100)] private float focusDistance = default;
 
     [Header("Post Effects"), Space(10)]
-    [SerializeField, Range(-10, 10)] private float exposure;
-    [SerializeField, Range(-100, 100)] private float contrasts;
-    [SerializeField, Range(-100, 100)] private float saturation;
-    [SerializeField, Range(0, 5)] private float bloom;
-    [SerializeField, Range(0, 100)] private float grain;
-    [SerializeField, Range(0, 100)] private float vignette;
+    [SerializeField, Range(-10, 10)] private float exposure = default;
+    [SerializeField, Range(-100, 100)] private float contrasts = default;
+    [SerializeField, Range(-100, 100)] private float saturation = default;
+    [SerializeField, Range(0, 5)] private float bloom = default;
+    [SerializeField, Range(0, 100)] private float grain = default;
+    [SerializeField, Range(0, 100)] private float vignette = default;
 
     [Header("Filters"), Space(10)]
-    [SerializeField] private VolumeProfilesEnum filtersSelection;
+    [SerializeField] private VolumeProfilesEnum filtersSelection = default;
     [SerializeField, Range(0,100)] private float filterIntensity = 100.0f;
     [SerializeField] private Texture[] filters = default;
 
     [Header("Events"), Space(10)]
-    [SerializeField] private UnityEvent enablePhotoMode;
-    [SerializeField] private UnityEvent disablePhotoMode;
+    [SerializeField] private UnityEvent enablePhotoMode = default;
+    [SerializeField] private UnityEvent disablePhotoMode = default;
 
     private void Awake()
     {
