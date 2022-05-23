@@ -42,6 +42,8 @@ public class PathManager : VLY_Singleton<PathManager>
     private bool PathReverse       = false;
     public LineRenderer currentLineDebug;
 
+    public static LineRenderer CurrentLinePreview => instance.currentLineDebug;
+
     [Header("Action")]
     public static Action<bool> isOnSpawn;
     public static Action<bool> isOnFinishPath;
