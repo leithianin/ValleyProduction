@@ -224,7 +224,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
         for (int i = 0; i < toModify.pathPoints.Count - 1; i++)
         {
-            PathFragmentData new_pfd = new PathFragmentData(toModify.pathPoints[i], toModify.pathPoints[i + 1], PathCreationManager.instance.CalculatePath(toModify.pathPoints[i], toModify.pathPoints[i + 1]), true);
+            PathFragmentData new_pfd = new PathFragmentData(toModify.pathPoints[i], toModify.pathPoints[i + 1], PathCreationManager.GetCalculatePath(toModify.pathPoints[i], toModify.pathPoints[i + 1]), true);
             pd.AddPathFragment(new_pfd);
         }
 
@@ -285,7 +285,7 @@ public class PathManager : VLY_Singleton<PathManager>
             previousPathpoint = pathpoint;
         }
 
-        pathpoint.Node.PlaceNode();
+        //pathpoint.Node.PlaceNode();
 
         pathpoint.pathpointActivate.ChangeLayerToDefault();
         DebugPoint(previousPathpoint);

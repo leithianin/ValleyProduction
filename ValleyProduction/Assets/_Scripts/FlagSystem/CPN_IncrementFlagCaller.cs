@@ -15,6 +15,7 @@ public class CPN_IncrementFlagCaller : MonoBehaviour
 
     public void IncrementFlag(string nFlagName)
     {
+        Debug.Log(nFlagName);
         VLY_FlagManager.IncrementFlagValue(nFlagName, incrementValue);
     }
 }
