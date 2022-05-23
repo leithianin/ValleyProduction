@@ -5,50 +5,74 @@ using UnityEngine.Events;
 
 public class TreeBehavior : MonoBehaviour
 {
-    [SerializeField] private int healthyScore;
+    [SerializeField] private List<MeshRenderer> meshes;
 
-    public GameObject OnSetMesh;
-    public GameObject OnUnsetMesh;
+    [SerializeField] private float lerpCoef;
 
-    [SerializeField] private UnityEvent OnSet;
-    [SerializeField] private UnityEvent OnUnset;
-
-    [SerializeField] private UnityEvent<float> OnChangeScore;
-
-    [SerializeField] private bool isSet = true;
+    [SerializeField] private UnityEvent OnTreeAlive;
+    [SerializeField] private UnityEvent OnTreeDead;
 
     private int currentPhase;
+    private float lastLerpValue;
 
-    public bool IsSet => isSet;
+    private float currentInterpolate = 0;
+    private float lerpValue = 0;
 
     public int CurrentPhase => currentPhase;
 
-    private void Start()
-    {
-        OnChangeScore?.Invoke(healthyScore);
-    }
-
     public void SetTreePhase(int phase)
     {
-        currentPhase = phase;
-        Debug.Log("TreePhase : " + phase);
+        if (phase != currentPhase)
+        {
+            Debug.Log("TreePhase : " + phase);
+
+            if(phase < currentPhase)
+            {
+                foreach(MeshRenderer mesh in meshes)
+                {
+                    mesh.material.EnableKeyword("_BLOSSOM");
+                }
+            }
+            else
+            {
+                foreach (MeshRenderer mesh in meshes)
+                {
+                    mesh.material.DisableKeyword("_BLOSSOM");
+                }
+            }
+
+            if(phase >= 3)
+            {
+                OnTreeDead?.Invoke();
+            }
+            else if(currentPhase >= 3)
+            {
+                OnTreeAlive?.Invoke();
+            }
+
+            lastLerpValue = lerpValue;
+
+            currentInterpolate = 0;
+
+            currentPhase = phase;
+
+            enabled = true;
+        }
     }
 
-    public void SetTree()
+    private void Update()
     {
-        isSet = true;
-        OnChangeScore?.Invoke(healthyScore);
-        OnUnsetMesh.SetActive(false);
-        OnSetMesh.SetActive(true);
-        OnSet?.Invoke();
-    }
+        currentInterpolate += Time.deltaTime * lerpCoef;
+        lerpValue = Mathf.Lerp(lastLerpValue, currentPhase, currentInterpolate);
 
-    public void UnsetTree()
-    {
-        isSet = false;
-        OnChangeScore?.Invoke(0);
-        OnSetMesh.SetActive(false);
-        OnUnsetMesh.SetActive(true);
-        OnUnset?.Invoke();
+        if (currentInterpolate >= 1)
+        {
+            enabled = false;
+        }
+
+        foreach (MeshRenderer mesh in meshes)
+        {
+            mesh.material.SetFloat("TRANSITION_STATE", lerpValue);
+        }
     }
 }
