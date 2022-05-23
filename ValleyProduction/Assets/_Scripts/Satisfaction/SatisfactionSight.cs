@@ -11,6 +11,7 @@ public class SatisfactionSight : MonoBehaviour
         CPN_SatisfactionGiver otherGiver = other.GetComponent<CPN_SatisfactionGiver>();
         if (otherGiver != null)
         {
+            Debug.Log("Satisfaction sight : " + otherGiver.SatisfactionGiven + " * " + satisfactionHandler.GetAppreciationLevel(otherGiver.SatisfactionGiverType));
             satisfactionHandler.AddSatisfaction(otherGiver.SatisfactionGiven * satisfactionHandler.GetAppreciationLevel(otherGiver.SatisfactionGiverType));
         }
     }

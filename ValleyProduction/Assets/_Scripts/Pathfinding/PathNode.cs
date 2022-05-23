@@ -57,6 +57,7 @@ public class PathNode : MonoBehaviour
     /// </summary>
     public void PlaceNode()
     {
+        Debug.Log("Je passe ici : " + VLY_LandmarkManager.AllLandmarks.Count);
         Collider[] colliderTab = Physics.OverlapSphere(transform.position, 0.5f);
 
         dataByLandmark = new List<NodePathData>();
