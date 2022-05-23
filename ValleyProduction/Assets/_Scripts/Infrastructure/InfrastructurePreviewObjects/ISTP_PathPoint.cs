@@ -17,8 +17,17 @@ public class ISTP_PathPoint : InfrastructurePreview
     {
         if (PathManager.previousPathpoint == null || PathCreationManager.CalculatePathShortness(false) < snapRange.y)
         {
+            if (PathManager.CurrentLinePreview != null)
+            {
+                PathManager.CurrentLinePreview.material.EnableKeyword("CAN_CONSTRUCT");
+            }
             return true;
         }
+        if (PathManager.CurrentLinePreview != null)
+        {
+            PathManager.CurrentLinePreview.material.DisableKeyword("CAN_CONSTRUCT");
+        }
+
         return false;
     }
 
