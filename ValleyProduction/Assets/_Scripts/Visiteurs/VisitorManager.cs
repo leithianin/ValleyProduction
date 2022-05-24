@@ -85,7 +85,14 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
                 IST_PathPoint wantedSpawn = null;
 
-                for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
+                wantedSpawn = SearchSpawnPoint(visitorType.LandmarksWanted);
+
+                if (wantedSpawn == null)
+                {
+                    wantedSpawn = SearchSpawnPointWithoutLandmark();
+                }
+
+                /*for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
                 {
                     wantedSpawn = SearchSpawnPoint(visitorType.LandmarksWanted[i]);
 
@@ -97,7 +104,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     {
                         wantedSpawn = SearchSpawnPointWithoutLandmark();
                     }
-                }
+                }*/
 
                 if (wantedSpawn != null)
                 {
@@ -171,24 +178,26 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
 
-    private IST_PathPoint SearchSpawnPoint(LandmarkType landmarkType)
+    private IST_PathPoint SearchSpawnPoint(List<LandmarkType> landmarkTypes)
     {
         List<IST_PathPoint> possiblePathpoints = new List<IST_PathPoint>();
         List<IST_PathPoint> allSpawns = new List<IST_PathPoint>(PathManager.SpawnPoints);
 
-        for (int j = 0; j < allSpawns.Count; j++)
+        foreach (LandmarkType landmarkType in landmarkTypes)
         {
-            List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(landmarkType);
-
-            for (int k = 0; k < landmarks.Count; k++)
+            for (int j = 0; j < allSpawns.Count; j++)
             {
-                if (allSpawns[j].Node.HasValidPathForLandmark(landmarks[k]))
+                List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(landmarkType);
+
+                for (int k = 0; k < landmarks.Count; k++)
                 {
-                    possiblePathpoints.Add(allSpawns[j]);
+                    if (allSpawns[j].Node.HasValidPathForLandmark(landmarks[k]))
+                    {
+                        possiblePathpoints.Add(allSpawns[j]);
+                    }
                 }
             }
         }
-
         if (possiblePathpoints.Count > 0)
         {
             return possiblePathpoints[UnityEngine.Random.Range(0, possiblePathpoints.Count)];
