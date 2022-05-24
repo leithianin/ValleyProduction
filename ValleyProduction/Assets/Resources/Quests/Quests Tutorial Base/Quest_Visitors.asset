@@ -15,14 +15,14 @@ MonoBehaviour:
   questName: Camera
   questDescription: Ceci est une description qui ne s'affichera pas.
   stages:
-  - State: 4
+  - State: 0
     Objectives:
     - {fileID: 11400000, guid: 57b14a6402fdd72459a603cec45c6cdc, type: 2}
     triggerFlagList:
     - FeedbackOutlineHikers
     incrementFlagList: []
     dialogueID: PTD_005
-  - State: 1
+  - State: 0
     Objectives:
     - {fileID: 11400000, guid: 007c0ef05e8f4304daa5bd467147ef4d, type: 2}
     triggerFlagList:
@@ -39,9 +39,10 @@ MonoBehaviour:
   - State: 0
     Objectives:
     - {fileID: 11400000, guid: aca9ddbf3158454438767e7ececa0e06, type: 2}
-    triggerFlagList: []
+    triggerFlagList:
+    - ReachWaterfall
     incrementFlagList: []
     dialogueID: 
   rewards:
   - {fileID: 11400000, guid: 0622f4831a7ebc545a1f9e4c4e267fa0, type: 2}
-  state: 1
+  state: 0
