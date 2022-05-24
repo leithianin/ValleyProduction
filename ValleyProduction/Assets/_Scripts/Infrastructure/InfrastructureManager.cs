@@ -262,6 +262,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void ReplaceInfrastructure(Vector3 position)
     {
+        Debug.Log("Replace Structure");
         //Pathpoint
         if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
         {
@@ -270,19 +271,16 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
         if (GetCurrentPreview.CanPlaceObject(position))
         {
-            if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
+            instance.ChangeInfrastructurePosition(GetCurrentSelectedStructure, position);
+
+            instance.movedObject.layer = default;
+            instance.movedObject = null;
+
+            if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
             {
-                Destroy(instance.movedObject);
-                PlaceInfrastructure(position);
-            }
-            else
-            {
-                //Pathpoint
-                instance.movedObject.layer = default;
-                instance.movedObject.transform.position = position;
-                instance.movedObject = null;
                 OnPlaceInfrastructure?.Invoke(GetCurrentSelectedStructure);
             }
+
 
             instance.previewHandler.SetInfrastructurePreview(null);
 
@@ -297,6 +295,18 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     }
 
+    private void ChangeInfrastructurePosition(Infrastructure toChange, Vector3 position)
+    {
+        if (GetCurrentPreview.AskToPlace(position) && !previewHandler.snaping)
+        {
+            EndRotation();
+
+            toChange.transform.position = position;
+
+            toChange.ReplaceObject();
+        }
+    }
+
     public static void ReplaceInfrastructureChangeLyer(GameObject saveObject)
     {
         saveObject.layer = layerInfrastructure;
@@ -309,21 +319,24 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             UnselectInfrastructure();
         }
 
-        switch (tool)
+        if (interactedStructure.CanBeUsedByTool(tool))
         {
-            //Just select l'infrastructure (Info)
-            case ToolType.None:
-                instance.SelectInfrastructure(interactedStructure);
-                break;
-            case ToolType.Place:
-                instance.PlaceInfrastructure(GetCurrentPreview, interactedStructure);
-                break;
-            case ToolType.Move:
-                MoveInfrastructure(interactedStructure);
-                break;
-            case ToolType.Delete:
-                DeleteInfrastructure(interactedStructure);
-                break;
+            switch (tool)
+            {
+                //Just select l'infrastructure (Info)
+                case ToolType.None:
+                    instance.SelectInfrastructure(interactedStructure);
+                    break;
+                case ToolType.Place:
+                    instance.PlaceInfrastructure(GetCurrentPreview, interactedStructure);
+                    break;
+                case ToolType.Move:
+                    MoveInfrastructure(interactedStructure);
+                    break;
+                case ToolType.Delete:
+                    DeleteInfrastructure(interactedStructure);
+                    break;
+            }
         }
     }
 

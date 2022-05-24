@@ -37,7 +37,7 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
         displayedQuest = null;
         title.text = "";
         description.text = "";
-        validationButton.interactable = false;
+        validationButton.gameObject.SetActive(false);
 
         handler.SetActive(false);
     }
@@ -45,7 +45,7 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
     public void SetPendingCompletion()
     {
         description.text = "<s>" + description.text;
-        validationButton.interactable = true;
+        validationButton.gameObject.SetActive(true);
     }
 
     public void ObjectiveValidated()
