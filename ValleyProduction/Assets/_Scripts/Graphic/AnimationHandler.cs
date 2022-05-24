@@ -46,7 +46,6 @@ public class AnimationHandler : VLY_Component
                     break;
             }
         }
-
     }
 
     public void StopBodyAnim(BodyAnimationType animName)
