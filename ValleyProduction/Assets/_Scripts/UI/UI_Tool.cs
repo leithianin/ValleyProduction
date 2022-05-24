@@ -29,31 +29,34 @@ public class UI_Tool : MonoBehaviour
 
     public void OnToolCreatePath(int i)
     {
-        ConstructionManager.SelectInfrastructureType(null);
+        if (!PlayerInputManager.blockMouse)
+        {
+            ConstructionManager.SelectInfrastructureType(null);
 
-        if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
-        {
-            InfrastructureManager.SetToolSelected((ToolType)i);
-        }
-        else
-        {
-            InfrastructureManager.SetToolSelected(ToolType.None);
-        }
+            if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
+            {
+                InfrastructureManager.SetToolSelected((ToolType)i);
+            }
+            else
+            {
+                InfrastructureManager.SetToolSelected(ToolType.None);
+            }
 
-        switch (InfrastructureManager.GetCurrentTool)
-        {
-            case ToolType.Place:
-                OnSelectPlaceTool?.Invoke();
-                break;
-            case ToolType.Move:
-                OnSelectMoveTool?.Invoke();
-                break;
-            case ToolType.Delete:
-                OnSelectDeleteTool?.Invoke();
-                break;
-            case ToolType.None:
-                UnselectTool();
-                break;
+            switch (InfrastructureManager.GetCurrentTool)
+            {
+                case ToolType.Place:
+                    OnSelectPlaceTool?.Invoke();
+                    break;
+                case ToolType.Move:
+                    OnSelectMoveTool?.Invoke();
+                    break;
+                case ToolType.Delete:
+                    OnSelectDeleteTool?.Invoke();
+                    break;
+                case ToolType.None:
+                    UnselectTool();
+                    break;
+            }
         }
     }
 

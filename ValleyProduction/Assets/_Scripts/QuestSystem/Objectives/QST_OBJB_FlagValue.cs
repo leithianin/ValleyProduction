@@ -36,7 +36,6 @@ public class QST_OBJB_FlagValue : QST_ObjectiveBehavior<QST_OBJ_FlagValue>
             Action<int> actionHandler = (value) => CheckFlag(objective, value);
 
             pendingObjectiveWithHandler.Add(objective, actionHandler);
-            Debug.Log(objective.Flag);
             VLY_FlagManager.AddIncrementFlagListener(objective.Flag, actionHandler);
 
         }
