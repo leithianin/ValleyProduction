@@ -13,10 +13,17 @@ public class CameraData : ScriptableObject
     public float verticalOffset;
 
     public bool isTraveling;
+    public float speed;
+
+    public bool isRotating;
+    public bool clockwise;
+    public float rotationSpeed;
     public bool cinematic;
+
+    public bool useCustomDuration;
+    public float duration;
 
     public Vector3 cameraOriginPosition;
     public Vector3 travelPosition;
 
-    public float speed;
 }
