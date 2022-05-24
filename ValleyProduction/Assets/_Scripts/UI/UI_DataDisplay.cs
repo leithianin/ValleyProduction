@@ -16,7 +16,7 @@ public class UI_DataDisplay : MonoBehaviour
 
     public void UpdateNbAttractivity(float nb)
     {
-        attractivityCounter.text = nb.ToString();
+        attractivityCounter.text = nb.ToString("F1");
     }
 
     public void UpdateNbVisitors(int nb)

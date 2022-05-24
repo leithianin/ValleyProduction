@@ -24,8 +24,6 @@ public class TreeBehavior : MonoBehaviour
     {
         if (phase != currentPhase)
         {
-            Debug.Log("TreePhase : " + phase);
-
             if(phase < currentPhase)
             {
                 foreach(MeshRenderer mesh in meshes)

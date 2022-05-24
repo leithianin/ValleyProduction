@@ -153,6 +153,11 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
         }
     }
 
+    public void ForceInteruptWalk()
+    {
+        InteruptWalk();
+    }
+
     /// <summary>
     /// Int�rromp le d�placement.
     /// </summary>
