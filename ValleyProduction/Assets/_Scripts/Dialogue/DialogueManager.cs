@@ -8,6 +8,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 {
     public ELEMENTS elements;
     private Coroutine speaking = null;
+
+    public GameObject textBlock;
     public static bool isSpeaking => instance.speaking != null;
 
     public float dialogueWaitingTime = 1f;
@@ -39,9 +41,17 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         //PlayDialogue("PTD_000");
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            SetWantToSkip();
+        }
+    }
+
     public void PlayDialogue(string id)
     {
-        //StopCoroutine(CloseDialogue());
+        textBlock.gameObject.SetActive(true);
         StopAllCoroutines();
         if (!isSpeaking)
         {
@@ -70,6 +80,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         else
         {
             Debug.Log("EndDialogue");
+            TimerManager.CreateRealTimer(0.2f, () => textBlock.gameObject.SetActive(false));
             CloseDialogue();
             StopSpeaking();
             OnEndDialogue?.Invoke();
@@ -126,7 +137,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void SetWantToSkip()
     {
-        if (speaking != null)
+        if (speak)
         {
             wantToSkip = true;
         }

@@ -71,7 +71,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static void AddIncrementFlagListener(string flagName, Action<int> callback)
     {
-        Debug.Log(flagName);
+
         if(!incrementalFlagListeners[flagName].Contains(callback))
         {
             incrementalFlagListeners[flagName].Add(callback);

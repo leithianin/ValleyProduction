@@ -21,6 +21,16 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
         instance.ChangeCurrentContext(ID);
     }
 
+    public static void ChangeContext(string str)
+    {
+        int security = instance.contexts.GetContextID(str);
+
+        if (security >= 0)
+        {
+            instance.ChangeCurrentContext(security);
+        }
+    }
+
     private void ChangeCurrentContext(int ID)
     {
         if (currentContext != contexts.GetContext(ID))
@@ -66,6 +76,10 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
                     break;
                 case FeatureLocker.BlockAllKeyboardInput:
                     PlayerInputManager.EnableOrDisableKeyboard(isEnable);
+                    break;
+                case FeatureLocker.BlockMouseInput:
+                    Debug.Log("IsEnable BlockMouse change to : " + isEnable);
+                    PlayerInputManager.blockMouse = isEnable;
                     break;
             }
         }
