@@ -16,6 +16,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnProfileInfrastructure;
 
     public UnityEvent OnEnd;
+    public UnityEvent OnCinematic;
 
     //unity event OnCameraMove
     public static void ClickOnHiker()
@@ -37,6 +38,11 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void OnEndTutorial()
     {
         instance.OnEnd?.Invoke();
+    }
+
+    public static void OnPlayCinematic()
+    {
+        instance.OnCinematic?.Invoke();
     }
 
     #region To Remove 

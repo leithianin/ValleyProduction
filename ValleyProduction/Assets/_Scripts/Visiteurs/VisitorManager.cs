@@ -337,6 +337,21 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         return null;
     }
 
+    public static List<VisitorBehavior> HikersList()
+    {
+        List<VisitorBehavior> toReturn = new List<VisitorBehavior>();
+
+        for (int i = 0; i < instance.visitorPool.Count; i++)
+        {
+            if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
+            {
+                toReturn.Add(instance.visitorPool[i]);
+            }
+        }
+
+        return toReturn;
+    }
+
     /// <summary>
     /// Choisit le chemin que devra emprunter un visiteur.
     /// </summary>
