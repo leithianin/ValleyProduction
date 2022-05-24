@@ -16,7 +16,7 @@ public class CameraInputManager : MonoBehaviour
     [SerializeField] private SettingsDatas settingsDatas;
 
     [Header("Edge Scrolling")]
-    [SerializeField, Range(1,20)] private float edgeScrollingMovingSpeed = 10f;
+    [SerializeField, Range(1,50)] private float edgeScrollingMovingSpeed = 30f;
 
     [Header("Mouse Scrolling")]
     [SerializeField, Range(1, 20)] private float mouseScrollingMovingSpeed = 10f;
@@ -119,12 +119,12 @@ public class CameraInputManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse1))
             return;
 
-        if (Input.mousePosition.x > 0 && Input.mousePosition.x < Screen.width && Input.mousePosition.y > 0 && Input.mousePosition.y < Screen.height) //Check if the mouse is on the borders of the screen
+        if (Input.mousePosition.x > 0 && Input.mousePosition.x < Screen.width && Input.mousePosition.y > 0 && Input.mousePosition.y < Screen.height -10) //Check if the mouse is on the borders of the screen
             return;
 
         Vector2 mouseDirection = new Vector2(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2)); //Convert Mouse position into direction vector for moving origin
         mouseDirection.Normalize();
-        //cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, edgeScrollingMovingSpeed);
+        cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, edgeScrollingMovingSpeed);
     }
 
     void MoveCameraOriginWithMouseDrag()

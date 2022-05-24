@@ -46,13 +46,19 @@ public class CinematicCameraBehaviour : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         CameraData shotData = SelectShotData(database.shotsDataBase);
+
+        // Set the shot duration
         float referenceTime = shotData.isTraveling ?
             Vector3.Distance(shotData.cameraOriginPosition, shotData.travelPosition) / shotData.speed
             : Random.Range(timeRange.x, timeRange.y);
+        referenceTime = shotData.useCustomDuration ? shotData.duration : referenceTime;
 
+        // Set the shot position and angle (+ offset)
+        cameraTransform.OriginVisualOffset = shotData.verticalOffset != 0.0f ? shotData.verticalOffset : cameraTransform.OriginVisualOffset;
         SelectDestination(shotData.cameraOriginPosition.x, shotData.cameraOriginPosition.z);
         SelectAngles(shotData.radius, shotData.azimuthalAngle, shotData.polarAngle);
 
+        // Run the shot
         for (float time = referenceTime; time > 0; time -= Time.deltaTime)
         {
             if (shotData.isTraveling)
@@ -76,14 +82,18 @@ public class CinematicCameraBehaviour : MonoBehaviour
         inCinematicMode = true;
         yield return new WaitForSeconds(0.5f);
 
+        // Set the shot duration
         float referenceTime = cameraData.isTraveling ?
             Vector3.Distance(cameraData.cameraOriginPosition, cameraData.travelPosition) / cameraData.speed
             : Random.Range(timeRange.x, timeRange.y);
+        referenceTime = cameraData.useCustomDuration ? cameraData.duration : referenceTime;
 
-        cameraTransform.OriginVisualOffset = cameraData.verticalOffset;
+        // Set the shot position and angle (+ offset)
+        cameraTransform.OriginVisualOffset = cameraData.verticalOffset != 0.0f ? cameraData.verticalOffset : cameraTransform.OriginVisualOffset;
         SelectDestination(cameraData.cameraOriginPosition.x, cameraData.cameraOriginPosition.z);
         SelectAngles(cameraData.radius, cameraData.azimuthalAngle, cameraData.polarAngle);
 
+        // Run the shot
         for (float time = referenceTime; time > 0; time -= Time.deltaTime)
         {
             if (cameraData.isTraveling)
@@ -145,6 +155,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         if (!cameraBoundaries)
         {
             Debug.LogError("No Boundaries Collider is set on the Cinematic Camera Behaviour");
+            return;
         }
 
         float xPos = cameraBoundaries.bounds.center.x + Random.Range(-cameraBoundaries.bounds.extents.x, cameraBoundaries.bounds.extents.x);
