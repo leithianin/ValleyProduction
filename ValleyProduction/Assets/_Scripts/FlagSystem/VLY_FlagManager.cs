@@ -25,6 +25,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
         foreach(string flagName in flagList.IncrementalsFlags)
         {
+            Debug.Log(flagName);
             flags.Add(flagName, 0);
 
             //Debug.Log(flagName);

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
+    public UnityEvent OnEnableEvent;
+
     public GameObject Welcome;
     public GameObject End;
 
@@ -24,6 +26,11 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         {
             instance.OnProfileHiker?.Invoke();
         }
+    }
+
+    private void OnEnable()
+    {
+        TimerManager.CreateRealTimer(1f, () => OnEnableEvent?.Invoke());
     }
 
     public static void ClickOnTourist()
