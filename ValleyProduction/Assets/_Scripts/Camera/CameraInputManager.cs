@@ -119,7 +119,7 @@ public class CameraInputManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse1))
             return;
 
-        if (Input.mousePosition.x > 0 && Input.mousePosition.x < Screen.width && Input.mousePosition.y > 0 && Input.mousePosition.y < Screen.height -10) //Check if the mouse is on the borders of the screen
+        if (Input.mousePosition.x > 10 && Input.mousePosition.x < Screen.width - 10 && Input.mousePosition.y > 0 && Input.mousePosition.y < Screen.height - 10) //Check if the mouse is on the borders of the screen
             return;
 
         Vector2 mouseDirection = new Vector2(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2)); //Convert Mouse position into direction vector for moving origin
