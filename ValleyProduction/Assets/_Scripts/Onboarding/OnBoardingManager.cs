@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
-    public UnityEvent OnEnableEvent;
-
     public GameObject Welcome;
     public GameObject End;
 
@@ -18,6 +16,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnProfileInfrastructure;
 
     public UnityEvent OnEnd;
+    public UnityEvent OnCinematic;
 
     //unity event OnCameraMove
     public static void ClickOnHiker()
@@ -26,11 +25,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         {
             instance.OnProfileHiker?.Invoke();
         }
-    }
-
-    private void OnEnable()
-    {
-        TimerManager.CreateRealTimer(1f, () => OnEnableEvent?.Invoke());
     }
 
     public static void ClickOnTourist()
@@ -44,6 +38,11 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void OnEndTutorial()
     {
         instance.OnEnd?.Invoke();
+    }
+
+    public static void OnPlayCinematic()
+    {
+        instance.OnCinematic?.Invoke();
     }
 
     #region To Remove 
