@@ -179,7 +179,7 @@ public class CameraInputManager : MonoBehaviour
 
     IEnumerator ResetRotationInput()
     {
-        for (float time = 0; time < wheelInputThreshold; time += Time.deltaTime)
+        for (float time = 0; time < wheelInputThreshold; time += Time.unscaledDeltaTime)
         {
             if (Input.GetKeyUp(KeyCode.Mouse2))
             {
