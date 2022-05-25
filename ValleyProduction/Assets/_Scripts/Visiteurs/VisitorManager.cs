@@ -23,8 +23,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     [Header("For Dev")]
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
-    [SerializeField] private Terrain mainTerrain;
-
     public static Action<bool> isOnDespawn;
 
     private float nextSpawnTime = 5f;
@@ -37,7 +35,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     public static Action<int> OnChangeVisitorCount;
     #endregion
 
-    public static Terrain GetMainTerrain => instance.mainTerrain;
+
 
     private void Start()
     {
