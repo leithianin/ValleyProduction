@@ -6,6 +6,7 @@ using UnityEngine;
 public class IST_PathPoint : Infrastructure
 {
     [SerializeField] private ManageMultiPath manageMultiPath;
+    public Outline outline;
     [SerializeField] private PathNode node;
     public PathpointActivate pathpointActivate;
 

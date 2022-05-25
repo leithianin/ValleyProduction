@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class IFB_MoveCameraToTargetOnBoarding : MonoBehaviour, IFeedbackPlayer
 {
-    public Transform target;
-    private int speed = 0;
+    private Transform target;
+    public int speed = 20;
 
     public void Play()
     {
         CameraManager.SetTargetWithSpeed(target, speed);
     }
 
-    public void Play(int newSpeed)
+    public void Play(Transform _target)
     {
-        speed = newSpeed;
+        target = _target;
         Play();
     }
 }
