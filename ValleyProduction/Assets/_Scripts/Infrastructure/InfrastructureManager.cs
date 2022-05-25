@@ -31,6 +31,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     [SerializeField] private UnityEvent OnUnselectModifyTool;
     [SerializeField] private UnityEvent OnSelectDeleteTool;
     [SerializeField] private UnityEvent OnUnselectDeleteTool;
+    [SerializeField] private UnityEvent OnSelectNoTool;
 
     public static GameObject GetMovedObject => instance.movedObject;
 
@@ -113,6 +114,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                         break;
                     case ToolType.Delete:
                         instance.OnSelectDeleteTool?.Invoke();
+                        break;
+                    case ToolType.None:
+                        instance.OnSelectNoTool?.Invoke();
                         break;
                 }
             }

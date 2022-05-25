@@ -33,8 +33,10 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
 
     private void ChangeCurrentContext(int ID)
     {
+        Debug.Log("Change Context for : " + contexts.GetContext(ID).GetContextName);
         if (currentContext != contexts.GetContext(ID))
         {
+
             if (currentContext != null)
             {
                 DisableOrEnableContext(currentContext, true);
