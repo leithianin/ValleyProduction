@@ -612,7 +612,7 @@ public class PathManager : VLY_Singleton<PathManager>
             NodePathProcess.UpdateAllNodes();
             newPathData.CheckMultiPath();
 
-            instance.ResetCurrentData();                                                                            //Data to default
+            //instance.ResetCurrentData();                                                                            //Data to default
 
             OnCreatePath?.Invoke(newPathData);
 
@@ -624,6 +624,8 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.pathpointList[0].RemoveObject();
             instance.pathpointList.Clear();
         }
+
+        instance.ResetCurrentData();
     }
 
     /// <summary>

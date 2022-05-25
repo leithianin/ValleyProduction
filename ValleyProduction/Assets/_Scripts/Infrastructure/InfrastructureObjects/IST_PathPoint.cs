@@ -32,8 +32,7 @@ public class IST_PathPoint : Infrastructure
             UIManager.HideShownGameObject();
             return;
         }
-
-        if (PathManager.IsSpawnPoint(this))                                 //Si c'est le spawnPoint (boucle)
+        else if (PathManager.IsSpawnPoint(this))                                 //Si c'est le spawnPoint (boucle)
         {
             PathManager.PlacePoint(this);
             PathManager.CreatePathData();
@@ -48,30 +47,19 @@ public class IST_PathPoint : Infrastructure
 
     protected override bool OnRemoveObject()
     {
-        /*if (PathManager.HasManyPath(this))
+        node.DeleteNode();
+        if (PathManager.GetCurrentPathpointList.Count > 0)
         {
-            if (InfrastructureManager.GetCurrentTool == ToolType.Delete)
-            {
-                UIManager.ArrangePathButton(this);
-            }
-            return false;
+            PathManager.UnplacePoint(this);
         }
-        else*/
+        else if (PathManager.GetCurrentPathData == null)
         {
-            node.DeleteNode();
-            if (PathManager.GetCurrentPathpointList.Count > 0)
-            {
-                PathManager.UnplacePoint(this);
-            }
-            else if (PathManager.GetCurrentPathData == null )
-            {
-                PathManager.DeletePoint(this, PathManager.GetAllPathDatas(this));
-            }
+            PathManager.DeletePoint(this, PathManager.GetAllPathDatas(this));
+        }
 
-            InfrastructureManager.DesnapInfrastructure(this);
-            OnDestroyPathPoint?.Invoke(this);
-            return true;
-        }
+        InfrastructureManager.DesnapInfrastructure(this);
+        OnDestroyPathPoint?.Invoke(this);
+        return true;
     }
 
     //Remove à partir de l'UI (Choose path plusieurs bouton)

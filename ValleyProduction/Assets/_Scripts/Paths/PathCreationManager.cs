@@ -61,7 +61,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     [Header("PathRenderer")]
     public PathRendererManager pathRendererManager;
 
-    public IST_PathPoint testPathpoint;
+    public IST_PathPoint pathpointAddOnMove;
 
     public bool isCancel = false;
 
@@ -85,7 +85,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
         if (isModifyPath)
         {
-            Debug.Log("Update");
             foreach (ModifiedPath mp in modifiedPaths)
             {
                 UpdateSeveralLines(mp);
@@ -175,7 +174,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
             pathModified.additionalPathpointList.Add(new AdditionalPathpointClass());
         }
 
-        Debug.Log(pathModified.modifyList.Count);
         for (int i = 0; i < pathModified.modifyList.Count; i++)
         {
             navPath = new NavMeshPath();
@@ -265,8 +263,6 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
     //Add markers beetween the moving pathpoint and other pathpoints if the distance is to high /!\ Possibilité de rassembler des choses en une fonction /!\
     public void AddMarkers(List<Vector3> vectors, int index, bool isInverse, List<AdditionalPathpointClass> additionalPathpointList, List<IST_PathPoint> pathPointList)
     {
-        Debug.Log("Add markers");
-
         float distance = Vector3.Distance(vectors[0], vectors[vectors.Count - 1]);
         int result = (int)distance / 20;                                                                            //Replace 20 par la valeur de distanceMax entre les balises
 
@@ -298,11 +294,12 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                             {
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
-                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                         //Remplacer par le pathpoint Preview
+                                IST_PathPoint pathpoint = Instantiate(pathpointAddOnMove, positionMarker, Quaternion.identity);                                         //Remplacer par le pathpoint Preview
 
                                 //pathpoint.Node.PlaceNode(); 
                                 pathpoint.pathpointActivate.ChangeLayerToDefault();
 
+                                pathpoint.Node.SetDatas();
                                 pathpoint.SetPreviewMat();
                                 UpdateData(pathpoint, vectors, false, pathPointList);
                                 additionalPathpointList[index].pathpointList[i - 1] = pathpoint;
@@ -333,7 +330,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                             {
                                 //Placer le point
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
-                                IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                        //Remplacer par le pathpoint Preview
+                                IST_PathPoint pathpoint = Instantiate(pathpointAddOnMove, positionMarker, Quaternion.identity);                                        //Remplacer par le pathpoint Preview
 
                                 //pathpoint.Node.PlaceNode();
                                 pathpoint.pathpointActivate.ChangeLayerToDefault();
