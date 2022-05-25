@@ -35,6 +35,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public static UnityEvent<Vector2> GetOnKeyMove => instance.OnKeyMove;
     private Vector2 lastKeyDirection;
     public static bool isKeyboardEnable = true;
+    public static bool blockMouse = false;
 
     [SerializeField] private UnityEvent<Vector2> OnMouseMove;
 
@@ -102,15 +103,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
                 CursorTextureManager.SetReleaseCursor();
                 StopCoroutine(StartCoroutine(TimerHoldLeft()));
                 CallLeftMouseInputs(raycastHit);
-
-                if (clicHandlerTouched != null)
-                {
-                    clicHandlerTouched.MouseDown(0);
-                }
-                else
-                {
-                    OnClicLeftWihtoutObject?.Invoke();
-                }
             }
 
             if (Input.GetMouseButtonUp(1))
@@ -226,9 +218,21 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CallLeftMouseInputs(RaycastHit hit)
     {
-        if (GetMousePosition != Vector3.zero)
+        if (!blockMouse)
         {
-            OnClicLeftPosition?.Invoke(GetMousePosition);
+            if (GetMousePosition != Vector3.zero)
+            {
+                OnClicLeftPosition?.Invoke(GetMousePosition);
+            }
+
+            if (clicHandlerTouched != null)
+            {
+                clicHandlerTouched.MouseDown(0);
+            }
+            else
+            {
+                OnClicLeftWihtoutObject?.Invoke();
+            }
         }
 
         OnClicLeft?.Invoke();
@@ -244,17 +248,15 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CallRightMouseInputs(RaycastHit hit)
     {
-        if (!clicHold)
+        if (!blockMouse)
         {
-            OnClicRight?.Invoke();
-
             if (GetMousePosition != Vector3.zero)
             {
                 OnClicRightPosition?.Invoke(GetMousePosition);
             }
-        }
 
-        clicHold = false;
+        }
+        OnClicRight?.Invoke();
     }
 
     private void CallRightHoldMouseInput(RaycastHit hit)

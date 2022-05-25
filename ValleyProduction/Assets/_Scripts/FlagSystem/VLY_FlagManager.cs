@@ -22,8 +22,11 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
     protected override void OnAwake()
     {
         //Ajoute tous les flags existant
+        flags.Clear();
+        incrementalFlagListeners.Clear();
+        triggerFlagListeners.Clear();
 
-        foreach(string flagName in flagList.IncrementalsFlags)
+        foreach (string flagName in flagList.IncrementalsFlags)
         {
             flags.Add(flagName, 0);
 
@@ -68,7 +71,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static void AddIncrementFlagListener(string flagName, Action<int> callback)
     {
-        Debug.Log(flagName);
+
         if(!incrementalFlagListeners[flagName].Contains(callback))
         {
             incrementalFlagListeners[flagName].Add(callback);

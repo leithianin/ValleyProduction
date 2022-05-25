@@ -78,8 +78,6 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
         OnUpdateAttractivity?.Invoke(attractivityScore.Value);
 
-        Debug.Log("Attractivity : " + attractivityScore.Value);
-
         currentTimer = TimerManager.CreateGameTimer(timeBetweenUpdates, CalculateAttractivity);
     }
 }

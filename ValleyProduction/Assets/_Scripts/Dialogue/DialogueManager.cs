@@ -8,13 +8,19 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 {
     public ELEMENTS elements;
     private Coroutine speaking = null;
+
+    public GameObject textBlock;
     public static bool isSpeaking => instance.speaking != null;
 
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
-    public float closeSpeed = 2f;
+    //public float closeSpeed = 2f;
     private int index;
     private string currentId;
+
+    public bool waitingInput = false;
+    public bool wantToSkip = false;
+    public bool speak = false;
 
     public UnityEvent OnEndDialogue;
 
@@ -35,9 +41,17 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         //PlayDialogue("PTD_000");
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            SetWantToSkip();
+        }
+    }
+
     public void PlayDialogue(string id)
     {
-        //StopCoroutine(CloseDialogue());
+        textBlock.gameObject.SetActive(true);
         StopAllCoroutines();
         if (!isSpeaking)
         {
@@ -66,7 +80,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         else
         {
             Debug.Log("EndDialogue");
-            StartCoroutine(CloseDialogue());
+            TimerManager.CreateRealTimer(0.2f, () => textBlock.gameObject.SetActive(false));
+            CloseDialogue();
             StopSpeaking();
             OnEndDialogue?.Invoke();
         }
@@ -75,7 +90,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     public static void Say(string text, string speaker)
     {
         instance.StopSpeaking();
-        instance.StartCoroutine(instance.Speaking(text, speaker));
+        instance.speaking = instance.StartCoroutine(instance.Speaking(text, speaker));
     }
 
     public void StopSpeaking()
@@ -92,22 +107,45 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         dialoguePanel.SetActive(true);
         dialogueText.text = "";
         nameText.text = speaker;
+        speak = true;
 
         while(dialogueText.text != dialogue)
         {
-            dialogueText.text += dialogue[dialogueText.text.Length];
-            yield return new WaitForSeconds(textSpeed);
-            //yield return new WaitForEndOfFrame();
+            if (wantToSkip)
+            {
+                dialogueText.text = dialogue;
+                yield return new WaitForEndOfFrame();
+            }
+            else
+            {
+                dialogueText.text += dialogue[dialogueText.text.Length];
+                yield return new WaitForSeconds(textSpeed);
+            }
         }
 
+        speak = false;
+        wantToSkip = false;
+        waitingInput = true;
         //Dialogue Over
         yield return new WaitForSeconds(dialogueWaitingTime);
-        NextDialogue();
     }
 
-    IEnumerator CloseDialogue()
+    public void CloseDialogue()
     {
-        yield return new WaitForSeconds(closeSpeed);
         dialoguePanel.SetActive(false);
+    }
+
+    public void SetWantToSkip()
+    {
+        if (speak)
+        {
+            wantToSkip = true;
+        }
+
+        if (waitingInput)
+        {
+            waitingInput = false;
+            NextDialogue();
+        }
     }
 }
