@@ -79,10 +79,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         //Handle Mouse input outside UI
 
+        raycastHit = GetHitMouseGameobject();
+
         if (/*!UIManager.IsOnMenuBool() &&*/ !usedEventSystem.IsPointerOverGameObject())
         {
-            raycastHit = GetHitMouseGameobject();
-
             if (raycastHit.transform != null)
             {
                 clicHandlerTouched = raycastHit.transform.gameObject.GetComponent<CPN_ClicHandler>();
