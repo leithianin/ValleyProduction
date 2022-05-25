@@ -18,7 +18,8 @@ MonoBehaviour:
   - State: 4
     Objectives:
     - {fileID: 11400000, guid: 1a29cdf68e8dc15448a356b4ffaf0221, type: 2}
-    triggerFlagList: []
+    triggerFlagList:
+    - ShowControlObjective
     incrementFlagList: []
     dialogueID: PTD_000
   - State: 4
@@ -26,21 +27,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 37081bfe3f3b266448b49b972283f0bf, type: 2}
     - {fileID: 11400000, guid: 2c045d9518da5cb4c8aa57c9533ba837, type: 2}
     triggerFlagList:
-    - OnControlsIntroduction
-    incrementFlagList: []
-    dialogueID: 
-  - State: 4
-    Objectives:
-    - {fileID: 11400000, guid: 2687f493fd20d694783069ac523c7c20, type: 2}
-    triggerFlagList:
-    - CameraOnHut
-    incrementFlagList: []
-    dialogueID: PTD_001
-  - State: 1
-    Objectives:
-    - {fileID: 11400000, guid: 8866a878866c122499acadba7039e78b, type: 2}
-    triggerFlagList: []
+    - ValidateControlObjective
     incrementFlagList: []
     dialogueID: 
   rewards: []
-  state: 1
+  state: 3
