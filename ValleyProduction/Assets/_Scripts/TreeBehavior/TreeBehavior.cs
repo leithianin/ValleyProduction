@@ -20,6 +20,12 @@ public class TreeBehavior : MonoBehaviour
 
     public int CurrentPhase => currentPhase;
 
+    [ContextMenu("Set Mesh List")]
+    private void GetAllMeshes()
+    {
+        meshes = new List<MeshRenderer>(transform.GetComponentsInChildren<MeshRenderer>());
+    }
+
     public void SetTreePhase(int phase)
     {
         if (phase != currentPhase)

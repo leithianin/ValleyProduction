@@ -19,7 +19,7 @@ public class AnimalBehavior : MonoBehaviour
 
     public void SetAnimal(InteractionSequence nSequence)
     {
-        float yPosition = VisitorManager.GetMainTerrain.SampleHeight(transform.position) + VisitorManager.GetMainTerrain.transform.position.y;
+        float yPosition = PlayerInputManager.GetTerrainHeight(transform.position);
 
         transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
 

@@ -35,6 +35,7 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
     {
         if (currentContext != contexts.GetContext(ID))
         {
+
             if (currentContext != null)
             {
                 DisableOrEnableContext(currentContext, true);

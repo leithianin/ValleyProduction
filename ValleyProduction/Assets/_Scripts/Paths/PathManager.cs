@@ -612,7 +612,7 @@ public class PathManager : VLY_Singleton<PathManager>
             NodePathProcess.UpdateAllNodes();
             newPathData.CheckMultiPath();
 
-            instance.ResetCurrentData();                                                                            //Data to default
+            //instance.ResetCurrentData();                                                                            //Data to default
 
             OnCreatePath?.Invoke(newPathData);
 
@@ -624,6 +624,8 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.pathpointList[0].RemoveObject();
             instance.pathpointList.Clear();
         }
+
+        instance.ResetCurrentData();
     }
 
     /// <summary>
@@ -946,32 +948,55 @@ public class PathManager : VLY_Singleton<PathManager>
             return new List<InterestPointDetector>();
         }
 
-        List<Vector3> detectorPositions = new List<Vector3>();
+        List<Vector2> path2D = new List<Vector2>();
 
-        float lineLength = 0;
-        for (int i = 0; i < path.Count - 1; i++)
+        for(int i = 0; i < path.Count; i++)
         {
-            lineLength += Vector3.Distance(path[i], path[i + 1]);
+            path2D.Add(new Vector2(path[i].x, path[i].z));
         }
 
-        detectorPositions.Add(path[0]);
+        List<Vector2> detectorPositions = new List<Vector2>();
+
+        float lineLength = 0;
+        for (int i = 0; i < path2D.Count - 1; i++)
+        {
+            lineLength += Vector2.Distance(path2D[i], path2D[i + 1]);
+        }
+
+        detectorPositions.Add(path2D[0]);
 
         float distanceBetweenPoints = roadDetectorPrefab.Radius * 2;
-        int numDist = (int)(lineLength / distanceBetweenPoints);
+        int numDist = Mathf.CeilToInt(lineLength / distanceBetweenPoints);
         int pathIndex = 0;
 
         for (int i = 0; i < numDist; i++)
         {
             float distanceLeft = distanceBetweenPoints;
-            while (Vector3.Distance(detectorPositions[detectorPositions.Count - 1], path[pathIndex + 1]) <= distanceLeft)
+
+            Vector2 nextPosition = detectorPositions[detectorPositions.Count - 1];
+
+            while (pathIndex < path2D.Count - 1 && Vector2.Distance(nextPosition, path2D[pathIndex + 1]) <= distanceLeft)
             {
-                distanceLeft -= Vector3.Distance(detectorPositions[detectorPositions.Count - 1], path[pathIndex + 1]);
+                distanceLeft -= Vector2.Distance(nextPosition, path2D[pathIndex + 1]);
+
+                nextPosition = path2D[pathIndex + 1];
+
                 pathIndex++;
             }
 
-            Vector3 nextPoint = detectorPositions[detectorPositions.Count - 1] + (path[pathIndex + 1] - path[pathIndex]).normalized * distanceLeft;
+            if (pathIndex < path2D.Count - 1)
+            {
+                Vector2 nextPoint = nextPosition + (path2D[pathIndex + 1] - nextPosition).normalized * distanceLeft;
 
-            detectorPositions.Add(nextPoint);
+                detectorPositions.Add(nextPoint);
+            }
+            else
+            {
+                Vector2 nextPoint = path2D[pathIndex];
+
+                detectorPositions.Add(nextPoint);
+            }
+
         }
 
         List<InterestPointDetector> toReturn = new List<InterestPointDetector>();
@@ -979,7 +1004,7 @@ public class PathManager : VLY_Singleton<PathManager>
         for (int i = 0; i < detectorPositions.Count; i++)
         {
             InterestPointDetector detector = Instantiate(roadDetectorPrefab);
-            detector.transform.position = detectorPositions[i];
+            detector.transform.position = new Vector3(detectorPositions[i].x, PlayerInputManager.GetTerrainHeight(new Vector3(detectorPositions[i].x, 0, detectorPositions[i].y)), detectorPositions[i].y);
             toReturn.Add(detector);
         }
 
