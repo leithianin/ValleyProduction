@@ -1006,6 +1006,11 @@ public class PathManager : VLY_Singleton<PathManager>
             InterestPointDetector detector = Instantiate(roadDetectorPrefab);
             detector.transform.position = new Vector3(detectorPositions[i].x, PlayerInputManager.GetTerrainHeight(new Vector3(detectorPositions[i].x, 0, detectorPositions[i].y)), detectorPositions[i].y);
             toReturn.Add(detector);
+
+            if (i > 0)
+            {
+                detector.transform.LookAt(detector.transform.position + (toReturn[i].transform.position - toReturn[i - 1].transform.position));
+            }
         }
 
         return toReturn;
