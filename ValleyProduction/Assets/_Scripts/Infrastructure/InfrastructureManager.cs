@@ -8,7 +8,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 {
     [SerializeField] private InfrastructurePreviewHandler previewHandler;
 
-    private Infrastructure currentSelectedStructure;
+    [SerializeField] private Infrastructure currentSelectedStructure;
 
     public static InfrastructurePreview GetCurrentPreview => instance.previewHandler.GetPreview;
     public static Infrastructure GetCurrentSelectedStructure => instance.currentSelectedStructure;
@@ -18,7 +18,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     private static LayerMask layerIgnoreRaycast = 2;
     private static LayerMask layerInfrastructure = 0;
 
-    private GameObject movedObject = null;
+    [SerializeField] private GameObject movedObject = null;
 
     [Header("Tool management")]
     public ToolType toolSelected = ToolType.None;
@@ -31,6 +31,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     [SerializeField] private UnityEvent OnUnselectModifyTool;
     [SerializeField] private UnityEvent OnSelectDeleteTool;
     [SerializeField] private UnityEvent OnUnselectDeleteTool;
+    [SerializeField] private UnityEvent OnSelectNoTool;
 
     public static GameObject GetMovedObject => instance.movedObject;
 
@@ -113,6 +114,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                         break;
                     case ToolType.Delete:
                         instance.OnSelectDeleteTool?.Invoke();
+                        break;
+                    case ToolType.None:
+                        instance.OnSelectNoTool?.Invoke();
                         break;
                 }
             }

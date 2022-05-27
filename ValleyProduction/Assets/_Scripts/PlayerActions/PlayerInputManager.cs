@@ -9,6 +9,13 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 {
     [SerializeField] private Camera usedCamera;
     [SerializeField] private EventSystem usedEventSystem;
+    [SerializeField] private Terrain mainTerrain;
+    public static Terrain GetMainTerrain => instance.mainTerrain;
+    public static float GetTerrainHeight(Vector3 positionToSearch)
+    {
+        return GetMainTerrain.SampleHeight(positionToSearch) + GetMainTerrain.transform.position.y;
+    }
+
     [SerializeField] private float holdDuration;
 
     [SerializeField] private UnityEvent OnClicLeft;
@@ -79,10 +86,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         //Handle Mouse input outside UI
 
+        raycastHit = GetHitMouseGameobject();
+
         if (/*!UIManager.IsOnMenuBool() &&*/ !usedEventSystem.IsPointerOverGameObject())
         {
-            raycastHit = GetHitMouseGameobject();
-
             if (raycastHit.transform != null)
             {
                 clicHandlerTouched = raycastHit.transform.gameObject.GetComponent<CPN_ClicHandler>();

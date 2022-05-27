@@ -13,7 +13,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
     protected List<GameObject> objectBlockingPose = new List<GameObject>();
 
     // The senvitivity with which the preview will check the Navmesh.
-    protected float navMeshSensitivity = 2.25f;
+    [SerializeField] protected float navMeshSensitivity = 3f;
 
     [SerializeField] protected float rotateSpeed = 50f;
 
