@@ -29,6 +29,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         rewardBehaviors.Add(new QST_RWDB_UnlockStructure());
         rewardBehaviors.Add(new QST_RWDB_VisitorType());
         rewardBehaviors.Add(new QST_RWDB_QuestStart());
+        rewardBehaviors.Add(new QST_RWDB_IncrementFlag());
+        rewardBehaviors.Add(new QST_RWDB_TriggerFlag());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();
@@ -39,9 +41,12 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
             allQuests[i].Reset();
         }
 
-        //Placeholder : Démarre la première quête
-        TimerManager.CreateRealTimer(2f, () => BeginQuest(startQuest));        
-        //BeginQuest(startQuest);
+        if (startQuest != null)
+        {
+            //Placeholder : Démarre la première quête
+            TimerManager.CreateRealTimer(2f, () => BeginQuest(startQuest));
+            //BeginQuest(startQuest);
+        }
     }
 
     /// <summary>
@@ -138,7 +143,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
 
         if (i >= updatedQuest.Stages.Count)
         {
-            Debug.Log("Complete : " + updatedQuest);
+            //Debug.Log("Complete : " + updatedQuest);
             //TO DO : Mettre à jour l'UI pour afficher le bouton de completion d'une quête
             updatedQuest.state = QuestObjectiveState.PendingCompletion;
             //CompleteQuest(updatedQuest);
@@ -165,7 +170,26 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         {
             stage.State = state;
 
+            if(stage.State == QuestObjectiveState.Started)
+            {
+                if (stage.dialogueID != string.Empty)
+                {
+                    DialogueManager.instance.PlayDialogue(stage.dialogueID);
+                }
+            }
 
+            if(stage.State == QuestObjectiveState.Completed)
+            {
+                foreach(string str in stage.triggerFlagList)
+                {
+                    VLY_FlagManager.TriggerFlag(str);
+                }
+
+                foreach (string str in stage.incrementFlagList)
+                {
+                    VLY_FlagManager.IncrementFlagValue(str,1);
+                }
+            }
         }
     }
 

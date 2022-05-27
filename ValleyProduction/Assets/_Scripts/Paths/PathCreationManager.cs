@@ -162,6 +162,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         return navmeshPositionsList;
     }
 
+    public static List<Vector3> GetCalculatePath(IST_PathPoint ppstart, IST_PathPoint ppend)
+    {
+         return instance.CalculatePath(ppstart, ppend);
+    }
+
     //Update les line renderer lorsqu'on déplace un pathpoint
     public void UpdateSeveralLines(ModifiedPath pathModified)
     {
@@ -295,7 +300,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y + 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y + 1])));
                                 IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                         //Remplacer par le pathpoint Preview
 
-                                pathpoint.Node.PlaceNode(); 
+                                //pathpoint.Node.PlaceNode(); 
                                 pathpoint.pathpointActivate.ChangeLayerToDefault();
 
                                 pathpoint.SetPreviewMat();
@@ -330,7 +335,7 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                                 Vector3 positionMarker = ValleyUtilities.GetVectorPoint3D(vectors[y], vectors[y - 1], (Mathf.Abs(distanceNeed) / Vector3.Distance(vectors[y], vectors[y - 1])));
                                 IST_PathPoint pathpoint = Instantiate(testPathpoint, positionMarker, Quaternion.identity);                                        //Remplacer par le pathpoint Preview
 
-                                pathpoint.Node.PlaceNode();
+                                //pathpoint.Node.PlaceNode();
                                 pathpoint.pathpointActivate.ChangeLayerToDefault();
 
                                 UpdateData(pathpoint, vectors, true, pathPointList);

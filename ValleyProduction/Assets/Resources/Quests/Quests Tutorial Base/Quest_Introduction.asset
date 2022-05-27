@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba81bcd538d3414995fd2b2e707f39b, type: 3}
+  m_Name: Quest_Introduction
+  m_EditorClassIdentifier: 
+  questName: Path Creation 1/4
+  questDescription: Ceci est une description qui ne s'affichera pas.
+  stages:
+  - State: 4
+    Objectives:
+    - {fileID: 11400000, guid: 2687f493fd20d694783069ac523c7c20, type: 2}
+    triggerFlagList:
+    - ShowBuildMenu
+    incrementFlagList: []
+    dialogueID: PTD_001
+  - State: 4
+    Objectives:
+    - {fileID: 11400000, guid: 8866a878866c122499acadba7039e78b, type: 2}
+    triggerFlagList: []
+    incrementFlagList: []
+    dialogueID: 
+  - State: 4
+    Objectives:
+    - {fileID: 11400000, guid: eddffd490a5fabd4faface90d09252e8, type: 2}
+    triggerFlagList:
+    - FeedbackStartingZone
+    incrementFlagList: []
+    dialogueID: PTD_002
+  - State: 4
+    Objectives:
+    - {fileID: 11400000, guid: d033eb833f5a43e4baaddf799897c184, type: 2}
+    triggerFlagList:
+    - FeedbackStartingZoneEnd
+    incrementFlagList: []
+    dialogueID: 
+  - State: 1
+    Objectives:
+    - {fileID: 11400000, guid: d62a5eb878b05d8448e410fada5fe34b, type: 2}
+    triggerFlagList: []
+    incrementFlagList: []
+    dialogueID: PTD_003
+  - State: 0
+    Objectives:
+    - {fileID: 11400000, guid: d5e2427f4780ad14aba082f1462f771c, type: 2}
+    triggerFlagList: []
+    incrementFlagList: []
+    dialogueID: 
+  - State: 0
+    Objectives:
+    - {fileID: 11400000, guid: eba18aafd622b1a4dabed1e0361d9cc7, type: 2}
+    triggerFlagList: []
+    incrementFlagList: []
+    dialogueID: PTD_004
+  - State: 0
+    Objectives:
+    - {fileID: 11400000, guid: a56eb1a4fdb9f7c47b25b1af60eb4cb0, type: 2}
+    triggerFlagList: []
+    incrementFlagList: []
+    dialogueID: 
+  rewards:
+  - {fileID: 11400000, guid: 32bf6c23f49c99d43af4cab643bef012, type: 2}
+  - {fileID: 11400000, guid: d6637056d43603847a4ac1151d7e5cbe, type: 2}
+  state: 1

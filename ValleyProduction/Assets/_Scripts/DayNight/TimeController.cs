@@ -18,7 +18,7 @@ public class TimeController : MonoBehaviour
     //[SerializeField] private Color nightAmbientLight;
     [SerializeField] private Gradient hourGrandient;
     [SerializeField] private AnimationCurve lightChangeCurve;
-    [SerializeField] private AnimationCurve sunRotationY;
+    [SerializeField] private AnimationCurve sunRotationY;      //Not use atm
     [SerializeField] private float maxSunLightIntensity;
 
 

@@ -9,8 +9,12 @@ public class UI_Tool : MonoBehaviour
     [SerializeField] private UnityEvent OnSelectMoveTool;
     [SerializeField] private UnityEvent OnSelectDeleteTool;
     [SerializeField] private UnityEvent OnDeselectTool;
+    [SerializeField] private UnityEvent OnSelectStructure;
+    [SerializeField] private UnityEvent OnUnselectStructure;
 
     [SerializeField] private List<UI_InfrastructureButton> structureButtons;
+
+    [SerializeField] private InfrastructureData currentStructure;
 
     public void UnlockStructure(InfrastructurePreview toUnlock) //CODE REVIEW : Voir pour utiliser des Scriptable plutot que le Preview directement
     {
@@ -25,33 +29,34 @@ public class UI_Tool : MonoBehaviour
 
     public void OnToolCreatePath(int i)
     {
-        ConstructionManager.SelectInfrastructureType(null);
+        if (!PlayerInputManager.blockMouse)
+        {
+            ConstructionManager.SelectInfrastructureType(null);
 
-        if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
-        {
-            InfrastructureManager.SetToolSelected((ToolType)i);
-        }
-        else
-        {
-            InfrastructureManager.SetToolSelected(ToolType.None);
-        }
+            if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
+            {
+                InfrastructureManager.SetToolSelected((ToolType)i);
+            }
+            else
+            {
+                InfrastructureManager.SetToolSelected(ToolType.None);
+            }
 
-        switch (InfrastructureManager.GetCurrentTool)
-        {
-            case ToolType.Place:
-                OnBoardingManager.OnClickBuild?.Invoke(true);
-                OnSelectPlaceTool?.Invoke();
-                break;
-            case ToolType.Move:
-                OnBoardingManager.OnClickModify?.Invoke(true);
-                OnSelectMoveTool?.Invoke();
-                break;
-            case ToolType.Delete:
-                OnSelectDeleteTool?.Invoke();
-                break;
-            case ToolType.None:
-                UnselectTool();
-                break;
+            switch (InfrastructureManager.GetCurrentTool)
+            {
+                case ToolType.Place:
+                    OnSelectPlaceTool?.Invoke();
+                    break;
+                case ToolType.Move:
+                    OnSelectMoveTool?.Invoke();
+                    break;
+                case ToolType.Delete:
+                    OnSelectDeleteTool?.Invoke();
+                    break;
+                case ToolType.None:
+                    UnselectTool();
+                    break;
+            }
         }
     }
 
@@ -63,5 +68,33 @@ public class UI_Tool : MonoBehaviour
         {
             PathManager.CreatePathData();
         }
+    }
+
+    public void SelectStructure(InfrastructureData structure)
+    {
+        if (currentStructure != structure)
+        {
+            if (structure != null)
+            {
+                OnSelectStructure?.Invoke();
+
+                currentStructure = structure;
+            }
+            else
+            {
+                UnselectStructure();
+            }
+        }
+        else
+        {
+            UnselectStructure();
+        }
+    }
+
+    public void UnselectStructure()
+    {
+        OnUnselectStructure?.Invoke();
+
+        currentStructure = null;
     }
 }

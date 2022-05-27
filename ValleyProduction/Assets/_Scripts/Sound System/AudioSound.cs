@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-[CreateAssetMenu(fileName ="AudioSound", menuName ="Create AudioSound")]
+[CreateAssetMenu(fileName ="AudioSound", menuName ="Valley/Create AudioSound")]
 public class AudioSound : ScriptableObject
 {
     [SerializeField, Tooltip("A list of all the sound that can be played. Each time the AudioSound is played, it takes a random clip from here.")] private AudioClip[] clips;

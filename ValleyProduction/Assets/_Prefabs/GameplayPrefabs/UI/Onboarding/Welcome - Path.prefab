@@ -65,9 +65,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "As the new natural park manager</b></cspace> you will have to take care
-    of the environment, satisfy the visitors, and develop your valley.\r\nLet\u2019s
-    go and learn the basics!\r\n"
+  m_text: 'Hello, young sapling ! How were your first steps in this natural park
+    ? I hope you like it, because you''re in charge now ! As the manager, you''ll
+    welcome visitors, do your best to please them, and take care of the flora and
+    fauna. All that to bring back the valley''s former glory by reinserting it''s
+    most famous resident : the bear ! I''ve been waiting for his return since my
+    young days as a ranger... Hmmm ? You want to know who I am ? Ah, I thought you
+    would never ask, but maybe you do know how to respect your elders. The name''s
+    Woody, 67 years old, and as fresh as a spring breeze ! You''ll learn more about
+    me as I pass all my knowledge about this place to you. And that''s a lot, so
+    I''m here to stay !'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d4c2ea064267874aadc96e01e7344fa, type: 2}
   m_sharedMaterial: {fileID: -5196172489567466955, guid: 4d4c2ea064267874aadc96e01e7344fa, type: 2}
@@ -1904,15 +1911,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: OnBoarding, Assembly-CSharp
-        m_MethodName: Over
-        m_Mode: 1
+      - m_Target: {fileID: 6741744394646506010}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
+          m_StringArgument: Exit
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5359454717255180461}
+        m_TargetAssemblyTypeName: IFB_DesactivateAfterTime, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.618
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2

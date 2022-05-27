@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Quest Objective", menuName = "Quest/Quest Objective/Visitor Reach Landmark")]
+[CreateAssetMenu(fileName = "New Quest Objective", menuName = "Valley/Quest/Quest Objective/Visitor Reach Landmark")]
 public class QST_OBJ_VisitorReachLandmark : QST_Objective
 {
     [SerializeField] private VisitorScriptable visitorType;

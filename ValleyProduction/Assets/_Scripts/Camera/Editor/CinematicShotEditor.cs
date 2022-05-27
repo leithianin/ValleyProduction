@@ -40,6 +40,9 @@ public class CinematicShotEditor : Editor
 
     SerializedProperty originVisualOffset;
 
+    SerializedProperty useCustomDuration;
+    SerializedProperty duration;
+
     SerializedProperty drawGroundDebug;
     SerializedProperty debugMesh;
 
@@ -51,7 +54,12 @@ public class CinematicShotEditor : Editor
     SerializedProperty cameraData;
 
     SerializedProperty isTraveling;
+    SerializedProperty cinematic;
     SerializedProperty speed;
+
+    SerializedProperty isRotating;
+    SerializedProperty clockwise;
+    SerializedProperty rotationSpeed;
 
 
     void OnEnable()
@@ -91,17 +99,20 @@ public class CinematicShotEditor : Editor
         cameraData = serializedObject.FindProperty("cameraData");
 
         isTraveling = serializedObject.FindProperty("isTraveling");
+        cinematic = serializedObject.FindProperty("cinematic");
         speed = serializedObject.FindProperty("speed");
+
+        isRotating = serializedObject.FindProperty("isRotating");
+        clockwise = serializedObject.FindProperty("clockwise");
+        rotationSpeed = serializedObject.FindProperty("rotationSpeed");
+
+        useCustomDuration = serializedObject.FindProperty("useCustomDuration");
+        duration = serializedObject.FindProperty("duration");
 
         ui = GameObject.Find("-UI-");
         baseColor = GUI.backgroundColor;
 
 
-    }
-
-    private void OnDisable()
-    {
-        
     }
 
     public override void OnInspectorGUI()
@@ -169,8 +180,33 @@ public class CinematicShotEditor : Editor
         EditorGUILayout.Space();
         GUILayout.BeginHorizontal("Dolly");
         EditorGUILayout.PropertyField(isTraveling, new GUIContent("Camera Dolly"));
-        EditorGUILayout.PropertyField(speed);
+        if (cinematicShot.isTraveling)
+        {
+            EditorGUILayout.PropertyField(speed);
+        }
         GUILayout.EndHorizontal();
+
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(isRotating, new GUIContent("Rotate"));
+        if (cinematicShot.isRotating)
+        {
+            GUILayout.BeginHorizontal("Rotation");
+            EditorGUILayout.PropertyField(clockwise);
+            EditorGUILayout.PropertyField(rotationSpeed, new GUIContent("Speed"));
+            GUILayout.EndHorizontal();
+        }
+
+        EditorGUILayout.Space();
+        GUILayout.BeginHorizontal("Duration");
+        EditorGUILayout.PropertyField(useCustomDuration, new GUIContent("Custom Duration"));
+        if (cinematicShot.useCustomDuration)
+        {
+            EditorGUILayout.PropertyField(duration);
+        }
+        GUILayout.EndHorizontal();
+
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(cinematic, new GUIContent("Cinematic"));
 
         EditorGUILayout.Space();
         EditorGUILayout.PropertyField(boundariesCollider);
@@ -219,6 +255,8 @@ public class CinematicShotEditor : Editor
         EditorGUILayout.PropertyField(originVisualOffset);
 
         EditorGUILayout.PropertyField(maxRadiusValue);
+
+        EditorGUILayout.PropertyField(cinematic);
 
         EditorGUILayout.PropertyField(drawGroundDebug);
         EditorGUILayout.PropertyField(debugMesh);

@@ -63,6 +63,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 6ff42559cc0f9194ab60d22d48b86e87, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - TransitionNoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 232f049d337d7614897676d6bb101a04, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -170,9 +174,15 @@ Material:
     - SetStretchCurve: 0
     - SetStretchEffect: 0
     - SquashAnim: 0
+    - TRANSITION: 0
+    - TRANSITION_STATE: 0
+    - TransitionEdgeThickness: 0.1
+    - TransitionHueState: 0
+    - TransitionState: 0
     - WindDensity: 5
     - WindStrength: 2
     - _AlphaClip: 0
+    - _BLOSSOM: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -201,6 +211,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - MainTexHue: {r: 1, g: 1, b: 1, a: 1}
+    - TransitionHue: {r: 0, g: 0, b: 0, a: 0}
     - WindDirection: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

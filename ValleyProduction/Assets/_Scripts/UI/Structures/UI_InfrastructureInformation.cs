@@ -100,8 +100,16 @@ public class UI_InfrastructureInformation : MonoBehaviour
 
     public void HideInfrastructureInfo()
     {
-        OnHide?.Invoke(openedInfrastructure.gameObject);
         UIManager.HideShownGameObject();
+    }
+
+    public void OnHideFunction()
+    {
+        if (openedInfrastructure != null)
+        {
+            OnHide?.Invoke(openedInfrastructure.gameObject);
+            ResetSavedInfrastructe();
+        }
     }
 
     public void SetStructureOpen(bool isOpen)

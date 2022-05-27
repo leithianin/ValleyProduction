@@ -15,6 +15,7 @@ public class HeatmapViewController : MonoBehaviour
     public GameObject foliage;
 
     private bool isEnabled;
+    private int currentIndex;
 
     void Start()
     {
@@ -66,7 +67,16 @@ public class HeatmapViewController : MonoBehaviour
     }
     public void HandleHeatmap(int index)
     {
-        EnableHeatmapView(!isEnabled, index);
+        if(currentIndex != index && index != 0)
+        {
+            currentIndex = index;
+            EnableHeatmapView(true, index);
+        }
+        else
+        {
+            currentIndex = 0;
+            EnableHeatmapView(false, 0);
+        }
     }
 
     private void EnableHeatmapView(bool enable, int index)
@@ -75,7 +85,10 @@ public class HeatmapViewController : MonoBehaviour
 
         baseLights.SetActive(!enable);
         heatmapLight.SetActive(enable);
-        foliage.SetActive(!enable);
+        if (foliage != null)
+        {
+            foliage.SetActive(!enable);
+        }
 
         foreach (Material m in Materials)
         {

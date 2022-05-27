@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UI_VisitorInformation : MonoBehaviour
 {
-    private GameObject currentVisitor;
+    [HideInInspector] public GameObject currentVisitor;
 
     [SerializeField] private TouristType touristInfo;
     [SerializeField] private TouristType hikersInfo;
@@ -35,22 +35,17 @@ public class UI_VisitorInformation : MonoBehaviour
     {
         currentVisitor = cpn_Inf.gameObject;
         currentInfo = cpn_Inf;
-        OnBoardingManager.OnClickVisitorEco?.Invoke(true);
         OnShow?.Invoke(currentVisitor);
         switch (cpn_Inf.visitorType)
         {
             case TypeVisitor.Hiker:
-                if (OnBoardingManager.firstClickVisitors)
-                {
-                    OnBoardingManager.OnClickVisitorPath?.Invoke(true);
-                    OnBoardingManager.ShowHikerProfileIntro();
-                    OnBoardingManager.firstClickVisitors = false;
-                }
+                OnBoardingManager.ClickOnHiker();
                 ChangeInfoVisitor(hikersInfo, cpn_Inf);
                 currentTourist = hikersInfo;
                 hikersInfo.gameObject.SetActive(true);
                 return hikersInfo;
             case TypeVisitor.Tourist:
+                OnBoardingManager.ClickOnTourist();
                 ChangeInfoVisitor(touristInfo, cpn_Inf);
                 currentTourist = touristInfo;
                 touristInfo.gameObject.SetActive(true);
@@ -61,8 +56,17 @@ public class UI_VisitorInformation : MonoBehaviour
 
     public void HideVisitorInformation()
     {
-        OnHide?.Invoke(currentVisitor);
         UIManager.HideShownGameObject();
+    }
+
+    public void OnHideFunction()
+    {
+        if (currentVisitor != null)
+        {
+            currentInfo.HideInformation();
+            OnHide?.Invoke(currentVisitor);
+            ResetSavedVisitors();
+        }
     }
 
     public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)

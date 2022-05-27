@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName ="New Structure", menuName ="Infrastructure/Create New Structure Data")]
+[CreateAssetMenu(fileName ="New Structure", menuName ="Valley/Infrastructure/Create New Structure Data")]
 public class InfrastructureData : ScriptableObject, CPN_Data_Purchasable
 {
     [SerializeField] private string structureName;

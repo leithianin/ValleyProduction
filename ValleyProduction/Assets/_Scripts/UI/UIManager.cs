@@ -71,14 +71,12 @@ public class UIManager : VLY_Singleton<UIManager>
         {
             if (GetInfrastructureInfo != null)
             {
-                GetInfrastructureInfo.ResetSavedInfrastructe();
+                GetInfrastructureInfo.OnHideFunction();
             }
             if (GetVisitorInformation != null)
             {
-                GetVisitorInformation.ResetSavedVisitors();
+                GetVisitorInformation.OnHideFunction();
             }
-            OnBoardingManager.onHideVisitorInfo?.Invoke(true);
-            OnBoardingManager.OnDeselectInfrastructure?.Invoke(true);
             gameObjectShown.SetActive(false);
         }
     }
@@ -199,9 +197,9 @@ public class UIManager : VLY_Singleton<UIManager>
         }
     }
 
-    public static void OnUnsetVisitor(VisitorScriptable visitor)
+    public static void OnUnsetVisitor(GameObject gameObject)
     {
-        if(GetVisitorInformation != null && GetVisitorInformation.currentInfo != null && visitor == GetVisitorInformation.currentInfo.scriptable)
+        if(GetVisitorInformation != null && GetVisitorInformation.currentInfo != null && gameObject == GetVisitorInformation.currentVisitor)
         {
             HideShownGameObject();
         }
@@ -219,7 +217,6 @@ public class UIManager : VLY_Singleton<UIManager>
 
     public void ShowInfoInfrastructure(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
-        OnBoardingManager.OnClickInfrastructure?.Invoke(true);
         infrastructureInfo.ShowStructureInformation(infoInfra, baseStruct);
         gameObjectShown = infrastructureInfo.gameObject;
     }

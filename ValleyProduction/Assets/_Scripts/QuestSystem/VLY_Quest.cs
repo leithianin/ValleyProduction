@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Quest Quest", menuName = "Quest/Create Quest")]
+[CreateAssetMenu(fileName = "New Quest Quest", menuName = "Valley/Quest/Create Quest")]
 public class VLY_Quest : ScriptableObject
 {
     private int currentStage;
@@ -69,4 +69,9 @@ public class QST_ObjectiveStage
     public QuestObjectiveState State;
 
     public List<QST_Objective> Objectives;
+
+    public List<string> triggerFlagList;
+    public List<string> incrementFlagList;
+
+    public string dialogueID;
 }

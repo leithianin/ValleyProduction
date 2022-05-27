@@ -10,8 +10,18 @@ public class CinematicShot : SphericalTransform
     [SerializeField] public Camera _camera = default;
     public GameObject ui;
     public bool soloCamera = false;
+
     public bool isTraveling = false;
+    public bool cinematic = false;
     public float speed = 1.0f;
+
+    public bool isRotating = false;
+    public bool clockwise = true;
+    public float rotationSpeed = 1.0f;
+
+    public bool useCustomDuration = false;
+    public float duration = 0.0f;
+
     [SerializeField] private Transform originTarget = default;
     [SerializeField] private GameObject parentGameObject = default;
     [SerializeField] private GameObject originGameObject = default;
@@ -53,11 +63,25 @@ public class CinematicShot : SphericalTransform
         if (cameraData != null)
         {
             cameraData.scene = SceneManager.GetActiveScene().name;
+
             cameraData.radius = Coordinates.x;
             cameraData.azimuthalAngle = Coordinates.y;
             cameraData.polarAngle = Coordinates.z;
+
+            cameraData.verticalOffset = OriginVisualOffset;
+
             cameraData.cameraOriginPosition = origin.position;
+
             cameraData.isTraveling = isTraveling;
+
+            cameraData.isRotating = isRotating;
+            cameraData.clockwise = clockwise;
+            cameraData.rotationSpeed = rotationSpeed;
+
+            cameraData.cinematic = cinematic;
+
+            cameraData.useCustomDuration = useCustomDuration;
+            cameraData.duration = duration;
 
             if (isTraveling)
             {

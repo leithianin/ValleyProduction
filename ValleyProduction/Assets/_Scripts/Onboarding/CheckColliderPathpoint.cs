@@ -5,22 +5,27 @@ using UnityEngine.Events;
 
 public class CheckColliderPathpoint : MonoBehaviour
 {
-    public UnityEvent OnCollide;
+    [SerializeField] private UnityEvent OnCollide;
 
-    private void OnEnable()
+   /* private void OnTriggerEnter(Collider other)
     {
-        
-    }
+        IST_PathPoint pathpoint = other.gameObject.GetComponent<IST_PathPoint>();
 
-    private void Start()
-    {
-        
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<IST_PathPoint>() && enabled)
+        if (pathpoint != null && InfrastructureManager.GetMovedObject == null)
         {
+            Debug.Log("OnCollide");
+            OnCollide?.Invoke();
+            enabled = false;
+        }
+    }*/
+
+    private void OnTriggerStay(Collider other)
+    {
+        IST_PathPoint pathpoint = other.gameObject.GetComponent<IST_PathPoint>();
+
+        if (pathpoint != null && InfrastructureManager.GetMovedObject == null)
+        {
+            Debug.Log("OnCollide");
             OnCollide?.Invoke();
             enabled = false;
         }

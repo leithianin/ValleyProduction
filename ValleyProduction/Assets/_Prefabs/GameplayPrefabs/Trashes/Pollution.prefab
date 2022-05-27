@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 808926896532056846}
   - component: {fileID: 808926896532056847}
   - component: {fileID: 808926896532056844}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: Pollution
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,8 +177,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04ffc6ccb2ed394d9ebbadadc6af0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 25
+  range: 10
   scoreProduced: 2
+  OnChangeScore:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &5589520389814543628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,6 +248,10 @@ PrefabInstance:
     - target: {fileID: 3122338157563747271, guid: 39ab700c43f4b004799e2f09534bacb5, type: 3}
       propertyPath: m_Name
       value: Prefab_DrinkCan_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122338157563747271, guid: 39ab700c43f4b004799e2f09534bacb5, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ab700c43f4b004799e2f09534bacb5, type: 3}

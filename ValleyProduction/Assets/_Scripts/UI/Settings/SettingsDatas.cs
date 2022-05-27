@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="Settings Data", menuName ="UI/Settings Data")]
+[CreateAssetMenu(fileName ="Settings Data", menuName ="Valley/UI/Settings Data")]
 public class SettingsDatas : ScriptableObject
 {
     public bool cameraEdgeScrollingActive = true;

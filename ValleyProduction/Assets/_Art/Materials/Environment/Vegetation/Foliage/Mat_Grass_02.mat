@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - MainTex:
-        m_Texture: {fileID: 2800000, guid: 2ae416daf3e5ea34a8007ee3a8cf1a55, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8b5270a67d2d39740b02e438646ffe1a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - NoiseMapTex:
@@ -51,6 +51,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: a99f52199a640cb44ac4bd02bff66bcf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - TransitionNoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -61,6 +65,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DefaultTex:
+        m_Texture: {fileID: 2800000, guid: 4ffcc92eb2b050f4e815ea2c0bc920ac, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -138,7 +146,7 @@ Material:
     - DitherOffset: 0
     - DitherRange: 100
     - EmissiveIntensity: 0
-    - FadeDistance: 50
+    - FadeDistance: 1
     - HEATMAP_INDEX: 0
     - HeatmapIndex: 0
     - Modifier: 0
@@ -153,10 +161,13 @@ Material:
     - SetStretchCurve: 0
     - SetStretchEffect: 0
     - SquashAnim: 0
+    - TRANSITION: 0
+    - TRANSITION_STATE: 0
     - WIND: 0
     - WindDensity: 5
     - WindStrength: 2
     - _AlphaClip: 0
+    - _BLOSSOM: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -186,7 +197,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - MainTexHue: {r: 0.5473478, g: 0.9433962, b: 0.65127116, a: 1}
+    - MainTexHue: {r: 1, g: 1, b: 1, a: 1}
+    - TransitionHue: {r: 0, g: 0, b: 0, a: 0}
     - WindDirection: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 0.26232645, g: 0.4245283, b: 0.3492203, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

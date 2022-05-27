@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="New global data", menuName ="Create Global Data")]
+[CreateAssetMenu(fileName ="New global data", menuName ="Valley/Create Global Data")]
 public class VLY_GlobalData : ScriptableObject
 {
     [SerializeField] private float value;

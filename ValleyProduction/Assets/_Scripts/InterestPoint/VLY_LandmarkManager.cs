@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VLY_LandmarkManager : VLY_Singleton<VLY_LandmarkManager>
 {
-    private List<LandmarkType> validLandmarkWithPath = new List<LandmarkType>();
+    [SerializeField]private List<LandmarkType> validLandmarkWithPath = new List<LandmarkType>();
 
     private List<CPN_IsLandmark> landmarkOnMap = new List<CPN_IsLandmark>();
 
@@ -14,7 +14,7 @@ public class VLY_LandmarkManager : VLY_Singleton<VLY_LandmarkManager>
     public static Action<LandmarkType, VisitorBehavior> OnVisitorInteractWithLandmark;
     #endregion
 
-    public List<LandmarkType> GetValidLandmark => validLandmarkWithPath;
+    public static List<LandmarkType> GetValidLandmark => instance.validLandmarkWithPath;
 
     public static List<CPN_IsLandmark> AllLandmarks => instance.landmarkOnMap;
 

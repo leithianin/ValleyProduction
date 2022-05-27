@@ -13,16 +13,23 @@ public class ECO_DIS_VegetationDisplayer : EcosystemDisplay
     public override void OnUpdateScore(int newScore)
     {
         score = newScore;
+
         for(int i = 0; i < trees.Count; i++)
         {
-            if(newScore > 0 && !trees[i].IsSet)
+            if(newScore != trees[i].CurrentPhase)
             {
-                trees[i].SetTree();
+                trees[i].SetTreePhase(newScore);
             }
-            else if (newScore <= 0 && trees[i].IsSet)
+
+            trees[i].SetTreePhase(newScore);
+            /*if(newScore > 0 && trees[i].IsSet)
             {
                 trees[i].UnsetTree();
             }
+            else if (newScore <= 0 && !trees[i].IsSet)
+            {
+                trees[i].SetTree();
+            }*/
         }
     }
 }

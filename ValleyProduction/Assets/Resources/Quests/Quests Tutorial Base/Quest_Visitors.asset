@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba81bcd538d3414995fd2b2e707f39b, type: 3}
+  m_Name: Quest_Visitors
+  m_EditorClassIdentifier: 
+  questName: Camera
+  questDescription: Ceci est une description qui ne s'affichera pas.
+  stages:
+  - State: 0
+    Objectives:
+    - {fileID: 11400000, guid: 57b14a6402fdd72459a603cec45c6cdc, type: 2}
+    triggerFlagList:
+    - FeedbackOutlineHikers
+    incrementFlagList: []
+    dialogueID: PTD_005
+  - State: 0
+    Objectives:
+    - {fileID: 11400000, guid: 007c0ef05e8f4304daa5bd467147ef4d, type: 2}
+    triggerFlagList:
+    - FeedbackOutlineHikersEnd
+    incrementFlagList: []
+    dialogueID: 
+  - State: 0
+    Objectives:
+    - {fileID: 11400000, guid: 34e4b29b1ddfbb14291923c6d576570f, type: 2}
+    triggerFlagList:
+    - StopFollowHiker
+    incrementFlagList: []
+    dialogueID: PTD_006
+  - State: 0
+    Objectives:
+    - {fileID: 11400000, guid: aca9ddbf3158454438767e7ececa0e06, type: 2}
+    triggerFlagList:
+    - ReachWaterfall
+    incrementFlagList: []
+    dialogueID: 
+  rewards:
+  - {fileID: 11400000, guid: 0622f4831a7ebc545a1f9e4c4e267fa0, type: 2}
+  state: 0

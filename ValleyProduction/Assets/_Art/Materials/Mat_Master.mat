@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Master
-  m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 5fcdb40db410b1042bd262104bbaeee1, type: 3}
   m_ShaderKeywords: WIND
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - MainTex:
-        m_Texture: {fileID: 2800000, guid: 15247ae52eafd3b478b36d40a5a29aff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 42625d0691465c54ba4da15869e30ad0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - NoiseMapTex:
@@ -53,6 +53,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - RMA:
         m_Texture: {fileID: 2800000, guid: 95037dc205769e54f96665866c961b06, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TransitionNoiseTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -139,7 +143,7 @@ Material:
     - DitherOffset: 0
     - DitherRange: 100
     - EmissiveIntensity: 0
-    - FadeDistance: 2
+    - FadeDistance: 1
     - HEATMAP_INDEX: 0
     - HeatmapIndex: 0
     - MODIF_MODE: 0
@@ -153,6 +157,7 @@ Material:
     - RENDER_HEATMAP: 0
     - Radius: 1
     - RangeRange: 0.2
+    - SQUASHANIM: 0
     - SQUASH_ANIM: 0
     - SetRadius: 1
     - SetSquashCurve: 0
@@ -165,11 +170,17 @@ Material:
     - SquashEffect: 0
     - StretchCurve: 0
     - StretchEffect: 0
+    - TRANSITION: 0
+    - TRANSITION_STATE: 0
+    - TransitionEdgeThickness: 0.1
+    - TransitionHueState: 0
+    - TransitionState: 0
     - WIND: 1
     - Wind: 0
     - WindDensity: 0.31
     - WindStrength: 0.06
     - _AlphaClip: 0
+    - _BLOSSOM: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -200,6 +211,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - MainTexHue: {r: 1, g: 1, b: 1, a: 1}
+    - TransitionHue: {r: 0, g: 0, b: 0, a: 0}
     - WindDirection: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

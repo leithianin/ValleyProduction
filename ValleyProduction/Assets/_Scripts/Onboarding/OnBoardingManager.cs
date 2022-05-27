@@ -7,105 +7,58 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
-    public bool activateOnBoarding = false;
+    public GameObject Welcome;
+    public GameObject End;
 
-    public OB_Sequence sequence;
+    public UnityEvent OnProfileHiker;
+    public UnityEvent OnProfileTourist;
+    public UnityEvent OnProfileInfrastructure;
 
-    [Header("On Boarding Path")]
-    public static Action<bool> OnClickVisitorPath;
-    public static bool firstClickVisitors = false;
-    public GameObject UI_Arrow_Chapel;
-    public GameObject UI_ZoneChapel;
-    public OB_VisitorsProfilesIntro visitorProfileIntroOnBoarding;
-    public OB_EndOnboardingPath endOnboarding;
-    public OB_OnReachChapel chapelOnboarding;
+    public UnityEvent OnEnd;
+    public UnityEvent OnCinematic;
 
-    [Header("On Boarding Ecosystem")]
-    public static Action<bool> OnClickHeatmapNoise;
-    public static Action<bool> OnClickVisitorEco;
-    public static Action<bool> onClickPath;
-    public static Action<bool> onHideVisitorInfo;
-    public static Action<bool> onDestroyPath;
-
-    [Header("On Boarding Infrastructure")]
-    public static Action<bool> OnClickInfrastructure;
-    public static Action<bool> OnDeselectInfrastructure;
-    public static Action<bool> OnClickModify;
-    public static Action<bool> OnClickFoodInfrastructure;
-    public static Action<bool> OnClickZone;
-    public static Action<bool> OnClickBuild;
-
-    private void Start()
+    //unity event OnCameraMove
+    public static void ClickOnHiker()
     {
-        if(activateOnBoarding)
+        if(instance != null)
         {
-            sequence.Play();
-        }
-        else
-        {
-            VisitorManager.SetVisitorSpawn(true);
+            instance.OnProfileHiker?.Invoke();
         }
     }
 
-    public static void PlayNextEvent()
+    public static void ClickOnTourist()
     {
-        Debug.Log("Play next Event");
-        //instance.increment++;
-        //instance.onBoardingList[instance.increment]?.Play();
+        if (instance != null)
+        {
+            instance.OnProfileTourist?.Invoke();
+        }
     }
 
-    #region Path
+    public static void OnEndTutorial()
+    {
+        instance.OnEnd?.Invoke();
+    }
+
+    public static void OnPlayCinematic()
+    {
+        instance.OnCinematic?.Invoke();
+    }
+
+    #region To Remove 
     public static void SetCanSpawnVisitors(bool cond)
     {
         VisitorManager.SetVisitorSpawn(cond);
     }
 
-    public static void PlayEndPathOnBoarding()
+    public static void SetTimeToNormal()
     {
         VLY_Time.SetTimeScale(1);
-        instance.endOnboarding.EndOnBoardingPath?.Invoke();
-    }
-
-    public static void ShowVisitorsProfileIntro()
-    {
-        //instance.UI_OB_VisitorsProfileInfo.SetActive(true);
-        instance.visitorProfileIntroOnBoarding.OnShowInfo?.Invoke();
-        instance.visitorProfileIntroOnBoarding.OnReach?.Invoke();
-    }
-
-    public static void ShowHikerProfileIntro()
-    {
-        instance.visitorProfileIntroOnBoarding.Over();
-        instance.chapelOnboarding.Play();
-        instance.activateOnBoarding = false;
-        //instance.UI_OB_VisitorsProfileInfo.SetActive(false);
-        //instance.UI_OB_HikerIntro.SetActive(true);
     }
 
     public static void ShowChapelDirection()
     {
-        instance.UI_Arrow_Chapel.SetActive(true);
-        instance.UI_ZoneChapel.SetActive(true);
-    }
-
-    public static void DesactivateTool()
-    {
-        InfrastructureManager.instance.toolSelected = ToolType.None;
-        ConstructionManager.SelectInfrastructureType(null);
-    }
-    #endregion
-
-    #region Ecosystem
-    public void OnHeatmapNoise()
-    {
-        OnClickHeatmapNoise?.Invoke(true);
-    }
-    #endregion
-
-    #region Infrastructure
-    public void OnInfraMove()
-    {
-        OnClickFoodInfrastructure?.Invoke(true);
+        //instance.UI_Arrow_Chapel.SetActive(true);
+        //instance.UI_ZoneChapel.SetActive(true);
     }
     #endregion
 }
