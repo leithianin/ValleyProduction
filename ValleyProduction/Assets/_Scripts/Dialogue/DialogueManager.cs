@@ -139,6 +139,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     {
         if (speak)
         {
+            Debug.Log("WantToSkip true.");
             wantToSkip = true;
         }
 

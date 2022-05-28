@@ -63,11 +63,14 @@ MonoBehaviour:
     - ShowObjectiveWatermillPath
     incrementFlagList: []
     dialogueID: PTD_004
-  - State: 1
+  - State: 4
     Objectives:
     - {fileID: 11400000, guid: a56eb1a4fdb9f7c47b25b1af60eb4cb0, type: 2}
-    triggerFlagList: []
+    triggerFlagList:
+    - ValidateWatermillObjective
     incrementFlagList: []
     dialogueID: 
-  rewards: []
-  state: 1
+  rewards:
+  - {fileID: 11400000, guid: d6637056d43603847a4ac1151d7e5cbe, type: 2}
+  - {fileID: 11400000, guid: 32bf6c23f49c99d43af4cab643bef012, type: 2}
+  state: 3
