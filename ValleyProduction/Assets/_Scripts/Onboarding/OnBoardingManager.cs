@@ -17,6 +17,19 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnEnd;
     public UnityEvent OnCinematic;
 
+    public static bool blockPlacePathpoint = false;
+    public static bool onlyHicker = false;
+
+    public static void SetBlockPlacePathpoint(bool cond)
+    {
+        blockPlacePathpoint = cond;
+    }
+
+    public static void SetOnlyHickers(bool cond)
+    {
+        onlyHicker = cond;
+    }
+
     //unity event OnCameraMove
     public static void ClickOnHiker()
     {

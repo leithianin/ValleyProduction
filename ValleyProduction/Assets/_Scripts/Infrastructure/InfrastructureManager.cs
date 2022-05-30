@@ -167,8 +167,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public void EndRotation()
     {
-        Debug.Log("End Rotation");
-
         previewHandler.isRotating = false;
         previewHandler.transform.rotation = Quaternion.identity;
         Cursor.visible = true;
