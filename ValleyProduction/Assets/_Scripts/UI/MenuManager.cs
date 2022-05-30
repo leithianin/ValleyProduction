@@ -7,12 +7,17 @@ using UnityEngine.UI;
 public class MenuManager : VLY_Singleton<MenuManager>
 {
     bool isSceneLoading;
-    int sceneToLoad = 0;
+    int sceneToLoad = -1;
+
+    public GameObject blackScreen;
 
     public static void LoadScene(int sceneIndex)
     {
-        Debug.Log(instance);
-        instance.Play(sceneIndex);
+        Debug.Log(instance.sceneToLoad);
+        if (instance.sceneToLoad <= -1) return;
+
+        instance.blackScreen.SetActive(true);
+        instance.Play(instance.sceneToLoad);
     }
 
     public static void Exit()
@@ -20,9 +25,15 @@ public class MenuManager : VLY_Singleton<MenuManager>
         instance.ExitGame();
     }
 
-    public void Play(int i) //CODE REVIEW : Pour le menu de pause, ne pas donner de référence à cette fonction directement. Passer par un script (UI_PauseMenu)
+    public void SetSceneIndex(int i)
     {
         sceneToLoad = i;
+        //LoadScene(sceneToLoad);
+    }
+
+    public void Play(int i) //CODE REVIEW : Pour le menu de pause, ne pas donner de référence à cette fonction directement. Passer par un script (UI_PauseMenu)
+    {
+        //sceneToLoad = i;
         if (!isSceneLoading)
         {
             Debug.Log("Load scene");
