@@ -158,7 +158,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         CursorControl.SetSaveMousePosition();
 
-        instance.previewHandler.isRotating = true;
+        previewHandler.isRotating = true;
         Cursor.visible = false;
     }
 
@@ -167,8 +167,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public void EndRotation()
     {
-        Debug.Log("End Rotation");
-
         previewHandler.isRotating = false;
         previewHandler.transform.rotation = Quaternion.identity;
         Cursor.visible = true;
