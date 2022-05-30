@@ -47,6 +47,7 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     {
         if (!snaping)
         {
+            Debug.Log(isRotating);
             if (!isRotating)
             {
                 transform.position = currentPreview.TrySetPosition();
