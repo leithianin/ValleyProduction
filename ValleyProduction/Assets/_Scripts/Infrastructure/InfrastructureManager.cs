@@ -85,9 +85,11 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             switch (instance.toolSelected)
             {
                 case ToolType.Place:
+                    instance.EndRotation();
                     instance.OnUnselectConstructionTool?.Invoke();
                     break;
                 case ToolType.Move:
+                    instance.EndRotation();
                     if (instance.movedObject != null)
                     {
                         CancelMoveStructure();
@@ -165,6 +167,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public void EndRotation()
     {
+        Debug.Log("End Rotation");
+
         previewHandler.isRotating = false;
         previewHandler.transform.rotation = Quaternion.identity;
         Cursor.visible = true;
@@ -243,6 +247,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void CancelMoveStructure()
     {
         //CODE REVIEW : PLUS UTILISE ?
+        instance.EndRotation();
         GameObject saveObject = instance.movedObject;
 
         TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));
@@ -303,6 +308,8 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         if (GetCurrentPreview.AskToPlace(position) && !previewHandler.snaping)
         {
+            toChange.transform.rotation = previewHandler.transform.rotation;
+
             EndRotation();
 
             toChange.transform.position = position;
@@ -361,6 +368,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void UnselectInfrastructure()
     {
+        instance.EndRotation();
         if (instance.currentSelectedStructure != null)
         {
             Debug.Log(instance.currentSelectedStructure.gameObject);
