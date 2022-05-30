@@ -17,6 +17,11 @@ public class HeatmapViewController : MonoBehaviour
     private bool isEnabled;
     private int currentIndex;
 
+    #region Animatic
+    public bool enableHeatview;
+    [Range(0, 4)] public int viewIndex;
+    #endregion
+
     void Start()
     {
         foreach (Material m in Materials)
@@ -59,12 +64,18 @@ public class HeatmapViewController : MonoBehaviour
         {
             HandleHeatmap(4);
         }
+
+        if (enableHeatview)
+        {
+            HandleHeatmap(viewIndex);
+        }
     }
 
     private void OnApplicationQuit()
     {
         EnableHeatmapView(false, 0);
     }
+
     public void HandleHeatmap(int index)
     {
         if(currentIndex != index && index != 0)
