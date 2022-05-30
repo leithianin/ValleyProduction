@@ -13,7 +13,7 @@ public class OutlineLastMarker : MonoBehaviour
 
     private void OnDisable()
     {
-        DesactivateOutline();
+        //DesactivateOutline();
     }
 
     public void ActivateOutline()
@@ -32,7 +32,7 @@ public class OutlineLastMarker : MonoBehaviour
 
     public void DesactivateOutline()
     {
-        PathManager.GetCurrentPathpointList[PathManager.GetCurrentPathpointList.Count - 1].outline.enabled = false;
+        //PathManager.GetCurrentPathpointList[PathManager.GetCurrentPathpointList.Count - 1].outline.enabled = false;
         enabled = false;
     }
 }
