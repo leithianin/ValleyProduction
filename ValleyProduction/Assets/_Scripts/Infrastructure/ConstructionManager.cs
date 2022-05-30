@@ -27,7 +27,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
             InfrastructureManager.PlaceInfrastructure(posePosition);
         }
 
-        if(InfrastructureManager.GetCurrentTool == ToolType.Move && InfrastructureManager.GetMovedObject != null)
+        if (InfrastructureManager.GetCurrentTool == ToolType.Move && InfrastructureManager.GetMovedObject != null)
         {
             InfrastructureManager.ReplaceInfrastructure(posePosition);
         }
