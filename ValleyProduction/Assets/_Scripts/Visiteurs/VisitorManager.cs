@@ -87,6 +87,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                 }
                 else
                 {
+                    Debug.Log(newVisitor.visitorType);
                     visitorType = newVisitor.visitorType;
                 }
 
