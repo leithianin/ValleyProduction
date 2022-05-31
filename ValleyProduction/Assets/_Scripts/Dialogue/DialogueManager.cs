@@ -51,7 +51,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void PlayDialogue(string id)
     {
-        Debug.Log("Play Dialogue : " + id);
         textBlock.gameObject.SetActive(true);
         StopAllCoroutines();
         if (!isSpeaking)
@@ -80,7 +79,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         }
         else
         {
-            Debug.Log("EndDialogue");
             TimerManager.CreateRealTimer(0.2f, () => textBlock.gameObject.SetActive(false));
             CloseDialogue();
             StopSpeaking();
@@ -140,7 +138,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     {
         if (speak)
         {
-            Debug.Log("WantToSkip true.");
             wantToSkip = true;
         }
 

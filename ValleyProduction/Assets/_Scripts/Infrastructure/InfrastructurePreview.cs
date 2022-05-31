@@ -66,8 +66,6 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
         OnAskToPlace(position);
 
-        Debug.Log(canPlace);
-
         if (canPlace)
         {
             PlayOnAskToPlaceTrue?.Invoke();

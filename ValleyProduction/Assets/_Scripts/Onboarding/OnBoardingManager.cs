@@ -17,10 +17,16 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnCinematic;
 
     public static bool blockPlacePathpoint = false;
+    public static bool blockFinishPath = false;
 
     public static void SetBlockPlacePathpoint(bool cond)
     {
         blockPlacePathpoint = cond;
+    }
+
+    public static void SetBlockFinishPath(bool cond)
+    {
+        VLY_ContextManager.ChangeContext(0);
     }
 
     //unity event OnCameraMove
