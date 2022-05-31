@@ -86,6 +86,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             {
                 case ToolType.Place:
                     instance.EndRotation();
+                    UnselectInfrastructure();
                     instance.OnUnselectConstructionTool?.Invoke();
                     break;
                 case ToolType.Move:
@@ -158,7 +159,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         CursorControl.SetSaveMousePosition();
 
-        instance.previewHandler.isRotating = true;
+        previewHandler.isRotating = true;
         Cursor.visible = false;
     }
 

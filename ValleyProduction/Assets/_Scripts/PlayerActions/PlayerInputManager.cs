@@ -210,7 +210,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     IEnumerator TimerHoldLeft()
     {
         //Debug.Log("Left Coroutine Start");
-        yield return new WaitForSeconds(holdDuration);
+        yield return new WaitForSecondsRealtime(holdDuration);
         //Debug.Log("Left Coroutine End");
         CallLeftHoldMouseInput(raycastHit);
     }
@@ -218,7 +218,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     IEnumerator TimerHoldRight()
     {
         //Debug.Log("Right Coroutine Start");
-        yield return new WaitForSeconds(holdDuration);
+        yield return new WaitForSecondsRealtime(holdDuration);
         //Debug.Log("Right Coroutine End");
         CallRightHoldMouseInput(raycastHit);
     }
@@ -277,9 +277,8 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CheckForMovementInput()
     {
-        float xDirection = Input.GetAxis("Horizontal");
-        float yDirection = Input.GetAxis("Vertical");
-
+        float xDirection  = Input.GetAxisRaw("Horizontal");
+        float yDirection = Input.GetAxisRaw("Vertical");
 
         if (xDirection != 0 || yDirection != 0 || lastKeyDirection != Vector2.zero)
         {

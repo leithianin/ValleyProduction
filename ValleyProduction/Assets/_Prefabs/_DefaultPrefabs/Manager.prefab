@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usedCamera: {fileID: 3631207456372332364}
   usedEventSystem: {fileID: 0}
+  mainTerrain: {fileID: 0}
   holdDuration: 0.2
   OnClicLeft:
     m_PersistentCalls:
@@ -381,25 +382,138 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previewHandler: {fileID: 5209237266696560537}
+  currentSelectedStructure: {fileID: 0}
+  movedObject: {fileID: 0}
   toolSelected: 0
   OnSelectConstructionTool:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3319775730593059043}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: ChangeInteractionZoneLayerMask
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1712268565191719400}
+        m_TargetAssemblyTypeName: VLY_ContextManager, Assembly-CSharp
+        m_MethodName: ChangeContext
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnUnselectConstructionTool:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3319775730593059043}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: ChangeInteractionZoneLayerMask
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UI_Tool, Assembly-CSharp
+        m_MethodName: UnselectTool
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnSelectModifyTool:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3319775730593059043}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: ChangeInteractionZoneLayerMask
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1712268565191719400}
+        m_TargetAssemblyTypeName: VLY_ContextManager, Assembly-CSharp
+        m_MethodName: ChangeContext
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnUnselectModifyTool:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3319775730593059043}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: ChangeInteractionZoneLayerMask
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnSelectDeleteTool:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1712268565191719400}
+        m_TargetAssemblyTypeName: VLY_ContextManager, Assembly-CSharp
+        m_MethodName: ChangeContext
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnUnselectDeleteTool:
     m_PersistentCalls:
       m_Calls: []
+  OnSelectNoTool:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1712268565191719400}
+        m_TargetAssemblyTypeName: VLY_ContextManager, Assembly-CSharp
+        m_MethodName: ChangeContext
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   saveScreenPos: {x: 0, y: 0, z: 0}
 --- !u!114 &5209237266425241733
 MonoBehaviour:
@@ -453,7 +567,7 @@ MonoBehaviour:
   modifiedPaths: []
   baseModifiedPathShow: []
   pathRendererManager: {fileID: 7872933226384271932}
-  testPathpoint: {fileID: 6225881508748953926, guid: e9214e3c02019ae4d8fd9c4da153318d, type: 3}
+  pathpointAddOnMove: {fileID: 0}
   isCancel: 0
 --- !u!114 &7872933226384271932
 MonoBehaviour:
@@ -1146,6 +1260,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1162757707294999572, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
   m_PrefabInstance: {fileID: 159400343555133642}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3319775730593059043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3180803252897415209, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}
+  m_PrefabInstance: {fileID: 159400343555133642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f95c62ec75e1e2b4f83e58de9f641247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &592276205304232956 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 724654950491024182, guid: 4499766bb2dacbe4f885fa8feada79a4, type: 3}

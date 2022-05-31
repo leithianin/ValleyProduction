@@ -15,7 +15,9 @@ public class ISTP_PathPoint : InfrastructurePreview
 
     protected override bool OnCanPlaceObject(Vector3 position)
     {
-        if (PathManager.previousPathpoint == null || PathCreationManager.CalculatePathShortness(false) < snapRange.y)
+        float pathLength = PathCreationManager.CalculatePathShortness(false);
+
+        if (PathManager.previousPathpoint == null || (pathLength < snapRange.y && pathLength >= 0))
         {
             if (PathManager.CurrentLinePreview != null)
             {

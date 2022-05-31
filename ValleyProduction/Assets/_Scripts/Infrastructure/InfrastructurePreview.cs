@@ -22,6 +22,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
     // The mesh renderer of the preview.
     [SerializeField] private MeshRenderer mesh;
 
+    private NavMeshHit navmeshHit;
+
     [SerializeField, Tooltip("Feedbacks to play when the player succeed to place the object.")] protected UnityEvent PlayOnAskToPlaceTrue;
     [SerializeField, Tooltip("Feedbacks to play when the player try to place the object without being able to.")] protected UnityEvent PlayOnAskToPlaceFalse;
 
@@ -30,6 +32,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
     protected bool availabilityState = true;
     protected bool lastFrameAvailabilityState = true;
+
+    public float NavmeshSensitivityReal => navMeshSensitivity;
 
     public bool CanRotate => canRotate;
 
@@ -61,6 +65,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
         bool canPlace = CanPlaceObject(position);
         OnAskToPlace(position);
 
+        Debug.Log("Can place : " + canPlace);
+
         if (canPlace)
         {
             PlayOnAskToPlaceTrue?.Invoke();
@@ -84,8 +90,10 @@ public abstract class InfrastructurePreview : MonoBehaviour
         //position = new Vector3(position.x, 0, position.z);
 
         NavMeshHit hit;
-        if (!NavMesh.SamplePosition(position, out hit, 1 / navMeshSensitivity, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
+        if (!NavMesh.SamplePosition(position, out hit, NavmeshSensitivityReal, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {
+            Debug.Log("Can't place cause Navmesh Sample");
+
             toReturn = false;
         }
 
@@ -145,12 +153,22 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
     public virtual Vector3 TrySetPosition()
     {
-        return PlayerInputManager.GetMousePosition;
+        Vector3 targetPosition = PlayerInputManager.GetMousePosition;
+
+        if (NavMesh.SamplePosition(targetPosition, out navmeshHit, NavmeshSensitivityReal, NavMesh.AllAreas))
+        {
+            if (Vector3.Distance(navmeshHit.position, targetPosition) < NavmeshSensitivityReal)
+            {
+                targetPosition = navmeshHit.position;
+            }
+        }
+
+        return targetPosition;
     }
 
     public virtual float TrySetRotation()
     {
-        return -(Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime);
+        return -(Input.GetAxis("Mouse X") * rotateSpeed * Time.unscaledDeltaTime);
     }
 
 
