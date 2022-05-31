@@ -143,10 +143,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1130449367180526931}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 3308707309273682450}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -154,6 +154,30 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7120759311291624089}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7370621337613708812}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 8708289785994501494}
         m_TargetAssemblyTypeName: AudioPlayer, Assembly-CSharp
@@ -873,16 +897,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_CairnShatter
       objectReference: {fileID: 0}
+    - target: {fileID: 7998638053134265751, guid: 1a5dc1d14640ca145a3252c9f5627e06, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a5dc1d14640ca145a3252c9f5627e06, type: 3}
+--- !u!1 &7370621337613708812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7998638053134265751, guid: 1a5dc1d14640ca145a3252c9f5627e06, type: 3}
+  m_PrefabInstance: {fileID: 669184631229924251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4665016167897453922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5328915721590609657, guid: 1a5dc1d14640ca145a3252c9f5627e06, type: 3}
-  m_PrefabInstance: {fileID: 669184631229924251}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1130449367180526931 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 502505769199994568, guid: 1a5dc1d14640ca145a3252c9f5627e06, type: 3}
   m_PrefabInstance: {fileID: 669184631229924251}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5438551039159767072
@@ -895,6 +923,10 @@ PrefabInstance:
     - target: {fileID: 7391390632780759602, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
       propertyPath: m_Name
       value: Prefab_Cairn
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391390632780759602, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7391390632780759603, guid: 8fc1307228b4f274885cf2f00243c24a, type: 3}
       propertyPath: m_RootOrder
