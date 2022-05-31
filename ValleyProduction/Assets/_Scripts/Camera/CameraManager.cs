@@ -71,4 +71,14 @@ public class CameraManager : VLY_Singleton<CameraManager>
     {
         instance.cineCamBehav.inCinematicMode = true;
     }
+
+    public void AddEventLayer(string str)
+    {
+        currentCamera.eventMask |= (1 << LayerMask.NameToLayer(str));
+    }
+
+    public void RemoveEventLayer(string str)
+    {
+        currentCamera.eventMask &= ~(1 << LayerMask.NameToLayer(str));
+    }
 }

@@ -7,9 +7,7 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
-    [SerializeField] public GameObject go;
-    public GameObject Welcome;
-    public GameObject End;
+    public List<Collider> touristList = new List<Collider>();
 
     public UnityEvent OnProfileHiker;
     public UnityEvent OnProfileTourist;
@@ -19,16 +17,16 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnCinematic;
 
     public static bool blockPlacePathpoint = false;
-    public static bool onlyHicker = false;
+    public static bool blockFinishPath = false;
 
     public static void SetBlockPlacePathpoint(bool cond)
     {
         blockPlacePathpoint = cond;
     }
 
-    public static void SetOnlyHickers(bool cond)
+    public static void SetBlockFinishPath(bool cond)
     {
-        onlyHicker = cond;
+        VLY_ContextManager.ChangeContext(0);
     }
 
     //unity event OnCameraMove
@@ -45,6 +43,14 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         if (instance != null)
         {
             instance.OnProfileTourist?.Invoke();
+        }
+    }
+
+    public static void SetVisitorsInteractable(bool cond)
+    {
+        foreach(Collider coll in instance.touristList)
+        {
+            coll.enabled = cond;
         }
     }
 

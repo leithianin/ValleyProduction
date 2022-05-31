@@ -22,10 +22,10 @@ public class IST_PathPoint : Infrastructure
         node.PlaceNode();
         PathManager.PlacePoint(this);
 
-        /*if(OnBoardingManager.blockPlacePathpoint)
+        if(OnBoardingManager.blockPlacePathpoint)
         {
             InfrastructureManager.InteractWithStructure(ToolType.Delete, this);
-        }*/
+        }
     }
 
     //Place on Click Infrastructure
