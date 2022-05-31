@@ -65,7 +65,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
         bool canPlace = CanPlaceObject(position);
         OnAskToPlace(position);
 
-        Debug.Log("Can place : " + canPlace);
+        Debug.Log(canPlace);
 
         if (canPlace)
         {

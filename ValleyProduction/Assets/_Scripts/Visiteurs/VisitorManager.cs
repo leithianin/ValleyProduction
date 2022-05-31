@@ -77,8 +77,18 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             if (newVisitor != null)
             {
                 VisitorScriptable visitorType;
-                if (type != null) { visitorType = type; }
-                else { visitorType = ChooseVisitorType(); }
+                if (type != null)
+                {
+                    visitorType = type;
+                }
+                else if(visitorTypes.Count > 0)
+                {
+                    visitorType = ChooseVisitorType();
+                }
+                else
+                {
+                    visitorType = newVisitor.visitorType;
+                }
 
                 Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
                 IST_PathPoint wantedSpawn = null;
