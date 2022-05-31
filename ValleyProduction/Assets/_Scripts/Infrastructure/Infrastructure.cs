@@ -121,7 +121,7 @@ public abstract class Infrastructure : MonoBehaviour
 
         if (OnRemoveObject())
         {
-            Destroy(gameObject);
+            TimerManager.CreateRealTimer(0.4f, () => Destroy(gameObject));
         }
         
     }
