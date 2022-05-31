@@ -11,6 +11,7 @@ public class CameraManager : VLY_Singleton<CameraManager>
     public GameObject origin;
 
     public static Action OnCameraMove;
+    public static Action OnCameraMoveEnd;
 
     [SerializeField] private LayerMask cameraLayerMaskBase;
 

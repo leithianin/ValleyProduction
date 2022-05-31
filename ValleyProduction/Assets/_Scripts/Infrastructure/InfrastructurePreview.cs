@@ -63,6 +63,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
     public bool AskToPlace(Vector3 position)
     {
         bool canPlace = CanPlaceObject(position);
+
         OnAskToPlace(position);
 
         Debug.Log("Can place : " + canPlace);

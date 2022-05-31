@@ -189,6 +189,8 @@ public class SphericalTransform : MonoBehaviour
             origin.position = Vector3.Lerp(target.position, startPos, time / referenceTime);
             yield return null;
         }
+
+        CameraManager.OnCameraMoveEnd?.Invoke();
     }
 
     public void MoveOriginFromStartPosition(Vector3 startPos, Vector3 movingVector)

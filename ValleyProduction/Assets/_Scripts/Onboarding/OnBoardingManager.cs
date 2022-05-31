@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
+    [SerializeField] public GameObject go;
     public GameObject Welcome;
     public GameObject End;
 
