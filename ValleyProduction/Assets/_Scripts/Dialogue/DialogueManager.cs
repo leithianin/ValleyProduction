@@ -51,6 +51,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void PlayDialogue(string id)
     {
+        Debug.Log("Play Dialogue : " + id);
         textBlock.gameObject.SetActive(true);
         StopAllCoroutines();
         if (!isSpeaking)
