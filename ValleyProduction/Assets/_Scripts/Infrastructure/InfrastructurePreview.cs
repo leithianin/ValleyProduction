@@ -66,8 +66,6 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
         OnAskToPlace(position);
 
-        Debug.Log(canPlace);
-
         if (canPlace)
         {
             PlayOnAskToPlaceTrue?.Invoke();
@@ -93,8 +91,6 @@ public abstract class InfrastructurePreview : MonoBehaviour
         NavMeshHit hit;
         if (!NavMesh.SamplePosition(position, out hit, NavmeshSensitivityReal, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {
-            Debug.Log("Can't place cause Navmesh Sample");
-
             toReturn = false;
         }
 
