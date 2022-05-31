@@ -86,6 +86,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             {
                 case ToolType.Place:
                     instance.EndRotation();
+                    UnselectInfrastructure();
                     instance.OnUnselectConstructionTool?.Invoke();
                     break;
                 case ToolType.Move:
