@@ -29,7 +29,6 @@ public class ISTP_PathPoint : InfrastructurePreview
         {
             PathManager.CurrentLinePreview.material.DisableKeyword("CAN_CONSTRUCT");
         }
-
         return false;
     }
 

@@ -66,7 +66,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
         OnAskToPlace(position);
 
-        Debug.Log("Can place : " + canPlace);
+        Debug.Log(canPlace);
 
         if (canPlace)
         {
