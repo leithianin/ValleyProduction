@@ -80,7 +80,7 @@ public class HeatmapViewController : MonoBehaviour
         }
     }
 
-    private void EnableHeatmapView(bool enable, int index)
+    public void EnableHeatmapView(bool enable, int index)
     {
         isEnabled = enable;
 
@@ -97,6 +97,26 @@ public class HeatmapViewController : MonoBehaviour
             else m.DisableKeyword("RENDER_HEATMAP");
 
             m.SetFloat("HEATMAP_INDEX", index);
+        }
+    }
+
+    public void EnableHeatmapView(bool enable)
+    {
+        isEnabled = enable;
+
+        baseLights.SetActive(!enable);
+        heatmapLight.SetActive(enable);
+        if (foliage != null)
+        {
+            foliage.SetActive(!enable);
+        }
+
+        foreach (Material m in Materials)
+        {
+            if (enable) m.EnableKeyword("RENDER_HEATMAP");
+            else m.DisableKeyword("RENDER_HEATMAP");
+
+            m.SetFloat("HEATMAP_INDEX", currentIndex);
         }
     }
 }
