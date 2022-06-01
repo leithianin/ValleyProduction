@@ -116,13 +116,19 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             {
                 CallRightMouseInputs(raycastHit);
 
-                if (clicHandlerTouched != null)
+                if (!OnBoardingManager.blockFinishPath)
                 {
-                    clicHandlerTouched.MouseDown(1);
-                }
-                else
-                {
-                    OnClicRightWihtoutObject?.Invoke();
+                    Debug.Log("Clic droit");
+                    if (clicHandlerTouched != null)
+                    {
+
+                        clicHandlerTouched.MouseDown(1);
+
+                    }
+                    else
+                    {
+                        OnClicRightWihtoutObject?.Invoke();
+                    }
                 }
             }
 
@@ -234,14 +240,16 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
             if (clicHandlerTouched != null)
             {
-                clicHandlerTouched.MouseDown(0);
+                if (!OnBoardingManager.blockFinishPath)
+                {
+                    clicHandlerTouched.MouseDown(0);
+                }
             }
             else
             {
                 OnClicLeftWihtoutObject?.Invoke();
             }
         }
-
         OnClicLeft?.Invoke();
     }
 

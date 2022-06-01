@@ -26,7 +26,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static void SetBlockFinishPath(bool cond)
     {
-        VLY_ContextManager.ChangeContext(0);
+        blockFinishPath = cond;
     }
 
     //unity event OnCameraMove
