@@ -13,6 +13,17 @@ public class InfrastructurePreviewHandler : MonoBehaviour
 
     public InfrastructurePreview GetPreview => currentPreview;
 
+    public bool Snaping => snaping;
+
+    public void SetSnaping(bool toSet)
+    {
+        snaping = toSet;
+        if(currentPreview != null)
+        {
+            currentPreview.SetSnap(toSet);
+        }
+    }
+
     public void SetInfrastructurePreview(InfrastructurePreview preview)
     {
         if (preview != null)
