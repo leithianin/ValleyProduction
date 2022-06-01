@@ -184,12 +184,27 @@ public class SphericalTransform : MonoBehaviour
         Vector3 startPos = origin.position;
         float referenceTime = Vector3.Distance(startPos, target.position) / speed;
 
-        for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
+        for (float time = 0.0f; time < referenceTime; time += Time.unscaledDeltaTime)
         {
-            origin.position = Vector3.Lerp(target.position, startPos, time / referenceTime);
+            origin.position = Vector3.Lerp(startPos, target.position, time / referenceTime);
             yield return null;
         }
 
+        origin.position = target.position;
+        CameraManager.OnCameraMoveEnd?.Invoke();
+    }
+
+    private IEnumerator MoveCameraOriginWithCustomDuration(Transform targetTransform, float duration)
+    {
+        Vector3 startPos = origin.position;
+
+        for (float time = 0.0f; time < duration; time += Time.unscaledDeltaTime)
+        {
+            origin.position = Vector3.Lerp(startPos, targetTransform.position, time / duration);
+            yield return null;
+        }
+
+        origin.position = targetTransform.position;
         CameraManager.OnCameraMoveEnd?.Invoke();
     }
 
@@ -261,6 +276,21 @@ public class SphericalTransform : MonoBehaviour
     protected Vector3 GetOriginForwardVector()
     {
         return Vector3.Normalize(new Vector3(origin.position.x - transform.position.x, 0.0f, origin.position.z - transform.position.z));
+    }
+
+    /// <summary>
+    /// Allow to move Camera origin and self spherical coordinates depending on a custom duration
+    /// </summary>
+    /// <param name="originTarget"></param>
+    /// <param name="targetRadius"></param>
+    /// <param name="targetAzimuthalAngle"></param>
+    /// <param name="targetPolarAngle"></param>
+    /// <param name="duration"></param>
+    public void ChangeCameraOriginAndCoordinatesWithCustomDuration(Transform originTarget, float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float duration)
+    {
+        StartCoroutine(MoveCameraOriginWithCustomDuration(originTarget, duration));
+
+        ChangeCameraCoordinatesWithCustomDuration(targetRadius, targetAzimuthalAngle, targetPolarAngle, duration);
     }
 
     #region Set Spherical Coordinates
