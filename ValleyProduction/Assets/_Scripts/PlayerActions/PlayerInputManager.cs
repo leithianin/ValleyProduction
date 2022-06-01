@@ -118,7 +118,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
                 if (!OnBoardingManager.blockFinishPath)
                 {
-                    Debug.Log("Clic droit");
                     if (clicHandlerTouched != null)
                     {
 
@@ -235,7 +234,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         {
             if (GetMousePosition != Vector3.zero)
             {
-                OnClicLeftPosition?.Invoke(GetMousePosition);
+                if (!OnBoardingManager.blockPlacePathpoint)
+                {
+                    OnClicLeftPosition?.Invoke(GetMousePosition);
+                }
             }
 
             if (clicHandlerTouched != null)

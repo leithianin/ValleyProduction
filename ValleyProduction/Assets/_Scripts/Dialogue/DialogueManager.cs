@@ -7,21 +7,26 @@ using UnityEngine.Events;
 public class DialogueManager : VLY_Singleton<DialogueManager>
 {
     public ELEMENTS elements;
-    private Coroutine speaking = null;
 
-    public GameObject textBlock;
+    public GameObject textBlock;                                            //Block input interaction 
     public static bool isSpeaking => instance.speaking != null;
 
+    [Header("Value")]
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
+    public float vignetteValue = 100f;
     //public float closeSpeed = 2f;
+
+    //Private variable
+    private Coroutine speaking = null;
     private int index;
     private string currentId;
 
-    public bool waitingInput = false;
-    public bool wantToSkip = false;
-    public bool speak = false;
+    private bool waitingInput = false;
+    private bool wantToSkip = false;
+    private bool speak = false;
 
+    [Header("Events")]
     public UnityEvent OnEndDialogue;
 
     [System.Serializable]
@@ -54,6 +59,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     public void PlayDialogue(string id)
     {
         indicationInputText.text = "<i> Click to speed up";
+        CameraManager.SetVignettage(vignetteValue);
         textBlock.gameObject.SetActive(true);
         StopAllCoroutines();
         if (!isSpeaking)
@@ -136,6 +142,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void CloseDialogue()
     {
+        CameraManager.SetVignettage(0f);
         dialoguePanel.SetActive(false);
     }
 

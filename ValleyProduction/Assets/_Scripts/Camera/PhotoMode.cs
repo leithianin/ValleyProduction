@@ -115,7 +115,6 @@ public class PhotoMode : MonoBehaviour
         sphericalTransform.OriginVisualOffset = baseVerticalOffset;
         SetRolling(0.0f);
         postProcessManager.Volume.profile = postProcessManager.DefaultProfile;
-
     }
 
     [Button]
