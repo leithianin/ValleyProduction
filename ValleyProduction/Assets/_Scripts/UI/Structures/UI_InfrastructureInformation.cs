@@ -46,7 +46,7 @@ public class UI_InfrastructureInformation : MonoBehaviour
         else { Debug.LogError("Data Description de la structure non rempli"); }
 
         
-        if (baseStruct.Data.Logo != null)        { imageComponent.sprite = baseStruct.Data.Logo; }
+        if (baseStruct.Data.ButtonIcon != null)        { imageComponent.sprite = baseStruct.Data.ButtonIcon; }
         else { Debug.LogError("Data Sprite de la structure non rempli"); }
 
         //Show Capacity si interactionScript

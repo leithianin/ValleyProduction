@@ -53,7 +53,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8325221086873178231}
-  - component: {fileID: 182763277668366093}
   - component: {fileID: 2979359818773466060}
   m_Layer: 12
   m_Name: Gain Money
@@ -76,19 +75,6 @@ Transform:
   m_Father: {fileID: 5524114339328531248}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &182763277668366093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 911757061274991086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bfff4105ef89e445a0100d82a6c60a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitTime: {x: 15, y: 15}
 --- !u!114 &2979359818773466060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +281,7 @@ MonoBehaviour:
     secondaryActions: []
   - mainAction: {fileID: 1825800804476936635}
     secondaryActions:
-    - {fileID: 182763277668366093}
+    - {fileID: 2979359818773466060}
   - mainAction: {fileID: 7142453251594456810}
     secondaryActions: []
   - mainAction: {fileID: 5461906692969764595}
@@ -485,7 +471,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 938453931807776595, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1688512389191840399, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: cost
@@ -849,7 +835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054228870248534635, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5054228870248534635, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: m_LocalScale.x
