@@ -9,7 +9,6 @@ public class ISTP_PathPoint : InfrastructurePreview
 
     protected override void OnAskToPlace(Vector3 position)
     {
-        //Debug.Log("Ask Pathpoint preview");
         PathCreationManager.CalculatePathShortness(true);
     }
 
@@ -17,7 +16,7 @@ public class ISTP_PathPoint : InfrastructurePreview
     {
         float pathLength = PathCreationManager.CalculatePathShortness(false);
 
-        if (PathManager.previousPathpoint == null || (pathLength < snapRange.y && pathLength >= 0))
+        if (PathManager.previousPathpoint == null || (pathLength < snapRange.y) && (doesSnap || pathLength > 1f))
         {
             if (PathManager.CurrentLinePreview != null)
             {

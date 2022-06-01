@@ -11,7 +11,17 @@ public class InfrastructureTransparency : MonoBehaviour
     {
         foreach(Renderer r in renderers)
         {
+            MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
+
+            r.GetPropertyBlock(materialBlock);
+
             r.material.SetInt(shader_variable_name, isTransparent ? 1 : 0);
+
+            r.SetPropertyBlock(materialBlock);
+
+
         }
     }
+
+
 }
