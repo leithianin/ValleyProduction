@@ -30,11 +30,13 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         public GameObject dialoguePanel;
         public TextMeshProUGUI dialogueText;
         public TextMeshProUGUI nameText;
+        public TextMeshProUGUI indicationInputText;
     }
 
     public static GameObject dialoguePanel => instance.elements.dialoguePanel;
     public static TextMeshProUGUI dialogueText => instance.elements.dialogueText;
     public static TextMeshProUGUI nameText => instance.elements.nameText;
+    public static TextMeshProUGUI indicationInputText => instance.elements.indicationInputText;
 
     private void Start()
     {
@@ -51,6 +53,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void PlayDialogue(string id)
     {
+        indicationInputText.text = "<i> Click to speed up";
         textBlock.gameObject.SetActive(true);
         StopAllCoroutines();
         if (!isSpeaking)
@@ -74,6 +77,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             string text = TextsDictionary.instance.GetTextAsset(currentId).Texts[index];
             string speaker = TextsDictionary.instance.GetTextAsset(currentId).Title;
 
+            indicationInputText.text = "<i> Click to speed up";
             Say(text, speaker);
             index++;
         }
@@ -113,6 +117,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             if (wantToSkip)
             {
                 dialogueText.text = dialogue;
+                indicationInputText.text = "<i> Click to skip";
                 yield return new WaitForEndOfFrame();
             }
             else

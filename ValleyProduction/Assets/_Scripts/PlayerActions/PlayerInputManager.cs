@@ -255,9 +255,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     private void CallLeftHoldMouseInput(RaycastHit hit)
     {
-        if (hit.transform != null)
+        if (!OnBoardingManager.blockPlacePathpoint)
         {
-            OnClicLeftHold?.Invoke(GetMousePosition);
+            if (hit.transform != null)
+            {
+                OnClicLeftHold?.Invoke(GetMousePosition);
+            }
         }
     }
 
