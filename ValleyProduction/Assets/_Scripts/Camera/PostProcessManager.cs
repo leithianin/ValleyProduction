@@ -75,7 +75,8 @@ public class PostProcessManager : MonoBehaviour
 
     private void Awake()
     {
-        //GetProfileOverrides();
+        GetProfileOverrides();
+
     }
 
     // Update is called once per frame
@@ -113,7 +114,6 @@ public class PostProcessManager : MonoBehaviour
         volume.profile.TryGet<Tonemapping>(out tonemapping);
         volume.profile.TryGet<Vignette>(out vignette);
         volume.profile.TryGet<WhiteBalance>(out whiteBalance);
-
     }
 
     void GetPostProcessDOF()
@@ -129,5 +129,10 @@ public class PostProcessManager : MonoBehaviour
             Debug.LogWarning("Cannot find sharedProfile");
             return;
         }
+    }
+
+    public void SetVignetteValue(float value)
+    {
+        vignette.intensity.Override(value / 100f);
     }
 }
