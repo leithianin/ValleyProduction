@@ -380,14 +380,14 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         if (!instance.previewHandler.isRotating)
         {
-            instance.previewHandler.snaping = true;
+            instance.previewHandler.SetSnaping(true);
             instance.previewHandler.transform.position = infrastructure.transform.position;
         }
     }
 
     public static void DesnapInfrastructure(Infrastructure infrastructure)
     {
-        instance.previewHandler.snaping = false;
+        instance.previewHandler.SetSnaping(false);
     }
 
     private void OnDestroy()
