@@ -87,13 +87,11 @@ public class TreeBehavior : MonoBehaviour
 
     private void SetTransitionState(Renderer toSet)
     {
-         MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
+        MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
 
         toSet.GetPropertyBlock(materialBlock);
 
         materialBlock.SetFloat("TRANSITION_STATE", lerpValue);
-
-        //materialBlock.SetFloat(shader_variable_name, state ? 1f : 0f);
 
         toSet.SetPropertyBlock(materialBlock);
     }
