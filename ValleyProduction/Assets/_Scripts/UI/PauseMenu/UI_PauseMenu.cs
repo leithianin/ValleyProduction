@@ -24,10 +24,14 @@ public class UI_PauseMenu : MonoBehaviour
         if(gameObject.activeSelf)
         {
             gameObject.SetActive(false);
+            OnCloseMenu?.Invoke();
         }
         else
         {
             gameObject.SetActive(true);
+            OnOpenMenu?.Invoke();
+
+            CloseSettingsMenu();
         }
     }
 
@@ -41,19 +45,6 @@ public class UI_PauseMenu : MonoBehaviour
         MenuManager.Exit();
     }
 
-    public void ChangeMenuOptionBool()
-    {
-        OnMenuOption = !OnMenuOption;
-
-        if(OnMenuOption)
-        {
-            OnOpenMenu?.Invoke();
-        }
-        else
-        {
-            OnCloseMenu?.Invoke();
-        }
-    }
     public void HideMenuOption()
     {
         resumeButton.onClick?.Invoke();

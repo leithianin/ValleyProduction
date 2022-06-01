@@ -33,6 +33,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
     protected bool availabilityState = true;
     protected bool lastFrameAvailabilityState = true;
 
+    [SerializeField]  protected bool doesSnap = false;
+
     public float NavmeshSensitivityReal => navMeshSensitivity;
 
     public bool CanRotate => canRotate;
@@ -41,6 +43,12 @@ public abstract class InfrastructurePreview : MonoBehaviour
     /// Getter for the Infrastructure.
     /// </summary>
     public Infrastructure RealInfrastructure => realInfrastructure;
+
+    public void SetSnap(bool toSet)
+    {
+        Debug.Log("Set snap");
+        doesSnap = toSet;
+    }
 
     /// <summary>
     /// Used to do specific action when we want to check if the construction can be placed.
@@ -63,9 +71,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
     public bool AskToPlace(Vector3 position)
     {
         bool canPlace = CanPlaceObject(position);
-        OnAskToPlace(position);
 
-        Debug.Log("Can place : " + canPlace);
+        OnAskToPlace(position);
 
         if (canPlace)
         {
@@ -92,8 +99,6 @@ public abstract class InfrastructurePreview : MonoBehaviour
         NavMeshHit hit;
         if (!NavMesh.SamplePosition(position, out hit, NavmeshSensitivityReal, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {
-            Debug.Log("Can't place cause Navmesh Sample");
-
             toReturn = false;
         }
 

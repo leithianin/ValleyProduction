@@ -116,13 +116,18 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             {
                 CallRightMouseInputs(raycastHit);
 
-                if (clicHandlerTouched != null)
+                if (!OnBoardingManager.blockFinishPath)
                 {
-                    clicHandlerTouched.MouseDown(1);
-                }
-                else
-                {
-                    OnClicRightWihtoutObject?.Invoke();
+                    if (clicHandlerTouched != null)
+                    {
+
+                        clicHandlerTouched.MouseDown(1);
+
+                    }
+                    else
+                    {
+                        OnClicRightWihtoutObject?.Invoke();
+                    }
                 }
             }
 
@@ -229,27 +234,35 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         {
             if (GetMousePosition != Vector3.zero)
             {
-                OnClicLeftPosition?.Invoke(GetMousePosition);
+                if (!OnBoardingManager.blockPlacePathpoint)
+                {
+                    OnClicLeftPosition?.Invoke(GetMousePosition);
+                }
             }
 
             if (clicHandlerTouched != null)
             {
-                clicHandlerTouched.MouseDown(0);
+                if (!OnBoardingManager.blockFinishPath)
+                {
+                    clicHandlerTouched.MouseDown(0);
+                }
             }
             else
             {
                 OnClicLeftWihtoutObject?.Invoke();
             }
         }
-
         OnClicLeft?.Invoke();
     }
 
     private void CallLeftHoldMouseInput(RaycastHit hit)
     {
-        if (hit.transform != null)
+        if (!OnBoardingManager.blockPlacePathpoint)
         {
-            OnClicLeftHold?.Invoke(GetMousePosition);
+            if (hit.transform != null)
+            {
+                OnClicLeftHold?.Invoke(GetMousePosition);
+            }
         }
     }
 

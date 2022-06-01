@@ -189,6 +189,8 @@ public class SphericalTransform : MonoBehaviour
             origin.position = Vector3.Lerp(target.position, startPos, time / referenceTime);
             yield return null;
         }
+
+        CameraManager.OnCameraMoveEnd?.Invoke();
     }
 
     public void MoveOriginFromStartPosition(Vector3 startPos, Vector3 movingVector)
@@ -292,7 +294,21 @@ public class SphericalTransform : MonoBehaviour
 
     }
 
-    public IEnumerator ChangeRadiusOverTime(float targetRadius, float speed)
+    /// <summary>
+    /// Move the Camera to the specified coordinates, this function does not move the camera origin
+    /// </summary>
+    /// <param name="targetRadius"></param>
+    /// <param name="targetAzimuthalAngle"></param>
+    /// <param name="targetPolarAngle"></param>
+    /// <param name="duration">In seconds</param>
+    public void ChangeCameraCoordinatesWithCustomDuration(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float duration)
+    {
+        StartCoroutine(ChangeRadiusWithCustomDuration(targetRadius, duration));
+        StartCoroutine(ChangeAzimuthalAngleWithCustomDuration(targetAzimuthalAngle, duration));
+        StartCoroutine(ChangePolarAngleWithCustomDuration(targetPolarAngle, duration));
+    }
+
+    private IEnumerator ChangeRadiusOverTime(float targetRadius, float speed)
     {
         float startRadius = coordinates.x;
         float referenceTime = Mathf.Abs(startRadius - targetRadius) / speed;
@@ -306,7 +322,20 @@ public class SphericalTransform : MonoBehaviour
         coordinates.x = targetRadius;
     }
 
-    public IEnumerator ChangeAzimuthalAngleOverTime(float targetAzimuthalAngle, float speed)
+    private IEnumerator ChangeRadiusWithCustomDuration(float targetRadius, float duration)
+    {
+        float startRadius = coordinates.x;
+
+        for (float time = 0.0f; time < duration; time += Time.unscaledDeltaTime)
+        {
+            coordinates.x = Mathf.Lerp(startRadius, targetRadius, time / duration);
+            yield return null;
+        }
+
+        coordinates.x = targetRadius;
+    }
+
+    private IEnumerator ChangeAzimuthalAngleOverTime(float targetAzimuthalAngle, float speed)
     {
         float startAzimuth = coordinates.y;
         float referenceTime = Mathf.Abs(startAzimuth - targetAzimuthalAngle) / speed;
@@ -320,7 +349,20 @@ public class SphericalTransform : MonoBehaviour
         coordinates.y = targetAzimuthalAngle;
     }
 
-    public IEnumerator ChangePolarAngleOverTime(float targetPolarAngle, float speed)
+    private IEnumerator ChangeAzimuthalAngleWithCustomDuration(float targetAzimuthalAngle, float duration)
+    {
+        float startAzimuthal = coordinates.y;
+
+        for (float time = 0.0f;  time < duration;  time += Time.unscaledDeltaTime)
+        {
+            coordinates.y = AngleLerp(startAzimuthal, targetAzimuthalAngle, time / duration);
+            yield return null;
+        }
+
+        coordinates.y = targetAzimuthalAngle;
+    }
+
+    private IEnumerator ChangePolarAngleOverTime(float targetPolarAngle, float speed)
     {
         float startPolar = coordinates.z;
         float referenceTime = Mathf.Abs(startPolar - targetPolarAngle) / speed;
@@ -328,6 +370,19 @@ public class SphericalTransform : MonoBehaviour
         for (float time = 0.0f; time < referenceTime; time += Time.unscaledDeltaTime)
         {
             coordinates.z = AngleLerp(startPolar, targetPolarAngle, time / referenceTime);
+            yield return null;
+        }
+
+        coordinates.z = targetPolarAngle;
+    }
+
+    private IEnumerator ChangePolarAngleWithCustomDuration(float targetPolarAngle, float duration)
+    {
+        float startPolar = coordinates.z;
+
+        for (float time = 0.0f; time < duration; time += Time.unscaledDeltaTime)
+        {
+            coordinates.z = AngleLerp(startPolar, targetPolarAngle, time / duration);
             yield return null;
         }
 

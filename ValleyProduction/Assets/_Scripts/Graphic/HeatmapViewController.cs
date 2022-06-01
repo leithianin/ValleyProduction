@@ -64,11 +64,6 @@ public class HeatmapViewController : MonoBehaviour
         {
             HandleHeatmap(4);
         }
-
-        if (enableHeatview)
-        {
-            HandleHeatmap(viewIndex);
-        }
     }
 
     private void OnApplicationQuit()

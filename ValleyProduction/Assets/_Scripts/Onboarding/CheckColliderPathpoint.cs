@@ -25,7 +25,6 @@ public class CheckColliderPathpoint : MonoBehaviour
 
         if (pathpoint != null && InfrastructureManager.GetMovedObject == null)
         {
-            Debug.Log("OnCollide");
             OnCollide?.Invoke();
             enabled = false;
         }

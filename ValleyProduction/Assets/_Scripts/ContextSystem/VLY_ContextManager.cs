@@ -35,7 +35,6 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
     {
         if (currentContext != contexts.GetContext(ID))
         {
-
             if (currentContext != null)
             {
                 DisableOrEnableContext(currentContext, true);
@@ -43,7 +42,6 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
 
             currentContext = contexts.GetContext(ID);
             usedCamera.eventMask = contexts.GetContextLayers(ID);
-
             DisableOrEnableContext(currentContext, false);
         }
     }
