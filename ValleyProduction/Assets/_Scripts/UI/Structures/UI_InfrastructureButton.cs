@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UI_InfrastructureButton : MonoBehaviour
 {
     [SerializeField] private InfrastructureData structure;
     [SerializeField] private Button button;
-
-    [SerializeField] private UnityEvent<InfrastructureData> OnSelectStructure;
 
     public InfrastructureData Structure => structure;
     
@@ -29,8 +26,6 @@ public class UI_InfrastructureButton : MonoBehaviour
                 }
                 break;
         }
-
-        //OnSelectStructure?.Invoke(structure);
 
         ConstructionManager.SelectInfrastructureType(structure);
     }
