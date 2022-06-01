@@ -133,6 +133,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             }
         }
 
+        indicationInputText.text = "<i> Click to skip";
         speak = false;
         wantToSkip = false;
         waitingInput = true;

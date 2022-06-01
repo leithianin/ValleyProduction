@@ -75,8 +75,9 @@ public class PostProcessManager : MonoBehaviour
 
     private void Awake()
     {
+        SetProfile(defaultProfile);
         GetProfileOverrides();
-
+        SetVignetteValue(0f);
     }
 
     // Update is called once per frame
