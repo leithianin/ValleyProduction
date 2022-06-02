@@ -60,6 +60,11 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
     
+    public static void AddVisitorLimit(int toAdd)
+    {
+        instance.maxSpawn += toAdd;
+    }
+
     public static void SetVisitorSpawn(bool doesAllow)
     {
         instance.allowVisitorSpawn = doesAllow;
