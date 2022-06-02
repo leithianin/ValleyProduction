@@ -69,6 +69,36 @@ MonoBehaviour:
   pollutionScore: {fileID: 7265129952611955960}
   capacityScore: {fileID: 1555986541344357283}
   priceHolder: {fileID: 8551775823595048641}
+  onSelectStructure:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6937972792187543043}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Selected
+          m_BoolArgument: 0
+        m_CallState: 2
+  onUnselectStructure:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6937972792187543043}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Normal
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2371520847220505737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -513,6 +543,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3918929677185749544, guid: 3e7f277736d23804b9848aabdb2a5bea, type: 3}
+      propertyPath: m_AnimationTriggers.m_SelectedTrigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918929677185749544, guid: 3e7f277736d23804b9848aabdb2a5bea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2201856472939345532}
@@ -658,6 +692,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &6937972792187543043 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6714475288356254672, guid: 3e7f277736d23804b9848aabdb2a5bea, type: 3}
+  m_PrefabInstance: {fileID: 4424288340177923539}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8676780737953491429 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4975392172625773622, guid: 3e7f277736d23804b9848aabdb2a5bea, type: 3}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -21,8 +22,14 @@ public class UI_InfrastructureButton : MonoBehaviour
     [SerializeField] private UI_DataHandler capacityScore;
     [SerializeField] private TextMeshProUGUI priceHolder;
 
+    [Header("Events")]
+    [SerializeField] private UnityEvent onSelectStructure;
+    [SerializeField] private UnityEvent onUnselectStructure;
+
+    private bool isSelected;
+
     public InfrastructureData Structure => structure;
-    
+
     public void Enable()
     {
         button.interactable = true;
@@ -40,7 +47,21 @@ public class UI_InfrastructureButton : MonoBehaviour
                 break;
         }
 
+        if (!isSelected)
+        {
+            onSelectStructure?.Invoke();
+        }
+
+        isSelected = true;
+
         ConstructionManager.SelectInfrastructureType(structure);
+    }
+
+    public void UnselectStructure()
+    {
+        isSelected = false;
+
+        onUnselectStructure?.Invoke();
     }
 
     [ContextMenu("Set structure")]
@@ -72,5 +93,11 @@ public class UI_InfrastructureButton : MonoBehaviour
         {
             capacityScore.SetScore(structure.Structure.interestPoint.GetInteractionMaxVisitors());
         }
+        else
+        {
+            capacityScore.SetScore(0);
+        }
+
+        UnityEditor.EditorUtility.SetDirty(this);
     }
 }
