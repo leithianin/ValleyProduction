@@ -11,6 +11,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
 
     public UnityEvent OnUnselectOneMore;
     [SerializeField] private UnityEvent<InfrastructureData> OnSelectStructure;
+    [SerializeField] private UnityEvent<InfrastructureData> OnUnselectStructure;
 
     public static bool HasSelectedStructureType => instance.selectedStructureType != InfrastructureType.None;// && instance.selectedStructureType != InfrastructureType.DeleteStructure;
 
@@ -27,7 +28,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
             InfrastructureManager.PlaceInfrastructure(posePosition);
         }
 
-        if(InfrastructureManager.GetCurrentTool == ToolType.Move && InfrastructureManager.GetMovedObject != null)
+        if (InfrastructureManager.GetCurrentTool == ToolType.Move && InfrastructureManager.GetMovedObject != null)
         {
             InfrastructureManager.ReplaceInfrastructure(posePosition);
         }
@@ -176,6 +177,8 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     /// </summary>
     private void OnUnselectInfrastructureType()
     {
+        OnUnselectStructure?.Invoke(selectedStructureData);
+
         InfrastructureManager.ChooseInfrastructure(null);
 
         switch (selectedStructureType)

@@ -33,7 +33,11 @@ public class MenuManager : VLY_Singleton<MenuManager>
 
     public void Play(int i) //CODE REVIEW : Pour le menu de pause, ne pas donner de référence à cette fonction directement. Passer par un script (UI_PauseMenu)
     {
-        //sceneToLoad = i;
+        if (sceneToLoad == -1)
+        {
+            sceneToLoad = i;
+        }
+
         if (!isSceneLoading)
         {
             Debug.Log("Load scene");

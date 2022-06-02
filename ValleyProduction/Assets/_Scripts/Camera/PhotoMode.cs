@@ -20,7 +20,7 @@ public class PhotoMode : MonoBehaviour
     [SerializeField] private SphericalTransform sphericalTransform = default;
     [SerializeField] private PostProcessManager postProcessManager = default;
     [SerializeField] private GameObject ui = default;
-    private ScreenshotsManager screenshotsManager;
+    [SerializeField] private ScreenshotsManager screenshotsManager;
 
     [SerializeField, ReadOnly] private bool active = false;
 
@@ -59,7 +59,7 @@ public class PhotoMode : MonoBehaviour
 
     private void Awake()
     {
-        screenshotsManager = GameObject.Find("ScreenshotManager").GetComponent<ScreenshotsManager>();
+        //screenshotsManager = GameObject.Find("ScreenshotManager").GetComponent<ScreenshotsManager>();
     }
 
 
@@ -115,7 +115,6 @@ public class PhotoMode : MonoBehaviour
         sphericalTransform.OriginVisualOffset = baseVerticalOffset;
         SetRolling(0.0f);
         postProcessManager.Volume.profile = postProcessManager.DefaultProfile;
-
     }
 
     [Button]

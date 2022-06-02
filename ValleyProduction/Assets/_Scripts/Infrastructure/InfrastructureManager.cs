@@ -86,6 +86,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             {
                 case ToolType.Place:
                     instance.EndRotation();
+                    UnselectInfrastructure();
                     instance.OnUnselectConstructionTool?.Invoke();
                     break;
                 case ToolType.Move:
@@ -158,7 +159,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         CursorControl.SetSaveMousePosition();
 
-        instance.previewHandler.isRotating = true;
+        previewHandler.isRotating = true;
         Cursor.visible = false;
     }
 
@@ -167,8 +168,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public void EndRotation()
     {
-        Debug.Log("End Rotation");
-
         previewHandler.isRotating = false;
         previewHandler.transform.rotation = Quaternion.identity;
         Cursor.visible = true;
@@ -381,14 +380,14 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         if (!instance.previewHandler.isRotating)
         {
-            instance.previewHandler.snaping = true;
+            instance.previewHandler.SetSnaping(true);
             instance.previewHandler.transform.position = infrastructure.transform.position;
         }
     }
 
     public static void DesnapInfrastructure(Infrastructure infrastructure)
     {
-        instance.previewHandler.snaping = false;
+        instance.previewHandler.SetSnaping(false);
     }
 
     private void OnDestroy()

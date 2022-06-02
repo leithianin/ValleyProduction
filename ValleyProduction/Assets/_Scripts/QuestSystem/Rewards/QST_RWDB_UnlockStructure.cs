@@ -8,7 +8,7 @@ public class QST_RWDB_UnlockStructure : QST_RewardBehavior<QST_RWD_UnlockStructu
     {
         for (int i = 0; i < reward.ToUnlock.Count; i++)
         {
-            UIManager.UnlockStructure(reward.ToUnlock[i].Preview);
+            UIManager.UnlockStructure(reward.ToUnlock[i]);
         }
     }
 }
