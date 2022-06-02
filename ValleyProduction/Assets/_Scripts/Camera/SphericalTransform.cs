@@ -3,6 +3,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+enum BoundariesType
+{
+    Box,
+    Sphere
+}
+
 [ExecuteAlways, DisallowMultipleComponent]
 public class SphericalTransform : MonoBehaviour
 {
@@ -27,7 +33,9 @@ public class SphericalTransform : MonoBehaviour
 
     [Header("Moving Constraints")]
     [SerializeField] private LayerMask layerMask = default;
-    [SerializeField] protected Collider boundariesCollider = default;
+    [SerializeField] protected BoxCollider boxBoundariesCollider = default;
+    [SerializeField] protected SphereCollider sphereBoundariesCollider = default;
+    [SerializeField] private BoundariesType colliderToUse;
 
     [Header("Polar Values")]
     [SerializeField, Tooltip("In degrees")] private float verticalOffset = 0.5f;
@@ -444,12 +452,37 @@ public class SphericalTransform : MonoBehaviour
 
     protected void ConstraintOriginPosition()
     {
-        if (boundariesCollider != null)
+        float xOriginClamped = origin.position.x;
+        float zOriginClamped = origin.position.z;
+
+        switch (colliderToUse)
         {
-            float xOriginClamped = Mathf.Clamp(origin.position.x, boundariesCollider.bounds.center.x - boundariesCollider.bounds.extents.x, boundariesCollider.bounds.center.x + boundariesCollider.bounds.extents.x);
-            float zOriginClamped = Mathf.Clamp(origin.position.z, boundariesCollider.bounds.center.z - boundariesCollider.bounds.extents.z, boundariesCollider.bounds.center.z + boundariesCollider.bounds.extents.z);
-            origin.position = new Vector3(xOriginClamped, origin.position.y, zOriginClamped);
+            case BoundariesType.Box:
+                if (boxBoundariesCollider != null)
+                {
+                    Vector3 center = boxBoundariesCollider.bounds.center;       // Collider center
+                    Vector3 extents = boxBoundariesCollider.bounds.extents;     // Collider extents
+
+                    xOriginClamped = Mathf.Clamp(origin.position.x, center.x - extents.x, center.x + extents.x);
+                    zOriginClamped = Mathf.Clamp(origin.position.z, center.z - extents.z, center.z + extents.z);
+                }
+                break;
+            case BoundariesType.Sphere:
+                if (sphereBoundariesCollider != null)
+                {
+                    Vector3 center = sphereBoundariesCollider.center;           // Collider center
+                    float r = sphereBoundariesCollider.radius;                  // Collider radius
+                    float rr = r * r;
+
+                    xOriginClamped = Mathf.Clamp(origin.position.x, center.x - r, center.x + r);
+                    float tempZ = Mathf.Sqrt(rr - (origin.position.x - center.x) * (origin.position.x - center.x));
+                    tempZ = float.IsNaN(tempZ) ? 0.0f : tempZ;
+                    zOriginClamped = Mathf.Clamp(origin.position.z, center.z - tempZ, center.z + tempZ);
+                }
+                break;
         }
+
+        origin.position = new Vector3(xOriginClamped, origin.position.y, zOriginClamped);
     }
     #endregion
 
@@ -458,6 +491,8 @@ public class SphericalTransform : MonoBehaviour
     {
         if (!origin)
             return;
+
+        Gizmos.DrawWireSphere(sphereBoundariesCollider.center, sphereBoundariesCollider.radius);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(origin.position, transform.position);

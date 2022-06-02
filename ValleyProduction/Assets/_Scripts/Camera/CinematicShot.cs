@@ -34,7 +34,8 @@ public class CinematicShot : SphericalTransform
 
     private void Awake()
     {
-        boundariesCollider = GameObject.Find("Boundaries").GetComponent<Collider>();
+        boxBoundariesCollider = GameObject.Find("Boundaries").GetComponent<BoxCollider>();
+        sphereBoundariesCollider = GameObject.Find("Boundaries").GetComponent<SphereCollider>();
     }
 
     private void Update()
