@@ -11,7 +11,6 @@ public class IFB_MoveCameraToTarget : MonoBehaviour, IFeedbackPlayer
     [SerializeField] private float targetAzimuthalAngle;
     [SerializeField] private float targetPolarAngle;
     [SerializeField] private float duration;
-    [SerializeField] private float speed;
 
     public GameObject target;
     public bool isRotate;
