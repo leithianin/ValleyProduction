@@ -82,17 +82,25 @@ public class UI_Tool : MonoBehaviour
             }
             else
             {
-                UnselectStructure();
+                UnselectStructure(currentStructure);
             }
         }
         else
         {
-            UnselectStructure();
+            UnselectStructure(currentStructure);
         }
     }
 
-    public void UnselectStructure()
+    public void UnselectStructure(InfrastructureData structure)
     {
+        foreach(UI_InfrastructureButton button in structureButtons)
+        {
+            if(button.Structure == structure)
+            {
+                button.UnselectStructure();
+            }
+        }
+
         OnUnselectStructure?.Invoke();
 
         currentStructure = null;

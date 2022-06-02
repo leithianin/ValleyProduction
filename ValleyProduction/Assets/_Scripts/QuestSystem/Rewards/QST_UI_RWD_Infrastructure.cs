@@ -19,7 +19,7 @@ public class QST_UI_RWD_Infrastructure : QST_UI_Reward<QST_RWD_UnlockStructure>
 
         for(int i = 0; i < reward.ToUnlock.Count; i++)
         {
-            structuresIcons[i].sprite = reward.ToUnlock[i].Icon;
+            structuresIcons[i].sprite = reward.ToUnlock[i].RewardIcon;
             structuresIcons[i].gameObject.SetActive(true);
         }
     }
