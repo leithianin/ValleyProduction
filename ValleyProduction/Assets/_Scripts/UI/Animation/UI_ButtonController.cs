@@ -22,9 +22,14 @@ public class UI_ButtonController : MonoBehaviour
 
     public void SetSelected()
     {
-        isSelected = !isSelected;
+        SetSelected(!isSelected);
+    }
 
-        if(isSelected)
+    public void SetSelected(bool value)
+    {
+        isSelected = value;
+
+        if (isSelected)
         {
             animator.SetBool("Selected", true);
         }
