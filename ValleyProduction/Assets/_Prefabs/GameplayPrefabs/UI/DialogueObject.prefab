@@ -377,6 +377,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1942725486586505052}
   - component: {fileID: 1942725486586504866}
+  - component: {fileID: 6141006347637548382}
+  - component: {fileID: 7539194193056292982}
   m_Layer: 0
   m_Name: DialogueObject
   m_TagString: Untagged
@@ -420,15 +422,39 @@ MonoBehaviour:
     dialoguePanel: {fileID: 1942725486585303957}
     dialogueText: {fileID: 1942725484761323160}
     nameText: {fileID: 1942725485465005751}
+    indicationInputText: {fileID: 0}
   textBlock: {fileID: 0}
   dialogueWaitingTime: 2
   textSpeed: 0.02
-  waitingInput: 0
-  wantToSkip: 0
-  speak: 0
+  vignetteValue: 100
   OnEndDialogue:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &6141006347637548382
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942725486586505053}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &7539194193056292982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942725486586505053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628f9bb044e9c364c9d2b3f7e65b976c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagToTrigger: EndDialogue
 --- !u!1 &4747401522917432331
 GameObject:
   m_ObjectHideFlags: 0
