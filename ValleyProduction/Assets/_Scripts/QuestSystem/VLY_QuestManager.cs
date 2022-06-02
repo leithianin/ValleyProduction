@@ -31,6 +31,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         rewardBehaviors.Add(new QST_RWDB_QuestStart());
         rewardBehaviors.Add(new QST_RWDB_IncrementFlag());
         rewardBehaviors.Add(new QST_RWDB_TriggerFlag());
+        rewardBehaviors.Add(new QST_RWDB_VisitorLimit());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();
