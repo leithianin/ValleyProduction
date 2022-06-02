@@ -53,15 +53,11 @@ public class VLY_ComponentHandler : MonoBehaviour
     {
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
         test.outline.enabled = true;
-
-        //TimerManager.CreateRealTimer(0.1f, BlinkOffOutline);
     }
 
     public void BlinkOffOutline()
     {
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
         test.outline.enabled = false;
-
-        //TimerManager.CreateRealTimer(0.1f, BlinkOnOutline);
     }
 }
