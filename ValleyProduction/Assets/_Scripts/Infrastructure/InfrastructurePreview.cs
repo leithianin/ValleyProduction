@@ -46,7 +46,6 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
     public void SetSnap(bool toSet)
     {
-        Debug.Log("Set snap");
         doesSnap = toSet;
     }
 
