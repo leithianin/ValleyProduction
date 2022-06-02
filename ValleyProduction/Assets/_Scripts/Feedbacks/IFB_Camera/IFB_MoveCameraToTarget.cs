@@ -18,13 +18,8 @@ public class IFB_MoveCameraToTarget : MonoBehaviour, IFeedbackPlayer
 
     public void Play()
     {
-        CameraManager.SetTargetWithSpeed(target.transform, speed);
+        CameraManager.MoveCamera(target.transform, targetRadius, targetAzimuthalAngle, targetPolarAngle, duration, isRotate);
         CameraManager.OnCameraMoveEnd += PlayOnEnd;
-
-        //CameraManager.SetTarget(target.transform);
-        //CameraManager.SetCameraPosition(target.transform.position);
-        //Si isRotate play func with bool isRotate
-        CameraManager.MoveCamera(targetRadius, targetAzimuthalAngle, targetPolarAngle, duration, isRotate);
         CameraManager.OnCameraMove += StopFocus;
     }
 

@@ -31,9 +31,9 @@ public class CameraManager : VLY_Singleton<CameraManager>
     }
 
     //Rotation chiant
-    public static void MoveCamera(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float duration, bool rotate)
+    public static void MoveCamera(Transform target, float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float duration, bool rotate)
     { 
-        instance.spherical.ChangeCameraCoordinatesWithCustomDuration(targetRadius, targetAzimuthalAngle, targetPolarAngle, duration);
+        instance.spherical.ChangeCameraOriginAndCoordinatesWithCustomDuration(target, targetRadius, targetAzimuthalAngle, targetPolarAngle, duration);
     }
 
     public static void SetTarget(Transform tr)
