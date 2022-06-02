@@ -8,8 +8,6 @@ public class UI_ButtonController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    [SerializeField] private Button linkedButton;
-
     private bool isSelected = false;
 
     public void SetBool(string boolName)
