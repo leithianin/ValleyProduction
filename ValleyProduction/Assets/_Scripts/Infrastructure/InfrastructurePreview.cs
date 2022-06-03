@@ -22,6 +22,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
     // The mesh renderer of the preview.
     [SerializeField] private MeshRenderer mesh;
 
+    private NavMeshHit navmeshHit;
+
     [SerializeField, Tooltip("Feedbacks to play when the player succeed to place the object.")] protected UnityEvent PlayOnAskToPlaceTrue;
     [SerializeField, Tooltip("Feedbacks to play when the player try to place the object without being able to.")] protected UnityEvent PlayOnAskToPlaceFalse;
 
@@ -31,12 +33,22 @@ public abstract class InfrastructurePreview : MonoBehaviour
     protected bool availabilityState = true;
     protected bool lastFrameAvailabilityState = true;
 
+    [SerializeField]  protected bool doesSnap = false;
+
+    public float NavmeshSensitivityReal => navMeshSensitivity;
+
     public bool CanRotate => canRotate;
 
     /// <summary>
     /// Getter for the Infrastructure.
     /// </summary>
     public Infrastructure RealInfrastructure => realInfrastructure;
+
+    public void SetSnap(bool toSet)
+    {
+        Debug.Log("Set snap");
+        doesSnap = toSet;
+    }
 
     /// <summary>
     /// Used to do specific action when we want to check if the construction can be placed.
@@ -59,6 +71,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
     public bool AskToPlace(Vector3 position)
     {
         bool canPlace = CanPlaceObject(position);
+
         OnAskToPlace(position);
 
         if (canPlace)
@@ -84,7 +97,7 @@ public abstract class InfrastructurePreview : MonoBehaviour
         //position = new Vector3(position.x, 0, position.z);
 
         NavMeshHit hit;
-        if (!NavMesh.SamplePosition(position, out hit, 1 / navMeshSensitivity, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
+        if (!NavMesh.SamplePosition(position, out hit, NavmeshSensitivityReal, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {
             toReturn = false;
         }
@@ -145,12 +158,22 @@ public abstract class InfrastructurePreview : MonoBehaviour
 
     public virtual Vector3 TrySetPosition()
     {
-        return PlayerInputManager.GetMousePosition;
+        Vector3 targetPosition = PlayerInputManager.GetMousePosition;
+
+        if (NavMesh.SamplePosition(targetPosition, out navmeshHit, NavmeshSensitivityReal, NavMesh.AllAreas))
+        {
+            if (Vector3.Distance(navmeshHit.position, targetPosition) < NavmeshSensitivityReal)
+            {
+                targetPosition = navmeshHit.position;
+            }
+        }
+
+        return targetPosition;
     }
 
     public virtual float TrySetRotation()
     {
-        return -(Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime);
+        return -(Input.GetAxis("Mouse X") * rotateSpeed * Time.unscaledDeltaTime);
     }
 
 

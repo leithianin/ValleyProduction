@@ -77,8 +77,18 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             if (newVisitor != null)
             {
                 VisitorScriptable visitorType;
-                if (type != null) { visitorType = type; }
-                else { visitorType = ChooseVisitorType(); }
+                if (type != null)
+                {
+                    visitorType = type;
+                }
+                else if(visitorTypes.Count > 0)
+                {
+                    visitorType = ChooseVisitorType();
+                }
+                else
+                {
+                    visitorType = newVisitor.visitorType;
+                }
 
                 Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
                 IST_PathPoint wantedSpawn = null;
@@ -271,7 +281,13 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             case "Hiker":
                 cpn_Inf.visitorType = TypeVisitor.Hiker;
                 break;
+            case "HikerSlow":
+                cpn_Inf.visitorType = TypeVisitor.Hiker;
+                break;
             case "Tourist":
+                cpn_Inf.visitorType = TypeVisitor.Tourist;
+                break;
+            case "TouristSlow":
                 cpn_Inf.visitorType = TypeVisitor.Tourist;
                 break;
         }
@@ -352,6 +368,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         {
             if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
             {
+                //Debug.Log(instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType);
                 toReturn.Add(instance.visitorPool[i]);
             }
         }

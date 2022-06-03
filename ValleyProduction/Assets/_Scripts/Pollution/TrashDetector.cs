@@ -9,7 +9,6 @@ public class TrashDetector : MonoBehaviour
         PollutionTrash trash = other.GetComponent<PollutionTrash>();
         if (trash != null)
         {
-            Debug.Log("Trash remove");
             trash.PickUp();
         }
     }

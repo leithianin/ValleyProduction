@@ -221,13 +221,13 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         {
             List<Vector3> points = instance.CalculateNavmesh(PathManager.previousPathpoint.transform.position, positionToCheck);
 
-            float currentDistance = 0;
+                float currentDistance = 0;
 
-            for (int i = 0; i < points.Count - 1; i++)
-            {
-                currentDistance += Vector3.Distance(points[i], points[i + 1]);
-            }
-            return currentDistance;
+                for (int i = 0; i < points.Count - 1; i++)
+                {
+                    currentDistance += Vector3.Distance(points[i], points[i + 1]);
+                }
+                return currentDistance;
         }
         else
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class MenuManager : VLY_Singleton<MenuManager>
 {
     bool isSceneLoading;
     int sceneToLoad = -1;
+    public static int GetSceneToLoad => instance.sceneToLoad;
 
     public GameObject blackScreen;
 
@@ -28,12 +30,17 @@ public class MenuManager : VLY_Singleton<MenuManager>
     public void SetSceneIndex(int i)
     {
         sceneToLoad = i;
+
         //LoadScene(sceneToLoad);
     }
 
     public void Play(int i) //CODE REVIEW : Pour le menu de pause, ne pas donner de référence à cette fonction directement. Passer par un script (UI_PauseMenu)
     {
-        //sceneToLoad = i;
+        if (sceneToLoad == -1)
+        {
+            sceneToLoad = i;
+        }
+
         if (!isSceneLoading)
         {
             Debug.Log("Load scene");

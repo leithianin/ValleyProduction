@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PathManager : VLY_Singleton<PathManager>
 {
@@ -10,6 +11,8 @@ public class PathManager : VLY_Singleton<PathManager>
     [SerializeField] private List<PathData> pathDataList = new List<PathData>();
     [SerializeField] private List<PathFragmentData> pathFragmentDataList = new List<PathFragmentData>();
                      public List<IST_PathPoint> pathpointList = new List<IST_PathPoint>();
+
+    [SerializeField] private UnityEvent onValidatePath;
 
     //Accesseur des listes
     public static List<IST_PathPoint> SpawnPoints => instance.spawnPoints;
@@ -616,6 +619,7 @@ public class PathManager : VLY_Singleton<PathManager>
 
             OnCreatePath?.Invoke(newPathData);
 
+
             //IF ONBOARDING SEQUENCE 
             TimerManager.CreateRealTimer(0.5f, () => isOnFinishPath?.Invoke(true));
         }
@@ -657,6 +661,7 @@ public class PathManager : VLY_Singleton<PathManager>
         NodePathProcess.UpdateAllNodes();
 
         OnCreatePath?.Invoke(newPathData);
+        instance.onValidatePath?.Invoke();
 
         if(newPathData.ContainsPoint(deletedPoint))
         {

@@ -34,14 +34,14 @@ public class TreeBehavior : MonoBehaviour
             {
                 foreach(MeshRenderer mesh in meshes)
                 {
-                    mesh.material.EnableKeyword("_BLOSSOM");
+                    //mesh.material.EnableKeyword("_BLOSSOM");
                 }
             }
             else
             {
                 foreach (MeshRenderer mesh in meshes)
                 {
-                    mesh.material.DisableKeyword("_BLOSSOM");
+                    //mesh.material.DisableKeyword("_BLOSSOM");
                 }
             }
 
@@ -76,7 +76,23 @@ public class TreeBehavior : MonoBehaviour
 
         foreach (MeshRenderer mesh in meshes)
         {
-            mesh.material.SetFloat("TRANSITION_STATE", lerpValue);
+            SetTransitionState(mesh);
         }
+    }
+
+    private void SetBlossom(Renderer toSet, bool value)
+    {
+
+    }
+
+    private void SetTransitionState(Renderer toSet)
+    {
+        MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
+
+        toSet.GetPropertyBlock(materialBlock);
+
+        materialBlock.SetFloat("TRANSITION_STATE", lerpValue);
+
+        toSet.SetPropertyBlock(materialBlock);
     }
 }

@@ -87,6 +87,10 @@ public class ManageMultiPath : MonoBehaviour
         {
             if (pfd.path.Count > 0)
             {
+                Debug.Log(arrowTagRef);
+                Debug.Log(prefabSign);
+
+
                 GameObject newArrow = Instantiate(arrowTagRef, prefabSign.transform);
                 newArrow.SetActive(true);
                 newArrow.transform.position = new Vector3(pivot.transform.position.x, pivot.transform.position.y - (offset * nbArrow), pivot.transform.position.z);

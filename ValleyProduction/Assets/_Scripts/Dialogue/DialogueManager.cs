@@ -7,21 +7,26 @@ using UnityEngine.Events;
 public class DialogueManager : VLY_Singleton<DialogueManager>
 {
     public ELEMENTS elements;
-    private Coroutine speaking = null;
 
-    public GameObject textBlock;
+    public GameObject textBlock;                                            //Block input interaction 
     public static bool isSpeaking => instance.speaking != null;
 
+    [Header("Value")]
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
+    public float vignetteValue = 100f;
     //public float closeSpeed = 2f;
+
+    //Private variable
+    private Coroutine speaking = null;
     private int index;
     private string currentId;
 
-    public bool waitingInput = false;
-    public bool wantToSkip = false;
-    public bool speak = false;
+    private bool waitingInput = false;
+    private bool wantToSkip = false;
+    private bool speak = false;
 
+    [Header("Events")]
     public UnityEvent OnEndDialogue;
 
     [System.Serializable]
@@ -30,11 +35,13 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         public GameObject dialoguePanel;
         public TextMeshProUGUI dialogueText;
         public TextMeshProUGUI nameText;
+        public TextMeshProUGUI indicationInputText;
     }
 
     public static GameObject dialoguePanel => instance.elements.dialoguePanel;
     public static TextMeshProUGUI dialogueText => instance.elements.dialogueText;
     public static TextMeshProUGUI nameText => instance.elements.nameText;
+    public static TextMeshProUGUI indicationInputText => instance.elements.indicationInputText;
 
     private void Start()
     {
@@ -51,6 +58,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void PlayDialogue(string id)
     {
+        indicationInputText.text = "<i> Click to speed up";
+        CameraManager.SetVignettage(vignetteValue);
         textBlock.gameObject.SetActive(true);
         StopAllCoroutines();
         if (!isSpeaking)
@@ -74,12 +83,12 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             string text = TextsDictionary.instance.GetTextAsset(currentId).Texts[index];
             string speaker = TextsDictionary.instance.GetTextAsset(currentId).Title;
 
+            indicationInputText.text = "<i> Click to speed up";
             Say(text, speaker);
             index++;
         }
         else
         {
-            Debug.Log("EndDialogue");
             TimerManager.CreateRealTimer(0.2f, () => textBlock.gameObject.SetActive(false));
             CloseDialogue();
             StopSpeaking();
@@ -114,6 +123,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             if (wantToSkip)
             {
                 dialogueText.text = dialogue;
+                indicationInputText.text = "<i> Click to skip";
                 yield return new WaitForEndOfFrame();
             }
             else
@@ -123,6 +133,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             }
         }
 
+        indicationInputText.text = "<i> Click to skip";
         speak = false;
         wantToSkip = false;
         waitingInput = true;
@@ -132,6 +143,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void CloseDialogue()
     {
+        CameraManager.SetVignettage(0f);
         dialoguePanel.SetActive(false);
     }
 
@@ -139,7 +151,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     {
         if (speak)
         {
-            Debug.Log("WantToSkip true.");
             wantToSkip = true;
         }
 

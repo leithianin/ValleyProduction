@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InfrastructurePreviewHandler : MonoBehaviour
 {
@@ -11,6 +12,17 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     public float rotateSpeed = 50f;
 
     public InfrastructurePreview GetPreview => currentPreview;
+
+    public bool Snaping => snaping;
+
+    public void SetSnaping(bool toSet)
+    {
+        snaping = toSet;
+        if(currentPreview != null)
+        {
+            currentPreview.SetSnap(toSet);
+        }
+    }
 
     public void SetInfrastructurePreview(InfrastructurePreview preview)
     {
@@ -47,7 +59,6 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     {
         if (!snaping)
         {
-            Debug.Log(isRotating);
             if (!isRotating)
             {
                 transform.position = currentPreview.TrySetPosition();

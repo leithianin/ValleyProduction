@@ -47,7 +47,6 @@ public class TimerManager : VLY_Singleton<TimerManager>
         }
     }
 
-
     private void Start()
     {
         DontDestroyOnLoad(gameObject);

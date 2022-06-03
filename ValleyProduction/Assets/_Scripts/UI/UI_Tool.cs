@@ -16,11 +16,11 @@ public class UI_Tool : MonoBehaviour
 
     [SerializeField] private InfrastructureData currentStructure;
 
-    public void UnlockStructure(InfrastructurePreview toUnlock) //CODE REVIEW : Voir pour utiliser des Scriptable plutot que le Preview directement
+    public void UnlockStructure(InfrastructureData toUnlock) //CODE REVIEW : Voir pour utiliser des Scriptable plutot que le Preview directement
     {
         for(int i = 0; i < structureButtons.Count; i++)
         {
-            if(structureButtons[i].Structure == toUnlock)
+            if (structureButtons[i].Structure == toUnlock)
             {
                 structureButtons[i].Enable();
             }
