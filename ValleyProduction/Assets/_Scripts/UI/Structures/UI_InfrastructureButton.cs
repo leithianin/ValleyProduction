@@ -98,6 +98,8 @@ public class UI_InfrastructureButton : MonoBehaviour
             capacityScore.SetScore(0);
         }
 
+#if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);
+#endif
     }
 }
