@@ -96,7 +96,7 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
 
     private void Start()
     {
-        enabled = false;
+        enabled = true;
     }
 
     private void OnDestroy()
@@ -110,7 +110,6 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     private void LateUpdate()
     {
         bufferElements = new List<PathpointBufferElement>();
-
         if (PathFragments != null)
         {
 
