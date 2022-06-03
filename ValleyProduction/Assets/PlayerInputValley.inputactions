@@ -22,6 +22,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "CameraPitch",
+                    "type": "Value",
+                    "id": "fde51e52-a701-4679-8141-ce32497fc7ac",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Heatmap_1",
                     "type": "Button",
                     "id": "3d93365a-0e43-4d1c-9ce6-394e251910c4",
@@ -68,11 +76,27 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "MiddleMouseClic",
+                    "type": "Button",
+                    "id": "6e179e52-1c7b-430c-a798-1652ea985ab3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MouseMovement",
+                    "type": "Value",
+                    "id": "5229a6d1-cbe4-4ad7-9c22-ef56179e32f3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
+                    "name": "WASD",
                     "id": "54c978d1-16cc-446b-9984-2d45307f8f96",
                     "path": "2DVector",
                     "interactions": "",
@@ -127,7 +151,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Arrows",
                     "id": "efe28aa8-dc67-4c25-94fe-7a695ef45db9",
                     "path": "2DVector",
                     "interactions": "",
@@ -277,6 +301,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "RightMouseClic",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20d8a39e-e8ea-4ffc-9be8-e20669e935c4",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "NormalizeVector2",
+                    "groups": "",
+                    "action": "MouseMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "17ae5b91-3da2-4c41-85ec-aca56779faab",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraPitch",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "a3eb0e19-4b7f-4333-8974-719025c382b3",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraPitch",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "4ce1f75a-8de1-4f49-a53d-e01ef42c412e",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraPitch",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ca3548c5-6d64-4b17-b9b2-63150b83733b",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MiddleMouseClic",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

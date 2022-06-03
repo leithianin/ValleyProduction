@@ -35,6 +35,14 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""CameraPitch"",
+                    ""type"": ""Value"",
+                    ""id"": ""fde51e52-a701-4679-8141-ce32497fc7ac"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Heatmap_1"",
                     ""type"": ""Button"",
                     ""id"": ""3d93365a-0e43-4d1c-9ce6-394e251910c4"",
@@ -81,11 +89,27 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""MiddleMouseClic"",
+                    ""type"": ""Button"",
+                    ""id"": ""6e179e52-1c7b-430c-a798-1652ea985ab3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MouseMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""5229a6d1-cbe4-4ad7-9c22-ef56179e32f3"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""WASD"",
                     ""id"": ""54c978d1-16cc-446b-9984-2d45307f8f96"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -140,7 +164,7 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""Arrows"",
                     ""id"": ""efe28aa8-dc67-4c25-94fe-7a695ef45db9"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -292,6 +316,61 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                     ""action"": ""RightMouseClic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20d8a39e-e8ea-4ffc-9be8-e20669e935c4"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": ""NormalizeVector2"",
+                    ""groups"": """",
+                    ""action"": ""MouseMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""17ae5b91-3da2-4c41-85ec-aca56779faab"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraPitch"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""a3eb0e19-4b7f-4333-8974-719025c382b3"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraPitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4ce1f75a-8de1-4f49-a53d-e01ef42c412e"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraPitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca3548c5-6d64-4b17-b9b2-63150b83733b"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiddleMouseClic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -308,12 +387,15 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
         m_MainGame = asset.FindActionMap("MainGame", throwIfNotFound: true);
         m_MainGame_CameraMovement = m_MainGame.FindAction("CameraMovement", throwIfNotFound: true);
         m_MainGame_CameraRotation = m_MainGame.FindAction("CameraRotation", throwIfNotFound: true);
+        m_MainGame_CameraPitch = m_MainGame.FindAction("CameraPitch", throwIfNotFound: true);
         m_MainGame_Heatmap_1 = m_MainGame.FindAction("Heatmap_1", throwIfNotFound: true);
         m_MainGame_Heatmap_2 = m_MainGame.FindAction("Heatmap_2", throwIfNotFound: true);
         m_MainGame_Heatmap_3 = m_MainGame.FindAction("Heatmap_3", throwIfNotFound: true);
         m_MainGame_Heatmap_4 = m_MainGame.FindAction("Heatmap_4", throwIfNotFound: true);
         m_MainGame_LeftMouseClic = m_MainGame.FindAction("LeftMouseClic", throwIfNotFound: true);
         m_MainGame_RightMouseClic = m_MainGame.FindAction("RightMouseClic", throwIfNotFound: true);
+        m_MainGame_MiddleMouseClic = m_MainGame.FindAction("MiddleMouseClic", throwIfNotFound: true);
+        m_MainGame_MouseMovement = m_MainGame.FindAction("MouseMovement", throwIfNotFound: true);
         // Tutorial_Base
         m_Tutorial_Base = asset.FindActionMap("Tutorial_Base", throwIfNotFound: true);
     }
@@ -367,24 +449,30 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
     private IMainGameActions m_MainGameActionsCallbackInterface;
     private readonly InputAction m_MainGame_CameraMovement;
     private readonly InputAction m_MainGame_CameraRotation;
+    private readonly InputAction m_MainGame_CameraPitch;
     private readonly InputAction m_MainGame_Heatmap_1;
     private readonly InputAction m_MainGame_Heatmap_2;
     private readonly InputAction m_MainGame_Heatmap_3;
     private readonly InputAction m_MainGame_Heatmap_4;
     private readonly InputAction m_MainGame_LeftMouseClic;
     private readonly InputAction m_MainGame_RightMouseClic;
+    private readonly InputAction m_MainGame_MiddleMouseClic;
+    private readonly InputAction m_MainGame_MouseMovement;
     public struct MainGameActions
     {
         private @PlayerInputValley m_Wrapper;
         public MainGameActions(@PlayerInputValley wrapper) { m_Wrapper = wrapper; }
         public InputAction @CameraMovement => m_Wrapper.m_MainGame_CameraMovement;
         public InputAction @CameraRotation => m_Wrapper.m_MainGame_CameraRotation;
+        public InputAction @CameraPitch => m_Wrapper.m_MainGame_CameraPitch;
         public InputAction @Heatmap_1 => m_Wrapper.m_MainGame_Heatmap_1;
         public InputAction @Heatmap_2 => m_Wrapper.m_MainGame_Heatmap_2;
         public InputAction @Heatmap_3 => m_Wrapper.m_MainGame_Heatmap_3;
         public InputAction @Heatmap_4 => m_Wrapper.m_MainGame_Heatmap_4;
         public InputAction @LeftMouseClic => m_Wrapper.m_MainGame_LeftMouseClic;
         public InputAction @RightMouseClic => m_Wrapper.m_MainGame_RightMouseClic;
+        public InputAction @MiddleMouseClic => m_Wrapper.m_MainGame_MiddleMouseClic;
+        public InputAction @MouseMovement => m_Wrapper.m_MainGame_MouseMovement;
         public InputActionMap Get() { return m_Wrapper.m_MainGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -400,6 +488,9 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                 @CameraRotation.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnCameraRotation;
                 @CameraRotation.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnCameraRotation;
                 @CameraRotation.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnCameraRotation;
+                @CameraPitch.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnCameraPitch;
+                @CameraPitch.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnCameraPitch;
+                @CameraPitch.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnCameraPitch;
                 @Heatmap_1.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnHeatmap_1;
                 @Heatmap_1.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnHeatmap_1;
                 @Heatmap_1.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnHeatmap_1;
@@ -418,6 +509,12 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                 @RightMouseClic.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnRightMouseClic;
                 @RightMouseClic.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnRightMouseClic;
                 @RightMouseClic.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnRightMouseClic;
+                @MiddleMouseClic.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMiddleMouseClic;
+                @MiddleMouseClic.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMiddleMouseClic;
+                @MiddleMouseClic.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMiddleMouseClic;
+                @MouseMovement.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMouseMovement;
+                @MouseMovement.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMouseMovement;
+                @MouseMovement.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMouseMovement;
             }
             m_Wrapper.m_MainGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -428,6 +525,9 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                 @CameraRotation.started += instance.OnCameraRotation;
                 @CameraRotation.performed += instance.OnCameraRotation;
                 @CameraRotation.canceled += instance.OnCameraRotation;
+                @CameraPitch.started += instance.OnCameraPitch;
+                @CameraPitch.performed += instance.OnCameraPitch;
+                @CameraPitch.canceled += instance.OnCameraPitch;
                 @Heatmap_1.started += instance.OnHeatmap_1;
                 @Heatmap_1.performed += instance.OnHeatmap_1;
                 @Heatmap_1.canceled += instance.OnHeatmap_1;
@@ -446,6 +546,12 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                 @RightMouseClic.started += instance.OnRightMouseClic;
                 @RightMouseClic.performed += instance.OnRightMouseClic;
                 @RightMouseClic.canceled += instance.OnRightMouseClic;
+                @MiddleMouseClic.started += instance.OnMiddleMouseClic;
+                @MiddleMouseClic.performed += instance.OnMiddleMouseClic;
+                @MiddleMouseClic.canceled += instance.OnMiddleMouseClic;
+                @MouseMovement.started += instance.OnMouseMovement;
+                @MouseMovement.performed += instance.OnMouseMovement;
+                @MouseMovement.canceled += instance.OnMouseMovement;
             }
         }
     }
@@ -479,12 +585,15 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
     {
         void OnCameraMovement(InputAction.CallbackContext context);
         void OnCameraRotation(InputAction.CallbackContext context);
+        void OnCameraPitch(InputAction.CallbackContext context);
         void OnHeatmap_1(InputAction.CallbackContext context);
         void OnHeatmap_2(InputAction.CallbackContext context);
         void OnHeatmap_3(InputAction.CallbackContext context);
         void OnHeatmap_4(InputAction.CallbackContext context);
         void OnLeftMouseClic(InputAction.CallbackContext context);
         void OnRightMouseClic(InputAction.CallbackContext context);
+        void OnMiddleMouseClic(InputAction.CallbackContext context);
+        void OnMouseMovement(InputAction.CallbackContext context);
     }
     public interface ITutorial_BaseActions
     {

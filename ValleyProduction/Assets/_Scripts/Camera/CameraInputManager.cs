@@ -19,7 +19,7 @@ public class CameraInputManager : MonoBehaviour
     [SerializeField, Range(1,50)] private float edgeScrollingMovingSpeed = 30f;
 
     [Header("Mouse Scrolling")]
-    [SerializeField, Range(1, 20)] private float mouseScrollingMovingSpeed = 10f;
+    [SerializeField, Range(1, 100)] private float mouseScrollingMovingSpeed = 50f;
 
 
     [Header("Mouse Wheel Values")]

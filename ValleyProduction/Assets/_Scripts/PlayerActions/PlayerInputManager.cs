@@ -18,6 +18,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     [SerializeField] private InputActionReference mouseRightClic;
 
+    [SerializeField] private InputActionReference mouseMiddleClic;
+
+    [SerializeField] private InputActionReference mouseMovement;
+
+
 
     [SerializeField] private Camera usedCamera;
     [SerializeField] private EventSystem usedEventSystem;
@@ -53,6 +58,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public Action<Vector2> OnKeyMoveAction;
     public static UnityEvent<Vector2> GetOnKeyMove => instance.OnKeyMove;
     private Vector2 lastKeyDirection;
+    private Vector2 lastMouseMovement;
     public static bool isKeyboardEnable = true;
     public static bool blockMouse = false;
 
@@ -70,7 +76,8 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent OnCameraMouseMove;
     public static UnityEvent GetOnCameraMouseMove => instance.OnCameraMouseMove;
 
-    public static bool clicHold = false;
+    private static bool righClicHold = false;
+    private static bool middleClicHold = false;
 
     [SerializeField] private GameContext context;
 
@@ -110,19 +117,15 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         mouseRightClic.action.performed += ActionRightHold;
         mouseRightClic.action.canceled += ActionRightUp;
 
+        mouseMiddleClic.action.started += ActionMiddleDown;
+        mouseMiddleClic.action.performed += ActionMiddleHold;
+        mouseMiddleClic.action.canceled += ActionMiddleUp;
     }
 
     private void OnDisable()
     {
-        cameraMovementHandler.action.performed -= ActionCameraMethod;
-
 
         inputControl.Disable();
-    }
-
-    public void ActionCameraMethod(InputAction.CallbackContext context)
-    {
-        OnMouseMove?.Invoke(context.ReadValue<Vector2>());
     }
 
     public void ActionLeftDown(InputAction.CallbackContext context)
@@ -153,6 +156,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public void ActionRightDown(InputAction.CallbackContext context)
     {
         Debug.Log("Right Down");
+        if (!usedEventSystem.IsPointerOverGameObject())
+        {
+            righClicHold = true;
+        }
     }
 
     public void ActionRightHold(InputAction.CallbackContext context)
@@ -171,6 +178,27 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         {
             CallRightMouseInputs(raycastHit);
         }
+        righClicHold = false;
+    }
+
+    public void ActionMiddleDown(InputAction.CallbackContext context)
+    {
+        Debug.Log("Middle Down");
+        if (!usedEventSystem.IsPointerOverGameObject())
+        {
+            middleClicHold = true;
+        }
+    }
+
+    public void ActionMiddleHold(InputAction.CallbackContext context)
+    {
+        Debug.Log("Middle Hold");
+    }
+
+    public void ActionMiddleUp(InputAction.CallbackContext context)
+    {
+        Debug.Log("Middle Up");
+        middleClicHold = false;
     }
 
     [ContextMenu("Test disable input")]
@@ -207,16 +235,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             }
         }
 
-        CheckForMovementInput();
+        CheckCameraInput();
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OnKeyEscape?.Invoke();
         }
-
-        OnAzimuthal?.Invoke(Input.GetAxisRaw("Azimuthal"));
-
-        OnPolar?.Invoke(Input.GetAxisRaw("Polar"));
 
         //CODE REVIEW : Plusieurs bool ou un seul pour disable le Context ?
         if (isKeyboardEnable)
@@ -345,6 +369,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
                 }
             }
         }
+
         OnClicRight?.Invoke();
     }
 
@@ -352,21 +377,48 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         if(hit.transform != null)
         {
-            clicHold = true;
             OnClicRightHold?.Invoke(hit.transform.gameObject);
         }
     }
 
-    private void CheckForMovementInput()
+    private void CheckCameraInput()
     {
-        Vector2 currentDirection = cameraMovementHandler.action.ReadValue<Vector2>();
-
-        if (currentDirection != Vector2.zero || lastKeyDirection != Vector2.zero)
+        if (middleClicHold)
         {
-            OnKeyMove?.Invoke(currentDirection);
+            lastMouseMovement = mouseMovement.action.ReadValue<Vector2>();
+
+            OnAzimuthal?.Invoke(lastMouseMovement.x);
+
+            OnPolar?.Invoke(lastMouseMovement.y);
+        }
+        else if(lastMouseMovement != Vector2.zero)
+        {
+            lastMouseMovement = Vector2.zero;
+
+            OnAzimuthal?.Invoke(lastMouseMovement.x);
+
+            OnPolar?.Invoke(lastMouseMovement.y);
+        }
+        else
+        {
+            
         }
 
-        lastKeyDirection = currentDirection;
+        if (righClicHold)
+        {
+            OnMouseMove?.Invoke(mouseMovement.action.ReadValue<Vector2>());
+        }
+        else
+        {
+            Vector2 currentDirection = cameraMovementHandler.action.ReadValue<Vector2>();
+
+            if (currentDirection != Vector2.zero || lastKeyDirection != Vector2.zero)
+            {
+                OnKeyMove?.Invoke(currentDirection);
+            }
+
+            lastKeyDirection = currentDirection;
+        }
     }
 
     private RaycastHit GetHitMouseGameobject()
