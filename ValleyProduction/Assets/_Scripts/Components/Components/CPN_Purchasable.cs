@@ -25,11 +25,13 @@ public class CPN_Purchasable : VLY_Component<CPN_Data_Purchasable>
     public void Buy()
     {
         VLY_RessourceManager.LoseRessource(cost);
+        OnBuy?.Invoke();
     }
 
     public void Sell()
     {
         VLY_RessourceManager.GainRessource(cost);
+        OnSell?.Invoke();
     }
 
     public void TryToBuy()
