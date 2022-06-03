@@ -25,9 +25,10 @@ public class UI_RoadInformation : MonoBehaviour
             roadsList[i].UpdateData(pathDataList[i]);
         }
 
+        gameObject.SetActive(true);
+
         closeOpenAnimator.SetBool("Selected", !pathPoint.IsOpen);
 
-        gameObject.SetActive(true);
         return this;
     }
 

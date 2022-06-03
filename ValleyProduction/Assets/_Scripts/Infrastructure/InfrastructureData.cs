@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class InfrastructureData : ScriptableObject, CPN_Data_Purchasable
 {
     [SerializeField] private string structureName;
-    [SerializeField] private string structureDescription;
+    [SerializeField, TextArea(2,2)] private string structureDescription;
     [SerializeField] private Sprite rewardIcon;
     [SerializeField] private Sprite buttonIcon;
     [SerializeField] private Sprite exempleImage;
