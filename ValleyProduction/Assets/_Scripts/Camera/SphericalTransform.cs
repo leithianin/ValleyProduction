@@ -6,7 +6,8 @@ using UnityEngine;
 enum BoundariesType
 {
     Box,
-    Sphere
+    Sphere,
+    None
 }
 
 [ExecuteAlways, DisallowMultipleComponent]
@@ -492,7 +493,7 @@ public class SphericalTransform : MonoBehaviour
         if (!origin)
             return;
 
-        Gizmos.DrawWireSphere(sphereBoundariesCollider.center, sphereBoundariesCollider.radius);
+        //Gizmos.DrawWireSphere(sphereBoundariesCollider.center, sphereBoundariesCollider.radius);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(origin.position, transform.position);
