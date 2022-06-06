@@ -9,7 +9,6 @@ public class QST_UI_RWD_Visitor : QST_UI_Reward<QST_RWD_VisitorType>
 {
     [SerializeField] private Image visitorIcon;
     [SerializeField] private TextMeshProUGUI visitorTypeName;
-    [SerializeField] private TextMeshProUGUI visitorObjective;
 
     public override void OnHideReward()
     {

@@ -7,30 +7,30 @@ using UnityEngine.UI;
 public class InfrastructureData : ScriptableObject, CPN_Data_Purchasable
 {
     [SerializeField] private string structureName;
-    [SerializeField] private string structureDescription;
-    [SerializeField] private Sprite icon;
+    [SerializeField, TextArea(2,2)] private string structureDescription;
+    [SerializeField] private Sprite rewardIcon;
+    [SerializeField] private Sprite buttonIcon;
+    [SerializeField] private Sprite exempleImage;
 
     [SerializeField] private float price;
     [SerializeField] private InfrastructureType structureType;
 
     [SerializeField] private Infrastructure structure;
     [SerializeField] private InfrastructurePreview preview;
-
-    [SerializeField] private Sprite logo;
     
 
     public string Name => structureName;
 
     public string Description => structureDescription;
-    public Sprite Icon => icon;
+    public Sprite RewardIcon => rewardIcon;
+    public Sprite ButtonIcon => buttonIcon;
+    public Sprite ExempleImage => exempleImage;
 
     public InfrastructureType StructureType => structureType;
 
     public Infrastructure Structure => structure;
 
     public InfrastructurePreview Preview => preview;
-
-    public Sprite Logo => logo;
 
     public float Cost()
     {

@@ -8,9 +8,7 @@ public class UI_QuestDisplayer : MonoBehaviour
 
     [SerializeField] private Queue<QST_Reward> rewardToDisplays = new Queue<QST_Reward>();
 
-    [SerializeField] private Transform rewardDisplayParent;
-
-    private QST_UI_Reward currentRewardDisplay;
+    [SerializeField] private UI_QST_RewardHandler rewardUiHandler;
 
     public void SetQuestObjective(VLY_Quest quest, List<QST_Objective> objectives)
     {
@@ -57,18 +55,20 @@ public class UI_QuestDisplayer : MonoBehaviour
 
     public void SetRewardToDisplay(List<QST_Reward> rewards)
     {
-        for(int i = 0; i < rewards.Count; i++)
+        rewardUiHandler.ShowReward(rewards);
+
+        /*for(int i = 0; i < rewards.Count; i++)
         {
             rewardToDisplays.Enqueue(rewards[i]);
         }
 
-        if(currentRewardDisplay == null)
+        if(rewardUiHandler == null)
         {
             ShowNextDisplay();
-        }
+        }*/
     }
 
-    public void ShowNextDisplay()
+    /*public void ShowNextDisplay()
     {
         if (rewardToDisplays.Count > 0)
         {
@@ -76,14 +76,13 @@ public class UI_QuestDisplayer : MonoBehaviour
 
             if (reward.RewardDisplay != null)
             {
-                currentRewardDisplay = Instantiate(reward.RewardDisplay, rewardDisplayParent);
-
-                currentRewardDisplay.ShowReward(reward, ShowNextDisplay);
+                //rewardUiHandler = Instantiate(reward.RewardDisplay, rewardDisplayParent);
+                //rewardUiHandler.ShowReward(reward, ShowNextDisplay);
             }
             else
             {
                 ShowNextDisplay();
             }
         }
-    }
+    }*/
 }

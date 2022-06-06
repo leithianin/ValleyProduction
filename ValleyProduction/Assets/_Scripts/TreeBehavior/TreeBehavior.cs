@@ -34,14 +34,14 @@ public class TreeBehavior : MonoBehaviour
             {
                 foreach(MeshRenderer mesh in meshes)
                 {
-                    //mesh.material.EnableKeyword("_BLOSSOM");
+                    SetBlossom(mesh, 1);
                 }
             }
             else
             {
                 foreach (MeshRenderer mesh in meshes)
                 {
-                    //mesh.material.DisableKeyword("_BLOSSOM");
+                    SetBlossom(mesh, 0);
                 }
             }
 
@@ -80,9 +80,15 @@ public class TreeBehavior : MonoBehaviour
         }
     }
 
-    private void SetBlossom(Renderer toSet, bool value)
+    private void SetBlossom(Renderer toSet, float value)
     {
+        MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
 
+        toSet.GetPropertyBlock(materialBlock);
+
+        materialBlock.SetFloat("_BLOSSOM", lerpValue);
+
+        toSet.SetPropertyBlock(materialBlock);
     }
 
     private void SetTransitionState(Renderer toSet)

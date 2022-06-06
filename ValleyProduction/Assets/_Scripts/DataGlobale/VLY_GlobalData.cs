@@ -6,10 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New global data", menuName ="Valley/Create Global Data")]
 public class VLY_GlobalData : ScriptableObject
 {
+    [SerializeField] private Sprite icon;
     [SerializeField] private float value;
 
     public Action<float> OnValueChange;
 
+    public Sprite Icon => icon;
     public float Value => value;
 
     public Action<float> OnAskChangeValue;
