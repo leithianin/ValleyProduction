@@ -35,7 +35,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_HealthyBush_03_LOD0
   m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP _WIND
+  m_ShaderKeywords: TRANSITION _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP _WIND
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
@@ -95,7 +95,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - TransitionNoiseTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: cd0ccd07ff4c5074b9b574c5f15a020f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
@@ -277,8 +277,8 @@ Material:
     - SetStretchCurve: 0
     - SetStretchEffect: 0
     - SquashAnim: 0
-    - TRANSITION: 0
-    - TRANSITION_STATE: 0
+    - TRANSITION: 1
+    - TRANSITION_STATE: 3
     - TransitionEdgeThickness: 0.1
     - TransitionHueState: 0
     - TransitionState: 0
@@ -300,7 +300,7 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
-    - _BLOSSOM: 0
+    - _BLOSSOM: 1
     - _Blend: 0
     - _BlendMode: 0
     - _BumpScale: 1
