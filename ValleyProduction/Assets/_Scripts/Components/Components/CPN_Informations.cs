@@ -29,7 +29,6 @@ public class CPN_Informations : VLY_Component<VisitorScriptable>
 
     public void DisplayInformation()
     {
-        Debug.Log("ddsdqs");
         OnShowInformation?.Invoke();
         UIManager.InteractWithVisitor(this);
     }
