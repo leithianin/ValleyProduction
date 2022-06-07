@@ -55,6 +55,27 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         }
     }
 
+    public static void SetHikersInteractable(bool cond)
+    {
+        foreach (Collider coll in instance.hikerList)
+        {
+            coll.enabled = cond;
+        }
+    }
+
+    public static void SetAllVisitorsInteractable(bool cond)
+    {
+        foreach (Collider coll in instance.touristList)
+        {
+            coll.enabled = cond;
+        }
+
+        foreach (Collider coll in instance.hikerList)
+        {
+            coll.enabled = cond;
+        }
+    }
+
     public static void OnEndTutorial()
     {
         instance.OnEnd?.Invoke();
