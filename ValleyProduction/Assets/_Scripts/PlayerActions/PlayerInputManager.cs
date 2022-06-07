@@ -22,7 +22,9 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     [SerializeField] private InputActionReference mouseMovement;
 
+    [SerializeField] private InputActionReference mouseScroll;
 
+    [SerializeField] private InputActionReference escapeInput;
 
     [SerializeField] private Camera usedCamera;
     [SerializeField] private EventSystem usedEventSystem;
@@ -49,8 +51,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent<float> OnPolar;
     [SerializeField] private UnityEvent<float> OnAzimuthal;
 
-    [SerializeField] private UnityEvent OnKeyReturn;
-    [SerializeField] private UnityEvent OnKeyDelete;
     [SerializeField] private UnityEvent OnKeyEscape;
     [SerializeField] private UnityEvent<bool> OnKeyLeftShift;
 
@@ -58,6 +58,9 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public Action<Vector2> OnKeyMoveAction;
     public static UnityEvent<Vector2> GetOnKeyMove => instance.OnKeyMove;
     private Vector2 lastKeyDirection;
+    private float lastKeyRotation;
+    private float lastKeyPitch;
+    private float lastScrollDirection;
     private Vector2 lastMouseMovement;
     public static bool isKeyboardEnable = true;
     public static bool blockMouse = false;
@@ -68,7 +71,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public Action<Vector2> OnMouseMoveAction;
     [SerializeField] private UnityEvent<float> OnMouseScroll;
     public static UnityEvent<float> GetOnMouseScroll => instance.OnMouseScroll;
-    private float lastScrollValue;
 
     [SerializeField] private UnityEvent<float> OnMouseWheelDown;
     public static UnityEvent<float> GetOnMouseWheelDown => instance.OnMouseWheelDown;
@@ -120,10 +122,25 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         mouseMiddleClic.action.started += ActionMiddleDown;
         mouseMiddleClic.action.performed += ActionMiddleHold;
         mouseMiddleClic.action.canceled += ActionMiddleUp;
+
+        escapeInput.action.started += ActionEscape;
     }
 
     private void OnDisable()
     {
+        mouseLeftClic.action.started -= ActionLeftDown;
+        mouseLeftClic.action.performed -= ActionLeftHold;
+        mouseLeftClic.action.canceled -= ActionLeftUp;
+
+        mouseRightClic.action.started -= ActionRightDown;
+        mouseRightClic.action.performed -= ActionRightHold;
+        mouseRightClic.action.canceled -= ActionRightUp;
+
+        mouseMiddleClic.action.started -= ActionMiddleDown;
+        mouseMiddleClic.action.performed -= ActionMiddleHold;
+        mouseMiddleClic.action.canceled -= ActionMiddleUp;
+
+        escapeInput.action.started -= ActionEscape;
 
         inputControl.Disable();
     }
@@ -201,6 +218,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         middleClicHold = false;
     }
 
+    public void ActionEscape(InputAction.CallbackContext context)
+    {
+        OnKeyEscape?.Invoke();
+    }
+
     [ContextMenu("Test disable input")]
     public void DisableKeyMovement()
     {
@@ -228,41 +250,20 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
                 clicHandlerTouched = null;
             }
 
-            if (Input.mouseScrollDelta.y != 0 || lastScrollValue != 0)
+            if(mouseScroll.action.ReadValue<float>() != 0 || lastScrollDirection != 0)
             {
-                OnMouseScroll?.Invoke(Input.mouseScrollDelta.y);
-                lastScrollValue = Input.mouseScrollDelta.y;
+                OnMouseScroll?.Invoke(mouseScroll.action.ReadValue<float>());
+
+                lastScrollDirection = mouseScroll.action.ReadValue<float>();
             }
         }
 
         CheckCameraInput();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            OnKeyEscape?.Invoke();
-        }
-
         //CODE REVIEW : Plusieurs bool ou un seul pour disable le Context ?
         if (isKeyboardEnable)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                OnKeyReturn?.Invoke();
-            }
 
-            if (Input.GetKeyDown(KeyCode.Delete))
-            {
-                OnKeyDelete?.Invoke();
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                OnKeyLeftShift?.Invoke(true);
-            }
-            else if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                OnKeyLeftShift?.Invoke(false);
-            }
         }
 
         ResetClicHandler();
@@ -401,7 +402,23 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         }
         else
         {
-            
+            float rotationMovement = cameraRotationHandler.action.ReadValue<float>();
+
+            if (rotationMovement != 0 || lastKeyRotation != 0)
+            {
+                OnAzimuthal?.Invoke(rotationMovement);
+
+                lastKeyRotation = rotationMovement;
+            }
+
+            float pitchMovement = cameraPitchHandler.action.ReadValue<float>();
+
+            if (pitchMovement != 0 || lastKeyPitch != 0)
+            {
+                OnPolar?.Invoke(pitchMovement);
+
+                lastKeyPitch = pitchMovement;
+            }
         }
 
         if (righClicHold)

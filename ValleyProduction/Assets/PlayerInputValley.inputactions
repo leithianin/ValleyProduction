@@ -92,6 +92,22 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "23d7e62d-051e-4242-baad-8e3315a127e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "99a6d3ea-8aa6-479a-b9c8-2d2251e75a44",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -356,6 +372,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MiddleMouseClic",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c290c84-2e1c-4dfe-97b1-b6e834ea8c19",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4693b524-f185-4179-afd5-9643f456ffe8",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "Clamp(min=-1,max=1)",
+                    "groups": "",
+                    "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

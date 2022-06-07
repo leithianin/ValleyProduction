@@ -105,6 +105,22 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""23d7e62d-051e-4242-baad-8e3315a127e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""99a6d3ea-8aa6-479a-b9c8-2d2251e75a44"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -371,6 +387,28 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                     ""action"": ""MiddleMouseClic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c290c84-2e1c-4dfe-97b1-b6e834ea8c19"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4693b524-f185-4179-afd5-9643f456ffe8"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": ""Clamp(min=-1,max=1)"",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -396,6 +434,8 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
         m_MainGame_RightMouseClic = m_MainGame.FindAction("RightMouseClic", throwIfNotFound: true);
         m_MainGame_MiddleMouseClic = m_MainGame.FindAction("MiddleMouseClic", throwIfNotFound: true);
         m_MainGame_MouseMovement = m_MainGame.FindAction("MouseMovement", throwIfNotFound: true);
+        m_MainGame_Escape = m_MainGame.FindAction("Escape", throwIfNotFound: true);
+        m_MainGame_Scroll = m_MainGame.FindAction("Scroll", throwIfNotFound: true);
         // Tutorial_Base
         m_Tutorial_Base = asset.FindActionMap("Tutorial_Base", throwIfNotFound: true);
     }
@@ -458,6 +498,8 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
     private readonly InputAction m_MainGame_RightMouseClic;
     private readonly InputAction m_MainGame_MiddleMouseClic;
     private readonly InputAction m_MainGame_MouseMovement;
+    private readonly InputAction m_MainGame_Escape;
+    private readonly InputAction m_MainGame_Scroll;
     public struct MainGameActions
     {
         private @PlayerInputValley m_Wrapper;
@@ -473,6 +515,8 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
         public InputAction @RightMouseClic => m_Wrapper.m_MainGame_RightMouseClic;
         public InputAction @MiddleMouseClic => m_Wrapper.m_MainGame_MiddleMouseClic;
         public InputAction @MouseMovement => m_Wrapper.m_MainGame_MouseMovement;
+        public InputAction @Escape => m_Wrapper.m_MainGame_Escape;
+        public InputAction @Scroll => m_Wrapper.m_MainGame_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_MainGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -515,6 +559,12 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                 @MouseMovement.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMouseMovement;
                 @MouseMovement.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMouseMovement;
                 @MouseMovement.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnMouseMovement;
+                @Escape.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnEscape;
+                @Scroll.started -= m_Wrapper.m_MainGameActionsCallbackInterface.OnScroll;
+                @Scroll.performed -= m_Wrapper.m_MainGameActionsCallbackInterface.OnScroll;
+                @Scroll.canceled -= m_Wrapper.m_MainGameActionsCallbackInterface.OnScroll;
             }
             m_Wrapper.m_MainGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -552,6 +602,12 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                 @MouseMovement.started += instance.OnMouseMovement;
                 @MouseMovement.performed += instance.OnMouseMovement;
                 @MouseMovement.canceled += instance.OnMouseMovement;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
             }
         }
     }
@@ -594,6 +650,8 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
         void OnRightMouseClic(InputAction.CallbackContext context);
         void OnMiddleMouseClic(InputAction.CallbackContext context);
         void OnMouseMovement(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
     public interface ITutorial_BaseActions
     {
