@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 1712268565191719400}
   - component: {fileID: 7789482485079233858}
   - component: {fileID: 1490254098018175378}
+  - component: {fileID: 7233844903273037547}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -112,10 +113,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e583b33b0276b62409f09a08949a361d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMovementHandler: {fileID: 413516378307164160, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  cameraRotationHandler: {fileID: 7716523699248865108, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  cameraPitchHandler: {fileID: 4482297512141600427, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  heatmapSelectorsHandler:
+  - {fileID: 8101786014136910956, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  - {fileID: 6839961966806294543, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  - {fileID: 7372748886046003742, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  - {fileID: -8506500430540588997, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  mouseLeftClic: {fileID: -23302506190534776, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  mouseRightClic: {fileID: 2840539315198311102, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  mouseMiddleClic: {fileID: 1709516370953805696, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  mouseMovement: {fileID: -4426768768356600298, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  mouseScroll: {fileID: 7121702872548995263, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  escapeInput: {fileID: 9058033371984924582, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
   usedCamera: {fileID: 3631207456372332364}
   usedEventSystem: {fileID: 0}
   mainTerrain: {fileID: 0}
-  holdDuration: 0.2
+  holdDuration: 0.02
   OnClicLeft:
     m_PersistentCalls:
       m_Calls: []
@@ -154,7 +169,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5209237266425241732}
         m_TargetAssemblyTypeName: ConstructionManager, Assembly-CSharp
-        m_MethodName: MoveStructure
+        m_MethodName: RotateStructure
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -166,19 +181,7 @@ MonoBehaviour:
         m_CallState: 2
   OnClicRight:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: TEMP_HideRoadChoice
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnClicRightWihtoutObject:
     m_PersistentCalls:
       m_Calls:
@@ -326,12 +329,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CPN_FlagActionIDHandler, Assembly-CSharp
+        m_MethodName: TriggerFlag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnMouseWheelDown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CPN_FlagActionIDHandler, Assembly-CSharp
+        m_MethodName: TriggerFlag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnCameraMouseMove:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CPN_FlagActionIDHandler, Assembly-CSharp
+        m_MethodName: TriggerFlag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   context: {fileID: 11400000, guid: 7081e410ad1599343ab3b55d065dac8b, type: 2}
 --- !u!114 &5209237266425241729
 MonoBehaviour:
@@ -367,6 +406,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnSelectStructure:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnselectStructure:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5209237266425241731
@@ -543,6 +585,9 @@ MonoBehaviour:
   pathDataList: []
   pathFragmentDataList: []
   pathpointList: []
+  onValidatePath:
+    m_PersistentCalls:
+      m_Calls: []
   roadDetectorPrefab: {fileID: 1278767380387114619, guid: 6a4e1cfd6a81634408167444e9a9a5f7, type: 3}
   debugMode: 1
   DebugLineRenderer: {fileID: 0}
@@ -595,6 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d2c30d85d8b364198c847aefea7ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blackScreen: {fileID: 0}
 --- !u!114 &4442775087009201159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,6 +807,36 @@ MonoBehaviour:
   T_interactionPressed: {fileID: 2800000, guid: 1d24ed5389de82045bee157a54db63c8, type: 3}
   interactionCursorMode: 0
   interactionHotSpot: {x: 30, y: 30}
+--- !u!114 &7233844903273037547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209237266425241743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: fea093fbb0bbd6f428b5c5215251590f, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: MainGame
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5209237266696560536
 GameObject:
   m_ObjectHideFlags: 0

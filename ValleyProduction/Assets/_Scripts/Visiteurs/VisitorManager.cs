@@ -373,7 +373,21 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         {
             if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
             {
-                //Debug.Log(instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType);
+                toReturn.Add(instance.visitorPool[i]);
+            }
+        }
+
+        return toReturn;
+    }
+
+    public static List<VisitorBehavior> TouristList()
+    {
+        List<VisitorBehavior> toReturn = new List<VisitorBehavior>();
+
+        for (int i = 0; i < instance.visitorPool.Count; i++)
+        {
+            if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Tourist)
+            {
                 toReturn.Add(instance.visitorPool[i]);
             }
         }
