@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
-    public List<Collider> touristList = new List<Collider>();
+    public List<Collider> touristList = new List<Collider>();    //Use in Tutorial Base
+    public List<Collider> hikerList = new List<Collider>();      //Use in Tutorial Advance
 
     public UnityEvent OnProfileHiker;
     public UnityEvent OnProfileTourist;
