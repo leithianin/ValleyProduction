@@ -18,4 +18,13 @@ public class SetObjectiveDone : MonoBehaviour
             checkImage.enabled = true;
         }
     }
+
+    public void SetObjectiveToUndone()
+    {
+        if (parent.gameObject.activeSelf)
+        {
+            objectiveText.text = "</s>" + objectiveText.text;
+            checkImage.enabled = false;
+        }
+    }
 }
