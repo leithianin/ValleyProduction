@@ -5,6 +5,7 @@ using UnityEngine;
 public class FishFlock : MonoBehaviour
 {
     public GameObject fishPrefab;
+    public GameObject goalPosPrefab;
     public static int tankSize = 5;
 
     public bool patrol;
@@ -17,9 +18,9 @@ public class FishFlock : MonoBehaviour
 
     [SerializeField] private Vector2 refreshPosRandom;
 
-    TimerManager.Timer refreshTargetTimer = null;
+    //TimerManager.Timer refreshTargetTimer = null;
 
-    private Vector3 center;
+    public static Vector3 center = Vector3.zero;
 
     void Start()
     {
@@ -33,7 +34,7 @@ public class FishFlock : MonoBehaviour
                 Random.Range(center.y - tankSize, center.y + tankSize),
                 Random.Range(center.z - tankSize, center.z + tankSize)
             );
-            fishes[i] = Instantiate(fishPrefab, pos, Quaternion.identity, gameObject.transform);
+            fishes[i] = Instantiate(fishPrefab, pos, Quaternion.identity/*, gameObject.transform*/);
         }
 
         RefreshTarget();
@@ -49,6 +50,7 @@ public class FishFlock : MonoBehaviour
             Random.Range(center.y - tankSize, center.y + tankSize),
             Random.Range(center.z - tankSize, center.z + tankSize)
         );
+        goalPosPrefab.transform.position = goalPos;
 
         TimerManager.CreateGameTimer(Random.Range(refreshPosRandom.x, refreshPosRandom.y), RefreshTarget);
     }
