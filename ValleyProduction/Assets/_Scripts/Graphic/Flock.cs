@@ -9,12 +9,12 @@ public class Flock : MonoBehaviour
 
     float speed = .001f;
     float rotationSpeed = 4f;
-    float neighbourDistance = 3f;
+    public float neighbourDistance = 3f;
 
     Vector3 averageHeading;
     Vector3 averagePositon;
 
-    bool turning;
+    bool turning = false;
 
     void Start()
     {
@@ -23,7 +23,7 @@ public class Flock : MonoBehaviour
 
     void Update()
     {
-        if(Vector3.Distance(transform.position, Vector3.zero) >= FishFlock.tankSize)
+        if(Vector3.Distance(transform.position, FishFlock.center) >= FishFlock.tankSize)
         {
             turning = true;
         }
@@ -34,7 +34,7 @@ public class Flock : MonoBehaviour
 
         if (turning)
         {
-            Vector3 direction = Vector3.zero - transform.position;
+            Vector3 direction = FishFlock.goalPos - transform.position;
             transform.rotation = Quaternion.Slerp
             (
                 transform.rotation,
@@ -59,11 +59,13 @@ public class Flock : MonoBehaviour
         GameObject[] fishes;
         fishes = FishFlock.fishes;
 
-        Vector3 vCenter = Vector3.zero;
-        Vector3 vAvoid = Vector3.zero;
+        Vector3 vCenter = FishFlock.goalPos;
+        Vector3 vAvoid = FishFlock.goalPos;
         float gSpeed = 0.1f;
 
         Vector3 goalPos = FishFlock.goalPos;
+
+        Debug.Log(FishFlock.goalPos + "+" + goalPos);
 
         float dist;
 
@@ -98,7 +100,7 @@ public class Flock : MonoBehaviour
 
             Vector3 direction = (vCenter + vAvoid) - transform.position;
 
-            if(direction != Vector3.zero)
+            if(direction != FishFlock.center)
             {
                 transform.rotation = Quaternion.Slerp
                 (
