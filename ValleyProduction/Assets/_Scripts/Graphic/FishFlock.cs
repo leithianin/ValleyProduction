@@ -7,6 +7,8 @@ public class FishFlock : MonoBehaviour
     public GameObject fishPrefab;
     public static int tankSize = 5;
 
+    public bool patrol;
+
     static int numFish = 10;
     public static GameObject[] fishes = new GameObject[numFish];
 
