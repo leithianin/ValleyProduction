@@ -29,6 +29,9 @@ public class UI_ButtonController : MonoBehaviour
     {
         isSelected = value;
 
+        Debug.Log(gameObject + " Set selected : " + isSelected);
+
+
         if (isSelected)
         {
             animator.SetBool("Selected", true);

@@ -19,7 +19,6 @@ public class AudioPlayer : MonoBehaviour
     /// </summary>
     public void Play()
     {
-        Debug.Log("PlaySound");
         if (loopCoroutine != null)
         {
             Stop();
