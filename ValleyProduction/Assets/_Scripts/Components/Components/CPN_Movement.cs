@@ -25,6 +25,8 @@ public class CPN_Movement : VLY_Component<CPN_Data_Movement>
 
     private Action reachDestinationCallback;
 
+    public NavMeshAgent Agent => agent;
+
     // Update is called once per frame
     void Update()
     {
