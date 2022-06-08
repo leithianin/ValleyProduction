@@ -7,6 +7,7 @@ public class IFB_DesactivateAfterTime : MonoBehaviour, IFeedbackPlayer
     private float timer = 0;
 
     [SerializeField] private bool isRealTimer = false;
+    public Animator animator;
 
     public void Play()
     {
@@ -16,6 +17,11 @@ public class IFB_DesactivateAfterTime : MonoBehaviour, IFeedbackPlayer
     public void Play(float integer)
     {
         timer = integer;
+        if(animator != null)
+        {
+            animator.SetTrigger("Over");
+        }
+
         //StartCoroutine(PlayAfter()); CODE REVIEW
         if(isRealTimer)
         {
