@@ -117,7 +117,7 @@ namespace TOZEditor {
 				//Top
 				EditorGUILayout.Space();
 				EditorGUILayout.BeginVertical();
-				gui_BrushSize = EditorGUILayout.Slider("Brush Size :", gui_BrushSize, 0.1f, 10.0f);
+				gui_BrushSize = EditorGUILayout.Slider("Brush Size :", gui_BrushSize, 0.1f, 100.0f);
 				gui_BrushOpacity = EditorGUILayout.Slider("Brush Opacity :", gui_BrushOpacity, 0.0f, 1.0f);
 				EditorGUILayout.BeginHorizontal();
 				EditorGUILayout.PrefixLabel("Brush Color :");
