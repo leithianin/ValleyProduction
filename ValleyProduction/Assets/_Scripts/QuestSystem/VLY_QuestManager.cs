@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
 {
@@ -13,6 +14,10 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
     private List<QST_RewardBehavior> rewardBehaviors = new List<QST_RewardBehavior>();
 
     [SerializeField] private VLY_Quest startQuest;
+
+    [SerializeField] private UnityEvent OnCompleteObjective;
+    [SerializeField] private UnityEvent OnCompleteStage;
+    [SerializeField] private UnityEvent OnCompleteQuest;
 
     private void Start()
     {
@@ -31,6 +36,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
         rewardBehaviors.Add(new QST_RWDB_QuestStart());
         rewardBehaviors.Add(new QST_RWDB_IncrementFlag());
         rewardBehaviors.Add(new QST_RWDB_TriggerFlag());
+        rewardBehaviors.Add(new QST_RWDB_VisitorLimit());
 
         //Récupération des quêtes dans le projet.
         allQuests = Resources.FindObjectsOfTypeAll<VLY_Quest>();
@@ -41,9 +47,12 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
             allQuests[i].Reset();
         }
 
-        //Placeholder : Démarre la première quête
-        TimerManager.CreateRealTimer(2f, () => BeginQuest(startQuest));        
-        //BeginQuest(startQuest);
+        if (startQuest != null)
+        {
+            //Placeholder : Démarre la première quête
+            TimerManager.CreateRealTimer(2f, () => BeginQuest(startQuest));
+            //BeginQuest(startQuest);
+        }
     }
 
     /// <summary>
@@ -65,6 +74,8 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
     public static void CompleteQuest(VLY_Quest quest)
     {
         quest.state = QuestObjectiveState.Completed;
+
+        instance.OnCompleteQuest?.Invoke();
 
         for(int i = 0; i < quest.Rewards.Count; i++)
         {
@@ -158,6 +169,13 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
     {
         QST_ObjectiveBehavior usedBehavior = instance.GetObjectiveBehavior(objective);
 
+        switch(state)
+        {
+            case QuestObjectiveState.Completed :
+                instance.OnCompleteObjective?.Invoke();
+                break;
+        }
+
         usedBehavior.SetObjectiveStatus(objective, state);
     }
 
@@ -177,7 +195,9 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
 
             if(stage.State == QuestObjectiveState.Completed)
             {
-                foreach(string str in stage.triggerFlagList)
+                instance.OnCompleteStage?.Invoke();
+
+                foreach (string str in stage.triggerFlagList)
                 {
                     VLY_FlagManager.TriggerFlag(str);
                 }

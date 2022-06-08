@@ -3,6 +3,13 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+enum BoundariesType
+{
+    Box,
+    Sphere,
+    None
+}
+
 [ExecuteAlways, DisallowMultipleComponent]
 public class SphericalTransform : MonoBehaviour
 {
@@ -27,7 +34,9 @@ public class SphericalTransform : MonoBehaviour
 
     [Header("Moving Constraints")]
     [SerializeField] private LayerMask layerMask = default;
-    [SerializeField] protected Collider boundariesCollider = default;
+    [SerializeField] protected BoxCollider boxBoundariesCollider = default;
+    [SerializeField] protected SphereCollider sphereBoundariesCollider = default;
+    [SerializeField] private BoundariesType colliderToUse;
 
     [Header("Polar Values")]
     [SerializeField, Tooltip("In degrees")] private float verticalOffset = 0.5f;
@@ -184,11 +193,28 @@ public class SphericalTransform : MonoBehaviour
         Vector3 startPos = origin.position;
         float referenceTime = Vector3.Distance(startPos, target.position) / speed;
 
-        for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
+        for (float time = 0.0f; time < referenceTime; time += Time.unscaledDeltaTime)
         {
-            origin.position = Vector3.Lerp(target.position, startPos, time / referenceTime);
+            origin.position = Vector3.Lerp(startPos, target.position, time / referenceTime);
             yield return null;
         }
+
+        origin.position = target.position;
+        CameraManager.OnCameraMoveEnd?.Invoke();
+    }
+
+    private IEnumerator MoveCameraOriginWithCustomDuration(Transform targetTransform, float duration)
+    {
+        Vector3 startPos = origin.position;
+
+        for (float time = 0.0f; time < duration; time += Time.unscaledDeltaTime)
+        {
+            origin.position = Vector3.Lerp(startPos, targetTransform.position, time / duration);
+            yield return null;
+        }
+
+        origin.position = targetTransform.position;
+        CameraManager.OnCameraMoveEnd?.Invoke();
     }
 
     public void MoveOriginFromStartPosition(Vector3 startPos, Vector3 movingVector)
@@ -261,6 +287,21 @@ public class SphericalTransform : MonoBehaviour
         return Vector3.Normalize(new Vector3(origin.position.x - transform.position.x, 0.0f, origin.position.z - transform.position.z));
     }
 
+    /// <summary>
+    /// Allow to move Camera origin and self spherical coordinates depending on a custom duration
+    /// </summary>
+    /// <param name="originTarget"></param>
+    /// <param name="targetRadius"></param>
+    /// <param name="targetAzimuthalAngle"></param>
+    /// <param name="targetPolarAngle"></param>
+    /// <param name="duration"></param>
+    public void ChangeCameraOriginAndCoordinatesWithCustomDuration(Transform originTarget, float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float duration)
+    {
+        StartCoroutine(MoveCameraOriginWithCustomDuration(originTarget, duration));
+
+        ChangeCameraCoordinatesWithCustomDuration(targetRadius, targetAzimuthalAngle, targetPolarAngle, duration);
+    }
+
     #region Set Spherical Coordinates
     public void SetRadius(float value)
     {
@@ -292,7 +333,21 @@ public class SphericalTransform : MonoBehaviour
 
     }
 
-    public IEnumerator ChangeRadiusOverTime(float targetRadius, float speed)
+    /// <summary>
+    /// Move the Camera to the specified coordinates, this function does not move the camera origin
+    /// </summary>
+    /// <param name="targetRadius"></param>
+    /// <param name="targetAzimuthalAngle"></param>
+    /// <param name="targetPolarAngle"></param>
+    /// <param name="duration">In seconds</param>
+    public void ChangeCameraCoordinatesWithCustomDuration(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float duration)
+    {
+        StartCoroutine(ChangeRadiusWithCustomDuration(targetRadius, duration));
+        StartCoroutine(ChangeAzimuthalAngleWithCustomDuration(targetAzimuthalAngle, duration));
+        StartCoroutine(ChangePolarAngleWithCustomDuration(targetPolarAngle, duration));
+    }
+
+    private IEnumerator ChangeRadiusOverTime(float targetRadius, float speed)
     {
         float startRadius = coordinates.x;
         float referenceTime = Mathf.Abs(startRadius - targetRadius) / speed;
@@ -306,7 +361,20 @@ public class SphericalTransform : MonoBehaviour
         coordinates.x = targetRadius;
     }
 
-    public IEnumerator ChangeAzimuthalAngleOverTime(float targetAzimuthalAngle, float speed)
+    private IEnumerator ChangeRadiusWithCustomDuration(float targetRadius, float duration)
+    {
+        float startRadius = coordinates.x;
+
+        for (float time = 0.0f; time < duration; time += Time.unscaledDeltaTime)
+        {
+            coordinates.x = Mathf.Lerp(startRadius, targetRadius, time / duration);
+            yield return null;
+        }
+
+        coordinates.x = targetRadius;
+    }
+
+    private IEnumerator ChangeAzimuthalAngleOverTime(float targetAzimuthalAngle, float speed)
     {
         float startAzimuth = coordinates.y;
         float referenceTime = Mathf.Abs(startAzimuth - targetAzimuthalAngle) / speed;
@@ -320,7 +388,20 @@ public class SphericalTransform : MonoBehaviour
         coordinates.y = targetAzimuthalAngle;
     }
 
-    public IEnumerator ChangePolarAngleOverTime(float targetPolarAngle, float speed)
+    private IEnumerator ChangeAzimuthalAngleWithCustomDuration(float targetAzimuthalAngle, float duration)
+    {
+        float startAzimuthal = coordinates.y;
+
+        for (float time = 0.0f;  time < duration;  time += Time.unscaledDeltaTime)
+        {
+            coordinates.y = AngleLerp(startAzimuthal, targetAzimuthalAngle, time / duration);
+            yield return null;
+        }
+
+        coordinates.y = targetAzimuthalAngle;
+    }
+
+    private IEnumerator ChangePolarAngleOverTime(float targetPolarAngle, float speed)
     {
         float startPolar = coordinates.z;
         float referenceTime = Mathf.Abs(startPolar - targetPolarAngle) / speed;
@@ -328,6 +409,19 @@ public class SphericalTransform : MonoBehaviour
         for (float time = 0.0f; time < referenceTime; time += Time.unscaledDeltaTime)
         {
             coordinates.z = AngleLerp(startPolar, targetPolarAngle, time / referenceTime);
+            yield return null;
+        }
+
+        coordinates.z = targetPolarAngle;
+    }
+
+    private IEnumerator ChangePolarAngleWithCustomDuration(float targetPolarAngle, float duration)
+    {
+        float startPolar = coordinates.z;
+
+        for (float time = 0.0f; time < duration; time += Time.unscaledDeltaTime)
+        {
+            coordinates.z = AngleLerp(startPolar, targetPolarAngle, time / duration);
             yield return null;
         }
 
@@ -359,12 +453,37 @@ public class SphericalTransform : MonoBehaviour
 
     protected void ConstraintOriginPosition()
     {
-        if (boundariesCollider != null)
+        float xOriginClamped = origin.position.x;
+        float zOriginClamped = origin.position.z;
+
+        switch (colliderToUse)
         {
-            float xOriginClamped = Mathf.Clamp(origin.position.x, boundariesCollider.bounds.center.x - boundariesCollider.bounds.extents.x, boundariesCollider.bounds.center.x + boundariesCollider.bounds.extents.x);
-            float zOriginClamped = Mathf.Clamp(origin.position.z, boundariesCollider.bounds.center.z - boundariesCollider.bounds.extents.z, boundariesCollider.bounds.center.z + boundariesCollider.bounds.extents.z);
-            origin.position = new Vector3(xOriginClamped, origin.position.y, zOriginClamped);
+            case BoundariesType.Box:
+                if (boxBoundariesCollider != null)
+                {
+                    Vector3 center = boxBoundariesCollider.bounds.center;       // Collider center
+                    Vector3 extents = boxBoundariesCollider.bounds.extents;     // Collider extents
+
+                    xOriginClamped = Mathf.Clamp(origin.position.x, center.x - extents.x, center.x + extents.x);
+                    zOriginClamped = Mathf.Clamp(origin.position.z, center.z - extents.z, center.z + extents.z);
+                }
+                break;
+            case BoundariesType.Sphere:
+                if (sphereBoundariesCollider != null)
+                {
+                    Vector3 center = sphereBoundariesCollider.center;           // Collider center
+                    float r = sphereBoundariesCollider.radius;                  // Collider radius
+                    float rr = r * r;
+
+                    xOriginClamped = Mathf.Clamp(origin.position.x, center.x - r, center.x + r);
+                    float tempZ = Mathf.Sqrt(rr - (origin.position.x - center.x) * (origin.position.x - center.x));
+                    tempZ = float.IsNaN(tempZ) ? 0.0f : tempZ;
+                    zOriginClamped = Mathf.Clamp(origin.position.z, center.z - tempZ, center.z + tempZ);
+                }
+                break;
         }
+
+        origin.position = new Vector3(xOriginClamped, origin.position.y, zOriginClamped);
     }
     #endregion
 
@@ -373,6 +492,8 @@ public class SphericalTransform : MonoBehaviour
     {
         if (!origin)
             return;
+
+        //Gizmos.DrawWireSphere(sphereBoundariesCollider.center, sphereBoundariesCollider.radius);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(origin.position, transform.position);

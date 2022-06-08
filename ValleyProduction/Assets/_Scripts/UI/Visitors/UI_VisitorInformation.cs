@@ -63,6 +63,7 @@ public class UI_VisitorInformation : MonoBehaviour
     {
         if (currentVisitor != null)
         {
+            currentInfo.HideInformation();
             OnHide?.Invoke(currentVisitor);
             ResetSavedVisitors();
         }

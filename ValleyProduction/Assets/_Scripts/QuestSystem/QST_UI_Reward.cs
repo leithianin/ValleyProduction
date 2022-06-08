@@ -7,24 +7,20 @@ using TMPro;
 
 public abstract class QST_UI_Reward : MonoBehaviour
 {
-    public abstract void ShowReward(QST_Reward reward, Action callback);
+    public abstract void ShowReward(QST_Reward reward);
 
     public abstract void HideReward();
 }
 
 public abstract class QST_UI_Reward<T> : QST_UI_Reward where T : QST_Reward
 {
-    protected Action endCallback;
-
     public abstract void OnShowReward(T reward);
     public abstract void OnHideReward();
 
-    public override void ShowReward(QST_Reward reward, Action callback)
+    public override void ShowReward(QST_Reward reward)
     {
         if(reward is T)
         {
-            endCallback = callback;
-
             OnShowReward(reward as T);
         }
     }
@@ -32,6 +28,5 @@ public abstract class QST_UI_Reward<T> : QST_UI_Reward where T : QST_Reward
     public override void HideReward()
     {
         OnHideReward();
-        endCallback?.Invoke();
     }
 }

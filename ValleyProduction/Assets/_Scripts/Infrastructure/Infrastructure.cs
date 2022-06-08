@@ -11,6 +11,8 @@ public abstract class Infrastructure : MonoBehaviour
 
     [SerializeField] private bool isOpen = true;
 
+    [SerializeField] private List<ToolType> lockedTool;
+
     [SerializeField, Tooltip("Actions to play when the construction is placed.")] private UnityEvent PlayOnPlace;
     [SerializeField, Tooltip("Actions to play when the construction is placed on an other construction.")] private UnityEvent PlayOnPlaceOverObject;
     [SerializeField, Tooltip("Actions to play when the construction is deleted.")] private UnityEvent PlayOnDelete;
@@ -44,6 +46,11 @@ public abstract class Infrastructure : MonoBehaviour
         public string name = string.Empty;
         public int visitorsTotal = 0;
         public int moneyTotal = 0;
+    }
+
+    public bool CanBeUsedByTool(ToolType toolToCheck)
+    {
+        return !lockedTool.Contains(toolToCheck);
     }
 
     /// <summary>
@@ -114,7 +121,7 @@ public abstract class Infrastructure : MonoBehaviour
 
         if (OnRemoveObject())
         {
-            Destroy(gameObject);
+            TimerManager.CreateRealTimer(0.4f, () => Destroy(gameObject));
         }
         
     }
@@ -158,6 +165,7 @@ public abstract class Infrastructure : MonoBehaviour
     {
         PlayOnReplace?.Invoke();
         OnReplaceObject();
+        OpenStructure();
     }
 
     public void HoldRightClic()

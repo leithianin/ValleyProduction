@@ -15,6 +15,12 @@ public class HeatmapViewController : MonoBehaviour
     public GameObject foliage;
 
     private bool isEnabled;
+    private int currentIndex;
+
+    #region Animatic
+    public bool enableHeatview;
+    [Range(0, 4)] public int viewIndex;
+    #endregion
 
     void Start()
     {
@@ -64,9 +70,19 @@ public class HeatmapViewController : MonoBehaviour
     {
         EnableHeatmapView(false, 0);
     }
+
     public void HandleHeatmap(int index)
     {
-        EnableHeatmapView(!isEnabled, index);
+        if(currentIndex != index && index != 0)
+        {
+            currentIndex = index;
+            EnableHeatmapView(true, index);
+        }
+        else
+        {
+            currentIndex = 0;
+            EnableHeatmapView(false, 0);
+        }
     }
 
     private void EnableHeatmapView(bool enable, int index)

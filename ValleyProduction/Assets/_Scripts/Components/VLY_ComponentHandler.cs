@@ -48,4 +48,16 @@ public class VLY_ComponentHandler : MonoBehaviour
         AnimationHandler test = GetComponentOfType<AnimationHandler>();
         test.outline.enabled = false;
     }
+
+    public void BlinkOnOutline()
+    {
+        AnimationHandler test = GetComponentOfType<AnimationHandler>();
+        test.outline.enabled = true;
+    }
+
+    public void BlinkOffOutline()
+    {
+        AnimationHandler test = GetComponentOfType<AnimationHandler>();
+        test.outline.enabled = false;
+    }
 }

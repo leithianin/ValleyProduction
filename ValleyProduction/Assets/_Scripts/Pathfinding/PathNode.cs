@@ -52,19 +52,23 @@ public class PathNode : MonoBehaviour
  
 
     #region Data Management
-    /// <summary>
-    /// Check if the PathNode is next to a Landmark and Update the node.
-    /// </summary>
-    public void PlaceNode()
+    public void SetDatas()
     {
-        Debug.Log("Je passe ici : " + VLY_LandmarkManager.AllLandmarks.Count);
-        Collider[] colliderTab = Physics.OverlapSphere(transform.position, 0.5f);
-
         dataByLandmark = new List<NodePathData>();
         foreach (CPN_IsLandmark landmark in VLY_LandmarkManager.AllLandmarks)
         {
             dataByLandmark.Add(new NodePathData(landmark));
         }
+    }
+
+    /// <summary>
+    /// Check if the PathNode is next to a Landmark and Update the node.
+    /// </summary>
+    public void PlaceNode()
+    {
+        SetDatas();
+
+        Collider[] colliderTab = Physics.OverlapSphere(transform.position, 0.5f);
 
         foreach (Collider c in colliderTab)
         {

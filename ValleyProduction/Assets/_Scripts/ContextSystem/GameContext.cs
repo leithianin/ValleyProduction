@@ -11,7 +11,8 @@ public enum FeatureLocker
     Destruction,
     Ressource,
     Satisfaction,
-    BlockAllKeyboardInput
+    BlockAllKeyboardInput,
+    BlockMouseInput
 }
 
 [CreateAssetMenu(fileName ="Game Context", menuName = "Valley/Create Game Context")]
@@ -21,6 +22,7 @@ public class GameContext : ScriptableObject
     public class Context
     {
         [SerializeField] private string contextName;
+        public string GetContextName => contextName;
         public LayerMask contextLayer;
         public List<FeatureLocker> lockedFeatures;
     }
@@ -30,6 +32,21 @@ public class GameContext : ScriptableObject
     public Context GetContext(int contextID)
     {
         return contexts[contextID];
+    }
+
+    public int GetContextID(string contextString)
+    {
+        int i = 0;
+        foreach(Context ctxt in contexts)
+        {
+            if(ctxt.GetContextName.Equals(contextString))
+            {
+                return i;
+            }
+            i++;
+        }
+
+        return -1;
     }
 
     public LayerMask GetContextLayers(int contextID)

@@ -31,7 +31,6 @@ public class QST_OBJB_VisitorReachLandmark : QST_ObjectiveBehavior<QST_OBJ_Visit
 
     private void CheckLandmarkInteraction(LandmarkType landmark, VisitorBehavior visitor)
     {
-        Debug.Log("Visitor : " + visitor.visitorType + " au Landmark : " + landmark);
         for(int i = 0; i < pendingObjectives.Count; i++)
         {
             if (landmark == pendingObjectives[i].Landmark)

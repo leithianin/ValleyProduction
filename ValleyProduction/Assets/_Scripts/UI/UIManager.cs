@@ -93,7 +93,7 @@ public class UIManager : VLY_Singleton<UIManager>
         toolInfo.OnToolCreatePath(i);
     }
 
-    public static void UnlockStructure(InfrastructurePreview toUnlock)
+    public static void UnlockStructure(InfrastructureData toUnlock)
     {
         instance.toolInfo.UnlockStructure(toUnlock);
     }

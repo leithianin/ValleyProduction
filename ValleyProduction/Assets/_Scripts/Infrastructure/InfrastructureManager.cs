@@ -8,7 +8,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 {
     [SerializeField] private InfrastructurePreviewHandler previewHandler;
 
-    private Infrastructure currentSelectedStructure;
+    [SerializeField] private Infrastructure currentSelectedStructure;
 
     public static InfrastructurePreview GetCurrentPreview => instance.previewHandler.GetPreview;
     public static Infrastructure GetCurrentSelectedStructure => instance.currentSelectedStructure;
@@ -18,7 +18,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     private static LayerMask layerIgnoreRaycast = 2;
     private static LayerMask layerInfrastructure = 0;
 
-    private GameObject movedObject = null;
+    [SerializeField] private GameObject movedObject = null;
 
     [Header("Tool management")]
     public ToolType toolSelected = ToolType.None;
@@ -31,6 +31,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     [SerializeField] private UnityEvent OnUnselectModifyTool;
     [SerializeField] private UnityEvent OnSelectDeleteTool;
     [SerializeField] private UnityEvent OnUnselectDeleteTool;
+    [SerializeField] private UnityEvent OnSelectNoTool;
 
     public static GameObject GetMovedObject => instance.movedObject;
 
@@ -84,9 +85,12 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             switch (instance.toolSelected)
             {
                 case ToolType.Place:
+                    instance.EndRotation();
+                    UnselectInfrastructure();
                     instance.OnUnselectConstructionTool?.Invoke();
                     break;
                 case ToolType.Move:
+                    instance.EndRotation();
                     if (instance.movedObject != null)
                     {
                         CancelMoveStructure();
@@ -113,6 +117,9 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
                         break;
                     case ToolType.Delete:
                         instance.OnSelectDeleteTool?.Invoke();
+                        break;
+                    case ToolType.None:
+                        instance.OnSelectNoTool?.Invoke();
                         break;
                 }
             }
@@ -152,7 +159,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         CursorControl.SetSaveMousePosition();
 
-        instance.previewHandler.isRotating = true;
+        previewHandler.isRotating = true;
         Cursor.visible = false;
     }
 
@@ -170,10 +177,13 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private void PlaceInfrastructure(InfrastructurePreview toPlace, Infrastructure selectedStructure)
     {
-        if (ConstructionManager.GetSelectedStructureType == selectedStructure.StructureType && toPlace.AskToPlace(selectedStructure.transform.position))
+        if (toPlace != null)
         {
-            currentSelectedStructure = selectedStructure;
-            selectedStructure.PlaceObject();
+            if (ConstructionManager.GetSelectedStructureType == selectedStructure.StructureType && toPlace.AskToPlace(selectedStructure.transform.position))
+            {
+                currentSelectedStructure = selectedStructure;
+                selectedStructure.PlaceObject();
+            }
         }
     }
 
@@ -239,6 +249,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static void CancelMoveStructure()
     {
         //CODE REVIEW : PLUS UTILISE ?
+        instance.EndRotation();
         GameObject saveObject = instance.movedObject;
 
         TimerManager.CreateRealTimer(0.5f, () => ReplaceInfrastructureChangeLyer(saveObject));
@@ -262,6 +273,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void ReplaceInfrastructure(Vector3 position)
     {
+        Debug.Log("Replace Structure");
         //Pathpoint
         if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
         {
@@ -270,19 +282,16 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
         if (GetCurrentPreview.CanPlaceObject(position))
         {
-            if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
+            instance.ChangeInfrastructurePosition(GetCurrentSelectedStructure, position);
+
+            instance.movedObject.layer = default;
+            instance.movedObject = null;
+
+            if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
             {
-                Destroy(instance.movedObject);
-                PlaceInfrastructure(position);
-            }
-            else
-            {
-                //Pathpoint
-                instance.movedObject.layer = default;
-                instance.movedObject.transform.position = position;
-                instance.movedObject = null;
                 OnPlaceInfrastructure?.Invoke(GetCurrentSelectedStructure);
             }
+
 
             instance.previewHandler.SetInfrastructurePreview(null);
 
@@ -297,6 +306,20 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     }
 
+    private void ChangeInfrastructurePosition(Infrastructure toChange, Vector3 position)
+    {
+        if (GetCurrentPreview.AskToPlace(position) && !previewHandler.snaping)
+        {
+            toChange.transform.rotation = previewHandler.transform.rotation;
+
+            EndRotation();
+
+            toChange.transform.position = position;
+
+            toChange.ReplaceObject();
+        }
+    }
+
     public static void ReplaceInfrastructureChangeLyer(GameObject saveObject)
     {
         saveObject.layer = layerInfrastructure;
@@ -309,21 +332,24 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             UnselectInfrastructure();
         }
 
-        switch (tool)
+        if (interactedStructure.CanBeUsedByTool(tool))
         {
-            //Just select l'infrastructure (Info)
-            case ToolType.None:
-                instance.SelectInfrastructure(interactedStructure);
-                break;
-            case ToolType.Place:
-                instance.PlaceInfrastructure(GetCurrentPreview, interactedStructure);
-                break;
-            case ToolType.Move:
-                MoveInfrastructure(interactedStructure);
-                break;
-            case ToolType.Delete:
-                DeleteInfrastructure(interactedStructure);
-                break;
+            switch (tool)
+            {
+                //Just select l'infrastructure (Info)
+                case ToolType.None:
+                    instance.SelectInfrastructure(interactedStructure);
+                    break;
+                case ToolType.Place:
+                    instance.PlaceInfrastructure(GetCurrentPreview, interactedStructure);
+                    break;
+                case ToolType.Move:
+                    MoveInfrastructure(interactedStructure);
+                    break;
+                case ToolType.Delete:
+                    DeleteInfrastructure(interactedStructure);
+                    break;
+            }
         }
     }
 
@@ -344,6 +370,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     /// </summary>
     public static void UnselectInfrastructure()
     {
+        instance.EndRotation();
         if (instance.currentSelectedStructure != null)
         {
             Debug.Log(instance.currentSelectedStructure.gameObject);
@@ -356,14 +383,14 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         if (!instance.previewHandler.isRotating)
         {
-            instance.previewHandler.snaping = true;
+            instance.previewHandler.SetSnaping(true);
             instance.previewHandler.transform.position = infrastructure.transform.position;
         }
     }
 
     public static void DesnapInfrastructure(Infrastructure infrastructure)
     {
-        instance.previewHandler.snaping = false;
+        instance.previewHandler.SetSnaping(false);
     }
 
     private void OnDestroy()

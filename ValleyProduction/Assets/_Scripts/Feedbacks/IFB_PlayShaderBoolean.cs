@@ -9,7 +9,20 @@ public class IFB_PlayShaderBoolean : MonoBehaviour, IFeedbackPlayer
     [SerializeField] private List<Renderer> renderers;
     [SerializeField] private string shader_variable_name;
 
+    [SerializeField] private Material usedMaterial;
+
     private MaterialPropertyBlock materialBlock;
+
+    [ContextMenu("Set Mesh List")]
+    private void SetGetAllMesh()
+    {
+        renderers = new List<Renderer>(transform.GetComponentsInChildren<Renderer>());
+
+        foreach(Renderer r in renderers)
+        {
+            r.material = usedMaterial;
+        }
+    }
 
     public void Play()
     {

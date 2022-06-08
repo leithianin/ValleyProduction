@@ -85,25 +85,32 @@ public class ManageMultiPath : MonoBehaviour
 
         foreach (PathFragmentData pfd in pfdList)
         {
-            GameObject newArrow = Instantiate(arrowTagRef, prefabSign.transform);
-            newArrow.SetActive(true);
-            newArrow.transform.position = new Vector3(pivot.transform.position.x, pivot.transform.position.y - (offset * nbArrow), pivot.transform.position.z);
-            nbArrow++;
-
-            if (pfd.startPoint == thisPathPoint)
+            if (pfd.path.Count > 0)
             {
-                pfd.endPoint.OnDestroyPathPoint += DeleteArrow;
-                newArrow.transform.forward = pfd.path[1] - newArrow.transform.position;
-                newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
-            }
-            else
-            {
-                pfd.startPoint.OnDestroyPathPoint += DeleteArrow;
-                newArrow.transform.forward = pfd.path[0] - newArrow.transform.position;
-                newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
-            }
+                Debug.Log(arrowTagRef);
+                Debug.Log(prefabSign);
 
-            multiPathList.Add(new MultiPathClass(newArrow, pfd));
+
+                GameObject newArrow = Instantiate(arrowTagRef, prefabSign.transform);
+                newArrow.SetActive(true);
+                newArrow.transform.position = new Vector3(pivot.transform.position.x, pivot.transform.position.y - (offset * nbArrow), pivot.transform.position.z);
+                nbArrow++;
+
+                if (pfd.startPoint == thisPathPoint)
+                {
+                    pfd.endPoint.OnDestroyPathPoint += DeleteArrow;
+                    newArrow.transform.forward = pfd.path[1] - newArrow.transform.position;
+                    newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
+                }
+                else
+                {
+                    pfd.startPoint.OnDestroyPathPoint += DeleteArrow;
+                    newArrow.transform.forward = pfd.path[0] - newArrow.transform.position;
+                    newArrow.transform.eulerAngles = new Vector3(0f, newArrow.transform.eulerAngles.y, 0f);
+                }
+
+                multiPathList.Add(new MultiPathClass(newArrow, pfd));
+            }
         }
     }
 

@@ -16,11 +16,11 @@ public class UI_Tool : MonoBehaviour
 
     [SerializeField] private InfrastructureData currentStructure;
 
-    public void UnlockStructure(InfrastructurePreview toUnlock) //CODE REVIEW : Voir pour utiliser des Scriptable plutot que le Preview directement
+    public void UnlockStructure(InfrastructureData toUnlock) //CODE REVIEW : Voir pour utiliser des Scriptable plutot que le Preview directement
     {
         for(int i = 0; i < structureButtons.Count; i++)
         {
-            if(structureButtons[i].Structure == toUnlock)
+            if (structureButtons[i].Structure == toUnlock)
             {
                 structureButtons[i].Enable();
             }
@@ -29,31 +29,34 @@ public class UI_Tool : MonoBehaviour
 
     public void OnToolCreatePath(int i)
     {
-        ConstructionManager.SelectInfrastructureType(null);
+        if (!PlayerInputManager.blockMouse)
+        {
+            ConstructionManager.SelectInfrastructureType(null);
 
-        if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
-        {
-            InfrastructureManager.SetToolSelected((ToolType)i);
-        }
-        else
-        {
-            InfrastructureManager.SetToolSelected(ToolType.None);
-        }
+            if (i != 0 && InfrastructureManager.GetCurrentTool != (ToolType)i)
+            {
+                InfrastructureManager.SetToolSelected((ToolType)i);
+            }
+            else
+            {
+                InfrastructureManager.SetToolSelected(ToolType.None);
+            }
 
-        switch (InfrastructureManager.GetCurrentTool)
-        {
-            case ToolType.Place:
-                OnSelectPlaceTool?.Invoke();
-                break;
-            case ToolType.Move:
-                OnSelectMoveTool?.Invoke();
-                break;
-            case ToolType.Delete:
-                OnSelectDeleteTool?.Invoke();
-                break;
-            case ToolType.None:
-                UnselectTool();
-                break;
+            switch (InfrastructureManager.GetCurrentTool)
+            {
+                case ToolType.Place:
+                    OnSelectPlaceTool?.Invoke();
+                    break;
+                case ToolType.Move:
+                    OnSelectMoveTool?.Invoke();
+                    break;
+                case ToolType.Delete:
+                    OnSelectDeleteTool?.Invoke();
+                    break;
+                case ToolType.None:
+                    UnselectTool();
+                    break;
+            }
         }
     }
 
@@ -79,17 +82,25 @@ public class UI_Tool : MonoBehaviour
             }
             else
             {
-                UnselectStructure();
+                UnselectStructure(currentStructure);
             }
         }
         else
         {
-            UnselectStructure();
+            UnselectStructure(currentStructure);
         }
     }
 
-    public void UnselectStructure()
+    public void UnselectStructure(InfrastructureData structure)
     {
+        foreach(UI_InfrastructureButton button in structureButtons)
+        {
+            if(button.Structure == structure)
+            {
+                button.UnselectStructure();
+            }
+        }
+
         OnUnselectStructure?.Invoke();
 
         currentStructure = null;

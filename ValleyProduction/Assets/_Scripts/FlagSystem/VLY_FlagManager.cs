@@ -15,15 +15,16 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
     private Dictionary<string, List<Action>> triggerToRemove = new Dictionary<string, List<Action>>();
     private Dictionary<string, List<Action<int>>> incrementalToRemove = new Dictionary<string, List<Action<int>>>();
 
-    /*public static Action<string, int> OnUpdateFlag;
-
-    public static Action<string> OnTriggerFlag;*/
+    [SerializeField] private List<CPN_IncrementFlagListener> flagListeners;
 
     protected override void OnAwake()
     {
         //Ajoute tous les flags existant
+        flags.Clear();
+        incrementalFlagListeners.Clear();
+        triggerFlagListeners.Clear();
 
-        foreach(string flagName in flagList.IncrementalsFlags)
+        foreach (string flagName in flagList.IncrementalsFlags)
         {
             flags.Add(flagName, 0);
 
@@ -37,11 +38,10 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
             triggerFlagListeners.Add(flagName, new List<Action>());
         }
 
-        /*
-        foreach (KeyValuePair<string, List<Action>> tfl in triggerFlagListeners)
+        foreach(CPN_IncrementFlagListener lst in flagListeners)
         {
-            Debug.Log(tfl.Key);
-        }*/
+            lst.enabled = true;
+        }
     }
 
     private void LateUpdate()
@@ -68,7 +68,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static void AddIncrementFlagListener(string flagName, Action<int> callback)
     {
-        Debug.Log(flagName);
+
         if(!incrementalFlagListeners[flagName].Contains(callback))
         {
             incrementalFlagListeners[flagName].Add(callback);
@@ -93,6 +93,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static void AddTriggerFlagListener(string flagName, Action callback)
     {
+        //Debug.Log(flagName);
         if (!triggerFlagListeners[flagName].Contains(callback))
         {
             triggerFlagListeners[flagName].Add(callback);

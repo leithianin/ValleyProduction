@@ -14,6 +14,8 @@ public class UI_InfrastructureInformation : MonoBehaviour
     [SerializeField] private TMP_Text pollutionScoreDisplay;
     [SerializeField] private Image imageComponent;
 
+    [SerializeField] private Animator closeOpenAnimator;
+
     [Header("Feature Icons")]
     [SerializeField] private GameObject capacity;
     [SerializeField] private TMP_Text capacityText;
@@ -46,7 +48,7 @@ public class UI_InfrastructureInformation : MonoBehaviour
         else { Debug.LogError("Data Description de la structure non rempli"); }
 
         
-        if (baseStruct.Data.Logo != null)        { imageComponent.sprite = baseStruct.Data.Logo; }
+        if (baseStruct.Data.ButtonIcon != null)        { imageComponent.sprite = baseStruct.Data.ButtonIcon; }
         else { Debug.LogError("Data Sprite de la structure non rempli"); }
 
         //Show Capacity si interactionScript
@@ -76,6 +78,8 @@ public class UI_InfrastructureInformation : MonoBehaviour
         noiseScoreDisplay.text = "Noise : <size=17>" + infoInfra.GetNoiseScore().ToString() + "</size>";
 
         gameObject.SetActive(true);
+
+        closeOpenAnimator.SetBool("Selected", !baseStruct.IsOpen);
     }
 
     public void UpdateCurrentNbInfo(Infrastructure baseStruct)
@@ -112,11 +116,19 @@ public class UI_InfrastructureInformation : MonoBehaviour
         }
     }
 
+    public void SwitchStructureOpening()
+    {
+        if(InfrastructureManager.GetCurrentSelectedStructure != null)
+        {
+            SetStructureOpen(!InfrastructureManager.GetCurrentSelectedStructure.IsOpen);
+        }
+    }
+
     public void SetStructureOpen(bool isOpen)
     {
         if(InfrastructureManager.GetCurrentSelectedStructure != null)
         {
-            if(isOpen)
+            if (isOpen)
             {
                 InfrastructureManager.GetCurrentSelectedStructure.OpenStructure();
             }

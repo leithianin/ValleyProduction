@@ -2,14 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CameraManager : VLY_Singleton<CameraManager>
 {
     [SerializeField] private Camera currentCamera;
     public SphericalTransform spherical;
-    public GameObject origin;
+    public CinematicCameraBehaviour cineCamBehav;
+    public PostProcessManager postProcessManager;
+    //public GameObject origin;
 
     public static Action OnCameraMove;
+    public static Action OnCameraMoveEnd;
 
     [SerializeField] private LayerMask cameraLayerMaskBase;
 
@@ -26,9 +31,9 @@ public class CameraManager : VLY_Singleton<CameraManager>
     }
 
     //Rotation chiant
-    public static void MoveCamera(float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float speed, bool rotate)
-    {
-        instance.spherical.MoveCameraOverTime(targetPolarAngle, targetAzimuthalAngle, targetPolarAngle, speed);
+    public static void MoveCamera(Transform target, float targetRadius, float targetAzimuthalAngle, float targetPolarAngle, float duration, bool rotate)
+    { 
+        instance.spherical.ChangeCameraOriginAndCoordinatesWithCustomDuration(target, targetRadius, targetAzimuthalAngle, targetPolarAngle, duration);
     }
 
     public static void SetTarget(Transform tr)
@@ -39,6 +44,11 @@ public class CameraManager : VLY_Singleton<CameraManager>
     public static void SetTargetWithSpeed(Transform tr, float speed)
     {
         instance.spherical.StartCoroutine(instance.spherical.MoveCameraOriginToCustomTarget(tr, speed));
+    }
+
+    public static void SetVignettage(float value)
+    {
+        instance.postProcessManager.SetVignetteValue(value);
     }
 
     public void ChangeInteractionZoneLayerMask(bool showLayer)
@@ -63,5 +73,20 @@ public class CameraManager : VLY_Singleton<CameraManager>
     {
         instance.cameraLayerMaskBase &= ~(1 << LayerMask.NameToLayer(mask));
         instance.currentCamera.cullingMask &= ~(1 << LayerMask.NameToLayer(mask));
+    }
+
+    public static void SetCinematicMode()
+    {
+        instance.cineCamBehav.inCinematicMode = true;
+    }
+
+    public void AddEventLayer(string str)
+    {
+        currentCamera.eventMask |= (1 << LayerMask.NameToLayer(str));
+    }
+
+    public void RemoveEventLayer(string str)
+    {
+        currentCamera.eventMask &= ~(1 << LayerMask.NameToLayer(str));
     }
 }

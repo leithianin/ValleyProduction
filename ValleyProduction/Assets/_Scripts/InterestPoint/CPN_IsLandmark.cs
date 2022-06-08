@@ -7,9 +7,12 @@ public enum LandmarkType
 {
     None,
     Spawn,
-    Natural,
-    Human,
-    Cultural
+    Lake,
+    Tree,
+    Waterfall,
+    Chapel,
+    Mill,
+    Menhir
 }
 
 public class CPN_IsLandmark : VLY_Component

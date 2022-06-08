@@ -23,8 +23,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     [Header("For Dev")]
     [SerializeField] private List<VisitorBehavior> visitorPool;
 
-    [SerializeField] private Terrain mainTerrain;
-
     public static Action<bool> isOnDespawn;
 
     private float nextSpawnTime = 5f;
@@ -37,7 +35,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
     public static Action<int> OnChangeVisitorCount;
     #endregion
 
-    public static Terrain GetMainTerrain => instance.mainTerrain;
+
 
     private void Start()
     {
@@ -62,6 +60,11 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
     
+    public static void AddVisitorLimit(int toAdd)
+    {
+        instance.maxSpawn += toAdd;
+    }
+
     public static void SetVisitorSpawn(bool doesAllow)
     {
         instance.allowVisitorSpawn = doesAllow;
@@ -79,13 +82,30 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             if (newVisitor != null)
             {
                 VisitorScriptable visitorType;
-                if (type != null) { visitorType = type; }
-                else { visitorType = ChooseVisitorType(); }
+                if (type != null)
+                {
+                    visitorType = type;
+                }
+                else if(visitorTypes.Count > 0)
+                {
+                    visitorType = ChooseVisitorType();
+                }
+                else
+                {
+                    visitorType = newVisitor.visitorType;
+                }
 
                 Vector2 rng = UnityEngine.Random.insideUnitCircle * spawnDistanceFromSpawnPoint;
                 IST_PathPoint wantedSpawn = null;
 
-                for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
+                wantedSpawn = SearchSpawnPoint(visitorType.LandmarksWanted);
+
+                if (wantedSpawn == null)
+                {
+                    wantedSpawn = SearchSpawnPointWithoutLandmark();
+                }
+
+                /*for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
                 {
                     wantedSpawn = SearchSpawnPoint(visitorType.LandmarksWanted[i]);
 
@@ -97,7 +117,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     {
                         wantedSpawn = SearchSpawnPointWithoutLandmark();
                     }
-                }
+                }*/
 
                 if (wantedSpawn != null)
                 {
@@ -171,24 +191,26 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
     }
 
-    private IST_PathPoint SearchSpawnPoint(LandmarkType landmarkType)
+    private IST_PathPoint SearchSpawnPoint(List<LandmarkType> landmarkTypes)
     {
         List<IST_PathPoint> possiblePathpoints = new List<IST_PathPoint>();
         List<IST_PathPoint> allSpawns = new List<IST_PathPoint>(PathManager.SpawnPoints);
 
-        for (int j = 0; j < allSpawns.Count; j++)
+        foreach (LandmarkType landmarkType in landmarkTypes)
         {
-            List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(landmarkType);
-
-            for (int k = 0; k < landmarks.Count; k++)
+            for (int j = 0; j < allSpawns.Count; j++)
             {
-                if (allSpawns[j].Node.HasValidPathForLandmark(landmarks[k]))
+                List<CPN_IsLandmark> landmarks = VLY_LandmarkManager.GetLandmarkOfType(landmarkType);
+
+                for (int k = 0; k < landmarks.Count; k++)
                 {
-                    possiblePathpoints.Add(allSpawns[j]);
+                    if (allSpawns[j].Node.HasValidPathForLandmark(landmarks[k]))
+                    {
+                        possiblePathpoints.Add(allSpawns[j]);
+                    }
                 }
             }
         }
-
         if (possiblePathpoints.Count > 0)
         {
             return possiblePathpoints[UnityEngine.Random.Range(0, possiblePathpoints.Count)];
@@ -264,7 +286,13 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
             case "Hiker":
                 cpn_Inf.visitorType = TypeVisitor.Hiker;
                 break;
+            case "HikerSlow":
+                cpn_Inf.visitorType = TypeVisitor.Hiker;
+                break;
             case "Tourist":
+                cpn_Inf.visitorType = TypeVisitor.Tourist;
+                break;
+            case "TouristSlow":
                 cpn_Inf.visitorType = TypeVisitor.Tourist;
                 break;
         }
@@ -335,6 +363,36 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
         }
 
         return null;
+    }
+
+    public static List<VisitorBehavior> HikersList()
+    {
+        List<VisitorBehavior> toReturn = new List<VisitorBehavior>();
+
+        for (int i = 0; i < instance.visitorPool.Count; i++)
+        {
+            if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Hiker)
+            {
+                toReturn.Add(instance.visitorPool[i]);
+            }
+        }
+
+        return toReturn;
+    }
+
+    public static List<VisitorBehavior> TouristList()
+    {
+        List<VisitorBehavior> toReturn = new List<VisitorBehavior>();
+
+        for (int i = 0; i < instance.visitorPool.Count; i++)
+        {
+            if (instance.visitorPool[i].IsUsed && instance.visitorPool[i].GetComponent<CPN_Informations>().visitorType == TypeVisitor.Tourist)
+            {
+                toReturn.Add(instance.visitorPool[i]);
+            }
+        }
+
+        return toReturn;
     }
 
     /// <summary>

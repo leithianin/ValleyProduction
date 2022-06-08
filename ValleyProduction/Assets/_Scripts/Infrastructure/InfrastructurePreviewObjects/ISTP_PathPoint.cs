@@ -9,13 +9,14 @@ public class ISTP_PathPoint : InfrastructurePreview
 
     protected override void OnAskToPlace(Vector3 position)
     {
-        //Debug.Log("Ask Pathpoint preview");
         PathCreationManager.CalculatePathShortness(true);
     }
 
     protected override bool OnCanPlaceObject(Vector3 position)
     {
-        if (PathManager.previousPathpoint == null || PathCreationManager.CalculatePathShortness(false) < snapRange.y)
+        float pathLength = PathCreationManager.CalculatePathShortness(false);
+
+        if (PathManager.previousPathpoint == null || (pathLength < snapRange.y) && (doesSnap || pathLength > 1f))
         {
             if (PathManager.CurrentLinePreview != null)
             {
@@ -27,7 +28,6 @@ public class ISTP_PathPoint : InfrastructurePreview
         {
             PathManager.CurrentLinePreview.material.DisableKeyword("CAN_CONSTRUCT");
         }
-
         return false;
     }
 

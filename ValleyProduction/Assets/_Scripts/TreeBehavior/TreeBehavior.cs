@@ -11,6 +11,8 @@ public class TreeBehavior : MonoBehaviour
 
     [SerializeField] private UnityEvent OnTreeAlive;
     [SerializeField] private UnityEvent OnTreeDead;
+    [SerializeField] private UnityEvent OnTreeDying;
+    [SerializeField] private UnityEvent OnTreeEndDying;
 
     private int currentPhase;
     private float lastLerpValue;
@@ -20,24 +22,30 @@ public class TreeBehavior : MonoBehaviour
 
     public int CurrentPhase => currentPhase;
 
+    [ContextMenu("Set Mesh List")]
+    private void GetAllMeshes()
+    {
+        meshes = new List<MeshRenderer>(transform.GetComponentsInChildren<MeshRenderer>());
+    }
+
     public void SetTreePhase(int phase)
     {
         if (phase != currentPhase)
         {
-            Debug.Log("TreePhase : " + phase);
-
             if(phase < currentPhase)
             {
-                foreach(MeshRenderer mesh in meshes)
+                foreach (MeshRenderer mesh in meshes)
                 {
-                    mesh.material.EnableKeyword("_BLOSSOM");
+                    SetBlossom(mesh, 1);
                 }
             }
             else
             {
+                OnTreeDying?.Invoke();
+
                 foreach (MeshRenderer mesh in meshes)
                 {
-                    mesh.material.DisableKeyword("_BLOSSOM");
+                    SetBlossom(mesh, 0);
                 }
             }
 
@@ -68,11 +76,35 @@ public class TreeBehavior : MonoBehaviour
         if (currentInterpolate >= 1)
         {
             enabled = false;
+
+            OnTreeEndDying?.Invoke();
         }
 
         foreach (MeshRenderer mesh in meshes)
         {
-            mesh.material.SetFloat("TRANSITION_STATE", lerpValue);
+            SetTransitionState(mesh);
         }
+    }
+
+    private void SetBlossom(Renderer toSet, float value)
+    {
+        MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
+
+        toSet.GetPropertyBlock(materialBlock);
+
+        materialBlock.SetFloat("_BLOSSOM", lerpValue);
+
+        toSet.SetPropertyBlock(materialBlock);
+    }
+
+    private void SetTransitionState(Renderer toSet)
+    {
+        MaterialPropertyBlock materialBlock = new MaterialPropertyBlock();
+
+        toSet.GetPropertyBlock(materialBlock);
+
+        materialBlock.SetFloat("TRANSITION_STATE", lerpValue);
+
+        toSet.SetPropertyBlock(materialBlock);
     }
 }

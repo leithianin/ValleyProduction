@@ -7,15 +7,28 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 {
-    public GameObject Welcome;
-    public GameObject End;
+    public List<Collider> touristList = new List<Collider>();    //Use in Tutorial Base
+    public List<Collider> hikerList = new List<Collider>();      //Use in Tutorial Advance
 
     public UnityEvent OnProfileHiker;
     public UnityEvent OnProfileTourist;
-
     public UnityEvent OnProfileInfrastructure;
 
     public UnityEvent OnEnd;
+    public UnityEvent OnCinematic;
+
+    public static bool blockPlacePathpoint = false;
+    public static bool blockFinishPath = false;
+
+    public static void SetBlockPlacePathpoint(bool cond)
+    {
+        blockPlacePathpoint = cond;
+    }
+
+    public static void SetBlockFinishPath(bool cond)
+    {
+        blockFinishPath = cond;
+    }
 
     //unity event OnCameraMove
     public static void ClickOnHiker()
@@ -34,9 +47,48 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         }
     }
 
+    public static void SetVisitorsInteractable(bool cond)
+    {
+        foreach(Collider coll in instance.touristList)
+        {
+            coll.enabled = cond;
+        }
+    }
+
+    public static void SetHikersInteractable(bool cond)
+    {
+        foreach (Collider coll in instance.hikerList)
+        {
+            coll.enabled = cond;
+        }
+    }
+
+    public static void SetAllVisitorsInteractable(bool cond)
+    {
+        foreach (Collider coll in instance.touristList)
+        {
+            coll.enabled = cond;
+        }
+
+        foreach (Collider coll in instance.hikerList)
+        {
+            coll.enabled = cond;
+        }
+    }
+
     public static void OnEndTutorial()
     {
         instance.OnEnd?.Invoke();
+    }
+
+    public static void OnPlayCinematic()
+    {
+        instance.OnCinematic?.Invoke();
+    }
+
+    public static void BlockCameraInput(bool cond)
+    {
+        PlayerInputManager.isCameraBlock = cond;
     }
 
     #region To Remove 
