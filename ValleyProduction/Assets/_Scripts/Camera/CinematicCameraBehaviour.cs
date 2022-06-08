@@ -152,10 +152,19 @@ public class CinematicCameraBehaviour : MonoBehaviour
             if (cameraData.isTraveling)
             {
                 cameraTransform.SetOrigin(Vector3.Lerp(cameraData.travelPosition, cameraData.cameraOriginPosition, time / referenceTime));
+
+                if (cameraData.isRotating)
+                {
+                    cameraTransform.AzimuthalRotation(cameraData.clockwise ? 1.0f : -1.0f, cameraData.rotationSpeed);
+                }
                 yield return null;
             }
             else
             {
+                if (cameraData.isRotating)
+                {
+                    cameraTransform.AzimuthalRotation(cameraData.clockwise ? 1.0f : -1.0f, cameraData.rotationSpeed);
+                }
                 yield return null;
             }
         }
