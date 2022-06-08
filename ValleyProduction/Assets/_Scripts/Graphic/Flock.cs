@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour
 {
+    public FishFlock fishFlock;
     public float minSpeed = .5f;
     public float maxSpeed = 1f;
 
     float speed = .001f;
     float rotationSpeed = 4f;
-    float neighbourDistance = 3f;
+    public float neighbourDistance = 3f;
 
-    Vector3 averageHeading;
-    Vector3 averagePositon;
-
-    bool turning;
+    bool turning = false;
 
     void Start()
     {
@@ -23,7 +21,7 @@ public class Flock : MonoBehaviour
 
     void Update()
     {
-        if(Vector3.Distance(transform.position, Vector3.zero) >= FishFlock.tankSize)
+        if(Mathf.Abs(transform.position.x - fishFlock.center.x) >= fishFlock.tankSize.x || Mathf.Abs(transform.position.y - fishFlock.center.y) >= fishFlock.tankSize.y || Mathf.Abs(transform.position.z - fishFlock.center.z) >= fishFlock.tankSize.z)
         {
             turning = true;
         }
@@ -34,7 +32,7 @@ public class Flock : MonoBehaviour
 
         if (turning)
         {
-            Vector3 direction = Vector3.zero - transform.position;
+            Vector3 direction = fishFlock.goalPos - transform.position;
             transform.rotation = Quaternion.Slerp
             (
                 transform.rotation,
@@ -57,13 +55,15 @@ public class Flock : MonoBehaviour
     void ApplyRules()
     {
         GameObject[] fishes;
-        fishes = FishFlock.fishes;
+        fishes = fishFlock.fishes;
 
-        Vector3 vCenter = Vector3.zero;
-        Vector3 vAvoid = Vector3.zero;
+        Vector3 vCenter = fishFlock.goalPos;
+        Vector3 vAvoid = fishFlock.goalPos;
         float gSpeed = 0.1f;
 
-        Vector3 goalPos = FishFlock.goalPos;
+        Vector3 goalPos = fishFlock.goalPos;
+
+        //Debug.Log(fishFlock.goalPos + "+" + goalPos);
 
         float dist;
 
@@ -98,7 +98,7 @@ public class Flock : MonoBehaviour
 
             Vector3 direction = (vCenter + vAvoid) - transform.position;
 
-            if(direction != Vector3.zero)
+            if(direction != fishFlock.center)
             {
                 transform.rotation = Quaternion.Slerp
                 (

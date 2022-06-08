@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3660753533411535957}
   - component: {fileID: 8103443096426090923}
   - component: {fileID: 634790595473359559}
+  - component: {fileID: 884417065299834003}
   m_Layer: 0
   m_Name: Button_Quit_01
   m_TagString: Untagged
@@ -244,6 +245,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 884417065299834003}
+          m_TargetAssemblyTypeName: UI_PlaySound, Assembly-CSharp
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &634790595473359559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +270,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3660753533411535957}
+--- !u!114 &884417065299834003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2635971187677960873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cac81afcd71af64bb32ddc4c614c8e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toPlay: {fileID: 11400000, guid: 4818e3557bf567c45a33d8b28b096873, type: 2}
 --- !u!1 &2704289452793167049
 GameObject:
   m_ObjectHideFlags: 0

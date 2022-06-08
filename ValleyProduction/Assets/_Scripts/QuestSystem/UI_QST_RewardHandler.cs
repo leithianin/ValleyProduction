@@ -22,9 +22,9 @@ public class UI_QST_RewardHandler : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        while (rewardHolder.childCount > 0)
+        for(int i = 0; i < rewardHolder.childCount; i++)
         {
-            Destroy(rewardHolder.GetChild(0).gameObject);
+            Destroy(rewardHolder.GetChild(i).gameObject);
         }
     }
 }

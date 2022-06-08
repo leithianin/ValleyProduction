@@ -64,6 +64,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     private Vector2 lastMouseMovement;
     public static bool isKeyboardEnable = true;
     public static bool blockMouse = false;
+    public static bool isCameraBlock = false;
 
     [SerializeField] private UnityEvent<Vector2> OnMouseMove;
 
@@ -234,6 +235,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         toDisable.action.Disable();
     }
 
+    public void EnableInput(InputActionReference toEnable)
+    {
+        toEnable.action.Enable();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -258,7 +264,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             }
         }
 
-        CheckCameraInput();
+        if (!isCameraBlock)
+        {
+            CheckCameraInput();
+        }
 
         //CODE REVIEW : Plusieurs bool ou un seul pour disable le Context ?
         if (isKeyboardEnable)
