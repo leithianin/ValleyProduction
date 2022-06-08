@@ -102,6 +102,12 @@ public class CinematicShot : SphericalTransform
         _camera.depth = soloCamera  ?  10.0f : 0.0f;
     }
 
+    public void GetBoundaries()
+    {
+        boxBoundariesCollider = GameObject.Find("Boundaries").GetComponent<BoxCollider>();
+        sphereBoundariesCollider = GameObject.Find("Boundaries").GetComponent<SphereCollider>();
+    }
+
     protected override void DrawTargetInEditor()
     {
         Gizmos.color = Color.green;

@@ -64,6 +64,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     private Vector2 lastMouseMovement;
     public static bool isKeyboardEnable = true;
     public static bool blockMouse = false;
+    public static bool isCameraBlock = false;
 
     [SerializeField] private UnityEvent<Vector2> OnMouseMove;
 
@@ -147,7 +148,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionLeftDown(InputAction.CallbackContext context)
     {
-        Debug.Log("Left Down");
         if (!usedEventSystem.IsPointerOverGameObject())
         {
             CursorTextureManager.SetPressedCursor();
@@ -157,12 +157,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionLeftHold(InputAction.CallbackContext context)
     {
-        Debug.Log("Left Hold");
+        
     }
 
     public void ActionLeftUp(InputAction.CallbackContext context)
     {
-        Debug.Log("Left Up");
         if (!usedEventSystem.IsPointerOverGameObject())
         {
             CursorTextureManager.SetReleaseCursor();
@@ -172,7 +171,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionRightDown(InputAction.CallbackContext context)
     {
-        Debug.Log("Right Down");
         if (!usedEventSystem.IsPointerOverGameObject())
         {
             righClicHold = true;
@@ -181,7 +179,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionRightHold(InputAction.CallbackContext context)
     {
-        Debug.Log("Right Hold");
         if (!usedEventSystem.IsPointerOverGameObject())
         {
             CallRightHoldMouseInput(raycastHit);
@@ -190,7 +187,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionRightUp(InputAction.CallbackContext context)
     {
-        Debug.Log("Right Up");
         if (!usedEventSystem.IsPointerOverGameObject())
         {
             CallRightMouseInputs(raycastHit);
@@ -200,7 +196,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionMiddleDown(InputAction.CallbackContext context)
     {
-        Debug.Log("Middle Down");
         if (!usedEventSystem.IsPointerOverGameObject())
         {
             middleClicHold = true;
@@ -209,12 +204,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionMiddleHold(InputAction.CallbackContext context)
     {
-        Debug.Log("Middle Hold");
+        
     }
 
     public void ActionMiddleUp(InputAction.CallbackContext context)
     {
-        Debug.Log("Middle Up");
         middleClicHold = false;
     }
 
@@ -232,6 +226,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public void DisableInput(InputActionReference toDisable)
     {
         toDisable.action.Disable();
+    }
+
+    public void EnableInput(InputActionReference toEnable)
+    {
+        toEnable.action.Enable();
     }
 
     // Update is called once per frame
@@ -258,7 +257,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             }
         }
 
-        CheckCameraInput();
+        if (!isCameraBlock)
+        {
+            CheckCameraInput();
+        }
 
         //CODE REVIEW : Plusieurs bool ou un seul pour disable le Context ?
         if (isKeyboardEnable)

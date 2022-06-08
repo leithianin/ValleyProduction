@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraData : ScriptableObject
 {
-    [HideInInspector] public string scene;
+    public string scene;
 
     public float radius;
     public float azimuthalAngle;

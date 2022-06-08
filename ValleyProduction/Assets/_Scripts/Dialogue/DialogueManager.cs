@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class DialogueManager : VLY_Singleton<DialogueManager>
 {
@@ -10,6 +11,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public GameObject textBlock;                                            //Block input interaction 
     public static bool isSpeaking => instance.speaking != null;
+
+    public Image woodyImage;
 
     [Header("Value")]
     public float dialogueWaitingTime = 1f;
@@ -28,6 +31,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     [Header("Events")]
     public UnityEvent OnEndDialogue;
+    public UnityEvent OnStartDialogue;
 
     [System.Serializable]
     public class ELEMENTS
@@ -61,12 +65,17 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         indicationInputText.text = "<i> Click to speed up";
         CameraManager.SetVignettage(vignetteValue);
         textBlock.gameObject.SetActive(true);
+        OnStartDialogue?.Invoke();
         StopAllCoroutines();
         if (!isSpeaking)
         {
             index = 0;
             currentId = id;
 
+            if (TextsDictionary.instance.GetTextAsset(id).Behavior != null)
+            {
+                woodyImage.sprite = TextsDictionary.instance.GetTextAsset(id).Behavior;
+            }
             string text = TextsDictionary.instance.GetTextAsset(id).Texts[index];
             string speaker = TextsDictionary.instance.GetTextAsset(id).Title;
 

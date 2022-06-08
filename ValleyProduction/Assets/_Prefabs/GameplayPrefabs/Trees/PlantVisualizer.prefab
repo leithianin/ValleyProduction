@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4668885155472284702}
   - component: {fileID: 249871729927248258}
   - component: {fileID: 4668885155472284701}
+  - component: {fileID: 3120665458764681625}
   m_Layer: 7
   m_Name: PlantVisualizer
   m_TagString: Untagged
@@ -46,37 +47,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData:
-  - dataTypeToCheck: 3
-    wantedScore: 3
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 6
-    needHigher: 1
-    score: 0
-  - dataTypeToCheck: 3
-    wantedScore: 10
-    needHigher: 1
-    score: 0
-  collider: {fileID: 4668885155472284701}
-  scoreByTree: 1
-  treesInArea: []
-  numberTreeToDisabled: 050000000500000005000000
-  OnChangeScore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 249871729927248258}
-        m_TargetAssemblyTypeName: AreaUpdater`1[[AU_PlantCounter, Assembly-CSharp
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - displayDatas:
+    - dataTypeToCheck: 1
+      wantedUpScore: 2
+      wantedDownScore: 3
+      needHigher: 1
+  - displayDatas:
+    - dataTypeToCheck: 1
+      wantedUpScore: 3
+      wantedDownScore: 4
+      needHigher: 1
+  - displayDatas:
+    - dataTypeToCheck: 1
+      wantedUpScore: 5
+      wantedDownScore: 4
+      needHigher: 1
+  - displayDatas:
+    - dataTypeToCheck: 1
+      wantedUpScore: 6
+      wantedDownScore: 5
+      needHigher: 1
+  trees:
+  - {fileID: 3120665458764681625}
+  score: 0
 --- !u!114 &249871729927248258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +82,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40404edf23d60584b801788d78d16167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreProduced: 0
+  range: 25
+  scoreProduced: 10
+  OnChangeScore:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!135 &4668885155472284701
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -103,3 +100,53 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3120665458764681625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668885155472284700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a42ce1da6d09c1742a97587a090e2025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshes: []
+  lerpCoef: 0.5
+  OnTreeAlive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 249871729927248258}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnTreeDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 249871729927248258}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnTreeDying:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTreeEndDying:
+    m_PersistentCalls:
+      m_Calls: []

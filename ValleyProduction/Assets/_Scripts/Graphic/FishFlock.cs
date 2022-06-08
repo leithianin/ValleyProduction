@@ -5,36 +5,36 @@ using UnityEngine;
 public class FishFlock : MonoBehaviour
 {
     public GameObject fishPrefab;
+
+    public int numFish = 10;
+    [HideInInspector] public GameObject[] fishes;
+
+    public Vector3 tankSize;
+
+    [HideInInspector] public Vector3 goalPos = Vector3.zero;
+
     public GameObject goalPosPrefab;
-    public static int tankSize = 5;
-
-    public bool patrol;
-    public Transform[] patrolPoints;
-
-    static int numFish = 10;
-    public static GameObject[] fishes = new GameObject[numFish];
-
-    public static Vector3 goalPos = Vector3.zero;
-
     [SerializeField] private Vector2 refreshPosRandom;
 
     //TimerManager.Timer refreshTargetTimer = null;
 
-    public static Vector3 center = Vector3.zero;
+    [HideInInspector] public Vector3 center = Vector3.zero;
 
     void Start()
     {
         center = this.transform.position;
+        fishes = new GameObject[numFish];
 
         for (int i = 0; i < numFish; i++)
         {
             Vector3 pos = new Vector3
             (
-                Random.Range(center.x - tankSize, center.x + tankSize),
-                Random.Range(center.y - tankSize, center.y + tankSize),
-                Random.Range(center.z - tankSize, center.z + tankSize)
+                Random.Range(center.x - tankSize.x, center.x + tankSize.x),
+                Random.Range(center.y - tankSize.y, center.y + tankSize.y),
+                Random.Range(center.z - tankSize.z, center.z + tankSize.z)
             );
-            fishes[i] = Instantiate(fishPrefab, pos, Quaternion.identity/*, gameObject.transform*/);
+            fishes[i] = Instantiate(fishPrefab, pos, Quaternion.identity, gameObject.transform);
+            fishes[i].GetComponent<Flock>().fishFlock = this;
         }
 
         RefreshTarget();
@@ -46,12 +46,18 @@ public class FishFlock : MonoBehaviour
 
         goalPos = new Vector3
         (
-            Random.Range(center.x - tankSize, center.x + tankSize),
-            Random.Range(center.y - tankSize, center.y + tankSize),
-            Random.Range(center.z - tankSize, center.z + tankSize)
+            Random.Range(center.x - tankSize.x, center.x + tankSize.x),
+            Random.Range(center.y - tankSize.y, center.y + tankSize.y),
+            Random.Range(center.z - tankSize.z, center.z + tankSize.z)
         );
         goalPosPrefab.transform.position = goalPos;
 
         TimerManager.CreateGameTimer(Random.Range(refreshPosRandom.x, refreshPosRandom.y), RefreshTarget);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1, 0, 0, .5f);
+        Gizmos.DrawCube(transform.position, new Vector3(tankSize.x * 2, tankSize.y * 2, tankSize.z * 2));
     }
 }
