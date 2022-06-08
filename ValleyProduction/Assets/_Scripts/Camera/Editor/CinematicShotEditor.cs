@@ -27,7 +27,9 @@ public class CinematicShotEditor : Editor
     SerializedProperty polarAngle;
 
     SerializedProperty layerMask;
-    SerializedProperty boundariesCollider;
+    SerializedProperty colliderToUse;
+    SerializedProperty boxBoundariesCollider;
+    SerializedProperty sphereBoundariesCollider;
 
     SerializedProperty verticalOffset;
     SerializedProperty minPolarValue;
@@ -75,7 +77,9 @@ public class CinematicShotEditor : Editor
         polarAngle = serializedObject.FindProperty("coordinates.z");
 
         layerMask = serializedObject.FindProperty("layerMask");
-        boundariesCollider = serializedObject.FindProperty("boundariesCollider");
+        colliderToUse = serializedObject.FindProperty("colliderToUse");
+        boxBoundariesCollider = serializedObject.FindProperty("boxBoundariesCollider");
+        sphereBoundariesCollider = serializedObject.FindProperty("sphereBoundariesCollider");
 
         verticalOffset = serializedObject.FindProperty("verticalOffset");
         minPolarValue = serializedObject.FindProperty("minPolarValue");
@@ -209,7 +213,13 @@ public class CinematicShotEditor : Editor
         EditorGUILayout.PropertyField(cinematic, new GUIContent("Cinematic"));
 
         EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(boundariesCollider);
+        EditorGUILayout.PropertyField(colliderToUse);
+        EditorGUILayout.PropertyField(boxBoundariesCollider);
+        EditorGUILayout.PropertyField(sphereBoundariesCollider);
+        if (GUILayout.Button("Get Boundaries"))
+        {
+            cinematicShot.GetBoundaries();
+        }
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("ScriptableObject", EditorStyles.boldLabel);
@@ -241,7 +251,8 @@ public class CinematicShotEditor : Editor
         EditorGUILayout.PropertyField(coordinates);
 
         EditorGUILayout.PropertyField(layerMask);
-        EditorGUILayout.PropertyField(boundariesCollider);
+        EditorGUILayout.PropertyField(boxBoundariesCollider);
+        EditorGUILayout.PropertyField(sphereBoundariesCollider);
 
         EditorGUILayout.PropertyField(verticalOffset);
         EditorGUILayout.PropertyField(minPolarValue);

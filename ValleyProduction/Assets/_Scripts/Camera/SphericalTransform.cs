@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-enum BoundariesType
+public enum BoundariesType
 {
     Box,
     Sphere,
@@ -36,7 +36,7 @@ public class SphericalTransform : MonoBehaviour
     [SerializeField] private LayerMask layerMask = default;
     [SerializeField] protected BoxCollider boxBoundariesCollider = default;
     [SerializeField] protected SphereCollider sphereBoundariesCollider = default;
-    [SerializeField] private BoundariesType colliderToUse;
+    [SerializeField] protected BoundariesType colliderToUse;
 
     [Header("Polar Values")]
     [SerializeField, Tooltip("In degrees")] private float verticalOffset = 0.5f;
