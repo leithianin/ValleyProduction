@@ -11,6 +11,9 @@ public abstract class TextBase : SerializedScriptableObject
     public string Title => title;
     [Space, SerializeField] private string title;
 
+    public Sprite Behavior => behavior;
+    [Space, SerializeField] private Sprite behavior;
+
     public string[] Texts => texts;
     [SerializeField, TextArea(5, 50)] private string[] texts;
 
