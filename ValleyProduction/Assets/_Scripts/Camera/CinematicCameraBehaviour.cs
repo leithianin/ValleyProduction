@@ -90,6 +90,8 @@ public class CinematicCameraBehaviour : MonoBehaviour
             FadeReset();
         }
         cameraTransform.OriginVisualOffset = refVerticalOffest;
+        CameraManager.OnEndCinematic?.Invoke();
+        cinematicModeTriggered = false;
         inCinematicMode = false;
     }
 

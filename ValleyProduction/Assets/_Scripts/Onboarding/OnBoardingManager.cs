@@ -15,7 +15,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnProfileInfrastructure;
 
     public UnityEvent OnEnd;
-    public UnityEvent OnCinematic;
+    public UnityEvent OnEndCinematicEvent;
 
     public static bool blockPlacePathpoint = false;
     public static bool blockFinishPath = false;
@@ -83,7 +83,12 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static void OnPlayCinematic()
     {
-        instance.OnCinematic?.Invoke();
+        CameraManager.OnEndCinematic += OnEndCinematic;
+    }
+    public static void OnEndCinematic()
+    {
+        CameraManager.OnEndCinematic -= OnEndCinematic;
+        instance.OnEndCinematicEvent?.Invoke();
     }
 
     public static void BlockCameraInput(bool cond)
