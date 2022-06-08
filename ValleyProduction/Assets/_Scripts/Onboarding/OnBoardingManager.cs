@@ -86,6 +86,11 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         instance.OnCinematic?.Invoke();
     }
 
+    public static void BlockCameraInput(bool cond)
+    {
+        PlayerInputManager.isCameraBlock = cond;
+    }
+
     #region To Remove 
     public static void SetCanSpawnVisitors(bool cond)
     {

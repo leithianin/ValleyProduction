@@ -24,7 +24,6 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
 
     private void Update()
     {
-        Debug.Log(instance.attractivityScore.Value);
         if(Input.GetKeyDown(KeyCode.Alpha5))
         {
             attractivityCheat = 5;
