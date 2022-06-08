@@ -31,6 +31,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     [Header("Events")]
     public UnityEvent OnEndDialogue;
+    public UnityEvent OnStartDialogue;
 
     [System.Serializable]
     public class ELEMENTS
@@ -64,6 +65,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         indicationInputText.text = "<i> Click to speed up";
         CameraManager.SetVignettage(vignetteValue);
         textBlock.gameObject.SetActive(true);
+        OnStartDialogue?.Invoke();
         StopAllCoroutines();
         if (!isSpeaking)
         {
