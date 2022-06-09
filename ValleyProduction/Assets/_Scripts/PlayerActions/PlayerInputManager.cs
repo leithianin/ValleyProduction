@@ -225,6 +225,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void DisableInput(InputActionReference toDisable)
     {
+        Debug.Log("Disable : " + toDisable.name);
         toDisable.action.Disable();
     }
 

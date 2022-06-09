@@ -10,15 +10,22 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public List<Collider> touristList = new List<Collider>();    //Use in Tutorial Base
     public List<Collider> hikerList = new List<Collider>();      //Use in Tutorial Advance
 
+    public UnityEvent OnStart;
+
     public UnityEvent OnProfileHiker;
     public UnityEvent OnProfileTourist;
     public UnityEvent OnProfileInfrastructure;
 
     public UnityEvent OnEnd;
-    public UnityEvent OnCinematic;
+    public UnityEvent OnEndCinematicEvent;
 
     public static bool blockPlacePathpoint = false;
     public static bool blockFinishPath = false;
+
+    private void Start()
+    {
+        OnStart?.Invoke();
+    }
 
     public static void SetBlockPlacePathpoint(bool cond)
     {
@@ -83,7 +90,12 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static void OnPlayCinematic()
     {
-        instance.OnCinematic?.Invoke();
+        CameraManager.OnEndCinematic += OnEndCinematic;
+    }
+    public static void OnEndCinematic()
+    {
+        CameraManager.OnEndCinematic -= OnEndCinematic;
+        instance.OnEndCinematicEvent?.Invoke();
     }
 
     public static void BlockCameraInput(bool cond)

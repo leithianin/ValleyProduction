@@ -20,6 +20,8 @@ public class CameraData : ScriptableObject
     public float rotationSpeed;
     public bool cinematic;
 
+    public AnimationCurve speedOverTime;
+
     public bool useCustomDuration;
     public float duration;
 

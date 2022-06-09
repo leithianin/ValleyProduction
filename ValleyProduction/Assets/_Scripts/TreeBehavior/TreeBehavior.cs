@@ -32,7 +32,7 @@ public class TreeBehavior : MonoBehaviour
     {
         if (phase != currentPhase)
         {
-            if(phase < currentPhase)
+            /*if(phase < currentPhase)
             {
                 foreach (MeshRenderer mesh in meshes)
                 {
@@ -47,7 +47,7 @@ public class TreeBehavior : MonoBehaviour
                 {
                     SetBlossom(mesh, 0);
                 }
-            }
+            }*/
 
             if(phase >= 3)
             {

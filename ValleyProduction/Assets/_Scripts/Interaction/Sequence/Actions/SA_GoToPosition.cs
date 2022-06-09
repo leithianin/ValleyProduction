@@ -17,6 +17,7 @@ public class SA_GoToPosition : InteractionActions
                 vectorPath.Add(pathToTake[i].position);
             }
 
+            movement.Agent.stoppingDistance = 0.1f;
             movement.WalkOnNewPath(vectorPath, () => EndAction(caller), 0);
         }
         else
@@ -27,13 +28,17 @@ public class SA_GoToPosition : InteractionActions
 
     protected override void OnEndAction(CPN_InteractionHandler caller)
     {
-        
+        if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
+        {
+            movement.Agent.stoppingDistance = 1f;
+        }
     }
 
     protected override void OnInteruptAction(CPN_InteractionHandler caller)
     {
         if (caller.HasComponent<CPN_Movement>(out CPN_Movement movement))
         {
+            movement.Agent.stoppingDistance = 1f;
             movement.InteruptWalk();
         }
     }

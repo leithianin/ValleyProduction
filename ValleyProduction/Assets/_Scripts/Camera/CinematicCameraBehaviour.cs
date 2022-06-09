@@ -22,7 +22,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
     [Header("Fade Values")]
     [SerializeField] private AnimationCurve fadeCurve = new AnimationCurve();
     [SerializeField] private float fadeDuration = 1f;
-    private float textureAlpha = 1;
+    private float textureAlpha = 0.0f;
     private Texture2D fadeTexture;
     private bool fadeDone;
     private float fadeTime;
@@ -30,13 +30,17 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Texture Alpha : " + textureAlpha);
+
         if (!inCinematicMode && cinematicModeTriggered)
             if (Random.Range(-5, 5) > 0) //Play custom or random shot
             {
+                Debug.Log("1");
                 StartCoroutine(PlayShotWithRandomRotation());
             }
             else
             {
+                Debug.Log("2");
                 StartCoroutine(PlayShotWithCustomsParameters());
             }
     }
@@ -44,11 +48,13 @@ public class CinematicCameraBehaviour : MonoBehaviour
     [Button]
     public void PlayCinemtic(ShotsSequence sequenceScriptableObject)
     {
+        Debug.Log("Ca play");
         StartCoroutine(PlayCinematic(sequenceScriptableObject));
     }
 
     public IEnumerator PlayCinematic(ShotsSequence sequenceScriptableObject)
     {
+        Debug.Log("Ca play 2");
         CameraData[] sequence = sequenceScriptableObject.sequence;
         Debug.Log(sequence.Length);
         float refVerticalOffest = cameraTransform.OriginVisualOffset;
@@ -57,32 +63,43 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
         foreach (CameraData shot in sequence)
         {
+            Debug.Log("Shot shot");
             // Set the shot duration
             float referenceTime = shot.isTraveling ?
                         Vector3.Distance(shot.cameraOriginPosition, shot.travelPosition) / shot.speed
                         : Random.Range(timeRange.x, timeRange.y);
             referenceTime = shot.useCustomDuration ? shot.duration : referenceTime;
 
+            while (textureAlpha < 1.0f)
+            {
+                Debug.Log("while 1");
+                yield return null;
+            }
             // Set the shot position and angle (+ offset)
             cameraTransform.OriginVisualOffset = shot.verticalOffset != 0.0f ? shot.verticalOffset : cameraTransform.OriginVisualOffset;
             SelectDestination(shot.cameraOriginPosition.x, shot.cameraOriginPosition.z);
-            SelectAngles(shot.radius, shot.azimuthalAngle, shot.polarAngle);
-
-            while (!fadeDone)
-            {
-                yield return null;
-            }
-
+            SetAngles(shot.radius, shot.azimuthalAngle, shot.polarAngle);
+           
             // Run the shot
             for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
             {
+                Debug.Log("for 1");
                 if (shot.isTraveling)
                 {
-                    cameraTransform.SetOrigin(Vector3.Lerp(shot.travelPosition, shot.cameraOriginPosition, time / referenceTime));
+                    cameraTransform.SetOrigin(Vector3.Lerp(shot.travelPosition, shot.cameraOriginPosition, shot.speedOverTime.Evaluate(time / referenceTime)));
+
+                    if (shot.isRotating)
+                    {
+                        cameraTransform.AzimuthalRotation(shot.clockwise ? 1.0f : -1.0f, shot.rotationSpeed);
+                    }
                     yield return null;
                 }
                 else
                 {
+                    if (shot.isRotating)
+                    {
+                        cameraTransform.AzimuthalRotation(shot.clockwise ? 1.0f : -1.0f, shot.rotationSpeed);
+                    }
                     yield return null;
                 }
             }
@@ -90,13 +107,19 @@ public class CinematicCameraBehaviour : MonoBehaviour
             FadeReset();
         }
         cameraTransform.OriginVisualOffset = refVerticalOffest;
+        CameraManager.OnEndCinematic?.Invoke();
+        Debug.Log("Ca fini");
+        cinematicModeTriggered = false;
         inCinematicMode = false;
     }
 
     public IEnumerator PlayShotWithCustomsParameters()
     {
         inCinematicMode = true;
-        yield return new WaitForSeconds(0.5f);
+        while(textureAlpha < 1.0f)
+        {
+            yield return null;
+        }
 
         CameraData shotData = SelectShotData(database.shotsDataBase);
 
@@ -109,7 +132,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         // Set the shot position and angle (+ offset)
         cameraTransform.OriginVisualOffset = shotData.verticalOffset != 0.0f ? shotData.verticalOffset : cameraTransform.OriginVisualOffset;
         SelectDestination(shotData.cameraOriginPosition.x, shotData.cameraOriginPosition.z);
-        SelectAngles(shotData.radius, shotData.azimuthalAngle, shotData.polarAngle);
+        SetAngles(shotData.radius, shotData.azimuthalAngle, shotData.polarAngle);
 
         // Run the shot
         for (float time = referenceTime; time > 0; time -= Time.deltaTime)
@@ -133,7 +156,10 @@ public class CinematicCameraBehaviour : MonoBehaviour
     {
         float refVerticalOffest = cameraTransform.OriginVisualOffset;
         inCinematicMode = true;
-        yield return new WaitForSeconds(0.5f);
+        while (textureAlpha < 1.0f)
+        {
+            yield return null;
+        }
 
         // Set the shot duration
         float referenceTime = cameraData.isTraveling ?
@@ -144,7 +170,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         // Set the shot position and angle (+ offset)
         cameraTransform.OriginVisualOffset = cameraData.verticalOffset != 0.0f ? cameraData.verticalOffset : cameraTransform.OriginVisualOffset;
         SelectDestination(cameraData.cameraOriginPosition.x, cameraData.cameraOriginPosition.z);
-        SelectAngles(cameraData.radius, cameraData.azimuthalAngle, cameraData.polarAngle);
+        SetAngles(cameraData.radius, cameraData.azimuthalAngle, cameraData.polarAngle);
 
         // Run the shot
         for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
@@ -178,10 +204,13 @@ public class CinematicCameraBehaviour : MonoBehaviour
     public IEnumerator PlayShotWithRandomRotation()
     {
         inCinematicMode = true;
-        yield return new WaitForSeconds(0.5f);
+        while (textureAlpha < 1.0f)
+        {
+            yield return null;
+        }
 
         SelectDestination();
-        SelectAngles();
+        SetAngles();
 
         int rotateDir = (int)Mathf.Sign(Random.value - 0.5f);
         float referenceTime = Random.Range(timeRange.x, timeRange.y);
@@ -231,14 +260,14 @@ public class CinematicCameraBehaviour : MonoBehaviour
         cameraTransform.SetOriginPosition(newPos);
     }
 
-    void SelectAngles()
+    void SetAngles()
     {
         cameraTransform.SetRadius(Random.Range(radiusRange.x, radiusRange.y));
         cameraTransform.SetAzimuthalAngle(Random.Range(0, 360));
         cameraTransform.SetPolarAngle(Random.Range(polarAngleRange.x, polarAngleRange.y));
     }
 
-    void SelectAngles(float radius, float azimuthalAngle, float polarAngle)
+    void SetAngles(float radius, float azimuthalAngle, float polarAngle)
     {
         cameraTransform.SetRadius(radius);
         cameraTransform.SetAzimuthalAngle(azimuthalAngle);
@@ -248,7 +277,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
     public void FadeReset()
     {
         fadeDone = false;
-        textureAlpha = 1;
+        textureAlpha = 0.0f;
         fadeTime = 0;
     }
 

@@ -19,6 +19,8 @@ public class CinematicShot : SphericalTransform
     public bool clockwise = true;
     public float rotationSpeed = 1.0f;
 
+    public AnimationCurve speedOverTime = default;
+
     public bool useCustomDuration = false;
     public float duration = 0.0f;
 
@@ -56,10 +58,10 @@ public class CinematicShot : SphericalTransform
         ConstraintOriginPosition();
         ConvertCameraTargetTransformIntoCarthesianCoords();
 
-        //WriteScirptableObject();
+        //WriteScriptableObject();
     }
 
-    public void WriteScirptableObject()
+    public void WriteScriptableObject()
     {
         if (cameraData != null)
         {
@@ -78,6 +80,8 @@ public class CinematicShot : SphericalTransform
             cameraData.isRotating = isRotating;
             cameraData.clockwise = clockwise;
             cameraData.rotationSpeed = rotationSpeed;
+
+            cameraData.speedOverTime = speedOverTime;
 
             cameraData.cinematic = cinematic;
 
