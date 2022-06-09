@@ -2,9 +2,9 @@ public enum SatisfactorType
 {
     All,
     Spawn,
-    Building1,
-    Building2,
-    Building3,
+    HikerAppreciation,
+    CamperAppreciation,
+    TouristAppreciation,
     AnimalDeer,
     AnimalFox,
     AnimalRabbit
