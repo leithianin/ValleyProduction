@@ -13,8 +13,11 @@ public class UI_QST_RewardHandler : MonoBehaviour
 
         foreach(QST_Reward reward in rewards)
         {
-            QST_UI_Reward rewardDisplay = Instantiate(reward.RewardDisplay, rewardHolder);
-            rewardDisplay.ShowReward(reward);
+            if (reward.RewardDisplay != null)
+            {
+                QST_UI_Reward rewardDisplay = Instantiate(reward.RewardDisplay, rewardHolder);
+                rewardDisplay.ShowReward(reward);
+            }
         }
     }
 
