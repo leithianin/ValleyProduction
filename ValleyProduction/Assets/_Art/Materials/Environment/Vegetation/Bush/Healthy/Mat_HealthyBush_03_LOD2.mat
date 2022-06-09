@@ -35,7 +35,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_HealthyBush_03_LOD2
   m_Shader: {fileID: -6465566751694194690, guid: 850e386253d080347ba7b00071275710, type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+  m_ShaderKeywords: TRANSITION _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
@@ -92,6 +92,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - RMA:
         m_Texture: {fileID: 2800000, guid: 2803fc01f9d183e42ac8bdc2b9eb82a1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TransitionNoiseTex:
+        m_Texture: {fileID: 2800000, guid: 3dacd23f39e38dd4c98c436e8a8bcfff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
@@ -258,6 +262,7 @@ Material:
     m_Floats:
     - AmbientOcclusionIntensity: 0.1
     - CamOffset: 0
+    - DissolveCorrection: 0.1
     - DitherOffset: 0
     - DitherRange: 100
     - EmissiveIntensity: 0
@@ -266,6 +271,7 @@ Material:
     - HeatmapIndex: 0
     - MODIF_MODE: 0
     - Mode: 0
+    - ModificationAlpha: 0.5
     - Modifier: 0
     - NIGHT_MODE: 0
     - RENDER_HEATMAP: 0
@@ -276,6 +282,9 @@ Material:
     - SetStretchCurve: 0
     - SetStretchEffect: 0
     - SquashAnim: 0
+    - TRANSITION: 1
+    - TRANSITION_STATE: 0
+    - TransitionNoiseTiling: 4
     - WindDensity: 5
     - WindStrength: 2
     - _AORemapMax: 1
@@ -294,6 +303,7 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
+    - _BLOSSOM: 0
     - _Blend: 0
     - _BlendMode: 0
     - _BumpScale: 1
@@ -409,6 +419,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - MainTexHue: {r: 1, g: 1, b: 1, a: 1}
+    - TransitionHue: {r: 1, g: 0, b: 0, a: 0}
     - WindDirection: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
