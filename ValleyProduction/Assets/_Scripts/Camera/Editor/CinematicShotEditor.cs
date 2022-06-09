@@ -63,6 +63,8 @@ public class CinematicShotEditor : Editor
     SerializedProperty clockwise;
     SerializedProperty rotationSpeed;
 
+    SerializedProperty speedOverTime;
+
 
     void OnEnable()
     {
@@ -113,6 +115,8 @@ public class CinematicShotEditor : Editor
         useCustomDuration = serializedObject.FindProperty("useCustomDuration");
         duration = serializedObject.FindProperty("duration");
 
+        speedOverTime = serializedObject.FindProperty("speedOverTime");
+
         ui = GameObject.Find("-UI-");
         baseColor = GUI.backgroundColor;
 
@@ -151,7 +155,7 @@ public class CinematicShotEditor : Editor
 
         serializedObject.ApplyModifiedProperties();
 
-        cinematicShot.WriteScirptableObject();
+        cinematicShot.WriteScriptableObject();
     }
 
     private void NormalMode()
@@ -204,22 +208,13 @@ public class CinematicShotEditor : Editor
         GUILayout.BeginHorizontal("Duration");
         EditorGUILayout.PropertyField(useCustomDuration, new GUIContent("Custom Duration"));
         if (cinematicShot.useCustomDuration)
-        {
             EditorGUILayout.PropertyField(duration);
-        }
         GUILayout.EndHorizontal();
+        
+        EditorGUILayout.PropertyField(speedOverTime);
 
         EditorGUILayout.Space();
         EditorGUILayout.PropertyField(cinematic, new GUIContent("Cinematic"));
-
-        EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(colliderToUse);
-        EditorGUILayout.PropertyField(boxBoundariesCollider);
-        EditorGUILayout.PropertyField(sphereBoundariesCollider);
-        if (GUILayout.Button("Get Boundaries"))
-        {
-            cinematicShot.GetBoundaries();
-        }
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("ScriptableObject", EditorStyles.boldLabel);
@@ -243,6 +238,14 @@ public class CinematicShotEditor : Editor
         }
         GUI.backgroundColor = baseColor;
 
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(colliderToUse);
+        EditorGUILayout.PropertyField(boxBoundariesCollider);
+        EditorGUILayout.PropertyField(sphereBoundariesCollider);
+        if (GUILayout.Button("Get Boundaries"))
+        {
+            cinematicShot.GetBoundaries();
+        }
 
         EditorGUILayout.PropertyField(origin);
         EditorGUILayout.PropertyField(originTarget);
@@ -285,9 +288,9 @@ public class CinematicShotEditor : Editor
 
     private void CreateScriptable()
     {
-        CameraData cameraData = cinematicShot.cameraData;
+        //CameraData cameraData = cinematicShot.cameraData;
 
-        if (cameraData == null)
+        if (cinematicShot.cameraData == null)
         {
             if (!AssetDatabase.IsValidFolder("Assets/_Scripts/Camera/Data"))
             {
@@ -307,7 +310,7 @@ public class CinematicShotEditor : Editor
         {
             Debug.Log("ScriptableObject already created");
             EditorUtility.FocusProjectWindow();
-            Selection.activeObject = cameraData;
+            Selection.activeObject = cinematicShot.cameraData;
         }
     }
 

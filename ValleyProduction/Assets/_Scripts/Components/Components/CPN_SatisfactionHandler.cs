@@ -35,7 +35,7 @@ public class CPN_SatisfactionHandler : VLY_Component<CPN_Data_SatisfactionHandle
 
     public int GetAppreciationLevel(SatisfactorType satisfactionPointType)
     {
-        if(likedInteractions.Contains(satisfactionPointType))
+        if(satisfactionPointType == SatisfactorType.All || likedInteractions.Contains(satisfactionPointType))
         {
             return 1;
         }

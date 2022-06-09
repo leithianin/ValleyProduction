@@ -9,11 +9,6 @@ public class ValleyAudioManager : VLY_Singleton<ValleyAudioManager>
 
     [SerializeField] private AudioPlayer audioPlayerPrefab;
 
-    protected override void OnAwake()
-    {
-        Debug.Log(gameObject);
-    }
-
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
