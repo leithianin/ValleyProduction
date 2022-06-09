@@ -9,9 +9,20 @@ public class CPN_IncrementFlagListener : MonoBehaviour
     [SerializeField] private int flagValueWanted;
     [SerializeField] private UnityEvent OnIncrementFlagEvent;
 
-    private void OnEnable()
+    private bool started = false;
+
+    private void Start()
     {
         VLY_FlagManager.AddIncrementFlagListener(flagToCheck, OnTriggerFlag);
+        started = true;
+    }
+
+    private void OnEnable()
+    {
+        if (started)
+        {
+            VLY_FlagManager.AddIncrementFlagListener(flagToCheck, OnTriggerFlag);
+        }
     }
 
     private void OnDisable()
