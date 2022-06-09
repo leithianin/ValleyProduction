@@ -35,10 +35,12 @@ public class CinematicCameraBehaviour : MonoBehaviour
         if (!inCinematicMode && cinematicModeTriggered)
             if (Random.Range(-5, 5) > 0) //Play custom or random shot
             {
+                Debug.Log("1");
                 StartCoroutine(PlayShotWithRandomRotation());
             }
             else
             {
+                Debug.Log("2");
                 StartCoroutine(PlayShotWithCustomsParameters());
             }
     }
@@ -46,11 +48,13 @@ public class CinematicCameraBehaviour : MonoBehaviour
     [Button]
     public void PlayCinemtic(ShotsSequence sequenceScriptableObject)
     {
+        Debug.Log("Ca play");
         StartCoroutine(PlayCinematic(sequenceScriptableObject));
     }
 
     public IEnumerator PlayCinematic(ShotsSequence sequenceScriptableObject)
     {
+        Debug.Log("Ca play 2");
         CameraData[] sequence = sequenceScriptableObject.sequence;
         Debug.Log(sequence.Length);
         float refVerticalOffest = cameraTransform.OriginVisualOffset;
@@ -59,6 +63,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
         foreach (CameraData shot in sequence)
         {
+            Debug.Log("Shot shot");
             // Set the shot duration
             float referenceTime = shot.isTraveling ?
                         Vector3.Distance(shot.cameraOriginPosition, shot.travelPosition) / shot.speed
@@ -67,6 +72,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
             while (textureAlpha < 1.0f)
             {
+                Debug.Log("while 1");
                 yield return null;
             }
             // Set the shot position and angle (+ offset)
@@ -77,6 +83,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
             // Run the shot
             for (float time = referenceTime; time > 0; time -= Time.unscaledDeltaTime)
             {
+                Debug.Log("for 1");
                 if (shot.isTraveling)
                 {
                     cameraTransform.SetOrigin(Vector3.Lerp(shot.travelPosition, shot.cameraOriginPosition, shot.speedOverTime.Evaluate(time / referenceTime)));
@@ -101,6 +108,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         }
         cameraTransform.OriginVisualOffset = refVerticalOffest;
         CameraManager.OnEndCinematic?.Invoke();
+        Debug.Log("Ca fini");
         cinematicModeTriggered = false;
         inCinematicMode = false;
     }
