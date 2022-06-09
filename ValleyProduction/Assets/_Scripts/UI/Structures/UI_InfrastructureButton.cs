@@ -12,6 +12,7 @@ public class UI_InfrastructureButton : MonoBehaviour
 
     [Header("Button")]
     [SerializeField] private Image buttonIcon;
+    [SerializeField] private Image notInteractibleIcon;
 
     [Header("Tooltip")]
     [SerializeField] private TextMeshProUGUI nameHolder;
@@ -78,6 +79,7 @@ public class UI_InfrastructureButton : MonoBehaviour
         descriptionHolder.text = structure.Description;
 
         buttonIcon.sprite = structure.ButtonIcon;
+        notInteractibleIcon.sprite = structure.NotInteractibleIcon;
         exempleImage.sprite = structure.ExempleImage;
 
         ECO_AGT_Informations structureScores = structure.Structure.GetComponent<ECO_AGT_Informations>();
@@ -98,6 +100,8 @@ public class UI_InfrastructureButton : MonoBehaviour
             capacityScore.SetScore(0);
         }
 
+#if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);
+#endif
     }
 }

@@ -10,25 +10,30 @@ public class AudioPlayer : MonoBehaviour
 
     private Coroutine loopCoroutine;
 
+    private AudioClip currentlyPlaying = null;
+
+    public AudioClip CurrentAudio => currentlyPlaying;
+
     /// <summary>
     /// Play the current sound.
     /// </summary>
     public void Play()
     {
-        Debug.Log("PlaySound");
         if (loopCoroutine != null)
         {
             Stop();
         }
 
-        AudioClip toPlay = sound.GetClip;
+        currentlyPlaying = sound.GetClip;
 
-        if (toPlay != null)
+        if (currentlyPlaying != null)
         {
-            source.PlayOneShot(toPlay);
+            source.outputAudioMixerGroup = sound.Mixer;
+
+            source.PlayOneShot(currentlyPlaying);
             if (sound.LoopTime >= 0)
             {
-                loopCoroutine = StartCoroutine(LoopSound(toPlay.length + sound.LoopTime));
+                loopCoroutine = StartCoroutine(LoopSound(currentlyPlaying.length + sound.LoopTime));
             }
         }
     }
@@ -51,6 +56,12 @@ public class AudioPlayer : MonoBehaviour
     public void Play(AudioSound newSound, AudioSource newSource)
     {
         source.outputAudioMixerGroup = newSource.outputAudioMixerGroup;
+        Play(newSound);
+    }
+
+    public void Play(AudioSound newSound, AudioMixerGroup newMixer)
+    {
+        source.outputAudioMixerGroup = newMixer;
         Play(newSound);
     }
 

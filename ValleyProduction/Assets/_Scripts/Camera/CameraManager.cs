@@ -16,6 +16,8 @@ public class CameraManager : VLY_Singleton<CameraManager>
     public static Action OnCameraMove;
     public static Action OnCameraMoveEnd;
 
+    public static Action OnEndCinematic;
+
     [SerializeField] private LayerMask cameraLayerMaskBase;
 
     [SerializeField] private string interactionZoneDisplayMask;

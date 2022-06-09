@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class InfrastructureData : ScriptableObject, CPN_Data_Purchasable
 {
     [SerializeField] private string structureName;
-    [SerializeField] private string structureDescription;
+    [SerializeField, TextArea(2,2)] private string structureDescription;
     [SerializeField] private Sprite rewardIcon;
     [SerializeField] private Sprite buttonIcon;
+    [SerializeField] private Sprite notInteractibleIcon;
     [SerializeField] private Sprite exempleImage;
 
     [SerializeField] private float price;
@@ -24,6 +25,7 @@ public class InfrastructureData : ScriptableObject, CPN_Data_Purchasable
     public string Description => structureDescription;
     public Sprite RewardIcon => rewardIcon;
     public Sprite ButtonIcon => buttonIcon;
+    public Sprite NotInteractibleIcon => notInteractibleIcon;
     public Sprite ExempleImage => exempleImage;
 
     public InfrastructureType StructureType => structureType;

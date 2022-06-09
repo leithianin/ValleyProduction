@@ -11,6 +11,8 @@ public class TreeBehavior : MonoBehaviour
 
     [SerializeField] private UnityEvent OnTreeAlive;
     [SerializeField] private UnityEvent OnTreeDead;
+    [SerializeField] private UnityEvent OnTreeDying;
+    [SerializeField] private UnityEvent OnTreeEndDying;
 
     private int currentPhase;
     private float lastLerpValue;
@@ -30,20 +32,22 @@ public class TreeBehavior : MonoBehaviour
     {
         if (phase != currentPhase)
         {
-            if(phase < currentPhase)
+            /*if(phase < currentPhase)
             {
-                foreach(MeshRenderer mesh in meshes)
+                foreach (MeshRenderer mesh in meshes)
                 {
                     SetBlossom(mesh, 1);
                 }
             }
             else
             {
+                OnTreeDying?.Invoke();
+
                 foreach (MeshRenderer mesh in meshes)
                 {
                     SetBlossom(mesh, 0);
                 }
-            }
+            }*/
 
             if(phase >= 3)
             {
@@ -72,6 +76,8 @@ public class TreeBehavior : MonoBehaviour
         if (currentInterpolate >= 1)
         {
             enabled = false;
+
+            OnTreeEndDying?.Invoke();
         }
 
         foreach (MeshRenderer mesh in meshes)

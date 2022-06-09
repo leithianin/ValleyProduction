@@ -11,6 +11,9 @@ public class UI_RoadInformation : MonoBehaviour
     [SerializeField] private List<UI_Roads> roadsList = new List<UI_Roads>();
     public static bool isEditName = false;
 
+
+    [SerializeField] private Animator closeOpenAnimator;
+
     public UI_RoadInformation ShowInfoRoad(IST_PathPoint pathPoint)
     {
         ResetRoadInfo();
@@ -23,6 +26,9 @@ public class UI_RoadInformation : MonoBehaviour
         }
 
         gameObject.SetActive(true);
+
+        closeOpenAnimator.SetBool("Selected", !pathPoint.IsOpen);
+
         return this;
     }
 
@@ -59,6 +65,14 @@ public class UI_RoadInformation : MonoBehaviour
     {
         PathManager.DeleteFullPath(pathData);
         UIManager.HideShownGameObject();
+    }
+
+    public void SwitchStructureOpening()
+    {
+        if (InfrastructureManager.GetCurrentSelectedStructure != null)
+        {
+            SetStructureOpen(!InfrastructureManager.GetCurrentSelectedStructure.IsOpen);
+        }
     }
 
     public void SetStructureOpen(bool isOpen)

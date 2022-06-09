@@ -28,7 +28,7 @@ public class AttractivityManager : VLY_Singleton<AttractivityManager>
         {
             attractivityCheat = 5;
         }
-        //Debug.Log(instance.attractivityScore.Value);
+        
     }
 
 

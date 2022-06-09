@@ -15,10 +15,15 @@ public class MenuManager : VLY_Singleton<MenuManager>
 
     public static void LoadScene(int sceneIndex)
     {
+        instance.sceneToLoad = sceneIndex;
+
         Debug.Log(instance.sceneToLoad);
         if (instance.sceneToLoad <= -1) return;
 
-        instance.blackScreen.SetActive(true);
+        if (instance.blackScreen != null)
+        {
+            instance.blackScreen.SetActive(true);
+        }
         instance.Play(instance.sceneToLoad);
     }
 

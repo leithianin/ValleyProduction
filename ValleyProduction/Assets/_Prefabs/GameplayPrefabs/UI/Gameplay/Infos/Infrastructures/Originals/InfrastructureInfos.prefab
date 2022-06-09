@@ -64,6 +64,7 @@ MonoBehaviour:
   noiseScoreDisplay: {fileID: 372888766631177051}
   pollutionScoreDisplay: {fileID: 8314367711821877525}
   imageComponent: {fileID: 4462960495527637910}
+  closeOpenAnimator: {fileID: 4894467270112621365}
   capacity: {fileID: 4030920799963342314}
   capacityText: {fileID: 5406630078514741444}
   visitorsTotal: {fileID: 8493393845533113565}
@@ -101,9 +102,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f7eb63e325b894a9d17e7a9a675c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
   targetRadius: 0
   targetAzimuthalAngle: 0
   targetPolarAngle: 0
+  duration: 0
   speed: 150
   target: {fileID: 0}
   isRotate: 0
@@ -177,6 +182,34 @@ PrefabInstance:
     - target: {fileID: 1495536872878130798, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818783463482171612, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818783463482171612, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818783463482171612, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9100487953286724022}
+    - target: {fileID: 1818783463482171612, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818783463482171612, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwitchStructureOpening
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818783463482171612, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI_InfrastructureInformation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818783463482171612, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2271582446106017704, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
       propertyPath: m_AnchorMax.y
@@ -539,6 +572,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &4894467270112621365 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 551931003346045527, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
+  m_PrefabInstance: {fileID: 4919195635541997922}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8522012932516460300 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3602945407795875438, guid: 8c9dc8950a1ea1741ae9c7735051b498, type: 3}
