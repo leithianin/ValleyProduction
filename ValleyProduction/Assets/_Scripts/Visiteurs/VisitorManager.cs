@@ -119,9 +119,9 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     }
                 }*/
 
+
                 if (wantedSpawn != null)
                 {
-
                     CPN_IsLandmark visitorObjective = SearchObjective(visitorType, wantedSpawn.Node);
 
                     Vector3 spawnPosition = wantedSpawn.transform.position + new Vector3(rng.x, 0, rng.y);

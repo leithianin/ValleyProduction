@@ -30,7 +30,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Texture Alpha : " + textureAlpha);
+        //Debug.Log("Texture Alpha : " + textureAlpha);
 
         if (!inCinematicMode && cinematicModeTriggered)
             if (Random.Range(-5, 5) > 0) //Play custom or random shot
