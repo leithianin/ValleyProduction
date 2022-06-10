@@ -125,6 +125,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         mouseMiddleClic.action.canceled += ActionMiddleUp;
 
         escapeInput.action.started += ActionEscape;
+
+        heatmapSelectorsHandler[0].action.started += ActionHeatmap1;
+        heatmapSelectorsHandler[1].action.started += ActionHeatmap2;
+        heatmapSelectorsHandler[2].action.started += ActionHeatmap3;
+        heatmapSelectorsHandler[3].action.started += ActionHeatmap4;
     }
 
     private void OnDisable()
@@ -142,6 +147,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         mouseMiddleClic.action.canceled -= ActionMiddleUp;
 
         escapeInput.action.started -= ActionEscape;
+
+        heatmapSelectorsHandler[0].action.started -= ActionHeatmap1;
+        heatmapSelectorsHandler[1].action.started -= ActionHeatmap2;
+        heatmapSelectorsHandler[2].action.started -= ActionHeatmap3;
+        heatmapSelectorsHandler[3].action.started -= ActionHeatmap4;
 
         inputControl.Disable();
     }
@@ -215,6 +225,23 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public void ActionEscape(InputAction.CallbackContext context)
     {
         OnKeyEscape?.Invoke();
+    }
+
+    public void ActionHeatmap1(InputAction.CallbackContext context)
+    {
+        HeatmapViewController.HandleHeatmap(1);
+    }
+    public void ActionHeatmap2(InputAction.CallbackContext context)
+    {
+        HeatmapViewController.HandleHeatmap(2);
+    }
+    public void ActionHeatmap3(InputAction.CallbackContext context)
+    {
+        HeatmapViewController.HandleHeatmap(3);
+    }
+    public void ActionHeatmap4(InputAction.CallbackContext context)
+    {
+        HeatmapViewController.HandleHeatmap(4);
     }
 
     [ContextMenu("Test disable input")]
