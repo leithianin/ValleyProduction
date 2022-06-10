@@ -201,8 +201,6 @@ public class VisitorBehavior : VLY_Component
 
         if (nodeData != null && (nodeData.linkedToLandmark || nodeData.distanceFromLandmark < 0))
         {
-            VLY_LandmarkManager.OnLandmarkInteraction(currentObjective.Type, this); // CODE REVIEW : Voir si on peut pas le mettre autre par (Dans les Landmark, mettre une fonction qui détecte l'entré dun visiteur ?)
-
             if (currentObjective.Type == LandmarkType.Spawn)
             {
                 return null;

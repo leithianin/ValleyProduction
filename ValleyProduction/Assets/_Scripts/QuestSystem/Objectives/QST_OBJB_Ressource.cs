@@ -26,11 +26,12 @@ public class QST_OBJB_Ressource : QST_ObjectiveBehavior<QST_OBJ_Ressource>
 
     protected override void OnStartObjective(QST_OBJ_Ressource objective)
     {
-        pendingObjectives.Add(objective);
-        if (pendingObjectives.Count < 2)
+        if (pendingObjectives.Count == 0)
         {
             objective.Ressource.OnValueChange += OnUpdateValues;
         }
+        pendingObjectives.Add(objective);
+
     }
 
     private void OnUpdateValues(float f)
