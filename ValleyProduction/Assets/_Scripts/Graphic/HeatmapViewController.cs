@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeatmapViewController : MonoBehaviour
+public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
 {
     [SerializeField] private MaskRenderer msk;
 
@@ -38,50 +38,22 @@ public class HeatmapViewController : MonoBehaviour
         EnableHeatmapView(false, 0);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            HandleHeatmap(0);
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            HandleHeatmap(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            HandleHeatmap(2);
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            HandleHeatmap(3);
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            HandleHeatmap(4);
-        }
-    }
-
     private void OnApplicationQuit()
     {
         EnableHeatmapView(false, 0);
     }
 
-    public void HandleHeatmap(int index)
+    public static void HandleHeatmap(int index)
     {
-        if(currentIndex != index && index != 0)
+        if(instance.currentIndex != index && index != 0)
         {
-            currentIndex = index;
-            EnableHeatmapView(true, index);
+            instance.currentIndex = index;
+            instance.EnableHeatmapView(true, index);
         }
         else
         {
-            currentIndex = 0;
-            EnableHeatmapView(false, 0);
+            instance.currentIndex = 0;
+            instance.EnableHeatmapView(false, 0);
         }
     }
 

@@ -12,26 +12,35 @@ public class CPN_ClicHandler : VLY_Component
 
     public void MouseDown(int mouseID)
     {
-        switch (mouseID)
+        if (enabled)
         {
-            case 0:
-                OnLeftMouseDown?.Invoke();
-                break;
-            case 1:
-                OnRightMouseDown?.Invoke();
-                break;
+            switch (mouseID)
+            {
+                case 0:
+                    OnLeftMouseDown?.Invoke();
+                    break;
+                case 1:
+                    OnRightMouseDown?.Invoke();
+                    break;
+            }
         }
     }
 
     public void MouseEnter()
     {
-        CursorTextureManager.SetInteractionCursor();
-        PlayOnMouseEnter?.Invoke();
+        if (enabled)
+        {
+            CursorTextureManager.SetInteractionCursor();
+            PlayOnMouseEnter?.Invoke();
+        }
     }
 
     public void MouseExit()
     {
-        CursorTextureManager.SetNormalCursor();
-        PlayOnMouseExit?.Invoke();
+        if (enabled)
+        {
+            CursorTextureManager.SetNormalCursor();
+            PlayOnMouseExit?.Invoke();
+        }
     }
 }

@@ -192,14 +192,14 @@ public class CameraInputManager : MonoBehaviour
 
     void LaunchCinematicMode()
     {
-        if (!Input.GetKeyDown(KeyCode.C))
+        /*if (!Input.GetKeyDown(KeyCode.C))
             return;
 
         if (cinematicCameraBehaviour.inCinematicMode)
             return;
 
         cinematicCameraBehaviour.cinematicModeTriggered = true;
-        hud.SetActive(false);
+        hud.SetActive(false);*/
     }
 
     void StopCinematicMode()

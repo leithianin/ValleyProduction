@@ -5,21 +5,16 @@ using UnityEngine;
 public class AnimationHandler : VLY_Component
 {
     public AnimateFace face;
-    private Animator body;
+    [SerializeField] private Animator body;
     public Outline outline;
 
     private BodyAnimationType lastAnim;
 
     public bool isWalking;
 
-    private void Awake()
-    {
-        body = GetComponent<Animator>();
-    }
-
     void Start()
     {
-        face.PlayIdle(Random.Range(1,3));
+        //face.PlayIdle(Random.Range(1,3));
     }
 
     private void Update()
@@ -65,7 +60,7 @@ public class AnimationHandler : VLY_Component
     #endregion
 
     #region Face
-    public void PlayFaceAnim(ExpressionType animName)
+    /*public void PlayFaceAnim(ExpressionType animName)
     {
         switch (animName)
         {
@@ -97,7 +92,7 @@ public class AnimationHandler : VLY_Component
                 face.PlayOnce(7);
                 break;
         }
-    }
+    }*/
     #endregion
 
     public void Testtruc()

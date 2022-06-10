@@ -24,6 +24,7 @@ public class CPN_IsLandmark : VLY_Component
     [SerializeField] private List<PathNode> pathPointNextTo = new List<PathNode>();
 
     [SerializeField] private UnityEvent<bool, LandmarkType> OnValidatePathToSpawn;
+    [SerializeField] private UnityEvent<LandmarkType, VisitorScriptable> OnReachLandmark;
 
     public void AddPointToLandmark(PathNode toAdd)
     {
@@ -48,10 +49,12 @@ public class CPN_IsLandmark : VLY_Component
         HasValidPathTo(LandmarkType.Spawn);
     }
 
-    [System.Obsolete]
     public void OnInteractWithLandmark(CPN_InteractionHandler interactor)
     {
-        //VLY_LandmarkManager.OnLandmarkInteraction(type, interactor);
+        if (interactor.HasComponent<VisitorBehavior>(out VisitorBehavior visitor))
+        {
+            VLY_LandmarkManager.OnLandmarkInteraction(type, visitor);
+        }
     }
 
     private void OnUpdateNode()

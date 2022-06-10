@@ -11,6 +11,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public List<Collider> hikerList = new List<Collider>();      //Use in Tutorial Advance
 
     public UnityEvent OnStart;
+    public UnityEvent OnDisableEvent;
 
     public UnityEvent OnProfileHiker;
     public UnityEvent OnProfileTourist;
@@ -23,6 +24,13 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static bool blockPlacePathpoint = false;
     public static bool blockFinishPath = false;
+
+    private void OnDisable()
+    {
+        OnDisableEvent?.Invoke();
+        blockPlacePathpoint = false;
+        blockFinishPath = false;
+    }
 
     private void Start()
     {
