@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum TypeVisitor { Hiker, Tourist}
+public enum TypeVisitor { Hiker, Tourist, Camper}
 public class CPN_Informations : VLY_Component<VisitorScriptable>
 {
     public VisitorScriptable scriptable = null;

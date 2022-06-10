@@ -105,20 +105,6 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     wantedSpawn = SearchSpawnPointWithoutLandmark();
                 }
 
-                /*for (int i = 0; i < visitorType.LandmarksWanted.Count; i++)
-                {
-                    wantedSpawn = SearchSpawnPoint(visitorType.LandmarksWanted[i]);
-
-                    if(wantedSpawn != null)
-                    {
-                        break;
-                    }
-                    else if(i == visitorType.LandmarksWanted.Count - 1)
-                    {
-                        wantedSpawn = SearchSpawnPointWithoutLandmark();
-                    }
-                }*/
-
 
                 if (wantedSpawn != null)
                 {
@@ -131,7 +117,7 @@ public class VisitorManager : VLY_Singleton<VisitorManager>
                     if (NavMesh.SamplePosition(spawnPosition, out hit, 5f, NavMesh.AllAreas))
                     {
                         newVisitor.SetVisitor(wantedSpawn, spawnPosition, visitorType, visitorObjective); //CODE REVIEW
-                        SetType(newVisitor);
+                        //SetType(newVisitor);
 
                         OnUpdateVisitorNumber?.Invoke(UsedVisitorNumber());
 
