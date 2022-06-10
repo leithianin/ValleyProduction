@@ -192,9 +192,6 @@ public class CameraInputManager : MonoBehaviour
 
     void LaunchCinematicMode()
     {
-        if (!Input.GetKeyDown(KeyCode.C))
-            return;
-
         if (cinematicCameraBehaviour.inCinematicMode)
             return;
 
