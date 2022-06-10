@@ -71,6 +71,12 @@ public class VisitorBehavior : VLY_Component
 
             gameObject.SetActive(true);
 
+            CPN_Informations information = handler.GetComponentOfType<CPN_Informations>();
+            if(information != null)
+            {
+                information.visitorType = visitorType.Type;
+            }
+
             if(visitorDisplay != null)
             {
                 OnRemoveComponent?.Invoke(visitorDisplay);

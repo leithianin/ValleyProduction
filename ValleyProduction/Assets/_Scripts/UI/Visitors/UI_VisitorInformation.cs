@@ -12,6 +12,7 @@ public class UI_VisitorInformation : MonoBehaviour
 
     [SerializeField] private TouristType touristInfo;
     [SerializeField] private TouristType hikersInfo;
+    [SerializeField] private TouristType camperInfo;
 
     public TouristType currentTourist;
     public CPN_Informations currentInfo;
@@ -50,6 +51,11 @@ public class UI_VisitorInformation : MonoBehaviour
                 currentTourist = touristInfo;
                 touristInfo.gameObject.SetActive(true);
                 return touristInfo;
+            case TypeVisitor.Camper:
+                ChangeInfoVisitor(camperInfo, cpn_Inf);
+                currentTourist = camperInfo;
+                camperInfo.gameObject.SetActive(true);
+                return camperInfo;
         }
         return null;
     }
