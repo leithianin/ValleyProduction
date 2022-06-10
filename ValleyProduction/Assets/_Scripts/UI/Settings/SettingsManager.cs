@@ -17,6 +17,7 @@ public class SettingsManager : MonoBehaviour
 
     public void SetScrollEdgeCamera(bool value)
     {
+        Debug.Log("Edge Scroll = " + value);
         datas.cameraEdgeScrollingActive = value;
     }
 
