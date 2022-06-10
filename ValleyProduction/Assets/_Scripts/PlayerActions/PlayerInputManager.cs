@@ -258,6 +258,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void EnableInput(InputActionReference toEnable)
     {
+        Debug.Log("Enable: " + toEnable.name);
         toEnable.action.Enable();
     }
 
