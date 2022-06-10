@@ -24,6 +24,12 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static bool blockPlacePathpoint = false;
     public static bool blockFinishPath = false;
 
+    private void OnDisable()
+    {
+        blockPlacePathpoint = false;
+        blockFinishPath = false;
+    }
+
     private void Start()
     {
         TimerManager.CreateRealTimer(2f, () => OnStart?.Invoke());
