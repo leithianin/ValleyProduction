@@ -5,17 +5,12 @@ using UnityEngine;
 public class AnimationHandler : VLY_Component
 {
     public AnimateFace face;
-    private Animator body;
+    [SerializeField] private Animator body;
     public Outline outline;
 
     private BodyAnimationType lastAnim;
 
     public bool isWalking;
-
-    private void Awake()
-    {
-        body = GetComponent<Animator>();
-    }
 
     void Start()
     {
