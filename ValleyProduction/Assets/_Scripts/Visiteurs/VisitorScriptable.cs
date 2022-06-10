@@ -8,6 +8,7 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
     [Header("General")]
     [SerializeField] private Sprite icon;
     [SerializeField] private string nom;
+    [SerializeField] private TypeVisitor type;
     [SerializeField, Tooltip("A list of all available skin for the visitor. We take a random one for each visitor.")] private List<AnimationHandler> display;
 
     [Header("Movement")]
@@ -36,6 +37,8 @@ public class VisitorScriptable : ScriptableObject, CPN_Data_Stamina, CPN_Data_Mo
     public Sprite Icon => icon;
 
     public string Nom => nom;
+
+    public TypeVisitor Type => type;
 
     /// <summary>
     /// Get a random skin for the visitor.

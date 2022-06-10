@@ -23,11 +23,12 @@ public class QST_OBJB_PlaceStructure : QST_ObjectiveBehavior<QST_OBJ_PlaceStruct
 
     protected override void OnStartObjective(QST_OBJ_PlaceStructure objective)
     {
-        pendingObjectives.Add(objective);
-        if(pendingObjectives.Count < 2)
+        if (pendingObjectives.Count == 0)
         {
             InfrastructureManager.OnPlaceInfrastructure += CheckPlacedStructure;
         }
+        pendingObjectives.Add(objective);
+
     }
 
     private void CheckPlacedStructure(Infrastructure placeStructure)

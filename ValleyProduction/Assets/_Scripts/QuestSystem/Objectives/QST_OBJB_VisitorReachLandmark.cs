@@ -22,11 +22,11 @@ public class QST_OBJB_VisitorReachLandmark : QST_ObjectiveBehavior<QST_OBJ_Visit
 
     protected override void OnStartObjective(QST_OBJ_VisitorReachLandmark objective)
     {
-        pendingObjectives.Add(objective);
-        if (pendingObjectives.Count < 2)
+        if (pendingObjectives.Count <= 0)
         {
             VLY_LandmarkManager.OnVisitorInteractWithLandmark += CheckLandmarkInteraction;
         }
+        pendingObjectives.Add(objective);
     }
 
     private void CheckLandmarkInteraction(LandmarkType landmark, VisitorBehavior visitor)
