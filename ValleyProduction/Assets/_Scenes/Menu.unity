@@ -13748,6 +13748,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e583b33b0276b62409f09a08949a361d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMovementHandler: {fileID: 0}
+  cameraRotationHandler: {fileID: 0}
+  cameraPitchHandler: {fileID: 0}
+  heatmapSelectorsHandler: []
+  mouseLeftClic: {fileID: 0}
+  mouseRightClic: {fileID: 0}
+  mouseMiddleClic: {fileID: 0}
+  mouseMovement: {fileID: 0}
+  mouseScroll: {fileID: 0}
+  escapeInput: {fileID: 0}
   usedCamera: {fileID: 353526763}
   usedEventSystem: {fileID: 121139299}
   mainTerrain: {fileID: 0}
@@ -13783,12 +13793,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAzimuthal:
-    m_PersistentCalls:
-      m_Calls: []
-  OnKeyReturn:
-    m_PersistentCalls:
-      m_Calls: []
-  OnKeyDelete:
     m_PersistentCalls:
       m_Calls: []
   OnKeyEscape:
@@ -53239,6 +53243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 8bf9842bb0409f647af12133c530e43f, type: 2}
   musicPlayer: {fileID: 1591749655}
+  audioPlayerPrefab: {fileID: 0}
 --- !u!4 &1591749657
 Transform:
   m_ObjectHideFlags: 0
@@ -72937,6 +72942,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 932629877925342303, guid: fb07816adfc915e4eb2dcb9890dc905a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 974013417312857238, guid: fb07816adfc915e4eb2dcb9890dc905a, type: 3}
       propertyPath: m_Transition
       value: 0
@@ -73631,7 +73640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4665630991092565982, guid: fb07816adfc915e4eb2dcb9890dc905a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665630991092565982, guid: fb07816adfc915e4eb2dcb9890dc905a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
@@ -73755,7 +73764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4997155747051786041, guid: fb07816adfc915e4eb2dcb9890dc905a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4997155747051786041, guid: fb07816adfc915e4eb2dcb9890dc905a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
