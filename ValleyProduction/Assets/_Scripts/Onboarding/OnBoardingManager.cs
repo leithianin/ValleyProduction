@@ -17,14 +17,17 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnProfileInfrastructure;
 
     public UnityEvent OnEnd;
-    public UnityEvent OnEndCinematicEvent;
+    public UnityEvent OnEndWelcomeCinematicEvent;
+    public UnityEvent OnEndEndCinematicEvent;
+
 
     public static bool blockPlacePathpoint = false;
     public static bool blockFinishPath = false;
 
     private void Start()
     {
-        OnStart?.Invoke();
+        TimerManager.CreateRealTimer(2f, () => OnStart?.Invoke());
+        //OnStart?.Invoke();
     }
 
     public static void SetBlockPlacePathpoint(bool cond)
@@ -88,14 +91,24 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
         instance.OnEnd?.Invoke();
     }
 
-    public static void OnPlayCinematic()
+    public static void OnPlayWelcomeCinematic()
     {
-        CameraManager.OnEndCinematic += OnEndCinematic;
+        CameraManager.OnEndCinematic += instance.OnEndWelcomeCinematic;
     }
-    public static void OnEndCinematic()
+    private void OnEndWelcomeCinematic()
     {
-        CameraManager.OnEndCinematic -= OnEndCinematic;
-        instance.OnEndCinematicEvent?.Invoke();
+        CameraManager.OnEndCinematic -= OnEndWelcomeCinematic;
+        instance.OnEndWelcomeCinematicEvent?.Invoke();
+    }
+
+    public static void OnPlayEndCinematic()
+    {
+        CameraManager.OnEndCinematic += instance.OnEndEndCinematic;
+    }
+    private void OnEndEndCinematic()
+    {
+        CameraManager.OnEndCinematic -= OnEndEndCinematic;
+        instance.OnEndEndCinematicEvent?.Invoke();
     }
 
     public static void BlockCameraInput(bool cond)
