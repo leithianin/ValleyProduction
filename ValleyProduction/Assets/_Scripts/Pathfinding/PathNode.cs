@@ -319,7 +319,7 @@ public class PathNode : MonoBehaviour
     /// <returns>The PathFragmentData for the visitor to follow.</returns>
     public PathFragmentData GetMostInterestingPath(CPN_IsLandmark target, PathFragmentData currentUsedFragment, List<SatisfactorType> likedTypes, List<SatisfactorType> hatedTypes, List<PathFragmentData> toIgnore)
     {
-        PathFragmentData toReturn = null;
+        List<PathFragmentData> toReturn = new List<PathFragmentData>();
 
         float score = -1f;
 
@@ -343,19 +343,24 @@ public class PathNode : MonoBehaviour
                 }
             }
 
-            if(nScore > score)
+            if(nScore >= score)
             {
-                score = nScore;
-                toReturn = usableFragments[i];
+                if (nScore > score)
+                {
+                    score = nScore;
+                    toReturn = new List<PathFragmentData>();
+                }
+
+                toReturn.Add(usableFragments[i]);
             }
         }
 
         if (toReturn == null && usableFragments.Count > 0)
         {
-            toReturn = usableFragments[UnityEngine.Random.Range(0, usableFragments.Count)];
+            toReturn.Add(usableFragments[UnityEngine.Random.Range(0, usableFragments.Count)]);
         }
 
-        return toReturn;
+        return toReturn[UnityEngine.Random.Range(0, toReturn.Count)];
     }
 
     private float CalculateScore(PathFragmentData fragmentToCalculate, CPN_IsLandmark landmarkWanted, List<SatisfactorType> likedTypes, List<SatisfactorType> hatedTypes)
