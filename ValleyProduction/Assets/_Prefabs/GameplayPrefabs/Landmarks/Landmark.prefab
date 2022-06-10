@@ -68,6 +68,9 @@ MonoBehaviour:
   OnValidatePathToSpawn:
     m_PersistentCalls:
       m_Calls: []
+  OnReachLandmark:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!135 &2485159473578402940
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -194,6 +197,34 @@ PrefabInstance:
     - target: {fileID: 2226904861111682125, guid: d999e72707f827b479988f609f7af60b, type: 3}
       propertyPath: m_Name
       value: InterestPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226904861451303784, guid: d999e72707f827b479988f609f7af60b, type: 3}
+      propertyPath: PlayOnStartInteract.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226904861451303784, guid: d999e72707f827b479988f609f7af60b, type: 3}
+      propertyPath: PlayOnStartInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226904861451303784, guid: d999e72707f827b479988f609f7af60b, type: 3}
+      propertyPath: PlayOnStartInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7039830408134545336}
+    - target: {fileID: 2226904861451303784, guid: d999e72707f827b479988f609f7af60b, type: 3}
+      propertyPath: PlayOnStartInteract.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226904861451303784, guid: d999e72707f827b479988f609f7af60b, type: 3}
+      propertyPath: PlayOnStartInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnInteractWithLandmark
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226904861451303784, guid: d999e72707f827b479988f609f7af60b, type: 3}
+      propertyPath: PlayOnStartInteract.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CPN_IsLandmark, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226904861451303784, guid: d999e72707f827b479988f609f7af60b, type: 3}
+      propertyPath: PlayOnStartInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2226904861451303786, guid: d999e72707f827b479988f609f7af60b, type: 3}
       propertyPath: m_Layer

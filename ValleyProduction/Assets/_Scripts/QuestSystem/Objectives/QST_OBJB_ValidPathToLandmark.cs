@@ -31,12 +31,13 @@ public class QST_OBJB_ValidPathToLandmark : QST_ObjectiveBehavior<QST_OBJ_ValidP
         }
         else
         {
-            pendingObjectives.Add(objective);
-
-            if (pendingObjectives.Count < 2)
+            if (pendingObjectives.Count == 0)
             {
                 VLY_LandmarkManager.OnLandmarkHasValidPath += OnLandmarkWithValidPath;
             }
+            pendingObjectives.Add(objective);
+
+
         }
     }
 
