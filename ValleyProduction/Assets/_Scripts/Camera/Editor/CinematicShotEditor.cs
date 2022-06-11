@@ -83,7 +83,7 @@ public class CinematicShotEditor : Editor
         boxBoundariesCollider = serializedObject.FindProperty("boxBoundariesCollider");
         sphereBoundariesCollider = serializedObject.FindProperty("sphereBoundariesCollider");
 
-        verticalOffset = serializedObject.FindProperty("verticalOffset");
+        verticalOffset = serializedObject.FindProperty("originVisualOffset");
         minPolarValue = serializedObject.FindProperty("minPolarValue");
         maxPolarValue = serializedObject.FindProperty("maxPolarValue");
 
@@ -185,6 +185,9 @@ public class CinematicShotEditor : Editor
         EditorGUILayout.PropertyField(radius, new GUIContent("Radius"));
         EditorGUILayout.PropertyField(hazimuthalAngle, new GUIContent("Horizontal Angle"));
         EditorGUILayout.PropertyField(polarAngle, new GUIContent("Vertical Angle"));
+
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(verticalOffset, new GUIContent("Vertical Angle Offset"));
 
         EditorGUILayout.Space();
         GUILayout.BeginHorizontal("Dolly");
