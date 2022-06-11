@@ -156,6 +156,7 @@ public class CinematicShotEditor : Editor
         serializedObject.ApplyModifiedProperties();
 
         cinematicShot.WriteScriptableObject();
+        EditorUtility.SetDirty(cinematicShot.cameraData);
     }
 
     private void NormalMode()
