@@ -67,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - MainTex:
-        m_Texture: {fileID: 2800000, guid: 4b570c920082fa24b9bc5853a9d20599, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2bfdb5c20f239b74dad2c4c689e7e6a7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - NoiseMapTex:
@@ -87,7 +87,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - TransitionNoiseTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c606c5d7d83fc24438d9d6bd319091e8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
@@ -248,8 +248,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - AmbientOcclusionIntensity: 2.13
+    - AmbientOcclusionIntensity: 0.6
     - CamOffset: 0
+    - DissolveCorrection: 0
     - DitherOffset: 0
     - DitherRange: 100
     - EmissiveIntensity: 0
@@ -271,6 +272,7 @@ Material:
     - SquashAnim: 0
     - TRANSITION: 0
     - TRANSITION_STATE: 0
+    - TransitionNoiseTiling: 1
     - WIND: 0
     - WindDensity: 5
     - WindStrength: 2
