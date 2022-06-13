@@ -260,23 +260,18 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void DisableInput(InputActionReference toDisable)
     {
-        Debug.Log("Disable : " + toDisable.name);
         toDisable.action.Disable();
     }
 
     public void EnableInput(InputActionReference toEnable)
     {
-        Debug.Log("Enable: " + toEnable.name);
         toEnable.action.Enable();
     }
 
     public void EnableAllInput()
     {
-        Debug.Log("Before Enable : " + cameraMovementHandler.action.enabled);
-
         cameraMovementHandler.action.Enable();
 
-        Debug.Log("After Enable : " + cameraMovementHandler.action.enabled);
         cameraRotationHandler.action.Enable();
         cameraPitchHandler.action.Enable();
         foreach (InputActionReference inpt in heatmapSelectorsHandler)
