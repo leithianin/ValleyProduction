@@ -338,7 +338,7 @@ public class @PlayerInputValley : IInputActionCollection, IDisposable
                     ""id"": ""20d8a39e-e8ea-4ffc-9be8-e20669e935c4"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseMovement"",
                     ""isComposite"": false,
