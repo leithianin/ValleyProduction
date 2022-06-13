@@ -1,0 +1,61 @@
+#pragma kernel CSMain
+
+//Constants
+#define PI 3.14159265358979323846
+#define TWO_PI 6.28318530717958647693
+
+//This describes a vertex on the source mesh
+struct SourceVertex 
+{
+    float3 positionOS;      //position in object space
+    float3 normalOS;
+    float2 uv;              //contains widthMultiplier, heightMultiplier
+    float3 color;
+};
+
+//Source buffers, arranged as a vertex buffer and index buffer
+StructuredBuffer<SourceVertex> _SourceVertices;
+
+//This describes a vertex on the generated mesh
+struct DrawVertex
+{
+    float3 positionWS;      //position in world space
+    float2 uv;
+    float3 diffuseColor;
+};
+
+//A triangle on the generated mesh
+struct DrawTriangle
+{
+    float3 normalOS;
+    DrawVertex vertices[3]; //three points of the triangle
+};
+
+//A buffer containing the generated mesh
+AppendStructuredBuffer<DrawTriangle> _DrawTriangles;
+
+//The indirect draw call args, as described in the renderer script
+struct IndirectArgs
+{
+    uint numVerticesPerInstance;
+    uint numInstances;
+    uint startVertexIndex;
+    uint startInstanceIndex;
+};
+
+//The kernel will count the number of vertices, so this must be RW enabled
+RWStructuredBuffer<IndirectArgs> _IndirectArgsBuffer;
+
+//These values are bounded by limits in C# scripts,
+//because in the script we need to specify the buffer size
+#define GRASS_BLADES 4      //blade per vertex
+#define GRASS_SEGMENTS 5    //segments per blade
+#define GRASS_NUM_VERTICES_PER_BLADE (GRASS_SEGMENTS * 2 + 1)
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    // TODO: insert actual code here!
+
+    Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+}
