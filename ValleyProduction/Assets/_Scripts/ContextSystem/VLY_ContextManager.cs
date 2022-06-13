@@ -78,7 +78,7 @@ public class VLY_ContextManager : VLY_Singleton<VLY_ContextManager>
                     break;
                 case FeatureLocker.BlockMouseInput:
                     Debug.Log("IsEnable BlockMouse change to : " + isEnable);
-                    PlayerInputManager.blockMouse = isEnable;
+                    PlayerInputManager.EnableOrDisableLockMouse(isEnable);
                     break;
             }
         }
