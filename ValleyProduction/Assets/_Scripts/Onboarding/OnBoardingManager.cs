@@ -121,7 +121,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static void BlockCameraInput(bool cond)
     {
-        PlayerInputManager.isCameraBlock = cond;
+        PlayerInputManager.EnableOrDisableCameraControl(cond);
     }
 
     #region To Remove 

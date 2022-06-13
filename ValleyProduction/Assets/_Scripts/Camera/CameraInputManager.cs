@@ -92,7 +92,7 @@ public class CameraInputManager : MonoBehaviour
         //Handle Cinematic Mode
         StopCinematicMode();
 
-        if (PlayerInputManager.isKeyboardEnable)
+        if (PlayerInputManager.IsKeyboardEnable)
         {
             MoveCameraOriginWithKeyboard();
             RotateCameraWithKeyboard();

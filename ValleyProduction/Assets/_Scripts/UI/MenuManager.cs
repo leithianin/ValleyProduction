@@ -13,6 +13,14 @@ public class MenuManager : VLY_Singleton<MenuManager>
 
     public GameObject blackScreen;
 
+    [SerializeField] private UnityEvent OnStartLoad;
+    [SerializeField] private UnityEvent OnEndLoad;
+
+    protected override void OnAwake()
+    {
+        Debug.Log(gameObject);
+    }
+
     public static void LoadScene(int sceneIndex)
     {
         if(sceneIndex <= -1) 
@@ -33,7 +41,6 @@ public class MenuManager : VLY_Singleton<MenuManager>
             {
                 instance.blackScreen.SetActive(true);
             }
-
         }
 
         Debug.Log(instance.sceneToLoad);
@@ -63,6 +70,9 @@ public class MenuManager : VLY_Singleton<MenuManager>
         {
             Debug.Log("Load scene");
             isSceneLoading = true;
+
+            OnStartLoad?.Invoke();
+
             StartCoroutine(LoadYourAsyncScene());
         }
     }

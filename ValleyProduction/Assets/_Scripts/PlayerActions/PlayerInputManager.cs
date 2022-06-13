@@ -62,9 +62,12 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     private float lastKeyPitch;
     private float lastScrollDirection;
     private Vector2 lastMouseMovement;
-    public static bool isKeyboardEnable = true;
-    public static bool blockMouse = false;
-    public static bool isCameraBlock = false;
+    public bool isKeyboardEnable = true;
+    public bool blockMouse = false;
+    public bool isCameraBlock = false;
+
+    public static bool IsKeyboardEnable => instance.isKeyboardEnable;
+    public static bool BlockMouse => instance.blockMouse;
 
     [SerializeField] private UnityEvent<Vector2> OnMouseMove;
 
@@ -79,8 +82,8 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     [SerializeField] private UnityEvent OnCameraMouseMove;
     public static UnityEvent GetOnCameraMouseMove => instance.OnCameraMouseMove;
 
-    private static bool righClicHold = false;
-    private static bool middleClicHold = false;
+    private bool righClicHold = false;
+    private bool middleClicHold = false;
 
     [SerializeField] private GameContext context;
 
@@ -105,6 +108,8 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     private void Start()
     {
         usedCamera.eventMask = context.GetContextLayers(0);
+
+        EnableAllInput();
     }
 
     private void OnEnable()
@@ -154,8 +159,11 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         heatmapSelectorsHandler[3].action.started -= ActionHeatmap4;
 
         inputControl.Disable();
+
+        VLY_Time.SetTimeScale(1f);
     }
 
+    #region Action inputs
     public void ActionLeftDown(InputAction.CallbackContext context)
     {
         if (!usedEventSystem.IsPointerOverGameObject())
@@ -261,6 +269,34 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         Debug.Log("Enable: " + toEnable.name);
         toEnable.action.Enable();
     }
+
+    public void EnableAllInput()
+    {
+        Debug.Log("Before Enable : " + cameraMovementHandler.action.enabled);
+
+        cameraMovementHandler.action.Enable();
+
+        Debug.Log("After Enable : " + cameraMovementHandler.action.enabled);
+        cameraRotationHandler.action.Enable();
+        cameraPitchHandler.action.Enable();
+        foreach (InputActionReference inpt in heatmapSelectorsHandler)
+        {
+            inpt.action.Enable();
+        }
+
+        mouseLeftClic.action.Enable();
+
+        mouseRightClic.action.Enable();
+
+        mouseMiddleClic.action.Enable();
+
+        mouseMovement.action.Enable();
+
+        mouseScroll.action.Enable();
+
+        escapeInput.action.Enable();
+    }
+    #endregion
 
     // Update is called once per frame
     void Update()
@@ -486,12 +522,22 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         if(isEnable)
         {
-            isKeyboardEnable = true;
+           instance.isKeyboardEnable = true;
         }
         else
         {
-            isKeyboardEnable = false;
+            instance.isKeyboardEnable = false;
         }
+    }
+
+    public static void EnableOrDisableCameraControl(bool isCameraLocked)
+    {
+        instance.isCameraBlock = isCameraLocked;
+    }
+
+    public static void EnableOrDisableLockMouse(bool isMouseLocked)
+    {
+        instance.blockMouse = isMouseLocked;
     }
 
     [Obsolete]

@@ -12,6 +12,19 @@ public class LoadingScreen : MonoBehaviour
 
     private void Start()
     {
-        TimerManager.CreateRealTimer(displayTime, () => OnShow?.Invoke());
+        if (displayTime >= 0)
+        {
+            TimerManager.CreateRealTimer(displayTime, HideLoadingScreen);
+        }
+    }
+
+    public void HideLoadingScreen()
+    {
+        OnHide?.Invoke();
+    }
+
+    public void ShowLoadingScreen()
+    {
+        OnShow?.Invoke();
     }
 }

@@ -29,7 +29,7 @@ public class UI_Tool : MonoBehaviour
 
     public void OnToolCreatePath(int i)
     {
-        if (!PlayerInputManager.blockMouse)
+        if (!PlayerInputManager.BlockMouse)
         {
             ConstructionManager.SelectInfrastructureType(null);
 
