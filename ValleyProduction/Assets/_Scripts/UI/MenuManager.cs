@@ -16,11 +16,6 @@ public class MenuManager : VLY_Singleton<MenuManager>
     [SerializeField] private UnityEvent OnStartLoad;
     [SerializeField] private UnityEvent OnEndLoad;
 
-    protected override void OnAwake()
-    {
-        Debug.Log(gameObject);
-    }
-
     public static void LoadScene(int sceneIndex)
     {
         if(sceneIndex <= -1) 
