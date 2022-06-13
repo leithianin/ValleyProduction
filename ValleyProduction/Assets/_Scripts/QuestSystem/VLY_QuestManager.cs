@@ -82,8 +82,6 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
             QST_RewardBehavior behavior = instance.GetRewardBehavior(quest.Rewards[i]);
 
             behavior.GiveReward(quest.Rewards[i]);
-
-            Debug.Log("Reward given : " + quest.Rewards[i]);
         }
 
         UIManager.ShowQuestRewards(quest.Rewards);
