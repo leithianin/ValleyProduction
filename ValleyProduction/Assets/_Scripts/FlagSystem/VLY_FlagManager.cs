@@ -93,7 +93,7 @@ public class VLY_FlagManager : VLY_Singleton<VLY_FlagManager>
 
     public static void AddTriggerFlagListener(string flagName, Action callback)
     {
-        //Debug.Log(flagName);
+        Debug.Log(flagName);
         if (!triggerFlagListeners[flagName].Contains(callback))
         {
             triggerFlagListeners[flagName].Add(callback);
