@@ -357,7 +357,7 @@ public class PathNode : MonoBehaviour
 
         if (toReturn == null && usableFragments.Count > 0)
         {
-            toReturn.Add(usableFragments[UnityEngine.Random.Range(0, usableFragments.Count)]);
+            toReturn = new List<PathFragmentData>(usableFragments);
         }
 
         return toReturn[UnityEngine.Random.Range(0, toReturn.Count)];
@@ -403,7 +403,7 @@ public class PathNode : MonoBehaviour
 
         if(distanceScore >= 100)
         {
-            attractivityScore = 150;
+            distanceScore = 150;
         }
         else if (attractivityScore > 100)
         {
@@ -413,6 +413,8 @@ public class PathNode : MonoBehaviour
         {
             attractivityScore = 0;
         }
+
+        Debug.Log(likedTypes.Count + " : " + attractivityScore);
 
         if (fragmentOpen)
         {
