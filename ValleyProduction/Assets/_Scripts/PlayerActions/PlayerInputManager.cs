@@ -485,9 +485,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
         if (righClicHold)
         {
-            Debug.Log(mouseMovement.action.ReadValue<Vector2>().ToString("F4"));
-
-            OnMouseMove?.Invoke(mouseMovement.action.ReadValue<Vector2>());
+            OnMouseMove?.Invoke(mouseMovement.action.ReadValue<Vector2>() / 10f);
         }
         else
         {
