@@ -448,7 +448,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     {
         if (middleClicHold)
         {
-            lastMouseMovement = mouseMovement.action.ReadValue<Vector2>();
+            lastMouseMovement = mouseMovement.action.ReadValue<Vector2>() / 10f;
 
             OnAzimuthal?.Invoke(lastMouseMovement.x);
 

@@ -8,7 +8,17 @@ public class UI_ButtonController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
+    [SerializeField] private bool startSelected = false;
+
     private bool isSelected = false;
+
+    private void OnEnable()
+    {
+        if(startSelected)
+        {
+            SetSelected(true);
+        }
+    }
 
     public void SetBool(string boolName)
     {
