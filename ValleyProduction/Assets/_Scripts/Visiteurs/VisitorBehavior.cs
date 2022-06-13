@@ -28,7 +28,7 @@ public class VisitorBehavior : VLY_Component
 
     private List<PathFragmentData> walkedPathFragment = new List<PathFragmentData>();
 
-    private CPN_IsLandmark currentObjective;
+    [SerializeField] private CPN_IsLandmark currentObjective;
     private bool isGoingHome;
 
     public bool IsUsed => isUsed;

@@ -107,6 +107,13 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
         //instance.modifiedPaths.RemoveRange(1, instance.modifiedPaths.Count-1);
     }
 
+    public static bool IsPathPossible(Vector3 startPoint, Vector3 endPoint)
+    {
+        NavMeshPath navPathTemp = new NavMeshPath();
+
+        return NavMesh.CalculatePath(startPoint, endPoint, NavMesh.AllAreas, navPathTemp);
+    }
+
     public List<Vector3> CalculateNavmesh(Vector3 startPoint, Vector3 endPoint)
     {
         navPath = new NavMeshPath();
@@ -219,7 +226,13 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
 
         if (PathManager.previousPathpoint != null)
         {
-            List<Vector3> points = instance.CalculateNavmesh(PathManager.previousPathpoint.transform.position, positionToCheck);
+            NavMeshPath navPathTemp = new NavMeshPath();
+
+            bool isNavmeshPossible = NavMesh.CalculatePath(PathManager.previousPathpoint.transform.position, positionToCheck, NavMesh.AllAreas, navPathTemp);
+
+            if (isNavmeshPossible && navPathTemp.corners[navPathTemp.corners.Length - 1] == positionToCheck)
+            {
+                List<Vector3> points = instance.CalculateNavmesh(PathManager.previousPathpoint.transform.position, positionToCheck);
 
                 float currentDistance = 0;
 
@@ -228,6 +241,11 @@ public class PathCreationManager : VLY_Singleton<PathCreationManager>
                     currentDistance += Vector3.Distance(points[i], points[i + 1]);
                 }
                 return currentDistance;
+            }
+            else
+            {
+                return -1f;
+            }
         }
         else
         {
