@@ -159,6 +159,8 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         heatmapSelectorsHandler[3].action.started -= ActionHeatmap4;
 
         inputControl.Disable();
+
+        VLY_Time.SetTimeScale(1f);
     }
 
     #region Action inputs
