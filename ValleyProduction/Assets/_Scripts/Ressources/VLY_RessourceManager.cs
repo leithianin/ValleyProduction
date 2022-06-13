@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 {
+    [SerializeField] private float ressourceStart = 500f;
     [SerializeField] private float ressourceProductionSpeed = 10f;
     [SerializeField] private float ressourceByVisitor = 0.2f;
     [SerializeField] private float ressourceGainedBase = 1f;
@@ -24,6 +25,8 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
     private void Start()
     {
         currentRessources.ResetData();
+
+        currentRessources.SetValue(ressourceStart);
 
         currentRessources.OnAskChangeValue += GainRessource;
 
@@ -75,7 +78,7 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
     {
         ressourceTimer?.Stop();
 
-        GainRessource((ressourceGainedBase + VisitorManager.UsedVisitorNumber() * ressourceByVisitor) * Mathf.Ceil(AttractivityManager.AttractivityScore + 1));
+        GainRessource((ressourceGainedBase * Mathf.Ceil(AttractivityManager.AttractivityScore)) + (VisitorManager.UsedVisitorNumber() * ressourceByVisitor));
 
         ressourceTimer = TimerManager.CreateGameTimer(ressourceProductionSpeed, GainRessourceOnTime);
     }
