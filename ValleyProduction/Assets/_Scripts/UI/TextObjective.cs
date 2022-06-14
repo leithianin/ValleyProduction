@@ -14,7 +14,6 @@ public abstract class TextObjective : SerializedScriptableObject
     public string Textfr => textfr;
     [SerializeField, TextArea(5, 50)] private string textfr;
 
-
     public string Id => id;
     [Space, SerializeField] private string id;
 }

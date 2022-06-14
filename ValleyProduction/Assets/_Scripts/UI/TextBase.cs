@@ -7,12 +7,8 @@ public abstract class TextBase : SerializedScriptableObject
 {
     /*public TextCategory Category => category;
     [SerializeField] private TextCategory category;*/
-
     public string Title => title;
     [Space, SerializeField] private string title;
-
-    public Sprite Behavior => behavior;
-    [Space, SerializeField] private Sprite behavior;
 
     public string[] Texts => texts;
     [SerializeField, TextArea(5, 50)] private string[] texts;

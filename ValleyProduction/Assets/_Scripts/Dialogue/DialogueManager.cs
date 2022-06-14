@@ -14,6 +14,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public Image woodyImage;
 
+    private List<string> texts = new List<string>();
+
     [Header("Value")]
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
@@ -93,30 +95,47 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         textBlock.gameObject.SetActive(true);
         OnStartDialogue?.Invoke();
         StopAllCoroutines();
+
+        switch (UIManager.GetData.lang)
+        {
+            case Language.en:
+                foreach (string str in TextsDictionary.instance.GetDialogueAsset(id).Textsen)
+                {
+                    texts.Add(str);
+                }
+                break;
+
+            case Language.fr:
+                foreach (string str in TextsDictionary.instance.GetDialogueAsset(id).Textsfr)
+                {
+                    texts.Add(str);
+                }
+                break;
+        }
+
         if (!isSpeaking)
         {
             index = 0;
             currentId = id;
 
-            if (TextsDictionary.instance.GetTextAsset(id).Behavior != null)
+            if (TextsDictionary.instance.GetDialogueAsset(id).Behavior != null)
             {
-                woodyImage.sprite = TextsDictionary.instance.GetTextAsset(id).Behavior;
+                woodyImage.sprite = TextsDictionary.instance.GetDialogueAsset(id).Behavior;
             }
-            string text = TextsDictionary.instance.GetTextAsset(id).Texts[index];
-            string speaker = TextsDictionary.instance.GetTextAsset(id).Title;
+
+            string text = texts[index];
+            string speaker = TextsDictionary.instance.GetDialogueAsset(id).Title;
 
             Say(text, speaker);
             index++;
-        }
-        
+        }     
     }
-
     private void NextDialogue()
     {
-        if (index < TextsDictionary.instance.GetTextAsset(currentId).Texts.Length)
+        if (index < texts.Count)
         {
-            string text = TextsDictionary.instance.GetTextAsset(currentId).Texts[index];
-            string speaker = TextsDictionary.instance.GetTextAsset(currentId).Title;
+            string text = texts[index];
+            string speaker = TextsDictionary.instance.GetDialogueAsset(currentId).Title;
 
             indicationInputText.text = "<i> Click to speed up";
             Say(text, speaker);
@@ -126,6 +145,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         {
             TimerManager.CreateRealTimer(0.2f, () => textBlock.gameObject.SetActive(false));
             CloseDialogue();
+            texts.Clear();
             StopSpeaking();
             OnEndDialogue?.Invoke();
         }
