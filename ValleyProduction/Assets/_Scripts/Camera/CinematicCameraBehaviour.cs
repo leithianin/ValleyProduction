@@ -33,6 +33,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
     private void Update()
     {
         if (!inCinematicMode && cinematicModeTriggered)
+        {
             if (Random.Range(-5, 5) > 0) //Play custom or random shot
             {
                 Debug.Log("1");
@@ -43,6 +44,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
                 Debug.Log("2");
                 StartCoroutine(PlayShotWithCustomsParameters());
             }
+        }
     }
 
     [Button]
@@ -55,7 +57,6 @@ public class CinematicCameraBehaviour : MonoBehaviour
     public IEnumerator PlayCinematic(ShotsSequence sequenceScriptableObject)
     {
         CameraData[] sequence = sequenceScriptableObject.sequence;
-        Debug.Log(sequence.Length);
         float refVerticalOffest = cameraTransform.OriginVisualOffset;
 
         inCinematicMode = true;
