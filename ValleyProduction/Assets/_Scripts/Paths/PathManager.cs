@@ -893,6 +893,8 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pp"></param>
     public static void UpdateAfterMoving(IST_PathPoint pp)
     {
+        pp.transform.position = instance.ppSaveMove.transform.position;
+
         Debug.Log("Cancel");
         PathCreationManager.isModifyPath = false;
 

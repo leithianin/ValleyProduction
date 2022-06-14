@@ -234,7 +234,7 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         instance.movedObject.layer = layerIgnoreRaycast;
 
         instance.currentSelectedStructure.MoveObject();
-        if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
+        /*if (instance.currentSelectedStructure.StructureType != InfrastructureType.Path)
         {
             instance.previewHandler.SetInfrastructurePreview(toMove.Data.Preview);
             instance.previewHandler.transform.rotation = toMove.transform.rotation;
@@ -242,6 +242,14 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         else
         {
             //Pathpoint
+            OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
+        }*/
+
+        instance.previewHandler.SetInfrastructurePreview(toMove.Data.Preview);
+        instance.previewHandler.transform.rotation = toMove.transform.rotation;
+
+        if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
+        {
             OnStartMoveInfrastructure?.Invoke(instance.currentSelectedStructure);
         }
     }
@@ -275,13 +283,15 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     {
         Debug.Log("Replace Structure");
         //Pathpoint
-        if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
+        /*if (instance.currentSelectedStructure.StructureType == InfrastructureType.Path)
         {
             instance.previewHandler.SetInfrastructurePreview(GetCurrentSelectedStructure.Data.Preview);
-        }
+        }*/
 
         if (GetCurrentPreview.CanPlaceObject(position))
         {
+            Debug.Log(GetCurrentPreview.CanPlaceObject(position));
+
             instance.ChangeInfrastructurePosition(GetCurrentSelectedStructure, position);
 
             instance.movedObject.layer = default;
@@ -291,7 +301,6 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
             {
                 OnPlaceInfrastructure?.Invoke(GetCurrentSelectedStructure);
             }
-
 
             instance.previewHandler.SetInfrastructurePreview(null);
 
