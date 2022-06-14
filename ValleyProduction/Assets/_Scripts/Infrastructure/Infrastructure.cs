@@ -119,11 +119,11 @@ public abstract class Infrastructure : MonoBehaviour
     {
         PlayOnDelete?.Invoke();
 
+
         if (OnRemoveObject())
         {
-            TimerManager.CreateRealTimer(0.4f, () => Destroy(gameObject));
+            TimerManager.CreateRealTimer(Time.unscaledDeltaTime, () => Destroy(gameObject));
         }
-        
     }
 
     public void StartMoveObject()

@@ -14,4 +14,11 @@ public class IFB_DoSomething : MonoBehaviour, IFeedbackPlayer
             DoThis?.Invoke();
         }
     }
+
+    public void PlayGlobal()
+    {
+        gameObject.transform.parent = null;
+
+        Play();
+    }
 }
