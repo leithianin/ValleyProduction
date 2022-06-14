@@ -17,6 +17,11 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     [Header("Value")]
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
+
+    [Header("Vignette")]
+    public float timeTransition;
+    private float currentTimeTransition = 0f;
+    private float currentVignette = 0f;
     public float vignetteValue = 100f;
     //public float closeSpeed = 2f;
 
@@ -58,12 +63,19 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         {
             SetWantToSkip();
         }
+
+        if(isSpeaking)
+        {
+            currentTimeTransition += Time.deltaTime;
+
+            CameraManager.SetVignettage(Mathf.Lerp(0f, vignetteValue, currentTimeTransition / timeTransition));
+        }
     }
 
     public void PlayDialogue(string id)
     {
         indicationInputText.text = "<i> Click to speed up";
-        CameraManager.SetVignettage(vignetteValue);
+        //CameraManager.SetVignettage(vignetteValue);
         textBlock.gameObject.SetActive(true);
         OnStartDialogue?.Invoke();
         StopAllCoroutines();
@@ -117,6 +129,9 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         {
             StopCoroutine(speaking);
         }
+
+        currentTimeTransition = 0f;
+        currentVignette = 0f;
         speaking = null;
     }
 
