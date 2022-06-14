@@ -106,9 +106,19 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
                 break;
 
             case Language.fr:
-                foreach (string str in TextsDictionary.instance.GetDialogueAsset(id).Textsfr)
+                if (TextsDictionary.instance.GetDialogueAsset(id).Textsfr[0] != string.Empty)
                 {
-                    texts.Add(str);
+                    foreach (string str in TextsDictionary.instance.GetDialogueAsset(id).Textsfr)
+                    {
+                        texts.Add(str);
+                    }
+                }
+                else
+                {
+                    foreach (string str in TextsDictionary.instance.GetDialogueAsset(id).Textsen)
+                    {
+                        texts.Add(str);
+                    }
                 }
                 break;
         }
