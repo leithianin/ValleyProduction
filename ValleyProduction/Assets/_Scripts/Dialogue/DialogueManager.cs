@@ -17,7 +17,13 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     [Header("Value")]
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
+
+    [Header("Vignette")]
+    public float timeTransition;
+    private float currentTimeTransition = 0f;
     public float vignetteValue = 100f;
+    private bool startVignettage = false;
+    private bool endVignettage   = false;
     //public float closeSpeed = 2f;
 
     //Private variable
@@ -47,23 +53,43 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     public static TextMeshProUGUI nameText => instance.elements.nameText;
     public static TextMeshProUGUI indicationInputText => instance.elements.indicationInputText;
 
-    private void Start()
-    {
-        //PlayDialogue("PTD_000");
-    }
-
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
             SetWantToSkip();
         }
+
+        if(startVignettage)
+        {
+            currentTimeTransition += Time.deltaTime;
+            CameraManager.SetVignettage(Mathf.Lerp(0f, vignetteValue, currentTimeTransition / timeTransition));
+
+            if(currentTimeTransition > timeTransition) 
+            {
+                currentTimeTransition = 0f;
+                startVignettage = false; 
+            }
+        }
+
+        if(endVignettage)
+        {
+            currentTimeTransition += Time.deltaTime;
+
+            CameraManager.SetVignettage(Mathf.Lerp(vignetteValue, 0f, currentTimeTransition / timeTransition));
+
+            if (currentTimeTransition > timeTransition) 
+            {
+                currentTimeTransition = 0f;
+                endVignettage = false; 
+            }
+        }
     }
 
     public void PlayDialogue(string id)
     {
         indicationInputText.text = "<i> Click to speed up";
-        CameraManager.SetVignettage(vignetteValue);
+        startVignettage = true;
         textBlock.gameObject.SetActive(true);
         OnStartDialogue?.Invoke();
         StopAllCoroutines();
@@ -117,6 +143,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         {
             StopCoroutine(speaking);
         }
+
         speaking = null;
     }
 
@@ -152,7 +179,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void CloseDialogue()
     {
-        CameraManager.SetVignettage(0f);
+        endVignettage = true;
         dialoguePanel.SetActive(false);
     }
 
