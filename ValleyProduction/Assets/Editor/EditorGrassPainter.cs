@@ -7,7 +7,7 @@ using UnityEngine;
 public class EditorGrassPainter : Editor
 {
     GrassPainter grassPainter;
-    readonly string[] toolbarStrings = { "Add", "Remove", "Edit" };
+    readonly string[] toolbarStrings = { "Add", "Remove", "Edit", "Reproject" };
 
     readonly string[] toolbarStringsEdit = { "Edit Colors", "Edit Length/Width", "Both" };
 
@@ -18,9 +18,9 @@ public class EditorGrassPainter : Editor
     void OnSceneGUI()
     {
         //base
-        Handles.color = Color.cyan;
+        Handles.color = Color.green;
         Handles.DrawWireDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize);
-        Handles.color = new Color(0, 0.5f, 0.5f, 0.4f);
+        Handles.color = new Color(0, 0.5f, 0, 0.4f);
         Handles.DrawSolidDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize);
 
         if (grassPainter.toolbarInt == 1)
@@ -36,18 +36,24 @@ public class EditorGrassPainter : Editor
             Handles.DrawWireDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize);
             Handles.color = new Color(0.5f, 0.5f, 0f, 0.4f);
             Handles.DrawSolidDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize);
-            //falloff
+            // falloff
             Handles.color = Color.yellow;
-            Handles.DrawWireDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushFalloffSize);
+            Handles.DrawWireDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize * grassPainter.brushFalloffSize);
             Handles.color = new Color(0.5f, 0.5f, 0f, 0.4f);
-            Handles.DrawSolidDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, Mathf.Clamp(grassPainter.brushFalloffSize, 0, grassPainter.brushSize));
+            Handles.DrawSolidDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize * grassPainter.brushFalloffSize);
+        }
+        if (grassPainter.toolbarInt == 3)
+        {
+            Handles.color = Color.cyan;
+            Handles.DrawWireDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize);
+            Handles.color = new Color(0, 0.5f, 0.5f, 0.4f);
+            Handles.DrawSolidDisc(grassPainter.hitPosGizmo, grassPainter.hitNormal, grassPainter.brushSize);
         }
     }
 
     public override void OnInspectorGUI()
     {
         EditorGUILayout.LabelField("Grass Limit", EditorStyles.boldLabel);
-
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField(grassPainter.i.ToString() + "/", EditorStyles.label);
         grassPainter.grassLimit = EditorGUILayout.IntField(grassPainter.grassLimit);
@@ -63,25 +69,33 @@ public class EditorGrassPainter : Editor
         grassPainter.toolbarInt = GUILayout.Toolbar(grassPainter.toolbarInt, toolbarStrings);
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Brush Settings", EditorStyles.boldLabel);
-
         grassPainter.brushSize = EditorGUILayout.Slider("Brush Size", grassPainter.brushSize, 0.1f, 10f);
 
         if (grassPainter.toolbarInt == 0)
         {
             grassPainter.normalLimit = EditorGUILayout.Slider("Normal Limit", grassPainter.normalLimit, 0f, 1f);
             grassPainter.density = EditorGUILayout.Slider("Density", grassPainter.density, 0.1f, 10f);
-
         }
+
         if (grassPainter.toolbarInt == 2)
         {
             grassPainter.toolbarIntEdit = GUILayout.Toolbar(grassPainter.toolbarIntEdit, toolbarStringsEdit);
             EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Flood Options", EditorStyles.boldLabel);
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("Flood Colors"))
+            {
+                grassPainter.FloodColor();
+            }
+            if (GUILayout.Button("Flood Length/Width"))
+            {
+                grassPainter.FloodLengthAndWidth();
+            }
+            EditorGUILayout.EndHorizontal();
             EditorGUILayout.LabelField("Soft Falloff Settings", EditorStyles.boldLabel);
-            grassPainter.brushFalloffSize = EditorGUILayout.Slider("Brush Falloff Size", grassPainter.brushFalloffSize, 0.1f, 10f);
-            grassPainter.Flow = EditorGUILayout.Slider("Brush Flow", grassPainter.Flow, 1, 20f);
-
+            grassPainter.brushFalloffSize = EditorGUILayout.Slider("Brush Falloff Size", grassPainter.brushFalloffSize, 0.01f, 1f);
+            grassPainter.Flow = EditorGUILayout.Slider("Brush Flow", grassPainter.Flow, 0.1f, 10f);
         }
-
 
         if (grassPainter.toolbarInt == 0 || grassPainter.toolbarInt == 2)
         {
@@ -98,6 +112,18 @@ public class EditorGrassPainter : Editor
             grassPainter.rangeB = EditorGUILayout.Slider("Blue", grassPainter.rangeB, 0f, 1f);
         }
 
+        if (grassPainter.toolbarInt == 3)
+        {
+            EditorGUILayout.Space();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Reprojection Y Offset", EditorStyles.boldLabel);
+
+            grassPainter.reprojectOffset = EditorGUILayout.FloatField(grassPainter.reprojectOffset);
+            EditorGUILayout.EndHorizontal();
+        }
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
         if (GUILayout.Button("Clear Mesh"))
         {
             if (EditorUtility.DisplayDialog("Clear Painted Mesh?",
@@ -106,6 +132,10 @@ public class EditorGrassPainter : Editor
                 grassPainter.ClearMesh();
             }
         }
+
+
+
+
     }
 
 }
