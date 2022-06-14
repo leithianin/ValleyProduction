@@ -158,6 +158,20 @@ public class ManageMultiPath : MonoBehaviour
         }
     }
 
+    public void CheckMultiPathAsset()
+    {
+        Debug.Log(multiPathList.Count);
+
+        if (multiPathList.Count > 0)
+        {
+            prefabCairn.SetActive(false);
+        }
+        else
+        {
+            prefabSign.SetActive(false);
+        }
+    }
+
     private void OnDestroy()
     {
         foreach (MultiPathClass mpc in multiPathList)
