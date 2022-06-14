@@ -414,8 +414,6 @@ public class PathNode : MonoBehaviour
             attractivityScore = 0;
         }
 
-        Debug.Log(likedTypes.Count + " : " + attractivityScore);
-
         if (fragmentOpen)
         {
             return attractivityScore + distanceScore;

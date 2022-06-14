@@ -64,6 +64,8 @@ public class UI_Tool : MonoBehaviour
     {
         OnDeselectTool?.Invoke();
 
+        Debug.Log("OnDeselectTool");
+
         if (PathManager.IsOnCreatePath)
         {
             PathManager.CreatePathData();

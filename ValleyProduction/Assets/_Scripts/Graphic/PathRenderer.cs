@@ -7,6 +7,8 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     #region Paths properties
     [Header("Path Data"), SerializeField] private List<PathFragmentData> pathFragments = new List<PathFragmentData>();
 
+    private List<PathFragmentData> brokenPathFragments = new List<PathFragmentData>();
+
     private static List<PathFragmentData> PathFragments => instance.pathFragments;
 
     public static void RegisterPathFragment(PathFragmentData frag) 
@@ -111,17 +113,33 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
     {
         bufferElements = new List<PathpointBufferElement>();
 
+        Debug.Log("Update Path Display");
+
+        if(brokenPathFragments.Count > 0)
+        {
+            foreach(PathFragmentData frag in brokenPathFragments)
+            {
+                if(pathFragments.Contains(frag))
+                {
+                    pathFragments.Remove(frag);
+                }
+            }
+        }
+
+        brokenPathFragments = new List<PathFragmentData>();
+
         if (PathFragments != null)
         {
-
             foreach (PathFragmentData frag in PathFragments)
             {
                 if(frag.startPoint == null)
                 {
+                    brokenPathFragments.Add(frag);
                     Debug.LogError("NO START POINT");
                 }
                 else if(frag.endPoint == null)
                 {
+                    brokenPathFragments.Add(frag);
                     Debug.LogError("NO END POINT");
                 }
 
@@ -156,10 +174,12 @@ public class PathRenderer : VLY_Singleton<PathRenderer>
             compute.SetFloat(noisePowerId, noisePower);
 
             compute.Dispatch(0, Mathf.CeilToInt(TextureSize / 8.0f), Mathf.CeilToInt(TextureSize / 8.0f), 1);
-
         }
 
-        enabled = false;
+        if (brokenPathFragments.Count <= 0)
+        {
+            enabled = false;
+        }
     }
 
     public static void RemoveFragment(PathFragmentData toRemove)

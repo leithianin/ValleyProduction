@@ -899,6 +899,8 @@ public class PathManager : VLY_Singleton<PathManager>
         Debug.Log("IsCancel : " + PathCreationManager.instance.isCancel);
         if (PathCreationManager.instance.isCancel)
         {
+            pp.transform.position = instance.ppSaveMove.transform.position;
+
             foreach (ModifiedPath mp in PathCreationManager.baseModifiedPath)
             {
                 PathCreationManager.instance.UpdateSeveralLines(mp);
