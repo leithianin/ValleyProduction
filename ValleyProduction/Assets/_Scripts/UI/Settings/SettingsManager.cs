@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -23,5 +25,24 @@ public class SettingsManager : MonoBehaviour
     public void SetScrollMouseCamera(bool value)
     {
         datas.cameraMouseScrollingActive = value;
+    }
+
+    public void SetLanguage(TMP_Dropdown dropdown)
+    {
+        Debug.Log(dropdown.value);
+
+        switch(dropdown.value)
+        {
+            case 0:
+                datas.lang = Language.en;
+                break;
+            case 1:
+                datas.lang = Language.fr;
+                break;
+            default:
+                break;
+        }
+
+        UIManager.OnLanguageChange?.Invoke();
     }
 }
