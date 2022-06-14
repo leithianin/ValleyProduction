@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 {
+    [SerializeField] private List<InfrastructureData> startingStructure;
+
     [SerializeField] private InfrastructurePreviewHandler previewHandler;
 
     [SerializeField] private Infrastructure currentSelectedStructure;
@@ -45,7 +47,14 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
     public static Action<Infrastructure> OnEndMoveInfrastructure;
     public static Action<Infrastructure> OnDestroyInfrastructure;
     #endregion
-
+    
+    private void Start()
+    {
+        foreach(InfrastructureData infra in startingStructure)
+        {
+            UIManager.UnlockStructure(infra);
+        }
+    }
 
     private void Update()
     {
@@ -189,19 +198,22 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
 
     private bool PlaceInfrastructure(InfrastructurePreview toPlace, Vector3 positionToPlace)
     {
+        bool toReturn = false;
         if (toPlace.AskToPlace(positionToPlace) && !previewHandler.snaping)
         {
             Infrastructure placedInfrastructure = Instantiate(toPlace.RealInfrastructure, previewHandler.transform.position, previewHandler.transform.rotation);
-            EndRotation();
 
             placedInfrastructure.PlaceObject(positionToPlace);
             objectIndex++;
             placedInfrastructure.gameObject.name += " : " + objectIndex;
 
             OnPlaceInfrastructure?.Invoke(placedInfrastructure);
-            return true;
+            toReturn = true;
         }
-        return false;
+
+        EndRotation();
+
+        return toReturn;
     }
 
     public static void DeleteInfrastructure(Infrastructure toDelete)
@@ -322,12 +334,11 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         {
             toChange.transform.rotation = previewHandler.transform.rotation;
 
-            EndRotation();
-
             toChange.transform.position = position;
 
             toChange.ReplaceObject();
         }
+        EndRotation();
     }
 
     public static void ReplaceInfrastructureChangeLyer(GameObject saveObject)

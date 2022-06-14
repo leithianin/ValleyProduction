@@ -59,10 +59,10 @@ public class InfrastructurePreviewHandler : MonoBehaviour
     {
         if (!snaping)
         {
+            currentPreview.CheckAvailability();
             if (!isRotating)
             {
                 transform.position = currentPreview.TrySetPosition();
-                currentPreview.CheckAvailability();
             }
             else
             {
