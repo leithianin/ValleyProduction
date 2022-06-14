@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UIManager : VLY_Singleton<UIManager>
 {
@@ -39,6 +40,11 @@ public class UIManager : VLY_Singleton<UIManager>
 
     [Header("Quest")]
     [SerializeField] private UI_QuestDisplayer questDisplayer;
+
+    [Header("Data")]
+    public SettingsDatas data;
+    public static SettingsDatas GetData => instance.data;
+    public static Action OnLanguageChange;
 
     private static Component[] componentTab;
     private static GameObject gameObjectShown;
