@@ -30,6 +30,11 @@ public abstract class Infrastructure : MonoBehaviour
 
     public InfrastructureData Data => datas;
 
+    public void SetData(InfrastructureData data)
+    {
+        datas = data;
+    }
+
     public InfrastructureType StructureType => datas.StructureType;
 
     public bool IsOpen => isOpen;
