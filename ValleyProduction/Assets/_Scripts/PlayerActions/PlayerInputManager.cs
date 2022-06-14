@@ -263,6 +263,30 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         toDisable.action.Disable();
     }
 
+    public void DisableAllInput()
+    {
+        cameraMovementHandler.action.Disable();
+
+        cameraRotationHandler.action.Disable();
+        cameraPitchHandler.action.Disable();
+        foreach (InputActionReference inpt in heatmapSelectorsHandler)
+        {
+            inpt.action.Disable();
+        }
+
+        mouseLeftClic.action.Disable();
+
+        mouseRightClic.action.Disable();
+
+        mouseMiddleClic.action.Disable();
+
+        mouseMovement.action.Disable();
+
+        mouseScroll.action.Disable();
+
+        escapeInput.action.Disable();
+    }
+
     public void EnableInput(InputActionReference toEnable)
     {
         toEnable.action.Enable();

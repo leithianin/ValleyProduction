@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class CinematicCameraBehaviour : MonoBehaviour
@@ -27,7 +28,8 @@ public class CinematicCameraBehaviour : MonoBehaviour
     private bool fadeDone;
     private float fadeTime;
 
-
+    public UnityEvent OnPlayCinematic;
+    public UnityEvent OnEndCinematic;
     private void Update()
     {
         if (!inCinematicMode && cinematicModeTriggered)
@@ -46,6 +48,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
     [Button]
     public void PlayCinemtic(ShotsSequence sequenceScriptableObject)
     {
+        OnPlayCinematic?.Invoke();
         StartCoroutine(PlayCinematic(sequenceScriptableObject));
     }
 
@@ -101,6 +104,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         }
         cameraTransform.OriginVisualOffset = refVerticalOffest;
         CameraManager.OnEndCinematic?.Invoke();
+        OnEndCinematic?.Invoke();
         cinematicModeTriggered = false;
         inCinematicMode = false;
     }
