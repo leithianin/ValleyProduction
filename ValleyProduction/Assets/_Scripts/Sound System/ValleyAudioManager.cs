@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ValleyAudioManager : VLY_Singleton<ValleyAudioManager>
 {
+    //Mettre à jour les MixerGroup avec les valeurs de base ?
+
     [SerializeField] private AudioSound music;
     [SerializeField] private AudioPlayer musicPlayer;
 
