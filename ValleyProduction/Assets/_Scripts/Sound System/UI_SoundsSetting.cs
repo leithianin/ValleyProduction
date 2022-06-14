@@ -12,6 +12,8 @@ public class UI_SoundsSetting : MonoBehaviour
     public AudioMixerGroup uiMixer;
     public AudioMixerGroup ambientMixer;
 
+    [SerializeField] private SoundDatas datas;
+
     [Header("UI")]
     public UI_AudioSettings master;
     public UI_AudioSettings music;
@@ -26,61 +28,59 @@ public class UI_SoundsSetting : MonoBehaviour
 
     public void SetBaseValue()
     {
-        float value;
-
         //Master
-        masterMixer.audioMixer.GetFloat("MasterVolume", out value);
-        master.value.text = (Mathf.Pow(value/20, 10)).ToString();
-        //master.slider.value = Mathf.Log10(((int)value)) / 20;
+        master.value.text = Mathf.RoundToInt(datas.masterVolume*100).ToString();
+        master.slider.value = datas.masterVolume;
 
         //Music
-        musicMixer.audioMixer.GetFloat("MusicVolume", out value);
-        music.value.text = (Mathf.Log(value) * 20).ToString();
-        //music.slider.value = Mathf.Log10(((int)value)) / 20;
+        music.value.text = Mathf.RoundToInt(datas.musicVolume * 100).ToString();
+        music.slider.value = datas.musicVolume;
 
         //SFX
-        sfxMixer.audioMixer.GetFloat("SFXVolume", out value);
-        sfx.value.text = (Mathf.Log(value) * 20).ToString();
-        //sfx.slider.value = Mathf.Log10(((int)value)) / 20;
+        sfx.value.text = Mathf.RoundToInt(datas.sfxVolume * 100).ToString();
+        sfx.slider.value = datas.sfxVolume;
 
         //UI
-        uiMixer.audioMixer.GetFloat("UIVolume", out value);
-        ui.value.text = (Mathf.Log(value) * 20).ToString();
-        //ui.slider.value = Mathf.Log10(((int)value)) / 20;
+        ui.value.text = Mathf.RoundToInt(datas.uiVolume * 100).ToString();
+        ui.slider.value = datas.uiVolume;
 
         //Ambient
-        ambientMixer.audioMixer.GetFloat("AmbientVolume", out value);
-        ambient.value.text = (Mathf.Log(value) * 20).ToString();
-        //ambient.slider.value = Mathf.Log10(((int)value)) / 20;
+        ambient.value.text = Mathf.RoundToInt(datas.ambientVolume * 100).ToString();
+        ambient.slider.value = datas.ambientVolume;
     }
 
     public void SetMasterVolume(float sliderValue)
     {
+        datas.masterVolume = sliderValue;
         masterMixer.audioMixer.SetFloat("MasterVolume", Mathf.Log10(sliderValue) * 20);
-        master.value.text = ((int)(sliderValue * 100)).ToString();
+        master.value.text = Mathf.RoundToInt(datas.masterVolume * 100).ToString();
     }
 
     public void SetMusicVolume(float sliderValue)
     {
+        datas.musicVolume = sliderValue;
         musicMixer.audioMixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue) * 20);
-        music.value.text = ((int)(sliderValue * 100)).ToString();
+        music.value.text = Mathf.RoundToInt(datas.musicVolume * 100).ToString();
     }
 
     public void SetSFXVolume(float sliderValue)
     {
+        datas.sfxVolume = sliderValue;
         sfxMixer.audioMixer.SetFloat("SFXVolume", Mathf.Log10(sliderValue) * 20);
-        sfx.value.text = ((int)(sliderValue * 100)).ToString();
+        sfx.value.text = Mathf.RoundToInt(datas.sfxVolume * 100).ToString();
     }
 
     public void SetUIVolume(float sliderValue)
     {
+        datas.uiVolume = sliderValue;
         uiMixer.audioMixer.SetFloat("UIVolume", Mathf.Log10(sliderValue) * 20);
-        ui.value.text = ((int)(sliderValue * 100)).ToString();
+        ui.value.text = Mathf.RoundToInt(datas.uiVolume * 100).ToString();
     }
 
     public void SetAmbientVolume(float sliderValue)
     {
+        datas.ambientVolume = sliderValue;
         ambientMixer.audioMixer.SetFloat("AmbientVolume", Mathf.Log10(sliderValue) * 20);
-        ambient.value.text = ((int)(sliderValue * 100)).ToString();
+        ambient.value.text = Mathf.RoundToInt(datas.ambientVolume * 100).ToString();
     }
 }
