@@ -505,8 +505,6 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
         RaycastHit hit;
         Ray ray = usedCamera.ScreenPointToRay(Input.mousePosition);
 
-        Debug.Log(GetCamera.eventMask.ToString());
-
         if (Physics.Raycast(ray, out hit, 100000.0f, GetCamera.eventMask))
         {
             return hit;
