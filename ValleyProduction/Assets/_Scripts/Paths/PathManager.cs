@@ -893,14 +893,14 @@ public class PathManager : VLY_Singleton<PathManager>
     /// <param name="pp"></param>
     public static void UpdateAfterMoving(IST_PathPoint pp)
     {
-        pp.transform.position = instance.ppSaveMove.transform.position;
-
         Debug.Log("Cancel");
         PathCreationManager.isModifyPath = false;
 
         Debug.Log("IsCancel : " + PathCreationManager.instance.isCancel);
         if (PathCreationManager.instance.isCancel)
         {
+            pp.transform.position = instance.ppSaveMove.transform.position;
+
             foreach (ModifiedPath mp in PathCreationManager.baseModifiedPath)
             {
                 PathCreationManager.instance.UpdateSeveralLines(mp);
