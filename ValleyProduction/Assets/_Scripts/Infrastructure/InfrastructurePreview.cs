@@ -9,6 +9,8 @@ public abstract class InfrastructurePreview : MonoBehaviour
     // The Infrastructure to place
     [SerializeField, Tooltip("The Infrastructure to place.")] private Infrastructure realInfrastructure;
 
+    [SerializeField] private List<Transform> interactionPoints;
+
     // A list of all the object blocking the placement of the construction.
     protected List<GameObject> objectBlockingPose = new List<GameObject>();
 
@@ -99,6 +101,16 @@ public abstract class InfrastructurePreview : MonoBehaviour
         if (!NavMesh.SamplePosition(position, out hit, NavmeshSensitivityReal, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
         {
             toReturn = false;
+        }
+
+        foreach(Transform t in interactionPoints)
+        {
+            NavMeshHit hitInteraction;
+
+            if (!NavMesh.SamplePosition(t.position, out hitInteraction, .5f, NavMesh.AllAreas)) //Check si on est sur un terrain praticable
+            {
+                toReturn = false;
+            }
         }
 
         if (objectBlockingPose.Count > 0)
