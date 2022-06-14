@@ -11,6 +11,8 @@ public class ValleyAudioManager : VLY_Singleton<ValleyAudioManager>
 
     private void Start()
     {
+        Debug.Log("Play Music Start");
+
         DontDestroyOnLoad(gameObject);
         if (musicPlayer != null)
         {
@@ -34,6 +36,8 @@ public class ValleyAudioManager : VLY_Singleton<ValleyAudioManager>
 
     private void OnSetMainMusic(AudioSound newMusic)
     {
+        Debug.Log("Play Music");
+
         music = newMusic;
         musicPlayer.Play(music);
     }
