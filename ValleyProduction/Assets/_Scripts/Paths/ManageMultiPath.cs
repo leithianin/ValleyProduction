@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ManageMultiPath : MonoBehaviour
 {
+    [SerializeField] private InfrastructureData cairnPreviewData;
+    [SerializeField] private InfrastructureData signPreviewData;
+
     [SerializeField] private IST_PathPoint thisPathPoint;
     [SerializeField] private GameObject prefabSign;
     [SerializeField] private GameObject prefabCairn;
@@ -36,6 +39,7 @@ public class ManageMultiPath : MonoBehaviour
         {
             prefabCairn.SetActive(false);
             prefabSign.SetActive(true);
+            thisPathPoint.SetData(signPreviewData);
             OrientateFirstTag();
         }
     }
@@ -44,6 +48,7 @@ public class ManageMultiPath : MonoBehaviour
     {
         prefabCairn.SetActive(true);
         prefabSign.SetActive(false);
+        thisPathPoint.SetData(cairnPreviewData);
         nbArrow = 0;
     }
 
