@@ -18,28 +18,20 @@ public class MenuManager : VLY_Singleton<MenuManager>
 
     public static void LoadScene(int sceneIndex)
     {
-        if(sceneIndex <= -1) 
-        {
-            Debug.Log(instance.sceneToLoad);
-
-            if (instance.blackScreen != null)
-            {
-                instance.blackScreen.SetActive(true);
-            }
-        }
-        else
+        if(sceneIndex >= 0) 
         {
             instance.sceneToLoad = sceneIndex;
-            Debug.Log(instance.sceneToLoad);
+        }
 
+        if (instance.sceneToLoad >= 0)
+        {
             if (instance.blackScreen != null)
             {
                 instance.blackScreen.SetActive(true);
             }
+            Debug.Log(instance.sceneToLoad);
+            instance.Play(instance.sceneToLoad);
         }
-
-        Debug.Log(instance.sceneToLoad);
-        instance.Play(instance.sceneToLoad);
     }
 
     public static void Exit()
@@ -49,8 +41,14 @@ public class MenuManager : VLY_Singleton<MenuManager>
 
     public void SetSceneIndex(int i)
     {
-        sceneToLoad = i;
-
+        if (sceneToLoad == i)
+        {
+            sceneToLoad = -1;
+        }
+        else
+        {
+            sceneToLoad = i;
+        }
         //LoadScene(sceneToLoad);
     }
 
