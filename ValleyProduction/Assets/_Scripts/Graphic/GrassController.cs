@@ -203,7 +203,7 @@ public class GrassController : MonoBehaviour
         m_ArgsBuffer = new ComputeBuffer(1, INDIRECT_ARGS_STRIDE, ComputeBufferType.IndirectArguments);
 
         //Cache the kernel IDs we will be dispatching
-        m_IdGrassKernel = m_InstantiatedComputeShader.FindKernel("Main");
+        m_IdGrassKernel = m_InstantiatedComputeShader.FindKernel("CSMain");
 
         //Set buffer data
         m_InstantiatedComputeShader.SetBuffer(m_IdGrassKernel, "_SourceVertices", m_SourceVertBuffer);
