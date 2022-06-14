@@ -151,6 +151,7 @@ public class GrassPainter : MonoBehaviour
                         {
                             hitPos = terrainHit.point;
                             hitNormal = terrainHit.normal;
+
                             if (k != 0)
                             {
                                 var grassPosition = hitPos; //+ Vector3.Cross(origin, hitNormal);
