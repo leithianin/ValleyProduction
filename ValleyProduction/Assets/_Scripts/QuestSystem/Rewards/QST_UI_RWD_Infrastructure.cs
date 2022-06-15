@@ -6,7 +6,8 @@ using TMPro;
 
 public class QST_UI_RWD_Infrastructure : QST_UI_Reward<QST_RWD_UnlockStructure>
 {
-    [SerializeField] private List<Image> structuresIcons;
+    [SerializeField] private Image structuresIcons;
+    [SerializeField] TextMeshProUGUI structureName;
 
     public override void OnHideReward()
     {
@@ -17,10 +18,8 @@ public class QST_UI_RWD_Infrastructure : QST_UI_Reward<QST_RWD_UnlockStructure>
     {
         gameObject.SetActive(true);
 
-        for(int i = 0; i < reward.ToUnlock.Count; i++)
-        {
-            structuresIcons[i].sprite = reward.ToUnlock[i].RewardIcon;
-            structuresIcons[i].gameObject.SetActive(true);
-        }
+        structureName.text = reward.ToUnlock[0].Name;
+        structuresIcons.sprite = reward.ToUnlock[0].RewardIcon;
+
     }
 }
