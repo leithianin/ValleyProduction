@@ -92,7 +92,7 @@ public class InterestPoint : MonoBehaviour
                 toReturn -= interactions[i].attractivityLevel;
             }
         }
-        
+
         return toReturn;
     }
 
