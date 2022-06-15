@@ -124,11 +124,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     }
 
     #region To Remove 
-    public static void SetCanSpawnVisitors(bool cond)
-    {
-        VisitorManager.SetVisitorSpawn(cond);
-    }
-
     public static void SetTimeToNormal()
     {
         VLY_Time.SetTimeScale(1);
