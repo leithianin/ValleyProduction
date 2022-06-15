@@ -333,7 +333,7 @@ public class PathNode : MonoBehaviour
             }
             else
             {
-                if (toIgnore.Contains(usableFragments[i]))
+                if (usableFragments[i].ContainsFragment(toIgnore))
                 {
                     nScore = CalculateScore(usableFragments[i], target, new List<SatisfactorType>(), new List<SatisfactorType>());
                 }
@@ -355,7 +355,7 @@ public class PathNode : MonoBehaviour
             }
         }
 
-        if (toReturn == null && usableFragments.Count > 0)
+        if (toReturn.Count <= 0 && usableFragments.Count > 0)
         {
             toReturn = new List<PathFragmentData>(usableFragments);
         }
@@ -405,7 +405,8 @@ public class PathNode : MonoBehaviour
         {
             distanceScore = 150;
         }
-        else if (attractivityScore > 100)
+       
+        if (attractivityScore > 100)
         {
             attractivityScore = 100;
         }
