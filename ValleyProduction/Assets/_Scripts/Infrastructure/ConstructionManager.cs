@@ -114,17 +114,7 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
     {
         if (InfrastructureManager.GetCurrentPreview != null)
         {
-            switch(InfrastructureManager.GetCurrentTool)
-            {
-                case ToolType.Place:
-                    instance.IsMovingPathpoint();
-                    InfrastructureManager.UnselectInfrastructure();                                                          //Reset CurrentSelectedStructure
-                    instance.OnSelectInfrastructureType(null);
-                    break;
-                case ToolType.Move:
-                    InfrastructureManager.CancelMoveStructure();
-                    break;
-            }
+            UnselectPreview();
         }
         else if (InfrastructureManager.GetCurrentTool != ToolType.None)
         {
@@ -133,6 +123,21 @@ public class ConstructionManager : VLY_Singleton<ConstructionManager>
         else
         {
             instance.OnUnselectOneMore?.Invoke();
+        }
+    }
+
+    public static void UnselectPreview()
+    {
+        switch (InfrastructureManager.GetCurrentTool)
+        {
+            case ToolType.Place:
+                instance.IsMovingPathpoint();
+                InfrastructureManager.UnselectInfrastructure();                                                          //Reset CurrentSelectedStructure
+                instance.OnSelectInfrastructureType(null);
+                break;
+            case ToolType.Move:
+                InfrastructureManager.CancelMoveStructure();
+                break;
         }
     }
 

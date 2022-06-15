@@ -42,6 +42,8 @@ public class UI_Tool : MonoBehaviour
                 InfrastructureManager.SetToolSelected(ToolType.None);
             }
 
+            Debug.Log(InfrastructureManager.GetCurrentTool);
+
             switch (InfrastructureManager.GetCurrentTool)
             {
                 case ToolType.Place:
