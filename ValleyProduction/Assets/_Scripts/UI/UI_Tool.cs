@@ -109,4 +109,14 @@ public class UI_Tool : MonoBehaviour
 
         currentStructure = null;
     }
+
+    public void ShowPreview()
+    {
+        InfrastructureManager.ShowPreviewDisplay();
+    }
+
+    public void HidePreview()
+    {
+        InfrastructureManager.HidePreviewDisplay();
+    }
 }

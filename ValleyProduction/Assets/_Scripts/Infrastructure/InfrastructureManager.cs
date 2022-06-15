@@ -414,6 +414,16 @@ public class InfrastructureManager : VLY_Singleton<InfrastructureManager>
         instance.previewHandler.SetSnaping(false);
     }
 
+    public static void ShowPreviewDisplay()
+    {
+        instance.previewHandler.ShowDisplay();
+    }
+
+    public static void HidePreviewDisplay()
+    {
+        instance.previewHandler.HideDisplay();
+    }
+
     private void OnDestroy()
     {
         OnPlaceInfrastructure = null;
