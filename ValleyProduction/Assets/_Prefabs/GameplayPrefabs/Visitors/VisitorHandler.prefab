@@ -166,11 +166,16 @@ MonoBehaviour:
   timeBetweenSpawn: 5
   visitorToSpawnNb: {x: 1, y: 3}
   spawnDistanceFromSpawnPoint: 0.8
-  maxSpawn: 50
+  maxSpawn: 7
   visitorTypes:
-  - {fileID: 11400000, guid: 4083f4a12e625ac4f86d8f5657b2505d, type: 2}
   - {fileID: 11400000, guid: 05f8a3c3fc122ee4f88be12bf46959a0, type: 2}
   OnUpdateVisitorNumber:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnterVisitor:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitVisitor:
     m_PersistentCalls:
       m_Calls: []
   visitorPool:
@@ -294,8 +299,6 @@ MonoBehaviour:
   - {fileID: 7603813357409240499}
   - {fileID: 7603813358296493112}
   - {fileID: 7603813357119953280}
-  mainTerrain: {fileID: 0}
-  allowVisitorSpawn: 0
 --- !u!1001 &51701705
 PrefabInstance:
   m_ObjectHideFlags: 0
