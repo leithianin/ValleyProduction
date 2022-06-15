@@ -15,28 +15,40 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private RectTransform tooltipPos;
     [SerializeField] private int index;
 
+    private bool isEnter = false;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        onEnter?.Invoke(this);
-        var message = "";
+        TimerManager.CreateGameTimer(0.8f, SetupTooltip);
+        isEnter = true;
+    }
 
-        switch(UIManager.GetData.lang)
+    public void SetupTooltip()
+    {
+        if (isEnter)
         {
-            case Language.en:
-                if (ValleyText.Titleen != string.Empty) {message = $"<b>{ValleyText.Titleen}</b>\n{ValleyText.Texten}";}
-                else                                    {message = $"{ValleyText.Texten}";}
-                break;
-            case Language.fr:
-                if (ValleyText.Titlefr != string.Empty) { message = $"<b>{ValleyText.Titlefr}</b>\n{ValleyText.Textfr}"; }
-                else { message = $"{ValleyText.Textfr}"; }
-                break;
-        }
+            onEnter?.Invoke(this);
+            var message = "";
 
-        UIManager.GetTooltip.ShowTooltip(message, tooltipPos, index);
+            switch (UIManager.GetData.lang)
+            {
+                case Language.en:
+                    if (ValleyText.Titleen != string.Empty) { message = $"<b>{ValleyText.Titleen}</b>\n{ValleyText.Texten}"; }
+                    else { message = $"{ValleyText.Texten}"; }
+                    break;
+                case Language.fr:
+                    if (ValleyText.Titlefr != string.Empty) { message = $"<b>{ValleyText.Titlefr}</b>\n{ValleyText.Textfr}"; }
+                    else { message = $"{ValleyText.Textfr}"; }
+                    break;
+            }
+
+            UIManager.GetTooltip.ShowTooltip(message, tooltipPos, index);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        isEnter = false;
         onExit?.Invoke(this);
         UIManager.GetTooltip.HideTooltip();
     }
