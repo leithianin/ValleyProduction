@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class TextHolder : MonoBehaviour
 {
-    public TextBase Value => value;
-    [SerializeField] private TextBase value;
+    public TextTooltip Value => value;
+    [SerializeField] private TextTooltip value;
 }

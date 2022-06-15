@@ -9,7 +9,7 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public event Action<PointerHandler> onEnter;
     public event Action<PointerHandler> onExit;
 
-    public TextBase ValleyText => relay.Value;
+    public TextTooltip ValleyText => relay.Value;
     [SerializeField] private TextHolder relay;
 
     [SerializeField] private RectTransform tooltipPos;
@@ -19,8 +19,19 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         onEnter?.Invoke(this);
         var message = "";
-        if (ValleyText.Title != "") { message = $"<b>{ValleyText.Title}</b>\n{ValleyText.Texts}"; }
-        else                                  { message = $"{ValleyText.Texts}"; }
+
+        switch(UIManager.GetData.lang)
+        {
+            case Language.en:
+                if (ValleyText.Titleen != string.Empty) {message = $"<b>{ValleyText.Titleen}</b>\n{ValleyText.Texten}";}
+                else                                    {message = $"{ValleyText.Texten}";}
+                break;
+            case Language.fr:
+                if (ValleyText.Titlefr != string.Empty) { message = $"<b>{ValleyText.Titlefr}</b>\n{ValleyText.Textfr}"; }
+                else { message = $"{ValleyText.Textfr}"; }
+                break;
+        }
+
         UIManager.GetTooltip.ShowTooltip(message, tooltipPos, index);
     }
 
