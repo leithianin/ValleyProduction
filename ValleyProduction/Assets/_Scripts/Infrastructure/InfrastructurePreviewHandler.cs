@@ -15,6 +15,8 @@ public class InfrastructurePreviewHandler : MonoBehaviour
 
     public bool Snaping => snaping;
 
+    private bool isDisplayShown;
+
     public void SetSnaping(bool toSet)
     {
         snaping = toSet;
@@ -42,6 +44,11 @@ public class InfrastructurePreviewHandler : MonoBehaviour
                 currentPreview.transform.localPosition = Vector3.zero;
 
                 currentPreview.SpawnObject(transform.position);
+
+                if(!isDisplayShown)
+                {
+                    currentPreview.gameObject.SetActive(false);
+                }
             }
         }
         else
@@ -68,6 +75,24 @@ public class InfrastructurePreviewHandler : MonoBehaviour
             {
                 Rotate();
             }
+        }
+    }
+    
+    public void ShowDisplay()
+    {
+        isDisplayShown = true;
+        if (currentPreview != null)
+        {
+            currentPreview.gameObject.SetActive(true);
+        }
+    }
+
+    public void HideDisplay()
+    {
+        isDisplayShown = false;
+        if (currentPreview != null)
+        {
+            currentPreview.gameObject.SetActive(false);
         }
     }
 
