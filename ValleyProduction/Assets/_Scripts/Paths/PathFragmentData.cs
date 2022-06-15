@@ -89,6 +89,22 @@ public class PathFragmentData
         return ((toCheck.endPoint == endPoint && toCheck.startPoint == startPoint) || (toCheck.startPoint == endPoint && toCheck.endPoint == startPoint));
     }
 
+    public bool ContainsFragment(List<PathFragmentData> toCheck)
+    {
+        bool toReturn = false;
+
+        foreach(PathFragmentData frag in toCheck)
+        {
+            if(IsSameFragment(frag))
+            {
+                toReturn = true;
+                break;
+            }
+        }
+
+        return toReturn;
+    }
+
     public int IsFragmentNeighbours(PathFragmentData possibleNeighbour)
     {
         if(possibleNeighbour.endPoint == startPoint) //On check si le chemin est dans la m�me direction
