@@ -187,14 +187,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
             {
                 if (stage.dialogueID != string.Empty)
                 {
-                    if (stage.dialogTime > 0)
-                    {
-                        DialogueManager.PlayDialogueForTime(stage.dialogueID, stage.dialogTime);
-                    }
-                    else
-                    {
-                        DialogueManager.PlayDialogue(stage.dialogueID);
-                    }
+                    DialogueManager.PlayDialogue(stage.dialogueID);
                 }
             }
 
