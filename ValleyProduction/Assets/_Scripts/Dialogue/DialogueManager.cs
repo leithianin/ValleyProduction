@@ -19,6 +19,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     [Header("Value")]
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
+    [SerializeField] private bool setVignetage = true;
 
     [Header("Vignette")]
     public float timeTransition;
@@ -62,7 +63,10 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         if(startVignettage)
         {
             currentTimeTransition += Time.deltaTime;
-            //CameraManager.SetVignettage(Mathf.Lerp(0f, vignetteValue, currentTimeTransition / timeTransition));
+            if (setVignetage)
+            {
+                CameraManager.SetVignettage(Mathf.Lerp(0f, vignetteValue, currentTimeTransition / timeTransition));
+            }
 
             if(currentTimeTransition > timeTransition) 
             {
@@ -75,7 +79,10 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         {
             currentTimeTransition += Time.deltaTime;
 
-            //CameraManager.SetVignettage(Mathf.Lerp(vignetteValue, 0f, currentTimeTransition / timeTransition));
+            if (setVignetage)
+            {
+                CameraManager.SetVignettage(Mathf.Lerp(vignetteValue, 0f, currentTimeTransition / timeTransition));
+            }
 
             if (currentTimeTransition > timeTransition) 
             {
