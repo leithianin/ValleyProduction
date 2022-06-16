@@ -75,7 +75,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
                 yield return null;
             }
             // Set the shot position and angle (+ offset)
-            cameraTransform.OriginVisualOffset = shot.verticalOffset != 0.0f ? shot.verticalOffset : cameraTransform.OriginVisualOffset;
+            cameraTransform.OriginVisualOffset = shot.verticalOffset;
             SelectDestination(shot.cameraOriginPosition.x, shot.cameraOriginPosition.z);
             SetAngles(shot.radius, shot.azimuthalAngle, shot.polarAngle);
            
