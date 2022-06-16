@@ -139,7 +139,7 @@ public class ManageMultiPath : MonoBehaviour
             nbArrow--;
         }
 
-        if(multiPathList.Count < 2)
+        if(multiPathList.Count <= 2)
         {
             DesactivateMultiPath();
         }

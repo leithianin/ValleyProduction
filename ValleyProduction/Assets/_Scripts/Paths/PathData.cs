@@ -219,7 +219,6 @@ public class PathData
                 pathfragmentList.Add(pfd);
             }
         }
-
         return pathfragmentList;
     }
     #endregion
