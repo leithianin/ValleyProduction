@@ -68,6 +68,7 @@ public class ManageMultiPath : MonoBehaviour
 
     public void SetRegisterPathFragment(List<PathFragmentData> pfdList)
     {
+        ActivateMultiPath();
         RegisterPathFragment(pfdList);
     }
 
