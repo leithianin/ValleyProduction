@@ -98,6 +98,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 927444604776422210, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 11400000, guid: a3d6d156f9818f84282977678c98983f, type: 2}
     - target: {fileID: 1688512389191840399, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: cost
       value: 20
@@ -203,6 +207,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: PlayOnDelete.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnReplace.m_PersistentCalls.m_Calls.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -219,6 +227,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: PlayOnDelete.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnMove.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 6655265851728118024}
@@ -230,6 +242,10 @@ PrefabInstance:
       propertyPath: OnSetOpen.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: PlayOnDelete.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1546579141108730839}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnMove.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
       value: 2
@@ -247,8 +263,16 @@ PrefabInstance:
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: PlayOnDelete.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnStartMove.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: PlayOnDelete.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayGlobal
       objectReference: {fileID: 0}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnReplace.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
@@ -269,6 +293,10 @@ PrefabInstance:
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnMove.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: PlayOnDelete.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: IFB_DoSomething, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnMove.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
@@ -292,6 +320,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: PlayOnMove.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+      propertyPath: PlayOnDelete.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4784454985005984352, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
@@ -392,7 +424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054228870248534635, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5388232056177239485, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: satisfactionType
@@ -436,7 +468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8507817671416688634, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8547061514566162606, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
       propertyPath: m_Radius
@@ -480,3 +512,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7857746994977429602, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
   m_PrefabInstance: {fileID: 3553360195445791082}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1546579141108730839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2604945139753259709, guid: 2b68bc0297d09f545ad6f43463ae6b64, type: 3}
+  m_PrefabInstance: {fileID: 3553360195445791082}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5dbcf7f431db9b46af504523791ff55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
