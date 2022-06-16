@@ -632,6 +632,24 @@ public class PathManager : VLY_Singleton<PathManager>
         instance.ResetCurrentData();
     }
 
+    public int GetNumberPathFragment(IST_PathPoint pp)
+    {
+        int i = 0;
+
+        foreach (PathData pd in instance.pathDataList)
+        {
+            if (pp)
+            {
+                foreach (PathFragmentData pfd in pd.GetPathFragments(pp))
+                {
+                    i++;
+                }
+            }
+        }
+
+        return i;
+    }
+
     /// <summary>
     /// Create a PathData for the path that is cut by the deleting tool
     /// </summary>
