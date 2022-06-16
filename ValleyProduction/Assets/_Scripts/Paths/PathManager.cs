@@ -623,7 +623,7 @@ public class PathManager : VLY_Singleton<PathManager>
             //IF ONBOARDING SEQUENCE 
             TimerManager.CreateRealTimer(0.5f, () => isOnFinishPath?.Invoke(true));
         }
-        else if (instance.pathpointList.Count > 0)
+        else if (instance.pathpointList.Count > 0 && previousPathpoint.Node.GetNeighbours().Count <= 0)
         {
             instance.pathpointList[0].RemoveObject();
             instance.pathpointList.Clear();

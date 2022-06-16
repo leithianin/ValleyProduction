@@ -74,4 +74,5 @@ public class QST_ObjectiveStage
     public List<string> incrementFlagList;
 
     public string dialogueID;
+    public float dialogTime = -1;
 }

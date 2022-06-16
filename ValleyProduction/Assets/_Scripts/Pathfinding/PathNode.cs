@@ -360,7 +360,14 @@ public class PathNode : MonoBehaviour
             toReturn = new List<PathFragmentData>(usableFragments);
         }
 
-        return toReturn[UnityEngine.Random.Range(0, toReturn.Count)];
+        if (toReturn.Count > 0)
+        {
+            return toReturn[UnityEngine.Random.Range(0, toReturn.Count)];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private float CalculateScore(PathFragmentData fragmentToCalculate, CPN_IsLandmark landmarkWanted, List<SatisfactorType> likedTypes, List<SatisfactorType> hatedTypes)
