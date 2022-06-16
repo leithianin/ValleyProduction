@@ -44,7 +44,7 @@ public class PhotoMode : MonoBehaviour
     [SerializeField, Range(-10, 10)] private float exposure = default;
     [SerializeField, Range(-100, 100)] private float contrasts = default;
     [SerializeField, Range(-100, 100)] private float saturation = default;
-    [SerializeField, Range(0, 5)] private float bloom = default;
+    [SerializeField, Range(0, 5)] public float bloom = default;
     [SerializeField, Range(0, 100)] private float grain = default;
     [SerializeField, Range(0, 100)] private float vignette = default;
 
@@ -56,6 +56,8 @@ public class PhotoMode : MonoBehaviour
     [Header("Events"), Space(10)]
     [SerializeField] private UnityEvent enablePhotoMode = default;
     [SerializeField] private UnityEvent disablePhotoMode = default;
+
+    public bool isModePhoto = false;
 
     private void Awake()
     {
@@ -69,7 +71,7 @@ public class PhotoMode : MonoBehaviour
         if (!active)
             return;
 
-        SetBloom(bloom);
+        /*SetBloom(bloom);
 
         SetPostExposure(exposure);
         SetContrasts(contrasts);
@@ -85,17 +87,32 @@ public class PhotoMode : MonoBehaviour
 
         SetFocalLength();
         SetVerticalOffset(verticalOffset);
-        SetRolling(roll);
+        SetRolling(roll);*/
     }
 
     private void LateUpdate()
     {
     }
 
+    public void ChangeState()
+    {
+        if(!isModePhoto)
+        { 
+            EnablePhotoMode();
+            isModePhoto = true;
+        }
+        else
+        {
+            DisablePhotoMode();
+            isModePhoto = false;
+        }
+    }
+
     [Button]
     public void EnablePhotoMode()
     {
         enablePhotoMode.Invoke();
+        ui.SetActive(false);
 
         focalLength = playerCamera.focalLength;
         baseVerticalOffset = sphericalTransform.OriginVisualOffset;
@@ -110,6 +127,7 @@ public class PhotoMode : MonoBehaviour
     {
         active = false;
         disablePhotoMode.Invoke();
+        ui.SetActive(true);
 
         playerCamera.focalLength = baseFocalLength;
         sphericalTransform.OriginVisualOffset = baseVerticalOffset;
@@ -193,10 +211,15 @@ public class PhotoMode : MonoBehaviour
     {
         playerCamera.focalLength = Mathf.Lerp(playerCamera.focalLength, focalLength, 0.9f);
     }
+
+    public void SetFocalLength(float focalLength)
+    {
+        playerCamera.focalLength = Mathf.Lerp(playerCamera.focalLength, focalLength, 0.9f);
+    }
     #endregion
 
     #region Rolling
-    private void SetRolling(float value)
+    public void SetRolling(float value)
     {
         //transform.rotation = Quaternion.FromToRotation()
         playerCameraTransform.eulerAngles = new Vector3(playerCameraTransform.eulerAngles.x, playerCameraTransform.eulerAngles.y, value);
@@ -218,6 +241,7 @@ public class PhotoMode : MonoBehaviour
 
     public void SetBloom(float value)
     {
+        Debug.Log(value);
         postProcessManager.Bloom.intensity.Override(value);
     }
     #endregion
