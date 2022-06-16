@@ -19,9 +19,9 @@ public class UI_VisitorInformation : MonoBehaviour
 
     [Header("Color Gradient")]
     public Gradient colorBackground;
-    public static Gradient GetColorBackground;
+    public Gradient GetColorBackground;
     public Gradient colorLogo;
-    public static Gradient GetColorLogo;
+    public Gradient GetColorLogo;
 
     public UnityEvent<GameObject> OnShow;
     public UnityEvent<GameObject> OnHide;
@@ -75,7 +75,7 @@ public class UI_VisitorInformation : MonoBehaviour
         }
     }
 
-    public static void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
+    public void ChangeInfoVisitor(TouristType UI_visitorsInfo, CPN_Informations cpn_Inf)
     {
         
         UI_visitorsInfo.name.text = cpn_Inf.GetName;
@@ -86,7 +86,7 @@ public class UI_VisitorInformation : MonoBehaviour
         ChangeStamina(UI_visitorsInfo, cpn_Inf.components.GetComponentOfType<CPN_Stamina>());
     }
 
-    public static void ChangeNoise(TouristType UI_visitorsInfo, VisitorScriptable visitorScript)
+    public void ChangeNoise(TouristType UI_visitorsInfo, VisitorScriptable visitorScript)
     {
         foreach(TextMeshProUGUI tmp in UI_visitorsInfo.noiseText)
         {
@@ -104,7 +104,7 @@ public class UI_VisitorInformation : MonoBehaviour
         }
     }
 
-    public static void ChangePollution(TouristType UI_visitorsInfo, VisitorScriptable visitorScript)
+    public void ChangePollution(TouristType UI_visitorsInfo, VisitorScriptable visitorScript)
     {
         foreach (TextMeshProUGUI tmp in UI_visitorsInfo.pollutionText)
         {
@@ -122,7 +122,7 @@ public class UI_VisitorInformation : MonoBehaviour
         }
     }
 
-    public static void ChangeStamina(TouristType UI_visitorsInfo, CPN_Stamina cpn_stamina)
+    public void ChangeStamina(TouristType UI_visitorsInfo, CPN_Stamina cpn_stamina)
     {
         float currentStamina = cpn_stamina.GetStamina/10;
 

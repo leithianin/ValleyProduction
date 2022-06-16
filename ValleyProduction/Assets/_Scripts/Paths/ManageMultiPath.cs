@@ -80,12 +80,19 @@ public class ManageMultiPath : MonoBehaviour
     {
         foreach (MultiPathClass mpc in multiPathList)
         {
+            List<PathFragmentData> toRemove = new List<PathFragmentData>();
+
             foreach (PathFragmentData pfd in pfdList)
             {
                 if (mpc.pathFragmentData == pfd)
                 {
-                    pfdList.Remove(pfd);
+                    toRemove.Add(pfd);
                 }
+            }
+
+            foreach(PathFragmentData pfd in toRemove)
+            {
+                pfdList.Remove(pfd);
             }
         }
 
@@ -139,7 +146,7 @@ public class ManageMultiPath : MonoBehaviour
             nbArrow--;
         }
 
-        if(multiPathList.Count < 2)
+        if(multiPathList.Count <= 2)
         {
             DesactivateMultiPath();
         }

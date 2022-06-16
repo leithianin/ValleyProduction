@@ -48,7 +48,6 @@ public class IST_PathPoint : Infrastructure
         else                                                                //Creer un nouveau chemin
         {
             PathManager.PlacePoint(this);
-            //manageMultiPath.ActivateMultiPath();
         }
     }
 
