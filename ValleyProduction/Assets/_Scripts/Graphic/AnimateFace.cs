@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimateFace : MonoBehaviour
 {
-    private Material face;
+    public Material face;
     private Animator anim;
 
     private int frameCounter;
@@ -31,7 +31,7 @@ public class AnimateFace : MonoBehaviour
         anim = gameObject.GetComponentInParent<Animator>();
 
         var textureScale = new Vector2(1f / stripLength, 1f / stripHeight);
-        //face.mainTextureScale = textureScale;
+        face.mainTextureScale = textureScale;
 
         StartCoroutine(PlayIdle(Random.Range(1, 3)));
     }
@@ -71,7 +71,7 @@ public class AnimateFace : MonoBehaviour
                 break;
         }
 
-        //face.mainTextureOffset = textureOffset;
+        face.mainTextureOffset = textureOffset;
 
         if (loopPlayed) delay = Random.Range(delayMin, delayMax);
 

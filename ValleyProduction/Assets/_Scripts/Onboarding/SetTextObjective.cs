@@ -6,6 +6,7 @@ using UnityEngine;
 public class SetTextObjective : MonoBehaviour
 {
     public TextMeshProUGUI textMesh;
+    public TextMeshProUGUI title;
     public TextObjective objective;
 
     private void OnEnable()
@@ -24,6 +25,8 @@ public class SetTextObjective : MonoBehaviour
                 else { textMesh.text = objective.Texten; }
                 break;
         }
+
+        title.text = objective.Title;
     }
 
     private void UpdateText()

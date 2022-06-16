@@ -65,6 +65,7 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
     public bool isKeyboardEnable = true;
     public bool blockMouse = false;
     public bool isCameraBlock = false;
+    private bool isClicOnUI;
 
     public static bool IsKeyboardEnable => instance.isKeyboardEnable;
     public static bool BlockMouse => instance.blockMouse;
@@ -171,6 +172,10 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
             CursorTextureManager.SetPressedCursor();
             CallLeftHoldMouseInput(raycastHit);
         }
+        else
+        {
+            isClicOnUI = true;
+        }
     }
 
     public void ActionLeftHold(InputAction.CallbackContext context)
@@ -180,11 +185,13 @@ public class PlayerInputManager : VLY_Singleton<PlayerInputManager>
 
     public void ActionLeftUp(InputAction.CallbackContext context)
     {
-        if (!usedEventSystem.IsPointerOverGameObject())
+        if (!usedEventSystem.IsPointerOverGameObject() && !isClicOnUI)
         {
             CursorTextureManager.SetReleaseCursor();
             CallLeftMouseInputs(raycastHit);
         }
+
+        isClicOnUI = false;
     }
 
     public void ActionRightDown(InputAction.CallbackContext context)

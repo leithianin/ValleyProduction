@@ -19,6 +19,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     [Header("Value")]
     public float dialogueWaitingTime = 1f;
     public float textSpeed = 0.02f;
+    [SerializeField] private bool setVignetage = true;
 
     [Header("Vignette")]
     public float timeTransition;
@@ -41,6 +42,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
     public UnityEvent OnEndDialogue;
     public UnityEvent OnStartDialogue;
 
+    private TimerManager.Timer currentDialogTimer;
+
     [System.Serializable]
     public class ELEMENTS
     {
@@ -57,15 +60,13 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            SetWantToSkip();
-        }
-
         if(startVignettage)
         {
             currentTimeTransition += Time.deltaTime;
-            CameraManager.SetVignettage(Mathf.Lerp(0f, vignetteValue, currentTimeTransition / timeTransition));
+            if (setVignetage)
+            {
+                CameraManager.SetVignettage(Mathf.Lerp(0f, vignetteValue, currentTimeTransition / timeTransition));
+            }
 
             if(currentTimeTransition > timeTransition) 
             {
@@ -78,7 +79,10 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         {
             currentTimeTransition += Time.deltaTime;
 
-            CameraManager.SetVignettage(Mathf.Lerp(vignetteValue, 0f, currentTimeTransition / timeTransition));
+            if (setVignetage)
+            {
+                CameraManager.SetVignettage(Mathf.Lerp(vignetteValue, 0f, currentTimeTransition / timeTransition));
+            }
 
             if (currentTimeTransition > timeTransition) 
             {
@@ -88,17 +92,48 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         }
     }
 
-    public void PlayDialogue(string id)
+    public static void PlayDialogueForTime(string id, float dialogTime)
+    {
+        instance.DisplayDialogueForTime(id, dialogTime);
+    }
+
+    public static void PlayDialogue(string id)
+    {
+        instance.DisplayDialogue(id);
+    }
+
+    public void DisplayDialogueForTime(string id, float dialogTime)
+    {
+        if(currentDialogTimer != null)
+        {
+            currentDialogTimer.Stop();
+            currentDialogTimer = null;
+        }
+
+        currentDialogTimer = TimerManager.CreateRealTimer(dialogTime, NextDialogue);
+
+        DisplayDialogue(id);
+    }
+
+    public void DisplayDialogue(string id)
     {
         indicationInputText.text = "<i> Click to speed up";
         startVignettage = true;
-        textBlock.gameObject.SetActive(true);
+        if (textBlock != null)
+        {
+            textBlock.gameObject.SetActive(true);
+        }
         OnStartDialogue?.Invoke();
-        StopAllCoroutines();
+
+        StopSpeaking();
 
         switch (UIManager.GetData.lang)
         {
             case Language.en:
+                Debug.Log(TextsDictionary.instance);
+                Debug.Log(TextsDictionary.instance.GetDialogueAsset(id));
+
+
                 foreach (string str in TextsDictionary.instance.GetDialogueAsset(id).Textsen)
                 {
                     texts.Add(str);
@@ -140,6 +175,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
             index++;
         }     
     }
+
     private void NextDialogue()
     {
         if (index < texts.Count)
@@ -153,12 +189,27 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         }
         else
         {
-            TimerManager.CreateRealTimer(0.2f, () => textBlock.gameObject.SetActive(false));
-            CloseDialogue();
-            texts.Clear();
-            StopSpeaking();
-            OnEndDialogue?.Invoke();
+            EndDialog();
         }
+    }
+
+    private void EndSpeak()
+    {
+        speak = false;
+        wantToSkip = false;
+        waitingInput = true;
+    }
+
+    private void EndDialog()
+    {
+        if (textBlock != null)
+        {
+            TimerManager.CreateRealTimer(0.2f, () => textBlock.gameObject.SetActive(false));
+        }
+        CloseDialogue();
+        texts.Clear();
+        StopSpeaking();
+        OnEndDialogue?.Invoke();
     }
 
     public static void Say(string text, string speaker)
@@ -169,6 +220,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void StopSpeaking()
     {
+        EndSpeak();
+
         if(isSpeaking)
         {
             StopCoroutine(speaking);
@@ -200,9 +253,7 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         }
 
         indicationInputText.text = "<i> Click to skip";
-        speak = false;
-        wantToSkip = false;
-        waitingInput = true;
+        EndSpeak();
         //Dialogue Over
         yield return new WaitForSeconds(dialogueWaitingTime);
     }

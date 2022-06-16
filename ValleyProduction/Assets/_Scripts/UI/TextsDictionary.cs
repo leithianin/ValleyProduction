@@ -9,6 +9,7 @@ public class TextsDictionary : ScriptableObject
 
     [SerializeField] private TextDialogue[] baseDialogue;
     [SerializeField] private TextDialogue[] advanceDialogue;
+    [SerializeField] private TextDialogue[] questDialogue;
     [SerializeField] private TextBase[] quests;
     [SerializeField] private TextBase blank;
     public TextsDictionary()
@@ -61,7 +62,16 @@ public class TextsDictionary : ScriptableObject
                         return txt;
                     }
                 }
-                break;      
+                break;
+            case "QST":
+                foreach (TextDialogue txt in questDialogue)
+                {
+                    if (txt.Id.Equals(id))
+                    {
+                        return txt;
+                    }
+                }
+                break;
         }
 
         return null;
