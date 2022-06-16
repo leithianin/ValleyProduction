@@ -187,7 +187,7 @@ public class VLY_QuestManager : VLY_Singleton<VLY_QuestManager>
             {
                 if (stage.dialogueID != string.Empty)
                 {
-                    DialogueManager.instance.PlayDialogue(stage.dialogueID);
+                    DialogueManager.PlayDialogue(stage.dialogueID);
                 }
             }
 

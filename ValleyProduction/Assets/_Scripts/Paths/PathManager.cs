@@ -594,6 +594,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// </summary>
     public static void CreatePathData()
     {
+        Debug.Log("Create Path Data");
         if (instance.pathpointList.Count > 1)
         {
             PathData newPathData = new PathData();
@@ -623,13 +624,31 @@ public class PathManager : VLY_Singleton<PathManager>
             //IF ONBOARDING SEQUENCE 
             TimerManager.CreateRealTimer(0.5f, () => isOnFinishPath?.Invoke(true));
         }
-        else if (instance.pathpointList.Count > 0)
+        else if (instance.pathpointList.Count > 0 && previousPathpoint.Node.GetNeighbours().Count <= 0)
         {
             instance.pathpointList[0].RemoveObject();
             instance.pathpointList.Clear();
         }
 
         instance.ResetCurrentData();
+    }
+
+    public int GetNumberPathFragment(IST_PathPoint pp)
+    {
+        int i = 0;
+
+        foreach (PathData pd in instance.pathDataList)
+        {
+            if (pp)
+            {
+                foreach (PathFragmentData pfd in pd.GetPathFragments(pp))
+                {
+                    i++;
+                }
+            }
+        }
+
+        return i;
     }
 
     /// <summary>
