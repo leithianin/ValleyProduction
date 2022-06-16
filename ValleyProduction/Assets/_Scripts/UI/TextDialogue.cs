@@ -8,6 +8,9 @@ public abstract class TextDialogue : SerializedScriptableObject
     public string Title => title;
     [Space, SerializeField] private string title;
 
+    [SerializeField] private float displayTime = -1f;
+    public float DisplayTime => displayTime;
+
     public Sprite Behavior => behavior;
     [Space, SerializeField] private Sprite behavior;
     public string[] Textsen => textsen;
