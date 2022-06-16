@@ -57,11 +57,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            SetWantToSkip();
-        }
-
         if(startVignettage)
         {
             currentTimeTransition += Time.deltaTime;

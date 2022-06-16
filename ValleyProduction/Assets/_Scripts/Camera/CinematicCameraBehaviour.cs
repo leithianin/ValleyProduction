@@ -63,6 +63,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
         foreach (CameraData shot in sequence)
         {
+            Debug.Log("Play Cinematic");
             // Set the shot duration
             float referenceTime = shot.isTraveling ?
                         Vector3.Distance(shot.cameraOriginPosition, shot.travelPosition) / shot.speed
