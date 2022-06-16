@@ -594,6 +594,7 @@ public class PathManager : VLY_Singleton<PathManager>
     /// </summary>
     public static void CreatePathData()
     {
+        Debug.Log("Create Path Data");
         if (instance.pathpointList.Count > 1)
         {
             PathData newPathData = new PathData();

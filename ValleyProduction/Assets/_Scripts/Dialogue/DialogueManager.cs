@@ -112,10 +112,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
         switch (UIManager.GetData.lang)
         {
             case Language.en:
-                Debug.Log(TextsDictionary.instance);
-                Debug.Log(TextsDictionary.instance.GetDialogueAsset(id));
-
-
                 foreach (string str in TextsDictionary.instance.GetDialogueAsset(id).Textsen)
                 {
                     texts.Add(str);
@@ -216,8 +212,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void StopSpeaking()
     {
-        EndSpeak();
-
         if(isSpeaking)
         {
             StopCoroutine(speaking);
@@ -262,6 +256,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void SetWantToSkip()
     {
+        Debug.Log("ff");
+
         if (speak)
         {
             wantToSkip = true;

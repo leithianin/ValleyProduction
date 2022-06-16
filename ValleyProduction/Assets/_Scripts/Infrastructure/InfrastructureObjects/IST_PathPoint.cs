@@ -31,7 +31,6 @@ public class IST_PathPoint : Infrastructure
     //Place on Click Infrastructure
     protected override void OnPlaceObject()
     {
-        Debug.Log("Ici");
         //Si c'est le dernier PathPoint du chemin = Terminer chemin
         if (this == PathManager.previousPathpoint)
         {
