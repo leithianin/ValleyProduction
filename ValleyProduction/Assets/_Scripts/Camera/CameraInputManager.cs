@@ -36,9 +36,15 @@ public class CameraInputManager : MonoBehaviour
      private Vector2 inputDirection;
      private Vector2 mouseDirection;
      private bool isShifting;
+     public bool isEdgeScrolling = true;
      private float polarValue;
      private float azimuthalValue;
      private float scrollInputValue;
+
+    public void SetIsEdgeScrolling(bool cond)
+    {
+        isEdgeScrolling = cond;
+    }
 
 
     public void SetInputDirection(Vector2 nInputDirection)
@@ -110,6 +116,9 @@ public class CameraInputManager : MonoBehaviour
 
     void MoveCameraOriginWithEdgeScrolling()
     {
+        if (!isEdgeScrolling)
+            return;
+
         if (!settingsDatas.cameraEdgeScrollingActive)
             return;
 
@@ -124,6 +133,7 @@ public class CameraInputManager : MonoBehaviour
 
         Vector2 mouseDirection = new Vector2(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2)); //Convert Mouse position into direction vector for moving origin
         mouseDirection.Normalize();
+
         cameraTransform.MoveOrigin(mouseDirection.x, mouseDirection.y, edgeScrollingMovingSpeed);
     }
 
