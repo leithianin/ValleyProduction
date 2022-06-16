@@ -51,6 +51,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
     public void PlayCinemtic(ShotsSequence sequenceScriptableObject)
     {
         OnPlayCinematic?.Invoke();
+        Debug.Log("StartCoroutine");
         StartCoroutine(PlayCinematic(sequenceScriptableObject));
     }
 
@@ -71,7 +72,6 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
             while (textureAlpha < 1.0f)
             {
-                Debug.Log(textureAlpha + " < " + 1.0f);
                 yield return null;
             }
             // Set the shot position and angle (+ offset)
@@ -285,10 +285,10 @@ public class CinematicCameraBehaviour : MonoBehaviour
     }
 
     private void Fade()
-    {
+    { 
         if (fadeDone)
             return;
-
+        
         if (!inCinematicMode)
             return;
 
