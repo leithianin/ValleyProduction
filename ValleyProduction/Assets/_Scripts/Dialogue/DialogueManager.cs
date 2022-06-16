@@ -216,8 +216,6 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void StopSpeaking()
     {
-        EndSpeak();
-
         if(isSpeaking)
         {
             StopCoroutine(speaking);
@@ -262,6 +260,8 @@ public class DialogueManager : VLY_Singleton<DialogueManager>
 
     public void SetWantToSkip()
     {
+        Debug.Log("ff");
+
         if (speak)
         {
             wantToSkip = true;
