@@ -65,6 +65,7 @@ public class PathData
 
                 if(nb >=3)
                 {
+                    Debug.Log(nb);
                     return true;
                 }
             }
@@ -312,7 +313,7 @@ public class PathData
     {
         foreach (IST_PathPoint pp in GetAllPoints())
         {
-            if(PathManager.HasManyDirection(pp))
+            if(PathManager.GetInstance.GetNumberPathFragment(pp) > 2)
             {
                 List<PathFragmentData> pathFragmentList = GetPathFragments(pp);
                 pp.GetManageMultiPath.SetRegisterPathFragment(pathFragmentList);

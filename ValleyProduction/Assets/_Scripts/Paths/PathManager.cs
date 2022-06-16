@@ -628,35 +628,26 @@ public class PathManager : VLY_Singleton<PathManager>
             instance.pathpointList[0].RemoveObject();
             instance.pathpointList.Clear();
         }
-        else
-        {
-            instance.CheckMultiPathOnValidatePath();
-        }
 
         instance.ResetCurrentData();
     }
 
-    public void CheckMultiPathOnValidatePath()
+    public int GetNumberPathFragment(IST_PathPoint pp)
     {
         int i = 0;
 
         foreach (PathData pd in instance.pathDataList)
         {
-            if (pd.ContainsPoint(instance.pathpointList[0]))
+            if (pp)
             {
-                foreach (PathFragmentData pfd in pd.GetPathFragments(instance.pathpointList[0]))
+                foreach (PathFragmentData pfd in pd.GetPathFragments(pp))
                 {
                     i++;
                 }
             }
         }
 
-        Debug.Log(i);
-
-        if (i <= 2)
-        {
-            instance.pathpointList[0].GetManageMultiPath.DesactivateMultiPath();
-        }
+        return i;
     }
 
     /// <summary>
