@@ -28,10 +28,14 @@ public class SA_PlayAnimation : InteractionActions
     {
         if(caller.HasComponent<AnimationHandler>(out AnimationHandler animHandler))
         {
+            Debug.Log(animationToPlay);
+
             animHandler.PlayBodyAnim(animationToPlay);
 
             if (timePlayed > 0)
             {
+                Debug.Log("Allo ?");
+
                 TimerManager.Timer newAnimTimer = TimerManager.CreateGameTimer(timePlayed, () => EndAction(caller));
 
                 animationPlayed.Add(new PlayedAnimation(caller, newAnimTimer, animationToPlay));
