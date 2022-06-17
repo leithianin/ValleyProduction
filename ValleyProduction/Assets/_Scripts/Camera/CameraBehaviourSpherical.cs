@@ -10,7 +10,7 @@ public class CameraBehaviourSpherical : MonoBehaviour
     [SerializeField] private Transform originLookAtTarget = default;
     [SerializeField] private SphericalTransform sphericalTransform = default;
     [SerializeField] private CinematicCameraBehaviour cinematicCameraBehaviour = default;
-    [SerializeField] private float lerpValue;
+    //[SerializeField] private float lerpValue;
 
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class CameraBehaviourSpherical : MonoBehaviour
 
     void JoinTarget()
     {
-        transform.position = Vector3.Lerp(transform.position, cameraTarget.position, lerpValue);
+        transform.position = Vector3.Lerp(transform.position, cameraTarget.position, sphericalTransform.lookAtLerpValue);
 
     }
 
