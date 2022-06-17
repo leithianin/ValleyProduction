@@ -59,37 +59,37 @@ public class PhotoModeSlider : MonoBehaviour
         switch (currentMode)
         {
             case ModePhoto.Filter:
-                
+                slider.value = postProcessManager.ColorLookup.contribution.value;
                 break;
             case ModePhoto.Focal_Length:
-                
+                slider.value = photoModeScript.playerCamera.focalLength / 10.0f;
                 break;
             case ModePhoto.Grain:
-                
+                slider.value = postProcessManager.FilmGrain.intensity.value;
                 break;
             case ModePhoto.Offset:
-                
+                slider.value = photoModeScript.sphericalTransform.OriginVisualOffset / 10.0f;
                 break;
             case ModePhoto.Roll:
-                
+                slider.value = photoModeScript.playerCameraTransform.eulerAngles.z;
                 break;
             case ModePhoto.Saturation:
-                
+                slider.value = postProcessManager.ColorAdjustments.saturation.value;
                 break;
             case ModePhoto.Vignette:
-                
+                slider.value = postProcessManager.Vignette.intensity.value;
                 break;
             case ModePhoto.Bloom:
                 slider.value = postProcessManager.Bloom.intensity.value;
                 break;
             case ModePhoto.Contrasts:
-                
+                slider.value = postProcessManager.ColorAdjustments.contrast.value;
                 break;
             case ModePhoto.DOF:
-                
+                slider.value = postProcessManager.DepthOfField.focusDistance.value / 10.0f;
                 break;
             case ModePhoto.Exposure:
-                
+                slider.value = postProcessManager.ColorAdjustments.postExposure.value;
                 break;
         }
     }
