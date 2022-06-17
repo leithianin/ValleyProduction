@@ -86,7 +86,7 @@ public class AudioPlayer : MonoBehaviour
     /// <returns></returns>
     IEnumerator LoopSound(float loopTime)
     {
-        yield return new WaitForSeconds(loopTime);
+        yield return new WaitForSecondsRealtime(loopTime);
         Play();
     }
 }
