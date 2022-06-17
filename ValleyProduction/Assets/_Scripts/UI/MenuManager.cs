@@ -18,6 +18,8 @@ public class MenuManager : VLY_Singleton<MenuManager>
 
     public static void LoadScene(int sceneIndex)
     {
+        Debug.Log("Pardon ?");
+
         if(sceneIndex >= 0) 
         {
             instance.sceneToLoad = sceneIndex;
