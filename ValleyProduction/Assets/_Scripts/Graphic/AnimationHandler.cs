@@ -39,6 +39,9 @@ public class AnimationHandler : VLY_Component
                 case BodyAnimationType.Walk:
                     body.SetBool("IsWalking", true);
                     break;
+                case BodyAnimationType.Sit:
+                    body.SetBool("IsSitting", true);
+                    break;
             }
         }
     }
@@ -54,6 +57,9 @@ public class AnimationHandler : VLY_Component
 
             case BodyAnimationType.Walk:
                 body.SetBool("IsWalking", false);
+                break;
+            case BodyAnimationType.Sit:
+                body.SetBool("IsSitting", false);
                 break;
         }
     }
