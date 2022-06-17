@@ -15,9 +15,9 @@ public enum VolumeProfilesEnum
 public class PhotoMode : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Camera playerCamera = default;
-    [SerializeField] private Transform playerCameraTransform = default;
-    [SerializeField] private SphericalTransform sphericalTransform = default;
+    public Camera playerCamera = default;
+    public Transform playerCameraTransform = default;
+    public SphericalTransform sphericalTransform = default;
     [SerializeField] private PostProcessManager postProcessManager = default;
     [SerializeField] private GameObject ui = default;
     [SerializeField] private ScreenshotsManager screenshotsManager;
@@ -229,7 +229,7 @@ public class PhotoMode : MonoBehaviour
     #region VerticalOffset
     public void SetVerticalOffset(float value)
     {
-        sphericalTransform.OriginVisualOffset = value;
+        sphericalTransform.OriginVisualOffset = value * 10.0f;
     }
     #endregion
 
@@ -413,7 +413,7 @@ public class PhotoMode : MonoBehaviour
 
     public void SetVignette(float value)
     {
-        postProcessManager.Vignette.intensity.Override(value / 100.0f);
+        postProcessManager.Vignette.intensity.Override(value);
     }
     #endregion
 
