@@ -24,7 +24,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     public static bool blockPlacePathpoint = false;
     public static bool blockFinishPath = false;
-
     private void OnDisable()
     {
         OnDisableEvent?.Invoke();
@@ -63,7 +62,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
             instance.OnProfileTourist?.Invoke();
         }
     }
-
     public static void SetVisitorsInteractable(bool cond)
     {
         foreach(Collider coll in instance.touristList)

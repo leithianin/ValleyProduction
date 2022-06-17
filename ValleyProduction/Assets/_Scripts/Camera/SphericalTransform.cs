@@ -48,7 +48,7 @@ public class SphericalTransform : MonoBehaviour
     [SerializeField] private float maxRadiusValue = 30.0f;
 
     [Header("LookAt")]
-    [SerializeField, Range(0,1)] private float lookAtLerpValue = 0.1f;
+    [Range(0,1)] public float lookAtLerpValue = 0.1f;
 
     [Header("Offset")]
     [SerializeField, Range(0f, 10f)] private float originVisualOffset;
@@ -75,7 +75,6 @@ public class SphericalTransform : MonoBehaviour
         SetOriginForward();
         SetCameraTarget();
         //SetTargetForward();
-        MoveOriginLookAtTarget();
 
         if(target != null)
         {
@@ -88,6 +87,9 @@ public class SphericalTransform : MonoBehaviour
         ConstraintAngles();
         ConstraintOriginPosition();
         ConvertCameraTargetTransformIntoCarthesianCoords();
+
+        MoveOriginLookAtTarget();
+
     }
 
 
