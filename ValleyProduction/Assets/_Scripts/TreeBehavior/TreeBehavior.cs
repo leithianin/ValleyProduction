@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Events;
 
 public class TreeBehavior : MonoBehaviour
@@ -22,33 +23,19 @@ public class TreeBehavior : MonoBehaviour
 
     public int CurrentPhase => currentPhase;
 
+#if UNITY_EDITOR
     [ContextMenu("Set Mesh List")]
-    private void GetAllMeshes()
+    public void GetAllMeshes()
     {
         meshes = new List<MeshRenderer>(transform.GetComponentsInChildren<MeshRenderer>());
+        EditorUtility.SetDirty(this);
     }
 
+#endif
     public void SetTreePhase(int phase)
     {
         if (phase != currentPhase)
         {
-            /*if(phase < currentPhase)
-            {
-                foreach (MeshRenderer mesh in meshes)
-                {
-                    SetBlossom(mesh, 1);
-                }
-            }
-            else
-            {
-                OnTreeDying?.Invoke();
-
-                foreach (MeshRenderer mesh in meshes)
-                {
-                    SetBlossom(mesh, 0);
-                }
-            }*/
-
             if(phase >= 3)
             {
                 OnTreeDead?.Invoke();

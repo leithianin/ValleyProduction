@@ -2,5 +2,6 @@ public enum BodyAnimationType
 { 
     None,
     Idle, 
-    Walk 
+    Walk,
+    Sit
 }
