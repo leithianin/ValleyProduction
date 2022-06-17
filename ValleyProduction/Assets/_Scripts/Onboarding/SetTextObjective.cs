@@ -11,6 +11,8 @@ public class SetTextObjective : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("OnEnable");
+
         UIManager.OnLanguageChange += UpdateText;
         //Need to me désinscrire aussi à un moment
 
