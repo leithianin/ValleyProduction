@@ -70,10 +70,13 @@ public class CinematicCameraBehaviour : MonoBehaviour
                         : Random.Range(timeRange.x, timeRange.y);
             referenceTime = shot.useCustomDuration ? shot.duration : referenceTime;
 
+            Debug.Log("Avant While");
             while (textureAlpha < 1.0f)
             {
+                Debug.Log("While");
                 yield return null;
             }
+            Debug.Log("Apres While");
             // Set the shot position and angle (+ offset)
             cameraTransform.OriginVisualOffset = shot.verticalOffset;
             SelectDestination(shot.cameraOriginPosition.x, shot.cameraOriginPosition.z);

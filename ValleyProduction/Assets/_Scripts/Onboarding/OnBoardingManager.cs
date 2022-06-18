@@ -21,6 +21,9 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public UnityEvent OnEndWelcomeCinematicEvent;
     public UnityEvent OnEndEndCinematicEvent;
 
+    public TextDialogue dialogueWelcome;
+    public TextDialogue dialogueEnd;
+
 
     public static bool blockPlacePathpoint = false;
     public static bool blockFinishPath = false;
@@ -99,6 +102,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void OnPlayWelcomeCinematic()
     {
         CameraManager.OnEndCinematic += instance.OnEndWelcomeCinematic;
+        TimerManager.CreateGameTimer(1f, () => DialogueManagerCinematic.PlayDialogue(instance.dialogueWelcome.Id));
     }
     private void OnEndWelcomeCinematic()
     {
@@ -109,6 +113,7 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void OnPlayEndCinematic()
     {
         CameraManager.OnEndCinematic += instance.OnEndEndCinematic;
+        TimerManager.CreateGameTimer(1f, () => DialogueManagerCinematic.PlayDialogue(instance.dialogueEnd.Id));
     }
     private void OnEndEndCinematic()
     {
