@@ -24,8 +24,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108591984519140903}
-  m_LocalRotation: {x: -0.34121257, y: -0, z: -0, w: 0.9399862}
-  m_LocalPosition: {x: -0.3580551, y: -10.2678795, z: 40.718822}
+  m_LocalRotation: {x: -0.34121257, y: 0, z: -0, w: 0.9399862}
+  m_LocalPosition: {x: -0.3580551, y: -8.349934, z: 39.11508}
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
   m_Children:
   - {fileID: 8948808764551474082}
@@ -75,8 +75,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3748709615470925249}
-  m_LocalRotation: {x: 0.22514662, y: -0, z: -0, w: 0.97432494}
-  m_LocalPosition: {x: -0.3580551, y: -1.4932442, z: 22.746464}
+  m_LocalRotation: {x: 0.22514662, y: 0, z: -0, w: 0.97432494}
+  m_LocalPosition: {x: -0.3580551, y: 0.4247017, z: 21.142723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5099312975583810412}
@@ -179,7 +179,9 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 60658
-  boundariesCollider: {fileID: 0}
+  boxBoundariesCollider: {fileID: 0}
+  sphereBoundariesCollider: {fileID: 0}
+  colliderToUse: 1
   verticalOffset: 0.5
   minPolarValue: 10
   maxPolarValue: 100
@@ -194,7 +196,19 @@ MonoBehaviour:
   ui: {fileID: 0}
   soloCamera: 0
   isTraveling: 0
+  cinematic: 0
   speed: 0
+  isRotating: 0
+  clockwise: 1
+  rotationSpeed: 1
+  speedOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  useCustomDuration: 0
+  duration: 0
   originTarget: {fileID: 8948808764551474082}
   parentGameObject: {fileID: 8339823494641229502}
   originGameObject: {fileID: 1108591984519140903}
