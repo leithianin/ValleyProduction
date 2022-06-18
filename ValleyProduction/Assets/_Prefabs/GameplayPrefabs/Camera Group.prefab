@@ -327,6 +327,7 @@ MonoBehaviour:
   wheelRotationSpeed: 250
   scrollingSpeed: 3000
   inCinematicMode: 0
+  isEdgeScrolling: 1
 --- !u!114 &518034171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +382,37 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  beginCinematicFadeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.05
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   fadeDuration: 3
+  OnPlayCinematic:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndCinematic:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2545606291852015140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,6 +454,7 @@ MonoBehaviour:
   disablePhotoMode:
     m_PersistentCalls:
       m_Calls: []
+  isModePhoto: 0
 --- !u!33 &724654950491024176
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -569,7 +601,6 @@ MonoBehaviour:
   originLookAtTarget: {fileID: 1440979087}
   sphericalTransform: {fileID: 724654950491024179}
   cinematicCameraBehaviour: {fileID: 518034171}
-  lerpValue: 0.1
 --- !u!114 &5965266355428144852
 MonoBehaviour:
   m_ObjectHideFlags: 0

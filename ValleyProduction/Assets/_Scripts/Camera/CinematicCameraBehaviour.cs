@@ -22,11 +22,14 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
     [Header("Fade Values")]
     [SerializeField] private AnimationCurve fadeCurve = new AnimationCurve();
+    [SerializeField] private AnimationCurve beginCinematicFadeCurve = new AnimationCurve();
     [SerializeField] private float fadeDuration = 1f;
     private float textureAlpha = 0.0f;
     private Texture2D fadeTexture;
     private bool fadeDone;
     private float fadeTime;
+
+    private bool firstShot = true;
 
     public UnityEvent OnPlayCinematic;
     public UnityEvent OnEndCinematic;
@@ -61,9 +64,13 @@ public class CinematicCameraBehaviour : MonoBehaviour
         float refVerticalOffest = cameraTransform.OriginVisualOffset;
 
         inCinematicMode = true;
+        int index = 0;
 
         foreach (CameraData shot in sequence)
         {
+            index++;
+            firstShot = index == 1;
+
             // Set the shot duration
             float referenceTime = shot.isTraveling ?
                         Vector3.Distance(shot.cameraOriginPosition, shot.travelPosition) / shot.speed
@@ -71,7 +78,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
             referenceTime = shot.useCustomDuration ? shot.duration : referenceTime;
 
             Debug.Log("Avant While");
-            while (textureAlpha < 1.0f)
+            while (textureAlpha <= 1.0f)
             {
                 Debug.Log("While");
                 yield return null;
@@ -107,6 +114,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
             FadeReset();
         }
+        firstShot = true;
         cameraTransform.OriginVisualOffset = refVerticalOffest;
         CameraManager.OnEndCinematic?.Invoke();
         OnEndCinematic?.Invoke();
@@ -302,7 +310,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         fadeTexture.Apply();
 
         fadeTime += Time.unscaledDeltaTime;
-        textureAlpha = fadeCurve.Evaluate(fadeTime / fadeDuration);
+        textureAlpha = firstShot ? beginCinematicFadeCurve.Evaluate(fadeTime / fadeDuration) : fadeCurve.Evaluate(fadeTime / fadeDuration);
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeTexture);
 
         if (textureAlpha <= 0)
