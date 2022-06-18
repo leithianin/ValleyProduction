@@ -163,6 +163,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
     public IEnumerator PlayShotWithCustomsParameters(CameraData cameraData)
     {
+        firstShot = false;
         float refVerticalOffest = cameraTransform.OriginVisualOffset;
         inCinematicMode = true;
         while (textureAlpha < 1.0f)
@@ -177,7 +178,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         referenceTime = cameraData.useCustomDuration ? cameraData.duration : referenceTime;
 
         // Set the shot position and angle (+ offset)
-        cameraTransform.OriginVisualOffset = cameraData.verticalOffset != 0.0f ? cameraData.verticalOffset : cameraTransform.OriginVisualOffset;
+        cameraTransform.OriginVisualOffset = cameraData.verticalOffset;
         SelectDestination(cameraData.cameraOriginPosition.x, cameraData.cameraOriginPosition.z);
         SetAngles(cameraData.radius, cameraData.azimuthalAngle, cameraData.polarAngle);
 
@@ -186,7 +187,7 @@ public class CinematicCameraBehaviour : MonoBehaviour
         {
             if (cameraData.isTraveling)
             {
-                cameraTransform.SetOrigin(Vector3.Lerp(cameraData.travelPosition, cameraData.cameraOriginPosition, time / referenceTime));
+                cameraTransform.SetOrigin(Vector3.Lerp(cameraData.travelPosition, cameraData.cameraOriginPosition, cameraData.speedOverTime.Evaluate(time / referenceTime)));
 
                 if (cameraData.isRotating)
                 {

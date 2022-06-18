@@ -222,13 +222,11 @@ public class CinematicShotEditor : Editor
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("ScriptableObject", EditorStyles.boldLabel);
-        GUILayout.BeginHorizontal("Scriptable");
         EditorGUILayout.PropertyField(fileName);
         if (GUILayout.Button("Create ScriptableObject"))
         {
             CreateScriptable();
         }
-        GUILayout.EndHorizontal();
 
     }
 
