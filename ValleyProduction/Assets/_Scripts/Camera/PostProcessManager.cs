@@ -72,12 +72,17 @@ public class PostProcessManager : MonoBehaviour
 
     private bool activeDepthOfField;
 
+    public bool WantDefaultProfile;
+
 
     private void Awake()
     {
-        SetProfile(defaultProfile);
-        GetProfileOverrides();
-        SetVignetteValue(0f);
+        if (WantDefaultProfile)
+        {
+            SetProfile(defaultProfile);
+            GetProfileOverrides();
+            SetVignetteValue(0f);
+        }
     }
 
     // Update is called once per frame
