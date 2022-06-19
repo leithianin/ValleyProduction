@@ -25,11 +25,9 @@ public class CombineMeshLOD1 : MonoBehaviour
         Debug.Log("MeshFilter Count : " + meshFilters.Count);
         Debug.Log("MeshRenderer Count : " + meshRenderers.Count);
 
-        Debug.Log(type.ToString());
-
         for (int i = 0; i < meshFilters.Count; i++)
         {
-            if (!meshFilters[i].gameObject.name.Contains("LOD1") || !meshFilters[i].gameObject.name.Contains(type.ToString()))
+            if (!meshFilters[i].gameObject.name.Contains("LOD1"))
             {
                 meshFiltersToRemove.Add((meshFilters[i]));
             }
@@ -46,7 +44,7 @@ public class CombineMeshLOD1 : MonoBehaviour
 
         for (int i = 0; i < meshRenderers.Count; i++)
         {
-            if (!meshRenderers[i].gameObject.name.Contains("LOD1") || !meshRenderers[i].gameObject.name.Contains(type.ToString()))
+            if (!meshRenderers[i].gameObject.name.Contains("LOD1"))
             {
                 meshRenderersToRemove.Add((meshRenderers[i]));
             }

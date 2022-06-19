@@ -30,7 +30,7 @@ public class CombineMeshLOD0 : MonoBehaviour
 
         for (int i = 0; i < meshFilters.Count; i++)
         {
-            if(!meshFilters[i].gameObject.name.Contains("LOD0") || !meshFilters[i].gameObject.name.Contains(type.ToString()))
+            if(!meshFilters[i].gameObject.name.Contains("LOD0"))
             {
                 meshFiltersToRemove.Add((meshFilters[i]));
             }
@@ -47,7 +47,7 @@ public class CombineMeshLOD0 : MonoBehaviour
 
         for (int i = 0; i < meshRenderers.Count; i++)
         {
-            if (!meshRenderers[i].gameObject.name.Contains("LOD0") || !meshRenderers[i].gameObject.name.Contains(type.ToString()))
+            if (!meshRenderers[i].gameObject.name.Contains("LOD0"))
             {
                 meshRenderersToRemove.Add((meshRenderers[i]));
             }
