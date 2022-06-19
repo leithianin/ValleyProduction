@@ -65,7 +65,7 @@ public class CombineMeshLOD0 : MonoBehaviour
         CombineInstance[] combine = new CombineInstance[meshFilters.Count];
         //Material[] SharedMats = meshRenderers[1].sharedMaterials;
         Material MainMaterial = meshRenderers[1].sharedMaterials[0];
-        Material[] SubMaterial = new Material[meshRenderers[1].materials.Length - 1];
+        Material[] SubMaterial = new Material[meshRenderers[1].sharedMaterials.Length - 1];
         List<CombineInstance> combine2 = new List<CombineInstance>();
 
         Debug.Log(meshFilters.Count);
@@ -105,14 +105,14 @@ public class CombineMeshLOD0 : MonoBehaviour
         var goRenderer = go.GetComponent<MeshRenderer>();
 
         go.SetActive(false);
-        goFilter.mesh = new Mesh();
-        goFilter.mesh.CombineMeshes(combine);
+        goFilter.sharedMesh = new Mesh();
+        goFilter.sharedMesh.CombineMeshes(combine);
         go.SetActive(true);
 
         go.transform.parent = parent;
 
         //goRenderer.materials = Mats;
-        goRenderer.material = MainMaterial;
+        goRenderer.sharedMaterial = MainMaterial;
 
         if (SubMaterial.Length >= 1)
         {
@@ -132,7 +132,7 @@ public class CombineMeshLOD0 : MonoBehaviour
             goRenderer2.material = SubMaterial[0];
         }
 
-        parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
+        //parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
 
 
         Debug.Log(gameObject.name);

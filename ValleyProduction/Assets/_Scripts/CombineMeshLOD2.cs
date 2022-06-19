@@ -103,7 +103,6 @@ public class CombineMeshLOD2 : MonoBehaviour
         go.SetActive(true);
 
         go.transform.parent = parent;
-        go.name = "LOD2";
 
         //goRenderer.materials = Mats;
         goRenderer.material = MainMaterial;
@@ -126,7 +125,7 @@ public class CombineMeshLOD2 : MonoBehaviour
             goRenderer2.material = SubMaterial[0];
         }
 
-        parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
+        //parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
 
         Debug.Log(gameObject.name);
         gameObject.SetActive(false);

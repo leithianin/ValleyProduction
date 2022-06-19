@@ -68,7 +68,7 @@ public class CombineMeshLOD1 : MonoBehaviour
         CombineInstance[] combine = new CombineInstance[meshFilters.Count];
         //Material[] SharedMats = meshRenderers[1].sharedMaterials;
         Material MainMaterial = meshRenderers[1].sharedMaterials[0];
-        Material[] SubMaterial = new Material[meshRenderers[1].materials.Length - 1];
+        Material[] SubMaterial = new Material[meshRenderers[1].sharedMaterials.Length - 1];
         List<CombineInstance> combine2 = new List<CombineInstance>();
 
         Debug.Log(meshFilters.Count);
@@ -113,7 +113,6 @@ public class CombineMeshLOD1 : MonoBehaviour
         go.SetActive(true);
 
         go.transform.parent = parent;
-        go.name = "LOD1";
 
         //LOD
         //go.transform.parent.GetComponent<LODGroup>().GetLODs()[1].renderers[0] = go.GetComponent<MeshRenderer>();
@@ -139,7 +138,7 @@ public class CombineMeshLOD1 : MonoBehaviour
             goRenderer2.material = SubMaterial[0];
         }
 
-        parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
+        //parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
 
         Debug.Log(gameObject.name);
         gameObject.SetActive(false);
