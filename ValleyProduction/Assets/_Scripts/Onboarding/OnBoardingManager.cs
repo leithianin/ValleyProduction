@@ -102,7 +102,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void OnPlayWelcomeCinematic()
     {
         CameraManager.OnEndCinematic += instance.OnEndWelcomeCinematic;
-        TimerManager.CreateGameTimer(1f, () => DialogueManagerCinematic.PlayDialogue(instance.dialogueWelcome.Id));
     }
     private void OnEndWelcomeCinematic()
     {
@@ -113,7 +112,6 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
     public static void OnPlayEndCinematic()
     {
         CameraManager.OnEndCinematic += instance.OnEndEndCinematic;
-        TimerManager.CreateGameTimer(1f, () => DialogueManagerCinematic.PlayDialogue(instance.dialogueEnd.Id));
     }
     private void OnEndEndCinematic()
     {

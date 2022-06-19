@@ -20,15 +20,22 @@ public class SetTextObjective : MonoBehaviour
         {
             case Language.en:
                 textMesh.text = objective.Texten;
+                title.text = objective.Title;
                 break;
 
             case Language.fr:
-                if(objective.Textfr != string.Empty) { textMesh.text = objective.Textfr; }
-                else { textMesh.text = objective.Texten; }
+                if(objective.Textfr != string.Empty) 
+                { 
+                    textMesh.text = objective.Textfr;
+                    title.text = objective.Titlefr;
+                }
+                else 
+                { 
+                    textMesh.text = objective.Texten;
+                    title.text = objective.Title;
+                }
                 break;
         }
-
-        title.text = objective.Title;
     }
 
     private void UpdateText()
@@ -37,11 +44,28 @@ public class SetTextObjective : MonoBehaviour
         {
             case Language.en:
                 textMesh.text = objective.Texten;
+                title.text = objective.Title;
                 break;
 
             case Language.fr:
-                if (objective.Textfr != string.Empty) { textMesh.text = objective.Textfr; }
-                else { textMesh.text = objective.Texten; }
+                if (objective.Textfr != string.Empty)
+                {
+                    textMesh.text = objective.Textfr;
+
+                    if (objective.Titlefr != string.Empty)
+                    {
+                        title.text = objective.Titlefr;
+                    }
+                    else
+                    {
+                        title.text = objective.Title;
+                    }
+                }
+                else
+                {
+                    textMesh.text = objective.Texten;
+                    title.text = objective.Title;
+                }
                 break;
         }
     }

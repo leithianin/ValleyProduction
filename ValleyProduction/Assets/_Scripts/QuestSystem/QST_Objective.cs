@@ -8,6 +8,7 @@ public abstract class QST_Objective : ScriptableObject
     public Action<QuestObjectiveState> OnUpdateState;
 
     [SerializeField] private string description;
+    [SerializeField] private string descriptionfr;
 
     [Header("Dev")]
     [SerializeField] protected QuestObjectiveState state;
@@ -15,7 +16,7 @@ public abstract class QST_Objective : ScriptableObject
     public QuestObjectiveState State => state;
 
     public string Description => description;
-
+    public string Descriptionfr => descriptionfr;
     /// <summary>
     /// Met à jour l'état de l'objectif
     /// </summary>

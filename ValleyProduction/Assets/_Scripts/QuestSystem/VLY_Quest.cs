@@ -9,6 +9,7 @@ public class VLY_Quest : ScriptableObject
     private int currentStage;
 
     public string questName;
+    public string questNamefr;
 
     public string questDescription;
 
@@ -20,6 +21,7 @@ public class VLY_Quest : ScriptableObject
     public QuestObjectiveState state;
 
     public string QuestName => questName;
+    public string QuestNamefr => questNamefr;
 
     public List<QST_ObjectiveStage> Stages => stages;
 
