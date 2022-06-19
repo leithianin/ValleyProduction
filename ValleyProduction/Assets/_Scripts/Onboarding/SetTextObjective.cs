@@ -51,7 +51,15 @@ public class SetTextObjective : MonoBehaviour
                 if (objective.Textfr != string.Empty)
                 {
                     textMesh.text = objective.Textfr;
-                    title.text = objective.Titlefr;
+
+                    if (objective.Titlefr != string.Empty)
+                    {
+                        title.text = objective.Titlefr;
+                    }
+                    else
+                    {
+                        title.text = objective.Title;
+                    }
                 }
                 else
                 {
