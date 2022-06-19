@@ -84,7 +84,7 @@ public class Tooltip : MonoBehaviour
         }
 
         tooltip.text = tooltipString;
-        var bgSize = new Vector2(300, tooltip.preferredHeight + 20);
+        var bgSize = new Vector2(tooltip.preferredWidth + 20, tooltip.preferredHeight);
 
         RectTransform.sizeDelta = bgSize;
 
