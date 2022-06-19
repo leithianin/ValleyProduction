@@ -7,7 +7,6 @@ using System.Linq;
 // Copy meshes from children into the parent's Mesh.
 // CombineInstance stores the list of meshes.  These are combined
 // and assigned to the attached Mesh.
-
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class CombineMeshLOD1 : MonoBehaviour
@@ -23,8 +22,8 @@ public class CombineMeshLOD1 : MonoBehaviour
         List<MeshFilter> meshFiltersToRemove = new List<MeshFilter>();
         List<MeshRenderer> meshRenderersToRemove = new List<MeshRenderer>();
 
-        //Debug.Log("MeshFilter Count : " + meshFilters.Count);
-        //Debug.Log("MeshRenderer Count : " + meshRenderers.Count);
+        Debug.Log("MeshFilter Count : " + meshFilters.Count);
+        Debug.Log("MeshRenderer Count : " + meshRenderers.Count);
 
         for (int i = 0; i < meshFilters.Count; i++)
         {
@@ -34,14 +33,14 @@ public class CombineMeshLOD1 : MonoBehaviour
             }
         }
 
-        //Debug.Log("MeshFilterToRemove : " + meshFiltersToRemove.Count);
+        Debug.Log("MeshFilterToRemove : " + meshFiltersToRemove.Count);
 
         foreach (MeshFilter mf in meshFiltersToRemove)
         {
             meshFilters.Remove(mf);
         }
 
-        //Debug.Log("MeshFilter Count After Delete : " + meshFilters.Count);
+        Debug.Log("MeshFilter Count After Delete : " + meshFilters.Count);
 
         for (int i = 0; i < meshRenderers.Count; i++)
         {
@@ -51,14 +50,14 @@ public class CombineMeshLOD1 : MonoBehaviour
             }
         }
 
-        //Debug.Log("MeshRendererToRemove : " + meshRenderersToRemove.Count);
+        Debug.Log("MeshRendererToRemove : " + meshRenderersToRemove.Count);
 
         foreach (MeshRenderer mr in meshRenderersToRemove)
         {
             meshRenderers.Remove(mr);
         }
 
-        //Debug.Log("MeshRenderer Count After Delete : " + meshRenderers.Count);
+        Debug.Log("MeshRenderer Count After Delete : " + meshRenderers.Count);
 
         /*if(meshRenderers.Count < 2 || meshFilters.Count < 2)
         {
@@ -69,7 +68,7 @@ public class CombineMeshLOD1 : MonoBehaviour
         CombineInstance[] combine = new CombineInstance[meshFilters.Count];
         //Material[] SharedMats = meshRenderers[1].sharedMaterials;
         Material MainMaterial = meshRenderers[1].sharedMaterials[0];
-        Material[] SubMaterial = new Material[meshRenderers[1].materials.Length - 1];
+        Material[] SubMaterial = new Material[meshRenderers[1].sharedMaterials.Length - 1];
         List<CombineInstance> combine2 = new List<CombineInstance>();
 
         Debug.Log(meshFilters.Count);
@@ -139,7 +138,7 @@ public class CombineMeshLOD1 : MonoBehaviour
             goRenderer2.material = SubMaterial[0];
         }
 
-        parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
+        //parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
 
         Debug.Log(gameObject.name);
         gameObject.SetActive(false);

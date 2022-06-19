@@ -125,7 +125,7 @@ public class CombineMeshLOD2 : MonoBehaviour
             goRenderer2.material = SubMaterial[0];
         }
 
-        parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
+        //parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
 
         Debug.Log(gameObject.name);
         gameObject.SetActive(false);
