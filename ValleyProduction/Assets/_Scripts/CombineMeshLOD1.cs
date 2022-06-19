@@ -7,7 +7,7 @@ using System.Linq;
 // Copy meshes from children into the parent's Mesh.
 // CombineInstance stores the list of meshes.  These are combined
 // and assigned to the attached Mesh.
-public enum TypeLOD1 { Tulip, WildGrass, Poppy, Daisy, Lavender, Dandelion }
+public enum TypeLOD1 { Tulip, WildGrass, Poppy, Daisy, Lavender, Dandelion, Fern, Branch, Mushroom }
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class CombineMeshLOD1 : MonoBehaviour
