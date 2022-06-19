@@ -19,7 +19,7 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        TimerManager.CreateGameTimer(0.8f, SetupTooltip);
+        TimerManager.CreateGameTimer(0.4f, SetupTooltip);
         isEnter = true;
     }
 
