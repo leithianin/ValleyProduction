@@ -24,6 +24,9 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
 
     private FontStyles newFont;
 
+    private VLY_Quest savedQuest;
+    private List<QST_Objective> savedObjectives;
+
     public void Play()
     {
         if (txt.Title != string.Empty) { title.text = $"{txt.Title}"; }
@@ -53,9 +56,36 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
 
     }
 
+    public void UpdateText()
+    {
+        SetQuestStage(savedQuest, savedObjectives);
+
+        switch (UIManager.GetData.lang)
+        {
+            case Language.en:
+                title.text = savedQuest.questName;
+                break;
+
+            case Language.fr:
+                if (savedQuest.questNamefr != string.Empty)
+                {
+                    title.text = savedQuest.questNamefr;
+                }
+                else
+                {
+                    title.text = savedQuest.questName;
+                }
+                break;
+        }
+    }
+
     public void SetQuestStage(VLY_Quest quest, List<QST_Objective> objectives)
     {
-        if(!handler.activeSelf)
+        UIManager.OnLanguageChange += UpdateText;
+        savedQuest = quest;
+        savedObjectives = objectives;
+
+        if (!handler.activeSelf)
         {
             handler.SetActive(true);
         }
@@ -63,7 +93,24 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
         if(quest != displayedQuest)
         {
             displayedQuest = quest;
-            title.text = quest.questName;
+
+            switch (UIManager.GetData.lang)
+            {
+                case Language.en:
+                    title.text = quest.questName;
+                    break;
+
+                case Language.fr:
+                    if (quest.questNamefr != string.Empty)
+                    {
+                        title.text = quest.questNamefr;
+                    }
+                    else
+                    {
+                        title.text = quest.questName;
+                    }
+                    break;
+            }
         }
 
         //Voir comment on affiche les objectifs complétés
@@ -73,11 +120,43 @@ public class IFB_ChangeTextGoal : MonoBehaviour, IFeedbackPlayer // CODE REVIEW 
         {
             if (objectives[i].State != QuestObjectiveState.Completed)
             {
-                objectiveText += objectives[i].Description + " \n";
+                switch (UIManager.GetData.lang)
+                {
+                    case Language.en:
+                        objectiveText += objectives[i].Description + " \n";
+                        break;
+
+                    case Language.fr:
+                        if (objectives[i].Descriptionfr != string.Empty)
+                        {
+                            objectiveText += objectives[i].Descriptionfr + " \n";
+                        }
+                        else
+                        {
+                            objectiveText += objectives[i].Description + " \n";
+                        }
+                        break;
+                }
             }
             else
             {
-                objectiveText += "<s>" + objectives[i].Description + " </s> \n";
+                switch (UIManager.GetData.lang)
+                {
+                    case Language.en:
+                        objectiveText += "<s>" + objectives[i].Description + " </s> \n";
+                        break;
+
+                    case Language.fr:
+                        if (objectives[i].Descriptionfr != string.Empty)
+                        {
+                            objectiveText += "<s>" + objectives[i].Descriptionfr + " </s> \n";
+                        }
+                        else
+                        {
+                            objectiveText += "<s>" + objectives[i].Description + " </s> \n";
+                        }
+                        break;
+                }
             }
         }
 
