@@ -8,11 +8,13 @@ using System.Linq;
 // CombineInstance stores the list of meshes.  These are combined
 // and assigned to the attached Mesh.
 
+public enum TypeLOD0 { Tulip, WildGrass, Poppy, Daisy, Lavender, Dandelion}
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class CombineMeshLOD0 : MonoBehaviour
 {
     public Transform parent;      //PlantVizualiser
+    public TypeLOD0 type;
 
     [Button(90)]
     void CombineLOD0()
@@ -30,7 +32,7 @@ public class CombineMeshLOD0 : MonoBehaviour
 
         for (int i = 0; i < meshFilters.Count; i++)
         {
-            if(!meshFilters[i].gameObject.name.Contains("LOD0"))
+            if(!meshFilters[i].gameObject.name.Contains("LOD0") || !meshFilters[i].gameObject.name.Contains(type.ToString()))
             {
                 meshFiltersToRemove.Add((meshFilters[i]));
             }
@@ -47,7 +49,7 @@ public class CombineMeshLOD0 : MonoBehaviour
 
         for (int i = 0; i < meshRenderers.Count; i++)
         {
-            if (!meshRenderers[i].gameObject.name.Contains("LOD0"))
+            if (!meshRenderers[i].gameObject.name.Contains("LOD0") || !meshRenderers[i].gameObject.name.Contains(type.ToString()))
             {
                 meshRenderersToRemove.Add((meshRenderers[i]));
             }
@@ -111,6 +113,7 @@ public class CombineMeshLOD0 : MonoBehaviour
         go.SetActive(true);
 
         go.transform.parent = parent;
+        go.name = "LOD0_" + type.ToString();
 
         //goRenderer.materials = Mats;
         goRenderer.sharedMaterial = MainMaterial;
@@ -134,7 +137,6 @@ public class CombineMeshLOD0 : MonoBehaviour
         }
 
         //parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
-
 
         Debug.Log(gameObject.name);
         gameObject.SetActive(false);
