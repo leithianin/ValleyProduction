@@ -23,6 +23,11 @@ public class CombineMeshLOD0 : MonoBehaviour
         List<MeshFilter> meshFiltersToRemove = new List<MeshFilter>();
         List<MeshRenderer> meshRenderersToRemove = new List<MeshRenderer>();
 
+        Debug.Log("MeshFilter Count : " + meshFilters.Count);
+        Debug.Log("MeshRenderer Count : " + meshRenderers.Count);
+
+        //Debug.Log(type.ToString());
+
         for (int i = 0; i < meshFilters.Count; i++)
         {
             if(!meshFilters[i].gameObject.name.Contains("LOD0"))
@@ -31,10 +36,14 @@ public class CombineMeshLOD0 : MonoBehaviour
             }
         }
 
-        foreach(MeshFilter mf in meshFiltersToRemove)
+        Debug.Log("MeshFilterToRemove : " + meshFiltersToRemove.Count);
+
+        foreach (MeshFilter mf in meshFiltersToRemove)
         {
             meshFilters.Remove(mf);
         }
+
+        Debug.Log("MeshFilter Count After Delete : " + meshFilters.Count);
 
         for (int i = 0; i < meshRenderers.Count; i++)
         {
@@ -44,15 +53,19 @@ public class CombineMeshLOD0 : MonoBehaviour
             }
         }
 
+        Debug.Log("MeshRendererToRemove : " + meshRenderersToRemove.Count);
+
         foreach (MeshRenderer mr in meshRenderersToRemove)
         {
             meshRenderers.Remove(mr);
         }
 
+        Debug.Log("MeshRenderer Count After Delete : " + meshRenderers.Count);
+
         CombineInstance[] combine = new CombineInstance[meshFilters.Count];
         //Material[] SharedMats = meshRenderers[1].sharedMaterials;
         Material MainMaterial = meshRenderers[1].sharedMaterials[0];
-        Material[] SubMaterial = new Material[meshRenderers[1].materials.Length - 1];
+        Material[] SubMaterial = new Material[meshRenderers[1].sharedMaterials.Length - 1];
         List<CombineInstance> combine2 = new List<CombineInstance>();
 
         Debug.Log(meshFilters.Count);
@@ -92,14 +105,15 @@ public class CombineMeshLOD0 : MonoBehaviour
         var goRenderer = go.GetComponent<MeshRenderer>();
 
         go.SetActive(false);
-        goFilter.mesh = new Mesh();
-        goFilter.mesh.CombineMeshes(combine);
+        goFilter.sharedMesh = new Mesh();
+        goFilter.sharedMesh.CombineMeshes(combine);
+        goFilter.sharedMesh.name = "Testouille";
         go.SetActive(true);
 
         go.transform.parent = parent;
 
         //goRenderer.materials = Mats;
-        goRenderer.material = MainMaterial;
+        goRenderer.sharedMaterial = MainMaterial;
 
         if (SubMaterial.Length >= 1)
         {
@@ -119,7 +133,7 @@ public class CombineMeshLOD0 : MonoBehaviour
             goRenderer2.material = SubMaterial[0];
         }
 
-        parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
+        //parent.parent.GetComponent<TreeBehavior>().GetAllMeshes();
 
 
         Debug.Log(gameObject.name);
