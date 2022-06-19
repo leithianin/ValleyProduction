@@ -107,6 +107,7 @@ public class CombineMeshLOD0 : MonoBehaviour
         go.SetActive(false);
         goFilter.sharedMesh = new Mesh();
         goFilter.sharedMesh.CombineMeshes(combine);
+        goFilter.sharedMesh.name = "Testouille";
         go.SetActive(true);
 
         go.transform.parent = parent;
