@@ -103,6 +103,7 @@ public class CombineMeshLOD2 : MonoBehaviour
         go.SetActive(true);
 
         go.transform.parent = parent;
+        go.name = "LOD2";
 
         //goRenderer.materials = Mats;
         goRenderer.material = MainMaterial;

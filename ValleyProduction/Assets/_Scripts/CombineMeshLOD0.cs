@@ -23,31 +23,44 @@ public class CombineMeshLOD0 : MonoBehaviour
         List<MeshFilter> meshFiltersToRemove = new List<MeshFilter>();
         List<MeshRenderer> meshRenderersToRemove = new List<MeshRenderer>();
 
+        Debug.Log("MeshFilter Count : " + meshFilters.Count);
+        Debug.Log("MeshRenderer Count : " + meshRenderers.Count);
+
+        //Debug.Log(type.ToString());
+
         for (int i = 0; i < meshFilters.Count; i++)
         {
-            if(!meshFilters[i].gameObject.name.Contains("LOD0"))
+            if(!meshFilters[i].gameObject.name.Contains("LOD0") || !meshFilters[i].gameObject.name.Contains(type.ToString()))
             {
                 meshFiltersToRemove.Add((meshFilters[i]));
             }
         }
 
-        foreach(MeshFilter mf in meshFiltersToRemove)
+        Debug.Log("MeshFilterToRemove : " + meshFiltersToRemove.Count);
+
+        foreach (MeshFilter mf in meshFiltersToRemove)
         {
             meshFilters.Remove(mf);
         }
 
+        Debug.Log("MeshFilter Count After Delete : " + meshFilters.Count);
+
         for (int i = 0; i < meshRenderers.Count; i++)
         {
-            if (!meshRenderers[i].gameObject.name.Contains("LOD0"))
+            if (!meshRenderers[i].gameObject.name.Contains("LOD0") || !meshRenderers[i].gameObject.name.Contains(type.ToString()))
             {
                 meshRenderersToRemove.Add((meshRenderers[i]));
             }
         }
 
+        Debug.Log("MeshRendererToRemove : " + meshRenderersToRemove.Count);
+
         foreach (MeshRenderer mr in meshRenderersToRemove)
         {
             meshRenderers.Remove(mr);
         }
+
+        Debug.Log("MeshRenderer Count After Delete : " + meshRenderers.Count);
 
         CombineInstance[] combine = new CombineInstance[meshFilters.Count];
         //Material[] SharedMats = meshRenderers[1].sharedMaterials;
