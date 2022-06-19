@@ -27,6 +27,7 @@ public class PointerHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (isEnter)
         {
+            Debug.Log("Enter Tooltip");
             onEnter?.Invoke(this);
             var message = "";
 
