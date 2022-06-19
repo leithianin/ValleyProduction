@@ -7,11 +7,13 @@ using System.Linq;
 // Copy meshes from children into the parent's Mesh.
 // CombineInstance stores the list of meshes.  These are combined
 // and assigned to the attached Mesh.
+public enum TypeLOD1 { Tulip, WildGrass, Poppy, Daisy, Lavender, Dandelion }
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class CombineMeshLOD1 : MonoBehaviour
 {
     public Transform parent;      //PlantVizualiser
+    public TypeLOD1 type;
 
     [Button(90)]
     void CombineLOD1()
@@ -27,7 +29,7 @@ public class CombineMeshLOD1 : MonoBehaviour
 
         for (int i = 0; i < meshFilters.Count; i++)
         {
-            if (!meshFilters[i].gameObject.name.Contains("LOD1"))
+            if (!meshFilters[i].gameObject.name.Contains("LOD1") || !meshFilters[i].gameObject.name.Contains(type.ToString()))
             {
                 meshFiltersToRemove.Add((meshFilters[i]));
             }
@@ -44,7 +46,7 @@ public class CombineMeshLOD1 : MonoBehaviour
 
         for (int i = 0; i < meshRenderers.Count; i++)
         {
-            if (!meshRenderers[i].gameObject.name.Contains("LOD1"))
+            if (!meshRenderers[i].gameObject.name.Contains("LOD1") || !meshRenderers[i].gameObject.name.Contains(type.ToString()))
             {
                 meshRenderersToRemove.Add((meshRenderers[i]));
             }
@@ -113,6 +115,7 @@ public class CombineMeshLOD1 : MonoBehaviour
         go.SetActive(true);
 
         go.transform.parent = parent;
+        go.name = "LOD1_" + type.ToString();
 
         //LOD
         //go.transform.parent.GetComponent<LODGroup>().GetLODs()[1].renderers[0] = go.GetComponent<MeshRenderer>();
