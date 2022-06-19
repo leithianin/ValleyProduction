@@ -8,7 +8,7 @@ using System.Linq;
 // CombineInstance stores the list of meshes.  These are combined
 // and assigned to the attached Mesh.
 
-public enum TypeLOD0 { Tulip, WildGrass, Poppy, Daisy, Lavender, Dandelion}
+public enum TypeLOD0 { Tulip, WildGrass, Poppy, Daisy, Lavender, Dandelion, Fern, Branch, Mushroom }
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class CombineMeshLOD0 : MonoBehaviour
