@@ -42,6 +42,7 @@ public class SphericalTransform : MonoBehaviour
     [SerializeField, Tooltip("In degrees")] private float verticalOffset = 0.5f;
     [SerializeField] private float minPolarValue = 0.0f;
     [SerializeField] private float maxPolarValue = 100.0f;
+    public bool allowPolarRotation = false;
 
     [Header("Radius Values")]
     [SerializeField] private float minRadiusValue = 1.0f;
@@ -183,6 +184,11 @@ public class SphericalTransform : MonoBehaviour
         Vector3 savePosition = origin.position;
 
         origin.position += Vector3.Normalize(origin.forward * yInput + origin.right * xInput) * speed * (coordinates.x / 5) * Time.unscaledDeltaTime;
+
+        if(origin.position.y > 15.0f && !allowPolarRotation)
+        {
+            origin.position = new Vector3(origin.position.x, 15, origin.position.z);
+        }
 
         if(origin.position != savePosition)
         {
@@ -449,7 +455,10 @@ public class SphericalTransform : MonoBehaviour
             coordinates.y = coordinates.y + 360f;
         }
 
-        coordinates.z = Mathf.Clamp(coordinates.z,minPolarValue, Vector3.Angle(touchDown - origin.position, origin.up) - verticalOffset);
+        if (allowPolarRotation)
+        {
+            coordinates.z = Mathf.Clamp(coordinates.z, minPolarValue, Vector3.Angle(touchDown - origin.position, origin.up) - verticalOffset);
+        }
         coordinates.x = Mathf.Clamp(coordinates.x, minRadiusValue, maxRadiusValue);
     }
 
