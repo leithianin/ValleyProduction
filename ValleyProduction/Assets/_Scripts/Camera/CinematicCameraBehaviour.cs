@@ -33,6 +33,11 @@ public class CinematicCameraBehaviour : MonoBehaviour
 
     public UnityEvent OnPlayCinematic;
     public UnityEvent OnEndCinematic;
+
+    private void Awake()
+    {
+        firstShot = true;
+    }
     private void Update()
     {
         if (!inCinematicMode && cinematicModeTriggered)
@@ -64,13 +69,9 @@ public class CinematicCameraBehaviour : MonoBehaviour
         float refVerticalOffest = cameraTransform.OriginVisualOffset;
 
         inCinematicMode = true;
-        int index = 0;
 
         foreach (CameraData shot in sequence)
         {
-            index++;
-            firstShot = index == 1;
-
             // Set the shot duration
             float referenceTime = shot.isTraveling ?
                         Vector3.Distance(shot.cameraOriginPosition, shot.travelPosition) / shot.speed
@@ -112,9 +113,9 @@ public class CinematicCameraBehaviour : MonoBehaviour
                 }
             }
 
+            firstShot = false;
             FadeReset();
         }
-        firstShot = true;
         cameraTransform.OriginVisualOffset = refVerticalOffest;
         CameraManager.OnEndCinematic?.Invoke();
         OnEndCinematic?.Invoke();
