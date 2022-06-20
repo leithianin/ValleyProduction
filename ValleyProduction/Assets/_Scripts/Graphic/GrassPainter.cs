@@ -112,8 +112,6 @@ public class GrassPainter : MonoBehaviour
         SceneView.duringSceneGui += this.OnScene;
         Undo.undoRedoPerformed += this.HandleUndo;
 
-        Debug.Log(gameObject);
-
         SetupMesh();
     }
 

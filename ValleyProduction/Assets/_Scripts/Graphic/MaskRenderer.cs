@@ -301,7 +301,6 @@ public class MaskRenderer : MonoBehaviour
             pixelsBuffer.GetData(ecosystemGrids);
         }
     }
-
     public int GetScoreAtPosition(Vector2 position, EcosystemDataType scoreType)
     {
         return ecosystemGrids[((int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)) * 4 + (int)scoreType];

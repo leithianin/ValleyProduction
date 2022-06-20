@@ -38,6 +38,11 @@ public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
         EnableHeatmapView(false, 0);
     }
 
+    private void OnDestroy()
+    {
+        HandleHeatmap(0);
+    }
+
     private void OnApplicationQuit()
     {
         EnableHeatmapView(false, 0);
@@ -62,7 +67,10 @@ public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
         isEnabled = enable;
 
         baseLights.SetActive(!enable);
-        heatmapLight.SetActive(enable);
+        if (heatmapLight != null)
+        {
+            heatmapLight.SetActive(enable);
+        }
         if (foliage != null)
         {
             foliage.SetActive(!enable);
