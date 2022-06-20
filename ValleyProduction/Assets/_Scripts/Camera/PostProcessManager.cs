@@ -80,9 +80,10 @@ public class PostProcessManager : MonoBehaviour
         if (WantDefaultProfile)
         {
             SetProfile(defaultProfile);
+        }
             GetProfileOverrides();
             SetVignetteValue(0f);
-        }
+        
     }
 
     // Update is called once per frame
