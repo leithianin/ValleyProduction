@@ -184,7 +184,8 @@ public class CameraInputManager : MonoBehaviour
 
         Debug.Log(azimuthalValue);
         //cameraTransform.PolarRotation(settingsDatas.cameraInvertVerticalWheelRotation ? -mouseDirection.y : mouseDirection.y, wheelRotationSpeed);
-        cameraTransform.PolarRotation(polarValue, wheelRotationSpeed);
+        if (cameraTransform.allowPolarRotation)
+            cameraTransform.PolarRotation(polarValue, wheelRotationSpeed);
 
         //cameraTransform.AzimuthalRotation(settingsDatas.cameraInvertHorizontalWheelRotation ? -mouseDirection.x : mouseDirection.x, wheelRotationSpeed);
         cameraTransform.AzimuthalRotation(azimuthalValue, wheelRotationSpeed);
