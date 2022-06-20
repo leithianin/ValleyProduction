@@ -160,6 +160,9 @@ public class CameraInputManager : MonoBehaviour
 
     void RotateCameraWithKeyboard()
     {
+        if (Input.GetKey(KeyCode.Mouse2))
+            return;
+
         cameraTransform.PolarRotation(polarValue, rotationSpeed);
 
         if (!allowRotation)
@@ -179,12 +182,12 @@ public class CameraInputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse2))
             StartCoroutine(ResetRotationInput());
 
-        cameraTransform.PolarRotation(settingsDatas.cameraInvertVerticalWheelRotation ? -mouseDirection.y : mouseDirection.y, wheelRotationSpeed);
+        Debug.Log(azimuthalValue);
+        //cameraTransform.PolarRotation(settingsDatas.cameraInvertVerticalWheelRotation ? -mouseDirection.y : mouseDirection.y, wheelRotationSpeed);
+        cameraTransform.PolarRotation(polarValue, wheelRotationSpeed);
 
-        if (!allowRotation)
-            return;
-
-        cameraTransform.AzimuthalRotation(settingsDatas.cameraInvertHorizontalWheelRotation ? -mouseDirection.x : mouseDirection.x, wheelRotationSpeed);
+        //cameraTransform.AzimuthalRotation(settingsDatas.cameraInvertHorizontalWheelRotation ? -mouseDirection.x : mouseDirection.x, wheelRotationSpeed);
+        cameraTransform.AzimuthalRotation(azimuthalValue, wheelRotationSpeed);
     }
 
     IEnumerator ResetRotationInput()
