@@ -50,6 +50,8 @@ public class TimerManager : VLY_Singleton<TimerManager>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        //QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
     }
 
     public static Timer CreateGameTimer(float time, Action callback)
