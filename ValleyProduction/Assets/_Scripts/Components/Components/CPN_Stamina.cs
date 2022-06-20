@@ -10,6 +10,7 @@ public class CPN_Stamina : VLY_Component<CPN_Data_Stamina>
     [SerializeField] private float currentStamina;
     [SerializeField] private float lastStaminaState;
     [SerializeField] private float maxStamina;
+    [SerializeField] private float staminaCoefByUnit = 0.3f;
 
     private float slopeCoef = 0.1f;
     private float staminaRegenCoef = 5f;
@@ -29,7 +30,7 @@ public class CPN_Stamina : VLY_Component<CPN_Data_Stamina>
     {
         if(Vector3.Distance(lastPosition, transform.position) > 0)
         {
-            currentStamina -= Vector3.Distance(lastPosition, transform.position) * CalculateSlope();
+            currentStamina -= Vector3.Distance(lastPosition, transform.position) * CalculateSlope() * staminaCoefByUnit;
             UIManager.UpdateCurrentStamina();
 
             if(currentStamina <= 0)
@@ -66,7 +67,7 @@ public class CPN_Stamina : VLY_Component<CPN_Data_Stamina>
 
     private float CalculateSlope()
     {
-        float toReturn = (transform.position.y - lastPosition.y) *slopeCoef + 1;
+        float toReturn = (transform.position.y - lastPosition.y) * slopeCoef + 1;
         if(toReturn > 1)
         {
             return toReturn;
