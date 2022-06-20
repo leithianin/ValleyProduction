@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 {
-    private float throwRadius;
+    [SerializeField] private float throwRadius;
 
-    private Vector2 throwTimeRange;
+    [SerializeField] private Vector2 throwTimeRange;
 
     TimerManager.Timer throwTimer = null;
 
@@ -59,14 +59,19 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
         throwTimer = null;
     }
 
-    private void ThrowPosition()
+    public void ThrowPosition()
+    {
+        Throw();
+
+        StopTimer();
+        StartTimer();
+    }
+
+    public void Throw()
     {
         Vector3 randomPosition = Random.insideUnitCircle * throwRadius;
 
         PollutionManager.ThrowTrash(transform.position + new Vector3(randomPosition.x, 0, randomPosition.y));
-
-        StopTimer();
-        StartTimer();
     }
 
     public void DelayThrow(float delayTime)
