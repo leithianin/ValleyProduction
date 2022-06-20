@@ -179,8 +179,8 @@ public class CameraInputManager : MonoBehaviour
         if (!Input.GetKey(KeyCode.Mouse2))
             return;
 
-        if (Input.GetKeyDown(KeyCode.Mouse2))
-            StartCoroutine(ResetRotationInput());
+        /*if (Input.GetKeyDown(KeyCode.Mouse2))
+            StartCoroutine(ResetRotationInput());*/
 
         Debug.Log(azimuthalValue);
         //cameraTransform.PolarRotation(settingsDatas.cameraInvertVerticalWheelRotation ? -mouseDirection.y : mouseDirection.y, wheelRotationSpeed);
