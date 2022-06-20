@@ -266,7 +266,6 @@ public class MaskRenderer : MonoBehaviour
         if (noiseTexture != null)
             DestroyImmediate(noiseTexture);
     }
-
     private void Update()
     {
         bufferElements.Clear();
