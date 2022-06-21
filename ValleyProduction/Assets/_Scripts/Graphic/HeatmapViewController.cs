@@ -17,6 +17,8 @@ public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
     private bool isEnabled;
     private int currentIndex;
 
+    private bool canChangeHeatmap = true;
+
     #region Animatic
     public bool enableHeatview;
     [Range(0, 4)] public int viewIndex;
@@ -64,24 +66,31 @@ public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
 
     private void EnableHeatmapView(bool enable, int index)
     {
-        isEnabled = enable;
-
-        baseLights.SetActive(!enable);
-        if (heatmapLight != null)
+        if (canChangeHeatmap)
         {
-            heatmapLight.SetActive(enable);
-        }
-        if (foliage != null)
-        {
-            foliage.SetActive(!enable);
-        }
+            isEnabled = enable;
 
-        foreach (Material m in Materials)
-        {
-            if (enable) m.EnableKeyword("RENDER_HEATMAP");
-            else m.DisableKeyword("RENDER_HEATMAP");
+            baseLights.SetActive(!enable);
+            if (heatmapLight != null)
+            {
+                heatmapLight.SetActive(enable);
+            }
+            if (foliage != null)
+            {
+                foliage.SetActive(!enable);
+            }
 
-            m.SetFloat("HEATMAP_INDEX", index);
+            foreach (Material m in Materials)
+            {
+                if (enable) m.EnableKeyword("RENDER_HEATMAP");
+                else m.DisableKeyword("RENDER_HEATMAP");
+
+                m.SetFloat("HEATMAP_INDEX", index);
+            }
+
+            canChangeHeatmap = false;
+
+            TimerManager.CreateRealTimer(1f, () => canChangeHeatmap = true);
         }
     }
 }
