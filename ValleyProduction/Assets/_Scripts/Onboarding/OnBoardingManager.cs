@@ -36,7 +36,8 @@ public class OnBoardingManager : VLY_Singleton<OnBoardingManager>
 
     private void Start()
     {
-        TimerManager.CreateRealTimer(4f, () => OnStart?.Invoke());
+        //TimerManager.CreateRealTimer(4f, () => OnStart?.Invoke());
+        OnStart?.Invoke();
     }
 
     public static void SetBlockPlacePathpoint(bool cond)
