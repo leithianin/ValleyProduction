@@ -6,19 +6,22 @@ public class UI_Heatmap : MonoBehaviour
 {
     [SerializeField] private HeatmapViewController heatmapViewController;
 
-    public void HeatmapNoise()
+    [SerializeField] private List<UI_ButtonController> heatmapButtons;
+
+    public void SelectHeatmap(int index)
     {
-        Debug.Log("Noise");
-        //heatmapViewController.HandleHeatmapNoise();
-    }
+        int buttonIndex = index - 1;
 
-    public void HeatmapVisitors()
-    {
-
-    }
-
-    public void HeatmapFauna()
-    {
-
+        for(int i =0; i < heatmapButtons.Count; i++)
+        {
+            if(i == buttonIndex)
+            {
+                heatmapButtons[i].SetSelected(true);
+            }
+            else
+            {
+                heatmapButtons[i].SetSelected(false);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
 {
@@ -18,6 +19,8 @@ public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
     private int currentIndex;
 
     private bool canChangeHeatmap = true;
+
+    [SerializeField] private UnityEvent<int> onSelectHeatmap;
 
     #region Animatic
     public bool enableHeatview;
@@ -52,45 +55,49 @@ public class HeatmapViewController : VLY_Singleton<HeatmapViewController>
 
     public static void HandleHeatmap(int index)
     {
-        if(instance.currentIndex != index && index != 0)
+        if (instance.canChangeHeatmap)
         {
-            instance.currentIndex = index;
-            instance.EnableHeatmapView(true, index);
-        }
-        else
-        {
-            instance.currentIndex = 0;
-            instance.EnableHeatmapView(false, 0);
+            if (instance.currentIndex != index && index != 0)
+            {
+                instance.currentIndex = index;
+                instance.EnableHeatmapView(true, index);
+            }
+            else
+            {
+                instance.currentIndex = 0;
+                instance.EnableHeatmapView(false, 0);
+            }
         }
     }
 
     private void EnableHeatmapView(bool enable, int index)
     {
-        if (canChangeHeatmap)
+
+        isEnabled = enable;
+
+        baseLights.SetActive(!enable);
+        if (heatmapLight != null)
         {
-            isEnabled = enable;
-
-            baseLights.SetActive(!enable);
-            if (heatmapLight != null)
-            {
-                heatmapLight.SetActive(enable);
-            }
-            if (foliage != null)
-            {
-                foliage.SetActive(!enable);
-            }
-
-            foreach (Material m in Materials)
-            {
-                if (enable) m.EnableKeyword("RENDER_HEATMAP");
-                else m.DisableKeyword("RENDER_HEATMAP");
-
-                m.SetFloat("HEATMAP_INDEX", index);
-            }
-
-            canChangeHeatmap = false;
-
-            TimerManager.CreateRealTimer(1f, () => canChangeHeatmap = true);
+            heatmapLight.SetActive(enable);
         }
+        if (foliage != null)
+        {
+            foliage.SetActive(!enable);
+        }
+
+        foreach (Material m in Materials)
+        {
+            if (enable) m.EnableKeyword("RENDER_HEATMAP");
+            else m.DisableKeyword("RENDER_HEATMAP");
+
+            m.SetFloat("HEATMAP_INDEX", index);
+        }
+
+        onSelectHeatmap?.Invoke(index);
+
+        canChangeHeatmap = false;
+
+        TimerManager.CreateRealTimer(1f, () => canChangeHeatmap = true);
+
     }
 }
