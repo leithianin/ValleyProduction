@@ -49,7 +49,7 @@ public class PhotoMode : MonoBehaviour
     [SerializeField, Range(0, 100)] private float vignette = default;
 
     [Header("Filters"), Space(10)]
-    [SerializeField] private VolumeProfilesEnum filtersSelection = default;
+    [SerializeField] public VolumeProfilesEnum filtersSelection = default;
     [SerializeField, Range(0,100)] private float filterIntensity = 100.0f;
     [SerializeField] private Texture[] filters = default;
 
@@ -150,6 +150,7 @@ public class PhotoMode : MonoBehaviour
         ScreenshotsManager.instance.screenshotList.Add(rt);
         //screenshotsManager.screenshotList.Add(rt);
     }
+
     #region Convert Gallery to PNG
     [Button]
     public void ConvertGalleryToPNG()
@@ -224,7 +225,7 @@ public class PhotoMode : MonoBehaviour
     public void SetRolling(float value)
     {
         //transform.rotation = Quaternion.FromToRotation()
-        playerCameraTransform.eulerAngles = new Vector3(playerCameraTransform.eulerAngles.x, playerCameraTransform.eulerAngles.y, value);
+        playerCameraTransform.eulerAngles = new Vector3(playerCameraTransform.eulerAngles.x, playerCameraTransform.eulerAngles.y, +value);
     }
     #endregion
 
@@ -415,7 +416,7 @@ public class PhotoMode : MonoBehaviour
 
     public void SetVignette(float value)
     {
-        postProcessManager.Vignette.intensity.Override(value);
+        postProcessManager.Vignette.intensity.Override(value/100f);
     }
     #endregion
 
