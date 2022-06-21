@@ -24,11 +24,31 @@ public class UI_InfrastructureInformation : MonoBehaviour
     [SerializeField] private GameObject moneyTotal;
     [SerializeField] private TMP_Text moneyTotalText;
 
+    [Header("Color Gradient")]
+    public Gradient colorBackground;
+    public Gradient GetColorBackground;
+    public Gradient colorLogo;
+    public Gradient GetColorLogo;
+
+    [Header("Noise")]
+    public Image noiseBackground;
+    public Image noiseImage;
+
+    [Header("Pollution")]
+    public Image pollutionBackground;
+    public Image pollutionImage;
+
+
     public Infrastructure openedInfrastructure;                                         //Infrastrucure dont l'UI est actuellement ouverte
 
     public UnityEvent<GameObject> OnShow;
     public UnityEvent<GameObject> OnHide;
 
+    private void OnEnable()
+    {
+        GetColorBackground = colorBackground;
+        GetColorLogo = colorLogo;
+    }
 
     public void ShowStructureInformation(ECO_AGT_Informations infoInfra, Infrastructure baseStruct)
     {
@@ -75,11 +95,25 @@ public class UI_InfrastructureInformation : MonoBehaviour
         moneyTotal.SetActive(true);
 
         pollutionScoreDisplay.text = "Pollution : <size=17>" + infoInfra.GetPolluterScore().ToString() + "</size>";
+        ShowPollution(infoInfra);
         noiseScoreDisplay.text = "Noise : <size=17>" + infoInfra.GetNoiseScore().ToString() + "</size>";
+        ShowNoise(infoInfra);
 
         gameObject.SetActive(true);
 
         closeOpenAnimator.SetBool("Selected", !baseStruct.IsOpen);
+    }
+
+    public void ShowNoise(ECO_AGT_Informations infoInfra)
+    {
+        noiseBackground.color = colorBackground.Evaluate(infoInfra.GetNoiseScore() / 10f);
+        noiseImage.color = colorLogo.Evaluate(infoInfra.GetNoiseScore() / 10f);
+    }
+
+    public void ShowPollution(ECO_AGT_Informations infoInfra)
+    {
+        pollutionBackground.color = colorBackground.Evaluate(infoInfra.GetPolluterScore() / 10f);
+        pollutionImage.color = colorLogo.Evaluate(infoInfra.GetPolluterScore() / 10f);
     }
 
     public void UpdateCurrentNbInfo(Infrastructure baseStruct)
