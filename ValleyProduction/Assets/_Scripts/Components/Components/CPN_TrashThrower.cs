@@ -8,6 +8,8 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 
     [SerializeField] private Vector2 throwTimeRange;
 
+    [SerializeField] private bool lockEnableThrow = false;
+
     TimerManager.Timer throwTimer = null;
 
     public override void SetData(CPN_Data_TrashThrower dataToSet)
@@ -35,7 +37,10 @@ public class CPN_TrashThrower : VLY_Component<CPN_Data_TrashThrower>
 
     private void OnEnable()
     {
-        StartTimer();
+        if (!lockEnableThrow)
+        {
+            StartTimer();
+        }
     }
 
     private void OnDisable()
