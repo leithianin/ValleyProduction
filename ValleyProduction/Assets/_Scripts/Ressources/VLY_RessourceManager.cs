@@ -37,6 +37,12 @@ public class VLY_RessourceManager : VLY_Singleton<VLY_RessourceManager>
 
     private void OnDestroy()
     {
+        if(ressourceTimer != null)
+        {
+            ressourceTimer.Stop();
+            ressourceTimer = null;
+        }
+
         currentRessources.OnAskChangeValue -= GainRessource;
     }
 
