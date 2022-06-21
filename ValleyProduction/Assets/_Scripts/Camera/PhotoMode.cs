@@ -113,7 +113,7 @@ public class PhotoMode : MonoBehaviour
     {
         enablePhotoMode.Invoke();
         ui.SetActive(false);
-        sphericalTransform.allowPolarRotation = true;
+        //sphericalTransform.allowPolarRotation = true;
 
         focalLength = playerCamera.focalLength;
         baseVerticalOffset = sphericalTransform.OriginVisualOffset;
@@ -129,7 +129,7 @@ public class PhotoMode : MonoBehaviour
         active = false;
         disablePhotoMode.Invoke();
         ui.SetActive(true);
-        sphericalTransform.allowPolarRotation = false;
+        //sphericalTransform.allowPolarRotation = false;
 
         playerCamera.focalLength = baseFocalLength;
         sphericalTransform.OriginVisualOffset = baseVerticalOffset;
