@@ -121,6 +121,8 @@ public class MaskRenderer : MonoBehaviour
     private ComputeBuffer pixelsBuffer = null;
     #endregion
 
+    private TimerManager.Timer updateTimer;
+
     public List<EcosystemAgent> Agents => ecosystemAgents;
 
     private void Awake()
@@ -256,17 +258,32 @@ public class MaskRenderer : MonoBehaviour
         pixelsBuffer = new ComputeBuffer((TextureSize * TextureSize) * 4, sizeof(int));
 
         compute.SetBuffer(0, pixelBufferId, pixelsBuffer);
+
+        updateTimer = TimerManager.CreateGameTimer(1f, UpdateShader);
     }
 
     private void OnDestroy()
     {
+        if (!isApplicationQuitting)
+        {
+            updateTimer.Stop();
+        }
+
         entityBuffer?.Dispose();
         pixelsBuffer?.Dispose();
 
         if (noiseTexture != null)
             DestroyImmediate(noiseTexture);
     }
-    private void Update()
+
+    bool isApplicationQuitting = false;
+
+    void OnApplicationQuit()
+    {
+        isApplicationQuitting = true;
+    }
+
+    private void UpdateShader()
     {
         bufferElements.Clear();
 
@@ -299,7 +316,12 @@ public class MaskRenderer : MonoBehaviour
 
             pixelsBuffer.GetData(ecosystemGrids);
         }
+
+        updateTimer = TimerManager.CreateGameTimer(1f, UpdateShader);
     }
+
+
+
     public int GetScoreAtPosition(Vector2 position, EcosystemDataType scoreType)
     {
         return ecosystemGrids[((int)(position.x * TextureSize / MapSize) * TextureSize + (int)(position.y * TextureSize / MapSize)) * 4 + (int)scoreType];

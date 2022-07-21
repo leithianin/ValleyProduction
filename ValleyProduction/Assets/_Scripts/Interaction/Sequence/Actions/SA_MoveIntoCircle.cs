@@ -7,7 +7,7 @@ public class SA_MoveIntoCircle : InteractionActions
 {
     [SerializeField] private Transform circleCenter;
     [SerializeField] private float circleRadius;
-    [SerializeField, Tooltip("Détermine la distance minimale et maximal d'un déplacement.")] private Vector2 rangeDistanceByMovement;
+    [SerializeField, Tooltip("Dï¿½termine la distance minimale et maximal d'un dï¿½placement.")] private Vector2 rangeDistanceByMovement;
 
     NavMeshPath pathToTake;
 
@@ -56,7 +56,7 @@ public class SA_MoveIntoCircle : InteractionActions
         }
         else
         {
-            TimerManager.CreateGameTimer(Time.deltaTime * 2f, () => EndAction(caller));
+            TimerManager.CreateGameTimer(5f, () => EndAction(caller));
         }
     }
 

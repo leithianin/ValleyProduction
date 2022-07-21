@@ -59,9 +59,12 @@ public abstract class EcosystemDisplay : MonoBehaviour
 
     public Vector2 Position => new Vector2(transform.position.x, transform.position.z);
 
+    private TimerManager.Timer updateTimer;
 
     private void Start()
     {
+        updateTimer = TimerManager.CreateGameTimer(1f, UpdateDisplay);
+
         OnStart();
     }
 
@@ -70,7 +73,7 @@ public abstract class EcosystemDisplay : MonoBehaviour
 
     }
 
-    private void Update()
+    private void UpdateDisplay()
     {
         for (int i = 0; i < scoreData.Count; i++)
         {
@@ -79,6 +82,23 @@ public abstract class EcosystemDisplay : MonoBehaviour
                 UpdateData(VLY_EcosystemManager.GetScoreAtPosition(Position, scoreData[i].displayDatas[j].dataTypeToCheck), scoreData[i].displayDatas[j].dataTypeToCheck);
             }
         }
+
+        updateTimer = TimerManager.CreateGameTimer(1f, UpdateDisplay);
+    }
+
+    private void OnDestroy()
+    {
+        if (!isApplicationQuitting)
+        {
+            updateTimer.Stop();
+        }
+    }
+
+    bool isApplicationQuitting = false;
+
+    void OnApplicationQuit()
+    {
+        isApplicationQuitting = true;
     }
 
     /// <summary>

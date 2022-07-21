@@ -29,18 +29,18 @@ public abstract class InteractionSight : MonoBehaviour
     }
 
     /// <summary>
-    /// Actions spécifiques à faire lors du commencement d'une interaction.
+    /// Actions spï¿½cifiques ï¿½ faire lors du commencement d'une interaction.
     /// </summary>
     /// <param name="spot">L'objet avec lequel il interagit.</param>
     public abstract void OnStartInteraction(InteractionSpot spot);
 
     /// <summary>
-    /// Actions spécifiques à faire lors de la fin d'une interaction.
+    /// Actions spï¿½cifiques ï¿½ faire lors de la fin d'une interaction.
     /// </summary>
     public abstract void OnEndInteraction();
 
     /// <summary>
-    /// Appelé quand on demande à interagir avec un Spot.
+    /// Appelï¿½ quand on demande ï¿½ interagir avec un Spot.
     /// </summary>
     /// <param name="spot">The spot the interactor want to interact with.</param>
     public void StartInteraction(InteractionSpot spot)
@@ -57,7 +57,7 @@ public abstract class InteractionSight : MonoBehaviour
     }
 
     /// <summary>
-    /// Appelé quand l'interaction avec le Spot se finit.
+    /// Appelï¿½ quand l'interaction avec le Spot se finit.
     /// </summary>
     /// <param name="spotInteractor">L'InteractionHandler qui vient de finir l'interaction.</param>
     private void EndInteraction(CPN_InteractionHandler spotInteractor)

@@ -23,6 +23,8 @@ public class InteractionSequence : InteractionActions
 
     [SerializeField] private List<SequenceHandler> sequenceUser = new List<SequenceHandler>();
 
+    private List<CPN_InteractionHandler> callersForNextFrame = new List<CPN_InteractionHandler>();
+
     protected override void OnPlayAction(CPN_InteractionHandler caller)
     {
         SequenceHandler newHandler = new SequenceHandler();
@@ -60,6 +62,24 @@ public class InteractionSequence : InteractionActions
         }
     }
 
+    private void SetNextStep(CPN_InteractionHandler caller)
+    {
+        if (!callersForNextFrame.Contains(caller))
+        {
+            callersForNextFrame.Add(caller);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        foreach(CPN_InteractionHandler caller in callersForNextFrame)
+        {
+            PlayNextStep(caller);
+        }
+
+        callersForNextFrame.Clear();
+    }
+
     private void PlayNextStep(CPN_InteractionHandler caller)
     {
         for (int i = 0; i < sequenceUser.Count; i++)
@@ -77,10 +97,10 @@ public class InteractionSequence : InteractionActions
                 {
                     for (int j = 0; j < sequence[handler.currentSequenceIndex].secondaryActions.Count; j++)
                     {
-                        sequence[handler.currentSequenceIndex].secondaryActions[j].PlayAction(caller, () => PlayNextStep(caller), null, true);
+                        sequence[handler.currentSequenceIndex].secondaryActions[j].PlayAction(caller, () => SetNextStep(caller), null, true);
                     }
 
-                    sequence[handler.currentSequenceIndex].mainAction.PlayAction(caller, () => PlayNextStep(caller), null, false);
+                    sequence[handler.currentSequenceIndex].mainAction.PlayAction(caller, () => SetNextStep(caller), null, false);
                 }
                 break;
             }
